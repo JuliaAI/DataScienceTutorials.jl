@@ -1,1 +1,1 @@
-[34mDecisionTreeClassifier @ 1…94[39m
+DecisionTreeClassifier @ 1…81

@@ -1,1 +1,1 @@
-ŷ[1] = UnivariateFinite(setosa=>0.01612903225806452, versicolor=>0.9677419354838711, virginica=>0.01612903225806452)
+ŷ[1] = UnivariateFinite(setosa=>0.01612903225806452, versicolor=>0.01612903225806452, virginica=>0.9677419354838711)

@@ -1,2 +1,2 @@
 There was an error running the code:
-MethodError(MLJBase.inverse_transform, ([34mNode{NodalMachine{UnivariateBoxCoxTransformer}} @ 8…44[39m,), 0x0000000000006d3a)
+MethodError(MLJBase.inverse_transform, (Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 3…35,), 0x0000000000006dac)

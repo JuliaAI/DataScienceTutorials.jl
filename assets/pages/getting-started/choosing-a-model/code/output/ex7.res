@@ -1,1 +1,1 @@
-[34mKNeighborsClassifier @ 1…25[39m
+KNeighborsClassifier @ 3…47

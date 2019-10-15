@@ -1,1 +1,1 @@
-[34mMachine{DecisionTreeClassifier} @ 1…44[39m
+Machine{DecisionTreeClassifier} @ 1…54

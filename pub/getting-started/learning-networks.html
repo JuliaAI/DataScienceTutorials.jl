@@ -7,7 +7,7 @@ x2 = rand(<span class=hljs-number >300</span>)
 x3 = rand(<span class=hljs-number >300</span>)
 y = exp.(x1 - x2 -<span class=hljs-number >2</span>x3 + <span class=hljs-number >0.1</span>*rand(<span class=hljs-number >300</span>))
 X = DataFrame(x1=x1, x2=x2, x3=x3)
-first(X, <span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">3×3 DataFrames.DataFrame
+first(X, <span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">3×3 DataFrame
 │ Row │ x1       │ x2        │ x3       │
 │     │ Float64  │ Float64   │ Float64  │
 ├─────┼──────────┼───────────┼──────────┤
@@ -22,16 +22,16 @@ first(X, <span class=hljs-number >3</span>)</code></pre><div class=code_output >
 <h3 id=sources_and_nodes ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#sources_and_nodes">Sources and nodes</a></h3>
 <p>In MLJ a learning network starts at <strong>source</strong> nodes and flows through nodes &#40;<code>X</code> and <code>y</code>&#41; defining operations/transformations &#40;<code>W</code>, <code>z</code>, <code>ẑ</code>, <code>ŷ</code>&#41;. To define the source nodes, use the <code>source</code> function, you can specify if it&#39;s a target:</p>
 <pre><code class="julia hljs">Xs = source(X)
-ys = source(y, kind=:target)</code></pre><div class=code_output ><pre><code class="plaintext hljs">e[34mSource{:target} @ 1…19e[39m</code></pre></div>
+ys = source(y, kind=:target)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Source{:target} @ 1…04</code></pre></div>
 <p>To define an &quot;trained-operation&quot; node, you must simply create a machine wrapping a model and another node &#40;the data&#41; and indicate which operation should be performed &#40;e.g. <code>transform</code>&#41;:</p>
 <pre><code class="julia hljs">stand = machine(Standardizer(), Xs)
-W = transform(stand, Xs)</code></pre><div class=code_output ><pre><code class="plaintext hljs">e[34mNode{NodalMachine{Standardizer}} @ 1…26e[39m</code></pre></div>
+W = transform(stand, Xs)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{Standardizer}} @ 9…80</code></pre></div>
 <p>You can <code>fit&#33;</code> a trained-operation node at any point, MLJ will fit whatever it needs that is upstream of that node. In this case, there is just a source node upstream of <code>W</code> so fitting <code>W</code> will just fit the standardizer:</p>
 <pre><code class="julia hljs">fit!(W, rows=train);</code></pre>
 <p>If you want to get the transformed data, you can then call the node speciying on which part of the data the operation should be performed:</p>
 <pre><code class="julia hljs">W()             <span class=hljs-comment ># transforms all data</span>
 W(rows=test, )  <span class=hljs-comment ># transforms only test data</span>
-W(X[<span class=hljs-number >3</span>:<span class=hljs-number >4</span>, :])    <span class=hljs-comment ># transforms specific data</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">2×3 DataFrames.DataFrame
+W(X[<span class=hljs-number >3</span>:<span class=hljs-number >4</span>, :])    <span class=hljs-comment ># transforms specific data</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">2×3 DataFrame
 │ Row │ x1        │ x2       │ x3        │
 │     │ Float64   │ Float64  │ Float64   │
 ├─────┼───────────┼──────────┼───────────┤
@@ -46,7 +46,7 @@ ridge_model = RidgeRegressor(lambda=<span class=hljs-number >0.1</span>)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
-ŷ = inverse_transform(box, ẑ)</code></pre><div class=code_output ><pre><code class="plaintext hljs">e[34mNode{NodalMachine{UnivariateBoxCoxTransformer}} @ 7…35e[39m</code></pre></div>
+ŷ = inverse_transform(box, ẑ)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 2…57</code></pre></div>
 <p>Note that we have not yet done any training, but if we now call <code>fit&#33;</code> on <code>ŷ</code>, it will fit all nodes upstream of <code>ŷ</code> that need to be re-trained:</p>
 <pre><code class="julia hljs">fit!(ŷ, rows=train);</code></pre>
 <p>Now that <code>ŷ</code> has been fitted, you can apply the full graph on test data &#40;or any compatible data&#41;. For instance, let&#39;s get the <code>rms</code> between the ground truth and the predicted values:</p>
@@ -62,7 +62,7 @@ rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code clas
 <p>Let&#39;s start with <code>W</code> and <code>z</code> &#40;the &quot;first layer&quot;&#41;:</p>
 <pre><code class="julia hljs">W = X |&gt; Standardizer()
 z = y |&gt; UnivariateBoxCoxTransformer()</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(e[34mStandardizer @ 1…70e[39m, (300×3 DataFrames.DataFrame
+MethodError(Standardizer @ 8…47, (300×3 DataFrame
 │ Row │ x1         │ x2         │ x3         │
 │     │ Float64    │ Float64    │ Float64    │
 ├─────┼────────────┼────────────┼────────────┤
@@ -365,23 +365,23 @@ MethodError(e[34mStandardizer @ 1…70e[39m, (300×3 DataFrames.DataFrame
 │ 297 │ 0.897133   │ 0.00210965 │ 0.847569   │
 │ 298 │ 0.164671   │ 0.106371   │ 0.891789   │
 │ 299 │ 0.0548157  │ 0.618538   │ 0.916233   │
-│ 300 │ 0.485627   │ 0.769774   │ 0.080851   │,), 0x0000000000006d3a)
+│ 300 │ 0.485627   │ 0.769774   │ 0.080851   │,), 0x0000000000006dac)
 </code></pre></div>
 <p>Note that we feed <code>X</code> and <code>y</code> directly into models. In the background, MLJ will create source nodes and assumes that the operation is a <code>transform</code> given the models are unsupervised.</p>
 <p>For a node that corresponds to a supervised model, you can feed a tuple where the first element corresponds to the input &#40;here <code>W</code>&#41; and the second corresponds to the target &#40;here <code>z</code>&#41;, MLJ will assume the operation is a <code>predict</code>:</p>
 <pre><code class="julia hljs">ẑ = (W, z) |&gt; RidgeRegressor(lambda=<span class=hljs-number >0.1</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(e[34mRidgeRegressor @ 2…35e[39m, ((e[34mNode{NodalMachine{Standardizer}} @ 1…26e[39m, e[34mNode{NodalMachine{UnivariateBoxCoxTransformer}} @ 8…44e[39m),), 0x0000000000006d3a)
+MethodError(RidgeRegressor @ 4…54, ((Node{NodalMachine{Standardizer}} @ 9…80, Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 3…35),), 0x0000000000006dac)
 </code></pre></div>
 <p>Finally we need to apply the inverse of the transform encapsulated in the node <code>z</code>, for this:</p>
 <pre><code class="julia hljs">ŷ = ẑ |&gt; inverse_transform(z)</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(MLJBase.inverse_transform, (e[34mNode{NodalMachine{UnivariateBoxCoxTransformer}} @ 8…44e[39m,), 0x0000000000006d3a)
+MethodError(MLJBase.inverse_transform, (Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 3…35,), 0x0000000000006dac)
 </code></pre></div>
 <p>That&#39;s it&#33; You can now fit the network as before:</p>
 <pre><code class="julia hljs">fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0542557476697907</code></pre></div>
 <p>To modify hyperparameters on a node, you can just access them like so:</p>
 <pre><code class="julia hljs">ẑ[:lambda] = <span class=hljs-number >5.0</span>;</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(setindex!, (e[34mNode{NodalMachine{RidgeRegressor}} @ 1…75e[39m, 5.0, :lambda), 0x0000000000006d3a)
+MethodError(setindex!, (Node{NodalMachine{RidgeRegressor}} @ 6…05, 5.0, :lambda), 0x0000000000006dac)
 </code></pre></div>
 <p>Here remember that <code>ẑ</code> is a node with a machine that wraps around a ridge regression with a parameter <code>lambda</code> so the syntax above is equivalent to</p>
 <pre><code class="julia hljs">ẑ.machine.model.lambda = <span class=hljs-number >5.0</span>;</code></pre>
@@ -390,7 +390,7 @@ MethodError(setindex!, (e[34mNode{NodalMachine{RidgeRegressor}} @ 1…75e[39m, 5
 rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0542557476697907</code></pre></div>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Thibaut Lienart. Last modified: October 10, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
+    &copy; Thibaut Lienart. Last modified: October 15, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
   </div>
 </div>
 

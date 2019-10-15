@@ -1,1 +1,1 @@
-ScientificTypes.Continuous
+Continuous

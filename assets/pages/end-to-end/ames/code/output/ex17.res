@@ -1,1 +1,1 @@
-[34mNode{Nothing} @ 6…83[39m
+Node{Nothing} @ 1…10
