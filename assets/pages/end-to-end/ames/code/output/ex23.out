@@ -1,0 +1,3 @@
+krb.knn_weight = 0.3
+krb.knn_model.K = 5
+krb.ridge_model.lambda = 2.5

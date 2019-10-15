@@ -1,0 +1,81 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <link rel=icon  href="/MLJTutorials/assets/infra/favicon.ico"> <title></title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item pure-menu-selected"><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link >⊳ Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link >⊳ Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link >⊳ Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link >⊳ Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link >⊳ Learning networks</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link >⊳ AMES</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=choosing_and_evaluating_a_model ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#choosing_and_evaluating_a_model">Choosing and evaluating a model</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/tlienart/MLJTutorials/gh-pages/notebooks/A-model-choice.ipynb" target=_blank ><em>notebook</em></a> <em>or the</em> <a href="https://raw.githubusercontent.com/tlienart/MLJTutorials/gh-pages/scripts/A-model-choice.jl" target=_blank ><em>raw script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#choosing_and_evaluating_a_model">Choosing and evaluating a model</a><ol><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#data_and_its_interpretation">Data and its interpretation</a><ol><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#machine_type_and_scientific_type">Machine type and scientific type</a><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#unpacking_data">Unpacking data</a></ol><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#choosing_a_model">Choosing a model</a><ol><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#model_search">Model search</a><li><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#loading_a_model">Loading a model</a></ol></ol></ol></div><h2 id=data_and_its_interpretation ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#data_and_its_interpretation">Data and its interpretation</a></h2> <h3 id=machine_type_and_scientific_type ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#machine_type_and_scientific_type">Machine type and scientific type</a></h3> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets, MLJ
+iris = dataset(<span class=hljs-string >"datasets"</span>, <span class=hljs-string >"iris"</span>)
+
+first(iris, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><div class=code_output ><pre><code class="plaintext hljs">┌────────────────────────────┬────────────────────────────┬────────────────────────────┬────────────────────────────┬────────────────────────────────────────────┐
+│ SepalLength                │ SepalWidth                 │ PetalLength                │ PetalWidth                 │ Species                                    │
+│ Float64                    │ Float64                    │ Float64                    │ Float64                    │ CategoricalArrays.CategoricalString{UInt8} │
+│ ScientificTypes.Continuous │ ScientificTypes.Continuous │ ScientificTypes.Continuous │ ScientificTypes.Continuous │ ScientificTypes.Multiclass{3}              │
+├────────────────────────────┼────────────────────────────┼────────────────────────────┼────────────────────────────┼────────────────────────────────────────────┤
+│ 5.1                        │ 3.5                        │ 1.4                        │ 0.2                        │ setosa                                     │
+│ 4.9                        │ 3.0                        │ 1.4                        │ 0.2                        │ setosa                                     │
+│ 4.7                        │ 3.2                        │ 1.3                        │ 0.2                        │ setosa                                     │
+└────────────────────────────┴────────────────────────────┴────────────────────────────┴────────────────────────────┴────────────────────────────────────────────┘
+</code></pre></div> <p>Observe that below each column name there are two <em>types</em> given: the first one is the <em>machine type</em> and the second one is the <em>scientific type</em>.</p> <ul> <li><p><strong>machine type</strong>: is the Julia type the data is currently encoded as, for instance <code>Float64</code>,</p> <li><p><strong>scientific type</strong>: is a type corresponding to how the data should be <em>interpreted</em>, for instance <code>Multiclass&#123;3&#125;</code>.</p> </ul> <p>If you want to specify a different scientific type than the one inferred, you can do so by using the function <code>coerce</code> along with pairs of column names and scientific types:</p> <pre><code class="julia hljs">iris2 = coerce(iris, :PetalWidth =&gt; OrderedFactor)
+first(iris2[[:PetalLength, :PetalWidth]], <span class=hljs-number >1</span>) |&gt; pretty</code></pre><div class=code_output ><pre><code class="plaintext hljs">┌────────────────────────────┬───────────────────────────────────────────────────┐
+│ PetalLength                │ PetalWidth                                        │
+│ Float64                    │ CategoricalArrays.CategoricalValue{Float64,UInt8} │
+│ ScientificTypes.Continuous │ ScientificTypes.OrderedFactor{22}                 │
+├────────────────────────────┼───────────────────────────────────────────────────┤
+│ 1.4                        │ 0.2                                               │
+└────────────────────────────┴───────────────────────────────────────────────────┘
+</code></pre></div> <h3 id=unpacking_data ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#unpacking_data">Unpacking data</a></h3> <p>The function <code>unpack</code> helps specify the target and the input for a regression or classification task</p> <pre><code class="julia hljs">y, X = unpack(iris, ==(:Species), colname -&gt; <span class=hljs-literal >true</span>)
+first(X, <span class=hljs-number >1</span>) |&gt; pretty</code></pre><div class=code_output ><pre><code class="plaintext hljs">┌────────────────────────────┬────────────────────────────┬────────────────────────────┬────────────────────────────┐
+│ SepalLength                │ SepalWidth                 │ PetalLength                │ PetalWidth                 │
+│ Float64                    │ Float64                    │ Float64                    │ Float64                    │
+│ ScientificTypes.Continuous │ ScientificTypes.Continuous │ ScientificTypes.Continuous │ ScientificTypes.Continuous │
+├────────────────────────────┼────────────────────────────┼────────────────────────────┼────────────────────────────┤
+│ 5.1                        │ 3.5                        │ 1.4                        │ 0.2                        │
+└────────────────────────────┴────────────────────────────┴────────────────────────────┴────────────────────────────┘
+</code></pre></div> <p>The two arguments after the dataframes should be understood as <em>functions</em> over column names specifying the target and the input data respectively. Let&#39;s look in more details at what we used here:</p> <ul> <li><p><code>&#61;&#61;&#40;:Species&#41;</code> is a shorthand to specify that the target should be the column with name equal to <code>:Species</code>,</p> <li><p><code>colname -&gt; true</code> indicates that every other column is to be taken as input</p> </ul> <p>Let&#39;s try another one:</p> <pre><code class="julia hljs">y, X = unpack(iris, ==(:Species), !=(:PetalLength))
+first(X, <span class=hljs-number >1</span>) |&gt; pretty</code></pre><div class=code_output ><pre><code class="plaintext hljs">┌────────────────────────────┬────────────────────────────┬────────────────────────────┐
+│ SepalLength                │ SepalWidth                 │ PetalWidth                 │
+│ Float64                    │ Float64                    │ Float64                    │
+│ ScientificTypes.Continuous │ ScientificTypes.Continuous │ ScientificTypes.Continuous │
+├────────────────────────────┼────────────────────────────┼────────────────────────────┤
+│ 5.1                        │ 3.5                        │ 0.2                        │
+└────────────────────────────┴────────────────────────────┴────────────────────────────┘
+</code></pre></div> <p>You can also use the shorthand <code>@load_iris</code> for such common examples:</p> <pre><code class="julia hljs">X, y = <span class=hljs-meta >@load_iris</span>;</code></pre>
+<h2 id=choosing_a_model ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#choosing_a_model">Choosing a model</a></h2>
+<h3 id=model_search ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#model_search">Model search</a></h3>
+<p>In MLJ, a <em>model</em> is a struct storing the <em>hyperparameters</em> of the learning algorithm indicated by the struct name &#40;and only that&#41;.</p>
+<p>A number of models are available in MLJ, usually thanks to external packages interfacing with MLJ &#40;see also <code><a href="https://github.com/alan-turing-institute/MLJModels.jl">MLJModels.jl</a></code>&#41;. In order to see which ones are appropriate for the data you have and its scientific interpretation, you can use the function <code>models</code> along with the function <code>matching</code>; let us look specifically at models which support a probabilistic output:</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >for</span> m <span class=hljs-keyword >in</span> models(matching(X, y))
+    <span class=hljs-keyword >if</span> m.prediction_type == :probabilistic
+        println(rpad(m.name, <span class=hljs-number >30</span>), <span class=hljs-string >"(<span class=hljs-subst >$(m.package_name)</span>)"</span>)
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">AdaBoostClassifier            (ScikitLearn)
+BaggingClassifier             (ScikitLearn)
+ConstantClassifier            (MLJModels)
+DecisionTreeClassifier        (DecisionTree)
+DummyClassifier               (ScikitLearn)
+ExtraTreesClassifier          (ScikitLearn)
+GaussianNBClassifier          (NaiveBayes)
+GaussianNBClassifier          (ScikitLearn)
+GaussianProcessClassifier     (ScikitLearn)
+GradientBoostingClassifier    (ScikitLearn)
+KNNClassifier                 (NearestNeighbors)
+KNeighborsClassifier          (ScikitLearn)
+LogisticCVClassifier          (ScikitLearn)
+LogisticClassifier            (ScikitLearn)
+ProbabilisticSGDClassifier    (ScikitLearn)
+RandomForestClassifier        (ScikitLearn)
+XGBoostClassifier             (XGBoost)
+</code></pre></div>
+<h3 id=loading_a_model ><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#loading_a_model">Loading a model</a></h3>
+<p>Most models are implemented outside of the MLJ ecosystem; you therefore have to <em>load models</em> using the <code>@load</code> command.</p>
+<p><strong>Note</strong>: you <em>must</em> have the package from which the model is loaded available in your environment &#40;in this case <code><a href="https://github.com/bensadeghi/DecisionTree.jl">DecisionTree.jl</a></code>&#41; otherwise MLJ will not be able to load the model.</p>
+<p>For instance, let&#39;s say you want to fit a K-Nearest Neighbours classifier:</p>
+<pre><code class="julia hljs">knc = <span class=hljs-meta >@load</span> KNeighborsClassifier</code></pre><div class=code_output ><pre><code class="plaintext hljs">e[34mKNeighborsClassifier @ 1…25e[39m</code></pre></div>
+<p>In some cases, there may be several packages offering the same model, for instance <code>LinearRegressor</code> is offered by both <code><a href="https://github.com/JuliaStats/GLM.jl">GLM.jl</a></code> and <code><a href="https://github.com/cstjean/ScikitLearn.jl">ScikitLearn.jl</a></code> so you will need to specify the package you would like to use by adding <code>pkg&#61;&quot;ThePackage&quot;</code> in the load command:</p>
+<pre><code class="julia hljs">linreg = <span class=hljs-meta >@load</span> LinearRegressor pkg=<span class=hljs-string >"GLM"</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">e[34mLinearRegressor @ 1…15e[39m</code></pre></div>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Thibaut Lienart. Last modified: October 10, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
+  </div>
+</div>
+
+</div>
+
+      </div> 
+  </div> 
+  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>

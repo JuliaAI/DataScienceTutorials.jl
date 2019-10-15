@@ -1,0 +1,1 @@
+Distributions.Normal{Float64}[Distributions.Normal{Float64}(μ=181022.65848871443, σ=74975.21062525548), Distributions.Normal{Float64}(μ=181022.65848871443, σ=74975.21062525548), Distributions.Normal{Float64}(μ=181022.65848871443, σ=74975.21062525548)]

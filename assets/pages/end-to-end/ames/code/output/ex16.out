@@ -1,0 +1,2 @@
+There was an error running the code:
+MethodError([34mKNNRegressor @ 1…77[39m, (([34mNode{NodalMachine{OneHotEncoder}} @ 1…51[39m, [34mNode{Nothing} @ 1…53[39m),), 0x0000000000006d8b)

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{if hasmath}} {{insert head_katex.html }}     {{end}}
+  {{if hascode}} {{insert head_highlight.html }}   {{end}}
+  <link rel="stylesheet" href="/css/judoc.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <link rel="icon" href="/assets/infra/favicon.ico">
+  {{isdef title}} <title>{{fill title}}</title>  {{end}}
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" />
+            <p><strong>MLJ Tutorials</strong></p>
+          </div>
+        </a>
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item {{ispage index.html}}pure-menu-selected{{end}}"><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+          <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item {{ispage pub/getting-started/choosing-a-model.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link">⊳ Choosing a model</a></li>
+            <li class="pure-menu-item {{ispage pub/getting-started/fit-and-predict.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/fit-and-predict.html" class="pure-menu-link">⊳ Fit, predict, transform</a></li>
+            <li class="pure-menu-item {{ispage pub/getting-started/model-tuning.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/model-tuning.html" class="pure-menu-link">⊳ Model tuning</a></li>
+            <li class="pure-menu-item {{ispage pub/getting-started/composing-models.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/composing-models.html" class="pure-menu-link">⊳ Composing models</a></li>
+            <li class="pure-menu-item {{ispage pub/getting-started/learning-networks.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/learning-networks.html" class="pure-menu-link">⊳ Learning networks</a></li>
+          </ul>
+
+          <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item {{ispage pub/end-to-end/AMES.html}}pure-menu-selected{{end}}"><a href="/pub/end-to-end/AMES.html" class="pure-menu-link">⊳ AMES</a></li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      {{ispage index.html}}
+      <div class="header">
+        <h1>{{fill title}}</h1>
+      </div>
+      {{end}}
+
+<!-- Content appended here -->
