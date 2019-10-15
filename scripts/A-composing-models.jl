@@ -1,6 +1,6 @@
 # Before running this, make sure to instantiate the environment corresponding to
-# [this `Project.toml`](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Project.toml)
-# and [this `Manifest.toml`](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Manifest.toml)
+# [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
+# and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml)
 # so that you get an environment which matches the one used to generate the tutorials.
 #
 # To do so, copy both files in a folder, start Julia in that folder and
