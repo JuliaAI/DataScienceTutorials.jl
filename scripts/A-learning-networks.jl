@@ -1,14 +1,13 @@
-# Before running this, make sure to instantiate the environment corresponding to
+# Before running this, make sure to activate the environment corresponding to
 # [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-# and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml)
-# so that you get an environment which matches the one used to generate the tutorials.
-#
-# To do so, copy both files in a folder, start Julia in that folder and
+# and update it so that you get an environment which matches the one used to generate
+# the tutorials:
 #
 # ```julia
+# cd("MLJTutorials") # cd to folder with the Project.toml
 # using Pkg
 # Pkg.activate(".")
-# Pkg.instantiate()
+# Pkg.update()
 # ```
 
 using MLJ, PrettyPrinting, DataFrames, Random
@@ -20,7 +19,7 @@ x2 = rand(300)
 x3 = rand(300)
 y = exp.(x1 - x2 -2x3 + 0.1*rand(300))
 X = DataFrame(x1=x1, x2=x2, x3=x3)
-first(X, 3)
+first(X, 3) |> pretty
 
 test, train = partition(eachindex(y), 0.8);
 
@@ -58,9 +57,9 @@ rms(y[test], ŷ(rows=test))
 W = X |> Standardizer()
 z = y |> UnivariateBoxCoxTransformer()
 
-ẑ = (W, z) |> RidgeRegressor(lambda=0.1)
+ẑ = (W, z) |> RidgeRegressor(lambda=0.1);
 
-ŷ = ẑ |> inverse_transform(z)
+ŷ = ẑ |> inverse_transform(z);
 
 fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))

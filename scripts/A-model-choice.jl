@@ -1,14 +1,13 @@
-# Before running this, make sure to instantiate the environment corresponding to
+# Before running this, make sure to activate the environment corresponding to
 # [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-# and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml)
-# so that you get an environment which matches the one used to generate the tutorials.
-#
-# To do so, copy both files in a folder, start Julia in that folder and
+# and update it so that you get an environment which matches the one used to generate
+# the tutorials:
 #
 # ```julia
+# cd("MLJTutorials") # cd to folder with the Project.toml
 # using Pkg
 # Pkg.activate(".")
-# Pkg.instantiate()
+# Pkg.update()
 # ```
 
 using RDatasets, MLJ
