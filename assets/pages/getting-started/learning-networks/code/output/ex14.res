@@ -1,1 +1,1 @@
-nothing
+Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 1…26

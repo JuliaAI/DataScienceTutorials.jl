@@ -4,7 +4,6 @@
 # As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduce version via `@load_reduced_ames`
 
 using MLJ, MLJBase, PrettyPrinting, DataFrames, Statistics
-MLJ.color_off() #src
 
 X, y = @load_reduced_ames
 @show size(X)
@@ -19,7 +18,7 @@ scitype_union(y)
 #
 # ## Dummy model
 #
-# A model is just a container for hyperparameters, let's take a particularly simple one: the constant regression.
+# Remember that a model is just a container for hyperparameters; let's take a particularly simple one: the constant regression.
 
 creg = ConstantRegressor()
 
@@ -32,9 +31,9 @@ cmach = machine(creg, X, y)
 train, test = partition(eachindex(y), 0.70, shuffle=true); # 70:30 split
 fit!(cmach, rows=train)
 ŷ = predict(cmach, rows=test)
-ŷ[1:3]
+ŷ[1:3] |> pprint
 
-# Observe that the output is probabilistic, each element is a univariate normal distribution (with the same mean and variance as it's a constant model...).
+# Observe that the output is probabilistic, each element is a univariate normal distribution (with the same mean and variance as it's a constant model).
 #
 # You can recover deterministic output by either computing the mean of predictions or using `predict_mean` directly:
 
@@ -48,7 +47,7 @@ rmsl(ŷ, y[test])
 #
 # ## KNN-Ridge blend
 #
-# Let's try something a bit better than a constant regressor.
+# Let's try something a bit fancier than a constant regressor.
 #
 # * one-hot-encode categorical inputs
 # * log-transform the target
@@ -96,7 +95,7 @@ fit!(ŷ, rows=train)
 ypreds = ŷ(rows=test)
 rmsl(y[test], ypreds)
 
-# ### Using the pipeline syntax
+# ### Using the "arrow" syntax
 #
 # If you're using Julia 1.3, you can use the following syntax to do the same thing.
 
@@ -203,7 +202,7 @@ krb_best = fitted_params(mtm).best_model
 @show krb_best.ridge_model.lambda
 @show krb_best.knn_weight
 
-# you can also use it to make predictions
+# you can also use `mtm` to make predictions (which will be done using the best model)
 
 preds = predict(mtm, rows=test)
 rmsl(y[test], preds)

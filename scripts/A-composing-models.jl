@@ -3,11 +3,12 @@
 # Let's start by generating some dummy data with both numerical values and categorical values:
 
 using MLJ, PrettyPrinting
-MLJ.color_off() #src
 
 @load KNNRegressor
+## input
 X = (age    = [23, 45, 34, 25, 67],
      gender = categorical(['m', 'm', 'f', 'm', 'f']))
+## target
 height = [178, 194, 165, 173, 168];
 
 # Note that the scientific type of `age` is `Count` here:

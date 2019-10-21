@@ -11,7 +11,6 @@
 # As usual, start by loading data and the model
 
 using MLJ
-MLJ.color_off() #src
 X, y = @load_iris
 @load DecisionTreeClassifier
 

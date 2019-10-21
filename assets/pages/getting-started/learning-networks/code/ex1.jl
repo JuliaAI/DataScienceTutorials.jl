@@ -8,4 +8,4 @@ x2 = rand(300)
 x3 = rand(300)
 y = exp.(x1 - x2 -2x3 + 0.1*rand(300))
 X = DataFrame(x1=x1, x2=x2, x3=x3)
-first(X, 3)
+first(X, 3) |> pretty

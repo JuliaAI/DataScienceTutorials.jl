@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <link rel=icon  href="/MLJTutorials/assets/infra/favicon.ico"> <title></title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link >⊳ Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link >⊳ Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link >⊳ Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link >⊳ Composing models</a> <li class="pure-menu-item pure-menu-selected"><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link >⊳ Learning networks</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link >⊳ AMES</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=learning_networks ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#learning_networks">Learning networks</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/A-learning-networks.ipynb" target=_blank ><em>notebook</em></a> <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/A-learning-networks.jl" target=_blank ><em>raw script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#learning_networks">Learning networks</a><ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#preliminary_steps">Preliminary steps</a><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#defining_a_learning_network">Defining a learning network</a><ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#sources_and_nodes">Sources and nodes</a><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#modifying_hyperparameters">Modifying hyperparameters</a></ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#pipe_syntax">Pipe syntax</a></ol></ol></div><h2 id=preliminary_steps ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#preliminary_steps">Preliminary steps</a></h2> <p>Let&#39;s generate a <code>DataFrame</code> with some dummy regression data, let&#39;s also load the good old ridge regressor.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, PrettyPrinting, DataFrames, Random
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title></title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link >⊳ Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link >⊳ Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link >⊳ Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link >⊳ Composing models</a> <li class="pure-menu-item pure-menu-selected"><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link >⊳ Learning networks</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link >⊳ AMES</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=learning_networks ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#learning_networks">Learning networks</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/A-learning-networks.ipynb" target=_blank ><em>notebook</em></a> <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/A-learning-networks.jl" target=_blank ><em>raw script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> </p> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#learning_networks">Learning networks</a><ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#preliminary_steps">Preliminary steps</a><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#defining_a_learning_network">Defining a learning network</a><ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#sources_and_nodes">Sources and nodes</a><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#modifying_hyperparameters">Modifying hyperparameters</a></ol><li><a href="/MLJTutorials/pub/getting-started/learning-networks.html#quotarrowquot_syntax">&quot;Arrow&quot; syntax</a></ol></ol></div> <h2 id=preliminary_steps ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#preliminary_steps">Preliminary steps</a></h2> <p>Let&#39;s generate a <code>DataFrame</code> with some dummy regression data, let&#39;s also load the good old ridge regressor.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, PrettyPrinting, DataFrames, Random
 <span class=hljs-meta >@load</span> RidgeRegressor pkg=MultivariateStats
 
 Random.seed!(<span class=hljs-number >5</span>) <span class=hljs-comment ># for reproducibility</span>
@@ -7,36 +7,35 @@ x2 = rand(<span class=hljs-number >300</span>)
 x3 = rand(<span class=hljs-number >300</span>)
 y = exp.(x1 - x2 -<span class=hljs-number >2</span>x3 + <span class=hljs-number >0.1</span>*rand(<span class=hljs-number >300</span>))
 X = DataFrame(x1=x1, x2=x2, x3=x3)
-first(X, <span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">3×3 DataFrame
-│ Row │ x1       │ x2        │ x3       │
-│     │ Float64  │ Float64   │ Float64  │
-├─────┼──────────┼───────────┼──────────┤
-│ 1   │ 0.530365 │ 0.0941064 │ 0.299901 │
-│ 2   │ 0.777009 │ 0.41113   │ 0.406941 │
-│ 3   │ 0.30131  │ 0.54994   │ 0.849502 │</code></pre></div> <p>Let&#39;s also prepare the train and test split which will be useful later on.</p> <pre><code class="julia hljs">test, train = partition(eachindex(y), <span class=hljs-number >0.8</span>);</code></pre>
+first(X, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><div class=code_output ><pre><code class="plaintext hljs">┌────────────────────┬─────────────────────┬────────────────────┐
+│ x1                 │ x2                  │ x3                 │
+│ Float64            │ Float64             │ Float64            │
+│ Continuous         │ Continuous          │ Continuous         │
+├────────────────────┼─────────────────────┼────────────────────┤
+│ 0.5303646605536807 │ 0.09410638348155964 │ 0.2999012171698161 │
+│ 0.777009169833947  │ 0.4111301767644082  │ 0.4069405144799101 │
+│ 0.3013103535440822 │ 0.5499402666491009  │ 0.8495024908781252 │
+└────────────────────┴─────────────────────┴────────────────────┘
+</code></pre></div> <p>Let&#39;s also prepare the train and test split which will be useful later on.</p> <pre><code class="julia hljs">test, train = partition(eachindex(y), <span class=hljs-number >0.8</span>);</code></pre>
 <h2 id=defining_a_learning_network ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#defining_a_learning_network">Defining a learning network</a></h2>
 <p>In MLJ, a <em>learning network</em> is a directed acyclic graph &#40;DAG&#41; whose <em>nodes</em> apply trained or untrained operations such as a <code>predict</code> or <code>transform</code> &#40;trained&#41; or <code>&#43;</code>, <code>vcat</code> etc. &#40;untrained&#41;. Learning networks can be seen as pipelines on steroids.</p>
-<p>Let&#39;s consider the following DAG:</p>
+<p>Let&#39;s consider the following simple DAG:</p>
 <p><img src="/MLJTutorials/assets/diagrams/composite1.svg" alt="" /></p>
 <p>It corresponds to a fairly standard regression workflow: the data is standardized, the target is transformed using a Box-Cox transformation, a ridge regression is applied and the result is converted back by inverting the transform.</p>
+<p><strong>Note</strong>: actually  this DAG is simple enough that it could also have been done with a pipeline.</p>
 <h3 id=sources_and_nodes ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#sources_and_nodes">Sources and nodes</a></h3>
 <p>In MLJ a learning network starts at <strong>source</strong> nodes and flows through nodes &#40;<code>X</code> and <code>y</code>&#41; defining operations/transformations &#40;<code>W</code>, <code>z</code>, <code>ẑ</code>, <code>ŷ</code>&#41;. To define the source nodes, use the <code>source</code> function, you can specify if it&#39;s a target:</p>
 <pre><code class="julia hljs">Xs = source(X)
-ys = source(y, kind=:target)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Source{:target} @ 1…04</code></pre></div>
+ys = source(y, kind=:target)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Source{:target} @ 1…35</code></pre></div>
 <p>To define an &quot;trained-operation&quot; node, you must simply create a machine wrapping a model and another node &#40;the data&#41; and indicate which operation should be performed &#40;e.g. <code>transform</code>&#41;:</p>
 <pre><code class="julia hljs">stand = machine(Standardizer(), Xs)
-W = transform(stand, Xs)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{Standardizer}} @ 9…80</code></pre></div>
+W = transform(stand, Xs)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{Standardizer}} @ 6…00</code></pre></div>
 <p>You can <code>fit&#33;</code> a trained-operation node at any point, MLJ will fit whatever it needs that is upstream of that node. In this case, there is just a source node upstream of <code>W</code> so fitting <code>W</code> will just fit the standardizer:</p>
 <pre><code class="julia hljs">fit!(W, rows=train);</code></pre>
 <p>If you want to get the transformed data, you can then call the node speciying on which part of the data the operation should be performed:</p>
 <pre><code class="julia hljs">W()             <span class=hljs-comment ># transforms all data</span>
 W(rows=test, )  <span class=hljs-comment ># transforms only test data</span>
-W(X[<span class=hljs-number >3</span>:<span class=hljs-number >4</span>, :])    <span class=hljs-comment ># transforms specific data</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">2×3 DataFrame
-│ Row │ x1        │ x2       │ x3        │
-│     │ Float64   │ Float64  │ Float64   │
-├─────┼───────────┼──────────┼───────────┤
-│ 1   │ -0.690031 │ 0.191073 │ 1.05874   │
-│ 2   │ 1.35423   │ -1.06167 │ -0.854028 │</code></pre></div>
+W(X[<span class=hljs-number >3</span>:<span class=hljs-number >4</span>, :])    <span class=hljs-comment ># transforms specific data</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">DataFrames.DataFrame(AbstractArray{T,1} where T[[-0.6900311161099527, 1.3542261585912594], [0.1910733263669551, -1.061665799587788], [1.0587393596234875, -0.8540276357623431]], DataFrames.Index(Dict(:x2 =&gt; 2,:x3 =&gt; 3,:x1 =&gt; 1), Symbol[:x1, :x2, :x3]))</code></pre></div>
 <p>Let&#39;s now define the other nodes:</p>
 <pre><code class="julia hljs">box_model = UnivariateBoxCoxTransformer()
 box = machine(box_model, ys)
@@ -46,7 +45,7 @@ ridge_model = RidgeRegressor(lambda=<span class=hljs-number >0.1</span>)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
-ŷ = inverse_transform(box, ẑ)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 2…57</code></pre></div>
+ŷ = inverse_transform(box, ẑ)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 4…16</code></pre></div>
 <p>Note that we have not yet done any training, but if we now call <code>fit&#33;</code> on <code>ŷ</code>, it will fit all nodes upstream of <code>ŷ</code> that need to be re-trained:</p>
 <pre><code class="julia hljs">fit!(ŷ, rows=train);</code></pre>
 <p>Now that <code>ŷ</code> has been fitted, you can apply the full graph on test data &#40;or any compatible data&#41;. For instance, let&#39;s get the <code>rms</code> between the ground truth and the predicted values:</p>
@@ -57,340 +56,29 @@ ŷ = inverse_transform(box, ẑ)</code></pre><div class=code_output ><pre><code
 <p>Since the node <code>ẑ</code> corresponds to a machine that wraps <code>ridge_model</code>, that node has effectively changed and will be retrained:</p>
 <pre><code class="julia hljs">fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0542557476697907</code></pre></div>
-<h2 id=pipe_syntax ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#pipe_syntax">Pipe syntax</a></h2>  <strong>Important</strong>: for this to work, you need to be using Julia ≥ 1.3:</p>
-<p>The syntax to define nodes etc. is a bit verbose. MLJ supports a shorter syntax which abstracts away some of the steps.</p>
+<h2 id=quotarrowquot_syntax ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#quotarrowquot_syntax">&quot;Arrow&quot; syntax</a></h2>  <strong>Important</strong>: for this to work, you need to be using <strong>Julia ≥ 1.3</strong>:</p>
+<p>The syntax to define nodes etc. is a bit verbose. MLJ supports a shorter syntax which abstracts away some of the steps. We will refer to it as the &quot;arrow&quot; syntax as it makes use of the <code>|&gt;</code> operator which can be interpreted as &quot;data flow&quot;.</p>
 <p>Let&#39;s start with <code>W</code> and <code>z</code> &#40;the &quot;first layer&quot;&#41;:</p>
 <pre><code class="julia hljs">W = X |&gt; Standardizer()
-z = y |&gt; UnivariateBoxCoxTransformer()</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(Standardizer @ 8…47, (300×3 DataFrame
-│ Row │ x1         │ x2         │ x3         │
-│     │ Float64    │ Float64    │ Float64    │
-├─────┼────────────┼────────────┼────────────┤
-│ 1   │ 0.530365   │ 0.0941064  │ 0.299901   │
-│ 2   │ 0.777009   │ 0.41113    │ 0.406941   │
-│ 3   │ 0.30131    │ 0.54994    │ 0.849502   │
-│ 4   │ 0.881349   │ 0.180285   │ 0.248878   │
-│ 5   │ 0.838358   │ 0.674431   │ 0.985678   │
-│ 6   │ 0.524059   │ 0.913673   │ 0.520375   │
-│ 7   │ 0.57126    │ 0.916548   │ 0.530664   │
-│ 8   │ 0.931515   │ 0.990499   │ 0.0426436  │
-│ 9   │ 0.044228   │ 0.898939   │ 0.558578   │
-│ 10  │ 0.118147   │ 0.906796   │ 0.814711   │
-│ 11  │ 0.511483   │ 0.577311   │ 0.0929357  │
-│ 12  │ 0.802961   │ 0.671417   │ 0.46098    │
-│ 13  │ 0.6713     │ 0.309762   │ 0.650996   │
-│ 14  │ 0.0856766  │ 0.472922   │ 0.704659   │
-│ 15  │ 0.362463   │ 0.0544504  │ 0.347737   │
-│ 16  │ 0.388377   │ 0.227941   │ 0.587542   │
-│ 17  │ 0.401096   │ 0.44357    │ 0.693785   │
-│ 18  │ 0.507445   │ 0.366533   │ 0.294565   │
-│ 19  │ 0.549537   │ 0.47341    │ 0.130082   │
-│ 20  │ 0.0672854  │ 0.46796    │ 0.658582   │
-│ 21  │ 0.623887   │ 0.0740418  │ 0.264289   │
-│ 22  │ 0.981007   │ 0.531009   │ 0.208197   │
-│ 23  │ 0.35575    │ 0.54786    │ 0.00323805 │
-│ 24  │ 0.962816   │ 0.294611   │ 0.937682   │
-│ 25  │ 0.105312   │ 0.439079   │ 0.578796   │
-│ 26  │ 0.205145   │ 0.681414   │ 0.718014   │
-│ 27  │ 0.61478    │ 0.120208   │ 0.983563   │
-│ 28  │ 0.658585   │ 0.823876   │ 0.333182   │
-│ 29  │ 0.980289   │ 0.768913   │ 0.717048   │
-│ 30  │ 0.940764   │ 0.191455   │ 0.887195   │
-│ 31  │ 0.530123   │ 0.742127   │ 0.355571   │
-│ 32  │ 0.340522   │ 0.323566   │ 0.820356   │
-│ 33  │ 0.438491   │ 0.122571   │ 0.835598   │
-│ 34  │ 0.977319   │ 0.757307   │ 0.636208   │
-│ 35  │ 0.644687   │ 0.106413   │ 0.705797   │
-│ 36  │ 0.159505   │ 0.0781322  │ 0.797001   │
-│ 37  │ 0.294878   │ 0.342936   │ 0.927368   │
-│ 38  │ 0.726677   │ 0.267387   │ 0.990782   │
-│ 39  │ 0.297117   │ 0.373448   │ 0.732604   │
-│ 40  │ 0.824847   │ 0.586456   │ 0.0367481  │
-│ 41  │ 0.338763   │ 0.150436   │ 0.209135   │
-│ 42  │ 0.176315   │ 0.929012   │ 0.0668315  │
-│ 43  │ 0.779335   │ 0.141815   │ 0.00552368 │
-│ 44  │ 0.456525   │ 0.172092   │ 0.187921   │
-│ 45  │ 0.621142   │ 0.739724   │ 0.0247057  │
-│ 46  │ 0.710788   │ 0.800236   │ 0.203381   │
-│ 47  │ 0.759111   │ 0.860439   │ 0.257499   │
-│ 48  │ 0.541425   │ 0.906428   │ 0.88618    │
-│ 49  │ 0.345042   │ 0.52952    │ 0.762341   │
-│ 50  │ 0.469683   │ 0.840783   │ 0.010709   │
-│ 51  │ 0.332085   │ 0.269477   │ 0.747646   │
-│ 52  │ 0.0592557  │ 0.567305   │ 0.074026   │
-│ 53  │ 0.907929   │ 0.697425   │ 0.53041    │
-│ 54  │ 0.106791   │ 0.75989    │ 0.0688767  │
-│ 55  │ 0.517433   │ 0.696024   │ 0.0622998  │
-│ 56  │ 0.0287065  │ 0.182157   │ 0.0583396  │
-│ 57  │ 0.607813   │ 0.841901   │ 0.378581   │
-│ 58  │ 0.690299   │ 0.788545   │ 0.323144   │
-│ 59  │ 0.274583   │ 0.98279    │ 0.808298   │
-│ 60  │ 0.21461    │ 0.468718   │ 0.850068   │
-│ 61  │ 0.898077   │ 0.0314988  │ 0.473411   │
-│ 62  │ 0.740364   │ 0.431359   │ 0.0289964  │
-│ 63  │ 0.790518   │ 0.0502868  │ 0.29828    │
-│ 64  │ 0.505638   │ 0.561097   │ 0.827414   │
-│ 65  │ 0.347713   │ 0.140337   │ 0.85103    │
-│ 66  │ 0.934902   │ 0.942134   │ 0.324088   │
-│ 67  │ 0.981971   │ 0.482595   │ 0.823372   │
-│ 68  │ 0.471741   │ 0.109215   │ 0.896045   │
-│ 69  │ 0.485011   │ 0.270765   │ 0.0702758  │
-│ 70  │ 0.100084   │ 0.0704625  │ 0.640185   │
-│ 71  │ 0.203418   │ 0.815486   │ 0.149853   │
-│ 72  │ 0.827816   │ 0.198915   │ 0.499989   │
-│ 73  │ 0.0377989  │ 0.46258    │ 0.629937   │
-│ 74  │ 0.203009   │ 0.492003   │ 0.371502   │
-│ 75  │ 0.421684   │ 0.2126     │ 0.490514   │
-│ 76  │ 0.561171   │ 0.339747   │ 0.138289   │
-│ 77  │ 0.736967   │ 0.547436   │ 0.479865   │
-│ 78  │ 0.219429   │ 0.730702   │ 0.393054   │
-│ 79  │ 0.357144   │ 0.132495   │ 0.647879   │
-│ 80  │ 0.720587   │ 0.924545   │ 0.290092   │
-│ 81  │ 0.57439    │ 0.0815348  │ 0.0204512  │
-│ 82  │ 0.390273   │ 0.659282   │ 0.514835   │
-│ 83  │ 0.312228   │ 0.588841   │ 0.911825   │
-│ 84  │ 0.741435   │ 0.996436   │ 0.312785   │
-│ 85  │ 0.826477   │ 0.0470831  │ 0.189358   │
-│ 86  │ 0.993982   │ 0.623965   │ 0.654624   │
-│ 87  │ 0.489758   │ 0.545855   │ 0.130035   │
-│ 88  │ 0.147984   │ 0.685508   │ 0.428754   │
-│ 89  │ 0.692991   │ 0.774174   │ 0.1322     │
-│ 90  │ 0.139515   │ 0.130578   │ 0.345217   │
-│ 91  │ 0.356643   │ 0.0430264  │ 0.77476    │
-│ 92  │ 0.789784   │ 0.580935   │ 0.887693   │
-│ 93  │ 0.218376   │ 0.462668   │ 0.107662   │
-│ 94  │ 0.858419   │ 0.321386   │ 0.975025   │
-│ 95  │ 0.1516     │ 0.0676714  │ 0.160433   │
-│ 96  │ 0.616874   │ 0.286893   │ 0.632627   │
-│ 97  │ 0.677645   │ 0.0167887  │ 0.76026    │
-│ 98  │ 0.653789   │ 0.851986   │ 0.257899   │
-│ 99  │ 0.0132257  │ 0.349631   │ 0.699042   │
-│ 100 │ 0.748486   │ 0.927087   │ 0.0795029  │
-│ 101 │ 0.756924   │ 0.729445   │ 0.189082   │
-│ 102 │ 0.589263   │ 0.497224   │ 0.976841   │
-│ 103 │ 0.800646   │ 0.993519   │ 0.0517778  │
-│ 104 │ 0.436707   │ 0.758221   │ 0.513433   │
-│ 105 │ 0.0312646  │ 0.111102   │ 0.303168   │
-│ 106 │ 0.485942   │ 0.516313   │ 0.448533   │
-│ 107 │ 0.0208062  │ 0.975802   │ 0.701433   │
-│ 108 │ 0.325212   │ 0.190865   │ 0.551134   │
-│ 109 │ 0.80049    │ 0.552449   │ 0.875847   │
-│ 110 │ 0.11021    │ 0.827773   │ 0.922337   │
-│ 111 │ 0.294462   │ 0.697261   │ 0.0721545  │
-│ 112 │ 0.345433   │ 0.221365   │ 0.150215   │
-│ 113 │ 0.682332   │ 0.244353   │ 0.453725   │
-│ 114 │ 0.758547   │ 0.632345   │ 0.249427   │
-│ 115 │ 0.792498   │ 0.839884   │ 0.268915   │
-│ 116 │ 0.253908   │ 0.965333   │ 0.717149   │
-│ 117 │ 0.60098    │ 0.0969605  │ 0.0875663  │
-│ 118 │ 0.484724   │ 0.178615   │ 0.786821   │
-│ 119 │ 0.283337   │ 0.817235   │ 0.194795   │
-│ 120 │ 0.714789   │ 0.110236   │ 0.451637   │
-│ 121 │ 0.183388   │ 0.554221   │ 0.283256   │
-│ 122 │ 0.538036   │ 0.842973   │ 0.403208   │
-│ 123 │ 0.853875   │ 0.571191   │ 0.336122   │
-│ 124 │ 0.74058    │ 0.141413   │ 0.0655829  │
-│ 125 │ 0.900871   │ 0.606101   │ 0.947043   │
-│ 126 │ 0.535795   │ 0.030421   │ 0.389671   │
-│ 127 │ 0.277498   │ 0.632352   │ 0.27692    │
-│ 128 │ 0.949197   │ 0.776016   │ 0.948427   │
-│ 129 │ 0.405095   │ 0.655682   │ 0.575562   │
-│ 130 │ 0.747223   │ 0.174955   │ 0.952704   │
-│ 131 │ 0.14837    │ 0.142139   │ 0.904714   │
-│ 132 │ 0.239225   │ 0.38172    │ 0.681337   │
-│ 133 │ 0.603483   │ 0.574763   │ 0.0786095  │
-│ 134 │ 0.590226   │ 0.968315   │ 0.0559093  │
-│ 135 │ 0.739605   │ 0.942258   │ 0.972896   │
-│ 136 │ 0.113291   │ 0.347045   │ 0.00691353 │
-│ 137 │ 0.354433   │ 0.043581   │ 0.830186   │
-│ 138 │ 0.593879   │ 0.50656    │ 0.125932   │
-│ 139 │ 0.746001   │ 0.152537   │ 0.222007   │
-│ 140 │ 0.38936    │ 0.799288   │ 0.186439   │
-│ 141 │ 0.737388   │ 0.232263   │ 0.0552942  │
-│ 142 │ 0.165327   │ 0.889371   │ 0.260728   │
-│ 143 │ 0.768127   │ 0.89438    │ 0.29333    │
-│ 144 │ 0.513646   │ 0.496375   │ 0.339283   │
-│ 145 │ 0.817831   │ 0.116562   │ 0.345662   │
-│ 146 │ 0.892878   │ 0.0203463  │ 0.668625   │
-│ 147 │ 0.392542   │ 0.802515   │ 0.339676   │
-│ 148 │ 0.499906   │ 0.435498   │ 0.463399   │
-│ 149 │ 0.237443   │ 0.552215   │ 0.20958    │
-│ 150 │ 0.409618   │ 0.0113828  │ 0.255221   │
-│ 151 │ 0.357511   │ 0.719067   │ 0.614901   │
-│ 152 │ 0.388584   │ 0.0737018  │ 0.465182   │
-│ 153 │ 0.407491   │ 0.937688   │ 0.228374   │
-│ 154 │ 0.568297   │ 0.352807   │ 0.921268   │
-│ 155 │ 0.683039   │ 0.187561   │ 0.244449   │
-│ 156 │ 0.201833   │ 0.752514   │ 0.912499   │
-│ 157 │ 0.935786   │ 0.500232   │ 0.0413818  │
-│ 158 │ 0.529355   │ 0.446881   │ 0.725896   │
-│ 159 │ 0.268512   │ 0.61453    │ 0.0544763  │
-│ 160 │ 0.108222   │ 0.676571   │ 0.872605   │
-│ 161 │ 0.140263   │ 0.0637478  │ 0.580214   │
-│ 162 │ 0.603384   │ 0.0229568  │ 0.415881   │
-│ 163 │ 0.325109   │ 0.632671   │ 0.254147   │
-│ 164 │ 0.220081   │ 0.468083   │ 0.401941   │
-│ 165 │ 0.0955252  │ 0.321994   │ 0.045484   │
-│ 166 │ 0.836314   │ 0.83672    │ 0.148254   │
-│ 167 │ 0.946403   │ 0.140299   │ 0.482139   │
-│ 168 │ 0.317631   │ 0.085152   │ 0.699868   │
-│ 169 │ 0.810797   │ 0.195415   │ 0.583167   │
-│ 170 │ 0.507508   │ 0.651043   │ 0.145356   │
-│ 171 │ 0.647518   │ 0.62109    │ 0.864734   │
-│ 172 │ 0.686868   │ 0.846166   │ 0.726782   │
-│ 173 │ 0.805724   │ 0.647504   │ 0.225842   │
-│ 174 │ 0.996047   │ 0.154426   │ 0.849458   │
-│ 175 │ 0.230128   │ 0.0420462  │ 0.870732   │
-│ 176 │ 0.323568   │ 0.463535   │ 0.0767078  │
-│ 177 │ 0.342601   │ 0.489413   │ 0.771769   │
-│ 178 │ 0.533714   │ 0.596838   │ 0.0130563  │
-│ 179 │ 0.245185   │ 0.416286   │ 0.955052   │
-│ 180 │ 0.708761   │ 0.062204   │ 0.854897   │
-│ 181 │ 0.972202   │ 0.758566   │ 0.748962   │
-│ 182 │ 0.738653   │ 0.961078   │ 0.718083   │
-│ 183 │ 0.714785   │ 0.51866    │ 0.466557   │
-│ 184 │ 0.613488   │ 0.658066   │ 0.752621   │
-│ 185 │ 0.496719   │ 0.658823   │ 0.410539   │
-│ 186 │ 0.18155    │ 0.706633   │ 0.785106   │
-│ 187 │ 0.34498    │ 0.202111   │ 0.844604   │
-│ 188 │ 0.277506   │ 0.876125   │ 0.0917179  │
-│ 189 │ 0.315877   │ 0.482811   │ 0.130934   │
-│ 190 │ 0.693764   │ 0.473669   │ 0.259535   │
-│ 191 │ 0.0685885  │ 0.812811   │ 0.352495   │
-│ 192 │ 0.412      │ 0.97088    │ 0.294002   │
-│ 193 │ 0.320892   │ 0.629882   │ 0.197532   │
-│ 194 │ 0.176124   │ 0.425634   │ 0.593901   │
-│ 195 │ 0.00193764 │ 0.597977   │ 0.750812   │
-│ 196 │ 0.129348   │ 0.236616   │ 0.351739   │
-│ 197 │ 0.550059   │ 0.0980077  │ 0.19403    │
-│ 198 │ 0.521952   │ 0.0860358  │ 0.683776   │
-│ 199 │ 0.478723   │ 0.832118   │ 0.132724   │
-│ 200 │ 0.0257368  │ 0.982824   │ 0.7384     │
-│ 201 │ 0.688801   │ 0.28425    │ 0.66622    │
-│ 202 │ 0.0992775  │ 0.394294   │ 0.32343    │
-│ 203 │ 0.977466   │ 0.421677   │ 0.889536   │
-│ 204 │ 0.430913   │ 0.523483   │ 0.773369   │
-│ 205 │ 0.693279   │ 0.377375   │ 0.776596   │
-│ 206 │ 0.0181931  │ 0.100863   │ 0.65208    │
-│ 207 │ 0.816742   │ 0.487193   │ 0.0332903  │
-│ 208 │ 0.0887126  │ 0.217362   │ 0.438817   │
-│ 209 │ 0.52247    │ 0.421632   │ 0.868261   │
-│ 210 │ 0.737489   │ 0.164612   │ 0.387124   │
-│ 211 │ 0.581326   │ 0.62712    │ 0.86339    │
-│ 212 │ 0.853586   │ 0.972765   │ 0.504382   │
-│ 213 │ 0.0592502  │ 0.716162   │ 0.80024    │
-│ 214 │ 0.321698   │ 0.479542   │ 0.820965   │
-│ 215 │ 0.953869   │ 0.507738   │ 0.389512   │
-│ 216 │ 0.372015   │ 0.643588   │ 0.920515   │
-│ 217 │ 0.7833     │ 0.581664   │ 0.357377   │
-│ 218 │ 0.430143   │ 0.894731   │ 0.564832   │
-│ 219 │ 0.0434068  │ 0.210725   │ 0.310926   │
-│ 220 │ 0.555943   │ 0.86161    │ 0.79512    │
-│ 221 │ 0.273684   │ 0.00768371 │ 0.0679675  │
-│ 222 │ 0.190014   │ 0.68237    │ 0.697618   │
-│ 223 │ 0.742776   │ 0.920246   │ 0.219351   │
-│ 224 │ 0.0850115  │ 0.636721   │ 0.671568   │
-│ 225 │ 0.194933   │ 0.900798   │ 0.175993   │
-│ 226 │ 0.141877   │ 0.87054    │ 0.17918    │
-│ 227 │ 0.697005   │ 0.657657   │ 0.230518   │
-│ 228 │ 0.0905735  │ 0.319013   │ 0.756888   │
-│ 229 │ 0.905355   │ 0.972248   │ 0.781644   │
-│ 230 │ 0.43452    │ 0.0906047  │ 0.174677   │
-│ 231 │ 0.620462   │ 0.658506   │ 0.590042   │
-│ 232 │ 0.867658   │ 0.560274   │ 0.430918   │
-│ 233 │ 0.666318   │ 0.936351   │ 0.694905   │
-│ 234 │ 0.107901   │ 0.275018   │ 0.303422   │
-│ 235 │ 0.717413   │ 0.0562383  │ 0.0826675  │
-│ 236 │ 0.0272741  │ 0.804545   │ 0.0685606  │
-│ 237 │ 0.234758   │ 0.743942   │ 0.436251   │
-│ 238 │ 0.852665   │ 0.00600143 │ 0.387113   │
-│ 239 │ 0.610004   │ 0.72135    │ 0.168975   │
-│ 240 │ 0.91177    │ 0.851165   │ 0.607057   │
-│ 241 │ 0.395342   │ 0.540497   │ 0.59243    │
-│ 242 │ 0.19652    │ 0.637937   │ 0.0621822  │
-│ 243 │ 0.991896   │ 0.0107795  │ 0.125159   │
-│ 244 │ 0.550348   │ 0.83076    │ 0.90899    │
-│ 245 │ 0.112321   │ 0.503695   │ 0.326181   │
-│ 246 │ 0.243318   │ 0.412796   │ 0.14485    │
-│ 247 │ 0.675552   │ 0.244658   │ 0.869481   │
-│ 248 │ 0.692201   │ 0.381314   │ 0.947778   │
-│ 249 │ 0.40091    │ 0.226669   │ 0.620553   │
-│ 250 │ 0.265543   │ 0.123811   │ 0.285253   │
-│ 251 │ 0.692562   │ 0.569342   │ 0.197852   │
-│ 252 │ 0.452014   │ 0.71307    │ 0.744143   │
-│ 253 │ 0.972139   │ 0.512211   │ 0.788796   │
-│ 254 │ 0.622718   │ 0.529639   │ 0.748185   │
-│ 255 │ 0.142419   │ 0.428392   │ 0.387239   │
-│ 256 │ 0.00726879 │ 0.702401   │ 0.134931   │
-│ 257 │ 0.736928   │ 0.435258   │ 0.7279     │
-│ 258 │ 0.402214   │ 0.845541   │ 0.559686   │
-│ 259 │ 0.146572   │ 0.470479   │ 0.459381   │
-│ 260 │ 0.311095   │ 0.489478   │ 0.935215   │
-│ 261 │ 0.842356   │ 0.453824   │ 0.3846     │
-│ 262 │ 0.9576     │ 0.0875272  │ 0.372905   │
-│ 263 │ 0.811965   │ 0.0509752  │ 0.959733   │
-│ 264 │ 0.106156   │ 0.332175   │ 0.196377   │
-│ 265 │ 0.866575   │ 0.29487    │ 0.945183   │
-│ 266 │ 0.998322   │ 0.434239   │ 0.569786   │
-│ 267 │ 0.482015   │ 0.793726   │ 0.944606   │
-│ 268 │ 0.628126   │ 0.877321   │ 0.0604058  │
-│ 269 │ 0.585289   │ 0.987287   │ 0.0420026  │
-│ 270 │ 0.624044   │ 0.971064   │ 0.00193476 │
-│ 271 │ 0.670517   │ 0.937147   │ 0.906555   │
-│ 272 │ 0.508087   │ 0.3119     │ 0.483833   │
-│ 273 │ 0.757767   │ 0.316423   │ 0.0387001  │
-│ 274 │ 0.670443   │ 0.434184   │ 0.808915   │
-│ 275 │ 0.783653   │ 0.923707   │ 0.0383782  │
-│ 276 │ 0.153192   │ 0.845798   │ 0.619209   │
-│ 277 │ 0.505462   │ 0.219576   │ 0.472768   │
-│ 278 │ 0.461232   │ 0.62456    │ 0.303867   │
-│ 279 │ 0.0489917  │ 0.50196    │ 0.167977   │
-│ 280 │ 0.136698   │ 0.133193   │ 0.436828   │
-│ 281 │ 0.797101   │ 0.92357    │ 0.91566    │
-│ 282 │ 0.642479   │ 0.86061    │ 0.799808   │
-│ 283 │ 0.591584   │ 0.0802889  │ 0.797068   │
-│ 284 │ 0.27538    │ 0.196127   │ 0.0682005  │
-│ 285 │ 0.465792   │ 0.909554   │ 0.77807    │
-│ 286 │ 0.148339   │ 0.998424   │ 0.334542   │
-│ 287 │ 0.393191   │ 0.540459   │ 0.436753   │
-│ 288 │ 0.205048   │ 0.550764   │ 0.642699   │
-│ 289 │ 0.811489   │ 0.611251   │ 0.611299   │
-│ 290 │ 0.352577   │ 0.238307   │ 0.679793   │
-│ 291 │ 0.343076   │ 0.467396   │ 0.564392   │
-│ 292 │ 0.611503   │ 0.187382   │ 0.660809   │
-│ 293 │ 0.0356558  │ 0.0521274  │ 0.0215774  │
-│ 294 │ 0.617826   │ 0.08486    │ 0.36148    │
-│ 295 │ 0.993364   │ 0.982647   │ 0.954661   │
-│ 296 │ 0.330986   │ 0.292782   │ 0.338965   │
-│ 297 │ 0.897133   │ 0.00210965 │ 0.847569   │
-│ 298 │ 0.164671   │ 0.106371   │ 0.891789   │
-│ 299 │ 0.0548157  │ 0.618538   │ 0.916233   │
-│ 300 │ 0.485627   │ 0.769774   │ 0.080851   │,), 0x0000000000006dac)
-</code></pre></div>
+z = y |&gt; UnivariateBoxCoxTransformer()</code></pre><div class=code_output ><pre><code class="plaintext hljs">Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 7…17</code></pre></div>
 <p>Note that we feed <code>X</code> and <code>y</code> directly into models. In the background, MLJ will create source nodes and assumes that the operation is a <code>transform</code> given the models are unsupervised.</p>
 <p>For a node that corresponds to a supervised model, you can feed a tuple where the first element corresponds to the input &#40;here <code>W</code>&#41; and the second corresponds to the target &#40;here <code>z</code>&#41;, MLJ will assume the operation is a <code>predict</code>:</p>
-<pre><code class="julia hljs">ẑ = (W, z) |&gt; RidgeRegressor(lambda=<span class=hljs-number >0.1</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(RidgeRegressor @ 4…54, ((Node{NodalMachine{Standardizer}} @ 9…80, Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 3…35),), 0x0000000000006dac)
-</code></pre></div>
+<pre><code class="julia hljs">ẑ = (W, z) |&gt; RidgeRegressor(lambda=<span class=hljs-number >0.1</span>);</code></pre>
 <p>Finally we need to apply the inverse of the transform encapsulated in the node <code>z</code>, for this:</p>
-<pre><code class="julia hljs">ŷ = ẑ |&gt; inverse_transform(z)</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(MLJBase.inverse_transform, (Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 3…35,), 0x0000000000006dac)
-</code></pre></div>
+<pre><code class="julia hljs">ŷ = ẑ |&gt; inverse_transform(z);</code></pre>
 <p>That&#39;s it&#33; You can now fit the network as before:</p>
 <pre><code class="julia hljs">fit!(ŷ, rows=train)
-rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0542557476697907</code></pre></div>
-<p>To modify hyperparameters on a node, you can just access them like so:</p>
-<pre><code class="julia hljs">ẑ[:lambda] = <span class=hljs-number >5.0</span>;</code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(setindex!, (Node{NodalMachine{RidgeRegressor}} @ 6…05, 5.0, :lambda), 0x0000000000006dac)
-</code></pre></div>
+rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.01991033805433656</code></pre></div>
+<p>To <em>manually</em> modify hyperparameters on a node, you can access them like so:</p>
+<pre><code class="julia hljs">ẑ[:lambda] = <span class=hljs-number >5.0</span>;</code></pre>
 <p>Here remember that <code>ẑ</code> is a node with a machine that wraps around a ridge regression with a parameter <code>lambda</code> so the syntax above is equivalent to</p>
 <pre><code class="julia hljs">ẑ.machine.model.lambda = <span class=hljs-number >5.0</span>;</code></pre>
-<p>but arguably a bit nicer.</p>
+<p>which is relevant if you want to tune the hyperparameter using a <code>TunedModel</code>.</p>
 <pre><code class="julia hljs">fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0542557476697907</code></pre></div>
 <div class=page-foot >
   <div class=copyright >
-    &copy; Thibaut Lienart &amp; Collaborators. Last modified: October 15, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
+    &copy; Thibaut Lienart. Last modified: October 21, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
   </div>
 </div>
 

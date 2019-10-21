@@ -6,7 +6,7 @@ This readme assumes that your current directory is `MLJTutorials`.
 
 You can read the tutorials [online](https://alan-turing-institute.github.io/MLJTutorials/).
 
-If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml) file.
+If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Manifest.toml) file.
 
 To do so, save both files in an appropriate folder, start Julia, `cd` to the folder and
 
@@ -22,16 +22,23 @@ Each tutorial has a link at the top for a notebook or the raw script which you c
 
 ## For developers
 
-**Important**: use `include("deploy.jl")` to push updates (assuming you have admin rights) as this also re-generates notebooks and scripts and pushes everything at the right place (see [this point](#push-updates)).
+### Important first steps
 
-### Literate scripts
+Start by running this line in your REPL (_always_):
 
-1. activate the environment (`] activate .`)
-2. add packages if you need additional ones (`] add ...`)
-3. add/modify tutorials in the `scripts/` folder
-4. to help display things neatly on the webpage (no horizontal overflow), prefer `pprint` from `PrettyPrinting.jl` to display things like `NamedTuple`
+```julia-repl
+julia> using Pkg; Pkg.activate("."); using JuDoc, MLJ; MLJ.color_off()
+```
 
-**Important**: use `MLJ.color_off` otherwise output is shown with ANSI colour codes (see other tutorials in the folder, add a `#src` on that line so that it's not displayed on the web page nor on the generated script and notebook).
+(Colours may be supported in the future but aren't now).
+
+When it's time to push updates, **only** use `include("deploy.jl")` (assuming you have admin rights) as this also re-generates notebooks and scripts and pushes everything at the right place (see [this point](#push-updates)).
+
+### Modifying literate scripts
+
+1. add packages if you need additional ones (`] add ...`), make sure to update explicit compat requirements in the `Project.toml` file
+1. add/modify tutorials in the `scripts/` folder
+1. to help display things neatly on the webpage (no horizontal overflow), prefer `pprint` from `PrettyPrinting.jl` to display things like `NamedTuple`
 
 ### Adding a page
 

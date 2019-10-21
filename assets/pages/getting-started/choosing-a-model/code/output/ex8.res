@@ -1,3 +1,1 @@
-LinearRegressor
-  fit_intercept: Bool true
-  allowrankdeficient: Bool false
+LinearRegressor @ 3…19

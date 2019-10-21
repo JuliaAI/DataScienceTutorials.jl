@@ -9,7 +9,7 @@ x2 = rand(300)
 x3 = rand(300)
 y = exp.(x1 - x2 -2x3 + 0.1*rand(300))
 X = DataFrame(x1=x1, x2=x2, x3=x3)
-first(X, 3)
+first(X, 3) |> pretty
 
 test, train = partition(eachindex(y), 0.8);
 
@@ -47,9 +47,9 @@ rms(y[test], ŷ(rows=test))
 W = X |> Standardizer()
 z = y |> UnivariateBoxCoxTransformer()
 
-ẑ = (W, z) |> RidgeRegressor(lambda=0.1)
+ẑ = (W, z) |> RidgeRegressor(lambda=0.1);
 
-ŷ = ẑ |> inverse_transform(z)
+ŷ = ẑ |> inverse_transform(z);
 
 fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))

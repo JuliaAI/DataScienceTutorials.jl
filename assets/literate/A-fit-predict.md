@@ -10,7 +10,7 @@
 As in "[choosing a model](choosing-a-model.html)", let's load the Iris dataset and unpack it:
 
 ```julia:ex1
-using MLJ, Statistics
+using MLJ, Statistics, PrettyPrinting
 X, y = @load_iris;
 ```
 
@@ -59,7 +59,7 @@ Note that this **modifies** the machine which now contains the trained parameter
 You can inspect the result of the fitting with the `fitresult` field of the model object:
 
 ```julia:ex6
-tree.fitresult
+tree.fitresult |> pprint
 ```
 
 This `fitresult` will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named (so that predictions can be appropriately named).
@@ -80,7 +80,7 @@ ȳ = predict_mode(tree, rows=test)
 @show mode(ŷ[1])
 ```
 
-To measure the discrepancy between `ŷ` and `y` you could use the mean cross entropy:
+To measure the discrepancy between `ŷ` and `y` you could use the average cross entropy:
 
 ```julia:ex9
 mce = cross_entropy(ŷ, y[test]) |> mean

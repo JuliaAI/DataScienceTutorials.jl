@@ -1,2 +1,0 @@
-There was an error running the code:
-MethodError(RidgeRegressor @ 4…54, ((Node{NodalMachine{Standardizer}} @ 9…80, Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 3…35),), 0x0000000000006dac)

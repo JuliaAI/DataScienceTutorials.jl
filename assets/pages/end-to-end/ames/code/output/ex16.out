@@ -1,2 +1,0 @@
-There was an error running the code:
-MethodError(KNNRegressor @ 1…44, ((Node{NodalMachine{OneHotEncoder}} @ 1…70, Node{Nothing} @ 1…66),), 0x0000000000006dad)

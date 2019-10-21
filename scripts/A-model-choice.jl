@@ -10,7 +10,6 @@
 # ### Machine type and scientific type
 
 using RDatasets, MLJ
-MLJ.color_off() #src
 iris = dataset("datasets", "iris")
 
 first(iris, 3) |> pretty

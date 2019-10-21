@@ -9,8 +9,7 @@
 #
 # As in "[choosing a model](choosing-a-model.html)", let's load the Iris dataset and unpack it:
 
-using MLJ, Statistics
-MLJ.color_off() #src
+using MLJ, Statistics, PrettyPrinting
 X, y = @load_iris;
 
 # let's also load the `DecisionTreeClassifier`:
@@ -49,7 +48,7 @@ fit!(tree, rows=train)
 # Note that this **modifies** the machine which now contains the trained parameters of the decision tree.
 # You can inspect the result of the fitting with the `fitresult` field of the model object:
 
-tree.fitresult
+tree.fitresult |> pprint
 
 # This `fitresult` will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named (so that predictions can be appropriately named).
 #
@@ -65,7 +64,7 @@ ȳ = predict_mode(tree, rows=test)
 @show ȳ[1]
 @show mode(ŷ[1])
 
-# To measure the discrepancy between `ŷ` and `y` you could use the mean cross entropy:
+# To measure the discrepancy between `ŷ` and `y` you could use the average cross entropy:
 
 mce = cross_entropy(ŷ, y[test]) |> mean
 round(mce, digits=4)

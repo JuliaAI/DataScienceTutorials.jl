@@ -1,16 +1,32 @@
 @def title = "MLJ Tutorials"
-@def subtitle = "Learning by doing"
-@def hasmath = false
-@def hascode = false
+@def hascode = true
 
-# Tutorials
+## Learning by doing
 
-Some intro + explain structure (TBD)
+This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related `MLJ*` packages.
+On each tutorial page, you will find a link to download the raw script and/or the notebook corresponding to the page.
 
-Explain that "Getting started" is for people who have a good idea of how things work (know the theory) but want to quickly get a feel for how things are done
+In order to reproduce the environment that was used to generate these tutorials, please download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml} in a folder and, in that folder, do
 
-Suggest some ordering in the end to end examples (ames is simpler)
+```julia-repl
+julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
+```
 
-Todo: in the getting started, need intro to the `params` function in like tuning
+## Getting started
 
-Tell people again they must activate.
+If you are new to MLJ but are familiar with Machine Learning, we recommend you start by going through the short _Getting started_ examples in order:
+
+1. How to [choose a model](/pub/getting-started/choosing-a-model.html),
+1. How to [fit, predict and transform](/pub/getting-started/fit-and-predict.html)
+1. How to [tune models](/pub/getting-started/model-tuning.html)
+1. How to [compose models](/pub/getting-started/composing-models.html)
+1. How to build a [learning network](/pub/getting-started/learning-networks.html)
+
+Additionally, you can refer to the [documentation](https://alan-turing-institute.github.io/MLJ.jl/stable/) for more detailed information.
+
+## End to end examples
+
+These are examples that are meant to show how MLJ can be used from loading data to producing a model.
+The examples can be followed in no specific order, the tags can guide which tutorials you may want to look at first.
+
+* [AMES](http://localhost:8000/pub/end-to-end/AMES.html), *simple*, *one-hot*, *learning network*, *tuning*, *deterministic*

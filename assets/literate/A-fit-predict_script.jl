@@ -1,6 +1,6 @@
 # This file was generated, do not modify it.
 
-using MLJ, Statistics
+using MLJ, Statistics, PrettyPrinting
 X, y = @load_iris;
 
 @load DecisionTreeClassifier
@@ -13,7 +13,7 @@ test[1:3]
 
 fit!(tree, rows=train)
 
-tree.fitresult
+tree.fitresult |> pprint
 
 ŷ = predict(tree, rows=test)
 @show ŷ[1]
