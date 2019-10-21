@@ -4,7 +4,7 @@
 ## Learning by doing
 
 This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related `MLJ*` packages.
-On each tutorial page, you will find a link to download the raw script and/or the notebook corresponding to the page.
+On each tutorial page, you will find a link to download the raw script and the notebook corresponding to the page.
 
 In order to reproduce the environment that was used to generate these tutorials, please download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml} in a folder and, in that folder, do
 
