@@ -1,7 +1,7 @@
 <!--This file was generated, do not modify it.-->
 ## Baby steps
 
-Let's load a reduce version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
+Let's load a reduced version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
 As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduce version via `@load_reduced_ames`
 
 ```julia:ex1

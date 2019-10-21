@@ -27,6 +27,8 @@ Additionally, you can refer to the [documentation](https://alan-turing-institute
 ## End to end examples
 
 These are examples that are meant to show how MLJ can be used from loading data to producing a model.
-The examples can be followed in no specific order, the tags can guide which tutorials you may want to look at first.
+They assume familiarity with Machine Learning and MLJ.
+The examples can be followed in any order, the tags can guide which tutorials you may want to look at first.
 
-* [AMES](http://localhost:8000/pub/end-to-end/AMES.html), *simple*, *one-hot*, *learning network*, *tuning*, *deterministic*
+* [AMES](/pub/end-to-end/AMES.html), *simple*, *regression*, *one-hot*, *learning network*, *tuning*, *deterministic*
+* [Crabs XGB](/pub/end-to-end/crabs-xgb.html), *simple*, *classification*, *xg-boost*, *tuning*

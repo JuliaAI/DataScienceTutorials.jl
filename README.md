@@ -18,7 +18,7 @@ Pkg.insantiate()
 
 Each tutorial has a link at the top for a notebook or the raw script which you can download by right-clicking on the link and selecting "*Save file as...*".
 
-**Important note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/MLJTutorials/issues/new) on this repository indicating points that are unclear or could be better explained!
+**Note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/MLJTutorials/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
 
 ---
 
