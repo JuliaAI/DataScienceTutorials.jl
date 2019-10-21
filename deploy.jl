@@ -37,6 +37,9 @@ ACTIVATE = """
 
 preproc(s) = ACTIVATE * s
 
+# Remove lines that end with `# hide`
+postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
+
 Literate.notebook.(ifiles, nbpath, preprocess=preproc, execute=false, documenter=false)
 Literate.script.(ifiles, scpath, postprocess=preproc, keep_comments=false, documenter=false)
 

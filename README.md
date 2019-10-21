@@ -18,6 +18,8 @@ Pkg.insantiate()
 
 Each tutorial has a link at the top for a notebook or the raw script which you can download by right-clicking on the link and selecting "*Save file as...*".
 
+**Important note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/MLJTutorials/issues/new) on this repository indicating points that are unclear or could be better explained!
+
 ---
 
 ## For developers
@@ -34,11 +36,14 @@ julia> using Pkg; Pkg.activate("."); using JuDoc, MLJ; MLJ.color_off()
 
 When it's time to push updates, **only** use `include("deploy.jl")` (assuming you have admin rights) as this also re-generates notebooks and scripts and pushes everything at the right place (see [this point](#push-updates)).
 
+**Note**: keep your tutorials short! if there's a tuning step at some point, do it on a high resolution search locally and only show a rough search in the right area in the tutorial otherwise running tutorials can take a long time.
+
 ### Modifying literate scripts
 
 1. add packages if you need additional ones (`] add ...`), make sure to update explicit compat requirements in the `Project.toml` file
 1. add/modify tutorials in the `scripts/` folder
 1. to help display things neatly on the webpage (no horizontal overflow), prefer `pprint` from `PrettyPrinting.jl` to display things like `NamedTuple`
+1. add `;` at the end of final lines of code blocks if you want to suppress output
 
 ### Adding a page
 
@@ -80,6 +85,23 @@ If you decide to change some of the code while `serve()` is running, this is fin
 **Notes**:
 - avoid modifying the literate file, killing the Julia session, then calling `serve()` that sequence can cause weird issues where Julia will complain about the age of the world...
 - the `serve()` command above activates the environment.
+
+### Plots
+
+For the moment, plots are done with `PyPlot.jl` (though you're not restricted to use it).
+It's best not to use `Plots.jl` because the loading time would risk making full updates of the webpage annoyingly slow.
+
+In order to display a plot, finish a code block defining a plot with
+
+```
+savefig("assets/literate/MyTutorial-Fig1.svg") # hide
+
+# ![](/assets/literate/MyTutorial-Fig1.svg)
+```
+
+Please do not use anything else than SVG; please also stick to this path and start the name of the file with the name of the tutorial (to help keep files organised).
+
+Do not forget to add the `# hide` which will ensure the line is not displayed on the website, notebook, or script.
 
 ### Troubleshooting
 

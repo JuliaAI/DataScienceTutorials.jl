@@ -13,6 +13,8 @@ The website_* must be defined for the RSS to work
 
 @def hasmath = false
 
+@def mintoclevel = 2
+
 \newcommand{\cout}[1]{@@code-output @@title output: @@ \output{!#1} @@}
 
 <!-----------------------------------------------------
