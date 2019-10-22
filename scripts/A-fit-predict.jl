@@ -14,8 +14,8 @@ using MLJ, Statistics, PrettyPrinting
 X, y = @load_iris;
 
 @load DecisionTreeClassifier
-
 tree_model = DecisionTreeClassifier()
+
 tree = machine(tree_model, X, y)
 
 train, test = partition(eachindex(y), 0.7, shuffle=true)
@@ -23,7 +23,7 @@ test[1:3]
 
 fit!(tree, rows=train)
 
-tree.fitresult |> pprint
+fitted_params(tree) |> pprint
 
 ŷ = predict(tree, rows=test)
 @show ŷ[1]

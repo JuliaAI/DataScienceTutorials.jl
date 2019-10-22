@@ -76,7 +76,7 @@ mutable struct KNNRidgeBlend <: DeterministicNetwork
     knn_weight::Float64
 end
 
-function MLJ.fit(model::KNNRidgeBlend, X, y)
+function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs, ys = source.((X, y))
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
@@ -89,7 +89,7 @@ function MLJ.fit(model::KNNRidgeBlend, X, y)
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
     fit!(ŷ, verbosity=0)
-    return ŷ
+    return fitresults(ŷ)
 end
 
 krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)

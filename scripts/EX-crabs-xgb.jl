@@ -10,13 +10,13 @@
 # Pkg.update()
 # ```
 
-using MLJ, StatsBase, Random, PyPlot
+using MLJ, StatsBase, Random, PyPlot, CategoricalArrays, PrettyPrinting
 X, y = @load_crabs
 @show size(X)
 @show y[1:3]
 first(X, 3) |> pretty
 
-unique(y) |> pprint
+levels(y) |> pprint
 
 train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
 @load XGBoostClassifier
