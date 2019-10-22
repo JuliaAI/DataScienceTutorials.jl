@@ -1,6 +1,6 @@
 # This file was generated, do not modify it.
 
-using MLJ
+using MLJ, PrettyPrinting
 X, y = @load_iris
 @load DecisionTreeClassifier
 
@@ -19,6 +19,8 @@ y = 2X.x1 - X.x2 + 0.05 * randn(100);
 
 dtr = @load DecisionTreeRegressor
 forest = EnsembleModel(atom=dtr)
+
+params(forest) |> pprint
 
 r1 = range(forest, :(atom.n_subfeatures), lower=1, upper=3)
 r2 = range(forest, :bagging_fraction, lower=0.4, upper=1.0)

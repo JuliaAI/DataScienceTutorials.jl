@@ -18,6 +18,7 @@ let's also load the `DecisionTreeClassifier`:
 
 ```julia:ex2
 @load DecisionTreeClassifier
+tree_model = DecisionTreeClassifier()
 ```
 
 ### MLJ Machine
@@ -27,7 +28,6 @@ A *machine* is an object wrapping both a model and data and can contain informat
 However, it does check that the model is compatible with the scientific type of the data and will warn you otherwise.
 
 ```julia:ex3
-tree_model = DecisionTreeClassifier()
 tree = machine(tree_model, X, y)
 ```
 
@@ -56,10 +56,10 @@ fit!(tree, rows=train)
 ```
 
 Note that this **modifies** the machine which now contains the trained parameters of the decision tree.
-You can inspect the result of the fitting with the `fitresult` field of the model object:
+You can inspect the result of the fitting with the `fitted_params` method:
 
 ```julia:ex6
-tree.fitresult |> pprint
+fitted_params(tree) |> pprint
 ```
 
 This `fitresult` will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named (so that predictions can be appropriately named).

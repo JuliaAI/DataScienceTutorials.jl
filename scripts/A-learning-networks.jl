@@ -2,7 +2,7 @@
 #
 # Let's generate a `DataFrame` with some dummy regression data, let's also load the good old ridge regressor.
 
-using MLJ, PrettyPrinting, DataFrames, Random
+using MLJ, DataFrames, Random
 @load RidgeRegressor pkg=MultivariateStats
 
 Random.seed!(5) # for reproducibility
@@ -33,7 +33,7 @@ test, train = partition(eachindex(y), 0.8);
 # ### Sources and nodes
 #
 # In MLJ a learning network starts at **source** nodes and flows through nodes (`X` and `y`) defining operations/transformations (`W`, `z`, `ẑ`, `ŷ`).
-# To define the source nodes, use the `source` function, you can specify if it's a target:
+# To define the source nodes, use the `source` function, you should specify whether it's a target:
 
 Xs = source(X)
 ys = source(y, kind=:target)

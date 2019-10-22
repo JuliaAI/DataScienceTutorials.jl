@@ -1,1 +1,1 @@
-Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 4…16
+Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 1…76

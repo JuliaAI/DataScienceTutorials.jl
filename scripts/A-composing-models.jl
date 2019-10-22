@@ -40,7 +40,7 @@ pipe = @pipeline MyPipe(X -> coerce(X, :age=>Continuous),
 pipe.knn.K = 2
 pipe.hot.drop_last = true;
 
-# Evaluation is as usual:
+# Evaluation for a pipe can be done with the `evaluate` method; implicitly it will construct machines that will contain the fitted parameters etc:
 
 evaluate(pipe, X, height, resampling=Holdout(),
          measure=rms) |> pprint

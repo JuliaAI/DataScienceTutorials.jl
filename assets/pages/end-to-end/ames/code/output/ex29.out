@@ -1,0 +1,2 @@
+There was an error running the code:
+ErrorException("Machine{DeterministicTunedModel} @ 3…80 has not been trained.")

@@ -1,1 +1,1 @@
-KNNRegressor @ 1…93
+KNNRegressor @ 1…10

@@ -1,1 +1,1 @@
-Node{NodalMachine{KNNRegressor}} @ 1…46
+Node{NodalMachine{KNNRegressor}} @ 2…50

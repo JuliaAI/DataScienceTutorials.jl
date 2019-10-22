@@ -26,7 +26,7 @@ height = [<span class=hljs-number >178</span>, <span class=hljs-number >194</spa
 <p>Hyperparameters of this pipeline can be accessed &#40;and set&#41; using dot syntax:</p>
 <pre><code class="julia hljs">pipe.knn.K = <span class=hljs-number >2</span>
 pipe.hot.drop_last = <span class=hljs-literal >true</span>;</code></pre>
-<p>Evaluation is as usual:</p>
+<p>Evaluation for a pipe can be done with the <code>evaluate</code> method; implicitly it will construct machines that will contain the fitted parameters etc:</p>
 <pre><code class="julia hljs">evaluate(pipe, X, height, resampling=Holdout(),
          measure=rms) |&gt; pprint</code></pre><div class=code_output ><pre><code class="plaintext hljs">(measure = [rms],
  measurement = [11.5],

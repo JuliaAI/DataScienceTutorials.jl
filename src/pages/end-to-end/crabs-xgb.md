@@ -1,6 +1,6 @@
 @def hascode = true
 @def showall = true
 
-# AMES
+# Crabs with XGBoost
 
 \tutorial{EX-crabs-xgb}

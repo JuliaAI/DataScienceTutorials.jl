@@ -6,7 +6,7 @@ This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2
 Again, the crabs dataset is so common that there is a  simple load function for it:
 
 ```julia:ex1
-using MLJ, StatsBase, Random, PyPlot
+using MLJ, StatsBase, Random, PyPlot, CategoricalArrays, PrettyPrinting
 X, y = @load_crabs
 @show size(X)
 @show y[1:3]
@@ -16,7 +16,7 @@ first(X, 3) |> pretty
 It's a classification problem with the following classes:
 
 ```julia:ex2
-unique(y) |> pprint
+levels(y) |> pprint
 ```
 
 It's not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.
@@ -33,7 +33,7 @@ Let's check whether the training and  is balanced, `StatsBase.countmap` is usefu
 countmap(y[train]) |> pprint
 ```
 
-pretty balanced yes; you could check the same on the test set and full set and it would still hold.
+which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.
 
 ## XGBoost machine
 
@@ -44,7 +44,7 @@ xgb  = XGBoostClassifier()
 xgbm = machine(xgb, X, y)
 ```
 
-we will tune it varying the number of rounds used and generate a learning curve
+We will tune it varying the number of rounds used and generate a learning curve
 
 ```julia:ex6
 r = range(xgb, :num_round, lower=10, upper=500)
@@ -53,7 +53,7 @@ curve = learning_curve!(xgbm, resampling=CV(),
                         measure=cross_entropy)
 ```
 
-let's have a look
+Let's have a look
 
 ```julia:ex7
 figure(figsize=(8,6))
@@ -68,7 +68,7 @@ savefig("assets/literate/EX-crabs-xgb-curve1.svg") # hide
 
 ![](/assets/literate/EX-crabs-xgb-curve1.svg)
 
-So we're doing quite a good job with 100 rounds. Let's fix that.
+So we're doing quite a good job with 100 rounds. Let's fix that:
 
 ```julia:ex8
 xgb.num_round = 100;
@@ -171,7 +171,7 @@ savefig("assets/literate/EX-crabs-xgb-heatmap2.svg") # hide
 
 ![](/assets/literate/EX-crabs-xgb-heatmap2.svg)
 
-let's retrieve the best models
+Let's retrieve the best models:
 
 ```julia:ex16
 xgb = fitted_params(mtm).best_model

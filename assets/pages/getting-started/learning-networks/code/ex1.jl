@@ -1,5 +1,5 @@
 # This file was generated, do not modify it. # hide
-using MLJ, PrettyPrinting, DataFrames, Random
+using MLJ, DataFrames, Random
 @load RidgeRegressor pkg=MultivariateStats
 
 Random.seed!(5) # for reproducibility

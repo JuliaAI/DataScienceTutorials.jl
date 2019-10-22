@@ -2,7 +2,7 @@
 ## Baby steps
 
 Let's load a reduced version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
-As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduce version via `@load_reduced_ames`
+As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduced version via `@load_reduced_ames`
 
 ```julia:ex1
 using MLJ, MLJBase, PrettyPrinting, DataFrames, Statistics
@@ -46,7 +46,7 @@ ŷ[1:3] |> pprint
 
 Observe that the output is probabilistic, each element is a univariate normal distribution (with the same mean and variance as it's a constant model).
 
-You can recover deterministic output by either computing the mean of predictions or using `predict_mean` directly:
+You can recover deterministic output by either computing the mean of predictions or using `predict_mean` directly (the `mean` function can  bve applied to any distribution from [`Distributions.jl`](https://github.com/JuliaStats/Distributions.jl)):
 
 ```julia:ex6
 ŷ = predict_mean(cmach, rows=test)
@@ -176,7 +176,7 @@ end
 We must specify how such a model should be fit, which is effectively just the learning network we had defined before except that now the parameters are contained in the struct:
 
 ```julia:ex21
-function MLJ.fit(model::KNNRidgeBlend, X, y)
+function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs, ys = source.((X, y))
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
@@ -189,7 +189,7 @@ function MLJ.fit(model::KNNRidgeBlend, X, y)
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
     fit!(ŷ, verbosity=0)
-    return ŷ
+    return fitresults(ŷ)
 end
 ```
 

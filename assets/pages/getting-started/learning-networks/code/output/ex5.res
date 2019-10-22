@@ -1,1 +1,1 @@
-Node{NodalMachine{Standardizer}} @ 6…00
+Node{NodalMachine{Standardizer}} @ 1…72

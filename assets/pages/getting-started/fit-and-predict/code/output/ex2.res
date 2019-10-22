@@ -1,1 +1,1 @@
-DecisionTreeClassifier @ 1…56
+DecisionTreeClassifier @ 1…32

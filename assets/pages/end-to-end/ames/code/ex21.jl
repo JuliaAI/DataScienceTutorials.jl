@@ -1,5 +1,5 @@
 # This file was generated, do not modify it. # hide
-function MLJ.fit(model::KNNRidgeBlend, X, y)
+function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs, ys = source.((X, y))
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
@@ -12,5 +12,5 @@ function MLJ.fit(model::KNNRidgeBlend, X, y)
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
     fit!(ŷ, verbosity=0)
-    return ŷ
+    return fitresults(ŷ)
 end
