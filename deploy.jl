@@ -39,7 +39,7 @@ postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
 
 Literate.notebook.(ifiles, nbpath, preprocess=preproc, postprocess=postproc,
                    execute=false, documenter=false)
-Literate.script.(ifiles, scpath, preprocess=preproc, postprocess=postproc,
+Literate.script.(ifiles, scpath, postprocess=preproc ∘ postproc,
                  keep_comments=false, documenter=false)
 
 JS_GHP = """
