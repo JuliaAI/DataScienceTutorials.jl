@@ -1,15 +1,3 @@
-# Before running this, make sure to activate the environment corresponding to
-# [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-# and update it so that you get an environment which matches the one used to generate
-# the tutorials:
-#
-# ```julia
-# cd("MLJTutorials") # cd to folder with the Project.toml
-# using Pkg
-# Pkg.activate(".")
-# Pkg.update()
-# ```
-
 using MLJ, DataFrames, Statistics, PrettyPrinting
 
 Xraw = rand(300, 3)
@@ -70,7 +58,7 @@ xlabel("Bagging fraction", fontsize=14)
 yticks([1, 5, 10, 15, 20], fontsize=12)
 ylabel("Number of neighbors - K", fontsize=14)
 
-savefig("assets/literate/A-ensembles-heatmap.svg") # hide
+
 
 ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])

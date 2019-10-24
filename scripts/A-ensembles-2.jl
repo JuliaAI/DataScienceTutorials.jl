@@ -1,15 +1,3 @@
-# Before running this, make sure to activate the environment corresponding to
-# [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-# and update it so that you get an environment which matches the one used to generate
-# the tutorials:
-#
-# ```julia
-# cd("MLJTutorials") # cd to folder with the Project.toml
-# using Pkg
-# Pkg.activate(".")
-# Pkg.update()
-# ```
-
 using MLJ, PyPlot, PrettyPrinting, Random
 
 X, y = @load_boston
@@ -71,7 +59,7 @@ xlabel("Number of sub-features", fontsize=14)
 yticks(0.4:0.2:1, fontsize=12)
 ylabel("Bagging fraction", fontsize=14)
 
-savefig("assets/literate/A-ensembles-2-heatmap.svg") # hide
+
 
 ŷ = predict(m, X)
 rms(ŷ, y)

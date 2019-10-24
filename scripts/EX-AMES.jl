@@ -1,15 +1,3 @@
-# Before running this, make sure to activate the environment corresponding to
-# [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-# and update it so that you get an environment which matches the one used to generate
-# the tutorials:
-#
-# ```julia
-# cd("MLJTutorials") # cd to folder with the Project.toml
-# using Pkg
-# Pkg.activate(".")
-# Pkg.update()
-# ```
-
 using MLJ, MLJBase, PrettyPrinting, DataFrames, Statistics
 
 X, y = @load_reduced_ames
@@ -36,7 +24,8 @@ rmsl(ŷ, y[test])
 @load RidgeRegressor pkg="MultivariateStats"
 @load KNNRegressor
 
-Xs, ys = source.((X, y));
+Xs = source(X)
+ys = source(ys, kind=:target)
 
 hot = machine(OneHotEncoder(), Xs)
 

@@ -1,15 +1,3 @@
-# Before running this, make sure to activate the environment corresponding to
-# [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-# and update it so that you get an environment which matches the one used to generate
-# the tutorials:
-#
-# ```julia
-# cd("MLJTutorials") # cd to folder with the Project.toml
-# using Pkg
-# Pkg.activate(".")
-# Pkg.update()
-# ```
-
 using MLJ, StatsBase, Random, PyPlot, CategoricalArrays, PrettyPrinting
 X, y = @load_crabs
 @show size(X)
@@ -39,7 +27,7 @@ ylabel("Cross entropy", fontsize=14)
 xticks([10, 100, 250, 500], fontsize=12)
 yticks(0.8:0.05:1, fontsize=12)
 
-savefig("assets/literate/EX-crabs-xgb-curve1.svg") # hide
+
 
 xgb.num_round = 100;
 
@@ -65,7 +53,7 @@ ylabel("Minimum child weight", fontsize=14)
 xticks(3:2:10, fontsize=12)
 yticks(fontsize=12)
 
-savefig("assets/literate/EX-crabs-xgb-heatmap.svg") # hide
+
 
 xgb = fitted_params(mtm).best_model
 @show xgb.max_depth
@@ -100,7 +88,7 @@ ylabel("Col sample by tree", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig("assets/literate/EX-crabs-xgb-heatmap2.svg") # hide
+
 
 xgb = fitted_params(mtm).best_model
 @show xgb.subsample
