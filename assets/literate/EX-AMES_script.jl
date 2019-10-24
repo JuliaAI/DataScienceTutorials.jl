@@ -26,7 +26,8 @@ rmsl(ŷ, y[test])
 @load RidgeRegressor pkg="MultivariateStats"
 @load KNNRegressor
 
-Xs, ys = source.((X, y));
+Xs = source(X)
+ys = source(ys, kind=:target)
 
 hot = machine(OneHotEncoder(), Xs)
 

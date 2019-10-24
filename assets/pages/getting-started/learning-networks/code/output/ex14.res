@@ -1,1 +1,1 @@
-Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 8…23
+Node @ 1…71 = inverse_transform(1…41, predict(5…48, transform(7…19, 3…67)))

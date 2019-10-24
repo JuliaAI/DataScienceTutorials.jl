@@ -81,7 +81,8 @@ You will first define a fixed model where all hyperparameters are specified or s
 Let's start by defining the source nodes:
 
 ```julia:ex9
-Xs, ys = source.((X, y));
+Xs = source(X)
+ys = source(ys, kind=:target)
 ```
 
 On the "first layer", there's one hot encoder and a log transform, these will respectively lead to node `W` and node `z`:

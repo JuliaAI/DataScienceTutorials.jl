@@ -1,1 +1,1 @@
-Node{NodalMachine{UnivariateBoxCoxTransformer}} @ 1…62
+Node @ 1…12 = transform(1…41, 4…38)

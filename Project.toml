@@ -13,9 +13,6 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
 CategoricalArrays = "^0.7"
-MLJ = "^0.5"
-MLJBase = "^0.7"
-MLJModels = "^0.5"
 PrettyPrinting = "^0.1"
 PyPlot = "^2.8"
 RDatasets = "^0.6"

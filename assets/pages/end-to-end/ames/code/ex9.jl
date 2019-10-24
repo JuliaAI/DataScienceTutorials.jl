@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-Xs, ys = source.((X, y));
+Xs = source(X)
+ys = source(ys, kind=:target)

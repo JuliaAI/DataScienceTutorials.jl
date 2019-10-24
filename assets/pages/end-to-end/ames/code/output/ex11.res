@@ -1,1 +1,1 @@
-Node{NodalMachine{KNNRegressor}} @ 2…50
+Node @ 8…20 = predict(1…96, transform(1…64, 4…13))

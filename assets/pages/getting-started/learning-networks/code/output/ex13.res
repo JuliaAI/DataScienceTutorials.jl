@@ -1,1 +1,1 @@
-Node{NodalMachine{RidgeRegressor}} @ 8…08
+Node @ 1…11 = predict(5…48, transform(7…19, 3…67))

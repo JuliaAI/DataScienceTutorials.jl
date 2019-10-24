@@ -1,1 +1,12 @@
-DeterministicEnsembleModel{KNNRegressor} @ 2…95
+MLJ.DeterministicEnsembleModel(atom = MLJModels.NearestNeighbors_.KNNRegressor(K = 10,
+                                                                               algorithm = :kdtree,
+                                                                               metric = Distances.Euclidean(0.0),
+                                                                               leafsize = 10,
+                                                                               reorder = true,
+                                                                               weights = :uniform,),
+                               weights = Float64[],
+                               bagging_fraction = 0.8,
+                               rng = Random._GLOBAL_RNG(),
+                               n = 20,
+                               parallel = true,
+                               out_of_bag_measure = Any[],) @ 1…22

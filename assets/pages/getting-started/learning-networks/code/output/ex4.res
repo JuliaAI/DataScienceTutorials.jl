@@ -1,1 +1,1 @@
-Node{NodalMachine{Standardizer}} @ 1…72
+Node @ 1…08 = transform(4…86, 1…31)

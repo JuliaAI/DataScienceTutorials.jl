@@ -21,16 +21,13 @@ isdir(nbpath) || mkpath(nbpath)
 isdir(scpath) || mkpath(scpath)
 
 ACTIVATE = """
-    # Before running this, make sure to activate the environment corresponding to
-    # [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml)
-    # and update it so that you get an environment which matches the one used to generate
-    # the tutorials:
+    # Before running this, please make sure to activate and instantiate the environment
+    # corresponding to [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml) and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml)
+    # so that you get an environment which matches the one used to generate the tutorials:
     #
     # ```julia
-    # cd("MLJTutorials") # cd to folder with the Project.toml
-    # using Pkg
-    # Pkg.activate(".")
-    # Pkg.update()
+    # cd("MLJTutorials") # cd to folder with the *.toml
+    # using Pkg; Pkg.activate("."); Pkg.instantiate()
     # ```
 
     """
@@ -40,8 +37,10 @@ preproc(s) = ACTIVATE * s
 # Remove lines that end with `# hide`
 postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
 
-Literate.notebook.(ifiles, nbpath, preprocess=preproc, execute=false, documenter=false)
-Literate.script.(ifiles, scpath, postprocess=preproc, keep_comments=false, documenter=false)
+Literate.notebook.(ifiles, nbpath, preprocess=preproc, postprocess=postproc,
+                   execute=false, documenter=false)
+Literate.script.(ifiles, scpath, preprocess=preproc, postprocess=postproc,
+                 keep_comments=false, documenter=false)
 
 JS_GHP = """
     var ghpages = require('gh-pages');

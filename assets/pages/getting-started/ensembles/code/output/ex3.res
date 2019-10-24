@@ -1,1 +1,1 @@
-Machine{KNNRegressor} @ 9…38
+Machine{KNNRegressor} @ 1…84

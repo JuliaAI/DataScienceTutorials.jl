@@ -1,1 +1,1 @@
-CategoricalArrays.CategoricalString{UInt32} "versicolor"
+CategoricalArrays.CategoricalString{UInt32} "setosa"

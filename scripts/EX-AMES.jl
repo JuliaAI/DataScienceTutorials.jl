@@ -64,7 +64,8 @@ rmsl(ŷ, y[test])
 #
 # Let's start by defining the source nodes:
 
-Xs, ys = source.((X, y));
+Xs = source(X)
+ys = source(ys, kind=:target)
 
 # On the "first layer", there's one hot encoder and a log transform, these will respectively lead to node `W` and node `z`:
 
