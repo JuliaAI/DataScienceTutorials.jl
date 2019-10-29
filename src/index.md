@@ -28,7 +28,11 @@ Additionally, you can refer to the [documentation](https://alan-turing-institute
 
 These are examples that are meant to show how MLJ can be used from loading data to producing a model.
 They assume familiarity with Machine Learning and MLJ.
-The examples can be followed in any order, the tags can guide which tutorials you may want to look at first.
+
+Note that these tutorials are not meant to teach you ML or Data Science; there may be better ways to analyse the data, the primary aim is to show quick analysis so that you can get more familiar with using MLJ.
+
+The examples can be followed in any order, the tags can guide you as to which tutorials you may want to look at first.
 
 * [AMES](/pub/end-to-end/AMES.html), *simple*, *regression*, *one-hot*, *learning network*, *tuning*, *deterministic*
+* [Wine](/pub/end-to-end/wine.html), *simple*, *classifier*, *standardizer*, *PCA*, *knn*, *multinomial*
 * [Crabs XGB](/pub/end-to-end/crabs-xgb.html), *simple*, *classification*, *xg-boost*, *tuning*

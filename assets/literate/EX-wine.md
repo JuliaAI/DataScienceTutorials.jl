@@ -1,0 +1,184 @@
+<!--This file was generated, do not modify it.-->
+## Initial data processing
+
+In this example, we consider the [UCI "wine" dataset](https://archive.ics.uci.edu/ml/datasets/wine)
+
+> These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.
+
+### Getting the data
+Let's download the data thanks to the [HTTP.jl](HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")) package and load it into a DataFrame via the [CSV.jl](https://github.com/JuliaData/CSV.jl) package:
+
+```julia:ex1
+using HTTP, CSV, MLJ, StatsBase, PyPlot
+req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
+data = CSV.read(req.body,
+                header=["Class", "Alcool", "Malic acid", "Ash",
+                        "Alcalinity of ash", "Magnesium", "Total phenols",
+                        "Flavanoids", "Nonflavanoid phenols", "Proanthcyanins",
+                        "Color intensity", "Hue", "OD280/OD315 of diluted wines",
+                        "Proline"])
+# the target is the Class column, everything else is a feature
+y, X = unpack(data, ==(:Class), colname->true);
+```
+
+### Setting the scientific type
+
+Let's explore the scientific type attributed by default to the target and the features
+
+```julia:ex2
+scitype_union(y)
+```
+
+this should be changed as it should be considered as an ordered factor
+
+```julia:ex3
+yc = coerce(y, OrderedFactor);
+```
+
+Let's now consider the features
+
+```julia:ex4
+for col in names(X)
+    println(rpad(col, 30), scitype_union(X[:, col]))
+end
+```
+
+Most values are considered as Continuous as they're encoded as floating point.
+Note also that there are no missing value (otherwise one of the scientific type would have been a `Union{Missing,*}`).
+Let's have a look at the `Proline` one to see what it looks like
+
+```julia:ex5
+X[1:5, :Proline]
+```
+
+It can likely be interpreted as a Continuous as well (it would be better to know precisely what it is but for now let's just go with the hunch).
+We'll do the same with `:Magnesium`:
+
+```julia:ex6
+Xc = coerce(X, :Proline=>Continuous, :Magnesium=>Continuous);
+```
+
+Finally, let's have a quick look at the mean and standard deviation of each feature to get a feel for their amplitude:
+
+```julia:ex7
+for col in names(Xc)
+    x = Xc[:, col]
+    μ = round(mean(x), sigdigits=2)
+    σ = round(std(x), sigdigits=2)
+    println(rpad(col, 30), lpad(μ, 5), "; " , lpad(σ, 5))
+end
+```
+
+Right so it varies a fair bit which would invite to standardise the data.
+
+**Note**: to complete such a first step, one could explore histograms of the various features for instance, check that there is enough variation among the continuous features and that there does not seem to be problems in the encoding, we cut this out to shorten the tutorial. We could also have checked that the data was balanced.
+
+## Getting a baseline
+
+It's a multiclass classification problem with continuous inputs so a sensible start is  to test two very simple classifiers to get a baseline.
+We'll train a KNN classifier and a multinomial classifier (logistic regression).
+
+```julia:ex8
+@load KNNClassifier pkg="NearestNeighbors"
+@load MultinomialClassifier pkg="MLJLinearModels";
+```
+
+First let's standardise the data
+
+```julia:ex9
+stand = machine(Standardizer(), Xc)
+fit!(stand)
+Xcs = transform(stand, Xc);
+```
+
+Let's also set aside 20% of the data for eventual testing.
+
+```julia:ex10
+train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111);
+Xtrain = selectrows(Xcs, train)
+Xtest = selectrows(Xcs, test)
+ytrain = selectrows(yc, train)
+ytest = selectrows(yc, test);
+```
+
+Let's train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90% of the training data to train the model and the remaining 10% to evaluate it:
+
+```julia:ex11
+knn = machine(KNNClassifier(), Xtrain, ytrain)
+opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
+res = evaluate!(knn; opts...)
+round(res.measurement[1], sigdigits=3)
+```
+
+Now we do the same with a MultinomialClassifier
+
+```julia:ex12
+mc = machine(MultinomialClassifier(), Xtrain, ytrain)
+res = evaluate!(mc; opts...)
+round(res.measurement[1], sigdigits=3)
+```
+
+Both methods seem to offer comparable levels of performance.
+Let's check the misclassification over the full training set:
+
+```julia:ex13
+mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
+mcr_m = misclassification_rate(predict_mode(mc, Xtrain), ytrain)
+println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
+println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
+```
+
+So here we have done no hyperparameter training and already have a misclassification rate below 5%.
+Clearly the problem is not very difficult.
+
+## Visualising the classes
+
+One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated.
+
+```julia:ex14
+@load PCA
+pca = machine(PCA(maxoutdim=2), Xtrain)
+fit!(pca)
+Wtrain = transform(pca, Xtrain);
+```
+
+Let's now display this using different colours for the different classes:
+
+```julia:ex15
+x1 = Wtrain.x1
+x2 = Wtrain.x2
+
+mask_1 = ytrain .== 1
+mask_2 = ytrain .== 2
+mask_3 = ytrain .== 3
+
+figure(figsize=(8, 6))
+plot(x1[mask_1], x2[mask_1], linestyle="none", marker="o", color="red")
+plot(x1[mask_2], x2[mask_2], linestyle="none", marker="o", color="blue")
+plot(x1[mask_3], x2[mask_3], linestyle="none", marker="o", color="magenta")
+
+xlabel("PCA dimension 1", fontsize=14)
+ylabel("PCA dimension 2", fontsize=14)
+legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
+xticks(fontsize=12)
+yticks(fontsize=12)
+
+savefig("assets/EX-wine-pca.svg") # hide
+```
+
+![](/assets/EX-wine-pca.svg)
+
+On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers.
+At this point it's a bit pointless to dig much deaper into parameter tuning etc.
+
+As a last step, we can report performances of the models on the test set which we set aside earlier:
+
+```julia:ex16
+perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
+perf_m = misclassification_rate(predict_mode(mc, Xtest), ytest)
+println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
+println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
+```
+
+Pretty good for so little work!
+
