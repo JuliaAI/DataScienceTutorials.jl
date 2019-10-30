@@ -494,9 +494,9 @@ uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 
 [[ScientificTypes]]
 deps = ["InteractiveUtils", "Requires"]
-git-tree-sha1 = "bb5b46ac7acbcaf4e7c91f428f0ccc991c04c614"
+path = "/Users/tlienart/.julia/dev/ScientificTypes"
 uuid = "321657f4-b219-11e9-178b-2701a2544e81"
-version = "0.2.2"
+version = "0.2.3"
 
 [[Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
