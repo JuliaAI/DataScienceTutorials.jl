@@ -34,5 +34,5 @@ Note that these tutorials are not meant to teach you ML or Data Science; there m
 The examples can be followed in any order, the tags can guide you as to which tutorials you may want to look at first.
 
 * [AMES](/pub/end-to-end/AMES.html), *simple*, *regression*, *one-hot*, *learning network*, *tuning*, *deterministic*
-* [Wine](/pub/end-to-end/wine.html), *simple*, *classifier*, *standardizer*, *PCA*, *knn*, *multinomial*
+* [Wine](/pub/end-to-end/wine.html), *simple*, *classifier*, *standardizer*, *PCA*, *knn*, *multinomial*, *pipeline*
 * [Crabs XGB](/pub/end-to-end/crabs-xgb.html), *simple*, *classification*, *xg-boost*, *tuning*

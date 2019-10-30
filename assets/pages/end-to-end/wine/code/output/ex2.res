@@ -1,1 +1,1 @@
-Count
+AbstractArray{Count,1}

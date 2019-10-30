@@ -3,64 +3,68 @@
 using HTTP, CSV, MLJ, StatsBase, PyPlot
 req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
-                header=["Class", "Alcool", "Malic acid", "Ash",
-                        "Alcalinity of ash", "Magnesium", "Total phenols",
-                        "Flavanoids", "Nonflavanoid phenols", "Proanthcyanins",
-                        "Color intensity", "Hue", "OD280/OD315 of diluted wines",
-                        "Proline"])
+                header=["Class", "Alcool", "Malic acid",
+                        "Ash", "Alcalinity of ash", "Magnesium",
+                        "Total phenols", "Flavanoids",
+                        "Nonflavanoid phenols", "Proanthcyanins",
+                        "Color intensity", "Hue",
+                        "OD280/OD315 of diluted wines", "Proline"])
 # the target is the Class column, everything else is a feature
 y, X = unpack(data, ==(:Class), colname->true);
 
-scitype_union(y)
+scitype(y)
 
 yc = coerce(y, OrderedFactor);
 
-for col in names(X)
-    println(rpad(col, 30), scitype_union(X[:, col]))
+scitype(X)
+
+sch = schema(X)
+println(rpad(" Name", 28), "| Scitype")
+println("-"^45)
+for (name, scitype) in zip(sch.names, sch.scitypes)
+    println(rpad("$name", 30), scitype)
 end
 
 X[1:5, :Proline]
 
 Xc = coerce(X, :Proline=>Continuous, :Magnesium=>Continuous);
 
-for col in names(Xc)
-    x = Xc[:, col]
-    μ = round(mean(x), sigdigits=2)
-    σ = round(std(x), sigdigits=2)
-    println(rpad(col, 30), lpad(μ, 5), "; " , lpad(σ, 5))
-end
+describe(Xc, :mean, :std)
 
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-stand = machine(Standardizer(), Xc)
-fit!(stand)
-Xcs = transform(stand, Xc);
+@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true
 
-train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111);
-Xtrain = selectrows(Xcs, train)
-Xtest = selectrows(Xcs, test)
+train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+Xtrain = selectrows(Xc, train)
+Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);
 
-knn = machine(KNNClassifier(), Xtrain, ytrain)
+knn = machine(KnnPipe(), Xtrain, ytrain)
+multi = machine(MnPipe(), Xtrain, ytrain)
+
 opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
 res = evaluate!(knn; opts...)
 round(res.measurement[1], sigdigits=3)
 
-mc = machine(MultinomialClassifier(), Xtrain, ytrain)
-res = evaluate!(mc; opts...)
+res = evaluate!(multi; opts...)
 round(res.measurement[1], sigdigits=3)
 
 mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
-mcr_m = misclassification_rate(predict_mode(mc, Xtrain), ytrain)
+mcr_m = misclassification_rate(predict_mode(multi, Xtrain), ytrain)
 println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 
-@load PCA
-pca = machine(PCA(maxoutdim=2), Xtrain)
+# @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))
+# pca = machine(PCAPipe(), Xtrain)
+# fit!(pca, Xtrain)
+# W = transform(pca, Xtrain)
+pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
 fit!(pca)
-Wtrain = transform(pca, Xtrain);
+W = pca(rows=train);
 
 x1 = Wtrain.x1
 x2 = Wtrain.x2
@@ -83,7 +87,7 @@ yticks(fontsize=12)
 savefig("assets/EX-wine-pca.svg") # hide
 
 perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
-perf_m = misclassification_rate(predict_mode(mc, Xtest), ytest)
+perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
 println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 

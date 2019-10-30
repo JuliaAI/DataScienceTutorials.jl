@@ -29,9 +29,9 @@ version = "0.5.7"
 
 [[CSTParser]]
 deps = ["Tokenize"]
-git-tree-sha1 = "c69698c3d4a7255bc1b4bc2afc09f59db910243b"
+git-tree-sha1 = "99dda94f5af21a4565dc2b97edf6a95485f116c3"
 uuid = "00ebfdb7-1f24-5e51-bd34-a7502290713f"
-version = "0.6.2"
+version = "1.0.0"
 
 [[CSV]]
 deps = ["CategoricalArrays", "DataFrames", "Dates", "FilePathsBase", "LazyArrays", "Mmap", "Parsers", "PooledArrays", "Profile", "Tables", "Unicode", "WeakRefStrings"]
@@ -292,10 +292,10 @@ uuid = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
 version = "0.5.1"
 
 [[MLJBase]]
-deps = ["CategoricalArrays", "Distributions", "InteractiveUtils", "Missings", "OrderedCollections", "Random", "Requires", "ScientificTypes", "SparseArrays", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "5147c9c64c51a66222974baa30f7166b3927e821"
+deps = ["CategoricalArrays", "Distributions", "InteractiveUtils", "Missings", "OrderedCollections", "Random", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
+git-tree-sha1 = "b55bba0e4bcdad0ef7366666c70c19573e48bf51"
 uuid = "a7f614a8-145f-11e9-1d2a-a57a1082229d"
-version = "0.7.1"
+version = "0.7.3"
 
 [[MLJLinearModels]]
 deps = ["DocStringExtensions", "IterativeSolvers", "LinearAlgebra", "LinearMaps", "MLJBase", "Optim", "Parameters", "Tables"]
@@ -307,7 +307,7 @@ version = "0.2.0"
 deps = ["CategoricalArrays", "ColorTypes", "Distances", "Distributions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "OrderedCollections", "Parameters", "Pkg", "Random", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
 path = "/Users/tlienart/.julia/dev/MLJModels"
 uuid = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
-version = "0.5.2"
+version = "0.5.4"
 
 [[MacroTools]]
 deps = ["CSTParser", "Compat", "DataStructures", "Test", "Tokenize"]

@@ -1,4 +1,4 @@
 # This file was generated, do not modify it. # hide
-mc = machine(MultinomialClassifier(), Xtrain, ytrain)
-res = evaluate!(mc; opts...)
+opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
+res = evaluate!(knn; opts...)
 round(res.measurement[1], sigdigits=3)

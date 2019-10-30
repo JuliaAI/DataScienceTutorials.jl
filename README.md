@@ -29,7 +29,7 @@ Each tutorial has a link at the top for a notebook or the raw script which you c
 Start by running this line in your REPL (_always_):
 
 ```julia-repl
-julia> using Pkg; Pkg.activate("."); using JuDoc, MLJ; MLJ.color_off()
+julia> using Pkg; Pkg.activate("."); using JuDoc, MLJ; MLJ.color_off();
 ```
 
 (Colours may be supported in the future but aren't now).

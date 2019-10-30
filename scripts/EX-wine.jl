@@ -10,11 +10,12 @@
 using HTTP, CSV, MLJ, StatsBase, PyPlot
 req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
-                header=["Class", "Alcool", "Malic acid", "Ash",
-                        "Alcalinity of ash", "Magnesium", "Total phenols",
-                        "Flavanoids", "Nonflavanoid phenols", "Proanthcyanins",
-                        "Color intensity", "Hue", "OD280/OD315 of diluted wines",
-                        "Proline"])
+                header=["Class", "Alcool", "Malic acid",
+                        "Ash", "Alcalinity of ash", "Magnesium",
+                        "Total phenols", "Flavanoids",
+                        "Nonflavanoid phenols", "Proanthcyanins",
+                        "Color intensity", "Hue",
+                        "OD280/OD315 of diluted wines", "Proline"])
 ## the target is the Class column, everything else is a feature
 y, X = unpack(data, ==(:Class), colname->true);
 
@@ -22,7 +23,7 @@ y, X = unpack(data, ==(:Class), colname->true);
 #
 # Let's explore the scientific type attributed by default to the target and the features
 
-scitype_union(y)
+scitype(y)
 
 # this should be changed as it should be considered as an ordered factor
 
@@ -30,13 +31,20 @@ yc = coerce(y, OrderedFactor);
 
 # Let's now consider the features
 
-for col in names(X)
-    println(rpad(col, 30), scitype_union(X[:, col]))
+scitype(X)
+
+# So there are `Continuous` values (encoded as floating point) and `Count` values (integer).
+# Note also that there are no missing value (otherwise one of the scientific type would have been a `Union{Missing,*}`).
+# Let's check which column is what:
+
+sch = schema(X)
+println(rpad(" Name", 28), "| Scitype")
+println("-"^45)
+for (name, scitype) in zip(sch.names, sch.scitypes)
+    println(rpad("$name", 30), scitype)
 end
 
-# Most values are considered as Continuous as they're encoded as floating point.
-# Note also that there are no missing value (otherwise one of the scientific type would have been a `Union{Missing,*}`).
-# Let's have a look at the `Proline` one to see what it looks like
+# The two variable that are encoded as `Count` can  probably be re-interpreted; let's have a look at the `Proline` one to see what it looks like
 
 X[1:5, :Proline]
 
@@ -47,12 +55,7 @@ Xc = coerce(X, :Proline=>Continuous, :Magnesium=>Continuous);
 
 # Finally, let's have a quick look at the mean and standard deviation of each feature to get a feel for their amplitude:
 
-for col in names(Xc)
-    x = Xc[:, col]
-    μ = round(mean(x), sigdigits=2)
-    σ = round(std(x), sigdigits=2)
-    println(rpad(col, 30), lpad(μ, 5), "; " , lpad(σ, 5))
-end
+describe(Xc, :mean, :std)
 
 # Right so it varies a fair bit which would invite to standardise the data.
 #
@@ -61,43 +64,45 @@ end
 # ## Getting a baseline
 #
 # It's a multiclass classification problem with continuous inputs so a sensible start is  to test two very simple classifiers to get a baseline.
-# We'll train a KNN classifier and a multinomial classifier (logistic regression).
+# We'll train two simple pipelines:
+# - a Standardizer + KNN classifier and
+# - a Standardizer + Multinomial classifier (logistic regression).
 
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-# First let's standardise the data
+@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true
 
-stand = machine(Standardizer(), Xc)
-fit!(stand)
-Xcs = transform(stand, Xc);
+# We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
 
-# Let's also set aside 20% of the data for eventual testing.
-
-train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111);
-Xtrain = selectrows(Xcs, train)
-Xtest = selectrows(Xcs, test)
+train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+Xtrain = selectrows(Xc, train)
+Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);
 
+# Let's now wrap an instance of these models with data (all hyperparameters are set to default here):
+
+knn = machine(KnnPipe(), Xtrain, ytrain)
+multi = machine(MnPipe(), Xtrain, ytrain)
+
 # Let's train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90% of the training data to train the model and the remaining 10% to evaluate it:
 
-knn = machine(KNNClassifier(), Xtrain, ytrain)
 opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
 res = evaluate!(knn; opts...)
 round(res.measurement[1], sigdigits=3)
 
 # Now we do the same with a MultinomialClassifier
 
-mc = machine(MultinomialClassifier(), Xtrain, ytrain)
-res = evaluate!(mc; opts...)
+res = evaluate!(multi; opts...)
 round(res.measurement[1], sigdigits=3)
 
 # Both methods seem to offer comparable levels of performance.
 # Let's check the misclassification over the full training set:
 
 mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
-mcr_m = misclassification_rate(predict_mode(mc, Xtrain), ytrain)
+mcr_m = misclassification_rate(predict_mode(multi, Xtrain), ytrain)
 println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 
@@ -106,12 +111,15 @@ println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 #
 # ## Visualising the classes
 #
-# One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated.
+# One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here (if you're on Julia <= 1.2, use the commented-out lines as you won't be able to use the arrow-syntax)
 
-@load PCA
-pca = machine(PCA(maxoutdim=2), Xtrain)
+## @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))
+## pca = machine(PCAPipe(), Xtrain)
+## fit!(pca, Xtrain)
+## W = transform(pca, Xtrain)
+pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
 fit!(pca)
-Wtrain = transform(pca, Xtrain);
+W = pca(rows=train);
 
 # Let's now display this using different colours for the different classes:
 
@@ -143,7 +151,7 @@ savefig("assets/EX-wine-pca.svg") # hide
 # As a last step, we can report performances of the models on the test set which we set aside earlier:
 
 perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
-perf_m = misclassification_rate(predict_mode(mc, Xtest), ytest)
+perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
 println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
