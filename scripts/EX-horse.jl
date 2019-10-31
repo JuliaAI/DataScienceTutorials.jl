@@ -8,7 +8,7 @@
 # ```
 
 using MLJ, StatsBase, ScientificTypes
-using HTTP, CSV, DataFrames, PyPlot
+using HTTP, CSV, DataFrames
 req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
 req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
