@@ -1,0 +1,3 @@
+round(acc, sigdigits=3) = 0.521
+round(prec, sigdigits=3) = 0.525
+round(rec, sigdigits=3) = 0.782

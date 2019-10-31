@@ -40,3 +40,15 @@ The examples can be followed in any order, the tags can guide you as to which tu
 * [Wine](/pub/end-to-end/wine.html), *simple*, *classification*, *standardizer*, *PCA*, *knn*, *multinomial*, *pipeline*
 * [Crabs XGB](/pub/end-to-end/crabs-xgb.html), *simple*, *classification*, *xg-boost*, *tuning*
 * [Horse](/pub/end-to-end/horse.html), *simple*, *classification*, *scientific type* and *autotype*, *missing values*, *imputation*, *one-hot*, *tuning*
+
+
+## Introduction to Statistical Learning
+
+This is a sequence of tutorials adapted from the labs associated with [_An introduction to statistical learning_](http://faculty.marshall.usc.edu/gareth-james/ISL/code.html) which were originally written in R.
+These tutorials may be useful if you want a gentle intro to MLJ **and** other relevant tools in the Julia environment.
+If you're fairly new to Julia and ML, this is probably where you should start.
+
+**Note**: the adaptation is fairly liberal, adding content when it helps highlights specificities with MLJ and removing content when it seems unnecessary.
+
+* [Lab 2](/pub/isl/lab-2.html), a very short intro to Julia for data analysis
+* [Lab 3](/pub/isl/lab-3.html)

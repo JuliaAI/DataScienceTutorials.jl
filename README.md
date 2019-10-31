@@ -153,3 +153,9 @@ include("deploy.jl")
 This should take ≤ 15 seconds to complete.
 
 If you don't have some of the requirements, or if something failed, just open a PR.
+
+### Continuous Integration
+
+To help maintain tutorials, most of them are tested on Travis.
+However tutorials that include plotting should **not** be included.
+Please adjust the file `test/runtests.jl` accordingly following the example.

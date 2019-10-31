@@ -11,7 +11,8 @@ for (root, _, files) in walkdir(scripts_dir), file in files
     splitdir(file)[2] in ("A-ensembles.jl",
                           "A-ensembles-2.jl",
                           "EX-crabs-xgb.jl",
-                          "EX-wine.jl") && continue
+                          "EX-wine.jl",
+                          "ISL-lab-4.jl") && continue
 
     @testset "testing $file" begin
         @test foo(joinpath(root, file))
