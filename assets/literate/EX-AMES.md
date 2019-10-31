@@ -82,7 +82,7 @@ Let's start by defining the source nodes:
 
 ```julia:ex9
 Xs = source(X)
-ys = source(ys, kind=:target)
+ys = source(y, kind=:target)
 ```
 
 On the "first layer", there's one hot encoder and a log transform, these will respectively lead to node `W` and node `z`:
@@ -178,7 +178,8 @@ We must specify how such a model should be fit, which is effectively just the le
 
 ```julia:ex21
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
-    Xs, ys = source.((X, y))
+    Xs = source(X)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)

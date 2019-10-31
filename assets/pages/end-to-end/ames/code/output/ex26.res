@@ -1,5 +1,5 @@
-MLJ.DeterministicTunedModel(model = JuDoc.KNNRidgeBlend(knn_model = KNNRegressor @ 3…35,
-                                                        ridge_model = RidgeRegressor @ 8…37,
+MLJ.DeterministicTunedModel(model = JuDoc.KNNRidgeBlend(knn_model = KNNRegressor @ 8…52,
+                                                        ridge_model = RidgeRegressor @ 1…81,
                                                         knn_weight = 0.3,),
                             tuning = Grid(resolution = 3,
                                           parallel = true,),
@@ -9,6 +9,6 @@ MLJ.DeterministicTunedModel(model = JuDoc.KNNRidgeBlend(knn_model = KNNRegressor
                             measure = MLJBase.RMSL(),
                             weights = nothing,
                             operation = StatsBase.predict,
-                            ranges = MLJ.NumericRange{T,Symbol} where T[NumericRange @ 1…43, NumericRange @ 1…94, NumericRange @ 2…43],
+                            ranges = MLJ.NumericRange{T,Symbol} where T[NumericRange @ 1…88, NumericRange @ 2…42, NumericRange @ 1…63],
                             full_report = true,
-                            train_best = true,) @ 4…71
+                            train_best = true,) @ 6…68

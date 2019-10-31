@@ -14,6 +14,15 @@ fit!(m)
 
 fitted_params(m).best_model.max_depth
 
+tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
+                measure=misclassification_rate)
+m = machine(tm, X, y)
+fit!(m)
+fitted_params(m).best_model.max_depth
+
+r = report(m)
+r.best_measurement
+
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
 y = 2X.x1 - X.x2 + 0.05 * randn(100);
 

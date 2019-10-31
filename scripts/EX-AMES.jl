@@ -65,7 +65,7 @@ rmsl(ŷ, y[test])
 # Let's start by defining the source nodes:
 
 Xs = source(X)
-ys = source(ys, kind=:target)
+ys = source(y, kind=:target)
 
 # On the "first layer", there's one hot encoder and a log transform, these will respectively lead to node `W` and node `z`:
 
@@ -137,7 +137,8 @@ end
 # We must specify how such a model should be fit, which is effectively just the learning network we had defined before except that now the parameters are contained in the struct:
 
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
-    Xs, ys = source.((X, y))
+    Xs = source(X)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)

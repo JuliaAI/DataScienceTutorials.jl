@@ -62,6 +62,9 @@ println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 # pca = machine(PCAPipe(), Xtrain)
 # fit!(pca, Xtrain)
 # W = transform(pca, Xtrain)
+
+@load PCA
+
 pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
 fit!(pca)
 W = pca(rows=train);

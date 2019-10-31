@@ -147,6 +147,9 @@ One way to get intuition for why the dataset is so easy to classify is to projec
 # pca = machine(PCAPipe(), Xtrain)
 # fit!(pca, Xtrain)
 # W = transform(pca, Xtrain)
+
+@load PCA
+
 pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
 fit!(pca)
 W = pca(rows=train);

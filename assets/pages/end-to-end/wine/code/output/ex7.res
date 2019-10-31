@@ -1,4 +1,4 @@
-178×13 DataFrames.DataFrame
+178×13 DataFrame
 │ Row │ Alcool  │ Malic acid │ Ash     │ Alcalinity of ash │ Magnesium │ Total phenols │ Flavanoids │ Nonflavanoid phenols │ Proanthcyanins │ Color intensity │ Hue     │ OD280/OD315 of diluted wines │ Proline │
 │     │ Float64 │ Float64    │ Float64 │ Float64           │ Float64   │ Float64       │ Float64    │ Float64              │ Float64        │ Float64         │ Float64 │ Float64                      │ Float64 │
 ├─────┼─────────┼────────────┼─────────┼───────────────────┼───────────┼───────────────┼────────────┼──────────────────────┼────────────────┼─────────────────┼─────────┼──────────────────────────────┼─────────┤

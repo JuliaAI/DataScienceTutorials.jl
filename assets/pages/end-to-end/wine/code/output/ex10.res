@@ -1,4 +1,4 @@
-36-element CategoricalArrays.CategoricalArray{Int64,1,UInt8}:
+36-element CategoricalArray{Int64,1,UInt8}:
  2
  1
  2

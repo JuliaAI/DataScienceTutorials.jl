@@ -1,6 +1,7 @@
 # This file was generated, do not modify it. # hide
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
-    Xs, ys = source.((X, y))
+    Xs = source(X)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)

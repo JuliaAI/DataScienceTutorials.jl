@@ -51,18 +51,37 @@ In order to inspect the best model, you can use the function `fitted_params` on 
 fitted_params(m).best_model.max_depth
 ```
 
+Note that here we have tuned a probabilistic model and consequently used a probabilistic measure for the tuning.
+We could also have decided we only cared about the mode and the misclassification rate, to do this, just use `operation=predict_mode` in the tuned model:
+
+```julia:ex6
+tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
+                measure=misclassification_rate)
+m = machine(tm, X, y)
+fit!(m)
+fitted_params(m).best_model.max_depth
+```
+
+In this case it doesn't the hyperparameter but it could have.
+Let's check the misclassification rate for the best model:
+
+```julia:ex7
+r = report(m)
+r.best_measurement
+```
+
 ## Tuning nested hyperparameters
 
 Let's generate simple dummy regression data
 
-```julia:ex6
+```julia:ex8
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
 y = 2X.x1 - X.x2 + 0.05 * randn(100);
 ```
 
 Let's then build a simple ensemble model with decision tree regressors:
 
-```julia:ex7
+```julia:ex9
 dtr = @load DecisionTreeRegressor
 forest = EnsembleModel(atom=dtr)
 ```
@@ -70,13 +89,13 @@ forest = EnsembleModel(atom=dtr)
 Such a model has *nested* hyperparameters in that the ensemble has hyperparameters (e.g. the `:bagging_fraction`) and the atom has hyperparameters (e.g. `:n_subfeatures` or `:max_depth`).
 You can see this by inspecting the parameters using `params`:
 
-```julia:ex8
+```julia:ex10
 params(forest) |> pprint
 ```
 
 Range for nested hyperparameters are specified using dot syntax, the rest is done in much the same way as before:
 
-```julia:ex9
+```julia:ex11
 r1 = range(forest, :(atom.n_subfeatures), lower=1, upper=3)
 r2 = range(forest, :bagging_fraction, lower=0.4, upper=1.0)
 tm = TunedModel(model=forest, tuning=Grid(resolution=12),
@@ -88,7 +107,7 @@ fit!(m);
 
 A useful function to inspect a model after fitting it is the `report` function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:
 
-```julia:ex10
+```julia:ex12
 r = report(m)
 r.best_measurement
 ```

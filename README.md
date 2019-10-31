@@ -29,10 +29,8 @@ Each tutorial has a link at the top for a notebook or the raw script which you c
 Start by running this line in your REPL (_always_):
 
 ```julia-repl
-julia> using Pkg; Pkg.activate("."); using JuDoc, MLJ; MLJ.color_off();
+julia> include("start.jl")
 ```
-
-(Colours may be supported in the future but aren't now).
 
 When it's time to push updates, **only** use `include("deploy.jl")` (assuming you have admin rights) as this also re-generates notebooks and scripts and pushes everything at the right place (see [this point](#push-updates)).
 

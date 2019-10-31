@@ -1,13 +1,1 @@
-MLJ.DeterministicEnsembleModel(atom = MLJModels.DecisionTree_.DecisionTreeRegressor(pruning_purity_threshold = 0.0,
-                                                                                    max_depth = -1,
-                                                                                    min_samples_leaf = 5,
-                                                                                    min_samples_split = 2,
-                                                                                    min_purity_increase = 0.0,
-                                                                                    n_subfeatures = 0,
-                                                                                    post_prune = false,),
-                               weights = Float64[],
-                               bagging_fraction = 0.8,
-                               rng = Random._GLOBAL_RNG(),
-                               n = 100,
-                               parallel = true,
-                               out_of_bag_measure = Any[],) @ 1…40
+0.2

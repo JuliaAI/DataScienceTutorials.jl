@@ -1,4 +1,4 @@
-178-element CategoricalArrays.CategoricalArray{Int64,1,UInt8}:
+178-element CategoricalArray{Int64,1,UInt8}:
  1
  1
  1

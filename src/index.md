@@ -19,8 +19,11 @@ If you are new to MLJ but are familiar with Machine Learning, we recommend you s
 1. How to [choose a model](/pub/getting-started/choosing-a-model.html),
 1. How to [fit, predict and transform](/pub/getting-started/fit-and-predict.html)
 1. How to [tune models](/pub/getting-started/model-tuning.html)
+1. How to [ensemble models](/pub/getting-started/ensembles.html)
+1. How to [ensemble models (2)](/pub/getting-started/ensembles-2.html)
 1. How to [compose models](/pub/getting-started/composing-models.html)
 1. How to build a [learning network](/pub/getting-started/learning-networks.html)
+1. How to [create models](/pub/getting-started/learning-networks-2.html) from learning networks
 
 Additionally, you can refer to the [documentation](https://alan-turing-institute.github.io/MLJ.jl/stable/) for more detailed information.
 

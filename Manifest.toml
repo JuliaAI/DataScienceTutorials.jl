@@ -81,6 +81,12 @@ git-tree-sha1 = "ed2c4abadf84c53d9e58510b5fc48912c2336fbb"
 uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
 version = "2.2.0"
 
+[[ComputationalResources]]
+deps = ["Test"]
+git-tree-sha1 = "89e7e7ed20af73d9f78877d2b8d1194e7b6ff13d"
+uuid = "ed09eef8-17a6-5b46-8889-db040fac31e3"
+version = "0.3.0"
+
 [[Conda]]
 deps = ["JSON", "VersionParsing"]
 git-tree-sha1 = "9a11d428dcdc425072af4aea19ab1e8c3e01c032"
@@ -286,10 +292,10 @@ version = "2.5.2"
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
 [[MLJ]]
-deps = ["CategoricalArrays", "Dates", "Distributed", "Distributions", "DocStringExtensions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "MLJModels", "OrderedCollections", "Pkg", "PrettyTables", "ProgressMeter", "Random", "RecipesBase", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "c3524f1ec8862f497a278c7c4515ead6ad793dd5"
+deps = ["CategoricalArrays", "ComputationalResources", "Dates", "Distributed", "Distributions", "DocStringExtensions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "MLJModels", "OrderedCollections", "Pkg", "PrettyTables", "ProgressMeter", "Random", "RecipesBase", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
+git-tree-sha1 = "ab0fe0de5298b967f9ed4a0fdc62d90b43291880"
 uuid = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-version = "0.5.1"
+version = "0.5.2"
 
 [[MLJBase]]
 deps = ["CategoricalArrays", "Distributions", "InteractiveUtils", "Missings", "OrderedCollections", "Random", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
@@ -307,7 +313,7 @@ version = "0.2.0"
 deps = ["CategoricalArrays", "ColorTypes", "Distances", "Distributions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "OrderedCollections", "Parameters", "Pkg", "Random", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
 path = "/Users/tlienart/.julia/dev/MLJModels"
 uuid = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
-version = "0.5.4"
+version = "0.5.5"
 
 [[MacroTools]]
 deps = ["CSTParser", "Compat", "DataStructures", "Test", "Tokenize"]

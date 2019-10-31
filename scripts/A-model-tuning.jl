@@ -40,6 +40,21 @@ fit!(m)
 
 fitted_params(m).best_model.max_depth
 
+# Note that here we have tuned a probabilistic model and consequently used a probabilistic measure for the tuning.
+# We could also have decided we only cared about the mode and the misclassification rate, to do this, just use `operation=predict_mode` in the tuned model:
+
+tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
+                measure=misclassification_rate)
+m = machine(tm, X, y)
+fit!(m)
+fitted_params(m).best_model.max_depth
+
+# In this case it doesn't the hyperparameter but it could have.
+# Let's check the misclassification rate for the best model:
+
+r = report(m)
+r.best_measurement
+
 # ## Tuning nested hyperparameters
 
 # Let's generate simple dummy regression data

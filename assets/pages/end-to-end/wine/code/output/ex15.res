@@ -1,4 +1,4 @@
-142×2 DataFrames.DataFrame
+142×2 DataFrame
 │ Row │ x1         │ x2         │
 │     │ Float64    │ Float64    │
 ├─────┼────────────┼────────────┤
