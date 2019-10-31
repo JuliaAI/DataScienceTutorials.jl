@@ -1,5 +1,7 @@
 # MLJTutorials
 
+[![Tutorials status](https://travis-ci.com/alan-turing-institute/MLJTutorials.svg?branch=master)](https://travis-ci.com/alan-turing-institute/MLJTutorials)
+
 This readme assumes that your current directory is `MLJTutorials`.
 
 ## For readers
