@@ -34,7 +34,7 @@ rmsl(ŷ, y[test])
 @load KNNRegressor
 
 Xs = source(X)
-ys = source(ys, kind=:target)
+ys = source(y, kind=:target)
 
 hot = machine(OneHotEncoder(), Xs)
 
@@ -75,7 +75,8 @@ mutable struct KNNRidgeBlend <: DeterministicNetwork
 end
 
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
-    Xs, ys = source.((X, y))
+    Xs = source(X)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
