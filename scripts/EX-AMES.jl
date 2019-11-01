@@ -7,7 +7,7 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, MLJBase, PrettyPrinting, DataFrames, Statistics
+using MLJ, PrettyPrinting, DataFrames, Statistics
 
 X, y = @load_reduced_ames
 @show size(X)
