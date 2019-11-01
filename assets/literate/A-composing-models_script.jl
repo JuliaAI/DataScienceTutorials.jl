@@ -9,7 +9,7 @@ X = (age    = [23, 45, 34, 25, 67],
 # target
 height = [178, 194, 165, 173, 168];
 
-scitype_union(X.age)
+scitype(X.age)
 
 pipe = @pipeline MyPipe(X -> coerce(X, :age=>Continuous),
                        hot = OneHotEncoder(),

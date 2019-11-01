@@ -1,1 +1,1 @@
-Continuous
+AbstractArray{Continuous,1}

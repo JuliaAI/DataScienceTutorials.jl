@@ -1,1 +1,1 @@
-ConstantRegressor(distribution_type = Distributions.Normal,) @ 1…87
+ConstantRegressor(distribution_type = Distributions.Normal,) @ 1…40

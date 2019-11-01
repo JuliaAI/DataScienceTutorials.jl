@@ -199,17 +199,6 @@ git-tree-sha1 = "88bb0edb352b16608036faadcc071adda068582a"
 uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.8.1"
 
-[[ElasticArrays]]
-git-tree-sha1 = "d9c079b747b9e9985d83e806bb77e41d149c959a"
-uuid = "fdbdab4c-e67f-52f5-8c3f-e7b388dad3d4"
-version = "0.4.0"
-
-[[ElasticPDMats]]
-deps = ["LinearAlgebra", "MacroTools", "PDMats", "Test"]
-git-tree-sha1 = "c6ac4406d9b4a549f7316fc746f7ccd5f1bcd2cd"
-uuid = "2904ab23-551e-5aed-883f-487f97af5226"
-version = "0.2.1"
-
 [[EzXML]]
 deps = ["BinaryProvider", "Libdl", "Printf"]
 git-tree-sha1 = "aed48d722e528bc634bd36a7d0e090fa2952a3c0"
@@ -274,10 +263,10 @@ uuid = "cc18c42c-b769-54ff-9e2a-b28141a64aae"
 version = "0.3.0"
 
 [[GaussianProcesses]]
-deps = ["Distances", "Distributions", "ElasticArrays", "ElasticPDMats", "FastGaussQuadrature", "ForwardDiff", "LinearAlgebra", "Optim", "PDMats", "Printf", "Random", "RecipesBase", "ScikitLearnBase", "SpecialFunctions", "StaticArrays", "Statistics", "StatsFuns", "Test"]
-git-tree-sha1 = "d27b78ff418d683df83ea7ae74f4eb545a8504ae"
+deps = ["Distances", "Distributions", "FastGaussQuadrature", "LinearAlgebra", "Optim", "PDMats", "Printf", "Random", "RecipesBase", "ScikitLearnBase", "SpecialFunctions", "StaticArrays", "Statistics", "StatsFuns", "Test"]
+git-tree-sha1 = "7c7ff029888c9ce6a4db84cf11b11f8c4aaaa190"
 uuid = "891a1506-143c-57d2-908e-e1f8e92e6de9"
-version = "0.9.0"
+version = "0.8.0"
 
 [[HDF5]]
 deps = ["BinaryProvider", "Blosc", "CMakeWrapper", "Libdl", "Mmap"]

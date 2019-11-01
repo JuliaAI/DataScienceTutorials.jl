@@ -1,13 +1,13 @@
 # This file was generated, do not modify it.
 
-using MLJ, MLJBase, PrettyPrinting, DataFrames, Statistics
+using MLJ, PrettyPrinting, DataFrames, Statistics
 
 X, y = @load_reduced_ames
 @show size(X)
 first(X, 3) |> pretty
 
 @show y[1:3]
-scitype_union(y)
+scitype(y)
 
 creg = ConstantRegressor()
 

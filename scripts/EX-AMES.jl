@@ -3,7 +3,7 @@
 # Let's load a reduced version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
 # As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduced version via `@load_reduced_ames`
 
-using MLJ, MLJBase, PrettyPrinting, DataFrames, Statistics
+using MLJ, PrettyPrinting, DataFrames, Statistics
 
 X, y = @load_reduced_ames
 @show size(X)
@@ -12,7 +12,7 @@ first(X, 3) |> pretty
 # and the target is a continuous vector:
 
 @show y[1:3]
-scitype_union(y)
+scitype(y)
 
 # so this is a standard regression problem with a mix of categorical and continuous input.
 #

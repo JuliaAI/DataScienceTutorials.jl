@@ -13,7 +13,7 @@ height = [178, 194, 165, 173, 168];
 
 # Note that the scientific type of `age` is `Count` here:
 
-scitype_union(X.age)
+scitype(X.age)
 
 # We will want to coerce that to `Continuous` so that it can be given to a regressor that expects such values.
 #
