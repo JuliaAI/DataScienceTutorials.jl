@@ -60,5 +60,98 @@ rec  = TP / (TP + FN)
 @show round(prec, sigdigits=3)
 @show round(rec, sigdigits=3)
 
+train = 1:findlast(X.Year .< 2005);
+test = last(train)+1:length(y)
+
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mcr = misclassification_rate(ŷ, y[test])
+accuracy = 1 - mcr
+
+X3 = select(X2, [:Lag1, :Lag2])
+clf = machine(LogisticClassifier(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mean(ŷ .== y[test])
+
+Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
+@show ŷ = predict(clf, Xnew)
+
+mode.(ŷ)
+
+@load BayesianLDA pkg=MultivariateStats
+
+clf = machine(BayesianLDA(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])
+
+@load LDA pkg=MultivariateStats
+using Distances
+
+clf = machine(LDA(dist=CosineDist()), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])
+
+@load BayesianQDA pkg=ScikitLearn
+
+clf = machine(BayesianQDA(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])
+
+@load KNNClassifier pkg=NearestNeighbors
+
+knnc = KNNClassifier(K=1)
+clf = machine(knnc, X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+@show mean(ŷ .== y[test])
+
+knnc.K = 3
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+@show mean(ŷ .== y[test])
+
+caravan  = dataset("ISLR", "Caravan")
+@show size(caravan)
+
+purchase = caravan.Purchase
+vals     = unique(purchase)
+
+nl1 = sum(purchase .== vals[1])
+nl2 = sum(purchase .== vals[2])
+println("#$(vals[1]) ", nl1)
+println("#$(vals[2]) ", nl2)
+
+y, X = unpack(caravan, ==(:Purchase), col->true)
+
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
+
+var(Xs[:,1])
+
+test = 1:1000
+train = last(test)+1:nrows(Xs);
+
+clf = machine(KNNClassifier(K=3), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])
+
+mean(y[test] .!= "No")
+
+clf = machine(LogisticClassifier(), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])
+
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
