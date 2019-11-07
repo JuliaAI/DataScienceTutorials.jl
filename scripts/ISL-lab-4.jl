@@ -83,13 +83,149 @@ rec  = TP / (TP + FN)
 @show round(rec, sigdigits=3)
 
 # Let's now train on the data before 2005 and use it to predict on the rest.
+# Let's find the row indices for which the condition holds
+
+train = 1:findlast(X.Year .< 2005);
+test = last(train)+1:length(y)
+
+# We can now just re-fit the machine that we've already defined just on those rows and predict on the test:
+
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mcr = misclassification_rate(ŷ, y[test])
+accuracy = 1 - mcr
+
+# Let's retrain a machine using only `:Lag1` and `:Lag2`:
+
+X3 = select(X2, [:Lag1, :Lag2])
+clf = machine(LogisticClassifier(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mean(ŷ .== y[test])
+
+# Interesting... it has higher accuracy than the model with more features! This could be investigated further by increasing the regularisation parameter but we'll leave it aside for  now.
+#
+# We can use a trained machine to predict on new data:
+
+Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
+@show ŷ = predict(clf, Xnew)
+
+# Note: when specifying data, we used a simple `NamedTuple`; we could also have defined a dataframe or any other compatible tabular container.
+# Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used `predict_mode` or indeed
+
+mode.(ŷ)
 
 # ### LDA
+#
+# Let's do a similar thing but with a LDA model this time:
+
+@load BayesianLDA pkg=MultivariateStats
+
+clf = machine(BayesianLDA(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])
+
+# Note: `BayesianLDA` is LDA using a multivariate normal model for each class with a default prior inferred from the proportions for each class in the training data.
+# You can also use the bare `LDA` model which does not make these assumptions and allows using a different metric in the transformed space, see the docs for details.
+
+@load LDA pkg=MultivariateStats
+using Distances
+
+clf = machine(LDA(dist=CosineDist()), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])
 
 # ### QDA
 #
-# _QDA is not yet supported_
-#
+# Bayesian QDA is available via ScikitLearn:
+
+@load BayesianQDA pkg=ScikitLearn
+
+# Using it is done in much the same way as before:
+
+clf = machine(BayesianQDA(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])
+
 # ### KNN
 #
+# Multiple packages offer KNN, we go via NearestNeighbors:
+
+@load KNNClassifier pkg=NearestNeighbors
+
+knnc = KNNClassifier(K=1)
+clf = machine(knnc, X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+@show mean(ŷ .== y[test])
+
+# Let's try with three neighbors
+
+knnc.K = 3
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+@show mean(ŷ .== y[test])
+
 # ## Caravan insurance data
+#
+# The caravan dataset is part of ISLR as well:
+
+caravan  = dataset("ISLR", "Caravan")
+@show size(caravan)
+
+# The target variable is `Purchase`, effectively  a categorical
+
+purchase = caravan.Purchase
+vals     = unique(purchase)
+
+# Let's see how many of each we have
+
+nl1 = sum(purchase .== vals[1])
+nl2 = sum(purchase .== vals[2])
+println("#$(vals[1]) ", nl1)
+println("#$(vals[2]) ", nl2)
+
+# that's quite unbalanced.
+#
+# Apart from the target, all other variables are numbers; we can standardize the data:
+
+y, X = unpack(caravan, ==(:Purchase), col->true)
+
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
+
+var(Xs[:,1])
+
+# **Note**: in MLJ, it is recommended to work with pipelines / networks when possible and not do "step-by-step" transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.
+#
+# We split the data in the first 1000 rows for testing and the rest for training:
+
+test = 1:1000
+train = last(test)+1:nrows(Xs);
+
+# Let's now fit a KNN model and check the misclassification rate
+
+clf = machine(KNNClassifier(K=3), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])
+
+# that looks good but recall the problem is very unbalanced
+
+mean(y[test] .!= "No")
+
+# Let's fit a logistic classifier to this problem
+
+clf = machine(LogisticClassifier(), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])

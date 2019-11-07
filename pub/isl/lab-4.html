@@ -4,7 +4,7 @@
 smarket = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Smarket"</span>)
 <span class=hljs-meta >@show</span> size(smarket)
 <span class=hljs-meta >@show</span> names(smarket)</code></pre><div class=code_output ><pre><code class="plaintext hljs">size(smarket) = (1250, 9)
-names(smarket) = [:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Direction]
+names(smarket) = Symbol[:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Direction]
 </code></pre></div> <p>Let&#39;s get a description too</p> <pre><code class="julia hljs">describe(smarket, :mean, :std, :eltype)</code></pre><div class=code_output ><pre><code class="plaintext hljs">9×4 DataFrame
 │ Row │ variable  │ mean      │ std      │ eltype                   │
 │     │ Symbol    │ Union…    │ Union…   │ DataType                 │
@@ -20,14 +20,14 @@ names(smarket) = [:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Di
 │ 9   │ Direction │           │          │ CategoricalString{UInt8} │</code></pre></div> <p>The target variable is <code>:Direction</code>:</p> <pre><code class="julia hljs">y = smarket.Direction
 X = select(smarket, Not(:Direction));</code></pre> <p>We can compute all the pairwise correlations; we use <code>Matrix</code> so that the dataframe entries are considered as one matrix of numbers &#40;otherwise <code>cor</code> won&#39;t work&#41;:</p> <pre><code class="julia hljs">cm = X |&gt; <span class=hljs-built_in >Matrix</span> |&gt; cor
 round.(cm, sigdigits=<span class=hljs-number >1</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">8×8 Array{Float64,2}:
- 1.0    0.03    0.03    0.03    0.04    0.03    0.5    0.03
- 0.03   1.0    -0.03   -0.01   -0.003  -0.006   0.04  -0.03
- 0.03  -0.03    1.0    -0.03   -0.01   -0.004  -0.04  -0.01
+ 1.0    0.03    0.03    0.03    0.04    0.03    0.5    0.03 
+ 0.03   1.0    -0.03   -0.01   -0.003  -0.006   0.04  -0.03 
+ 0.03  -0.03    1.0    -0.03   -0.01   -0.004  -0.04  -0.01 
  0.03  -0.01   -0.03    1.0    -0.02   -0.02   -0.04  -0.002
  0.04  -0.003  -0.01   -0.02    1.0    -0.03   -0.05  -0.007
- 0.03  -0.006  -0.004  -0.02   -0.03    1.0    -0.02  -0.03
- 0.5    0.04   -0.04   -0.04   -0.05   -0.02    1.0    0.01
- 0.03  -0.03   -0.01   -0.002  -0.007  -0.03    0.01   1.0</code></pre></div> <p>Let&#39;s see what the <code>:Volume</code> feature looks like:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
+ 0.03  -0.006  -0.004  -0.02   -0.03    1.0    -0.02  -0.03 
+ 0.5    0.04   -0.04   -0.04   -0.05   -0.02    1.0    0.01 
+ 0.03  -0.03   -0.01   -0.002  -0.007  -0.03    0.01   1.0  </code></pre></div> <p>Let&#39;s see what the <code>:Volume</code> feature looks like:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
 figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(X.Volume)
 xlabel(<span class=hljs-string >"Tick number"</span>, fontsize=<span class=hljs-number >14</span>)
@@ -36,10 +36,10 @@ xticks(fontsize=<span class=hljs-number >12</span>)
 yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre> <p><img src="/MLJTutorials/assets/ISL-volume.svg" alt=volume  /></p> <h3 id=logistic_regression ><a href="/MLJTutorials/pub/isl/lab-4.html#logistic_regression">Logistic Regression</a></h3> <p>We will now try to train models; the target <code>:Direction</code> has two classes: <code>Up</code> and <code>Down</code>; it needs to be interpreted as a Multiclass object first:</p> <pre><code class="julia hljs">yc = coerce(y, Multiclass)
 unique(yc)</code></pre><div class=code_output ><pre><code class="plaintext hljs">2-element Array{String,1}:
- "Up"
+ "Up"  
  "Down"</code></pre></div> <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 1…80
+clf = machine(LogisticClassifier(), X2, y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 7…92
 </code></pre></div> <p>Let&#39;s fit it to the data and try to reproduce the output:</p> <pre><code class="julia hljs">fit!(clf)
 ŷ = predict(clf, X2)
 cross_entropy(ŷ, y) |&gt; mean</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.6910338223694449</code></pre></div>
@@ -66,12 +66,119 @@ rec  = TP / (TP + FN)
 round(prec, sigdigits=3) = 0.525
 round(rec, sigdigits=3) = 0.782
 </code></pre></div>
-<p>Let&#39;s now train on the data before 2005 and use it to predict on the rest.</p>
+<p>Let&#39;s now train on the data before 2005 and use it to predict on the rest. Let&#39;s find the row indices for which the condition holds</p>
+<pre><code class="julia hljs">train = <span class=hljs-number >1</span>:findlast(X.Year .&lt; <span class=hljs-number >2005</span>);
+test = last(train)+<span class=hljs-number >1</span>:length(y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">999:1250</code></pre></div>
+<p>We can now just re-fit the machine that we&#39;ve already defined just on those rows and predict on the test:</p>
+<pre><code class="julia hljs">fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mcr = misclassification_rate(ŷ, y[test])
+accuracy = <span class=hljs-number >1</span> - mcr</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.4841269841269841</code></pre></div>
+<p>Let&#39;s retrain a machine using only <code>:Lag1</code> and <code>:Lag2</code>:</p>
+<pre><code class="julia hljs">X3 = select(X2, [:Lag1, :Lag2])
+clf = machine(LogisticClassifier(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mean(ŷ .== y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.5595238095238095</code></pre></div>
+<p>Interesting... it has higher accuracy than the model with more features&#33; This could be investigated further by increasing the regularisation parameter but we&#39;ll leave it aside for  now.</p>
+<p>We can use a trained machine to predict on new data:</p>
+<pre><code class="julia hljs">Xnew = (Lag1 = [<span class=hljs-number >1.2</span>, <span class=hljs-number >1.5</span>], Lag2 = [<span class=hljs-number >1.1</span>, -<span class=hljs-number >0.8</span>])
+<span class=hljs-meta >@show</span> ŷ = predict(clf, Xnew)</code></pre><div class=code_output ><pre><code class="plaintext hljs">ŷ = predict(clf, Xnew) = UnivariateFinite{String,UInt8,Float64}[UnivariateFinite(Down=&gt;0.521, Up=&gt;0.479), UnivariateFinite(Down=&gt;0.504, Up=&gt;0.496)]
+</code></pre></div>
+<p>Note: when specifying data, we used a simple <code>NamedTuple</code>; we could also have defined a dataframe or any other compatible tabular container. Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used <code>predict_mode</code> or indeed</p>
+<pre><code class="julia hljs">mode.(ŷ)</code></pre><div class=code_output ><pre><code class="plaintext hljs">2-element CategoricalArray{String,1,UInt8}:
+ "Down"
+ "Down"</code></pre></div>
 <h3 id=lda ><a href="/MLJTutorials/pub/isl/lab-4.html#lda">LDA</a></h3>
+<p>Let&#39;s do a similar thing but with a LDA model this time:</p>
+<pre><code class="julia hljs"><span class=hljs-meta >@load</span> BayesianLDA pkg=MultivariateStats
+
+clf = machine(BayesianLDA(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.5595238095238095</code></pre></div>
+<p>Note: <code>BayesianLDA</code> is LDA using a multivariate normal model for each class with a default prior inferred from the proportions for each class in the training data. You can also use the bare <code>LDA</code> model which does not make these assumptions and allows using a different metric in the transformed space, see the docs for details.</p>
+<pre><code class="julia hljs"><span class=hljs-meta >@load</span> LDA pkg=MultivariateStats
+<span class=hljs-keyword >using</span> Distances
+
+clf = machine(LDA(dist=CosineDist()), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.5476190476190477</code></pre></div>
 <h3 id=qda ><a href="/MLJTutorials/pub/isl/lab-4.html#qda">QDA</a></h3>
-<p><em>QDA is not yet supported</em></p>
+<p>Bayesian QDA is available via ScikitLearn:</p>
+<pre><code class="julia hljs"><span class=hljs-meta >@load</span> BayesianQDA pkg=ScikitLearn</code></pre><div class=code_output ><pre><code class="plaintext hljs">BayesianQDA(priors = nothing,
+            reg_param = 0.0,
+            store_covariance = false,
+            tol = 0.0001,) @ 1…11</code></pre></div>
+<p>Using it is done in much the same way as before:</p>
+<pre><code class="julia hljs">clf = machine(BayesianQDA(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+acc = mean(ŷ .== y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.5992063492063492</code></pre></div>
 <h3 id=knn ><a href="/MLJTutorials/pub/isl/lab-4.html#knn">KNN</a></h3>
+<p>Multiple packages offer KNN, we go via NearestNeighbors:</p>
+<pre><code class="julia hljs"><span class=hljs-meta >@load</span> KNNClassifier pkg=NearestNeighbors
+
+knnc = KNNClassifier(K=<span class=hljs-number >1</span>)
+clf = machine(knnc, X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+<span class=hljs-meta >@show</span> mean(ŷ .== y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">mean(ŷ .== y[test]) = 0.5
+</code></pre></div>
+<p>Let&#39;s try with three neighbors</p>
+<pre><code class="julia hljs">knnc.K = <span class=hljs-number >3</span>
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+<span class=hljs-meta >@show</span> mean(ŷ .== y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">mean(ŷ .== y[test]) = 0.5317460317460317
+</code></pre></div>
 <h2 id=caravan_insurance_data ><a href="/MLJTutorials/pub/isl/lab-4.html#caravan_insurance_data">Caravan insurance data</a></h2>
+<p>The caravan dataset is part of ISLR as well:</p>
+<pre><code class="julia hljs">caravan  = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Caravan"</span>)
+<span class=hljs-meta >@show</span> size(caravan)</code></pre><div class=code_output ><pre><code class="plaintext hljs">size(caravan) = (5822, 86)
+</code></pre></div>
+<p>The target variable is <code>Purchase</code>, effectively  a categorical</p>
+<pre><code class="julia hljs">purchase = caravan.Purchase
+vals     = unique(purchase)</code></pre><div class=code_output ><pre><code class="plaintext hljs">2-element Array{String,1}:
+ "No" 
+ "Yes"</code></pre></div>
+<p>Let&#39;s see how many of each we have</p>
+<pre><code class="julia hljs">nl1 = sum(purchase .== vals[<span class=hljs-number >1</span>])
+nl2 = sum(purchase .== vals[<span class=hljs-number >2</span>])
+println(<span class=hljs-string >"#<span class=hljs-subst >$(vals[<span class=hljs-number >1</span>])</span> "</span>, nl1)
+println(<span class=hljs-string >"#<span class=hljs-subst >$(vals[<span class=hljs-number >2</span>])</span> "</span>, nl2)</code></pre><div class=code_output ><pre><code class="plaintext hljs">#No 5474
+#Yes 348
+</code></pre></div>
+<p>that&#39;s quite unbalanced.</p>
+<p>Apart from the target, all other variables are numbers; we can standardize the data:</p>
+<pre><code class="julia hljs">y, X = unpack(caravan, ==(:Purchase), col-&gt;<span class=hljs-literal >true</span>)
+
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
+
+var(Xs[:,<span class=hljs-number >1</span>])</code></pre><div class=code_output ><pre><code class="plaintext hljs">1.0000000000000002</code></pre></div>
+<p><strong>Note</strong>: in MLJ, it is recommended to work with pipelines / networks when possible and not do &quot;step-by-step&quot; transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.</p>
+<p>We split the data in the first 1000 rows for testing and the rest for training:</p>
+<pre><code class="julia hljs">test = <span class=hljs-number >1</span>:<span class=hljs-number >1000</span>
+train = last(test)+<span class=hljs-number >1</span>:nrows(Xs);</code></pre>
+<p>Let&#39;s now fit a KNN model and check the misclassification rate</p>
+<pre><code class="julia hljs">clf = machine(KNNClassifier(K=<span class=hljs-number >3</span>), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.075</code></pre></div>
+<p>that looks good but recall the problem is very unbalanced</p>
+<pre><code class="julia hljs">mean(y[test] .!= <span class=hljs-string >"No"</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.059</code></pre></div>
+<p>Let&#39;s fit a logistic classifier to this problem</p>
+<pre><code class="julia hljs">clf = machine(LogisticClassifier(), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.066</code></pre></div>
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: October 31, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.

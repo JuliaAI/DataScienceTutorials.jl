@@ -1,2 +1,2 @@
 size(smarket) = (1250, 9)
-names(smarket) = [:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Direction]
+names(smarket) = Symbol[:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Direction]
