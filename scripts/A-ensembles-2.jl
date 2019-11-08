@@ -7,12 +7,15 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, PyPlot, PrettyPrinting, Random
+using MLJ, PyPlot, PrettyPrinting, Random,
+      DataFrames
 
 X, y = @load_boston
-@show size(X)
-@show y[1:3]
-first(X, 3) |> pretty
+sch = schema(X)
+p = length(sch.names)
+n = sch.nrows
+@show (n, p)
+describe(y)
 
 @load DecisionTreeRegressor
 
