@@ -3,4 +3,4 @@ KNNRegressor(K = 5,
              metric = Distances.Euclidean(0.0),
              leafsize = 10,
              reorder = true,
-             weights = :uniform,) @ 8…29
+             weights = :uniform,) @ 1…25

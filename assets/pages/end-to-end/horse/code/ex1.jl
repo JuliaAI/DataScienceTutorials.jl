@@ -16,7 +16,7 @@ header = ["surgery", "age", "hospital_number",
     "outcome", "surgical_lesion", "lesion_1", "lesion_2", "lesion_3",
     "cp_data"]
 csv_opts = (header=header, delim=' ', missingstring="?",
-            threaded=false, silencewarnings=true)
+            ignorerepeated=true)
 data_train = CSV.read(req1.body; csv_opts...)
 data_test  = CSV.read(req2.body; csv_opts...)
 @show size(data_train)

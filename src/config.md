@@ -24,6 +24,6 @@ For instance:
 \newcommand{\R}{\mathbb R}
 \newcommand{\scal}[1]{\langle #1 \rangle}
 
-\newcommand{\tutorial}[1]{*Download the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/!#1.ipynb" target="_blank"><em>notebook</em></a>~~~ *or the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/!#1.jl" target="_blank"><em>raw script</em></a>~~~ *for this tutorial (right-click on the link and save).* <!--_-->\toc\literate{/scripts/!#1.jl}}
+\newcommand{\tutorial}[1]{*Download the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/!#1.ipynb" target="_blank"><em>notebook</em></a>~~~, *the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/!#1.jl" target="_blank"><em>raw script</em></a>~~~, *or the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/scripts/!#1.jl" target="_blank"><em>annoted script</em></a>~~~ *for this tutorial (right-click on the link and save).* <!--_-->\toc\literate{/scripts/!#1.jl}}
 
 \newcommand{\refblank}[2]{~~~<a href="!#2" target="_blank">~~~!#1~~~</a>~~~}

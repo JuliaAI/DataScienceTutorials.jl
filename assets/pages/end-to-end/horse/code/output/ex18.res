@@ -6,4 +6,4 @@ JuDoc.SimplePipe(hot = OneHotEncoder(features = Symbol[],
                                              penalty = :l2,
                                              fit_intercept = true,
                                              penalize_intercept = false,
-                                             solver = nothing,),) @ 4…75
+                                             solver = nothing,),) @ 4…63

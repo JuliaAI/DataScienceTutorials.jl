@@ -4,12 +4,15 @@
 This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
 
 ```julia:ex1
-using MLJ, PyPlot, PrettyPrinting, Random
+using MLJ, PyPlot, PrettyPrinting, Random,
+      DataFrames
 
 X, y = @load_boston
-@show size(X)
-@show y[1:3]
-first(X, 3) |> pretty
+sch = schema(X)
+p = length(sch.names)
+n = sch.nrows
+@show (n, p)
+describe(y)
 ```
 
 Let's load the decision tree regressor
