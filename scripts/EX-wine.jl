@@ -126,8 +126,8 @@ W = pca(rows=train);
 
 # Let's now display this using different colours for the different classes:
 
-x1 = Wtrain.x1
-x2 = Wtrain.x2
+x1 = W.x1
+x2 = W.x2
 
 mask_1 = ytrain .== 1
 mask_2 = ytrain .== 2

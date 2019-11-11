@@ -51,4 +51,5 @@ If you're fairly new to Julia and ML, this is probably where you should start.
 **Note**: the adaptation is fairly liberal, adding content when it helps highlights specificities with MLJ and removing content when it seems unnecessary.
 
 * [Lab 2](/pub/isl/lab-2.html), a very short intro to Julia for data analysis
-* [Lab 3](/pub/isl/lab-3.html)
+* [Lab 3](/pub/isl/lab-3.html), linear regression and metrics
+* [Lab 4](/pub/isl/lab-4.html), classification with LDA, QDA, KNN and metrics
