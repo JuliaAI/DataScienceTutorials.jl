@@ -76,8 +76,8 @@ pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
 fit!(pca)
 W = pca(rows=train);
 
-x1 = Wtrain.x1
-x2 = Wtrain.x2
+x1 = W.x1
+x2 = W.x2
 
 mask_1 = ytrain .== 1
 mask_2 = ytrain .== 2
