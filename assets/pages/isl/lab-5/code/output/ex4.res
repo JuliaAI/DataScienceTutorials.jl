@@ -1,16 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title></title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/wine.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/horse.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-3.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-4.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-5.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=lab_5_-_cross_validation_and_the_bootstrap ><a href="/MLJTutorials/pub/isl/lab-5.html#lab_5_-_cross_validation_and_the_bootstrap">Lab 5 - Cross validation and the bootstrap</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/ISL-lab-5.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/ISL-lab-5.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/scripts/ISL-lab-5.jl" target=_blank ><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/isl/lab-5.html#getting_started">Getting started</a><ol><li><a href="/MLJTutorials/pub/isl/lab-5.html#polynomial_regression">Polynomial regression</a></ol><li><a href="/MLJTutorials/pub/isl/lab-5.html#k-folds_cross_validation">K-Folds Cross Validation</a><li><a href="/MLJTutorials/pub/isl/lab-5.html#the_bootstrap">The Bootstrap</a></ol></div><h2 id=getting_started ><a href="/MLJTutorials/pub/isl/lab-5.html#getting_started">Getting started</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, RDatasets
-
-auto = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Auto"</span>)
-y, X = unpack(auto, ==(:MPG), col-&gt;<span class=hljs-literal >true</span>)
-train, test = partition(eachindex(y), <span class=hljs-number >0.5</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >444</span>);</code></pre> <p>Note the use of <code>rng&#61;</code> to seed the shuffling of indices so that the results are reproducible.</p> <h3 id=polynomial_regression ><a href="/MLJTutorials/pub/isl/lab-5.html#polynomial_regression">Polynomial regression</a></h3> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><div class=code_output ><pre><code class="plaintext hljs">LinearRegressor(fit_intercept = true,
-                solver = nothing,) @ 6…75</code></pre></div> <p>In this part we only build models with the Horsepower feature. Let&#39;s get a baseline:</p> <pre><code class="julia hljs">lm = LinearRegressor()
-mlm = machine(lm, select(X, :Horsepower), y)
-fit!(mlm, rows=train)
-rms(predict(mlm, rows=test), y[test])^<span class=hljs-number >2</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">23.493990895007986</code></pre></div>
-<p>Note that we square the measure to  match the results obtained in the ISL labs where the mean squared error &#40;here we use the <code>rms</code> which is the square root of that&#41;.</p>
-<p>We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:</p>
-<pre><code class="julia hljs">hp = X.Horsepower
-Xhp = DataFrame(hp1=hp, hp2=hp.^<span class=hljs-number >2</span>, hp3=hp.^<span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">392×3 DataFrame
+392×3 DataFrame
 │ Row │ hp1     │ hp2     │ hp3       │
 │     │ Float64 │ Float64 │ Float64   │
 ├─────┼─────────┼─────────┼───────────┤
@@ -405,72 +393,4 @@ Xhp = DataFrame(hp1=hp, hp2=hp.^<span class=hljs-number >2</span>, hp3=hp.^<span
 │ 389 │ 52.0    │ 2704.0  │ 140608.0  │
 │ 390 │ 84.0    │ 7056.0  │ 592704.0  │
 │ 391 │ 79.0    │ 6241.0  │ 493039.0  │
-│ 392 │ 82.0    │ 6724.0  │ 551368.0  │</code></pre></div>
-<p>Now we  can write a simple pipeline where the first step selects the features we want &#40;and with it the degree of the polynomial&#41; and the second is the linear regressor:</p>
-<pre><code class="julia hljs"><span class=hljs-meta >@pipeline</span> LinMod(fs = FeatureSelector(features=[:hp1]),
-                 lr = LinearRegressor())</code></pre><div class=code_output ><pre><code class="plaintext hljs">JuDoc.LinMod(fs = FeatureSelector(features = [:hp1],),
-             lr = LinearRegressor(fit_intercept = true,
-                                  solver = nothing,),) @ 9…95</code></pre></div>
-<p>Then we can  instantiate and fit 3 models where we specify the features each time:</p>
-<pre><code class="julia hljs">lrm = LinMod()
-lr1 = machine(lrm, Xhp, y) <span class=hljs-comment ># poly of degree 1 (line)</span>
-fit!(lr1, rows=train)
-
-lrm.fs.features = [:hp1, :hp2] <span class=hljs-comment ># poly of degree 2</span>
-lr2 = machine(lrm, Xhp, y)
-fit!(lr2, rows=train)
-
-lrm.fs.features = [:hp1, :hp2, :hp3] <span class=hljs-comment ># poly of degree 3</span>
-lr3 = machine(lrm, Xhp, y)
-fit!(lr3, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LinMod} @ 1…36
-</code></pre></div>
-<p>Let&#39;s check the performances on the test set</p>
-<pre><code class="julia hljs"><span class=hljs-meta >@show</span> rms(lr1)^<span class=hljs-number >2</span>
-<span class=hljs-meta >@show</span> rms(lr2)^<span class=hljs-number >2</span>
-<span class=hljs-meta >@show</span> rms(lr3)^<span class=hljs-number >2</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">There was an error running the code:
-MethodError(rms, (Machine{LinMod} @ 5…05,), 0x0000000000006a0e)
-</code></pre></div>
-<h2 id=k-folds_cross_validation ><a href="/MLJTutorials/pub/isl/lab-5.html#k-folds_cross_validation">K-Folds Cross Validation</a></h2>
-<p>Let&#39;s crossvalidate over the degree of the  polynomial. <strong>Note</strong>: there&#39;s a  bit of gymnastics here because MLJ doesn&#39;t directly support a polynomial regression; see our tutorial on <a href="/MLJTutorials/pub/getting-started/model-tuning.html">tuning models</a>.</p>
-<pre><code class="julia hljs">Xhp = DataFrame([hp.^i <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>])
-
-cases = [[<span class=hljs-built_in >Symbol</span>(<span class=hljs-string >"x<span class=hljs-variable >$j</span>"</span>) <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:i] <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>]
-r = range(lrm, :(fs.features), values=cases)
-
-tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-number >10</span>), measure=rms)</code></pre><div class=code_output ><pre><code class="plaintext hljs">MLJ.DeterministicTunedModel(model = JuDoc.LinMod(fs = FeatureSelector @ 1…44,
-                                                 lr = LinearRegressor @ 1…12,),
-                            tuning = Grid(resolution = 10,
-                                          acceleration = ComputationalResources.CPU1{Nothing}(nothing),),
-                            resampling = CV(nfolds = 10,
-                                            shuffle = false,
-                                            rng = Random._GLOBAL_RNG(),),
-                            measure = MLJBase.RMS(),
-                            weights = nothing,
-                            operation = StatsBase.predict,
-                            ranges = MLJ.NominalRange(field = :(fs.features),
-                                                      values = ([:x1], [:x1, :x2], [:x1, :x2, :x3], [:x1, :x2, :x3, :x4], [:x1, :x2, :x3, :x4, :x5], [:x1, :x2, :x3, :x4, :x5, :x6], [:x1, :x2, :x3, :x4, :x5, :x6, :x7], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9, :x10]),),
-                            full_report = true,
-                            train_best = true,) @ 1…15</code></pre></div>
-<p>Now we&#39;re left with fitting the tuned model</p>
-<pre><code class="julia hljs">mtm = machine(tm, Xhp, y)
-fit!(mtm)
-rep = report(mtm)
-<span class=hljs-meta >@show</span> round.(rep.measurements.^<span class=hljs-number >2</span>, digits=<span class=hljs-number >2</span>)
-<span class=hljs-meta >@show</span> argmin(rep.measurements)</code></pre><div class=code_output ><pre><code class="plaintext hljs">round.(rep.measurements .^ 2, digits=2) = [26.07, 19.95, 20.04, 20.05, 19.52, 19.55, 19.61, 24.28, 73.69, 210.93]
-argmin(rep.measurements) = 5
-</code></pre></div>
-<p>So the conclusion here is that the 5th order polynomial does quite well.</p>
-<p>In ISL they use a different seed so the results are a bit different but comparable.</p>
-<h2 id=the_bootstrap ><a href="/MLJTutorials/pub/isl/lab-5.html#the_bootstrap">The Bootstrap</a></h2>
-<p><em>Bootstrapping is not currently supported in MLJ.</em>
-<div class=page-foot >
-  <div class=copyright >
-    &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: November 08, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
-  </div>
-</div>
-
-</div>
-
-      </div> 
-  </div> 
-  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>
+│ 392 │ 82.0    │ 6724.0  │ 551368.0  │

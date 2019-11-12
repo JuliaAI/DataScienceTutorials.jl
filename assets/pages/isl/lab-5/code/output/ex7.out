@@ -1,0 +1,2 @@
+There was an error running the code:
+MethodError(rms, (Machine{LinMod} @ 5…05,), 0x0000000000006a0e)
