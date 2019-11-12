@@ -2,7 +2,12 @@
 
 [![Tutorials status](https://travis-ci.com/alan-turing-institute/MLJTutorials.svg?branch=master)](https://travis-ci.com/alan-turing-institute/MLJTutorials)
 
-This readme assumes that your current directory is `MLJTutorials`.
+This repository contains tutorials for MLJ.
+Currently the main aim is to add many tutorials presenting different perspectives and contexts through which the MLJ-way should become more apparent.
+The organisation is rudimentary at the moment and once there are more tutorials, we will try to improve that.
+If you have suggestions or recommendations or would like to help, please o pen an issue here, thanks!
+
+The rest of this readme assumes that your current directory is `MLJTutorials`.
 
 ## For readers
 
