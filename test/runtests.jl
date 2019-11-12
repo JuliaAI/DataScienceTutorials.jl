@@ -13,6 +13,7 @@ for (root, _, files) in walkdir(scripts_dir), file in files
                           "ISL-lab-4.jl") && continue
 
     @testset "testing $file" begin
+        println("\n\n>> looking at $file ...")
         path = joinpath(root, file)
         tf = tempname()
         write(tf, """
