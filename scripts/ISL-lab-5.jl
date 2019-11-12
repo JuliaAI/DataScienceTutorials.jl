@@ -26,12 +26,12 @@ rms(predict(mlm, rows=test), y[test])^2
 # We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:
 
 hp = X.Horsepower
-Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3)
+Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 
 # Now we  can write a simple pipeline where the first step selects the features we want (and with it the degree of the polynomial) and the second is the linear regressor:
 
 @pipeline LinMod(fs = FeatureSelector(features=[:hp1]),
-                 lr = LinearRegressor())
+                 lr = LinearRegressor());
 
 # Then we can  instantiate and fit 3 models where we specify the features each time:
 
@@ -49,14 +49,17 @@ fit!(lr3, rows=train)
 
 # Let's check the performances on the test set
 
-@show rms(lr1)^2
-@show rms(lr2)^2
-@show rms(lr3)^2
+get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
+
+@show get_mse(lr1)
+@show get_mse(lr2)
+@show get_mse(lr3)
 
 # ## K-Folds Cross Validation
 #
 # Let's crossvalidate over the degree of the  polynomial.
-# **Note**: there's a  bit of gymnastics here because MLJ doesn't directly support a polynomial regression; see our tutorial on [tuning models](/pub/getting-started/model-tuning.html).
+#
+# **Note**: there's a  bit of gymnastics here because MLJ doesn't directly support a polynomial regression; see our tutorial on [tuning models](/pub/getting-started/model-tuning.html) for a gentler introduction to model tuning.
 
 Xhp = DataFrame([hp.^i for i in 1:10])
 

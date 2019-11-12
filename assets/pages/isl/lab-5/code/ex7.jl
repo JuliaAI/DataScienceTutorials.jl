@@ -1,4 +1,6 @@
 # This file was generated, do not modify it. # hide
-@show rms(lr1)^2
-@show rms(lr2)^2
-@show rms(lr3)^2
+get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
+
+@show get_mse(lr1)
+@show get_mse(lr2)
+@show get_mse(lr3)

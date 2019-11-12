@@ -14,10 +14,10 @@ fit!(mlm, rows=train)
 rms(predict(mlm, rows=test), y[test])^2
 
 hp = X.Horsepower
-Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3)
+Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 
 @pipeline LinMod(fs = FeatureSelector(features=[:hp1]),
-                 lr = LinearRegressor())
+                 lr = LinearRegressor());
 
 lrm = LinMod()
 lr1 = machine(lrm, Xhp, y) # poly of degree 1 (line)
@@ -31,9 +31,11 @@ lrm.fs.features = [:hp1, :hp2, :hp3] # poly of degree 3
 lr3 = machine(lrm, Xhp, y)
 fit!(lr3, rows=train)
 
-@show rms(lr1)^2
-@show rms(lr2)^2
-@show rms(lr3)^2
+get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
+
+@show get_mse(lr1)
+@show get_mse(lr2)
+@show get_mse(lr3)
 
 Xhp = DataFrame([hp.^i for i in 1:10])
 
