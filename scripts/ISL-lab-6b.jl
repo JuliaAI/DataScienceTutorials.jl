@@ -9,6 +9,7 @@
 
 using MLJ, RDatasets, ScientificTypes, PrettyPrinting
 
+@load LinearRegressor pkg=MLJLinearModels
 @load RidgeRegressor pkg=MLJLinearModels
 @load LassoRegressor pkg=MLJLinearModels
 
