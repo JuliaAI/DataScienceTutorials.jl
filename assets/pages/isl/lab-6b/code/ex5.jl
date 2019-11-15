@@ -1,9 +1,10 @@
 # This file was generated, do not modify it. # hide
-@pipeline HotReg(hot = OneHotEncoder(),
-                 reg = LinearRegressor())
+@pipeline RegPipe(std = Standardizer(),
+                  hot = OneHotEncoder(),
+                  reg = LinearRegressor())
 
-model = HotReg()
-pipe1 = machine(model, Xc, y)
-fit!(pipe1, rows=train)
-ŷ = predict(pipe1, rows=test)
-round(rms(ŷ, y[test]), sigdigits=4)
+model = RegPipe()
+pipe  = machine(model, Xc, y)
+fit!(pipe, rows=train)
+ŷ = predict(pipe, rows=test)
+round(rms(ŷ, y[test])^2, sigdigits=4)

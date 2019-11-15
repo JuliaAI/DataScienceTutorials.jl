@@ -1,1 +1,0 @@
-round(best_mdl.reg.lambda, sigdigits=4) = 4.942
