@@ -2,6 +2,12 @@
 
 [![Tutorials status](https://travis-ci.com/alan-turing-institute/MLJTutorials.svg?branch=master)](https://travis-ci.com/alan-turing-institute/MLJTutorials)
 
+**Full checks** tracker:
+
+MLJ   | MLJBase | MLJModels | ScientificTypes | Commit  | Note
+----- | ------- | --------- | --------------- | ------- | ----
+0.5.2 | 0.7.5   | 0.5.6     | 0.2.4           | f556f62 | ✓
+
 This repository contains tutorials for MLJ.
 Currently the main aim is to add many tutorials presenting different perspectives and contexts through which the MLJ-way should become more apparent.
 The organisation is rudimentary at the moment and once there are more tutorials, we will try to improve that.
