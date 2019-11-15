@@ -27,45 +27,62 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
 
-@pipeline HotReg(hot = OneHotEncoder(),
-                 reg = LinearRegressor())
+@pipeline RegPipe(std = Standardizer(),
+                  hot = OneHotEncoder(),
+                  reg = LinearRegressor())
 
-model = HotReg()
-pipe1 = machine(model, Xc, y)
-fit!(pipe1, rows=train)
-ŷ = predict(pipe1, rows=test)
-round(rms(ŷ, y[test]), sigdigits=4)
+model = RegPipe()
+pipe  = machine(model, Xc, y)
+fit!(pipe, rows=train)
+ŷ = predict(pipe, rows=test)
+round(rms(ŷ, y[test])^2, sigdigits=4)
 
-model.reg = RidgeRegressor()
-pipe2 = machine(model, Xc, y)
-fit!(pipe2, rows=train)
-ŷ = predict(pipe2, rows=test)
-round(rms(ŷ, y[test]), sigdigits=4)
+pipe.model.reg = RidgeRegressor()
+fit!(pipe, rows=train)
+ŷ = predict(pipe, rows=test)
+round(rms(ŷ, y[test])^2, sigdigits=4)
 
-r  = range(model, :(reg.lambda), lower=1e-2, upper=1e9, scale=:log10)
+r  = range(model, :(reg.lambda), lower=1e-2, upper=100_000, scale=:log10)
 tm = TunedModel(model=model, ranges=r, tuning=Grid(resolution=50),
-                measure=rms)
+                resampling=CV(nfolds=3, rng=4141), measure=rms)
 mtm = machine(tm, Xc, y)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-@show round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.reg.lambda, sigdigits=4)
 
 ŷ = predict(mtm, rows=test)
-round(rms(ŷ, y[test]), sigdigits=4)
+round(rms(ŷ, y[test])^2, sigdigits=4)
 
-Xc2 = select(Xc, Not([:League, :Division, :NewLeague]))
-pipe2 = machine(model, Xc2, y)
-fit!(pipe2, rows=train)
-ŷ = predict(pipe2, rows=test)
-round(rms(ŷ, y[test]), sigdigits=4)
-
-tm.resampling = CV(nfolds=5)
-mtm = machine(tm, Xc2, y)
+mtm.model.model.reg = LassoRegressor()
+mtm.model.ranges = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
 
+best_mdl = fitted_params(mtm).best_model
+round(best_mdl.reg.lambda, sigdigits=4)
+
 ŷ = predict(mtm, rows=test)
-round(rms(ŷ, y[test]), sigdigits=4)
+round(rms(ŷ, y[test])^2, sigdigits=4)
+
+coefs = mtm.fitresult.fitresult.machine.fitresult
+round.(coefs, sigdigits=2)
+
+sum(coefs .≈ 0) / length(coefs)
+
+@load ElasticNetRegressor pkg=MLJLinearModels
+
+mtm.model.model.reg = ElasticNetRegressor()
+mtm.model.ranges = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
+                    range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
+mtm.model.tuning = Grid(resolution=10)
+fit!(mtm, rows=train)
+
+best_mdl = fitted_params(mtm).best_model
+@show round(best_mdl.reg.lambda, sigdigits=4)
+@show round(best_mdl.reg.gamma, sigdigits=4)
+
+ŷ = predict(mtm, rows=test)
+round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
