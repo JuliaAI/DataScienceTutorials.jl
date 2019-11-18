@@ -4,9 +4,9 @@
 
 **Full checks** tracker: (these combination of versions are known to work fully together)
 
-MLJ   | MLJBase | MLJModels | ScientificTypes | Commit    | Note
------ | ------- | --------- | --------------- | --------- | ----
-0.5.2 | 0.7.5   | 0.5.6     | 0.2.4           | [f556f62] | ✓
+MLJ   | MLJBase | MLJModels | ScientificTypes | Commit    | Note | Date
+----- | ------- | --------- | --------------- | --------- | ---- | ----
+0.5.2 | 0.7.5   | 0.5.6     | 0.2.4           | [f556f62] | ✓    | Nov 13, 2019
 
 [f556f62]: https://github.com/alan-turing-institute/MLJTutorials/commit/f556f62dad3e9c0e6003faa9ba90d132769fb718
 

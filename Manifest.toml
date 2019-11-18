@@ -270,9 +270,9 @@ version = "0.12.5"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "MbedTLS", "Sockets"]
-git-tree-sha1 = "806f2a5d66d1b78e5349fd463a41f0c10ca5fff3"
+git-tree-sha1 = "5c49dab19938b119fe204fd7d7e8e174f4e9c68b"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "0.8.7"
+version = "0.8.8"
 
 [[IniFile]]
 deps = ["Test"]
