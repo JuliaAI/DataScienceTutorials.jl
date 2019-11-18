@@ -1,0 +1,47 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title></title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/wine.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/horse.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-3.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-4.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-5.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-6b.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-8.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-9.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-10.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=lab_10_-_pca_and_clustering ><a href="/MLJTutorials/pub/isl/lab-10.html#lab_10_-_pca_and_clustering">Lab 10 - PCA and Clustering</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/ISL-lab-10.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/ISL-lab-10.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/scripts/ISL-lab-10.jl" target=_blank ><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/isl/lab-10.html#getting_started">Getting started</a><li><a href="/MLJTutorials/pub/isl/lab-10.html#pca_pipeline">PCA pipeline</a><li><a href="/MLJTutorials/pub/isl/lab-10.html#k-means_clustering">K-Means Clustering</a></ol></div><h2 id=getting_started ><a href="/MLJTutorials/pub/isl/lab-10.html#getting_started">Getting started</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, RDatasets, Random
+
+data = dataset(<span class=hljs-string >"datasets"</span>, <span class=hljs-string >"USArrests"</span>)
+names(data)</code></pre><div class=code_output ><pre><code class="plaintext hljs">5-element Array{Symbol,1}:
+ :State
+ :Murder
+ :Assault
+ :UrbanPop
+ :Rape</code></pre></div> <p>Let&#39;s have a look at the mean and standard deviation of each feature:</p> <pre><code class="julia hljs">describe(data, :mean, :std)</code></pre><div class=code_output ><pre><code class="plaintext hljs">5×3 DataFrame
+│ Row │ variable │ mean   │ std     │
+│     │ Symbol   │ Union… │ Union…  │
+├─────┼──────────┼────────┼─────────┤
+│ 1   │ State    │        │         │
+│ 2   │ Murder   │ 7.788  │ 4.35551 │
+│ 3   │ Assault  │ 170.76 │ 83.3377 │
+│ 4   │ UrbanPop │ 65.54  │ 14.4748 │
+│ 5   │ Rape     │ 21.232 │ 9.36638 │</code></pre></div> <h2 id=pca_pipeline ><a href="/MLJTutorials/pub/isl/lab-10.html#pca_pipeline">PCA pipeline</a></h2> <p>PCA is usually best done after standardization:</p> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> PCA pkg=MultivariateStats
+
+<span class=hljs-meta >@pipeline</span> StdPCA(std = Standardizer(),
+                 pca = PCA())
+
+spca_mdl = StdPCA()
+spca = machine(spca_mdl, X)
+fit!(spca)
+
+W = transform(spca, X);</code></pre> <p>W is the PCA&#39;d data; here we&#39;ve used default settings for PCA and it has recovered 2 components:</p> <pre><code class="julia hljs">schema(W).names</code></pre><div class=code_output ><pre><code class="plaintext hljs">(:x1, :x2)</code></pre></div>
+<p>Let&#39;s inspect the fit:</p>
+<pre><code class="julia hljs">r = report(spca).reports[<span class=hljs-number >1</span>]
+cumsum(r.principalvars ./ r.tvar)</code></pre><div class=code_output ><pre><code class="plaintext hljs">2-element Array{Float64,1}:
+ 0.5524311344213105
+ 1.0</code></pre></div>
+<p>In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we completely recover all  of the variance. In other words the actual dimension of the data is 2 and, indeed,</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> LinearAlgebra
+rank(MLJ.matrix(X))</code></pre><div class=code_output ><pre><code class="plaintext hljs">2</code></pre></div>
+<h2 id=k-means_clustering ><a href="/MLJTutorials/pub/isl/lab-10.html#k-means_clustering">K-Means Clustering</a></h2>
+<p><strong>ONGOING</strong>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: November 18, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
+  </div>
+</div>
+
+</div>
+
+      </div> 
+  </div> 
+  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>
