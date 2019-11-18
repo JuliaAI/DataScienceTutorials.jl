@@ -59,3 +59,4 @@ Also note that some of the things used in the ISL labs are not (yet) supported b
 * [Lab 5](/pub/isl/lab-5.html), k-folds cross validation
 * [Lab 6b](/pub/isl/lab-6b.html), Ridge and Lasso regression
 * [Lab 8](/pub/isl/lab-8.html), Tree-based models
+* [Lab 9](/pub/isl/lab-9.html), SVM (_partial_)

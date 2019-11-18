@@ -12,12 +12,14 @@ for (root, _, files) in walkdir(scripts_dir), file in files
         "EX-crabs-xgb.jl",    # has plots
         "EX-wine.jl",         # has plots
         "ISL-lab-4.jl",       # has plots
-#       "ISL-lab-8.jl",       # SckitLearn's RFR
-        "ISL-lab-9.jl",       # has plots
+        "ISL-lab-8.jl",       # has SckitLearn
         ) && get(ENV, "CI", "false") == "true" && continue
 
     # NOTE: for some reason if something uses one of ScikitLearn's
-    # model Travis errors,
+    # model Travis errors (fails to load ScikitLearn_.Model)
+    # NOTE 2: everything *will* be tested if run locally, as it should.
+
+    # uncomment this to individually test specific files
 
 #    splitdir(file)[2] != "ISL-lab-8.jl" && continue
 
