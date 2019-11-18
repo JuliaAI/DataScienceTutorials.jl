@@ -6,6 +6,8 @@
 This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related `MLJ*` packages.
 On each tutorial page, you will find a link to download the raw script and the notebook corresponding to the page.
 
+Feedback and PRs are always welcome to help make these tutorials better!
+
 In order to reproduce the environment that was used to generate these tutorials, please download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml} in a folder and, in that folder, do
 
 ```julia-repl
@@ -55,5 +57,5 @@ Also note that some of the things used in the ISL labs are not (yet) supported b
 * [Lab 3](/pub/isl/lab-3.html), linear regression and metrics
 * [Lab 4](/pub/isl/lab-4.html), classification with LDA, QDA, KNN and metrics
 * [Lab 5](/pub/isl/lab-5.html), k-folds cross validation
-* _Lab 6a_, forward and backward selection procedure (_not yet supported in MLJ_)
-* [Lab 6b](/pub/isl/lab-6b.html), Ridge and Lasso regression (_ongoing dev_)
+* [Lab 6b](/pub/isl/lab-6b.html), Ridge and Lasso regression
+* [Lab 8](/pub/isl/lab-8.html), Tree-based models
