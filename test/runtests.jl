@@ -1,4 +1,5 @@
 using Test, Logging
+using ScikitLearn # seems to have to be written explicitly for travis.
 
 const curdir = @__DIR__
 const scripts_dir = normpath(joinpath(curdir, "..", "scripts"))
@@ -6,11 +7,14 @@ const scripts_dir = normpath(joinpath(curdir, "..", "scripts"))
 for (root, _, files) in walkdir(scripts_dir), file in files
     # we don't want to test scripts that plot stuff, as that will break on
     # travis.
-    splitdir(file)[2] in ("A-ensembles.jl",
-                          "A-ensembles-2.jl",
-                          "EX-crabs-xgb.jl",
-                          "EX-wine.jl",
-                          "ISL-lab-4.jl") && continue
+    splitdir(file)[2] in ("A-ensembles.jl",     # has plots
+                          "A-ensembles-2.jl",   # has plots
+                          "EX-crabs-xgb.jl",    # has plots
+                          "EX-wine.jl",         # has plots
+                          "ISL-lab-4.jl",       # has plots
+                          ) && continue
+
+#    splitdir(file)[2] != "ISL-lab-8.jl" && continue
 
     @testset "testing $file" begin
         println("\n\n>> looking at $file ...")
