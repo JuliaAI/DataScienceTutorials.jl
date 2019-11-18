@@ -6,13 +6,15 @@ const scripts_dir = normpath(joinpath(curdir, "..", "scripts"))
 for (root, _, files) in walkdir(scripts_dir), file in files
     # we don't want to test scripts that plot stuff, as that will break on
     # travis.
-    splitdir(file)[2] in ("A-ensembles.jl",     # has plots
-                          "A-ensembles-2.jl",   # has plots
-                          "EX-crabs-xgb.jl",    # has plots
-                          "EX-wine.jl",         # has plots
-                          "ISL-lab-4.jl",       # has plots
-#                          "ISL-lab-8.jl",       # SckitLearn's RFR
-                          ) && continue
+    splitdir(file)[2] in (
+        "A-ensembles.jl",     # has plots
+        "A-ensembles-2.jl",   # has plots
+        "EX-crabs-xgb.jl",    # has plots
+        "EX-wine.jl",         # has plots
+        "ISL-lab-4.jl",       # has plots
+#       "ISL-lab-8.jl",       # SckitLearn's RFR
+        "ISL-lab-9.jl",       # has plots
+        ) && get(ENV, "CI", "false") == "true" && continue
 
     # NOTE: for some reason if something uses one of ScikitLearn's
     # model Travis errors,
@@ -25,7 +27,7 @@ for (root, _, files) in walkdir(scripts_dir), file in files
         tf = tempname()
         write(tf, """
         module Tester
-            using ScikitLearn
+            import ScikitLearn
             include("$path")
         end
         """)
