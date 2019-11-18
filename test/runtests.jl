@@ -1,5 +1,4 @@
 using Test, Logging
-using ScikitLearn # seems to have to be written explicitly for travis.
 
 const curdir = @__DIR__
 const scripts_dir = normpath(joinpath(curdir, "..", "scripts"))
@@ -12,7 +11,11 @@ for (root, _, files) in walkdir(scripts_dir), file in files
                           "EX-crabs-xgb.jl",    # has plots
                           "EX-wine.jl",         # has plots
                           "ISL-lab-4.jl",       # has plots
+#                          "ISL-lab-8.jl",       # SckitLearn's RFR
                           ) && continue
+
+    # NOTE: for some reason if something uses one of ScikitLearn's
+    # model Travis errors,
 
 #    splitdir(file)[2] != "ISL-lab-8.jl" && continue
 
@@ -22,6 +25,7 @@ for (root, _, files) in walkdir(scripts_dir), file in files
         tf = tempname()
         write(tf, """
         module Tester
+            using ScikitLearn
             include("$path")
         end
         """)
