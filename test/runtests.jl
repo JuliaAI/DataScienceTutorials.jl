@@ -86,5 +86,5 @@ for (root, _, files) in walkdir(scripts_dir), file in files
             try_run(tf); true
         end
     end
-    println("All done 🍻")
 end
+println("All done 🍻")
