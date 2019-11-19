@@ -1,4 +1,4 @@
-50×4 DataFrames.DataFrame
+50×4 DataFrame
 │ Row │ Murder  │ Assault │ UrbanPop │ Rape    │
 │     │ Float64 │ Int64   │ Float64  │ Float64 │
 ├─────┼─────────┼─────────┼──────────┼─────────┤

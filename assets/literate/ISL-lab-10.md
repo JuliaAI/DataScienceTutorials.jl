@@ -18,7 +18,7 @@ Let's extract the numerical component and coerce
 
 ```julia:ex3
 X = select(data, Not(:State))
-X = coerce(X, :UrbanPop=>Continuous)
+X = coerce(X, :UrbanPop=>Continuous);
 ```
 
 ## PCA pipeline
@@ -50,7 +50,76 @@ cumsum(r.principalvars ./ r.tvar)
 
 In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all  of the variance.
 
-## K-Means Clustering
+## More interesting data...
 
-**ONGOING**
+Instead of just playing with toy data, let's load the orange juice data and extract only the columns corresponding to price data:
+
+```julia:ex7
+data = dataset("ISLR", "OJ")
+
+X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
+                  :SalePriceCH, :PriceDiff, :PctDiscMM, :PctDiscCH]);
+```
+
+### PCA pipeline
+
+```julia:ex8
+Random.seed!(1515)
+
+@pipeline SPCA(std = Standardizer(),
+               pca = PCA())
+spca_mdl = SPCA()
+spca = machine(spca_mdl, X)
+fit!(spca)
+W = transform(spca, X)
+names(W)
+```
+
+What kind of variance can we explain?
+
+```julia:ex9
+r = report(spca).reports[1]
+cumsum(r.principalvars ./ r.tvar)
+```
+
+So 4 PCA features are enough to recover most of the variance.
+
+### Clustering
+
+```julia:ex10
+Random.seed!(1515)
+
+@load KMeans
+@pipeline SPCA2(std = Standardizer(),
+                pca = PCA(),
+                km = KMeans(k=3))
+
+spca2_mdl = SPCA2()
+spca2 = machine(spca2_mdl, X)
+fit!(spca2)
+
+assignments = report(spca2).reports[1].assignments
+mask1 = assignments .== 1
+mask2 = assignments .== 2
+mask3 = assignments .== 3;
+```
+
+Now we can  try visualising this
+
+```julia:ex11
+using PyPlot
+
+figure(figsize=(8, 6))
+for (m, c) in zip((mask1, mask2, mask3), ("red", "green", "blue"))
+    plot(W[m, 1], W[m, 2], ls="none", marker=".", markersize=10, color=c)
+end
+
+xlabel("PCA-1", fontsize=13)
+ylabel("PCA-2", fontsize=13)
+legend(["Group 1", "Group 2", "Group 3"], fontsize=13)
+
+savefig("assets/literate/ISL-lab-10-cluster.svg") # hide
+```
+
+![](/assets/literate/ISL-lab-10-cluster.svg)
 

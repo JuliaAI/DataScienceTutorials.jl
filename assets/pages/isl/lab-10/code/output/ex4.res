@@ -1,4 +1,4 @@
-50×4 DataFrames.DataFrame
+50×4 DataFrame
 │ Row │ x1       │ x2        │ x3         │ x4        │
 │     │ Float64  │ Float64   │ Float64    │ Float64   │
 ├─────┼──────────┼───────────┼────────────┼───────────┤

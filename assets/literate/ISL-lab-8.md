@@ -126,8 +126,6 @@ round(rms(ypred, y[test]), sigdigits=3)
 
 **Note**: the package DecisionTree.jl also has a RandomForest model but it is not yet interfaced with in MLJ.
 
-notest # hide
-
 ```julia:ex12
 @load RandomForestRegressor pkg=ScikitLearn
 
