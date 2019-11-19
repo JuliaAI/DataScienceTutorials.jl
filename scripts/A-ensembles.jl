@@ -91,8 +91,6 @@ r = report(tuned_ensemble);
 
 # For instance, `r.measurements` are the measurements for all pairs of hyperparameters which you could visualise nicely:
 
-# notest # hide
-
 using PyPlot
 
 figure(figsize=(8,6))

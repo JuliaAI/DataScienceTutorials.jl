@@ -41,14 +41,17 @@ function strip_code(fpath)
     lines = readlines(fpath)
     jc = IOBuffer()
     record = true
+    is_ci = get(ENV, "CI", "false") == "true"
     for line in lines
-        if startswith(line, "# notest")
+        if is_ci && startswith(line, "# notest")
             record = false
             continue
         end
         if record
             # is it code?
             startswith(line, "# ") && continue
+            # is it a savefig ?
+            startswith(line, "savefig") && continue
             # it is
             write(jc, line * "\n")
         else
@@ -67,8 +70,7 @@ for (root, _, files) in walkdir(scripts_dir), file in files
 
     # NOTE: if want to run a single file  in isolation, uncomment line below
 
-    splitdir(file)[2] ∉ ("ISL-lab-9.jl",
-                         "ISL-lab-10.jl") && continue
+#    splitdir(file)[2] ∉ ("ISL-lab-8.jl",) && continue
 
     @testset "testing $file" begin
         println("\n\n>> looking at $file ...")

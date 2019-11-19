@@ -43,8 +43,6 @@ curve = learning_curve!(xgbm, resampling=CV(),
 
 # Let's have a look
 
-# notest # hide
-
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
@@ -74,8 +72,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 # Great, as always we can investigate the tuning by using `report` and can, for instance, plot a heatmap of the measurements:
-
-# notest # hide
 
 r = report(mtm)
 
@@ -128,8 +124,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 # and the usual procedure to visualise it:
-
-# notest # hide
 
 r = report(mtm)
 ss = r.parameter_values[:,1]
