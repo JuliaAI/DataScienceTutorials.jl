@@ -35,11 +35,7 @@ ACTIVATE = """
 preproc(s) = ACTIVATE * s
 
 # Remove lines that end with `# hide`
-_no_hide(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
-# Remove occurences of # notest
-_no_notest(s) = replace(s, r"^#\snotest"=>"")
-
-postproc(s) = s |> _no_notest |> _no_hide
+postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
 
 # =============================================================================
 
