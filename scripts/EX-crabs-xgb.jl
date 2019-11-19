@@ -37,7 +37,6 @@ curve = learning_curve!(xgbm, resampling=CV(),
                         measure=cross_entropy)
 
 # Let's have a look
-
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
@@ -61,7 +60,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 # Great, as always we can investigate the tuning by using `report` and can, for instance, plot a heatmap of the measurements:
-
 r = report(mtm)
 
 md = r.parameter_values[:,1]
@@ -103,7 +101,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 # and the usual procedure to visualise it:
-
 r = report(mtm)
 ss = r.parameter_values[:,1]
 cbt = r.parameter_values[:,2]

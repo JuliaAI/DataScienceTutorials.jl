@@ -39,7 +39,6 @@ curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8),
                          range=r, measure=rms, n=4);
 
 # let's plot the curves
-
 figure(figsize=(8,6))
 plot(curves.parameter_values, curves.measurements)
 xlabel("Number of trees", fontsize=14)
@@ -70,7 +69,6 @@ e = evaluate!(m, resampling=Holdout(fraction_train=0.8),
 e |> pprint
 
 # ### Reporting# Again, you could show a 2D heatmap of the hyperparameters
-
 r = report(m)
 
 figure(figsize=(8,6))

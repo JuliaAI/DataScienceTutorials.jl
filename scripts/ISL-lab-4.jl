@@ -27,7 +27,6 @@ cm = X |> Matrix |> cor
 round.(cm, sigdigits=1)
 
 # Let's see what the `:Volume` feature looks like:
-
 using PyPlot
 figure(figsize=(8,6))
 plot(X.Volume)

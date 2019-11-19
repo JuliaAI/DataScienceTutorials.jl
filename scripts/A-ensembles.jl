@@ -68,7 +68,6 @@ best_ensemble = fitted_params(tuned_ensemble).best_model
 r = report(tuned_ensemble);
 
 # For instance, `r.measurements` are the measurements for all pairs of hyperparameters which you could visualise nicely:
-
 using PyPlot
 
 figure(figsize=(8,6))
