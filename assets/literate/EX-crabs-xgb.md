@@ -56,6 +56,8 @@ curve = learning_curve!(xgbm, resampling=CV(),
 
 Let's have a look
 
+notest # hide
+
 ```julia:ex7
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
@@ -91,6 +93,8 @@ fit!(mtm, rows=train)
 ```
 
 Great, as always we can investigate the tuning by using `report` and can, for instance, plot a heatmap of the measurements:
+
+notest # hide
 
 ```julia:ex10
 r = report(mtm)
@@ -153,6 +157,8 @@ fit!(mtm, rows=train)
 ```
 
 and the usual procedure to visualise it:
+
+notest # hide
 
 ```julia:ex15
 r = report(mtm)

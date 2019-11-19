@@ -35,12 +35,33 @@ ACTIVATE = """
 preproc(s) = ACTIVATE * s
 
 # Remove lines that end with `# hide`
-postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
+_no_hide(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
+# Remove occurences of # notest
+_no_notest(s) = replace(s, r"^#\snotest"=>"")
 
-Literate.notebook.(ifiles, nbpath, preprocess=preproc, postprocess=postproc,
-                   execute=false, documenter=false)
-Literate.script.(ifiles, scpath, postprocess=preproc ∘ postproc,
-                 keep_comments=false, documenter=false)
+postproc(s) = s |> _no_notest |> _no_hide
+
+# =============================================================================
+
+get_fn(fp) = splitext(splitdir(fp)[2])[1]
+
+for file in ifiles
+   # Generate annotated notebooks
+   Literate.notebook(file, nbpath,
+                      preprocess=preproc, postprocess=postproc,
+                      execute=false, documenter=false)
+
+   # Generate annotated scripts
+   Literate.script(file, scpath,
+                    postprocess=preproc ∘ postproc,
+                    keep_comments=true, documenter=false)
+
+   # Generate stripped scripts (no comments)
+   Literate.script(file, scpath, name=get_fn(file)*"-raw",
+                    postprocess=preproc ∘ postproc,
+                    keep_comments=false, documenter=false)
+end
+
 
 JS_GHP = """
     var ghpages = require('gh-pages');

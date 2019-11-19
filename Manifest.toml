@@ -47,9 +47,9 @@ version = "0.2.3"
 
 [[CSV]]
 deps = ["CategoricalArrays", "DataFrames", "Dates", "FilePathsBase", "LazyArrays", "Mmap", "Parsers", "PooledArrays", "Profile", "Tables", "Unicode", "WeakRefStrings"]
-git-tree-sha1 = "4194bc05efd054cdbf2765ce4a0d1497bf8eec65"
+git-tree-sha1 = "6b3dcd52e5a86e6c6c00777b9a9c7c5b5cc4a588"
 uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-version = "0.5.16"
+version = "0.5.17"
 
 [[Calculus]]
 deps = ["Compat"]
@@ -388,27 +388,27 @@ version = "0.5.1"
 
 [[MLJ]]
 deps = ["CategoricalArrays", "ComputationalResources", "Dates", "DelimitedFiles", "Distributed", "Distributions", "DocStringExtensions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "MLJModels", "OrderedCollections", "Pkg", "PrettyTables", "ProgressMeter", "Random", "RecipesBase", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "0466bf17ae5b061c4a75492c00b423e56f04ebb7"
+git-tree-sha1 = "8f4b1be988da5481800b6fd979c2f6b571642d98"
 uuid = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-version = "0.5.3"
+version = "0.5.4"
 
 [[MLJBase]]
-deps = ["CategoricalArrays", "DelimitedFiles", "Distributions", "InteractiveUtils", "LossFunctions", "Missings", "OrderedCollections", "Random", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "af65194442b42ea18dccb796032996e2b42b3ad2"
+deps = ["CategoricalArrays", "DelimitedFiles", "Distributions", "InteractiveUtils", "LinearAlgebra", "LossFunctions", "Missings", "OrderedCollections", "Parameters", "Random", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
+git-tree-sha1 = "4a41f57c6cde7f51d6fde29d2c12415d75290e99"
 uuid = "a7f614a8-145f-11e9-1d2a-a57a1082229d"
-version = "0.7.5"
+version = "0.8.1"
 
 [[MLJLinearModels]]
 deps = ["DocStringExtensions", "IterativeSolvers", "LinearAlgebra", "LinearMaps", "MLJBase", "Optim", "Parameters", "Tables"]
-git-tree-sha1 = "303b22bed8b01d42ff3765fc0752d734fc976571"
+git-tree-sha1 = "6f441a8b9ed6e32cda91d749c8baadecfb061f43"
 uuid = "6ee0df7b-362f-4a72-a706-9e79364fb692"
-version = "0.2.0"
+version = "0.2.1"
 
 [[MLJModels]]
 deps = ["CategoricalArrays", "ColorTypes", "Distances", "Distributions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "OrderedCollections", "Parameters", "Pkg", "Random", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "f9bbdba2cee3b3fe09ed51a1ca59e9e03125304c"
+git-tree-sha1 = "c680e986db8dcda1bfed5fc5d617cc4716f06fec"
 uuid = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
-version = "0.5.6"
+version = "0.5.7"
 
 [[MacroTools]]
 deps = ["Compat", "DataStructures", "Test"]
@@ -607,9 +607,9 @@ uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 
 [[ScientificTypes]]
 deps = ["CategoricalArrays", "ColorTypes", "Tables"]
-git-tree-sha1 = "e848198364756008ed85dea69aa9e570dc55d2ac"
+git-tree-sha1 = "312929ba03f39c4f7118424ac57b102d0d1432bb"
 uuid = "321657f4-b219-11e9-178b-2701a2544e81"
-version = "0.2.4"
+version = "0.2.5"
 
 [[ScikitLearn]]
 deps = ["Compat", "Conda", "DataFrames", "DecisionTree", "Distributed", "GaussianMixtures", "GaussianProcesses", "IterTools", "LinearAlgebra", "MacroTools", "NBInclude", "Parameters", "Printf", "PyCall", "PyPlot", "RData", "RDatasets", "Random", "ScikitLearnBase", "SparseArrays", "StatsBase"]

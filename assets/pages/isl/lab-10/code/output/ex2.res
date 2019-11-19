@@ -1,4 +1,4 @@
-5×3 DataFrame
+5×3 DataFrames.DataFrame
 │ Row │ variable │ mean   │ std     │
 │     │ Symbol   │ Union… │ Union…  │
 ├─────┼──────────┼────────┼─────────┤

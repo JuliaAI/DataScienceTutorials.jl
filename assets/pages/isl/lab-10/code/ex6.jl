@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-using LinearAlgebra
-rank(MLJ.matrix(X))
+r = report(pca)
+cumsum(r.principalvars ./ r.tvar)

@@ -7,22 +7,19 @@ names(data)
 
 describe(data, :mean, :std)
 
+X = select(data, Not(:State))
+X = coerce(X, :UrbanPop=>Continuous)
+
 @load PCA pkg=MultivariateStats
 
-@pipeline StdPCA(std = Standardizer(),
-                 pca = PCA())
+pca_mdl = PCA(pratio=1)
+pca = machine(pca_mdl, X)
+fit!(pca)
 
-spca_mdl = StdPCA()
-spca = machine(spca_mdl, X)
-fit!(spca)
-
-W = transform(spca, X);
+W = transform(pca, X);
 
 schema(W).names
 
-r = report(spca).reports[1]
+r = report(pca)
 cumsum(r.principalvars ./ r.tvar)
-
-using LinearAlgebra
-rank(MLJ.matrix(X))
 

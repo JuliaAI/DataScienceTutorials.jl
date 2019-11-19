@@ -81,6 +81,7 @@ best_ensemble.bagging_fraction = 0.5555555555555556
 <p>The <code>report</code> method gives more detailed information on the tuning process:</p>
 <pre><code class="julia hljs">r = report(tuned_ensemble);</code></pre>
 <p>For instance, <code>r.measurements</code> are the measurements for all pairs of hyperparameters which you could visualise nicely:</p>
+<p>notest # hide</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
 
 figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))

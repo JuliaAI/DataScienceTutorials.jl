@@ -3,25 +3,72 @@ using Test, Logging
 const curdir = @__DIR__
 const scripts_dir = normpath(joinpath(curdir, "..", "scripts"))
 
+function finish(bko, bke, wro, rdo, wre, rde)
+    redirect_stdout(bko)
+    redirect_stderr(bke)
+    close(wro)
+    close(rdo)
+    close(wre)
+    close(rde)
+end
+
+function try_run(tf)
+    bko = stdout
+    bke = stderr
+    (rdo, wro) = redirect_stdout()
+    (rde, wre) = redirect_stderr()
+    @sync begin
+        Logging.disable_logging(Logging.LogLevel(3_000))
+        try
+            include(tf)
+        catch e
+            Logging.disable_logging(Logging.Debug)
+            finish(bko, bke, wro, rdo, wre, rde)
+            throw(e)
+        end
+        Logging.disable_logging(Logging.Debug)
+    end
+    finish(bko, bke, wro, rdo, wre, rde)
+end
+
+"""
+strip_code
+
+Gets the julia code out, unless if the block starts with `# notest` in which case
+it's ignored (useful for plots and ScikitLearn things which will fail on travis).
+"""
+function strip_code(fpath)
+    lines = readlines(fpath)
+    jc = IOBuffer()
+    record = true
+    for line in lines
+        if startswith(line, "# notest")
+            record = false
+            continue
+        end
+        if record
+            # is it code?
+            startswith(line, "# ") && continue
+            # it is
+            write(jc, line * "\n")
+        else
+            # toggle it back on if new block
+            if startswith(line, "# ")
+                record = true
+            end
+        end
+    end
+    tp = tempname()
+    write(tp, take!(jc))
+    return tp
+end
+
 for (root, _, files) in walkdir(scripts_dir), file in files
-    # we don't want to test scripts that plot stuff, as that will break on
-    # travis.
-    splitdir(file)[2] in (
-        "A-ensembles.jl",     # has plots
-        "A-ensembles-2.jl",   # has plots
-        "EX-crabs-xgb.jl",    # has plots
-        "EX-wine.jl",         # has plots
-        "ISL-lab-4.jl",       # has plots
-        "ISL-lab-8.jl",       # has SckitLearn
-        ) && get(ENV, "CI", "false") == "true" && continue
 
-    # NOTE: for some reason if something uses one of ScikitLearn's
-    # model Travis errors (fails to load ScikitLearn_.Model)
-    # NOTE 2: everything *will* be tested if run locally, as it should.
+    # NOTE: if want to run a single file  in isolation, uncomment line below
 
-    # uncomment this to individually test specific files
-
-#    splitdir(file)[2] != "ISL-lab-8.jl" && continue
+    splitdir(file)[2] ∉ ("ISL-lab-9.jl",
+                         "ISL-lab-10.jl") && continue
 
     @testset "testing $file" begin
         println("\n\n>> looking at $file ...")
@@ -29,20 +76,13 @@ for (root, _, files) in walkdir(scripts_dir), file in files
         tf = tempname()
         write(tf, """
         module Tester
-            import ScikitLearn
-            include("$path")
+            import ..strip_code
+            include(strip_code("$path"))
         end
         """)
         @test begin
-            bk = stdout
-            (rd, wr) = redirect_stdout()
-            Logging.disable_logging(Logging.LogLevel(3_000))
-            include(tf)
-            Logging.disable_logging(Logging.Debug)
-            redirect_stdout(bk)
-            close(wr)
-            close(rd)
-            true
+            try_run(tf); true
         end
     end
+    println("All done 🍻")
 end

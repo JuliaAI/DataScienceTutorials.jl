@@ -25,6 +25,8 @@ round.(cm, sigdigits=1)
 
 # Let's see what the `:Volume` feature looks like:
 
+# notest # hide
+
 using PyPlot
 figure(figsize=(8,6))
 plot(X.Volume)
