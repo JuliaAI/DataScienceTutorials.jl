@@ -121,7 +121,6 @@ pca = Xc |&gt; Standardizer() |&gt; PCA(maxoutdim=<span class=hljs-number >2</sp
 fit!(pca)
 W = pca(rows=train);</code></pre>
 <p>Let&#39;s now display this using different colours for the different classes:</p>
-<p>notest # hide</p>
 <pre><code class="julia hljs">x1 = Wtrain.x1
 x2 = Wtrain.x2
 

@@ -60,7 +60,7 @@ curve = learning_curve!(xgbm, resampling=CV(),
                         measure=cross_entropy)</code></pre><div class=code_output ><pre><code class="plaintext hljs">(parameter_name = "num_round",
  parameter_scale = :linear,
  parameter_values = [10, 30, 51, 71, 92, 112, 132, 153, 173, 194, 214, 235, 255, 275, 296, 316, 337, 357, 378, 398, 418, 439, 459, 480, 500],
- measurements = [0.8189709782600403, 0.9566784501075745, 0.9794661998748779, 0.9755905270576477, 0.973228931427002, 0.9782517552375793, 0.9744570851325989, 0.9760178923606873, 0.9730918407440186, 0.9792575836181641, 0.9787470698356628, 0.9826120734214783, 0.9854166507720947, 0.9833042621612549, 0.9805116057395935, 0.9808792471885681, 0.9800875186920166, 0.9776668548583984, 0.979369580745697, 0.9778077602386475, 0.9787402749061584, 0.9779520630836487, 0.9782482981681824, 0.9770736694335938, 0.9777476787567139],)</code></pre></div> <p>Let&#39;s have a look</p> <p>notest # hide</p> <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+ measurements = [0.8189709782600403, 0.9566784501075745, 0.9794661998748779, 0.9755905270576477, 0.973228931427002, 0.9782517552375793, 0.9744570851325989, 0.9760178923606873, 0.9730918407440186, 0.9792575836181641, 0.9787470698356628, 0.9826120734214783, 0.9854166507720947, 0.9833042621612549, 0.9805116057395935, 0.9808792471885681, 0.9800875186920166, 0.9776668548583984, 0.979369580745697, 0.9778077602386475, 0.9787402749061584, 0.9779520630836487, 0.9782482981681824, 0.9770736694335938, 0.9777476787567139],)</code></pre></div> <p>Let&#39;s have a look</p> <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(curve.parameter_values, curve.measurements)
 xlabel(<span class=hljs-string >"Number of rounds"</span>, fontsize=<span class=hljs-number >14</span>)
 ylabel(<span class=hljs-string >"Cross entropy"</span>, fontsize=<span class=hljs-number >14</span>)
@@ -79,7 +79,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…67
 </code></pre></div>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
-<p>notest # hide</p>
 <pre><code class="julia hljs">r = report(mtm)
 
 md = r.parameter_values[:,<span class=hljs-number >1</span>]
@@ -123,7 +122,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 9…06
 </code></pre></div>
 <p>and the usual procedure to visualise it:</p>
-<p>notest # hide</p>
 <pre><code class="julia hljs">r = report(mtm)
 ss = r.parameter_values[:,<span class=hljs-number >1</span>]
 cbt = r.parameter_values[:,<span class=hljs-number >2</span>]

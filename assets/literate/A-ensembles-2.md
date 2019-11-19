@@ -53,8 +53,6 @@ curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8),
 
 let's plot the curves
 
-notest # hide
-
 ```julia:ex6
 figure(figsize=(8,6))
 plot(curves.parameter_values, curves.measurements)
@@ -105,8 +103,6 @@ e |> pprint
 
 ### Reporting
 Again, you could show a 2D heatmap of the hyperparameters
-
-notest # hide
 
 ```julia:ex11
 r = report(m)

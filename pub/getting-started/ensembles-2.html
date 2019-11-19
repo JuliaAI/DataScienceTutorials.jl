@@ -46,7 +46,6 @@ r = range(forest, :n, lower=<span class=hljs-number >10</span>, upper=<span clas
 curves = learning_curve!(m, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
                          range=r, measure=rms, n=<span class=hljs-number >4</span>);</code></pre>
 <p>let&#39;s plot the curves</p>
-<p>notest # hide</p>
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(curves.parameter_values, curves.measurements)
 xlabel(<span class=hljs-string >"Number of trees"</span>, fontsize=<span class=hljs-number >14</span>)
@@ -97,7 +96,6 @@ m = machine(tuned_forest, X, y)
  per_observation = [missing, missing])
 </code></pre></div>
 <h3 id=reporting ><a href="/MLJTutorials/pub/getting-started/ensembles-2.html#reporting">Reporting</a></h3>  Again, you could show a 2D heatmap of the hyperparameters</p>
-<p>notest # hide</p>
 <pre><code class="julia hljs">r = report(m)
 
 figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))

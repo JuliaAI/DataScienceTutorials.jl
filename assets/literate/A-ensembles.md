@@ -118,8 +118,6 @@ r = report(tuned_ensemble);
 
 For instance, `r.measurements` are the measurements for all pairs of hyperparameters which you could visualise nicely:
 
-notest # hide
-
 ```julia:ex14
 using PyPlot
 

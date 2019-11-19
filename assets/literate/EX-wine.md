@@ -157,8 +157,6 @@ W = pca(rows=train);
 
 Let's now display this using different colours for the different classes:
 
-notest # hide
-
 ```julia:ex16
 x1 = W.x1
 x2 = W.x2
