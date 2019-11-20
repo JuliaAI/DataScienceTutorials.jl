@@ -124,6 +124,8 @@ mpg |> mean
 #
 # In these tutorials we use `PyPlot` but you could use another package of course.
 
+using PyPlot
+
 figure(figsize=(8,6))
 plot(mpg)
 

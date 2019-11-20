@@ -165,6 +165,8 @@ There are multiple libraries that can be used to  plot things in Julia:
 In these tutorials we use `PyPlot` but you could use another package of course.
 
 ```julia:ex21
+using PyPlot
+
 figure(figsize=(8,6))
 plot(mpg)
 
