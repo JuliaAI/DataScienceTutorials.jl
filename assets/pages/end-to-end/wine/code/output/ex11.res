@@ -1,1 +1,1 @@
-[34mMachine{MnPipe} @ 5…48[39m
+Machine{MnPipe} @ 1…98

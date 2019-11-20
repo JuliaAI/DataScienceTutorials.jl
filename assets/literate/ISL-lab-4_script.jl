@@ -34,6 +34,8 @@ clf = machine(LogisticClassifier(), X2, y)
 
 fit!(clf)
 ŷ = predict(clf, X2)
+ŷ[1:3]
+
 cross_entropy(ŷ, y) |> mean
 
 ŷ = predict_mode(clf, X2)

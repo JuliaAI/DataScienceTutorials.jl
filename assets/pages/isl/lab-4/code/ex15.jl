@@ -1,3 +1,6 @@
 # This file was generated, do not modify it. # hide
-Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
-@show ŷ = predict(clf, Xnew)
+X3 = select(X2, [:Lag1, :Lag2])
+clf = machine(LogisticClassifier(), X3, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+mean(ŷ .== y[test])

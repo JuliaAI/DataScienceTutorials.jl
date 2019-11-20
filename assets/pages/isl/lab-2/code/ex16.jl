@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-describe(auto, :mean, :median, :std)
+auto = dataset("ISLR", "Auto")
+first(auto, 3)

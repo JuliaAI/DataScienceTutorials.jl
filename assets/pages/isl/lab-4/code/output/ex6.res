@@ -1,3 +1,3 @@
 2-element Array{String,1}:
- "Up"  
+ "Up"
  "Down"

@@ -1,3 +1,3 @@
-[Distributions.Normal{Float64}(μ=181489.71736997055, σ=77912.05830349971),
- Distributions.Normal{Float64}(μ=181489.71736997055, σ=77912.05830349971),
- Distributions.Normal{Float64}(μ=181489.71736997055, σ=77912.05830349971)]
+[Distributions.Normal{Float64}(μ=179034.4190382728, σ=76622.40944444199),
+ Distributions.Normal{Float64}(μ=179034.4190382728, σ=76622.40944444199),
+ Distributions.Normal{Float64}(μ=179034.4190382728, σ=76622.40944444199)]

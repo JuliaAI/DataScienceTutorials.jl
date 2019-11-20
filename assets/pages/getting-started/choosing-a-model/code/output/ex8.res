@@ -1,2 +1,2 @@
-MLJModels.GLM_.LinearRegressor(fit_intercept = true,
-                               allowrankdeficient = false,) @ 2…75
+LinearRegressor(fit_intercept = true,
+                solver = nothing,) @ 1…90

@@ -1,4 +1,4 @@
-2×3 DataFrames.DataFrame
+2×3 DataFrame
 │ Row │ x1        │ x2       │ x3        │
 │     │ Float64   │ Float64  │ Float64   │
 ├─────┼───────────┼──────────┼───────────┤

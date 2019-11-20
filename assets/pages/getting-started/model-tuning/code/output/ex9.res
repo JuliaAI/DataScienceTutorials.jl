@@ -9,5 +9,5 @@ MLJ.DeterministicEnsembleModel(atom = MLJModels.DecisionTree_.DecisionTreeRegres
                                bagging_fraction = 0.8,
                                rng = Random._GLOBAL_RNG(),
                                n = 100,
-                               parallel = true,
-                               out_of_bag_measure = Any[],) @ 7…80
+                               acceleration = ComputationalResources.CPU1{Nothing}(nothing),
+                               out_of_bag_measure = Any[],) @ 6…32

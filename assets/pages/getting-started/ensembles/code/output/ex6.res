@@ -8,5 +8,5 @@ MLJ.DeterministicEnsembleModel(atom = MLJModels.NearestNeighbors_.KNNRegressor(K
                                bagging_fraction = 0.8,
                                rng = Random._GLOBAL_RNG(),
                                n = 20,
-                               parallel = true,
-                               out_of_bag_measure = Any[],) @ 1…22
+                               acceleration = ComputationalResources.CPU1{Nothing}(nothing),
+                               out_of_bag_measure = Any[],) @ 1…87

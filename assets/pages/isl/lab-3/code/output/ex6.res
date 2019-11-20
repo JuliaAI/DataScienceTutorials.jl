@@ -1,2 +1,2 @@
 LinearRegressor(fit_intercept = true,
-                solver = nothing,) @ 9…48
+                solver = nothing,) @ 3…22

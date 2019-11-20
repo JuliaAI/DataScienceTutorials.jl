@@ -1,3 +1,8 @@
 # This file was generated, do not modify it. # hide
-test = 1:1000
-train = last(test)+1:nrows(Xs);
+y, X = unpack(caravan, ==(:Purchase), col->true)
+
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
+
+var(Xs[:,1])

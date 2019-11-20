@@ -1,2 +1,6 @@
 # This file was generated, do not modify it. # hide
-mean(y[test] .!= "No")
+clf = machine(KNNClassifier(K=3), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
+
+misclassification_rate(ŷ, y[test])

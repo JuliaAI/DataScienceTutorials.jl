@@ -1,10 +1,11 @@
 # ## Simple linear regression
 #
-# `MLJ` essentially serves as a unified doorway to many existing Julia packages each of which provide their own functionalities.
+# `MLJ` essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.
 #
-# The simple linear regression demonstrates this, many packages offer it (beyond just using the backslash operator): here we will use `MLJLinearModels` but we could also have used `GLM`, `ScikitLearn` etc.
+# The simple linear regression demonstrates this.
+# Several packages offer it (beyond just using the backslash operator): here we will use `MLJLinearModels` but we could also have used `GLM`, `ScikitLearn` etc.
 #
-# To load the functionality use `@load ModelName pkg=PackageName`
+# To load the model from a given package use `@load ModelName pkg=PackageName`
 
 using MLJ
 
@@ -12,7 +13,7 @@ using MLJ
 
 # Note: in order to be able to load this, you **must** have the relevant package in your environment, if you don't, you can always add it (``using Pkg; Pkg.add("MLJLinearModels")``).
 #
-# Let's load the boston data set
+# Let's load the _boston_ data set
 
 using RDatasets, DataFrames
 boston = dataset("MASS", "Boston")
@@ -28,7 +29,7 @@ describe(boston, :mean, :std, :eltype)
 # Here we will just interpret the integer features as continuous as we will just use a basic linear regression; the `ScientificTypes` package helps us with that:
 
 using ScientificTypes
-data = coerce(boston, :Tax=>Continuous, :Rad=>Continuous);
+data = coerce(boston, autotype(boston, :discrete_to_continuous));
 
 # Let's also extract the target variable (`MedV`):
 
@@ -56,6 +57,28 @@ fp = fitted_params(mach)
 
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
+
+# Let's see what the residuals look like
+
+using PyPlot
+
+figure(figsize=(8,6))
+res = ŷ .- y
+stem(res)
+
+savefig("assets/literate/ISL-lab-3-res.svg") # hide
+
+# ![](/assets/literate/ISL-lab-3-res.svg)
+
+# Maybe that a histogram is more appropriate here
+
+figure(figsize=(8,6))
+hist(res, density=true)
+x = range(-20, 20, )
+
+savefig("assets/literate/ISL-lab-3-res2.svg") # hide
+
+# ![](/assets/literate/ISL-lab-3-res2.svg)
 
 # ## Interaction and transformation
 #

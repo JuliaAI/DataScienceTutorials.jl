@@ -1,6 +1,6 @@
 # ## Basic commands
 #
-# This is a very brief and rough primer if you're new to Julia and wondering how to do simpe things that are relevant for data analysis.
+# This is a very brief and rough primer if you're new to Julia and wondering how to do simple things that are relevant for data analysis.
 #
 # Defining a vector
 
@@ -21,10 +21,11 @@ X = [1  2; 3 4]
 
 X = reshape([1, 2, 3, 4], 2, 2)
 
-# But you have to be careful that it fills the matrix by column; so if you want to get the same result as before let's just permute the dimensions
+# But you have to be careful that it fills the matrix by column; so if you want to get the same result as before, you will need to permute the dimensions
 
 X = permutedims(reshape([1, 2, 3, 4], 2, 2))
 
+#
 # Function calls can be split with the `|>` operator so that the above can also be written
 
 X = reshape([1,2,3,4], 2, 2) |> permutedims
@@ -45,10 +46,10 @@ sqrt.([4, 9, 16])
 
 using Statistics, StatsBase
 
-# **Note**: if you don't have `StatsBase`, you can add it using `using Pkg; Pkg.add("StatsBase")`.
+# Note that if you don't have `StatsBase`, you can add it using `using Pkg; Pkg.add("StatsBase")`.
 # Right, let's now compute some simple statistics:
 
-x = randn(1_000) # 500 points iid from a N(0, 1)
+x = randn(1_000) # 1_000 points iid from a N(0, 1)
 μ = mean(x)
 σ = std(x)
 @show (μ, σ)
@@ -79,7 +80,7 @@ using RDatasets
 
 using DataFrames
 
-# Let's load some data from RDatasets (the full list of datasets is available [here](http://vincentarelbundock.github.io/Rdatasets/datasets.html))
+# Let's load some data from RDatasets (the full list of datasets is available [here](http://vincentarelbundock.github.io/Rdatasets/datasets.html)).
 
 auto = dataset("ISLR", "Auto")
 first(auto, 3)
@@ -110,3 +111,22 @@ mpg |> mean
 # * the [learn x in y](https://learnxinyminutes.com/docs/julia/) julia tutorial
 # * the [`DataFrames.jl` docs](http://juliadata.github.io/DataFrames.jl/latest/)
 # * the [`StatsBases.jl` docs](https://juliastats.org/StatsBase.jl/latest/)
+#
+# ## Plotting data
+#
+# There are multiple libraries that can be used to  plot things in Julia:
+#
+# * [Plots.jl](https://github.com/JuliaPlots/Plots.jl) which supports multiple plotting backends,
+# * [Gadfly.jl](https://github.com/GiovineItalia/Gadfly.jl) influenced by the grammar of graphics and `ggplot2`
+# * [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) basically matplotlib
+# * [PGFPlotsX.jl](https://github.com/KristofferC/PGFPlotsX.jl) and [PGFPlots](https://github.com/JuliaTeX/PGFPlots.jl) using the LaTeX package  pgfplots,
+# * [Makie](https://github.com/JuliaPlots/Makie.jl), [Gaston](https://github.com/mbaz/Gaston.jl), [Vega](https://github.com/queryverse/VegaLite.jl), ...
+#
+# In these tutorials we use `PyPlot` but you could use another package of course.
+
+figure(figsize=(8,6))
+plot(mpg)
+
+savefig("assets/literate/ISL-lab-2-mpg.svg") # hide
+
+# ![](/assets/literate/ISL-lab-2-mpg.svg)

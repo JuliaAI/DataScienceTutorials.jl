@@ -1,1 +1,1 @@
-CategoricalArrays.CategoricalString{UInt32} "setosa"
+CategoricalString{UInt8} "virginica"

@@ -4,4 +4,4 @@ JuDoc.MnPipe(std = Standardizer(features = Symbol[],),
                                                          penalty = :l2,
                                                          fit_intercept = true,
                                                          penalize_intercept = false,
-                                                         solver = nothing,),)[34m @ 3…87[39m
+                                                         solver = nothing,),) @ 1…72

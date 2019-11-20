@@ -11,7 +11,7 @@ first(boston, 3)
 describe(boston, :mean, :std, :eltype)
 
 using ScientificTypes
-data = coerce(boston, :Tax=>Continuous, :Rad=>Continuous);
+data = coerce(boston, autotype(boston, :discrete_to_continuous));
 
 y = data.MedV
 X = select(data, Not(:MedV));
@@ -27,6 +27,20 @@ fp = fitted_params(mach)
 
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
+
+using PyPlot
+
+figure(figsize=(8,6))
+res = ŷ .- y
+stem(res)
+
+savefig("assets/literate/ISL-lab-3-res.svg") # hide
+
+figure(figsize=(8,6))
+hist(res, density=true)
+x = range(-20, 20, )
+
+savefig("assets/literate/ISL-lab-3-res2.svg") # hide
 
 X2 = hcat(X, X.LStat .* X.Age);
 

@@ -5,4 +5,4 @@ MLJModels.ScikitLearn_.KNeighborsClassifier(n_neighbors = 5,
                                             p = 2,
                                             metric = "minkowski",
                                             metric_params = nothing,
-                                            n_jobs = nothing,) @ 1…87
+                                            n_jobs = nothing,) @ 2…70

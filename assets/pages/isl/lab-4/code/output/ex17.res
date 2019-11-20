@@ -1,1 +1,3 @@
-0.5595238095238095
+2-element CategoricalArray{String,1,UInt8}:
+ "Down"
+ "Down"

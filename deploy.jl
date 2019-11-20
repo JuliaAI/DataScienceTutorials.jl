@@ -72,4 +72,6 @@ run(`$(nodejs_cmd()) -e $JS_GHP`)
 # to the master branch this time.
 ##################################################################
 
+commit = (@isdefined commit) ? commit : "jd-update"
+
 publish()

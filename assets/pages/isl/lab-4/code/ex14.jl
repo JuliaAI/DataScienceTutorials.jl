@@ -1,6 +1,5 @@
 # This file was generated, do not modify it. # hide
-X3 = select(X2, [:Lag1, :Lag2])
-clf = machine(LogisticClassifier(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
-mean(ŷ .== y[test])
+mcr = misclassification_rate(ŷ, y[test])
+accuracy = 1 - mcr

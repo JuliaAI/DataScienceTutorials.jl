@@ -7,4 +7,4 @@ MLJModels.DecisionTree_.DecisionTreeClassifier(pruning_purity = 1.0,
                                                display_depth = 5,
                                                post_prune = false,
                                                merge_purity_threshold = 0.9,
-                                               pdf_smoothing = 0.05,) @ 5…73
+                                               pdf_smoothing = 0.05,) @ 1…40

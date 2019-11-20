@@ -1,4 +1,5 @@
 # This file was generated, do not modify it. # hide
-@show size(auto)
-@show nrow(auto)
-@show ncol(auto)
+mpg = auto.MPG
+mpg = auto[:, 1]
+mpg = auto[:, :MPG]
+mpg |> mean

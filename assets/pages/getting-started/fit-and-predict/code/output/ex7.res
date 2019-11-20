@@ -1,1 +1,1 @@
-UnivariateFinite(setosa=>0.9677419354838711, versicolor=>0.01612903225806452, virginica=>0.01612903225806452)
+UnivariateFinite(setosa=>0.0161, versicolor=>0.0161, virginica=>0.968)
