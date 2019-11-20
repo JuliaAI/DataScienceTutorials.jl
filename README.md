@@ -30,7 +30,7 @@ To do so, save both files in an appropriate folder, start Julia, `cd` to the fol
 ```julia
 using Pkg
 Pkg.activate(".")
-Pkg.insantiate()
+Pkg.instantiate()
 ```
 
 Each tutorial has a link at the top for a notebook or the raw script which you can download by right-clicking on the link and selecting "*Save file as...*".
