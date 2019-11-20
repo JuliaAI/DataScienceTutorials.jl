@@ -65,6 +65,8 @@ mpg |> mean
 @show nrow(auto)
 @show ncol(auto)
 
+using PyPlot
+
 figure(figsize=(8,6))
 plot(mpg)
 
