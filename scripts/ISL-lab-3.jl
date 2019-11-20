@@ -7,12 +7,12 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-# ## Simple linear regression## `MLJ` essentially serves as a unified doorway to many existing Julia packages each of which provide their own functionalities.## The simple linear regression demonstrates this, many packages offer it (beyond just using the backslash operator): here we will use `MLJLinearModels` but we could also have used `GLM`, `ScikitLearn` etc.## To load the functionality use `@load ModelName pkg=PackageName`
+# ## Simple linear regression## `MLJ` essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.## The simple linear regression demonstrates this.# Several packages offer it (beyond just using the backslash operator): here we will use `MLJLinearModels` but we could also have used `GLM`, `ScikitLearn` etc.## To load the model from a given package use `@load ModelName pkg=PackageName`
 using MLJ
 
 @load LinearRegressor pkg=MLJLinearModels
 
-# Note: in order to be able to load this, you **must** have the relevant package in your environment, if you don't, you can always add it (``using Pkg; Pkg.add("MLJLinearModels")``).## Let's load the boston data set
+# Note: in order to be able to load this, you **must** have the relevant package in your environment, if you don't, you can always add it (``using Pkg; Pkg.add("MLJLinearModels")``).## Let's load the _boston_ data set
 using RDatasets, DataFrames
 boston = dataset("MASS", "Boston")
 first(boston, 3)
@@ -22,7 +22,7 @@ describe(boston, :mean, :std, :eltype)
 
 # So there's no missing value and most variables are floating point.# In MLJ it's important to specify the interpretation of the features (should it be considered as a Continuous feature, as a Count, ...?), see [this tutorial section](/pub/getting-started/choosing-a-model.html#data_and_its_interpretation) on scientific types.## Here we will just interpret the integer features as continuous as we will just use a basic linear regression; the `ScientificTypes` package helps us with that:
 using ScientificTypes
-data = coerce(boston, :Tax=>Continuous, :Rad=>Continuous);
+data = coerce(boston, autotype(boston, :discrete_to_continuous));
 
 # Let's also extract the target variable (`MedV`):
 y = data.MedV
@@ -44,6 +44,24 @@ fp = fitted_params(mach)
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
 
+# Let's see what the residuals look like
+using PyPlot
+
+figure(figsize=(8,6))
+res = ŷ .- y
+stem(res)
+
+
+
+# ![](/assets/literate/ISL-lab-3-res.svg)
+# Maybe that a histogram is more appropriate here
+figure(figsize=(8,6))
+hist(res, density=true)
+x = range(-20, 20, )
+
+
+
+# ![](/assets/literate/ISL-lab-3-res2.svg)
 # ## Interaction and transformation## Let's say we want to also consider an interaction term of `lstat` and `age` taken together.# To do this, just create a new dataframe with an additional column corresponding to the interaction term:
 X2 = hcat(X, X.LStat .* X.Age);
 

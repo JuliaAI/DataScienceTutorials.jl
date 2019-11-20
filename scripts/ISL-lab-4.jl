@@ -22,7 +22,7 @@ describe(smarket, :mean, :std, :eltype)
 y = smarket.Direction
 X = select(smarket, Not(:Direction));
 
-# We can compute all the pairwise correlations; we use `Matrix` so that the dataframe entries are considered as one matrix of numbers (otherwise `cor` won't work):
+# We can compute all the pairwise correlations; we use `Matrix` so that the dataframe entries are considered as one matrix of numbers with the same type (otherwise `cor` won't work):
 cm = X |> Matrix |> cor
 round.(cm, sigdigits=1)
 
@@ -50,9 +50,12 @@ clf = machine(LogisticClassifier(), X2, y)
 # Let's fit it to the data and try to reproduce the output:
 fit!(clf)
 ŷ = predict(clf, X2)
+ŷ[1:3]
+
+# Note that here the `ŷ` are _scores_.# We can recover the average cross-entropy loss:
 cross_entropy(ŷ, y) |> mean
 
-# Note that here the `ŷ` are _scores_; in order to recover the class, we could use the mode and compare the misclassification rate:
+# in order to recover the class, we could use the mode and compare the misclassification rate:
 ŷ = predict_mode(clf, X2)
 misclassification_rate(ŷ, y)
 

@@ -30,7 +30,7 @@ sqrt.([4, 9, 16])
 
 using Statistics, StatsBase
 
-x = randn(1_000) # 500 points iid from a N(0, 1)
+x = randn(1_000) # 1_000 points iid from a N(0, 1)
 μ = mean(x)
 σ = std(x)
 @show (μ, σ)
@@ -64,6 +64,11 @@ mpg |> mean
 @show size(auto)
 @show nrow(auto)
 @show ncol(auto)
+
+figure(figsize=(8,6))
+plot(mpg)
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
