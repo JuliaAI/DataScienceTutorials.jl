@@ -144,9 +144,9 @@ legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig("assets/EX-wine-pca.svg") # hide
+savefig("assets/literate/EX-wine-pca.svg") # hide
 
-# ![](/assets/EX-wine-pca.svg)
+# ![PCA](/assets/EX-wine-pca.svg)
 #
 # On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers.
 # At this point it's a bit pointless to dig much deaper into parameter tuning etc.

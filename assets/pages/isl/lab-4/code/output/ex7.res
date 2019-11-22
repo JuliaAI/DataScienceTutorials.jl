@@ -1,1 +1,3 @@
-Machine{LogisticClassifier} @ 8…54
+2-element CategoricalArray{String,1,UInt8}:
+ "Down"
+ "Up"

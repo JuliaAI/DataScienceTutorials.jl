@@ -1,5 +1,3 @@
 # This file was generated, do not modify it. # hide
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
-mcr = misclassification_rate(ŷ, y[test])
-accuracy = 1 - mcr
+train = 1:findlast(X.Year .< 2005)
+test = last(train)+1:length(y);

@@ -97,7 +97,7 @@ xlabel(<span class=hljs-string >"Bagging fraction"</span>, fontsize=<span class=
 yticks([<span class=hljs-number >1</span>, <span class=hljs-number >5</span>, <span class=hljs-number >10</span>, <span class=hljs-number >15</span>, <span class=hljs-number >20</span>], fontsize=<span class=hljs-number >12</span>)
 ylabel(<span class=hljs-string >"Number of neighbors - K"</span>, fontsize=<span class=hljs-number >14</span>)
 </code></pre>
-<p><img src="/MLJTutorials/assets/literate/A-ensembles-heatmap.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/literate/A-ensembles-heatmap.svg" alt="Hyperparameter heatmap" /></p>
 <p>Finally you can always just evaluate the model by reporting <code>rms</code> on the test set:</p>
 <pre><code class="julia hljs">ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.06047534932250347</code></pre></div>

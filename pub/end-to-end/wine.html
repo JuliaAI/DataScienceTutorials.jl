@@ -77,12 +77,12 @@ Proline                       Count
 
 <span class=hljs-meta >@pipeline</span> KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=<span class=hljs-literal >true</span>
 <span class=hljs-meta >@pipeline</span> MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=<span class=hljs-literal >true</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">JuDoc.MnPipe(std = Standardizer(features = Symbol[],),
-             clf = MLJLinearModels.MultinomialClassifier(lambda = 1.0,
-                                                         gamma = 0.0,
-                                                         penalty = :l2,
-                                                         fit_intercept = true,
-                                                         penalize_intercept = false,
-                                                         solver = nothing,),) @ 1…72</code></pre></div>
+             clf = MultinomialClassifier(lambda = 1.0,
+                                         gamma = 0.0,
+                                         penalty = :l2,
+                                         fit_intercept = true,
+                                         penalize_intercept = false,
+                                         solver = nothing,),) @ 4…42</code></pre></div>
 <p>We can now fit this on a train split of the data setting aside 20&#37; of the data for eventual testing.</p>
 <pre><code class="julia hljs">train, test = partition(eachindex(yc), <span class=hljs-number >0.8</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >111</span>)
 Xtrain = selectrows(Xc, train)
@@ -91,7 +91,7 @@ ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
 <pre><code class="julia hljs">knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{MnPipe} @ 1…98
+multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{MnPipe} @ 4…55
 </code></pre></div>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="julia hljs">opts = (resampling=Holdout(fraction_train=<span class=hljs-number >0.9</span>), measure=cross_entropy)
@@ -139,7 +139,7 @@ legend([<span class=hljs-string >"Class 1"</span>, <span class=hljs-string >"Cla
 xticks(fontsize=<span class=hljs-number >12</span>)
 yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/MLJTutorials/assets/EX-wine-pca.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/EX-wine-pca.svg" alt=PCA  /></p>
 <p>On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers. At this point it&#39;s a bit pointless to dig much deaper into parameter tuning etc.</p>
 <p>As a last step, we can report performances of the models on the test set which we set aside earlier:</p>
 <pre><code class="julia hljs">perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)

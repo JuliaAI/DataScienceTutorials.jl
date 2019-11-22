@@ -66,7 +66,7 @@ xlabel(<span class=hljs-string >"Number of rounds"</span>, fontsize=<span class=
 ylabel(<span class=hljs-string >"Cross entropy"</span>, fontsize=<span class=hljs-number >14</span>)
 xticks([<span class=hljs-number >10</span>, <span class=hljs-number >100</span>, <span class=hljs-number >250</span>, <span class=hljs-number >500</span>], fontsize=<span class=hljs-number >12</span>)
 yticks(<span class=hljs-number >0.8</span>:<span class=hljs-number >0.05</span>:<span class=hljs-number >1</span>, fontsize=<span class=hljs-number >12</span>)
-</code></pre> <p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-curve1.svg" alt="" /></p> <p>So we&#39;re doing quite a good job with 100 rounds. Let&#39;s fix that:</p> <pre><code class="julia hljs">xgb.num_round = <span class=hljs-number >100</span>;</code></pre>
+</code></pre> <p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-curve1.svg" alt="Cross entropy vs Num Round" /></p> <p>So we&#39;re doing quite a good job with 100 rounds. Let&#39;s fix that:</p> <pre><code class="julia hljs">xgb.num_round = <span class=hljs-number >100</span>;</code></pre>
 <h3 id=more_tuning_1 ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_1">More tuning &#40;1&#41;</a></h3>
 <p>Let&#39;s now tune the maximum depth of each tree and the minimum child weight in the boosting.</p>
 <pre><code class="julia hljs">r1 = range(xgb, :max_depth, lower=<span class=hljs-number >3</span>, upper=<span class=hljs-number >10</span>)
@@ -92,7 +92,7 @@ ylabel(<span class=hljs-string >"Minimum child weight"</span>, fontsize=<span cl
 xticks(<span class=hljs-number >3</span>:<span class=hljs-number >2</span>:<span class=hljs-number >10</span>, fontsize=<span class=hljs-number >12</span>)
 yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-heatmap.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-heatmap.svg" alt="Hyperparameter heatmap" /></p>
 <p>Let&#39;s extract the optimal model and inspect its parameters:</p>
 <pre><code class="julia hljs">xgb = fitted_params(mtm).best_model
 <span class=hljs-meta >@show</span> xgb.max_depth
@@ -134,7 +134,7 @@ ylabel(<span class=hljs-string >"Col sample by tree"</span>, fontsize=<span clas
 xticks(fontsize=<span class=hljs-number >12</span>)
 yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-heatmap2.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-heatmap2.svg" alt="Hyperparameter heatmap" /></p>
 <p>Let&#39;s retrieve the best models:</p>
 <pre><code class="julia hljs">xgb = fitted_params(mtm).best_model
 <span class=hljs-meta >@show</span> xgb.subsample

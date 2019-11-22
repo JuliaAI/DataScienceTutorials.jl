@@ -138,7 +138,7 @@ ylabel("Number of neighbors - K", fontsize=14)
 savefig("assets/literate/A-ensembles-heatmap.svg") # hide
 ```
 
-![](/assets/literate/A-ensembles-heatmap.svg)
+![Hyperparameter heatmap](/assets/literate/A-ensembles-heatmap.svg)
 
 Finally you can always just evaluate the model by reporting `rms` on the test set:
 

@@ -68,7 +68,7 @@ stem(res)
 
 savefig("assets/literate/ISL-lab-3-res.svg") # hide
 
-# ![](/assets/literate/ISL-lab-3-res.svg)
+# ![Plot of the residuals](/assets/literate/ISL-lab-3-res.svg)
 
 # Maybe that a histogram is more appropriate here
 
@@ -78,7 +78,7 @@ x = range(-20, 20, )
 
 savefig("assets/literate/ISL-lab-3-res2.svg") # hide
 
-# ![](/assets/literate/ISL-lab-3-res2.svg)
+# ![Histogram of the residuals](/assets/literate/ISL-lab-3-res2.svg)
 
 # ## Interaction and transformation
 #

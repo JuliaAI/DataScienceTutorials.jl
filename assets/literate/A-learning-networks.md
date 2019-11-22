@@ -29,7 +29,7 @@ Learning networks can be seen as pipelines on steroids.
 
 Let's consider the following simple DAG:
 
-![](/assets/diagrams/composite1.svg)
+![Operation DAG](/assets/diagrams/composite1.svg)
 
 It corresponds to a fairly standard regression workflow: the data is standardized, the target is transformed using a Box-Cox transformation, a ridge regression is applied and the result is converted back by inverting the transform.
 

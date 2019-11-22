@@ -17,4 +17,4 @@ legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig("assets/EX-wine-pca.svg") # hide
+savefig("assets/literate/EX-wine-pca.svg") # hide

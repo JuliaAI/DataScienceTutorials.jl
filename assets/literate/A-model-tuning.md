@@ -85,7 +85,7 @@ ylim([0, 1])
 savefig("assets/literate/A-model-tuning-hpt.svg") # hide
 ```
 
-![](/assets/literate/A-model-tuning-hpt.svg)
+![Hyperparameter heatmap](/assets/literate/A-model-tuning-hpt.svg)
 
 ## Tuning nested hyperparameters
 
@@ -146,5 +146,5 @@ yticks(fontsize=12)
 savefig("assets/literate/A-model-tuning-hm.svg") # hide
 ```
 
-![](/assets/literate/A-model-tuning-hm.svg)
+![Hyperparameter heatmap](/assets/literate/A-model-tuning-hm.svg)
 

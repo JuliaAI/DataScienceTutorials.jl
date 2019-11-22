@@ -67,7 +67,7 @@ yticks(0.8:0.05:1, fontsize=12)
 savefig("assets/literate/EX-crabs-xgb-curve1.svg") # hide
 ```
 
-![](/assets/literate/EX-crabs-xgb-curve1.svg)
+![Cross entropy vs Num Round](/assets/literate/EX-crabs-xgb-curve1.svg)
 
 So we're doing quite a good job with 100 rounds. Let's fix that:
 
@@ -109,7 +109,7 @@ yticks(fontsize=12)
 savefig("assets/literate/EX-crabs-xgb-heatmap.svg") # hide
 ```
 
-![](/assets/literate/EX-crabs-xgb-heatmap.svg)
+![Hyperparameter heatmap](/assets/literate/EX-crabs-xgb-heatmap.svg)
 
 Let's extract the optimal model and inspect its parameters:
 
@@ -170,7 +170,7 @@ yticks(fontsize=12)
 savefig("assets/literate/EX-crabs-xgb-heatmap2.svg") # hide
 ```
 
-![](/assets/literate/EX-crabs-xgb-heatmap2.svg)
+![Hyperparameter heatmap](/assets/literate/EX-crabs-xgb-heatmap2.svg)
 
 Let's retrieve the best models:
 

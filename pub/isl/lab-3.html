@@ -44,13 +44,13 @@ figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</sp
 res = ŷ .- y
 stem(res)
 </code></pre>
-<p><img src="/MLJTutorials/assets/literate/ISL-lab-3-res.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-3-res.svg" alt="Plot of the residuals" /></p>
 <p>Maybe that a histogram is more appropriate here</p>
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 hist(res, density=<span class=hljs-literal >true</span>)
 x = range(-<span class=hljs-number >20</span>, <span class=hljs-number >20</span>, )
 </code></pre>
-<p><img src="/MLJTutorials/assets/literate/ISL-lab-3-res2.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-3-res2.svg" alt="Histogram of the residuals" /></p>
 <h2 id=interaction_and_transformation ><a href="/MLJTutorials/pub/isl/lab-3.html#interaction_and_transformation">Interaction and transformation</a></h2>
 <p>Let&#39;s say we want to also consider an interaction term of <code>lstat</code> and <code>age</code> taken together. To do this, just create a new dataframe with an additional column corresponding to the interaction term:</p>
 <pre><code class="julia hljs">X2 = hcat(X, X.LStat .* X.Age);</code></pre>

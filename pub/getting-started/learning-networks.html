@@ -20,7 +20,7 @@ first(X, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><div class=
 <h2 id=defining_a_learning_network ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#defining_a_learning_network">Defining a learning network</a></h2>
 <p>In MLJ, a <em>learning network</em> is a directed acyclic graph &#40;DAG&#41; whose <em>nodes</em> apply trained or untrained operations such as a <code>predict</code> or <code>transform</code> &#40;trained&#41; or <code>&#43;</code>, <code>vcat</code> etc. &#40;untrained&#41;. Learning networks can be seen as pipelines on steroids.</p>
 <p>Let&#39;s consider the following simple DAG:</p>
-<p><img src="/MLJTutorials/assets/diagrams/composite1.svg" alt="" /></p>
+<p><img src="/MLJTutorials/assets/diagrams/composite1.svg" alt="Operation DAG" /></p>
 <p>It corresponds to a fairly standard regression workflow: the data is standardized, the target is transformed using a Box-Cox transformation, a ridge regression is applied and the result is converted back by inverting the transform.</p>
 <p><strong>Note</strong>: actually  this DAG is simple enough that it could also have been done with a pipeline.</p>
 <h3 id=sources_and_nodes ><a href="/MLJTutorials/pub/getting-started/learning-networks.html#sources_and_nodes">Sources and nodes</a></h3>

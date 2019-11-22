@@ -65,7 +65,7 @@ ylim([4, 5])
 savefig("assets/literate/A-ensembles-2-curves.svg")
 ```
 
-![](/assets/literate/A-ensembles-2-curves.svg)
+![RMS vs number of trees](/assets/literate/A-ensembles-2-curves.svg)
 
 So out of this curve we could decide for instance to go for 300 trees:
 

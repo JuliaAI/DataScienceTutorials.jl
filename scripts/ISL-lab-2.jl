@@ -131,4 +131,4 @@ plot(mpg)
 
 savefig("assets/literate/ISL-lab-2-mpg.svg") # hide
 
-# ![](/assets/literate/ISL-lab-2-mpg.svg)
+# ![Simple plot](/assets/literate/ISL-lab-2-mpg.svg)
