@@ -29,7 +29,8 @@ ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
 # The few steps above are equivalent to just calling `evaluate!`:
-evaluate!(knn, resampling=Holdout(fraction_train=0.7), measure=rms) |> pprint
+evaluate!(knn, resampling=Holdout(fraction_train=0.7),
+          measure=rms) |> pprint
 
 # ## Homogenous ensembles## MLJ offers basic support for ensembling such as [_bagging_](https://en.wikipedia.org/wiki/Bootstrap_aggregating).# Defining such an ensemble of simple "atomic" models is done via the `EnsembleModel` constructor:
 ensemble_model = EnsembleModel(atom=knn_model, n=20);
@@ -47,8 +48,10 @@ estimates |> pprint
 params(ensemble_model) |> pprint
 
 # To define a tuning grid, we construct ranges for the two parameters and collate these ranges:
-B_range = range(ensemble_model, :bagging_fraction, lower=0.5, upper=1.0)
-K_range = range(ensemble_model, :(atom.K), lower=1, upper=20);
+B_range = range(ensemble_model, :bagging_fraction,
+                lower=0.5, upper=1.0)
+K_range = range(ensemble_model, :(atom.K),
+                lower=1, upper=20);
 
 # the scale for a tuning grid is linear by default but can be specified to `:log10` for logarithmic ranges.# Now we have to define a `TunedModel` and fit it:
 tm = TunedModel(model=ensemble_model,

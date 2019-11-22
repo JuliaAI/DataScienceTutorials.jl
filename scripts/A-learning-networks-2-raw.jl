@@ -37,10 +37,11 @@ ẑ = predict(ridge, W)
 ŷ = inverse_transform(box, ẑ)
 
 @from_network CompositeModel(std=std_model, box=box_model,
-                             ridge=ridge_model) <= ŷ
+                             ridge=ridge_model) <= ŷ;
 
 cm = machine(CompositeModel(), X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
+res = evaluate!(cm, resampling=Holdout(fraction_train=0.8),
+                measure=rms)
 round(res.measurement[1], sigdigits=3)
 
 mutable struct CompositeModel2 <: DeterministicNetwork

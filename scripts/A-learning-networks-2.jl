@@ -43,11 +43,12 @@ ŷ = inverse_transform(box, ẑ)
 
 # No fitting has been done thus far, we have just defined a sequence of operations.## To form a model out of that network is easy using the `@from_network` macro:
 @from_network CompositeModel(std=std_model, box=box_model,
-                             ridge=ridge_model) <= ŷ
+                             ridge=ridge_model) <= ŷ;
 
 # The macro defines a constructor `CompositeModel` and attributes a name to the different nodes; the ordering / connection between the nodes is inferred from `ŷ` via the `<= ŷ`.## **Note**: had the model been probabilistic (e.g. `RidgeClassifier`) you would have needed to add `is_probabilistic=true` at the end.
 cm = machine(CompositeModel(), X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
+res = evaluate!(cm, resampling=Holdout(fraction_train=0.8),
+                measure=rms)
 round(res.measurement[1], sigdigits=3)
 
 # ## Defining a model from scratch## An alternative to the `@from_network`, is to fully define a new model with its `fit` method:

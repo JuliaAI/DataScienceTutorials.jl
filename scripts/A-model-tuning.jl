@@ -33,10 +33,24 @@ m = machine(tm, X, y)
 fit!(m)
 fitted_params(m).best_model.max_depth
 
-# In this case it doesn't the hyperparameter but it could have.# Let's check the misclassification rate for the best model:
+# Let's check the misclassification rate for the best model:
 r = report(m)
 r.best_measurement
 
+# Anyone wants plots? of course:
+using PyPlot
+figure(figsize=(8,6))
+plot(r.parameter_values, r.measurements)
+
+xticks(1:5, fontsize=12)
+yticks(fontsize=12)
+xlabel("Maximum depth", fontsize=14)
+ylabel("Misclassification rate", fontsize=14)
+ylim([0, 1])
+
+
+
+# ![](/assets/literate/A-model-tuning-hpt.svg)
 # ## Tuning nested hyperparameters
 # Let's generate simple dummy regression data
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
@@ -62,5 +76,20 @@ fit!(m);
 r = report(m)
 r.best_measurement
 
+# Let's visualise this
+figure(figsize=(8,6))
+
+vals_sf = r.parameter_values[:, 1]
+vals_bf = r.parameter_values[:, 2]
+
+tricontourf(vals_sf, vals_bf, r.measurements)
+xlabel("Number of sub-features", fontsize=14)
+ylabel("Bagging fraction", fontsize=14)
+xticks([1, 2, 3], fontsize=12)
+yticks(fontsize=12)
+
+
+
+# ![](/assets/literate/A-model-tuning-hm.svg)
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
