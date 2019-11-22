@@ -7,4 +7,4 @@ JuDoc.MyPipe(hot = OneHotEncoder(features = Symbol[],
                                                             leafsize = 10,
                                                             reorder = true,
                                                             weights = :uniform,),
-             target = UnivariateStandardizer(),) @ 1…21
+             target = UnivariateStandardizer(),) @ 2…71

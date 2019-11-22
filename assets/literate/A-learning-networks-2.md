@@ -68,7 +68,7 @@ To form a model out of that network is easy using the `@from_network` macro:
 
 ```julia:ex6
 @from_network CompositeModel(std=std_model, box=box_model,
-                             ridge=ridge_model) <= ŷ
+                             ridge=ridge_model) <= ŷ;
 ```
 
 The macro defines a constructor `CompositeModel` and attributes a name to the different nodes; the ordering / connection between the nodes is inferred from `ŷ` via the `<= ŷ`.
@@ -77,7 +77,8 @@ The macro defines a constructor `CompositeModel` and attributes a name to the di
 
 ```julia:ex7
 cm = machine(CompositeModel(), X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
+res = evaluate!(cm, resampling=Holdout(fraction_train=0.8),
+                measure=rms)
 round(res.measurement[1], sigdigits=3)
 ```
 

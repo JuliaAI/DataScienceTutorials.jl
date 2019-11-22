@@ -49,7 +49,7 @@ pipe.knn.K = 2
 pipe.hot.drop_last = true;
 ```
 
-Evaluation for a pipe can be done with the `evaluate` method; implicitly it will construct machines that will contain the fitted parameters etc:
+Evaluation for a pipe can be done with the `evaluate!` method; implicitly it will construct machines that will contain the fitted parameters etc:
 
 ```julia:ex5
 evaluate(pipe, X, height, resampling=Holdout(),

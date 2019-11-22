@@ -62,7 +62,6 @@ fit!(m)
 fitted_params(m).best_model.max_depth
 ```
 
-In this case it doesn't the hyperparameter but it could have.
 Let's check the misclassification rate for the best model:
 
 ```julia:ex7
@@ -70,18 +69,36 @@ r = report(m)
 r.best_measurement
 ```
 
+Anyone wants plots? of course:
+
+```julia:ex8
+using PyPlot
+figure(figsize=(8,6))
+plot(r.parameter_values, r.measurements)
+
+xticks(1:5, fontsize=12)
+yticks(fontsize=12)
+xlabel("Maximum depth", fontsize=14)
+ylabel("Misclassification rate", fontsize=14)
+ylim([0, 1])
+
+savefig("assets/literate/A-model-tuning-hpt.svg") # hide
+```
+
+![](/assets/literate/A-model-tuning-hpt.svg)
+
 ## Tuning nested hyperparameters
 
 Let's generate simple dummy regression data
 
-```julia:ex8
+```julia:ex9
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
 y = 2X.x1 - X.x2 + 0.05 * randn(100);
 ```
 
 Let's then build a simple ensemble model with decision tree regressors:
 
-```julia:ex9
+```julia:ex10
 dtr = @load DecisionTreeRegressor
 forest = EnsembleModel(atom=dtr)
 ```
@@ -89,13 +106,13 @@ forest = EnsembleModel(atom=dtr)
 Such a model has *nested* hyperparameters in that the ensemble has hyperparameters (e.g. the `:bagging_fraction`) and the atom has hyperparameters (e.g. `:n_subfeatures` or `:max_depth`).
 You can see this by inspecting the parameters using `params`:
 
-```julia:ex10
+```julia:ex11
 params(forest) |> pprint
 ```
 
 Range for nested hyperparameters are specified using dot syntax, the rest is done in much the same way as before:
 
-```julia:ex11
+```julia:ex12
 r1 = range(forest, :(atom.n_subfeatures), lower=1, upper=3)
 r2 = range(forest, :bagging_fraction, lower=0.4, upper=1.0)
 tm = TunedModel(model=forest, tuning=Grid(resolution=12),
@@ -107,8 +124,27 @@ fit!(m);
 
 A useful function to inspect a model after fitting it is the `report` function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:
 
-```julia:ex12
+```julia:ex13
 r = report(m)
 r.best_measurement
 ```
+
+Let's visualise this
+
+```julia:ex14
+figure(figsize=(8,6))
+
+vals_sf = r.parameter_values[:, 1]
+vals_bf = r.parameter_values[:, 2]
+
+tricontourf(vals_sf, vals_bf, r.measurements)
+xlabel("Number of sub-features", fontsize=14)
+ylabel("Bagging fraction", fontsize=14)
+xticks([1, 2, 3], fontsize=12)
+yticks(fontsize=12)
+
+savefig("assets/literate/A-model-tuning-hm.svg") # hide
+```
+
+![](/assets/literate/A-model-tuning-hm.svg)
 

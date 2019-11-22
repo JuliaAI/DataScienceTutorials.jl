@@ -30,6 +30,8 @@ e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
 e |> pprint
 ```
 
+Note that multiple measures can be reported simultaneously.
+
 ## Random forest
 
 Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.

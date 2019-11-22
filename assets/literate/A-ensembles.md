@@ -37,7 +37,8 @@ rms(ŷ, y[test])
 The few steps above are equivalent to just calling `evaluate!`:
 
 ```julia:ex5
-evaluate!(knn, resampling=Holdout(fraction_train=0.7), measure=rms) |> pprint
+evaluate!(knn, resampling=Holdout(fraction_train=0.7),
+          measure=rms) |> pprint
 ```
 
 ## Homogenous ensembles
@@ -81,8 +82,10 @@ params(ensemble_model) |> pprint
 To define a tuning grid, we construct ranges for the two parameters and collate these ranges:
 
 ```julia:ex10
-B_range = range(ensemble_model, :bagging_fraction, lower=0.5, upper=1.0)
-K_range = range(ensemble_model, :(atom.K), lower=1, upper=20);
+B_range = range(ensemble_model, :bagging_fraction,
+                lower=0.5, upper=1.0)
+K_range = range(ensemble_model, :(atom.K),
+                lower=1, upper=20);
 ```
 
 the scale for a tuning grid is linear by default but can be specified to `:log10` for logarithmic ranges.

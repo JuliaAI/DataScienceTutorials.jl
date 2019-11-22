@@ -17,7 +17,8 @@ fit!(knn, rows=train)
 ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
-evaluate!(knn, resampling=Holdout(fraction_train=0.7), measure=rms) |> pprint
+evaluate!(knn, resampling=Holdout(fraction_train=0.7),
+          measure=rms) |> pprint
 
 ensemble_model = EnsembleModel(atom=knn_model, n=20);
 
@@ -30,8 +31,10 @@ estimates |> pprint
 
 params(ensemble_model) |> pprint
 
-B_range = range(ensemble_model, :bagging_fraction, lower=0.5, upper=1.0)
-K_range = range(ensemble_model, :(atom.K), lower=1, upper=20);
+B_range = range(ensemble_model, :bagging_fraction,
+                lower=0.5, upper=1.0)
+K_range = range(ensemble_model, :(atom.K),
+                lower=1, upper=20);
 
 tm = TunedModel(model=ensemble_model,
                 tuning=Grid(resolution=10), # 10x10 grid
