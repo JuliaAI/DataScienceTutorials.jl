@@ -59,9 +59,9 @@ version = "0.5.1"
 
 [[CategoricalArrays]]
 deps = ["Compat", "DataAPI", "Future", "JSON", "Missings", "Printf", "Reexport", "Unicode"]
-git-tree-sha1 = "2473560b9c7cb18f98c3c926af0dc7bedccfc7ab"
+git-tree-sha1 = "4d85a015093760ff23b20f3e25fa195b4cb76794"
 uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
-version = "0.7.2"
+version = "0.7.3"
 
 [[Clustering]]
 deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "Printf", "SparseArrays", "Statistics", "StatsBase"]
@@ -393,7 +393,7 @@ version = "0.5.4"
 
 [[MLJBase]]
 deps = ["CategoricalArrays", "DelimitedFiles", "Distributions", "InteractiveUtils", "LinearAlgebra", "LossFunctions", "Missings", "OrderedCollections", "Parameters", "Random", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
-path = "/Users/tlienart/.julia/dev/MLJBase"
+git-tree-sha1 = "910cff6b02aca70b03a5620dd8c86b3d460d2237"
 uuid = "a7f614a8-145f-11e9-1d2a-a57a1082229d"
 version = "0.8.3"
 
