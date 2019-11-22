@@ -93,6 +93,6 @@ plot(mpg)
 
 
 
-# ![](/assets/literate/ISL-lab-2-mpg.svg)
+# ![Simple plot](/assets/literate/ISL-lab-2-mpg.svg)
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

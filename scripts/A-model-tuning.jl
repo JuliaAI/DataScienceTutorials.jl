@@ -50,7 +50,7 @@ ylim([0, 1])
 
 
 
-# ![](/assets/literate/A-model-tuning-hpt.svg)
+# ![Hyperparameter heatmap](/assets/literate/A-model-tuning-hpt.svg)
 # ## Tuning nested hyperparameters
 # Let's generate simple dummy regression data
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
@@ -90,6 +90,6 @@ yticks(fontsize=12)
 
 
 
-# ![](/assets/literate/A-model-tuning-hm.svg)
+# ![Hyperparameter heatmap](/assets/literate/A-model-tuning-hm.svg)
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

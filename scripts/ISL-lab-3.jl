@@ -53,7 +53,7 @@ stem(res)
 
 
 
-# ![](/assets/literate/ISL-lab-3-res.svg)
+# ![Plot of the residuals](/assets/literate/ISL-lab-3-res.svg)
 # Maybe that a histogram is more appropriate here
 figure(figsize=(8,6))
 hist(res, density=true)
@@ -61,7 +61,7 @@ x = range(-20, 20, )
 
 
 
-# ![](/assets/literate/ISL-lab-3-res2.svg)
+# ![Histogram of the residuals](/assets/literate/ISL-lab-3-res2.svg)
 # ## Interaction and transformation## Let's say we want to also consider an interaction term of `lstat` and `age` taken together.# To do this, just create a new dataframe with an additional column corresponding to the interaction term:
 X2 = hcat(X, X.LStat .* X.Age);
 

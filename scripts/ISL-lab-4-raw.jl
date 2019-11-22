@@ -9,10 +9,16 @@
 
 using MLJ, RDatasets, ScientificTypes,
       DataFrames, Statistics, StatsBase
+using MLJ: confusion_matrix, accuracy, tp, fp,
+      precision, recall, auc, roc, f1score
+using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
 @show size(smarket)
 @show names(smarket)
+
+r3 = x -> round(x, sigdigits=3)
+r3(pi)
 
 describe(smarket, :mean, :std, :eltype)
 
@@ -32,8 +38,8 @@ yticks(fontsize=12)
 
 
 
-yc = coerce(y, Multiclass)
-unique(yc)
+y = coerce(y, OrderedFactor)
+classes(y[1])
 
 @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
@@ -43,41 +49,36 @@ fit!(clf)
 ŷ = predict(clf, X2)
 ŷ[1:3]
 
-cross_entropy(ŷ, y) |> mean
+cross_entropy(ŷ, y) |> mean |> r3
 
 ŷ = predict_mode(clf, X2)
-misclassification_rate(ŷ, y)
+misclassification_rate(ŷ, y) |> r3
 
-TN = down_down = sum(ŷ .== y .== "Down")
-FN = down_up = sum(ŷ .!= y .== "Up")
-FP = up_down = sum(ŷ .!= y .== "Down")
-TP = up_up = sum(ŷ .== y .== "Up")
+cm = confusion_matrix(ŷ, y)
 
-conf_mat = [down_down down_up; up_down up_up]
+@show fp(cm)                 # false positives
+@show accuracy(ŷ, y)  |> r3
+@show accuracy(cm)    |> r3  # same thing
+@show precision(ŷ, y) |> r3
+@show recall(ŷ, y)    |> r3
+@show f1score(ŷ, y)   |> r3
 
-acc = (TN + TP) / length(y)
-prec = TP /  (TP + FP)
-rec  = TP / (TP + FN)
-@show round(acc, sigdigits=3)
-@show round(prec, sigdigits=3)
-@show round(rec, sigdigits=3)
-
-train = 1:findlast(X.Year .< 2005);
-test = last(train)+1:length(y)
+train = 1:findlast(X.Year .< 2005)
+test = last(train)+1:length(y);
 
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
-mcr = misclassification_rate(ŷ, y[test])
-accuracy = 1 - mcr
+accuracy(ŷ, y[test]) |> r3
 
 X3 = select(X2, [:Lag1, :Lag2])
 clf = machine(LogisticClassifier(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
-mean(ŷ .== y[test])
+accuracy(ŷ, y[test]) |> r3
 
 Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
-@show ŷ = predict(clf, Xnew)
+ŷ = predict(clf, Xnew)
+ŷ |> pprint
 
 mode.(ŷ)
 
@@ -87,7 +88,7 @@ clf = machine(BayesianLDA(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-acc = mean(ŷ .== y[test])
+accuracy(ŷ, y[test]) |> r3
 
 @load LDA pkg=MultivariateStats
 using Distances
@@ -96,7 +97,7 @@ clf = machine(LDA(dist=CosineDist()), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-acc = mean(ŷ .== y[test])
+accuracy(ŷ, y[test]) |> r3
 
 @load BayesianQDA pkg=ScikitLearn
 
@@ -104,7 +105,7 @@ clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-acc = mean(ŷ .== y[test])
+accuracy(ŷ, y[test]) |> r3
 
 @load KNNClassifier pkg=NearestNeighbors
 
@@ -112,15 +113,15 @@ knnc = KNNClassifier(K=1)
 clf = machine(knnc, X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
-@show mean(ŷ .== y[test])
+accuracy(ŷ, y[test]) |> r3
 
 knnc.K = 3
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
-@show mean(ŷ .== y[test])
+accuracy(ŷ, y[test]) |> r3
 
 caravan  = dataset("ISLR", "Caravan")
-@show size(caravan)
+size(caravan)
 
 purchase = caravan.Purchase
 vals     = unique(purchase)
@@ -136,7 +137,7 @@ std = machine(Standardizer(), X)
 fit!(std)
 Xs = transform(std, X)
 
-var(Xs[:,1])
+var(Xs[:,1]) |> r3
 
 test = 1:1000
 train = last(test)+1:nrows(Xs);
@@ -145,15 +146,31 @@ clf = machine(KNNClassifier(K=3), Xs, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-misclassification_rate(ŷ, y[test])
+accuracy(ŷ, y[test]) |> r3
 
-mean(y[test] .!= "No")
+mean(y[test] .!= "No") |> r3
 
 clf = machine(LogisticClassifier(), Xs, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-misclassification_rate(ŷ, y[test])
+accuracy(ŷ, y[test]) |> r3
+
+ŷ = predict(clf, rows=test)
+
+auc(ŷ, y[test])
+
+fprs, tprs, thresholds = roc(ŷ, y[test])
+
+figure(figsize=(8,6))
+plot(fprs, tprs)
+
+xlabel("False Positive Rate", fontsize=14)
+ylabel("True Positive Rate", fontsize=14)
+xticks(fontsize=12)
+yticks(fontsize=12)
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

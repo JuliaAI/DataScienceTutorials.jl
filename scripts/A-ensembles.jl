@@ -86,7 +86,7 @@ ylabel("Number of neighbors - K", fontsize=14)
 
 
 
-# ![](/assets/literate/A-ensembles-heatmap.svg)## Finally you can always just evaluate the model by reporting `rms` on the test set:
+# ![Hyperparameter heatmap](/assets/literate/A-ensembles-heatmap.svg)## Finally you can always just evaluate the model by reporting `rms` on the test set:
 ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])
 

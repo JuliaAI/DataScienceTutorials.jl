@@ -48,7 +48,7 @@ ylim([4, 5])
 
 savefig("assets/literate/A-ensembles-2-curves.svg")
 
-# ![](/assets/literate/A-ensembles-2-curves.svg)## So out of this curve we could decide for instance to go for 300 trees:
+# ![RMS vs number of trees](/assets/literate/A-ensembles-2-curves.svg)## So out of this curve we could decide for instance to go for 300 trees:
 forest.n = 300;
 
 # ### Tuning## As `forest` is a composite model, it has nested hyperparameters:

@@ -112,7 +112,7 @@ yticks(fontsize=12)
 
 
 
-# ![](/assets/EX-wine-pca.svg)## On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers.# At this point it's a bit pointless to dig much deaper into parameter tuning etc.## As a last step, we can report performances of the models on the test set which we set aside earlier:
+# ![PCA](/assets/EX-wine-pca.svg)## On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers.# At this point it's a bit pointless to dig much deaper into parameter tuning etc.## As a last step, we can report performances of the models on the test set which we set aside earlier:
 perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
 perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
 println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))

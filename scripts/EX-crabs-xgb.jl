@@ -46,7 +46,7 @@ yticks(0.8:0.05:1, fontsize=12)
 
 
 
-# ![](/assets/literate/EX-crabs-xgb-curve1.svg)## So we're doing quite a good job with 100 rounds. Let's fix that:
+# ![Cross entropy vs Num Round](/assets/literate/EX-crabs-xgb-curve1.svg)## So we're doing quite a good job with 100 rounds. Let's fix that:
 xgb.num_round = 100;
 
 # ### More tuning (1)## Let's now tune the maximum depth of each tree and the minimum child weight in the boosting.
@@ -75,7 +75,7 @@ yticks(fontsize=12)
 
 
 
-# ![](/assets/literate/EX-crabs-xgb-heatmap.svg)## Let's extract the optimal model and inspect its parameters:
+# ![Hyperparameter heatmap](/assets/literate/EX-crabs-xgb-heatmap.svg)## Let's extract the optimal model and inspect its parameters:
 xgb = fitted_params(mtm).best_model
 @show xgb.max_depth
 @show xgb.min_child_weight
@@ -115,7 +115,7 @@ yticks(fontsize=12)
 
 
 
-# ![](/assets/literate/EX-crabs-xgb-heatmap2.svg)## Let's retrieve the best models:
+# ![Hyperparameter heatmap](/assets/literate/EX-crabs-xgb-heatmap2.svg)## Let's retrieve the best models:
 xgb = fitted_params(mtm).best_model
 @show xgb.subsample
 @show xgb.colsample_bytree
