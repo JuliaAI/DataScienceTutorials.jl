@@ -1,6 +1,8 @@
 # This file was generated, do not modify it. # hide
-clf = machine(KNNClassifier(K=3), Xs, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+y, X = unpack(caravan, ==(:Purchase), col->true)
 
-accuracy(ŷ, y[test]) |> r3
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
+
+var(Xs[:,1]) |> r3

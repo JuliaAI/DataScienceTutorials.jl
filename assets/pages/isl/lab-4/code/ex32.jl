@@ -1,5 +1,5 @@
 # This file was generated, do not modify it. # hide
-clf = machine(LogisticClassifier(), Xs, y)
+clf = machine(KNNClassifier(K=3), Xs, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 

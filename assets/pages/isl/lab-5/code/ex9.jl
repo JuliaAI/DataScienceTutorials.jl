@@ -1,6 +1,6 @@
 # This file was generated, do not modify it. # hide
-mtm = machine(tm, Xhp, y)
-fit!(mtm)
-rep = report(mtm)
-@show round.(rep.measurements.^2, digits=2)
-@show argmin(rep.measurements)
+get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
+
+@show get_mse(lr1)
+@show get_mse(lr2)
+@show get_mse(lr3)

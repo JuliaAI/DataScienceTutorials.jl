@@ -58,7 +58,7 @@ Element wise operations on a collection can be done with the dot syntax:
 sqrt.([4, 9, 16])
 ```
 
-The packages `Statistics` and `StatsBase` offer a number of useful function for stats:
+The packages `Statistics` (from the standard library) and [`StatsBase`](https://github.com/JuliaStats/StatsBase.jl) offer a number of useful function for stats:
 
 ```julia:ex9
 using Statistics, StatsBase
@@ -92,19 +92,19 @@ size(X)
 
 ## Loading data
 
-There are many ways to load data in Julia, one convenient one is via the CSV package.
+There are many ways to load data in Julia, one convenient one is via the [`CSV`](https://github.com/JuliaData/CSV.jl) package.
 
 ```julia:ex13
 using CSV
 ```
 
-Many datasets are available via the `RDatasets` package
+Many datasets are available via the [`RDatasets`](https://github.com/JuliaStats/RDatasets.jl) package
 
 ```julia:ex14
 using RDatasets
 ```
 
-And finally the `DataFrames` package allows to manipulate data easily
+And finally the [`DataFrames`](https://github.com/JuliaData/DataFrames.jl) package allows to manipulate data easily
 
 ```julia:ex15
 using DataFrames

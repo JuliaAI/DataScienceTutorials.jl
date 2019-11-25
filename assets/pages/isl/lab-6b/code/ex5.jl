@@ -1,10 +1,15 @@
 # This file was generated, do not modify it. # hide
-@pipeline RegPipe(std = Standardizer(),
-                  hot = OneHotEncoder(),
-                  reg = LinearRegressor())
+figure(figsize=(8,6))
+hist(y, bins=50, density=true)
 
-model = RegPipe()
-pipe  = machine(model, Xc, y)
-fit!(pipe, rows=train)
-ŷ = predict(pipe, rows=test)
-round(rms(ŷ, y[test])^2, sigdigits=4)
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Salary", fontsize=14); ylabel("Density", fontsize=14)
+
+edfit = D.fit_mle(D.Exponential, y)
+xx = range(minimum(y), 2500, length=100)
+yy = pdf.(edfit, xx)
+plot(xx, yy, lw=3, label="Exponential distribution fit")
+
+legend(fontsize=12)
+
+savefig("assets/literate/ISL-lab-6-g2.svg") # hide

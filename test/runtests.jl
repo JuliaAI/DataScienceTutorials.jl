@@ -71,6 +71,7 @@ for (root, _, files) in walkdir(scripts_dir), file in files
     # NOTE: if want to run a single file  in isolation, uncomment line below
 
 #    splitdir(file)[2] ∉ ("ISL-lab-8.jl",) && continue
+#    startswith(splitdir(file)[2], "ISL-lab-4") || continue
 
     @testset "testing $file" begin
         println("\n\n>> looking at $file ...")

@@ -1,16 +1,12 @@
 # This file was generated, do not modify it. # hide
-Random.seed!(1515)
+using PyPlot
 
-@load KMeans
-@pipeline SPCA2(std = Standardizer(),
-                pca = PCA(),
-                km = KMeans(k=3))
+figure(figsize=(8,6))
 
-spca2_mdl = SPCA2()
-spca2 = machine(spca2_mdl, X)
-fit!(spca2)
+bar(1:length(cs), cs)
+plot(1:length(cs), cs, color="red", marker="o")
 
-assignments = report(spca2).reports[1].assignments
-mask1 = assignments .== 1
-mask2 = assignments .== 2
-mask3 = assignments .== 3;
+xlabel("Number of PCA features", fontsize=14)
+ylabel("Ratio of explained variance", fontsize=14)
+
+savefig("assets/literate/ISL-lab-10-g1.svg") # hide

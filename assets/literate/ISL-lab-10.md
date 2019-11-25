@@ -48,7 +48,7 @@ r = report(pca)
 cumsum(r.principalvars ./ r.tvar)
 ```
 
-In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all  of the variance.
+In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all of the variance.
 
 ## More interesting data...
 
@@ -67,7 +67,7 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 Random.seed!(1515)
 
 @pipeline SPCA(std = Standardizer(),
-               pca = PCA())
+               pca = PCA(pratio=1-1e-4))
 spca_mdl = SPCA()
 spca = machine(spca_mdl, X)
 fit!(spca)
@@ -78,15 +78,33 @@ names(W)
 What kind of variance can we explain?
 
 ```julia:ex9
-r = report(spca).reports[1]
-cumsum(r.principalvars ./ r.tvar)
+r  = report(spca).reports[1]
+cs = cumsum(r.principalvars ./ r.tvar)
 ```
+
+Let's visualise this
+
+```julia:ex10
+using PyPlot
+
+figure(figsize=(8,6))
+
+bar(1:length(cs), cs)
+plot(1:length(cs), cs, color="red", marker="o")
+
+xlabel("Number of PCA features", fontsize=14)
+ylabel("Ratio of explained variance", fontsize=14)
+
+savefig("assets/literate/ISL-lab-10-g1.svg") # hide
+```
+
+![PCA explained variance](/assets/literate/ISL-lab-10-g1.svg)
 
 So 4 PCA features are enough to recover most of the variance.
 
 ### Clustering
 
-```julia:ex10
+```julia:ex11
 Random.seed!(1515)
 
 @load KMeans
@@ -106,7 +124,7 @@ mask3 = assignments .== 3;
 
 Now we can  try visualising this
 
-```julia:ex11
+```julia:ex12
 using PyPlot
 
 figure(figsize=(8, 6))

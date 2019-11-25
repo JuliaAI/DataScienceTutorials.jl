@@ -1,2 +1,0 @@
-round(best_mdl.reg.lambda, sigdigits=4) = 21.54
-round(best_mdl.reg.gamma, sigdigits=4) = 1357.0

@@ -1,6 +1,8 @@
 # ## Getting started
 
 using MLJ, RDatasets, ScientificTypes, PrettyPrinting
+import Distributions
+const D = Distributions
 
 @load LinearRegressor pkg=MLJLinearModels
 @load RidgeRegressor pkg=MLJLinearModels
@@ -21,6 +23,41 @@ y = collect(skipmissing(y))
 X = X[no_miss, :]
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
+#
+
+using PyPlot
+
+figure(figsize=(8,6))
+plot(y, ls="none", marker="o")
+
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
+
+savefig("assets/literate/ISL-lab-6-g1.svg") # hide
+
+# ![Salary](/assets/literate/ISL-lab-6-g1.svg)
+
+# That looks quite skewed, let's have a look at a histogram:
+
+figure(figsize=(8,6))
+hist(y, bins=50, density=true)
+
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Salary", fontsize=14); ylabel("Density", fontsize=14)
+
+edfit = D.fit_mle(D.Exponential, y)
+xx = range(minimum(y), 2500, length=100)
+yy = pdf.(edfit, xx)
+plot(xx, yy, lw=3, label="Exponential distribution fit")
+
+legend(fontsize=12)
+
+savefig("assets/literate/ISL-lab-6-g2.svg") # hide
+
+# ![Distribution of salary](/assets/literate/ISL-lab-6-g2.svg)
+#
+# ### Data preparation
+#
 # Most features are currently encoded as integers but we will consider them as continuous
 
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
@@ -43,9 +80,45 @@ fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
-# ### Basic ridge
+# Let's get a feel for how we're doing
+
+figure(figsize=(8,6))
+
+res = ŷ .- y[test]
+stem(res)
+
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
+
+ylim([-1300, 1000])
+
+savefig("assets/literate/ISL-lab-6-g3.svg") # hide
+
+# ![Residuals](/assets/literate/ISL-lab-6-g3.svg)
+
+figure(figsize=(8,6))
+hist(res, bins=30, density=true, color="green")
+
+xx = range(-1100, 1100, length=100)
+ndfit = D.fit_mle(D.Normal, res)
+lfit  = D.fit_mle(D.Laplace, res)
+
+plot(xx, pdf.(ndfit, xx), lw=3, color="orange", label="Normal fit")
+plot(xx, pdf.(lfit, xx), lw=3, color="magenta", label="Laplace fit")
+
+legend(fontsize=12)
+
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Residual (ŷ - y)", fontsize=14); ylabel("Density", fontsize=14)
+xlim([-1100, 1100])
+
+savefig("assets/literate/ISL-lab-6-g4.svg") # hide
+
+# ![Distribution of residuals](/assets/literate/ISL-lab-6-g4.svg)
+
+# ### Basic Ridge
 #
-# Let's now swap the linear regressor for a ridge one without specifying the penalty (`1` by default):
+# Let's now swap the linear regressor for a Ridge one without specifying the penalty (`1` by default):
 
 pipe.model.reg = RidgeRegressor()
 fit!(pipe, rows=train)
@@ -72,6 +145,24 @@ round(best_mdl.reg.lambda, sigdigits=4)
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
+# Let's see:
+
+figure(figsize=(8,6))
+
+res = ŷ .- y[test]
+stem(res)
+
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
+
+ylim([-1300, 1000])
+
+savefig("assets/literate/ISL-lab-6-g5.svg") # hide
+
+# ![Ridge residuals](/assets/literate/ISL-lab-6-g5.svg)
+#
+# You can compare that with the residuals obtained earlier.
+
 # ## Lasso pipeline
 #
 # Let's do the same as above but using a Lasso model and adjusting the range a bit:
@@ -90,12 +181,32 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Pretty good! and the parameters are reasonably sparse as expected:
 
-coefs = mtm.fitresult.fitresult.machine.fitresult
+coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
 round.(coefs, sigdigits=2)
 
 # with around 50% sparsity:
 
 sum(coefs .≈ 0) / length(coefs)
+
+# Let's visualise this:
+
+figure(figsize=(8,6))
+stem(coefs)
+
+## name of the features including one-hot-encoded ones
+all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
+             :CAtBat, :CHits, :CHmRun, :CRuns, :CRBI, :CWalks,
+             :League__A, :League__N, :Div_E, :Div_W,
+             :PutOuts, :Assists, :Errors, :NewLeague_A, :NewLeague_N]
+
+idxshow = collect(1:length(coefs))[abs.(coefs) .> 10]
+xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
+yticks(fontsize=12)
+ylabel("Amplitude", fontsize=14)
+
+savefig("assets/literate/ISL-lab-6-g6.svg") # hide
+
+# ![Lasso coefficients](/assets/literate/ISL-lab-6-g6.svg)
 
 # ## Elastic net pipeline
 

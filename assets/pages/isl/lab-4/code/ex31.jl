@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-mean(y[test] .!= "No") |> r3
+test = 1:1000
+train = last(test)+1:nrows(Xs);

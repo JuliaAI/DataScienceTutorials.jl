@@ -1,5 +1,3 @@
 # This file was generated, do not modify it. # hide
-pipe.model.reg = RidgeRegressor()
-fit!(pipe, rows=train)
-ŷ = predict(pipe, rows=test)
-round(rms(ŷ, y[test])^2, sigdigits=4)
+Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
+scitype(Xc)

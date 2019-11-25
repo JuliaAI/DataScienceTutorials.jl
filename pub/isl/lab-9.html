@@ -2,11 +2,41 @@
 <p>We start by generating a 2D cloud of points</p>
 <pre><code class="julia hljs">Random.seed!(<span class=hljs-number >3203</span>)
 X = randn(<span class=hljs-number >20</span>, <span class=hljs-number >2</span>)
-y = vcat(-ones(<span class=hljs-number >10</span>), ones(<span class=hljs-number >10</span>))
+y = vcat(-ones(<span class=hljs-number >10</span>), ones(<span class=hljs-number >10</span>))</code></pre><div class=code_output ><pre><code class="plaintext hljs">20-element Array{Float64,1}:
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+ -1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0
+  1.0</code></pre></div>
+<p>which we can visualise</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 
-X = MLJ.table(X)
+ym1 = y .== -<span class=hljs-number >1</span>
+ym2 = .!ym1
+plot(X[ym1, <span class=hljs-number >1</span>], X[ym1, <span class=hljs-number >2</span>], ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
+plot(X[ym2, <span class=hljs-number >1</span>], X[ym2, <span class=hljs-number >2</span>], ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"x"</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-9-g1.svg" alt="Toy points" /></p>
+<p>let&#39;s wrap the data as a table:</p>
+<pre><code class="julia hljs">X = MLJ.table(X)
 y = categorical(y);</code></pre>
-<p>Let&#39;s fit a SVM classifier</p>
+<p>and fit a SVM classifier</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> SVC pkg=LIBSVM
 
 svc_mdl = SVC()

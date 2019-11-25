@@ -43,7 +43,7 @@ yticks(fontsize=12)
 
 savefig("assets/literate/ISL-lab-4-volume.svg") # hide
 
-# ![volume](/assets/ISL-lab-4-volume.svg)
+# ![volume](/assets/literate/ISL-lab-4-volume.svg)
 
 # ### Logistic Regression
 #
@@ -53,6 +53,20 @@ y = coerce(y, OrderedFactor)
 classes(y[1])
 
 # Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since `D`  comes before `U`.
+
+figure(figsize=(8,6))
+cm = countmap(y)
+bar([1, 2], [cm["Down"], cm["Up"]])
+xticks([1, 2], ["Down", "Up"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
+
+savefig("assets/literate/ISL-lab-4-bal.svg") # hide
+
+# ![volume](/assets/literate/ISL-lab-4-bal.svg)
+#
+# Seems pretty balanced.
+
 # Let's now try fitting a simple logistic classifier (aka logistic regression) not using `:Year` and `:Today`:
 
 @load LogisticClassifier pkg=MLJLinearModels
@@ -112,7 +126,7 @@ fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
-# Interesting... it has higher accuracy than the model with more features! This could be investigated further by increasing the regularisation parameter but we'll leave it aside for now.
+# Interesting... it has higher accuracy than the model with more features! This could be investigated further by increasing the regularisation parameter but we'll leave that aside for now.
 #
 # We can use a trained machine to predict on new data:
 
@@ -120,7 +134,7 @@ Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
 ŷ = predict(clf, Xnew)
 ŷ |> pprint
 
-# Note: when specifying data, we used a simple `NamedTuple`; we could also have defined a dataframe or any other compatible tabular container.
+# **Note**: when specifying data, we used a simple `NamedTuple`; we could also have defined a dataframe or any other compatible tabular container.
 # Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used `predict_mode` or indeed
 
 mode.(ŷ)
@@ -165,7 +179,7 @@ accuracy(ŷ, y[test]) |> r3
 
 # ### KNN
 #
-# Multiple packages offer KNN, we go via NearestNeighbors:
+# We can use K-Nearest Neighbors models via the [`NearestNeighbors`](https://github.com/KristofferC/NearestNeighbors.jl) package:
 
 @load KNNClassifier pkg=NearestNeighbors
 
@@ -175,12 +189,14 @@ fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
-# Let's try with three neighbors
+# Pretty bad... let's try with three neighbors
 
 knnc.K = 3
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
+
+# A bit better but not hugely so.
 
 # ## Caravan insurance data
 #
@@ -201,6 +217,19 @@ nl2 = sum(purchase .== vals[2])
 println("#$(vals[1]) ", nl1)
 println("#$(vals[2]) ", nl2)
 
+# we can also visualise this as was done before:
+
+figure(figsize=(8,6))
+cm = countmap(purchase)
+bar([1, 2], [cm["No"], cm["Yes"]])
+xticks([1, 2], ["No", "Yes"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
+
+savefig("assets/literate/ISL-lab-4-bal2.svg") # hide
+
+# ![volume](/assets/literate/ISL-lab-4-bal2.svg)
+
 # that's quite unbalanced.
 #
 # Apart from the target, all other variables are numbers; we can standardize the data:
@@ -213,7 +242,7 @@ Xs = transform(std, X)
 
 var(Xs[:,1]) |> r3
 
-# Note: in MLJ, it is recommended to work with pipelines / networks when possible and not do "step-by-step" transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.
+# **Note**: in MLJ, it is recommended to work with pipelines / networks when possible and not do "step-by-step" transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.
 #
 # We split the data in the first 1000 rows for testing and the rest for training:
 

@@ -1,13 +1,16 @@
 # This file was generated, do not modify it. # hide
-using PyPlot
+Random.seed!(1515)
 
-figure(figsize=(8, 6))
-for (m, c) in zip((mask1, mask2, mask3), ("red", "green", "blue"))
-    plot(W[m, 1], W[m, 2], ls="none", marker=".", markersize=10, color=c)
-end
+@load KMeans
+@pipeline SPCA2(std = Standardizer(),
+                pca = PCA(),
+                km = KMeans(k=3))
 
-xlabel("PCA-1", fontsize=13)
-ylabel("PCA-2", fontsize=13)
-legend(["Group 1", "Group 2", "Group 3"], fontsize=13)
+spca2_mdl = SPCA2()
+spca2 = machine(spca2_mdl, X)
+fit!(spca2)
 
-savefig("assets/literate/ISL-lab-10-cluster.svg") # hide
+assignments = report(spca2).reports[1].assignments
+mask1 = assignments .== 1
+mask2 = assignments .== 2
+mask3 = assignments .== 3;

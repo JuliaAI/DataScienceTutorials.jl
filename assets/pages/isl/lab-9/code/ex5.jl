@@ -1,10 +1,7 @@
 # This file was generated, do not modify it. # hide
-rc = range(svc_mdl, :cost, lower=0.1, upper=5)
-tm = TunedModel(model=svc_mdl, ranges=[rc], tuning=Grid(resolution=10),
-                resampling=CV(nfolds=3, rng=33), measure=misclassification_rate)
-mtm = machine(tm, X, y)
+@load SVC pkg=LIBSVM
 
-fit!(mtm)
+svc_mdl = SVC()
+svc = machine(svc_mdl, X, y)
 
-ypred = predict(mtm, X)
-misclassification_rate(ypred, y)
+fit!(svc);

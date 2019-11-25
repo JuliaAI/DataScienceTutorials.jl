@@ -22,7 +22,7 @@ sqrt(x) = 2.0
 </code></pre></div> <p>Element wise operations on a collection can be done with the dot syntax:</p> <pre><code class="julia hljs">sqrt.([<span class=hljs-number >4</span>, <span class=hljs-number >9</span>, <span class=hljs-number >16</span>])</code></pre><div class=code_output ><pre><code class="plaintext hljs">3-element Array{Float64,1}:
  2.0
  3.0
- 4.0</code></pre></div> <p>The packages <code>Statistics</code> and <code>StatsBase</code> offer a number of useful function for stats:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Statistics, StatsBase</code></pre>
+ 4.0</code></pre></div> <p>The packages <code>Statistics</code> &#40;from the standard library&#41; and <a href="https://github.com/JuliaStats/StatsBase.jl"><code>StatsBase</code></a> offer a number of useful function for stats:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> Statistics, StatsBase</code></pre>
 <p>Note that if you don&#39;t have <code>StatsBase</code>, you can add it using <code>using Pkg; Pkg.add&#40;&quot;StatsBase&quot;&#41;</code>. Right, let&#39;s now compute some simple statistics:</p>
 <pre><code class="julia hljs">x = randn(<span class=hljs-number >1_000</span>) <span class=hljs-comment ># 1_000 points iid from a N(0, 1)</span>
 μ = mean(x)
@@ -42,11 +42,11 @@ X[[1, 2], [1, 2]] = [1 2; 3 4]
 <code>size</code> gives dimensions &#40;nrows, ncolumns&#41;</p>
 <pre><code class="julia hljs">size(X)</code></pre><div class=code_output ><pre><code class="plaintext hljs">(3, 2)</code></pre></div>
 <h2 id=loading_data ><a href="/MLJTutorials/pub/isl/lab-2.html#loading_data">Loading data</a></h2>
-<p>There are many ways to load data in Julia, one convenient one is via the CSV package.</p>
+<p>There are many ways to load data in Julia, one convenient one is via the <a href="https://github.com/JuliaData/CSV.jl"><code>CSV</code></a> package.</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV</code></pre>
-<p>Many datasets are available via the <code>RDatasets</code> package</p>
+<p>Many datasets are available via the <a href="https://github.com/JuliaStats/RDatasets.jl"><code>RDatasets</code></a> package</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets</code></pre>
-<p>And finally the <code>DataFrames</code> package allows to manipulate data easily</p>
+<p>And finally the <a href="https://github.com/JuliaData/DataFrames.jl"><code>DataFrames</code></a> package allows to manipulate data easily</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> DataFrames</code></pre>
 <p>Let&#39;s load some data from RDatasets &#40;the full list of datasets is available <a href="http://vincentarelbundock.github.io/Rdatasets/datasets.html">here</a>&#41;.</p>
 <pre><code class="julia hljs">auto = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Auto"</span>)

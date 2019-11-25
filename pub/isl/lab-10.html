@@ -29,7 +29,7 @@ cumsum(r.principalvars ./ r.tvar)</code></pre><div class=code_output ><pre><code
  0.9933515571990573
  0.9991510921213993
  1.0</code></pre></div>
-<p>In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all  of the variance.</p>
+<p>In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all of the variance.</p>
 <h2 id=more_interesting_data ><a href="/MLJTutorials/pub/isl/lab-10.html#more_interesting_data">More interesting data...</a></h2>
 <p>Instead of just playing with toy data, let&#39;s load the orange juice data and extract only the columns corresponding to price data:</p>
 <pre><code class="julia hljs">data = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"OJ"</span>)
@@ -40,23 +40,39 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 <pre><code class="julia hljs">Random.seed!(<span class=hljs-number >1515</span>)
 
 <span class=hljs-meta >@pipeline</span> SPCA(std = Standardizer(),
-               pca = PCA())
+               pca = PCA(pratio=<span class=hljs-number >1</span>-<span class=hljs-number >1e-4</span>))
 spca_mdl = SPCA()
 spca = machine(spca_mdl, X)
 fit!(spca)
 W = transform(spca, X)
-names(W)</code></pre><div class=code_output ><pre><code class="plaintext hljs">4-element Array{Symbol,1}:
+names(W)</code></pre><div class=code_output ><pre><code class="plaintext hljs">6-element Array{Symbol,1}:
  :x1
  :x2
  :x3
- :x4</code></pre></div>
+ :x4
+ :x5
+ :x6</code></pre></div>
 <p>What kind of variance can we explain?</p>
-<pre><code class="julia hljs">r = report(spca).reports[<span class=hljs-number >1</span>]
-cumsum(r.principalvars ./ r.tvar)</code></pre><div class=code_output ><pre><code class="plaintext hljs">4-element Array{Float64,1}:
+<pre><code class="julia hljs">r  = report(spca).reports[<span class=hljs-number >1</span>]
+cs = cumsum(r.principalvars ./ r.tvar)</code></pre><div class=code_output ><pre><code class="plaintext hljs">6-element Array{Float64,1}:
  0.4174696748484731
  0.7233074812209765
  0.9436456234171869
- 0.9997505816044248</code></pre></div>
+ 0.9997505816044248
+ 0.9998956501446636
+ 0.9999999999999998</code></pre></div>
+<p>Let&#39;s visualise this</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
+
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+
+bar(<span class=hljs-number >1</span>:length(cs), cs)
+plot(<span class=hljs-number >1</span>:length(cs), cs, color=<span class=hljs-string >"red"</span>, marker=<span class=hljs-string >"o"</span>)
+
+xlabel(<span class=hljs-string >"Number of PCA features"</span>, fontsize=<span class=hljs-number >14</span>)
+ylabel(<span class=hljs-string >"Ratio of explained variance"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-10-g1.svg" alt="PCA explained variance" /></p>
 <p>So 4 PCA features are enough to recover most of the variance.</p>
 <h3 id=clustering ><a href="/MLJTutorials/pub/isl/lab-10.html#clustering">Clustering</a></h3>
 <pre><code class="julia hljs">Random.seed!(<span class=hljs-number >1515</span>)

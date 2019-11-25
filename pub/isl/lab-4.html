@@ -47,17 +47,27 @@ ylabel(<span class=hljs-string >"Volume"</span>, fontsize=<span class=hljs-numbe
 xticks(fontsize=<span class=hljs-number >12</span>)
 yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/MLJTutorials/assets/ISL-lab-4-volume.svg" alt=volume  /></p>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-4-volume.svg" alt=volume  /></p>
 <h3 id=logistic_regression ><a href="/MLJTutorials/pub/isl/lab-4.html#logistic_regression">Logistic Regression</a></h3>
 <p>We will now try to train models; the target <code>:Direction</code> has two classes: <code>Up</code> and <code>Down</code>; it needs to be interpreted as a categorical object, and we will mark it as a <em>ordered factor</em> to specify that &#39;Up&#39; is positive and &#39;Down&#39; negative &#40;for the confusion matrix later&#41;:</p>
 <pre><code class="julia hljs">y = coerce(y, OrderedFactor)
 classes(y[<span class=hljs-number >1</span>])</code></pre><div class=code_output ><pre><code class="plaintext hljs">2-element CategoricalArray{String,1,UInt8}:
  "Down"
  "Up"</code></pre></div>
-<p>Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since <code>D</code>  comes before <code>U</code>. Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
+<p>Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since <code>D</code>  comes before <code>U</code>.</p>
+<pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+cm = countmap(y)
+bar([<span class=hljs-number >1</span>, <span class=hljs-number >2</span>], [cm[<span class=hljs-string >"Down"</span>], cm[<span class=hljs-string >"Up"</span>]])
+xticks([<span class=hljs-number >1</span>, <span class=hljs-number >2</span>], [<span class=hljs-string >"Down"</span>, <span class=hljs-string >"Up"</span>], fontsize=<span class=hljs-number >12</span>)
+yticks(fontsize=<span class=hljs-number >12</span>)
+ylabel(<span class=hljs-string >"Number of occurences"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-4-bal.svg" alt=volume  /></p>
+<p>Seems pretty balanced.</p>
+<p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 9…72
+clf = machine(LogisticClassifier(), X2, y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 1…61
 </code></pre></div>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="julia hljs">fit!(clf)
@@ -109,14 +119,14 @@ clf = machine(LogisticClassifier(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |&gt; r3</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.56</code></pre></div>
-<p>Interesting... it has higher accuracy than the model with more features&#33; This could be investigated further by increasing the regularisation parameter but we&#39;ll leave it aside for now.</p>
+<p>Interesting... it has higher accuracy than the model with more features&#33; This could be investigated further by increasing the regularisation parameter but we&#39;ll leave that aside for now.</p>
 <p>We can use a trained machine to predict on new data:</p>
 <pre><code class="julia hljs">Xnew = (Lag1 = [<span class=hljs-number >1.2</span>, <span class=hljs-number >1.5</span>], Lag2 = [<span class=hljs-number >1.1</span>, -<span class=hljs-number >0.8</span>])
 ŷ = predict(clf, Xnew)
 ŷ |&gt; pprint</code></pre><div class=code_output ><pre><code class="plaintext hljs">[UnivariateFinite(Down=&gt;0.521, Up=&gt;0.479),
  UnivariateFinite(Down=&gt;0.504, Up=&gt;0.496)]
 </code></pre></div>
-<p>Note: when specifying data, we used a simple <code>NamedTuple</code>; we could also have defined a dataframe or any other compatible tabular container. Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used <code>predict_mode</code> or indeed</p>
+<p><strong>Note</strong>: when specifying data, we used a simple <code>NamedTuple</code>; we could also have defined a dataframe or any other compatible tabular container. Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used <code>predict_mode</code> or indeed</p>
 <pre><code class="julia hljs">mode.(ŷ)</code></pre><div class=code_output ><pre><code class="plaintext hljs">2-element CategoricalArray{String,1,UInt8}:
  "Down"
  "Down"</code></pre></div>
@@ -140,10 +150,10 @@ ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |&gt; r3</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.548</code></pre></div>
 <h3 id=qda ><a href="/MLJTutorials/pub/isl/lab-4.html#qda">QDA</a></h3>
 <p>Bayesian QDA is available via ScikitLearn:</p>
-<pre><code class="julia hljs"><span class=hljs-meta >@load</span> BayesianQDA pkg=ScikitLearn</code></pre><div class=code_output ><pre><code class="plaintext hljs">BayesianQDA(priors = nothing,
-            reg_param = 0.0,
-            store_covariance = false,
-            tol = 0.0001,) @ 9…62</code></pre></div>
+<pre><code class="julia hljs"><span class=hljs-meta >@load</span> BayesianQDA pkg=ScikitLearn</code></pre><div class=code_output ><pre><code class="plaintext hljs">MLJModels.ScikitLearn_.BayesianQDA(priors = nothing,
+                                   reg_param = 0.0,
+                                   store_covariance = false,
+                                   tol = 0.0001,) @ 4…16</code></pre></div>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="julia hljs">clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)
@@ -151,7 +161,7 @@ ŷ = predict_mode(clf, rows=test)
 
 accuracy(ŷ, y[test]) |&gt; r3</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.599</code></pre></div>
 <h3 id=knn ><a href="/MLJTutorials/pub/isl/lab-4.html#knn">KNN</a></h3>
-<p>Multiple packages offer KNN, we go via NearestNeighbors:</p>
+<p>We can use K-Nearest Neighbors models via the <a href="https://github.com/KristofferC/NearestNeighbors.jl"><code>NearestNeighbors</code></a> package:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> KNNClassifier pkg=NearestNeighbors
 
 knnc = KNNClassifier(K=<span class=hljs-number >1</span>)
@@ -159,11 +169,12 @@ clf = machine(knnc, X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |&gt; r3</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.5</code></pre></div>
-<p>Let&#39;s try with three neighbors</p>
+<p>Pretty bad... let&#39;s try with three neighbors</p>
 <pre><code class="julia hljs">knnc.K = <span class=hljs-number >3</span>
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |&gt; r3</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.532</code></pre></div>
+<p>A bit better but not hugely so.</p>
 <h2 id=caravan_insurance_data ><a href="/MLJTutorials/pub/isl/lab-4.html#caravan_insurance_data">Caravan insurance data</a></h2>
 <p>The caravan dataset is part of ISLR as well:</p>
 <pre><code class="julia hljs">caravan  = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Caravan"</span>)
@@ -180,6 +191,15 @@ println(<span class=hljs-string >"#<span class=hljs-subst >$(vals[<span class=hl
 println(<span class=hljs-string >"#<span class=hljs-subst >$(vals[<span class=hljs-number >2</span>])</span> "</span>, nl2)</code></pre><div class=code_output ><pre><code class="plaintext hljs">#No 5474
 #Yes 348
 </code></pre></div>
+<p>we can also visualise this as was done before:</p>
+<pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+cm = countmap(purchase)
+bar([<span class=hljs-number >1</span>, <span class=hljs-number >2</span>], [cm[<span class=hljs-string >"No"</span>], cm[<span class=hljs-string >"Yes"</span>]])
+xticks([<span class=hljs-number >1</span>, <span class=hljs-number >2</span>], [<span class=hljs-string >"No"</span>, <span class=hljs-string >"Yes"</span>], fontsize=<span class=hljs-number >12</span>)
+yticks(fontsize=<span class=hljs-number >12</span>)
+ylabel(<span class=hljs-string >"Number of occurences"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-4-bal2.svg" alt=volume  /></p>
 <p>that&#39;s quite unbalanced.</p>
 <p>Apart from the target, all other variables are numbers; we can standardize the data:</p>
 <pre><code class="julia hljs">y, X = unpack(caravan, ==(:Purchase), col-&gt;<span class=hljs-literal >true</span>)
@@ -189,7 +209,7 @@ fit!(std)
 Xs = transform(std, X)
 
 var(Xs[:,<span class=hljs-number >1</span>]) |&gt; r3</code></pre><div class=code_output ><pre><code class="plaintext hljs">1.0</code></pre></div>
-<p>Note: in MLJ, it is recommended to work with pipelines / networks when possible and not do &quot;step-by-step&quot; transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.</p>
+<p><strong>Note</strong>: in MLJ, it is recommended to work with pipelines / networks when possible and not do &quot;step-by-step&quot; transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.</p>
 <p>We split the data in the first 1000 rows for testing and the rest for training:</p>
 <pre><code class="julia hljs">test = <span class=hljs-number >1</span>:<span class=hljs-number >1000</span>
 train = last(test)+<span class=hljs-number >1</span>:nrows(Xs);</code></pre>

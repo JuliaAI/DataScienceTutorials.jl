@@ -2,6 +2,3 @@
 Random.seed!(3203)
 X = randn(20, 2)
 y = vcat(-ones(10), ones(10))
-
-X = MLJ.table(X)
-y = categorical(y);

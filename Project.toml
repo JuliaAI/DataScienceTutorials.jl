@@ -1,6 +1,6 @@
 name = "MLJTutorials"
 uuid = "b22f6415-6e67-485c-b34d-7995e604d9c9"
-version = "1.0.0"
+version = "0.1.1"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -9,6 +9,7 @@ Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DecisionTree = "7806a523-6efd-50cb-b5f6-3fa6f1930dbb"
 Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 LIBSVM = "b1bec4e5-fd48-53fe-b0cb-9723c09d164b"

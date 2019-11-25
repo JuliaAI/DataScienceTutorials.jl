@@ -102,7 +102,7 @@ round(rms(ypred, y[test]), sigdigits=3)
 
 # ## Random Forest
 #
-# **Note**: the package DecisionTree.jl also has a RandomForest model but it is not yet interfaced with in MLJ.
+# **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
 @load RandomForestRegressor pkg=ScikitLearn
 

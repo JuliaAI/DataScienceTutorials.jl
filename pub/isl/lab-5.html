@@ -3,11 +3,33 @@
 auto = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Auto"</span>)
 y, X = unpack(auto, ==(:MPG), col-&gt;<span class=hljs-literal >true</span>)
 train, test = partition(eachindex(y), <span class=hljs-number >0.5</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >444</span>);</code></pre> <p>Note the use of <code>rng&#61;</code> to seed the shuffling of indices so that the results are reproducible.</p> <h3 id=polynomial_regression ><a href="/MLJTutorials/pub/isl/lab-5.html#polynomial_regression">Polynomial regression</a></h3> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><div class=code_output ><pre><code class="plaintext hljs">LinearRegressor(fit_intercept = true,
-                solver = nothing,) @ 1…81</code></pre></div> <p>In this part we only build models with the Horsepower feature. Let&#39;s get a baseline:</p> <pre><code class="julia hljs">lm = LinearRegressor()
+                solver = nothing,) @ 5…90</code></pre></div> <p>In this part we only build models with the <code>Horsepower</code> feature.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
+
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
+
+xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
+yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
+ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre> <p><img src="/MLJTutorials/assets/literate/ISL-lab-5-g1.svg" alt="MPG v Horsepower" /></p> <p>Let&#39;s get a baseline:</p> <pre><code class="julia hljs">lm = LinearRegressor()
 mlm = machine(lm, select(X, :Horsepower), y)
 fit!(mlm, rows=train)
 rms(predict(mlm, rows=test), y[test])^<span class=hljs-number >2</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">23.493990895007986</code></pre></div>
 <p>Note that we square the measure to  match the results obtained in the ISL labs where the mean squared error &#40;here we use the <code>rms</code> which is the square root of that&#41;.</p>
+<pre><code class="julia hljs">xx = (Horsepower=range(<span class=hljs-number >50</span>, <span class=hljs-number >225</span>, length=<span class=hljs-number >100</span>) |&gt; collect, )
+yy = predict(mlm, xx)
+
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
+plot(xx.Horsepower, yy, lw=<span class=hljs-number >3</span>)
+
+xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
+yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
+ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-5-g2.svg" alt="1st order baseline" /></p>
 <p>We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:</p>
 <pre><code class="julia hljs">hp = X.Horsepower
 Xhp = DataFrame(hp1=hp, hp2=hp.^<span class=hljs-number >2</span>, hp3=hp.^<span class=hljs-number >3</span>);</code></pre>
@@ -25,7 +47,7 @@ fit!(lr2, rows=train)
 
 lrm.fs.features = [:hp1, :hp2, :hp3] <span class=hljs-comment ># poly of degree 3</span>
 lr3 = machine(lrm, Xhp, y)
-fit!(lr3, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LinMod} @ 1…09
+fit!(lr3, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{LinMod} @ 1…43
 </code></pre></div>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="julia hljs">get_mse(lr) = rms(predict(lr, rows=test), y[test])^<span class=hljs-number >2</span>
@@ -36,16 +58,38 @@ fit!(lr3, rows=train)</code></pre><div class=code_output ><pre><code class="plai
 get_mse(lr2) = 19.287175510952146
 get_mse(lr3) = 19.381831638657914
 </code></pre></div>
+<p>Let&#39;s visualise the models</p>
+<pre><code class="julia hljs">hpn  = xx.Horsepower
+Xnew = DataFrame(hp1=hpn, hp2=hpn.^<span class=hljs-number >2</span>, hp3=hpn.^<span class=hljs-number >3</span>)
+
+yy1 = predict(lr1, Xnew)
+yy2 = predict(lr2, Xnew)
+yy3 = predict(lr3, Xnew)
+
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
+plot(xx.Horsepower, yy1, lw=<span class=hljs-number >3</span>, label=<span class=hljs-string >"Order 1"</span>)
+plot(xx.Horsepower, yy2, lw=<span class=hljs-number >3</span>, label=<span class=hljs-string >"Order 2"</span>)
+plot(xx.Horsepower, yy3, lw=<span class=hljs-number >3</span>, label=<span class=hljs-string >"Order 3"</span>)
+
+legend(fontsize=<span class=hljs-number >14</span>)
+
+xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
+yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
+ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-5-g3.svg" alt="1st, 2nd and 3d order fit" /></p>
 <h2 id=k-folds_cross_validation ><a href="/MLJTutorials/pub/isl/lab-5.html#k-folds_cross_validation">K-Folds Cross Validation</a></h2>
 <p>Let&#39;s crossvalidate over the degree of the  polynomial.</p>
-<p><strong>Note</strong>: there&#39;s a  bit of gymnastics here because MLJ doesn&#39;t directly support a polynomial regression; see our tutorial on <a href="/MLJTutorials/pub/getting-started/model-tuning.html">tuning models</a> for a gentler introduction to model tuning.</p>
+<p><strong>Note</strong>: there&#39;s a  bit of gymnastics here because MLJ doesn&#39;t directly support a polynomial regression; see our tutorial on <a href="/MLJTutorials/pub/getting-started/model-tuning.html">tuning models</a> for a gentler introduction to model tuning. The gist of the following code is to create a dataframe where each column is a power of the <code>Horsepower</code> feature from 1 to 10 and we build a series of regression models using incrementally more of those features &#40;higher degree&#41;:</p>
 <pre><code class="julia hljs">Xhp = DataFrame([hp.^i <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>])
 
 cases = [[<span class=hljs-built_in >Symbol</span>(<span class=hljs-string >"x<span class=hljs-variable >$j</span>"</span>) <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:i] <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>]
 r = range(lrm, :(fs.features), values=cases)
 
-tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-number >10</span>), measure=rms)</code></pre><div class=code_output ><pre><code class="plaintext hljs">MLJ.DeterministicTunedModel(model = JuDoc.LinMod(fs = FeatureSelector @ 1…71,
-                                                 lr = LinearRegressor @ 1…10,),
+tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-number >10</span>), measure=rms)</code></pre><div class=code_output ><pre><code class="plaintext hljs">MLJ.DeterministicTunedModel(model = JuDoc.LinMod(fs = FeatureSelector @ 6…37,
+                                                 lr = LinearRegressor @ 7…27,),
                             tuning = Grid(resolution = 10,
                                           acceleration = ComputationalResources.CPU1{Nothing}(nothing),),
                             resampling = CV(nfolds = 10,
@@ -57,7 +101,7 @@ tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-numbe
                             ranges = MLJ.NominalRange(field = :(fs.features),
                                                       values = ([:x1], [:x1, :x2], [:x1, :x2, :x3], [:x1, :x2, :x3, :x4], [:x1, :x2, :x3, :x4, :x5], [:x1, :x2, :x3, :x4, :x5, :x6], [:x1, :x2, :x3, :x4, :x5, :x6, :x7], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9, :x10]),),
                             full_report = true,
-                            train_best = true,) @ 1…69</code></pre></div>
+                            train_best = true,) @ 1…21</code></pre></div>
 <p>Now we&#39;re left with fitting the tuned model</p>
 <pre><code class="julia hljs">mtm = machine(tm, Xhp, y)
 fit!(mtm)
@@ -68,6 +112,19 @@ argmin(rep.measurements) = 5
 </code></pre></div>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>
 <p>In ISL they use a different seed so the results are a bit different but comparable.</p>
+<pre><code class="julia hljs">Xnew = DataFrame([hpn.^i <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>])
+yy5 = predict(mtm, Xnew)
+
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
+plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
+plot(xx.Horsepower, yy5, lw=<span class=hljs-number >3</span>)
+
+xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
+yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
+ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)
+</code></pre>
+<p><img src="/MLJTutorials/assets/literate/ISL-lab-5-g4.svg" alt="5th order fit" /></p>
 <h2 id=the_bootstrap ><a href="/MLJTutorials/pub/isl/lab-5.html#the_bootstrap">The Bootstrap</a></h2>
 <p><em>Bootstrapping is not currently supported in MLJ.</em>
 <div class=page-foot >

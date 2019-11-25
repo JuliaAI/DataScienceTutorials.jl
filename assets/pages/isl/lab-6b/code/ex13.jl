@@ -1,12 +1,12 @@
 # This file was generated, do not modify it. # hide
-@load ElasticNetRegressor pkg=MLJLinearModels
+figure(figsize=(8,6))
 
-mtm.model.model.reg = ElasticNetRegressor()
-mtm.model.ranges = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
-                    range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
-mtm.model.tuning = Grid(resolution=10)
-fit!(mtm, rows=train)
+res = ŷ .- y[test]
+stem(res)
 
-best_mdl = fitted_params(mtm).best_model
-@show round(best_mdl.reg.lambda, sigdigits=4)
-@show round(best_mdl.reg.gamma, sigdigits=4)
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
+
+ylim([-1300, 1000])
+
+savefig("assets/literate/ISL-lab-6-g5.svg") # hide

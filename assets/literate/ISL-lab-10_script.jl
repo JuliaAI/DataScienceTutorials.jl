@@ -31,15 +31,27 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 Random.seed!(1515)
 
 @pipeline SPCA(std = Standardizer(),
-               pca = PCA())
+               pca = PCA(pratio=1-1e-4))
 spca_mdl = SPCA()
 spca = machine(spca_mdl, X)
 fit!(spca)
 W = transform(spca, X)
 names(W)
 
-r = report(spca).reports[1]
-cumsum(r.principalvars ./ r.tvar)
+r  = report(spca).reports[1]
+cs = cumsum(r.principalvars ./ r.tvar)
+
+using PyPlot
+
+figure(figsize=(8,6))
+
+bar(1:length(cs), cs)
+plot(1:length(cs), cs, color="red", marker="o")
+
+xlabel("Number of PCA features", fontsize=14)
+ylabel("Ratio of explained variance", fontsize=14)
+
+savefig("assets/literate/ISL-lab-10-g1.svg") # hide
 
 Random.seed!(1515)
 
