@@ -18,13 +18,43 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 # ### Polynomial regression
 @load LinearRegressor pkg=MLJLinearModels
 
-# In this part we only build models with the Horsepower feature.# Let's get a baseline:
+# In this part we only build models with the `Horsepower` feature.
+using PyPlot
+
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)
+
+
+
+# ![MPG v Horsepower](/assets/literate/ISL-lab-5-g1.svg)
+# Let's get a baseline:
 lm = LinearRegressor()
 mlm = machine(lm, select(X, :Horsepower), y)
 fit!(mlm, rows=train)
 rms(predict(mlm, rows=test), y[test])^2
 
-# Note that we square the measure to  match the results obtained in the ISL labs where the mean squared error (here we use the `rms` which is the square root of that).## We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:
+# Note that we square the measure to  match the results obtained in the ISL labs where the mean squared error (here we use the `rms` which is the square root of that).
+xx = (Horsepower=range(50, 225, length=100) |> collect, )
+yy = predict(mlm, xx)
+
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+plot(xx.Horsepower, yy, lw=3)
+
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)
+
+
+
+# ![1st order baseline](/assets/literate/ISL-lab-5-g2.svg)
+# We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:
 hp = X.Horsepower
 Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 
@@ -52,7 +82,31 @@ get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
 @show get_mse(lr2)
 @show get_mse(lr3)
 
-# ## K-Folds Cross Validation## Let's crossvalidate over the degree of the  polynomial.## **Note**: there's a  bit of gymnastics here because MLJ doesn't directly support a polynomial regression; see our tutorial on [tuning models](/pub/getting-started/model-tuning.html) for a gentler introduction to model tuning.
+# Let's visualise the models
+hpn  = xx.Horsepower
+Xnew = DataFrame(hp1=hpn, hp2=hpn.^2, hp3=hpn.^3)
+
+yy1 = predict(lr1, Xnew)
+yy2 = predict(lr2, Xnew)
+yy3 = predict(lr3, Xnew)
+
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+plot(xx.Horsepower, yy1, lw=3, label="Order 1")
+plot(xx.Horsepower, yy2, lw=3, label="Order 2")
+plot(xx.Horsepower, yy3, lw=3, label="Order 3")
+
+legend(fontsize=14)
+
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)
+
+
+
+# ![1st, 2nd and 3d order fit](/assets/literate/ISL-lab-5-g3.svg)
+# ## K-Folds Cross Validation## Let's crossvalidate over the degree of the  polynomial.## **Note**: there's a  bit of gymnastics here because MLJ doesn't directly support a polynomial regression; see our tutorial on [tuning models](/pub/getting-started/model-tuning.html) for a gentler introduction to model tuning.# The gist of the following code is to create a dataframe where each column is a power of the `Horsepower` feature from 1 to 10 and we build a series of regression models using incrementally more of those features (higher degree):
 Xhp = DataFrame([hp.^i for i in 1:10])
 
 cases = [[Symbol("x$j") for j in 1:i] for i in 1:10]
@@ -68,6 +122,21 @@ rep = report(mtm)
 @show argmin(rep.measurements)
 
 # So the conclusion here is that the 5th order polynomial does quite well.## In ISL they use a different seed so the results are a bit different but comparable.
+Xnew = DataFrame([hpn.^i for i in 1:10])
+yy5 = predict(mtm, Xnew)
+
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+plot(xx.Horsepower, yy5, lw=3)
+
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)
+
+
+
+# ![5th order fit](/assets/literate/ISL-lab-5-g4.svg)
 # ## The Bootstrap## _Bootstrapping is not currently supported in MLJ._
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

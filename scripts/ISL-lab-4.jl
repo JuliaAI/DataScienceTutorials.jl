@@ -44,12 +44,23 @@ yticks(fontsize=12)
 
 
 
-# ![volume](/assets/ISL-lab-4-volume.svg)
+# ![volume](/assets/literate/ISL-lab-4-volume.svg)
 # ### Logistic Regression## We will now try to train models; the target `:Direction` has two classes: `Up` and `Down`; it needs to be interpreted as a categorical object, and we will mark it as a _ordered factor_ to specify that 'Up' is positive and 'Down' negative (for the confusion matrix later):
 y = coerce(y, OrderedFactor)
 classes(y[1])
 
-# Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since `D`  comes before `U`.# Let's now try fitting a simple logistic classifier (aka logistic regression) not using `:Year` and `:Today`:
+# Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since `D`  comes before `U`.
+figure(figsize=(8,6))
+cm = countmap(y)
+bar([1, 2], [cm["Down"], cm["Up"]])
+xticks([1, 2], ["Down", "Up"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
+
+
+
+# ![volume](/assets/literate/ISL-lab-4-bal.svg)## Seems pretty balanced.
+# Let's now try fitting a simple logistic classifier (aka logistic regression) not using `:Year` and `:Today`:
 @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
 clf = machine(LogisticClassifier(), X2, y)
@@ -93,12 +104,12 @@ fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
-# Interesting... it has higher accuracy than the model with more features! This could be investigated further by increasing the regularisation parameter but we'll leave it aside for now.## We can use a trained machine to predict on new data:
+# Interesting... it has higher accuracy than the model with more features! This could be investigated further by increasing the regularisation parameter but we'll leave that aside for now.## We can use a trained machine to predict on new data:
 Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
 ŷ = predict(clf, Xnew)
 ŷ |> pprint
 
-# Note: when specifying data, we used a simple `NamedTuple`; we could also have defined a dataframe or any other compatible tabular container.# Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used `predict_mode` or indeed
+# **Note**: when specifying data, we used a simple `NamedTuple`; we could also have defined a dataframe or any other compatible tabular container.# Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used `predict_mode` or indeed
 mode.(ŷ)
 
 # ### LDA## Let's do a similar thing but with a LDA model this time:
@@ -130,7 +141,7 @@ ŷ = predict_mode(clf, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
-# ### KNN## Multiple packages offer KNN, we go via NearestNeighbors:
+# ### KNN## We can use K-Nearest Neighbors models via the [`NearestNeighbors`](https://github.com/KristofferC/NearestNeighbors.jl) package:
 @load KNNClassifier pkg=NearestNeighbors
 
 knnc = KNNClassifier(K=1)
@@ -139,12 +150,13 @@ fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
-# Let's try with three neighbors
+# Pretty bad... let's try with three neighbors
 knnc.K = 3
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
+# A bit better but not hugely so.
 # ## Caravan insurance data## The caravan dataset is part of ISLR as well:
 caravan  = dataset("ISLR", "Caravan")
 size(caravan)
@@ -159,6 +171,17 @@ nl2 = sum(purchase .== vals[2])
 println("#$(vals[1]) ", nl1)
 println("#$(vals[2]) ", nl2)
 
+# we can also visualise this as was done before:
+figure(figsize=(8,6))
+cm = countmap(purchase)
+bar([1, 2], [cm["No"], cm["Yes"]])
+xticks([1, 2], ["No", "Yes"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
+
+
+
+# ![volume](/assets/literate/ISL-lab-4-bal2.svg)
 # that's quite unbalanced.## Apart from the target, all other variables are numbers; we can standardize the data:
 y, X = unpack(caravan, ==(:Purchase), col->true)
 
@@ -168,7 +191,7 @@ Xs = transform(std, X)
 
 var(Xs[:,1]) |> r3
 
-# Note: in MLJ, it is recommended to work with pipelines / networks when possible and not do "step-by-step" transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.## We split the data in the first 1000 rows for testing and the rest for training:
+# **Note**: in MLJ, it is recommended to work with pipelines / networks when possible and not do "step-by-step" transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.## We split the data in the first 1000 rows for testing and the rest for training:
 test = 1:1000
 train = last(test)+1:nrows(Xs);
 

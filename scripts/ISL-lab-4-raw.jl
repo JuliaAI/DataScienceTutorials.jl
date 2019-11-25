@@ -41,6 +41,15 @@ yticks(fontsize=12)
 y = coerce(y, OrderedFactor)
 classes(y[1])
 
+figure(figsize=(8,6))
+cm = countmap(y)
+bar([1, 2], [cm["Down"], cm["Up"]])
+xticks([1, 2], ["Down", "Up"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
+
+
+
 @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
 clf = machine(LogisticClassifier(), X2, y)
@@ -130,6 +139,15 @@ nl1 = sum(purchase .== vals[1])
 nl2 = sum(purchase .== vals[2])
 println("#$(vals[1]) ", nl1)
 println("#$(vals[2]) ", nl2)
+
+figure(figsize=(8,6))
+cm = countmap(purchase)
+bar([1, 2], [cm["No"], cm["Yes"]])
+xticks([1, 2], ["No", "Yes"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
+
+
 
 y, X = unpack(caravan, ==(:Purchase), col->true)
 

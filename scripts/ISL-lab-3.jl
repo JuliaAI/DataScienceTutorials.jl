@@ -20,7 +20,7 @@ first(boston, 3)
 # Let's get a feel for the data
 describe(boston, :mean, :std, :eltype)
 
-# So there's no missing value and most variables are floating point.# In MLJ it's important to specify the interpretation of the features (should it be considered as a Continuous feature, as a Count, ...?), see [this tutorial section](/pub/getting-started/choosing-a-model.html#data_and_its_interpretation) on scientific types.## Here we will just interpret the integer features as continuous as we will just use a basic linear regression; the `ScientificTypes` package helps us with that:
+# So there's no missing value and most variables are encoded as floating point numbers.# In MLJ it's important to specify the interpretation of the features (should it be considered as a Continuous feature, as a Count, ...?), see also [this tutorial section](/pub/getting-started/choosing-a-model.html#data_and_its_interpretation) on scientific types.## Here we will just interpret the integer features as continuous as we will just use a basic linear regression; the [`ScientificTypes`](https://github.com/alan-turing-institute/ScientificTypes.jl) package helps us with that:
 using ScientificTypes
 data = coerce(boston, autotype(boston, :discrete_to_continuous));
 

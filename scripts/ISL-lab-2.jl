@@ -36,7 +36,7 @@ x = 4
 # Element wise operations on a collection can be done with the dot syntax:
 sqrt.([4, 9, 16])
 
-# The packages `Statistics` and `StatsBase` offer a number of useful function for stats:
+# The packages `Statistics` (from the standard library) and [`StatsBase`](https://github.com/JuliaStats/StatsBase.jl) offer a number of useful function for stats:
 using Statistics, StatsBase
 
 # Note that if you don't have `StatsBase`, you can add it using `using Pkg; Pkg.add("StatsBase")`.# Right, let's now compute some simple statistics:
@@ -55,13 +55,13 @@ X = [1 2; 3 4; 5 6]
 # `size` gives dimensions (nrows, ncolumns)
 size(X)
 
-# ## Loading data## There are many ways to load data in Julia, one convenient one is via the CSV package.
+# ## Loading data## There are many ways to load data in Julia, one convenient one is via the [`CSV`](https://github.com/JuliaData/CSV.jl) package.
 using CSV
 
-# Many datasets are available via the `RDatasets` package
+# Many datasets are available via the [`RDatasets`](https://github.com/JuliaStats/RDatasets.jl) package
 using RDatasets
 
-# And finally the `DataFrames` package allows to manipulate data easily
+# And finally the [`DataFrames`](https://github.com/JuliaData/DataFrames.jl) package allows to manipulate data easily
 using DataFrames
 
 # Let's load some data from RDatasets (the full list of datasets is available [here](http://vincentarelbundock.github.io/Rdatasets/datasets.html)).
