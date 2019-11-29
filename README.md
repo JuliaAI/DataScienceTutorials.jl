@@ -11,6 +11,7 @@ MLJ   | MLJBase | MLJModels | ScientificTypes | Commit    | Note | Date
 0.5.4 | 0.8.1   | 0.5.7     | 0.2.5           | [f96a4e5] | ✓    | Nov 19, 2019
 0.5.2 | 0.7.5   | 0.5.6     | 0.2.4           | [f556f62] | ✓    | Nov 13, 2019
 
+[8433e41]: https://github.com/alan-turing-institute/MLJTutorials/commit/8433e41b43636999cce0981c4323fc92029dd438
 [6b30fda]: https://github.com/alan-turing-institute/MLJTutorials/commit/6b30fda6829ee65a55477f98c8498315ba262c0f
 [f96a4e5]: https://github.com/alan-turing-institute/MLJTutorials/commit/f96a4e56bb00c49a52c47f07f5730ffe54cabfa8
 [f556f62]: https://github.com/alan-turing-institute/MLJTutorials/commit/f556f62dad3e9c0e6003faa9ba90d132769fb718
