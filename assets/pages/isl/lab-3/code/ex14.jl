@@ -1,5 +1,6 @@
 # This file was generated, do not modify it. # hide
-mach = machine(mdl, X2, y)
-fit!(mach)
-ŷ = predict(mach, X2)
-round(rms(ŷ, y), sigdigits=4)
+figure(figsize=(8,6))
+hist(res, density=true)
+x = range(-20, 20, )
+
+savefig("assets/literate/ISL-lab-3-res2.svg") # hide

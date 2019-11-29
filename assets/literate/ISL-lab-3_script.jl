@@ -18,6 +18,23 @@ X = select(data, Not(:MedV));
 
 mdl = LinearRegressor()
 
+X_uni = select(X, :LStat) # only a single feature
+mach_uni = machine(mdl, X_uni, y)
+fit!(mach_uni)
+
+fp = fitted_params(mach_uni)
+@show round.(fp.coefs, sigdigits=3)
+@show round(fp.intercept, sigdigits=3)
+
+using PyPlot
+
+figure(figsize=(8,6))
+plot(X.LStat, y, ls="none", marker="o")
+Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
+plot(Xnew.LStat, predict(mach_uni, Xnew))
+
+savefig("assets/literate/ISL-lab-3-lm1.svg") # hide
+
 mach = machine(mdl, X, y)
 fit!(mach)
 
@@ -25,10 +42,15 @@ fp = fitted_params(mach)
 @show round.(fp.coefs[1:3], sigdigits=3)
 @show round(fp.intercept, sigdigits=3)
 
+println(rpad(" Feature", 11), "| ", "Coefficient")
+println("-"^24)
+for (i, name) in enumerate(names(X))
+    println(rpad("$name", 11), "| ", round(fp.coefs[i], sigdigits=3))
+end
+println(rpad("Intercept", 11), "| ", round(fp.intercept, sigdigits=3))
+
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
-
-using PyPlot
 
 figure(figsize=(8,6))
 res = ŷ .- y
@@ -52,8 +74,16 @@ ŷ = predict(mach, X2)
 round(rms(ŷ, y), sigdigits=4)
 
 X3 = hcat(X.LStat, X.LStat.^2)
-machine(mdl, X3, y)
+mach = machine(mdl, X3, y)
 fit!(mach)
 ŷ = predict(mach, X3)
 round(rms(ŷ, y), sigdigits=4)
+
+Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
+
+figure(figsize=(8,6))
+plot(X.LStat, y, ls="none", marker="o")
+plot(Xnew.LStat, predict(mach, Xnew))
+
+savefig("assets/literate/ISL-lab-3-lreg.svg") # hide
 

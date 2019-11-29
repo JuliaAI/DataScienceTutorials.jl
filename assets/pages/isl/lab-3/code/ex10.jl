@@ -1,8 +1,7 @@
 # This file was generated, do not modify it. # hide
-using PyPlot
+mach = machine(mdl, X, y)
+fit!(mach)
 
-figure(figsize=(8,6))
-res = ŷ .- y
-stem(res)
-
-savefig("assets/literate/ISL-lab-3-res.svg") # hide
+fp = fitted_params(mach)
+@show round.(fp.coefs[1:3], sigdigits=3)
+@show round(fp.intercept, sigdigits=3)

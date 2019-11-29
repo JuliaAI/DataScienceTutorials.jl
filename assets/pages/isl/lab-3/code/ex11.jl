@@ -1,6 +1,7 @@
 # This file was generated, do not modify it. # hide
-figure(figsize=(8,6))
-hist(res, density=true)
-x = range(-20, 20, )
-
-savefig("assets/literate/ISL-lab-3-res2.svg") # hide
+println(rpad(" Feature", 11), "| ", "Coefficient")
+println("-"^24)
+for (i, name) in enumerate(names(X))
+    println(rpad("$name", 11), "| ", round(fp.coefs[i], sigdigits=3))
+end
+println(rpad("Intercept", 11), "| ", round(fp.intercept, sigdigits=3))
