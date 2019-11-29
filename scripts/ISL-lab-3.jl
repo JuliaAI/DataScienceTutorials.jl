@@ -31,22 +31,48 @@ X = select(data, Not(:MedV));
 # Let's declare a simple multivariate linear regression model:
 mdl = LinearRegressor()
 
-# In order to fit it on the data, we need to wrap it in a _machine_ which, in MLJ, is the composition of a model and data to apply the model on:
+# First let's do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a _machine_ which, in MLJ, is the composition of a model and data to apply the model on:
+X_uni = select(X, :LStat) # only a single feature
+mach_uni = machine(mdl, X_uni, y)
+fit!(mach_uni)
+
+# You can then retrieve the  fitted parameters using `fitted_params`:
+fp = fitted_params(mach_uni)
+@show round.(fp.coefs, sigdigits=3)
+@show round(fp.intercept, sigdigits=3)
+
+# You can also visualise this
+using PyPlot
+
+figure(figsize=(8,6))
+plot(X.LStat, y, ls="none", marker="o")
+Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
+plot(Xnew.LStat, predict(mach_uni, Xnew))
+
+
+
+# ![Univariate regression](/assets/literate/ISL-lab-3-lm1.svg)
+# The  multivariate case is very similar
 mach = machine(mdl, X, y)
 fit!(mach)
 
-# The `fit!` operation trains the model on the data and the results are kept inside of the machine.# In this case we have trained it on the whole data.# You can retrieve the fitted parameters using `fitted_params`:
 fp = fitted_params(mach)
 @show round.(fp.coefs[1:3], sigdigits=3)
 @show round(fp.intercept, sigdigits=3)
+
+# The coefficients here correspond to each of the feature
+println(rpad(" Feature", 11), "| ", "Coefficient")
+println("-"^24)
+for (i, name) in enumerate(names(X))
+    println(rpad("$name", 11), "| ", round(fp.coefs[i], sigdigits=3))
+end
+println(rpad("Intercept", 11), "| ", round(fp.intercept, sigdigits=3))
 
 # You can use the `machine` in order to _predict_ values as well and, for instance, compute the root mean squared error:
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
 
 # Let's see what the residuals look like
-using PyPlot
-
 figure(figsize=(8,6))
 res = ŷ .- y
 stem(res)
@@ -76,11 +102,20 @@ round(rms(ŷ, y), sigdigits=4)
 
 # We get slightly better results but nothing spectacular.## Let's get back to the lab where they consider regressing the target variable on `lstat` and `lstat^2`; again, it's essentially a case of defining the right DataFrame:
 X3 = hcat(X.LStat, X.LStat.^2)
-machine(mdl, X3, y)
+mach = machine(mdl, X3, y)
 fit!(mach)
 ŷ = predict(mach, X3)
 round(rms(ŷ, y), sigdigits=4)
 
-# Unsurprisingly  the results are much  worse since we use far less information than before.
+# which again, we can visualise:
+Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
+
+figure(figsize=(8,6))
+plot(X.LStat, y, ls="none", marker="o")
+plot(Xnew.LStat, predict(mach, Xnew))
+
+
+
+# ![Polynomial regression](/assets/literate/ISL-lab-3-lreg.svg)
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
