@@ -4,7 +4,8 @@
 #
 # Again, the crabs dataset is so common that there is a  simple load function for it:
 
-using MLJ, StatsBase, Random, PyPlot, CategoricalArrays, PrettyPrinting, DataFrames
+using MLJ, StatsBase, Random, PyPlot, CategoricalArrays
+using PrettyPrinting, DataFrames, LossFunctions
 X, y = @load_crabs
 X = DataFrame(X)
 @show size(X)
@@ -36,10 +37,10 @@ xgbm = machine(xgb, X, y)
 
 # We will tune it varying the number of rounds used and generate a learning curve
 
-r = range(xgb, :num_round, lower=10, upper=500)
-curve = learning_curve!(xgbm, resampling=CV(),
-                        range=r, resolution=25,
-                        measure=cross_entropy)
+r = range(xgb, :num_round, lower=50, upper=500)
+curve = learning_curve!(xgbm, resampling=CV(nfolds=3),
+                        range=r, resolution=50,
+                        measure=HingeLoss())
 
 # Let's have a look
 
@@ -47,16 +48,16 @@ figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("Cross entropy", fontsize=14)
-xticks([10, 100, 250, 500], fontsize=12)
-yticks(0.8:0.05:1, fontsize=12)
+xticks([10, 100, 200, 500], fontsize=12)
+yticks(1.46:0.005:1.475, fontsize=12)
 
 savefig("assets/literate/EX-crabs-xgb-curve1.svg") # hide
 
 # ![Cross entropy vs Num Round](/assets/literate/EX-crabs-xgb-curve1.svg)
 #
-# So we're doing quite a good job with 100 rounds. Let's fix that:
+# So, in short, using more rounds helps. Let's arbitrarily fix it to 200.
 
-xgb.num_round = 100;
+xgb.num_round = 200;
 
 # ### More tuning (1)
 #
@@ -106,7 +107,7 @@ curve = learning_curve!(xgbm, resampling=CV(),
                         range=r, resolution=30,
                         measure=cross_entropy);
 
-# actually it doesn't look like it's changing anything:
+# actually it doesn't look like it's changing much...:
 
 @show round(minimum(curve.measurements), sigdigits=3)
 @show round(maximum(curve.measurements), sigdigits=3)
@@ -151,4 +152,4 @@ xgb = fitted_params(mtm).best_model
 # How does it fare on the test set?
 
 ŷ = predict_mode(mtm, rows=test)
-round(misclassification_rate(ŷ, y[test]), sigdigits=3)
+round(accuracy(ŷ, y[test]), sigdigits=3)
