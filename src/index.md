@@ -3,7 +3,7 @@
 
 ## Learning by doing
 
-This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related `MLJ*` packages.
+This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related packages.
 On each tutorial page, you will find a link to download the raw script and the notebook corresponding to the page.
 
 Feedback and PRs are always welcome to help make these tutorials better, from the presentation to the content.
@@ -14,7 +14,18 @@ In order to reproduce the environment that was used to generate these tutorials,
 julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
 ```
 
-## Getting started
+## Elementary data manipulations
+
+If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on.
+In these we provide an introduction to some of the fundamental packages in the Julia data processing universe: [DataFrames], [CSV], [CategoricalArrays] as well as two packages from the MLJ universe: [ScientificTypes] and [MLJBase].
+
+[DataFrames]: https://github.com/JuliaData/DataFrames.jl
+[CSV]: https://github.com/JuliaData/CSV.jl
+[CategoricalArrays]: https://github.com/JuliaData/CategoricalArrays.jl
+[ScientificTypes]: https://github.com/alan-turing-institute/ScientificTypes.jl
+[MLJBase]: https://github.com/alan-turing-institute/MLJBase.jl
+
+## Getting started with MLJ
 
 If you are new to MLJ but are familiar with Julia and with Machine Learning, we recommend you start by going through the short _Getting started_ examples in order:
 
@@ -29,7 +40,7 @@ If you are new to MLJ but are familiar with Julia and with Machine Learning, we 
 
 Additionally, you can refer to the [documentation](https://alan-turing-institute.github.io/MLJ.jl/stable/) for more detailed information.
 
-## Introduction to Statistical Learning
+## Introduction to Statistical Learning with MLJ
 
 This is a sequence of tutorials adapted from the labs associated with [_An introduction to statistical learning_](http://faculty.marshall.usc.edu/gareth-james/ISL/code.html) which were originally written in R.
 These tutorials may be useful if you want a gentle intro to MLJ **and** other relevant tools in the Julia environment.
@@ -47,7 +58,7 @@ Also note that some of the things used in the ISL labs are not (yet) supported b
 * [Lab 9](/pub/isl/lab-9.html), SVM (_partial_)
 * [Lab 10](/pub/isl/lab-10.html), PCA and clustering (_partial_)
 
-## End to end examples
+## End to end examples with MLJ
 
 These are examples that are meant to show how MLJ can be used from loading data to producing a model.
 They assume familiarity with Machine Learning and MLJ.

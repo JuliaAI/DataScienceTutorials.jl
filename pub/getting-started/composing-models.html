@@ -1,46 +1,130 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title></title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item pure-menu-selected"><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-3.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-4.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-5.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-6b.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-8.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-9.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-10.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/wine.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/horse.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=composing_models ><a href="/MLJTutorials/pub/getting-started/composing-models.html#composing_models">Composing models</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/A-composing-models.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/A-composing-models-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/A-composing-models.jl" target=_blank ><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/getting-started/composing-models.html#generating_dummy_data">Generating dummy data</a><li><a href="/MLJTutorials/pub/getting-started/composing-models.html#declaring_a_pipeline">Declaring a pipeline</a></ol></div><h2 id=generating_dummy_data ><a href="/MLJTutorials/pub/getting-started/composing-models.html#generating_dummy_data">Generating dummy data</a></h2> <p>Let&#39;s start by generating some dummy data with both numerical values and categorical values:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, PrettyPrinting
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+   
+  <link rel="stylesheet" href="/css/judoc.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title></title>  
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" />
+            <p><strong>MLJ Tutorials</strong></p>
+          </div>
+        </a>
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
 
-<span class=hljs-meta >@load</span> KNNRegressor
-<span class=hljs-comment ># input</span>
-X = (age    = [<span class=hljs-number >23</span>, <span class=hljs-number >45</span>, <span class=hljs-number >34</span>, <span class=hljs-number >25</span>, <span class=hljs-number >67</span>],
-     gender = categorical([<span class=hljs-string >'m'</span>, <span class=hljs-string >'m'</span>, <span class=hljs-string >'f'</span>, <span class=hljs-string >'m'</span>, <span class=hljs-string >'f'</span>]))
-<span class=hljs-comment ># target</span>
-height = [<span class=hljs-number >178</span>, <span class=hljs-number >194</span>, <span class=hljs-number >165</span>, <span class=hljs-number >173</span>, <span class=hljs-number >168</span>];</code></pre> <p>Note that the scientific type of <code>age</code> is <code>Count</code> here:</p> <pre><code class="julia hljs">scitype(X.age)</code></pre><div class=code_output ><pre><code class="plaintext hljs">AbstractArray{Count,1}</code></pre></div>
+          <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item "><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/fit-and-predict.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/model-tuning.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+            <li class="pure-menu-item pure-menu-selected"><a href="/pub/getting-started/composing-models.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+          </ul>
+
+          <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          <ul class="pure-menu-sublist" id=isl>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-3.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-4.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-5.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-6b.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-8.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-9.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-10.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+          </ul>
+
+          <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+          <ul class="pure-menu-sublist" id=e2e>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/AMES.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/wine.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/crabs-xgb.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/horse.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+
+<div class="jd-content">
+<h1 id="composing_models"><a href="/pub/getting-started/composing-models.html#composing_models">Composing models</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/A-composing-models.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/A-composing-models-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/A-composing-models.jl" target="_blank"><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="jd-toc"><ol><li><a href="/pub/getting-started/composing-models.html#generating_dummy_data">Generating dummy data</a></li><li><a href="/pub/getting-started/composing-models.html#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div><h2 id="generating_dummy_data"><a href="/pub/getting-started/composing-models.html#generating_dummy_data">Generating dummy data</a></h2>
+<p>Let&#39;s start by generating some dummy data with both numerical values and categorical values:</p>
+<pre><code class="language-julia">using MLJ, PrettyPrinting
+
+@load KNNRegressor
+# input
+X = (age    = [23, 45, 34, 25, 67],
+     gender = categorical(['m', 'm', 'f', 'm', 'f']))
+# target
+height = [178, 194, 165, 173, 168];</code></pre>
+<p>Note that the scientific type of <code>age</code> is <code>Count</code> here:</p>
+<pre><code class="language-julia">scitype(X.age)</code></pre><div class="code_output"><pre><code class="plaintext">AbstractArray{Count,1}</code></pre></div>
 <p>We will want to coerce that to <code>Continuous</code> so that it can be given to a regressor that expects such values.</p>
-<h2 id=declaring_a_pipeline ><a href="/MLJTutorials/pub/getting-started/composing-models.html#declaring_a_pipeline">Declaring a pipeline</a></h2>
+<h2 id="declaring_a_pipeline"><a href="/pub/getting-started/composing-models.html#declaring_a_pipeline">Declaring a pipeline</a></h2>
 <p>A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data. Let&#39;s say that we want to apply the following steps:</p>
 <ol>
 <li><p>standardize the target variable &#40;<code>:height</code>&#41;</p>
-
+</li>
 <li><p>one hot encode the categorical data</p>
-
+</li>
 <li><p>train a KNN regression model</p>
-
+</li>
 </ol>
 <p>The <code>@pipeline</code> macro helps you define such a simple &#40;non-branching&#41; pipeline of steps to be applied in order:</p>
-<pre><code class="julia hljs">pipe = <span class=hljs-meta >@pipeline</span> MyPipe(X -&gt; coerce(X, :age=&gt;Continuous),
+<pre><code class="language-julia">pipe = @pipeline MyPipe(X -> coerce(X, :age=>Continuous),
                        hot = OneHotEncoder(),
-                       knn = KNNRegressor(K=<span class=hljs-number >3</span>),
+                       knn = KNNRegressor(K=3),
                        target = UnivariateStandardizer());</code></pre>
 <p>Note the coercion of the <code>:age</code> variable to Continuous since <code>KNNRegressor</code> expects <code>Continuous</code> input. Note also the <code>target</code> keyword where you can specify a transformation of the target variable.</p>
 <p>Hyperparameters of this pipeline can be accessed &#40;and set&#41; using dot syntax:</p>
-<pre><code class="julia hljs">pipe.knn.K = <span class=hljs-number >2</span>
-pipe.hot.drop_last = <span class=hljs-literal >true</span>;</code></pre>
+<pre><code class="language-julia">pipe.knn.K = 2
+pipe.hot.drop_last = true;</code></pre>
 <p>Evaluation for a pipe can be done with the <code>evaluate&#33;</code> method; implicitly it will construct machines that will contain the fitted parameters etc:</p>
-<pre><code class="julia hljs">evaluate(pipe, X, height, resampling=Holdout(),
-         measure=rms) |&gt; pprint</code></pre><div class=code_output ><pre><code class="plaintext hljs">(measure = [rms],
+<pre><code class="language-julia">evaluate(pipe, X, height, resampling=Holdout(),
+         measure=rms) |> pprint</code></pre><div class="code_output"><pre><code class="plaintext">(measure = [rms],
  measurement = [11.5],
  per_fold = [[11.5]],
  per_observation = [missing])
 </code></pre></div>
-<div class=page-foot >
-  <div class=copyright >
+<div class="page-foot">
+  <div class="copyright">
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: October 10, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
   </div>
 </div>
 
 </div>
+<!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-      </div> 
-  </div> 
-  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>
+  
+</body>
+</html>
