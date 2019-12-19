@@ -23,7 +23,7 @@ Currently the main aim is to add many tutorials presenting different perspective
 The organisation is rudimentary at the moment and once there are more tutorials, we will try to improve that.
 If you have suggestions or recommendations or would like to help, please open an issue here, thanks!
 
-The rest of this readme assumes that your current directory is `MLJTutorials`.
+The rest of this readme assumes that your current directory is `MLJTutorials` (a local clone of this repository).
 
 ## For readers
 
