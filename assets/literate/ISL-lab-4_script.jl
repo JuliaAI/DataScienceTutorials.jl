@@ -182,4 +182,3 @@ xticks(fontsize=12)
 yticks(fontsize=12)
 
 savefig("assets/literate/ISL-lab-4-roc.svg") # hide
-
