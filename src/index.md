@@ -17,13 +17,14 @@ julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
 ## Elementary data manipulations
 
 If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on.
-In these we provide an introduction to some of the fundamental packages in the Julia data processing universe: [DataFrames], [CSV], [CategoricalArrays] as well as two packages from the MLJ universe: [ScientificTypes] and [MLJBase].
+In these we provide an introduction to some of the fundamental packages in the Julia data processing universe such as [DataFrames], [CSV] and [CategoricalArrays].
 
 [DataFrames]: https://github.com/JuliaData/DataFrames.jl
 [CSV]: https://github.com/JuliaData/CSV.jl
 [CategoricalArrays]: https://github.com/JuliaData/CategoricalArrays.jl
-[ScientificTypes]: https://github.com/alan-turing-institute/ScientificTypes.jl
-[MLJBase]: https://github.com/alan-turing-institute/MLJBase.jl
+
+* How to [load data](/pub/data/loading.html),
+* Short intro to [dataframes](/pub/data/loading.html),
 
 ## Getting started with MLJ
 

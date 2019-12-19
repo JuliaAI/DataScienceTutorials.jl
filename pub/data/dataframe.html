@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+   
+  <link rel="stylesheet" href="/css/judoc.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title></title>  
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" />
+            <p><strong>MLJ Tutorials</strong></p>
+          </div>
+        </a>
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+          <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item "><a href="/pub/data/loading.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+            <li class="pure-menu-item pure-menu-selected"><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> DataFrame</a></li>
+          </ul>
+
+          <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item "><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/fit-and-predict.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/model-tuning.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/composing-models.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+          </ul>
+
+          <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          <ul class="pure-menu-sublist" id=isl>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-3.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-4.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-5.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-6b.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-8.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-9.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+            <li class="pure-menu-item "><a href="/pub/isl/lab-10.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+          </ul>
+
+          <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+          <ul class="pure-menu-sublist" id=e2e>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/AMES.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/wine.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/crabs-xgb.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+            <li class="pure-menu-item "><a href="/pub/end-to-end/horse.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+
+<div class="jd-content">
+<h1 id="manipulating_a_dataframe"><a href="/pub/data/dataframe.html#manipulating_a_dataframe">Manipulating a DataFrame</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/D0-dataframe.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/D0-dataframe-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/D0-dataframe.jl" target="_blank"><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="jd-toc"><ol><li><a href="/pub/data/dataframe.html#basics">Basics</a></li></ol></div><h2 id="basics"><a href="/pub/data/dataframe.html#basics">Basics</a></h2>
+<pre><code class="language-julia">using RDatasets
+
+boston = dataset("MASS", "Boston");</code></pre>
+<p>You can show the first few rows using <code>first</code> and specifying a number of rows:</p>
+<pre><code class="language-julia">first(boston, 4)</code></pre><div class="code_output"><pre><code class="plaintext">4×14 DataFrame
+│ Row │ Crim    │ Zn      │ Indus   │ Chas  │ NOx     │ Rm      │ Age     │ Dis     │ Rad   │ Tax   │ PTRatio │ Black   │ LStat   │ MedV    │
+│     │ Float64 │ Float64 │ Float64 │ Int64 │ Float64 │ Float64 │ Float64 │ Float64 │ Int64 │ Int64 │ Float64 │ Float64 │ Float64 │ Float64 │
+├─────┼─────────┼─────────┼─────────┼───────┼─────────┼─────────┼─────────┼─────────┼───────┼───────┼─────────┼─────────┼─────────┼─────────┤
+│ 1   │ 0.00632 │ 18.0    │ 2.31    │ 0     │ 0.538   │ 6.575   │ 65.2    │ 4.09    │ 1     │ 296   │ 15.3    │ 396.9   │ 4.98    │ 24.0    │
+│ 2   │ 0.02731 │ 0.0     │ 7.07    │ 0     │ 0.469   │ 6.421   │ 78.9    │ 4.9671  │ 2     │ 242   │ 17.8    │ 396.9   │ 9.14    │ 21.6    │
+│ 3   │ 0.02729 │ 0.0     │ 7.07    │ 0     │ 0.469   │ 7.185   │ 61.1    │ 4.9671  │ 2     │ 242   │ 17.8    │ 392.83  │ 4.03    │ 34.7    │
+│ 4   │ 0.03237 │ 0.0     │ 2.18    │ 0     │ 0.458   │ 6.998   │ 45.8    │ 6.0622  │ 3     │ 222   │ 18.7    │ 394.63  │ 2.94    │ 33.4    │</code></pre></div>
+<code>StatsBase</code> offers a convenient <code>describe</code> function which you can use to quickly get an overview of the data:</p>
+<pre><code class="language-julia">using StatsBase
+describe(boston, :min, :max, :mean, :median, :std)</code></pre><div class="code_output"><pre><code class="plaintext">14×6 DataFrame
+│ Row │ variable │ min     │ max     │ mean     │ median  │ std      │
+│     │ Symbol   │ Real    │ Real    │ Float64  │ Float64 │ Float64  │
+├─────┼──────────┼─────────┼─────────┼──────────┼─────────┼──────────┤
+│ 1   │ Crim     │ 0.00632 │ 88.9762 │ 3.61352  │ 0.25651 │ 8.60155  │
+│ 2   │ Zn       │ 0.0     │ 100.0   │ 11.3636  │ 0.0     │ 23.3225  │
+│ 3   │ Indus    │ 0.46    │ 27.74   │ 11.1368  │ 9.69    │ 6.86035  │
+│ 4   │ Chas     │ 0       │ 1       │ 0.06917  │ 0.0     │ 0.253994 │
+│ 5   │ NOx      │ 0.385   │ 0.871   │ 0.554695 │ 0.538   │ 0.115878 │
+│ 6   │ Rm       │ 3.561   │ 8.78    │ 6.28463  │ 6.2085  │ 0.702617 │
+│ 7   │ Age      │ 2.9     │ 100.0   │ 68.5749  │ 77.5    │ 28.1489  │
+│ 8   │ Dis      │ 1.1296  │ 12.1265 │ 3.79504  │ 3.20745 │ 2.10571  │
+│ 9   │ Rad      │ 1       │ 24      │ 9.54941  │ 5.0     │ 8.70726  │
+│ 10  │ Tax      │ 187     │ 711     │ 408.237  │ 330.0   │ 168.537  │
+│ 11  │ PTRatio  │ 12.6    │ 22.0    │ 18.4555  │ 19.05   │ 2.16495  │
+│ 12  │ Black    │ 0.32    │ 396.9   │ 356.674  │ 391.44  │ 91.2949  │
+│ 13  │ LStat    │ 1.73    │ 37.97   │ 12.6531  │ 11.36   │ 7.14106  │
+│ 14  │ MedV     │ 5.0     │ 50.0    │ 22.5328  │ 21.2    │ 9.1971   │</code></pre></div>
+<p>So here we get a derived object with one row per feature and one column per required statistic.
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: December 19, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
+  </div>
+</div>
+
+</div>
+<!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

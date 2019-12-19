@@ -29,6 +29,12 @@
         <ul class="pure-menu-list">
           <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
 
+          <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item "><a href="/pub/data/loading.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+            <li class="pure-menu-item "><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> DataFrame</a></li>
+          </ul>
+
           <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
           <ul class="pure-menu-sublist">
             <li class="pure-menu-item "><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
@@ -74,14 +80,12 @@
 <p>Let&#39;s load the usual packages and the data</p>
 <pre><code class="language-julia">using MLJ, RDatasets, ScientificTypes,
       DataFrames, Statistics, StatsBase
-using MLJ: confusion_matrix, accuracy, tp, fp,
-      precision, recall, auc, roc, f1score
 using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
 @show size(smarket)
 @show names(smarket)</code></pre><div class="code_output"><pre><code class="plaintext">size(smarket) = (1250, 9)
-names(smarket) = [:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Direction]
+names(smarket) = Symbol[:Year, :Lag1, :Lag2, :Lag3, :Lag4, :Lag5, :Volume, :Today, :Direction]
 </code></pre></div>
 <p>Since we often  want  to only show a few significant digits for the metrics etc, let&#39;s introduce a very simple function  that does that:</p>
 <pre><code class="language-julia">r3 = x -> round(x, sigdigits=3)
@@ -106,14 +110,14 @@ X = select(smarket, Not(:Direction));</code></pre>
 <p>We can compute all the pairwise correlations; we use <code>Matrix</code> so that the dataframe entries are considered as one matrix of numbers with the same type &#40;otherwise <code>cor</code> won&#39;t work&#41;:</p>
 <pre><code class="language-julia">cm = X |> Matrix |> cor
 round.(cm, sigdigits=1)</code></pre><div class="code_output"><pre><code class="plaintext">8×8 Array{Float64,2}:
- 1.0    0.03    0.03    0.03    0.04    0.03    0.5    0.03
- 0.03   1.0    -0.03   -0.01   -0.003  -0.006   0.04  -0.03
- 0.03  -0.03    1.0    -0.03   -0.01   -0.004  -0.04  -0.01
+ 1.0    0.03    0.03    0.03    0.04    0.03    0.5    0.03 
+ 0.03   1.0    -0.03   -0.01   -0.003  -0.006   0.04  -0.03 
+ 0.03  -0.03    1.0    -0.03   -0.01   -0.004  -0.04  -0.01 
  0.03  -0.01   -0.03    1.0    -0.02   -0.02   -0.04  -0.002
  0.04  -0.003  -0.01   -0.02    1.0    -0.03   -0.05  -0.007
- 0.03  -0.006  -0.004  -0.02   -0.03    1.0    -0.02  -0.03
- 0.5    0.04   -0.04   -0.04   -0.05   -0.02    1.0    0.01
- 0.03  -0.03   -0.01   -0.002  -0.007  -0.03    0.01   1.0</code></pre></div>
+ 0.03  -0.006  -0.004  -0.02   -0.03    1.0    -0.02  -0.03 
+ 0.5    0.04   -0.04   -0.04   -0.05   -0.02    1.0    0.01 
+ 0.03  -0.03   -0.01   -0.002  -0.007  -0.03    0.01   1.0  </code></pre></div>
 <p>Let&#39;s see what the <code>:Volume</code> feature looks like:</p>
 <pre><code class="language-julia">using PyPlot
 figure(figsize=(8,6))
@@ -129,7 +133,7 @@ yticks(fontsize=12)
 <pre><code class="language-julia">y = coerce(y, OrderedFactor)
 classes(y[1])</code></pre><div class="code_output"><pre><code class="plaintext">2-element CategoricalArray{String,1,UInt8}:
  "Down"
- "Up"</code></pre></div>
+ "Up"  </code></pre></div>
 <p>Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since <code>D</code>  comes before <code>U</code>.</p>
 <pre><code class="language-julia">figure(figsize=(8,6))
 cm = countmap(y)
@@ -143,7 +147,7 @@ ylabel("Number of occurences", fontsize=14)
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="language-julia">@load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><div class="code_output"><pre><code class="plaintext">Machine{LogisticClassifier} @ 1…61
+clf = machine(LogisticClassifier(), X2, y)</code></pre><div class="code_output"><pre><code class="plaintext">Machine{LogisticClassifier} @ 1…34
 </code></pre></div>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit!(clf)
@@ -226,10 +230,10 @@ ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3</code></pre><div class="code_output"><pre><code class="plaintext">0.548</code></pre></div>
 <h3 id="qda"><a href="/pub/isl/lab-4.html#qda">QDA</a></h3>
 <p>Bayesian QDA is available via ScikitLearn:</p>
-<pre><code class="language-julia">@load BayesianQDA pkg=ScikitLearn</code></pre><div class="code_output"><pre><code class="plaintext">MLJModels.ScikitLearn_.BayesianQDA(priors = nothing,
-                                   reg_param = 0.0,
-                                   store_covariance = false,
-                                   tol = 0.0001,) @ 4…16</code></pre></div>
+<pre><code class="language-julia">@load BayesianQDA pkg=ScikitLearn</code></pre><div class="code_output"><pre><code class="plaintext">BayesianQDA(priors = nothing,
+            reg_param = 0.0,
+            store_covariance = false,
+            tol = 0.0001,) @ 1…95</code></pre></div>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="language-julia">clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)
@@ -258,7 +262,7 @@ size(caravan)</code></pre><div class="code_output"><pre><code class="plaintext">
 <p>The target variable is <code>Purchase</code>, effectively  a categorical</p>
 <pre><code class="language-julia">purchase = caravan.Purchase
 vals     = unique(purchase)</code></pre><div class="code_output"><pre><code class="plaintext">2-element Array{String,1}:
- "No"
+ "No" 
  "Yes"</code></pre></div>
 <p>Let&#39;s see how many of each we have</p>
 <pre><code class="language-julia">nl1 = sum(purchase .== vals[1])

@@ -29,6 +29,12 @@
         <ul class="pure-menu-list">
           <li class="pure-menu-item pure-menu-top-item pure-menu-selected"><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
 
+          <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+          <ul class="pure-menu-sublist">
+            <li class="pure-menu-item "><a href="/pub/data/loading.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+            <li class="pure-menu-item "><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> DataFrame</a></li>
+          </ul>
+
           <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
           <ul class="pure-menu-sublist">
             <li class="pure-menu-item "><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
@@ -79,8 +85,15 @@
 <p>In order to reproduce the environment that was used to generate these tutorials, please download this <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml" target="_blank"><code>Project.toml</code></a> and this <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml" target="_blank"><code>Manifest.toml</code></a> in a folder and, in that folder, do</p>
 <pre><code class="language-julia-repl">julia> using Pkg; Pkg.activate("."); Pkg.instantiate();</code></pre>
 <h2 id="elementary_data_manipulations"><a href="/index.html#elementary_data_manipulations">Elementary data manipulations</a></h2>
-<p>If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on. In these we provide an introduction to some of the fundamental packages in the Julia data processing universe: <a href="https://github.com/JuliaData/DataFrames.jl">DataFrames</a>, <a href="https://github.com/JuliaData/CSV.jl">CSV</a>, <a href="https://github.com/JuliaData/CategoricalArrays.jl">CategoricalArrays</a> as well as two packages from the MLJ universe: <a href="https://github.com/alan-turing-institute/ScientificTypes.jl">ScientificTypes</a> and <a href="https://github.com/alan-turing-institute/MLJBase.jl">MLJBase</a>.</p>
- <h2 id="getting_started_with_mlj"><a href="/index.html#getting_started_with_mlj">Getting started with MLJ</a></h2>
+<p>If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on. In these we provide an introduction to some of the fundamental packages in the Julia data processing universe such as <a href="https://github.com/JuliaData/DataFrames.jl">DataFrames</a>, <a href="https://github.com/JuliaData/CSV.jl">CSV</a> and <a href="https://github.com/JuliaData/CategoricalArrays.jl">CategoricalArrays</a>.</p>
+
+<ul>
+<li><p>How to <a href="/pub/data/loading.html">load data</a>,</p>
+</li>
+<li><p>Short intro to <a href="/pub/data/loading.html">dataframes</a>,</p>
+</li>
+</ul>
+<h2 id="getting_started_with_mlj"><a href="/index.html#getting_started_with_mlj">Getting started with MLJ</a></h2>
 <p>If you are new to MLJ but are familiar with Julia and with Machine Learning, we recommend you start by going through the short <em>Getting started</em> examples in order:</p>
 <ol>
 <li><p>How to <a href="/pub/getting-started/choosing-a-model.html">choose a model</a>,</p>
