@@ -12,7 +12,9 @@ using JuDoc, Pkg, Logging, NodeJS, Literate
 
 Logging.disable_logging(Logging.LogLevel(1500))
 
-ifiles = joinpath.("scripts", readdir("scripts"))
+scripts = readdir("scripts")
+filter!(e -> endswith(e, ".jl"), scripts)
+ifiles = joinpath.("scripts", scripts)
 
 nbpath = joinpath("generated", "notebooks")
 scpath = joinpath("generated", "scripts")
