@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-first(boston, 4)
+using CSV
+data = CSV.read("scripts/data/foo.csv")

@@ -1,91 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-   <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
-   
-  <link rel="stylesheet" href="/css/judoc.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
-   <title></title>  
-</head>
-<body>
-  <div id="layout">
-    <!-- Menu toggle / hamburger icon -->
-    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
-      <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
-          <div class="menu-logo">
-            <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" />
-            <p><strong>MLJ Tutorials</strong></p>
-          </div>
-        </a>
-        <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
-
-          <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-          <ul class="pure-menu-sublist">
-            <li class="pure-menu-item "><a href="/pub/data/loading.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-            <li class="pure-menu-item "><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> DataFrame</a></li>
-          </ul>
-
-          <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-          <ul class="pure-menu-sublist">
-            <li class="pure-menu-item "><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/fit-and-predict.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/model-tuning.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/composing-models.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-          </ul>
-
-          <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-          <ul class="pure-menu-sublist" id=isl>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-3.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-4.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-5.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-6b.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-8.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-9.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-10.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-          </ul>
-
-          <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-          <ul class="pure-menu-sublist" id=e2e>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/AMES.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/wine.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-            <li class="pure-menu-item pure-menu-selected"><a href="/pub/end-to-end/crabs-xgb.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/horse.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-          </ul>
-        </ul>
-      </div>
-    </div>
-    <div id="main"> <!-- Closed in foot -->
-      
-
-<!-- Content appended here -->
-
-<div class="jd-content">
-<h1 id="crabs_with_xgboost"><a href="/pub/end-to-end/crabs-xgb.html#crabs_with_xgboost">Crabs with XGBoost</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/EX-crabs-xgb.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-crabs-xgb-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-crabs-xgb.jl" target="_blank"><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="jd-toc"><ol><li><a href="/pub/end-to-end/crabs-xgb.html#first_steps">First steps</a></li><li><a href="/pub/end-to-end/crabs-xgb.html#xgboost_machine">XGBoost machine</a><ol><li><a href="/pub/end-to-end/crabs-xgb.html#more_tuning_1">More tuning &#40;1&#41;</a></li><li><a href="/pub/end-to-end/crabs-xgb.html#more_tuning_2">More tuning &#40;2&#41;</a></li><li><a href="/pub/end-to-end/crabs-xgb.html#more_tuning_3">More tuning &#40;3&#41;</a></li></ol></li></ol></div>This example is inspired from <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">this post</a> showing how to use XGBoost.</p>
-<h2 id="first_steps"><a href="/pub/end-to-end/crabs-xgb.html#first_steps">First steps</a></h2>
-<p>Again, the crabs dataset is so common that there is a  simple load function for it:</p>
-<pre><code class="language-julia">using MLJ, StatsBase, Random, PyPlot, CategoricalArrays
-using PrettyPrinting, DataFrames, LossFunctions
-X, y = @load_crabs
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title>Crabs with XGBoost</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/data/loading.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/data/dataframe.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> DataFrame</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-3.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-4.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-5.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-6b.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-8.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-9.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-10.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/wine.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item pure-menu-selected"><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/horse.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=crabs_with_xgboost ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#crabs_with_xgboost">Crabs with XGBoost</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/EX-crabs-xgb.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-crabs-xgb-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-crabs-xgb.jl" target=_blank ><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#first_steps">First steps</a><li><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#xgboost_machine">XGBoost machine</a><ol><li><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_1">More tuning &#40;1&#41;</a><li><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_2">More tuning &#40;2&#41;</a><li><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_3">More tuning &#40;3&#41;</a></ol></ol></div>This example is inspired from <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">this post</a> showing how to use XGBoost.</p> <h2 id=first_steps ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#first_steps">First steps</a></h2> <p>Again, the crabs dataset is so common that there is a simple load function for it:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, StatsBase, Random, PyPlot, CategoricalArrays
+<span class=hljs-keyword >using</span> PrettyPrinting, DataFrames, LossFunctions
+X, y = <span class=hljs-meta >@load_crabs</span>
 X = DataFrame(X)
-@show size(X)
-@show y[1:3]
-first(X, 3) |> pretty</code></pre><div class="code_output"><pre><code class="plaintext">size(X) = (200, 5)
+<span class=hljs-meta >@show</span> size(X)
+<span class=hljs-meta >@show</span> y[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>]
+first(X, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><div class=code_output ><pre><code class="plaintext hljs">size(X) = (200, 5)
 y[1:3] = CategoricalString{UInt8}["B", "B", "B"]
 ┌────────────┬────────────┬────────────┬────────────┬────────────┐
 │ FL         │ RW         │ CL         │ CW         │ BD         │
@@ -96,14 +15,10 @@ y[1:3] = CategoricalString{UInt8}["B", "B", "B"]
 │ 8.8        │ 7.7        │ 18.1       │ 20.8       │ 7.4        │
 │ 9.2        │ 7.8        │ 19.0       │ 22.4       │ 7.7        │
 └────────────┴────────────┴────────────┴────────────┴────────────┘
-</code></pre></div>
-<p>It&#39;s a classification problem with the following classes:</p>
-<pre><code class="language-julia">levels(y) |> pprint</code></pre><div class="code_output"><pre><code class="plaintext">["B", "O"]
-</code></pre></div>
-<p>It&#39;s not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.</p>
-<pre><code class="language-julia">train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
-@load XGBoostClassifier
-xgb_model = XGBoostClassifier()</code></pre><div class="code_output"><pre><code class="plaintext">XGBoostClassifier(num_round = 1,
+</code></pre></div> <p>It&#39;s a classification problem with the following classes:</p> <pre><code class="julia hljs">levels(y) |&gt; pprint</code></pre><div class=code_output ><pre><code class="plaintext hljs">["B", "O"]
+</code></pre></div> <p>It&#39;s not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.</p> <pre><code class="julia hljs">train, test = partition(eachindex(y), <span class=hljs-number >0.70</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >52</span>)
+<span class=hljs-meta >@load</span> XGBoostClassifier
+xgb_model = XGBoostClassifier()</code></pre><div class=code_output ><pre><code class="plaintext hljs">XGBoostClassifier(num_round = 1,
                   booster = "gbtree",
                   disable_default_eval_metric = 0,
                   eta = 0.3,
@@ -137,128 +52,107 @@ xgb_model = XGBoostClassifier()</code></pre><div class="code_output"><pre><code 
                   objective = "automatic",
                   base_score = 0.5,
                   eval_metric = "mlogloss",
-                  seed = 0,) @ 2…61</code></pre></div>
-<p>Let&#39;s check whether the training and  is balanced, <code>StatsBase.countmap</code> is useful for that:</p>
-<pre><code class="language-julia">countmap(y[train]) |> pprint</code></pre><div class="code_output"><pre><code class="plaintext">Dict("B" => 73, "O" => 67)
-</code></pre></div>
-<p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p>
-<h2 id="xgboost_machine"><a href="/pub/end-to-end/crabs-xgb.html#xgboost_machine">XGBoost machine</a></h2>
-<p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p>
-<pre><code class="language-julia">xgb  = XGBoostClassifier()
-xgbm = machine(xgb, X, y)</code></pre><div class="code_output"><pre><code class="plaintext">Machine{XGBoostClassifier} @ 7…20
-</code></pre></div>
-<p>We will tune it varying the number of rounds used and generate a learning curve</p>
-<pre><code class="language-julia">r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, resampling=CV(nfolds=3),
-                        range=r, resolution=50,
-                        measure=HingeLoss())</code></pre><div class="code_output"><pre><code class="plaintext">(parameter_name = "num_round",
+                  seed = 0,) @ 2…61</code></pre></div> <p>Let&#39;s check whether the training and is balanced, <code>StatsBase.countmap</code> is useful for that:</p> <pre><code class="julia hljs">countmap(y[train]) |&gt; pprint</code></pre><div class=code_output ><pre><code class="plaintext hljs">Dict("B" =&gt; 73, "O" =&gt; 67)
+</code></pre></div> <p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p> <h2 id=xgboost_machine ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#xgboost_machine">XGBoost machine</a></h2> <p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p> <pre><code class="julia hljs">xgb  = XGBoostClassifier()
+xgbm = machine(xgb, X, y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{XGBoostClassifier} @ 7…20
+</code></pre></div> <p>We will tune it varying the number of rounds used and generate a learning curve</p> <pre><code class="julia hljs">r = range(xgb, :num_round, lower=<span class=hljs-number >50</span>, upper=<span class=hljs-number >500</span>)
+curve = learning_curve!(xgbm, resampling=CV(nfolds=<span class=hljs-number >3</span>),
+                        range=r, resolution=<span class=hljs-number >50</span>,
+                        measure=HingeLoss())</code></pre><div class=code_output ><pre><code class="plaintext hljs">(parameter_name = "num_round",
  parameter_scale = :linear,
  parameter_values = [50, 59, 68, 78, 87, 96, 105, 114, 123, 133, 142, 151, 160, 169, 179, 188, 197, 206, 215, 224, 234, 243, 252, 261, 270, 280, 289, 298, 307, 316, 326, 335, 344, 353, 362, 371, 381, 390, 399, 408, 417, 427, 436, 445, 454, 463, 472, 482, 491, 500],
- measurements = [1.475905418395996, 1.4743404388427734, 1.4762519598007202, 1.4751825332641602, 1.4732745885849, 1.4731879234313965, 1.4726825952529907, 1.4715490341186523, 1.4713517427444458, 1.47074556350708, 1.470677375793457, 1.4697991609573364, 1.4691554307937622, 1.4691001176834106, 1.4682527780532837, 1.4679924249649048, 1.468157172203064, 1.4676014184951782, 1.4671438932418823, 1.4673799276351929, 1.4666513204574585, 1.4661507606506348, 1.4661484956741333, 1.4660505056381226, 1.4653849601745605, 1.4652198553085327, 1.46450936794281, 1.4643359184265137, 1.4638872146606445, 1.4639283418655396, 1.4635329246520996, 1.4633418321609497, 1.463156819343567, 1.4626812934875488, 1.4626370668411255, 1.462546467781067, 1.4623528718948364, 1.4626270532608032, 1.4624465703964233, 1.462222695350647, 1.4620510339736938, 1.4620307683944702, 1.4619566202163696, 1.461545467376709, 1.4615777730941772, 1.4611939191818237, 1.4609676599502563, 1.4607977867126465, 1.4606176614761353, 1.4607505798339844],)</code></pre></div>
-<p>Let&#39;s have a look</p>
-<pre><code class="language-julia">figure(figsize=(8,6))
+ measurements = [1.475905418395996, 1.4743404388427734, 1.4762519598007202, 1.4751825332641602, 1.4732745885849, 1.4731879234313965, 1.4726825952529907, 1.4715490341186523, 1.4713517427444458, 1.47074556350708, 1.470677375793457, 1.4697991609573364, 1.4691554307937622, 1.4691001176834106, 1.4682527780532837, 1.4679924249649048, 1.468157172203064, 1.4676014184951782, 1.4671438932418823, 1.4673799276351929, 1.4666513204574585, 1.4661507606506348, 1.4661484956741333, 1.4660505056381226, 1.4653849601745605, 1.4652198553085327, 1.46450936794281, 1.4643359184265137, 1.4638872146606445, 1.4639283418655396, 1.4635329246520996, 1.4633418321609497, 1.463156819343567, 1.4626812934875488, 1.4626370668411255, 1.462546467781067, 1.4623528718948364, 1.4626270532608032, 1.4624465703964233, 1.462222695350647, 1.4620510339736938, 1.4620307683944702, 1.4619566202163696, 1.461545467376709, 1.4615777730941772, 1.4611939191818237, 1.4609676599502563, 1.4607977867126465, 1.4606176614761353, 1.4607505798339844],)</code></pre></div> <p>Let&#39;s have a look</p> <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(curve.parameter_values, curve.measurements)
-xlabel("Number of rounds", fontsize=14)
-ylabel("Cross entropy", fontsize=14)
-xticks([10, 100, 200, 500], fontsize=12)
-yticks(1.46:0.005:1.475, fontsize=12)
-</code></pre>
-<p><img src="/assets/literate/EX-crabs-xgb-curve1.svg" alt="Cross entropy vs Num Round" /></p>
-<p>So, in short, using more rounds helps. Let&#39;s arbitrarily fix it to 200.</p>
-<pre><code class="language-julia">xgb.num_round = 200;</code></pre>
-<h3 id="more_tuning_1"><a href="/pub/end-to-end/crabs-xgb.html#more_tuning_1">More tuning &#40;1&#41;</a></h3>
+xlabel(<span class=hljs-string >"Number of rounds"</span>, fontsize=<span class=hljs-number >14</span>)
+ylabel(<span class=hljs-string >"Cross entropy"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks([<span class=hljs-number >10</span>, <span class=hljs-number >100</span>, <span class=hljs-number >200</span>, <span class=hljs-number >500</span>], fontsize=<span class=hljs-number >12</span>)
+yticks(<span class=hljs-number >1.46</span>:<span class=hljs-number >0.005</span>:<span class=hljs-number >1.475</span>, fontsize=<span class=hljs-number >12</span>)
+</code></pre> <p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-curve1.svg" alt="Cross entropy vs Num Round" /></p> <p>So, in short, using more rounds helps. Let&#39;s arbitrarily fix it to 200.</p> <pre><code class="julia hljs">xgb.num_round = <span class=hljs-number >200</span>;</code></pre>
+<h3 id=more_tuning_1 ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_1">More tuning &#40;1&#41;</a></h3>
 <p>Let&#39;s now tune the maximum depth of each tree and the minimum child weight in the boosting.</p>
-<pre><code class="language-julia">r1 = range(xgb, :max_depth, lower=3, upper=10)
-r2 = range(xgb, :min_child_weight, lower=0, upper=5)
+<pre><code class="julia hljs">r1 = range(xgb, :max_depth, lower=<span class=hljs-number >3</span>, upper=<span class=hljs-number >10</span>)
+r2 = range(xgb, :min_child_weight, lower=<span class=hljs-number >0</span>, upper=<span class=hljs-number >5</span>)
 
-tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
-                resampling=CV(rng=11), ranges=[r1,r2],
+tm = TunedModel(model=xgb, tuning=Grid(resolution=<span class=hljs-number >8</span>),
+                resampling=CV(rng=<span class=hljs-number >11</span>), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><div class="code_output"><pre><code class="plaintext">Machine{ProbabilisticTunedModel} @ 1…34
+fit!(mtm, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…34
 </code></pre></div>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
-<pre><code class="language-julia">r = report(mtm)
+<pre><code class="julia hljs">r = report(mtm)
 
-md = r.parameter_values[:,1]
-mcw = r.parameter_values[:,2]
+md = r.parameter_values[:,<span class=hljs-number >1</span>]
+mcw = r.parameter_values[:,<span class=hljs-number >2</span>]
 
-figure(figsize=(8,6))
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 tricontourf(md, mcw, r.measurements)
 
-xlabel("Maximum tree depth", fontsize=14)
-ylabel("Minimum child weight", fontsize=14)
-xticks(3:2:10, fontsize=12)
-yticks(fontsize=12)
+xlabel(<span class=hljs-string >"Maximum tree depth"</span>, fontsize=<span class=hljs-number >14</span>)
+ylabel(<span class=hljs-string >"Minimum child weight"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks(<span class=hljs-number >3</span>:<span class=hljs-number >2</span>:<span class=hljs-number >10</span>, fontsize=<span class=hljs-number >12</span>)
+yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/assets/literate/EX-crabs-xgb-heatmap.svg" alt="Hyperparameter heatmap" /></p>
+<p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-heatmap.svg" alt="Hyperparameter heatmap" /></p>
 <p>Let&#39;s extract the optimal model and inspect its parameters:</p>
-<pre><code class="language-julia">xgb = fitted_params(mtm).best_model
-@show xgb.max_depth
-@show xgb.min_child_weight</code></pre><div class="code_output"><pre><code class="plaintext">xgb.max_depth = 7
+<pre><code class="julia hljs">xgb = fitted_params(mtm).best_model
+<span class=hljs-meta >@show</span> xgb.max_depth
+<span class=hljs-meta >@show</span> xgb.min_child_weight</code></pre><div class=code_output ><pre><code class="plaintext hljs">xgb.max_depth = 7
 xgb.min_child_weight = 1.4285714285714286
 </code></pre></div>
-<h3 id="more_tuning_2"><a href="/pub/end-to-end/crabs-xgb.html#more_tuning_2">More tuning &#40;2&#41;</a></h3>
+<h3 id=more_tuning_2 ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_2">More tuning &#40;2&#41;</a></h3>
 <p>Let&#39;s examine the effect of <code>gamma</code>:</p>
-<pre><code class="language-julia">xgbm = machine(xgb, X, y)
-r = range(xgb, :gamma, lower=0, upper=10)
+<pre><code class="julia hljs">xgbm = machine(xgb, X, y)
+r = range(xgb, :gamma, lower=<span class=hljs-number >0</span>, upper=<span class=hljs-number >10</span>)
 curve = learning_curve!(xgbm, resampling=CV(),
-                        range=r, resolution=30,
+                        range=r, resolution=<span class=hljs-number >30</span>,
                         measure=cross_entropy);</code></pre>
 <p>actually it doesn&#39;t look like it&#39;s changing much...:</p>
-<pre><code class="language-julia">@show round(minimum(curve.measurements), sigdigits=3)
-@show round(maximum(curve.measurements), sigdigits=3)</code></pre><div class="code_output"><pre><code class="plaintext">round(minimum(curve.measurements), sigdigits=3) = 0.917
+<pre><code class="julia hljs"><span class=hljs-meta >@show</span> round(minimum(curve.measurements), sigdigits=<span class=hljs-number >3</span>)
+<span class=hljs-meta >@show</span> round(maximum(curve.measurements), sigdigits=<span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">round(minimum(curve.measurements), sigdigits=3) = 0.917
 round(maximum(curve.measurements), sigdigits=3) = 0.917
 </code></pre></div>
-<h3 id="more_tuning_3"><a href="/pub/end-to-end/crabs-xgb.html#more_tuning_3">More tuning &#40;3&#41;</a></h3>
+<h3 id=more_tuning_3 ><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html#more_tuning_3">More tuning &#40;3&#41;</a></h3>
 <p>Let&#39;s examine the effect of <code>subsample</code> and <code>colsample_bytree</code>:</p>
-<pre><code class="language-julia">r1 = range(xgb, :subsample, lower=0.6, upper=1.0)
-r2 = range(xgb, :colsample_bytree, lower=0.6, upper=1.0)
-tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
-                resampling=CV(rng=234), ranges=[r1,r2],
+<pre><code class="julia hljs">r1 = range(xgb, :subsample, lower=<span class=hljs-number >0.6</span>, upper=<span class=hljs-number >1.0</span>)
+r2 = range(xgb, :colsample_bytree, lower=<span class=hljs-number >0.6</span>, upper=<span class=hljs-number >1.0</span>)
+tm = TunedModel(model=xgb, tuning=Grid(resolution=<span class=hljs-number >8</span>),
+                resampling=CV(rng=<span class=hljs-number >234</span>), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><div class="code_output"><pre><code class="plaintext">Machine{ProbabilisticTunedModel} @ 8…59
+fit!(mtm, rows=train)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 8…59
 </code></pre></div>
 <p>and the usual procedure to visualise it:</p>
-<pre><code class="language-julia">r = report(mtm)
-ss = r.parameter_values[:,1]
-cbt = r.parameter_values[:,2]
+<pre><code class="julia hljs">r = report(mtm)
+ss = r.parameter_values[:,<span class=hljs-number >1</span>]
+cbt = r.parameter_values[:,<span class=hljs-number >2</span>]
 
-figure(figsize=(8,6))
+figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 tricontourf(ss, cbt, r.measurements)
 
-xlabel("Sub sample", fontsize=14)
-ylabel("Col sample by tree", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
+xlabel(<span class=hljs-string >"Sub sample"</span>, fontsize=<span class=hljs-number >14</span>)
+ylabel(<span class=hljs-string >"Col sample by tree"</span>, fontsize=<span class=hljs-number >14</span>)
+xticks(fontsize=<span class=hljs-number >12</span>)
+yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/assets/literate/EX-crabs-xgb-heatmap2.svg" alt="Hyperparameter heatmap" /></p>
+<p><img src="/MLJTutorials/assets/literate/EX-crabs-xgb-heatmap2.svg" alt="Hyperparameter heatmap" /></p>
 <p>Let&#39;s retrieve the best models:</p>
-<pre><code class="language-julia">xgb = fitted_params(mtm).best_model
-@show xgb.subsample
-@show xgb.colsample_bytree</code></pre><div class="code_output"><pre><code class="plaintext">xgb.subsample = 0.8857142857142857
+<pre><code class="julia hljs">xgb = fitted_params(mtm).best_model
+<span class=hljs-meta >@show</span> xgb.subsample
+<span class=hljs-meta >@show</span> xgb.colsample_bytree</code></pre><div class=code_output ><pre><code class="plaintext hljs">xgb.subsample = 0.8857142857142857
 xgb.colsample_bytree = 0.9428571428571428
 </code></pre></div>
 <p>We could continue with more fine tuning but given how small the dataset is, it doesn&#39;t make much sense. How does it fare on the test set?</p>
-<pre><code class="language-julia">ŷ = predict_mode(mtm, rows=test)
-round(accuracy(ŷ, y[test]), sigdigits=3)</code></pre><div class="code_output"><pre><code class="plaintext">0.9</code></pre></div>
-<div class="page-foot">
-  <div class="copyright">
+<pre><code class="julia hljs">ŷ = predict_mode(mtm, rows=test)
+round(accuracy(ŷ, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.9</code></pre></div>
+<div class=page-foot >
+  <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: October 22, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
   </div>
 </div>
 
 </div>
-<!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
-</body>
-</html>
+      </div> 
+  </div> 
+  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>

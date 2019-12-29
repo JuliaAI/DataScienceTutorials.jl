@@ -1,112 +1,25 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-   <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
-   
-  <link rel="stylesheet" href="/css/judoc.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
-   <title></title>  
-</head>
-<body>
-  <div id="layout">
-    <!-- Menu toggle / hamburger icon -->
-    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
-      <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
-          <div class="menu-logo">
-            <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" />
-            <p><strong>MLJ Tutorials</strong></p>
-          </div>
-        </a>
-        <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
-
-          <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-          <ul class="pure-menu-sublist">
-            <li class="pure-menu-item "><a href="/pub/data/loading.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-            <li class="pure-menu-item "><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> DataFrame</a></li>
-          </ul>
-
-          <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-          <ul class="pure-menu-sublist">
-            <li class="pure-menu-item "><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/fit-and-predict.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/model-tuning.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/ensembles-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/composing-models.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-            <li class="pure-menu-item "><a href="/pub/getting-started/learning-networks-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-          </ul>
-
-          <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-          <ul class="pure-menu-sublist" id=isl>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-3.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-4.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-5.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-6b.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-8.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-9.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-            <li class="pure-menu-item "><a href="/pub/isl/lab-10.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-          </ul>
-
-          <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-          <ul class="pure-menu-sublist" id=e2e>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/AMES.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/wine.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/crabs-xgb.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-            <li class="pure-menu-item "><a href="/pub/end-to-end/horse.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-          </ul>
-        </ul>
-      </div>
-    </div>
-    <div id="main"> <!-- Closed in foot -->
-      
-
-<!-- Content appended here -->
-
-<div class="jd-content">
-<h1 id="wine"><a href="/pub/end-to-end/wine.html#wine">Wine</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/EX-wine.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-wine-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-wine.jl" target="_blank"><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="jd-toc"><ol><li><a href="/pub/end-to-end/wine.html#initial_data_processing">Initial data processing</a><ol><li><a href="/pub/end-to-end/wine.html#getting_the_data">Getting the data</a></li><li><a href="/pub/end-to-end/wine.html#setting_the_scientific_type">Setting the scientific type</a></li></ol></li><li><a href="/pub/end-to-end/wine.html#getting_a_baseline">Getting a baseline</a></li><li><a href="/pub/end-to-end/wine.html#visualising_the_classes">Visualising the classes</a></li></ol></div><h2 id="initial_data_processing"><a href="/pub/end-to-end/wine.html#initial_data_processing">Initial data processing</a></h2>
-<p>In this example, we consider the <a href="https://archive.ics.uci.edu/ml/datasets/wine">UCI &quot;wine&quot; dataset</a></p>
-<blockquote>
-<p>These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.</p>
-</blockquote>
-<h3 id="getting_the_data"><a href="/pub/end-to-end/wine.html#getting_the_data">Getting the data</a></h3>  Let&#39;s download the data thanks to the <a href="HTTP.get&#40;&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data&quot;&#41;">HTTP.jl</a> package and load it into a DataFrame via the <a href="https://github.com/JuliaData/CSV.jl">CSV.jl</a> package:</p>
-<pre><code class="language-julia">using HTTP, CSV, MLJ, StatsBase, PyPlot
-req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/judoc.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title>Wine</title> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/data/loading.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/data/dataframe.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> DataFrame</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/choosing-a-model.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/fit-and-predict.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/model-tuning.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/ensembles-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/composing-models.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/getting-started/learning-networks-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-2.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-3.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-4.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-5.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-6b.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-8.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-9.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/isl/lab-10.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/AMES.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/wine.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/crabs-xgb.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/pub/end-to-end/horse.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> </ul> </div> </div> <div id=main > <div class=jd-content > <h1 id=wine ><a href="/MLJTutorials/pub/end-to-end/wine.html#wine">Wine</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/notebooks/EX-wine.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-wine-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/scripts/EX-wine.jl" target=_blank ><em>annoted script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=jd-toc ><ol><li><a href="/MLJTutorials/pub/end-to-end/wine.html#initial_data_processing">Initial data processing</a><ol><li><a href="/MLJTutorials/pub/end-to-end/wine.html#getting_the_data">Getting the data</a><li><a href="/MLJTutorials/pub/end-to-end/wine.html#setting_the_scientific_type">Setting the scientific type</a></ol><li><a href="/MLJTutorials/pub/end-to-end/wine.html#getting_a_baseline">Getting a baseline</a><li><a href="/MLJTutorials/pub/end-to-end/wine.html#visualising_the_classes">Visualising the classes</a></ol></div><h2 id=initial_data_processing ><a href="/MLJTutorials/pub/end-to-end/wine.html#initial_data_processing">Initial data processing</a></h2> <p>In this example, we consider the <a href="https://archive.ics.uci.edu/ml/datasets/wine">UCI &quot;wine&quot; dataset</a></p> <blockquote> <p>These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.</p> </blockquote> <h3 id=getting_the_data ><a href="/MLJTutorials/pub/end-to-end/wine.html#getting_the_data">Getting the data</a></h3> Let&#39;s download the data thanks to the <a href="HTTP.get&#40;&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data&quot;&#41;">HTTP.jl</a> package and load it into a DataFrame via the <a href="https://github.com/JuliaData/CSV.jl">CSV.jl</a> package:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> HTTP, CSV, MLJ, StatsBase, PyPlot
+req = HTTP.get(<span class=hljs-string >"https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"</span>)
 data = CSV.read(req.body,
-                header=["Class", "Alcool", "Malic acid",
-                        "Ash", "Alcalinity of ash", "Magnesium",
-                        "Total phenols", "Flavanoids",
-                        "Nonflavanoid phenols", "Proanthcyanins",
-                        "Color intensity", "Hue",
-                        "OD280/OD315 of diluted wines", "Proline"])
-# the target is the Class column, everything else is a feature
-y, X = unpack(data, ==(:Class), colname->true);</code></pre>
-<h3 id="setting_the_scientific_type"><a href="/pub/end-to-end/wine.html#setting_the_scientific_type">Setting the scientific type</a></h3>
-<p>Let&#39;s explore the scientific type attributed by default to the target and the features</p>
-<pre><code class="language-julia">scitype(y)</code></pre><div class="code_output"><pre><code class="plaintext">AbstractArray{Count,1}</code></pre></div>
+                header=[<span class=hljs-string >"Class"</span>, <span class=hljs-string >"Alcool"</span>, <span class=hljs-string >"Malic acid"</span>,
+                        <span class=hljs-string >"Ash"</span>, <span class=hljs-string >"Alcalinity of ash"</span>, <span class=hljs-string >"Magnesium"</span>,
+                        <span class=hljs-string >"Total phenols"</span>, <span class=hljs-string >"Flavanoids"</span>,
+                        <span class=hljs-string >"Nonflavanoid phenols"</span>, <span class=hljs-string >"Proanthcyanins"</span>,
+                        <span class=hljs-string >"Color intensity"</span>, <span class=hljs-string >"Hue"</span>,
+                        <span class=hljs-string >"OD280/OD315 of diluted wines"</span>, <span class=hljs-string >"Proline"</span>])
+<span class=hljs-comment ># the target is the Class column, everything else is a feature</span>
+y, X = unpack(data, ==(:Class), colname-&gt;<span class=hljs-literal >true</span>);</code></pre> <h3 id=setting_the_scientific_type ><a href="/MLJTutorials/pub/end-to-end/wine.html#setting_the_scientific_type">Setting the scientific type</a></h3> <p>Let&#39;s explore the scientific type attributed by default to the target and the features</p> <pre><code class="julia hljs">scitype(y)</code></pre><div class=code_output ><pre><code class="plaintext hljs">AbstractArray{Count,1}</code></pre></div>
 <p>this should be changed as it should be considered as an ordered factor</p>
-<pre><code class="language-julia">yc = coerce(y, OrderedFactor);</code></pre>
+<pre><code class="julia hljs">yc = coerce(y, OrderedFactor);</code></pre>
 <p>Let&#39;s now consider the features</p>
-<pre><code class="language-julia">scitype(X)</code></pre><div class="code_output"><pre><code class="plaintext">Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}}}</code></pre></div>
+<pre><code class="julia hljs">scitype(X)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}}}</code></pre></div>
 <p>So there are <code>Continuous</code> values &#40;encoded as floating point&#41; and <code>Count</code> values &#40;integer&#41;. Note also that there are no missing value &#40;otherwise one of the scientific type would have been a <code>Union&#123;Missing,*&#125;</code>&#41;. Let&#39;s check which column is what:</p>
-<pre><code class="language-julia">sch = schema(X)
-println(rpad(" Name", 28), "| Scitype")
-println("-"^45)
-for (name, scitype) in zip(sch.names, sch.scitypes)
-    println(rpad("$name", 30), scitype)
-end</code></pre><div class="code_output"><pre><code class="plaintext"> Name                       | Scitype
+<pre><code class="julia hljs">sch = schema(X)
+println(rpad(<span class=hljs-string >" Name"</span>, <span class=hljs-number >28</span>), <span class=hljs-string >"| Scitype"</span>)
+println(<span class=hljs-string >"-"</span>^<span class=hljs-number >45</span>)
+<span class=hljs-keyword >for</span> (name, scitype) <span class=hljs-keyword >in</span> zip(sch.names, sch.scitypes)
+    println(rpad(<span class=hljs-string >"<span class=hljs-variable >$name</span>"</span>, <span class=hljs-number >30</span>), scitype)
+<span class=hljs-keyword >end</span></code></pre><div class=code_output ><pre><code class="plaintext hljs"> Name                       | Scitype
 ---------------------------------------------
 Alcool                        Continuous
 Malic acid                    Continuous
@@ -123,16 +36,16 @@ OD280/OD315 of diluted wines  Continuous
 Proline                       Count
 </code></pre></div>
 <p>The two variable that are encoded as <code>Count</code> can  probably be re-interpreted; let&#39;s have a look at the <code>Proline</code> one to see what it looks like</p>
-<pre><code class="language-julia">X[1:5, :Proline]</code></pre><div class="code_output"><pre><code class="plaintext">5-element Array{Int64,1}:
+<pre><code class="julia hljs">X[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>, :Proline]</code></pre><div class=code_output ><pre><code class="plaintext hljs">5-element Array{Int64,1}:
  1065
  1050
  1185
  1480
   735</code></pre></div>
 <p>It can likely be interpreted as a Continuous as well &#40;it would be better to know precisely what it is but for now let&#39;s just go with the hunch&#41;. We&#39;ll do the same with <code>:Magnesium</code>:</p>
-<pre><code class="language-julia">Xc = coerce(X, :Proline=>Continuous, :Magnesium=>Continuous);</code></pre>
+<pre><code class="julia hljs">Xc = coerce(X, :Proline=&gt;Continuous, :Magnesium=&gt;Continuous);</code></pre>
 <p>Finally, let&#39;s have a quick look at the mean and standard deviation of each feature to get a feel for their amplitude:</p>
-<pre><code class="language-julia">describe(Xc, :mean, :std)</code></pre><div class="code_output"><pre><code class="plaintext">13×3 DataFrame
+<pre><code class="julia hljs">describe(Xc, :mean, :std)</code></pre><div class=code_output ><pre><code class="plaintext hljs">13×3 DataFrame
 │ Row │ variable                     │ mean     │ std      │
 │     │ Symbol                       │ Float64  │ Float64  │
 ├─────┼──────────────────────────────┼──────────┼──────────┤
@@ -151,19 +64,19 @@ Proline                       Count
 │ 13  │ Proline                      │ 746.893  │ 314.907  │</code></pre></div>
 <p>Right so it varies a fair bit which would invite to standardise the data.</p>
 <p><strong>Note</strong>: to complete such a first step, one could explore histograms of the various features for instance, check that there is enough variation among the continuous features and that there does not seem to be problems in the encoding, we cut this out to shorten the tutorial. We could also have checked that the data was balanced.</p>
-<h2 id="getting_a_baseline"><a href="/pub/end-to-end/wine.html#getting_a_baseline">Getting a baseline</a></h2>
+<h2 id=getting_a_baseline ><a href="/MLJTutorials/pub/end-to-end/wine.html#getting_a_baseline">Getting a baseline</a></h2>
 <p>It&#39;s a multiclass classification problem with continuous inputs so a sensible start is  to test two very simple classifiers to get a baseline. We&#39;ll train two simple pipelines:</p>
 <ul>
 <li><p>a Standardizer &#43; KNN classifier and</p>
-</li>
-<li><p>a Standardizer &#43; Multinomial classifier &#40;logistic regression&#41;.</p>
-</li>
-</ul>
-<pre><code class="language-julia">@load KNNClassifier pkg="NearestNeighbors"
-@load MultinomialClassifier pkg="MLJLinearModels";
 
-@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
-@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true</code></pre><div class="code_output"><pre><code class="plaintext">JuDoc.MnPipe(std = Standardizer(features = Symbol[],),
+<li><p>a Standardizer &#43; Multinomial classifier &#40;logistic regression&#41;.</p>
+
+</ul>
+<pre><code class="julia hljs"><span class=hljs-meta >@load</span> KNNClassifier pkg=<span class=hljs-string >"NearestNeighbors"</span>
+<span class=hljs-meta >@load</span> MultinomialClassifier pkg=<span class=hljs-string >"MLJLinearModels"</span>;
+
+<span class=hljs-meta >@pipeline</span> KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=<span class=hljs-literal >true</span>
+<span class=hljs-meta >@pipeline</span> MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=<span class=hljs-literal >true</span></code></pre><div class=code_output ><pre><code class="plaintext hljs">JuDoc.MnPipe(std = Standardizer(features = Symbol[],),
              clf = MultinomialClassifier(lambda = 1.0,
                                          gamma = 0.0,
                                          penalty = :l2,
@@ -171,87 +84,79 @@ Proline                       Count
                                          penalize_intercept = false,
                                          solver = nothing,),) @ 4…42</code></pre></div>
 <p>We can now fit this on a train split of the data setting aside 20&#37; of the data for eventual testing.</p>
-<pre><code class="language-julia">train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+<pre><code class="julia hljs">train, test = partition(eachindex(yc), <span class=hljs-number >0.8</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >111</span>)
 Xtrain = selectrows(Xc, train)
 Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
-<pre><code class="language-julia">knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><div class="code_output"><pre><code class="plaintext">Machine{MnPipe} @ 4…55
+<pre><code class="julia hljs">knn = machine(KnnPipe(), Xtrain, ytrain)
+multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><div class=code_output ><pre><code class="plaintext hljs">Machine{MnPipe} @ 4…55
 </code></pre></div>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
-<pre><code class="language-julia">opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
+<pre><code class="julia hljs">opts = (resampling=Holdout(fraction_train=<span class=hljs-number >0.9</span>), measure=cross_entropy)
 res = evaluate!(knn; opts...)
-round(res.measurement[1], sigdigits=3)</code></pre><div class="code_output"><pre><code class="plaintext">0.0159</code></pre></div>
+round(res.measurement[<span class=hljs-number >1</span>], sigdigits=<span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0159</code></pre></div>
 <p>Now we do the same with a MultinomialClassifier</p>
-<pre><code class="language-julia">res = evaluate!(multi; opts...)
-round(res.measurement[1], sigdigits=3)</code></pre><div class="code_output"><pre><code class="plaintext">0.0141</code></pre></div>
+<pre><code class="julia hljs">res = evaluate!(multi; opts...)
+round(res.measurement[<span class=hljs-number >1</span>], sigdigits=<span class=hljs-number >3</span>)</code></pre><div class=code_output ><pre><code class="plaintext hljs">0.0141</code></pre></div>
 <p>Both methods seem to offer comparable levels of performance. Let&#39;s check the misclassification over the full training set:</p>
-<pre><code class="language-julia">mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
+<pre><code class="julia hljs">mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
 mcr_m = misclassification_rate(predict_mode(multi, Xtrain), ytrain)
-println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
-println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))</code></pre><div class="code_output"><pre><code class="plaintext">KNN mcr:  0.0352
+println(rpad(<span class=hljs-string >"KNN mcr:"</span>, <span class=hljs-number >10</span>), round(mcr_k, sigdigits=<span class=hljs-number >3</span>))
+println(rpad(<span class=hljs-string >"MNC mcr:"</span>, <span class=hljs-number >10</span>), round(mcr_m, sigdigits=<span class=hljs-number >3</span>))</code></pre><div class=code_output ><pre><code class="plaintext hljs">KNN mcr:  0.0352
 MNC mcr:  0.0
 </code></pre></div>
 <p>So here we have done no hyperparameter training and already have a misclassification rate below 5&#37;. Clearly the problem is not very difficult.</p>
-<h2 id="visualising_the_classes"><a href="/pub/end-to-end/wine.html#visualising_the_classes">Visualising the classes</a></h2>
+<h2 id=visualising_the_classes ><a href="/MLJTutorials/pub/end-to-end/wine.html#visualising_the_classes">Visualising the classes</a></h2>
 <p>One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here &#40;if you&#39;re on Julia &lt;&#61; 1.2, use the commented-out lines as you won&#39;t be able to use the arrow-syntax&#41;</p>
-<pre><code class="language-julia"># @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))
-# pca = machine(PCAPipe(), Xtrain)
-# fit!(pca, Xtrain)
-# W = transform(pca, Xtrain)
+<pre><code class="julia hljs"><span class=hljs-comment ># @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))</span>
+<span class=hljs-comment ># pca = machine(PCAPipe(), Xtrain)</span>
+<span class=hljs-comment ># fit!(pca, Xtrain)</span>
+<span class=hljs-comment ># W = transform(pca, Xtrain)</span>
 
-@load PCA
+<span class=hljs-meta >@load</span> PCA
 
-pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
+pca = Xc |&gt; Standardizer() |&gt; PCA(maxoutdim=<span class=hljs-number >2</span>)
 fit!(pca)
 W = pca(rows=train);</code></pre>
 <p>Let&#39;s now display this using different colours for the different classes:</p>
-<pre><code class="language-julia">x1 = W.x1
+<pre><code class="julia hljs">x1 = W.x1
 x2 = W.x2
 
-mask_1 = ytrain .== 1
-mask_2 = ytrain .== 2
-mask_3 = ytrain .== 3
+mask_1 = ytrain .== <span class=hljs-number >1</span>
+mask_2 = ytrain .== <span class=hljs-number >2</span>
+mask_3 = ytrain .== <span class=hljs-number >3</span>
 
-figure(figsize=(8, 6))
-plot(x1[mask_1], x2[mask_1], linestyle="none", marker="o", color="red")
-plot(x1[mask_2], x2[mask_2], linestyle="none", marker="o", color="blue")
-plot(x1[mask_3], x2[mask_3], linestyle="none", marker="o", color="magenta")
+figure(figsize=(<span class=hljs-number >8</span>, <span class=hljs-number >6</span>))
+plot(x1[mask_1], x2[mask_1], linestyle=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>, color=<span class=hljs-string >"red"</span>)
+plot(x1[mask_2], x2[mask_2], linestyle=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>, color=<span class=hljs-string >"blue"</span>)
+plot(x1[mask_3], x2[mask_3], linestyle=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>, color=<span class=hljs-string >"magenta"</span>)
 
-xlabel("PCA dimension 1", fontsize=14)
-ylabel("PCA dimension 2", fontsize=14)
-legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
-xticks(fontsize=12)
-yticks(fontsize=12)
+xlabel(<span class=hljs-string >"PCA dimension 1"</span>, fontsize=<span class=hljs-number >14</span>)
+ylabel(<span class=hljs-string >"PCA dimension 2"</span>, fontsize=<span class=hljs-number >14</span>)
+legend([<span class=hljs-string >"Class 1"</span>, <span class=hljs-string >"Class 2"</span>, <span class=hljs-string >"Class 3"</span>], fontsize=<span class=hljs-number >12</span>)
+xticks(fontsize=<span class=hljs-number >12</span>)
+yticks(fontsize=<span class=hljs-number >12</span>)
 </code></pre>
-<p><img src="/assets/EX-wine-pca.svg" alt="PCA" /></p>
+<p><img src="/MLJTutorials/assets/EX-wine-pca.svg" alt=PCA  /></p>
 <p>On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers. At this point it&#39;s a bit pointless to dig much deaper into parameter tuning etc.</p>
 <p>As a last step, we can report performances of the models on the test set which we set aside earlier:</p>
-<pre><code class="language-julia">perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
+<pre><code class="julia hljs">perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
 perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
-println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
-println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))</code></pre><div class="code_output"><pre><code class="plaintext">KNN mcr:  0.111
+println(rpad(<span class=hljs-string >"KNN mcr:"</span>, <span class=hljs-number >10</span>), round(perf_k, sigdigits=<span class=hljs-number >3</span>))
+println(rpad(<span class=hljs-string >"MNC mcr:"</span>, <span class=hljs-number >10</span>), round(perf_m, sigdigits=<span class=hljs-number >3</span>))</code></pre><div class=code_output ><pre><code class="plaintext hljs">KNN mcr:  0.111
 MNC mcr:  0.0556
 </code></pre></div>
 <p>Pretty good for so little work&#33;
-<div class="page-foot">
-  <div class="copyright">
+<div class=page-foot >
+  <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: October 29, 2019. Website built with <a href="https://github.com/tlienart/JuDoc.jl">JuDoc.jl</a>.
   </div>
 </div>
 
 </div>
-<!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
-</body>
-</html>
+      </div> 
+  </div> 
+  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>
