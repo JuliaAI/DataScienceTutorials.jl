@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="/css/extra.css">
   <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
   {{isdef title}} <title>{{fill title}}</title>  {{end}}
+  <!-- LUNR -->
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
 <body>
   <div id="layout">
@@ -24,15 +28,21 @@
             <p><strong>MLJ Tutorials</strong></p>
           </div>
         </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/search.html" style="visibility:hidden">
+        </form>
         <ul class="pure-menu-list">
           <li class="pure-menu-item pure-menu-top-item {{ispage index.html}}pure-menu-selected{{end}}"><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
-
+          <!-- DATA BASICS -->
           <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
           <ul class="pure-menu-sublist">
             <li class="pure-menu-item {{ispage pub/data/loading.html}}pure-menu-selected{{end}}"><a href="/pub/data/loading.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-            <li class="pure-menu-item {{ispage pub/data/dataframe.html}}pure-menu-selected{{end}}"><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> DataFrame</a></li>
+            <li class="pure-menu-item {{ispage pub/data/dataframe.html}}pure-menu-selected{{end}}"><a href="/pub/data/dataframe.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+            <li class="pure-menu-item {{ispage pub/data/categorical.html}}pure-menu-selected{{end}}"><a href="/pub/data/categorical.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+            <li class="pure-menu-item {{ispage pub/data/scitype.html}}pure-menu-selected{{end}}"><a href="/pub/data/scitype.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
           </ul>
-
+          <!-- GETTING STARTED WITH MLJ -->
           <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
           <ul class="pure-menu-sublist">
             <li class="pure-menu-item {{ispage pub/getting-started/choosing-a-model.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/choosing-a-model.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
@@ -44,7 +54,7 @@
             <li class="pure-menu-item {{ispage pub/getting-started/learning-networks.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/learning-networks.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
             <li class="pure-menu-item {{ispage pub/getting-started/learning-networks-2.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/learning-networks-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
           </ul>
-
+          <!-- INTRO TO STATS LEARNING -->
           <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
           <ul class="pure-menu-sublist" id=isl>
             <li class="pure-menu-item {{ispage pub/isl/lab-2.html}}pure-menu-selected{{end}}"><a href="/pub/isl/lab-2.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
@@ -56,7 +66,7 @@
             <li class="pure-menu-item "><a href="/pub/isl/lab-9.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
             <li class="pure-menu-item "><a href="/pub/isl/lab-10.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
           </ul>
-
+          <!-- END TO END EXAMPLES -->
           <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
           <ul class="pure-menu-sublist" id=e2e>
             <li class="pure-menu-item {{ispage pub/end-to-end/AMES.html}}pure-menu-selected{{end}}"><a href="/pub/end-to-end/AMES.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>

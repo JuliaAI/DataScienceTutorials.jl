@@ -25,6 +25,8 @@ In these we provide an introduction to some of the fundamental packages in the J
 
 * How to [load data](/pub/data/loading.html),
 * Short intro to [dataframes](/pub/data/loading.html),
+* Dealing with [categorical data](/pub/data/categorical.html)
+* Specifying [data interpretation](/pub/data/scitype.html)
 
 ## Getting started with MLJ
 

@@ -76,4 +76,4 @@ run(`$(nodejs_cmd()) -e $JS_GHP`)
 
 commit = (@isdefined commit) ? commit : "jd-update"
 
-publish(message=commit)
+publish(message=commit, final=lunr)
