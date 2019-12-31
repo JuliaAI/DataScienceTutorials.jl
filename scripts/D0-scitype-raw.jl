@@ -8,7 +8,7 @@
 # ```
 
 using RDatasets, ScientificTypes
-boston = dataset("MASS", "boston")
+boston = dataset("MASS", "Boston")
 sch = schema(boston)
 
 unique(boston.Chas)
