@@ -133,3 +133,37 @@ ul#e2e.pure-menu-sublist {
 h3 {
     margin-top: 2em;
 }
+
+/* LUNR */
+.result-title a { text-decoration: none; }
+.result-title a:hover { text-decoration: underline; }
+.result-preview { color: #808080; }
+.resultCount { color: #808080; }
+.result-query { font-weight: bold; }
+#lunrSearchForm { margin-top: 1em; text-align: center;}
+#lunrSearchForm .input { }
+
+
+.note {
+  margin-top: 1.5em;
+  width: 95%;
+  margin-left:auto;
+  margin-right:auto;
+  background-color:  aliceblue;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-bottom: 1em;
+}
+.note .content {
+  padding: 10px;
+  padding-left: 12px;
+}
+.note .title{
+  font-size: 105%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding-left: 7px;
+  padding-top: 2px;
+  color: white;
+  background: cornflowerblue;
+}

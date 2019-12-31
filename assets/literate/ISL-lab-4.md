@@ -6,8 +6,6 @@ Let's load the usual packages and the data
 ```julia:ex1
 using MLJ, RDatasets, ScientificTypes,
       DataFrames, Statistics, StatsBase
-using MLJ: confusion_matrix, accuracy, tp, fp,
-      precision, recall, auc, roc, f1score
 using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
