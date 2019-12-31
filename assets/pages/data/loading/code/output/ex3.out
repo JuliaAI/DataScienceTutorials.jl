@@ -1,0 +1,2 @@
+There was an error running the code:
+ArgumentError("\"/Users/tlienart/Desktop/MLJTutorials/assets/pages/data/loading/code/data/foo.csv\" is not a valid file")

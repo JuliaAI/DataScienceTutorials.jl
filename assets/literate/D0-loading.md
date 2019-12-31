@@ -35,7 +35,7 @@ In particular the `CSV.read` function allows to read a file and return a DataFra
 
 ### Basic usage
 
-Let's say you have a file `scripts/data/foo.csv` with the content
+Let's say you have a file `data/foo.csv` with the content
 
 ```plaintext
 col1,col2,col3,col4,col5,col6,col7,col8
@@ -48,9 +48,10 @@ You can read it with CSV using
 
 ```julia:ex3
 using CSV
-data = CSV.read("scripts/data/foo.csv")
+data = CSV.read(joinpath(@__DIR__, "data", "foo.csv"))
 ```
 
+Note that we use this `joinpath` for compatibility with  our system but you could pass any valid path on your system for instance `CSV.read("path/to/file.csv")`.
 The data is also returned as a dataframe
 
 ```julia:ex4
@@ -69,23 +70,25 @@ For more details see `?CSV.File`.
 
 ### Example 1
 
-Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00504/), the content of which we saved in `scripts/data/qsar.csv`.
+Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00504/), the content of which we saved in `data/qsar.csv`.
 It doesn't have a header so we have to provide it ourselves.
 
 ```julia:ex5
 header = ["CIC0", "SM1_Dz", "GATS1i",
           "NdsCH", "NdssC", "MLOGP", "LC50"]
-data = CSV.read("scripts/data/qsar.csv", header=header)
+data = CSV.read(joinpath(@__DIR__, "data", "qsar.csv"),
+                header=header)
 first(data, 3)
 ```
 
 ### Example 2
 
-Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00423/), the content of which we saved in `scripts/data/hcc.txt`.
+Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00423/), the content of which we saved in `data/hcc.txt`.
 It does not have a header and missing values indicated by `?`.
 
 ```julia:ex6
-data = CSV.read("scripts/data/hcc.txt", header=false, missingstring="?")
+data = CSV.read(joinpath(@__DIR__, "data", "hcc.txt"),
+                header=false, missingstring="?")
 first(data[:, 1:5], 3)
 ```
 
