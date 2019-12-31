@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-typeof(data)
+using CSV
+data = CSV.read(fpath)
