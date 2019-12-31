@@ -7,7 +7,7 @@
 │     ├─ Continuous
 │     └─ Count
 └─ Unknown</code></pre> <h3 id=default_scitype ><a href="/MLJTutorials/pub/data/scitype.html#default_scitype">Default scitype</a></h3> <p>A scientific type <em>convention</em> indicates broadly how a scientific types are associated with machine types, these will form the &quot;first guess&quot;. The default convention is the <em>mlj</em> one which, for instance, suggest as <code>Continuous</code> any feature with machine type <code>&lt;:AbstractFloat</code>.</p> <p>In short, if you have data, there is a default interpretation of that data which you can inspect with <code>schema</code>:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets, ScientificTypes
-boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"boston"</span>)
+boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"Boston"</span>)
 sch = schema(boston)</code></pre><div class=code_output ><pre><code class="plaintext hljs">_.table = 
 ┌─────────┬─────────┬────────────┐
 │ _.names │ _.types │ _.scitypes │

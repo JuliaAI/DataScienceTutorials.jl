@@ -46,7 +46,7 @@
 #
 
 using RDatasets, ScientificTypes
-boston = dataset("MASS", "boston")
+boston = dataset("MASS", "Boston")
 sch = schema(boston)
 
 # In this cases, most of the variables have a (machine) type `Float64` and their default  interpretation is `Continuous`.

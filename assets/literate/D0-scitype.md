@@ -47,7 +47,7 @@ In short, if you have data, there is a default interpretation of that data which
 
 ```julia:ex1
 using RDatasets, ScientificTypes
-boston = dataset("MASS", "boston")
+boston = dataset("MASS", "Boston")
 sch = schema(boston)
 ```
 
