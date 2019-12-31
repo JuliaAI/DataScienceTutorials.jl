@@ -37,7 +37,7 @@ ACTIVATE = """
 preproc(s) = ACTIVATE * s
 
 # Remove lines that end with `# hide`
-postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide"=>s"\1")
+postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide(?:all)?"=>s"\1")
 
 # =============================================================================
 
