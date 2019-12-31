@@ -17,7 +17,7 @@ typeof(boston)
 
 # For a short introduction to DataFrame objects, see [this tutorial](/pub/data/dataframe.html).
 # ## Using CSV## The package [CSV.jl](https://github.com/JuliaData/CSV.jl) offers a powerful way to read arbitrary CSV files efficiently.# In particular the `CSV.read` function allows to read a file and return a DataFrame.## ### Basic usage## Let's say you have a file `foo.csv` at some path `fpath=joinpath("data", "foo.csv")` with the content## ```plaintext# col1,col2,col3,col4,col5,col6,col7,col8# ,1,1.0,1,one,2019-01-01,2019-01-01T00:00:00,true# ,2,2.0,2,two,2019-01-02,2019-01-02T00:00:00,false# ,3,3.0,3.14,three,2019-01-03,2019-01-03T00:00:00,true# ```
-all
+
 c = """
 col1,col2,col3,col4,col5,col6,col7,col8
 ,1,1.0,1,one,2019-01-01,2019-01-01T00:00:00,true
@@ -35,7 +35,7 @@ data = CSV.read(fpath)
 typeof(data)
 
 # Some of the useful arguments for `read` are:## * `header=` to specify whether there's a header, or which line the header is on or to specify a full header yourself,# * `skipto=` to specify how many rows to skip before starting to read the data,# * `limit=` to specify a maximum number of rows to parse,# * `missingstring=` to specify a string or vector of strings that should be parsed as missing values,# * `delim=','` a char or string to specify how columns are separated.## For more details see `?CSV.File`.## ### Example 1## Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00504/), the content of which we saved in a file at path `fpath`.
-all
+
 c = """
 3.26;0.829;1.676;0;1;1.453;3.770
 2.189;0.58;0.863;0;0;1.348;3.115
@@ -71,7 +71,7 @@ data = CSV.read(fpath, header=header)
 first(data, 3)
 
 # ### Example 2## Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00423/), the content of which we saved at `fpath`.
-all
+
 c = """
 1,0,1,0,0,0,0,1,0,1,1,?,1,0,0,0,0,1,0,0,0,0,1,67,137,15,0,1,1,1.53,95,13.7,106.6,4.9,99,3.4,2.1,34,41,183,150,7.1,0.7,1,3.5,0.5,?,?,?,1
 0,?,0,0,0,0,1,1,?,?,1,0,0,1,0,0,0,1,0,0,0,0,1,62,0,?,0,1,1,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,1.8,?,?,?,?,1
