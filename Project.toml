@@ -1,6 +1,6 @@
 name = "MLJTutorials"
 uuid = "b22f6415-6e67-485c-b34d-7995e604d9c9"
-version = "0.1.4"
+version = "0.2.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
