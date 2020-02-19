@@ -1,0 +1,2 @@
+round(minimum(curve.measurements), sigdigits=3) = 0.917
+round(maximum(curve.measurements), sigdigits=3) = 0.917

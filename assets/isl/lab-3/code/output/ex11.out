@@ -1,0 +1,16 @@
+ Feature   | Coefficient
+------------------------
+Crim       | -0.108
+Zn         | 0.0464
+Indus      | 0.0206
+Chas       | 2.69
+NOx        | -17.8
+Rm         | 3.81
+Age        | 0.000692
+Dis        | -1.48
+Rad        | 0.306
+Tax        | -0.0123
+PTRatio    | -0.953
+Black      | 0.00931
+LStat      | -0.525
+Intercept  | 36.5

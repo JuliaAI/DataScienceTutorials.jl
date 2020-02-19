@@ -1,0 +1,1 @@
+CategoricalValue{Int64,UInt8}

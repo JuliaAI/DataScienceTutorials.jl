@@ -1,0 +1,1 @@
+Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{2},1}}}
