@@ -9,6 +9,7 @@
 
 # ## Stock market data## Let's load the usual packages and the data
 using MLJ, RDatasets, DataFrames, Statistics
+import StatsBase: countmap
 
 using PrettyPrinting
 

@@ -5,6 +5,7 @@ Let's load the usual packages and the data
 
 ```julia:ex1
 using MLJ, RDatasets, DataFrames, Statistics
+import StatsBase: countmap
 MLJ.color_off() # hide
 using PrettyPrinting
 

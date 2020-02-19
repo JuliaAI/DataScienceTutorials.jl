@@ -1,101 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-   <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
- 
-  <link rel="stylesheet" href="/css/franklin.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
-   <title>Fit, predict, transform</title>  
-  <!-- LUNR -->
-  <script src="/libs/lunr/lunr.min.js"></script>
-  <script src="/libs/lunr/lunr_index.js"></script>
-  <script src="/libs/lunr/lunrclient.min.js"></script>
-</head>
-<body>
-  <div id="layout">
-    <!-- Menu toggle / hamburger icon -->
-    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
-      <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
-          <div class="menu-logo">
-            <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" />
-            <p><strong>MLJ Tutorials</strong></p>
-          </div>
-        </a>
-        <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/search.html" style="visibility:hidden">
-        </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/data/dataframe/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/data/categorical/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/data/scitype/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-    </ul>
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/model-tuning/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/composing-models/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-    </ul>
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/isl/lab-2/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-3/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-4/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-5/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-6b/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-8/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-9/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-10/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/end-to-end/AMES/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/wine/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/horse/index.html" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
-      </div>
-    </div>
-    <div id="main"> <!-- Closed in foot -->
-      
-
-<!-- Content appended here -->
-
-<div class="franklin-content">
-<h1 id="fit_predict_transform"><a href="/getting-started/fit-and-predict/index.html#fit_predict_transform">Fit, predict, transform</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/notebooks/A-fit-predict.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/scripts/A-fit-predict-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/scripts/A-fit-predict.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="/getting-started/fit-and-predict/index.html#preliminary_steps">Preliminary steps</a><ol><li><a href="/getting-started/fit-and-predict/index.html#data">Data</a></li><li><a href="/getting-started/fit-and-predict/index.html#mlj_machine">MLJ Machine</a></li></ol></li><li><a href="/getting-started/fit-and-predict/index.html#training_and_testing_a_supervised_model">Training and testing a supervised model</a><ol><li><a href="/getting-started/fit-and-predict/index.html#splitting_the_data">Splitting the data</a></li><li><a href="/getting-started/fit-and-predict/index.html#fitting_and_testing_the_machine">Fitting and testing the machine</a></li></ol></li><li><a href="/getting-started/fit-and-predict/index.html#unsupervised_models">Unsupervised models</a></li></ol></div> <h2 id="preliminary_steps"><a href="/getting-started/fit-and-predict/index.html#preliminary_steps">Preliminary steps</a></h2>
-<h3 id="data"><a href="/getting-started/fit-and-predict/index.html#data">Data</a></h3>
-<p>As in &quot;<a href="choosing-a-model.html">choosing a model</a>&quot;, let&#39;s load the Iris dataset and unpack it:</p>
-<pre><code class="language-julia">using MLJ, Statistics, PrettyPrinting
-X, y = @load_iris;</code></pre>
-<p>let&#39;s also load the <code>DecisionTreeClassifier</code>:</p>
-<pre><code class="language-julia">@load DecisionTreeClassifier
-tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext">DecisionTreeClassifier(
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/franklin.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title>Fit, predict, transform</title> <script src="/MLJTutorials/libs/lunr/lunr.min.js"></script> <script src="/MLJTutorials/libs/lunr/lunr_index.js"></script> <script src="/MLJTutorials/libs/lunr/lunrclient.min.js"></script> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <form id=lunrSearchForm  name=lunrSearchForm > <input class=search-input  name=q  placeholder="Enter search term" type=text > <input type=submit  value=Search  formaction="/MLJTutorials/search.html" style="visibility:hidden"> </form> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/data/loading/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/MLJTutorials/data/dataframe/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data Frames</a> <li class="pure-menu-item "><a href="/MLJTutorials/data/categorical/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a> <li class="pure-menu-item "><a href="/MLJTutorials/data/scitype/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Scientific Type</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/choosing-a-model/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/fit-and-predict/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/model-tuning/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/ensembles/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/ensembles-2/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/composing-models/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/learning-networks/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/learning-networks-2/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-2/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-3/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-4/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-5/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-6b/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-8/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-9/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-10/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/AMES/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/wine/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/crabs-xgb/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/horse/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> </ul> </div> </div> <div id=main > <div class=franklin-content > <h1 id=fit_predict_transform ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#fit_predict_transform">Fit, predict, transform</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/notebooks/A-fit-predict.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/scripts/A-fit-predict-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/scripts/A-fit-predict.jl" target=_blank ><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=franklin-toc ><ol><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#preliminary_steps">Preliminary steps</a><ol><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#data">Data</a><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#mlj_machine">MLJ Machine</a></ol><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#training_and_testing_a_supervised_model">Training and testing a supervised model</a><ol><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#splitting_the_data">Splitting the data</a><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#fitting_and_testing_the_machine">Fitting and testing the machine</a></ol><li><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#unsupervised_models">Unsupervised models</a></ol></div> <h2 id=preliminary_steps ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#preliminary_steps">Preliminary steps</a></h2> <h3 id=data ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#data">Data</a></h3> <p>As in &quot;<a href=choosing-a-model.html >choosing a model</a>&quot;, let&#39;s load the Iris dataset and unpack it:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, Statistics, PrettyPrinting
+X, y = <span class=hljs-meta >@load_iris</span>;</code></pre> <p>let&#39;s also load the <code>DecisionTreeClassifier</code>:</p> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> DecisionTreeClassifier
+tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext hljs">DecisionTreeClassifier(
     max_depth = -1,
     min_samples_leaf = 1,
     min_samples_split = 2,
@@ -104,80 +9,51 @@ tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext">D
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 8…08</code></pre>
-<h3 id="mlj_machine"><a href="/getting-started/fit-and-predict/index.html#mlj_machine">MLJ Machine</a></h3>
-<p>In MLJ, remember that a <em>model</em> is an object that only serves as a container for the hyperparameters of the model. A <em>machine</em> is an object wrapping both a model and data and can contain information on the <em>trained</em> model; it does <em>not</em> fit the model by itself. However, it does check that the model is compatible with the scientific type of the data and will warn you otherwise.</p>
-<pre><code class="language-julia">tree = machine(tree_model, X, y)</code></pre><pre><code class="plaintext">Machine{DecisionTreeClassifier} @ 3…60
-</code></pre>
-<p>A machine is used both for supervised and unsupervised model. In this tutorial we give an example for the supervised model first and then go on with the unsupervised case.</p>
-<h2 id="training_and_testing_a_supervised_model"><a href="/getting-started/fit-and-predict/index.html#training_and_testing_a_supervised_model">Training and testing a supervised model</a></h2>
-<p>Now that you&#39;ve declared the model you&#39;d like to consider and the data, we are left with the standard training and testing step for a supervised learning algorithm.</p>
-<h3 id="splitting_the_data"><a href="/getting-started/fit-and-predict/index.html#splitting_the_data">Splitting the data</a></h3>
-<p>To split the data into a <em>training</em> and <em>testing</em> set, you can use the function <code>partition</code> to obtain indices for data points that should be considered either as training or testing data:</p>
-<pre><code class="language-julia">train, test = partition(eachindex(y), 0.7, shuffle=true)
-test[1:3]</code></pre><pre><code class="plaintext">3-element Array{Int64,1}:
+    display_depth = 5) @ 8…08</code></pre> <h3 id=mlj_machine ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#mlj_machine">MLJ Machine</a></h3> <p>In MLJ, remember that a <em>model</em> is an object that only serves as a container for the hyperparameters of the model. A <em>machine</em> is an object wrapping both a model and data and can contain information on the <em>trained</em> model; it does <em>not</em> fit the model by itself. However, it does check that the model is compatible with the scientific type of the data and will warn you otherwise.</p> <pre><code class="julia hljs">tree = machine(tree_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @ 3…60
+</code></pre> <p>A machine is used both for supervised and unsupervised model. In this tutorial we give an example for the supervised model first and then go on with the unsupervised case.</p> <h2 id=training_and_testing_a_supervised_model ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#training_and_testing_a_supervised_model">Training and testing a supervised model</a></h2> <p>Now that you&#39;ve declared the model you&#39;d like to consider and the data, we are left with the standard training and testing step for a supervised learning algorithm.</p> <h3 id=splitting_the_data ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#splitting_the_data">Splitting the data</a></h3> <p>To split the data into a <em>training</em> and <em>testing</em> set, you can use the function <code>partition</code> to obtain indices for data points that should be considered either as training or testing data:</p> <pre><code class="julia hljs">train, test = partition(eachindex(y), <span class=hljs-number >0.7</span>, shuffle=<span class=hljs-literal >true</span>)
+test[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>]</code></pre><pre><code class="plaintext hljs">3-element Array{Int64,1}:
  104
   40
-  55</code></pre>
-<h3 id="fitting_and_testing_the_machine"><a href="/getting-started/fit-and-predict/index.html#fitting_and_testing_the_machine">Fitting and testing the machine</a></h3>
-<p>To fit the machine, you can use the function <code>fit&#33;</code> specifying the rows to be used for the training:</p>
-<pre><code class="language-julia">fit!(tree, rows=train)</code></pre><pre><code class="plaintext">Machine{DecisionTreeClassifier} @ 3…60
-</code></pre>
-<p>Note that this <strong>modifies</strong> the machine which now contains the trained parameters of the decision tree. You can inspect the result of the fitting with the <code>fitted_params</code> method:</p>
-<pre><code class="language-julia">fitted_params(tree) |> pprint</code></pre><pre><code class="plaintext">(tree = Decision Tree
+  55</code></pre> <h3 id=fitting_and_testing_the_machine ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#fitting_and_testing_the_machine">Fitting and testing the machine</a></h3> <p>To fit the machine, you can use the function <code>fit&#33;</code> specifying the rows to be used for the training:</p> <pre><code class="julia hljs">fit!(tree, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @ 3…60
+</code></pre> <p>Note that this <strong>modifies</strong> the machine which now contains the trained parameters of the decision tree. You can inspect the result of the fitting with the <code>fitted_params</code> method:</p> <pre><code class="julia hljs">fitted_params(tree) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(tree = Decision Tree
 Leaves: 8
 Depth:  4,
- encoding = Dict("virginica" => 0x00000003,
-                 "setosa" => 0x00000001,
-                 "versicolor" => 0x00000002))</code></pre>
-<p>This <code>fitresult</code> will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named &#40;so that predictions can be appropriately named&#41;.</p>
-<p>You can now use the machine to make predictions with the <code>predict</code> function specifying rows to be used for the prediction:</p>
-<pre><code class="language-julia">ŷ = predict(tree, rows=test)
-@show ŷ[1]</code></pre><pre><code class="plaintext">ŷ[1] = UnivariateFinite(setosa=>0.0, versicolor=>0.0, virginica=>1.0)
-</code></pre>
-<p>Note that the output is <em>probabilistic</em>, effectively a vector with a score for each class. You could get the mode by using the <code>mode</code> function on <code>ŷ</code> or using <code>predict_mode</code>:</p>
-<pre><code class="language-julia">ȳ = predict_mode(tree, rows=test)
-@show ȳ[1]
-@show mode(ŷ[1])</code></pre><pre><code class="plaintext">ȳ[1] = "virginica"
+ encoding = Dict("virginica" =&gt; 0x00000003,
+                 "setosa" =&gt; 0x00000001,
+                 "versicolor" =&gt; 0x00000002))</code></pre> <p>This <code>fitresult</code> will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named &#40;so that predictions can be appropriately named&#41;.</p> <p>You can now use the machine to make predictions with the <code>predict</code> function specifying rows to be used for the prediction:</p> <pre><code class="julia hljs">ŷ = predict(tree, rows=test)
+<span class=hljs-meta >@show</span> ŷ[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">ŷ[1] = UnivariateFinite(setosa=&gt;0.0, versicolor=&gt;0.0, virginica=&gt;1.0)
+</code></pre> <p>Note that the output is <em>probabilistic</em>, effectively a vector with a score for each class. You could get the mode by using the <code>mode</code> function on <code>ŷ</code> or using <code>predict_mode</code>:</p> <pre><code class="julia hljs">ȳ = predict_mode(tree, rows=test)
+<span class=hljs-meta >@show</span> ȳ[<span class=hljs-number >1</span>]
+<span class=hljs-meta >@show</span> mode(ŷ[<span class=hljs-number >1</span>])</code></pre><pre><code class="plaintext hljs">ȳ[1] = "virginica"
 mode(ŷ[1]) = "virginica"
-</code></pre>
-<p>To measure the discrepancy between <code>ŷ</code> and <code>y</code> you could use the average cross entropy:</p>
-<pre><code class="language-julia">mce = cross_entropy(ŷ, y[test]) |> mean
-round(mce, digits=4)</code></pre><pre><code class="plaintext">1.6019</code></pre>
-<h2 id="unsupervised_models"><a href="/getting-started/fit-and-predict/index.html#unsupervised_models">Unsupervised models</a></h2>
+</code></pre> <p>To measure the discrepancy between <code>ŷ</code> and <code>y</code> you could use the average cross entropy:</p> <pre><code class="julia hljs">mce = cross_entropy(ŷ, y[test]) |&gt; mean
+round(mce, digits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">1.6019</code></pre>
+<h2 id=unsupervised_models ><a href="/MLJTutorials/getting-started/fit-and-predict/index.html#unsupervised_models">Unsupervised models</a></h2>
 <p>Unsupervised models define a <code>transform</code> method, and may optionally implement an <code>inverse_transform</code> method. As in the supervised case, we use a machine to wrap the unsupervised model and the data:</p>
-<pre><code class="language-julia">v = [1, 2, 3, 4]
+<pre><code class="julia hljs">v = [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >4</span>]
 stand_model = UnivariateStandardizer()
-stand = machine(stand_model, v)</code></pre><pre><code class="plaintext">Machine{UnivariateStandardizer} @ 1…83
+stand = machine(stand_model, v)</code></pre><pre><code class="plaintext hljs">Machine{UnivariateStandardizer} @ 1…83
 </code></pre>
 <p>We can then fit the machine and use it to apply the corresponding <em>data transformation</em>:</p>
-<pre><code class="language-julia">fit!(stand)
+<pre><code class="julia hljs">fit!(stand)
 w = transform(stand, v)
-@show round.(w, digits=2)
-@show mean(w)
-@show std(w)</code></pre><pre><code class="plaintext">round.(w, digits = 2) = [-1.16, -0.39, 0.39, 1.16]
+<span class=hljs-meta >@show</span> round.(w, digits=<span class=hljs-number >2</span>)
+<span class=hljs-meta >@show</span> mean(w)
+<span class=hljs-meta >@show</span> std(w)</code></pre><pre><code class="plaintext hljs">round.(w, digits = 2) = [-1.16, -0.39, 0.39, 1.16]
 mean(w) = 0.0
 std(w) = 1.0
 </code></pre>
 <p>In this case, the model also has an inverse transform:</p>
-<pre><code class="language-julia">vv = inverse_transform(stand, w)
-sum(abs.(vv .- v))</code></pre><pre><code class="plaintext">0.0</code></pre>
-<div class="page-foot">
-  <div class="copyright">
+<pre><code class="julia hljs">vv = inverse_transform(stand, w)
+sum(abs.(vv .- v))</code></pre><pre><code class="plaintext hljs">0.0</code></pre>
+<div class=page-foot >
+  <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 
 </div>
-<!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
-</body>
-</html>
+      </div> 
+  </div> 
+  <script src="/MLJTutorials/libs/pure/ui.min.js"></script>
