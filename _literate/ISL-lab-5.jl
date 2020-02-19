@@ -116,7 +116,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")) # hide
 #
 # Let's crossvalidate over the degree of the  polynomial.
 #
-# **Note**: there's a  bit of gymnastics here because MLJ doesn't directly support a polynomial regression; see our tutorial on [tuning models](/pub/getting-started/model-tuning.html) for a gentler introduction to model tuning.
+# **Note**: there's a  bit of gymnastics here because MLJ doesn't directly support a polynomial regression; see our tutorial on [tuning models](/getting-started/model-tuning/) for a gentler introduction to model tuning.
 # The gist of the following code is to create a dataframe where each column is a power of the `Horsepower` feature from 1 to 10 and we build a series of regression models using incrementally more of those features (higher degree):
 
 Xhp = DataFrame([hp.^i for i in 1:10])

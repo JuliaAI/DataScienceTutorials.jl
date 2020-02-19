@@ -27,7 +27,7 @@ first(boston, <span class=hljs-number >3</span>)</code></pre><pre><code class="p
 │ 11  │ PTRatio  │ 18.4555  │ 2.16495  │ Float64  │
 │ 12  │ Black    │ 356.674  │ 91.2949  │ Float64  │
 │ 13  │ LStat    │ 12.6531  │ 7.14106  │ Float64  │
-│ 14  │ MedV     │ 22.5328  │ 9.1971   │ Float64  │</code></pre> <p>So there&#39;s no missing value and most variables are encoded as floating point numbers. In MLJ it&#39;s important to specify the interpretation of the features &#40;should it be considered as a Continuous feature, as a Count, ...?&#41;, see also <a href="/MLJTutorials/pub/getting-started/choosing-a-model.html#data_and_its_interpretation">this tutorial section</a> on scientific types.</p> <p>Here we will just interpret the integer features as continuous as we will just use a basic linear regression:</p> <pre><code class="julia hljs">data = coerce(boston, autotype(boston, :discrete_to_continuous));</code></pre>
+│ 14  │ MedV     │ 22.5328  │ 9.1971   │ Float64  │</code></pre> <p>So there&#39;s no missing value and most variables are encoded as floating point numbers. In MLJ it&#39;s important to specify the interpretation of the features &#40;should it be considered as a Continuous feature, as a Count, ...?&#41;, see also <a href="/MLJTutorials/getting-started/choosing-a-model/#data_and_its_interpretation">this tutorial section</a> on scientific types.</p> <p>Here we will just interpret the integer features as continuous as we will just use a basic linear regression:</p> <pre><code class="julia hljs">data = coerce(boston, autotype(boston, :discrete_to_continuous));</code></pre>
 <p>Let&#39;s also extract the target variable &#40;<code>MedV</code>&#41;:</p>
 <pre><code class="julia hljs">y = data.MedV
 X = select(data, Not(:MedV));</code></pre>

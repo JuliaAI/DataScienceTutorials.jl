@@ -32,7 +32,7 @@ describe(boston, :mean, :std, :eltype)
 ```
 
 So there's no missing value and most variables are encoded as floating point numbers.
-In MLJ it's important to specify the interpretation of the features (should it be considered as a Continuous feature, as a Count, ...?), see also [this tutorial section](/pub/getting-started/choosing-a-model.html#data_and_its_interpretation) on scientific types.
+In MLJ it's important to specify the interpretation of the features (should it be considered as a Continuous feature, as a Count, ...?), see also [this tutorial section](/getting-started/choosing-a-model/#data_and_its_interpretation) on scientific types.
 
 Here we will just interpret the integer features as continuous as we will just use a basic linear regression:
 

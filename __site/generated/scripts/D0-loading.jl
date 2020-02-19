@@ -15,7 +15,7 @@ boston = dataset("MASS", "Boston");
 # The fact that `Boston` is part of `MASS` is clearly indicated on the [list](http://vincentarelbundock.github.io/Rdatasets/datasets.html) linked to earlier.# While it can be a bit slow, loading a dataset via RDatasets is very simple and convenient as you don't have to  worry about setting the names of columns etc.## The `dataset` function returns a `DataFrame` object from the [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) package.
 typeof(boston)
 
-# For a short introduction to DataFrame objects, see [this tutorial](/pub/data/dataframe.html).
+# For a short introduction to DataFrame objects, see [this tutorial](/data/).
 # ## Using CSV## The package [CSV.jl](https://github.com/JuliaData/CSV.jl) offers a powerful way to read arbitrary CSV files efficiently.# In particular the `CSV.read` function allows to read a file and return a DataFrame.## ### Basic usage## Let's say you have a file `foo.csv` at some path `fpath=joinpath("data", "foo.csv")` with the content## ```# col1,col2,col3,col4,col5,col6,col7,col8# ,1,1.0,1,one,2019-01-01,2019-01-01T00:00:00,true# ,2,2.0,2,two,2019-01-02,2019-01-02T00:00:00,false# ,3,3.0,3.14,three,2019-01-03,2019-01-03T00:00:00,true# ```
 
 c = """

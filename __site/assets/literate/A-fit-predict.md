@@ -7,7 +7,7 @@
 
 ### Data
 
-As in "[choosing a model](choosing-a-model.html)", let's load the Iris dataset and unpack it:
+As in "[choosing a model](/getting-started/choosing-a-model/)", let's load the Iris dataset and unpack it:
 
 ```julia:ex1
 using MLJ, Statistics, PrettyPrinting
