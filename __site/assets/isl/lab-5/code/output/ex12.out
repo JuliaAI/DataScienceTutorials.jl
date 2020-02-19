@@ -1,0 +1,2 @@
+round.(res.measurements .^ 2, digits = 2) = [20.83, 25.63, 20.89, 21.27, 223.05, 98.83, 21.24, 27.33, 20.82, 21.11]
+argmin(res.measurements) = 9

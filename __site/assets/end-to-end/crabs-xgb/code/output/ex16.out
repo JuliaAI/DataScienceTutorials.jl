@@ -1,0 +1,2 @@
+xgb.subsample = 0.8857142857142857
+xgb.colsample_bytree = 1.0
