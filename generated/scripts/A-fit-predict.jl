@@ -7,7 +7,7 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-# [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl# [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl# [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl## ## Preliminary steps## ### Data## As in "[choosing a model](choosing-a-model.html)", let's load the Iris dataset and unpack it:
+# [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl# [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl# [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl## ## Preliminary steps## ### Data## As in "[choosing a model](/getting-started/choosing-a-model/)", let's load the Iris dataset and unpack it:
 using MLJ, Statistics, PrettyPrinting
 
 X, y = @load_iris;
