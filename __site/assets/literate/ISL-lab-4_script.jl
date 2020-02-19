@@ -1,6 +1,7 @@
 # This file was generated, do not modify it.
 
 using MLJ, RDatasets, DataFrames, Statistics
+import StatsBase: countmap
 MLJ.color_off() # hide
 using PrettyPrinting
 

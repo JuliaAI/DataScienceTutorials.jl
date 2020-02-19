@@ -8,6 +8,7 @@
 # ```
 
 using MLJ, RDatasets, DataFrames, Statistics
+import StatsBase: countmap
 
 using PrettyPrinting
 
