@@ -1,0 +1,25 @@
+surgery                       Union{Missing, OrderedFactor{2}}
+age                           OrderedFactor{2}
+hospital_number               Count
+rectal_temperature            Union{Missing, Continuous}
+pulse                         Union{Missing, Count}
+respiratory_rate              Union{Missing, Count}
+temperature_extremities       Union{Missing, OrderedFactor{4}}
+peripheral_pulse              Union{Missing, OrderedFactor{4}}
+mucous_membranes              Union{Missing, OrderedFactor{6}}
+capillary_refill_time         Union{Missing, OrderedFactor{3}}
+pain                          Union{Missing, OrderedFactor{5}}
+peristalsis                   Union{Missing, OrderedFactor{4}}
+abdominal_distension          Union{Missing, OrderedFactor{4}}
+nasogastric_tube              Union{Missing, OrderedFactor{3}}
+nasogastric_reflux            Union{Missing, OrderedFactor{3}}
+nasogastric_reflux_ph         Union{Missing, OrderedFactor{24}}
+feces                         Union{Missing, OrderedFactor{4}}
+abdomen                       Union{Missing, OrderedFactor{5}}
+packed_cell_volume            Union{Missing, Continuous}
+total_protein                 Union{Missing, Continuous}
+abdomcentesis_appearance      Union{Missing, OrderedFactor{3}}
+abdomcentesis_total_protein   Union{Missing, Continuous}
+outcome                       Union{Missing, OrderedFactor{3}}
+surgical_lesion               OrderedFactor{2}
+cp_data                       OrderedFactor{2}
