@@ -3,10 +3,10 @@ var fs      = require("fs");
 var lunr    = require("lunr");
 var cheerio = require("cheerio");
 
-// don't modify this, it'll be modified on the fly by lunr() in JuDoc
+// don't modify this, it'll be modified on the fly by lunr() in Franklin
 const PATH_PREPEND = "..";
 
-const HTML_FOLDER  = "../../pub";
+const HTML_FOLDER  = "../../__site";
 const OUTPUT_INDEX = "lunr_index.js";
 
 function isHtml(filename) {
@@ -25,6 +25,9 @@ function findHtml(folder) {
         var filename = path.join(folder, files[i]);
         var stat = fs.lstatSync(filename);
         if (stat.isDirectory()) {
+            if (stat == "assets" || stat == "css" || stat == "libs" ) {
+                continue
+            }
             var recursed = findHtml(filename);
             for (var j = 0; j < recursed.length; j++) {
                 recursed[j] = path.join(files[i], recursed[j]).replace(/\\/g, "/");
@@ -74,7 +77,7 @@ function buildPreviews(docs) {
         var doc = docs[i];
         result[doc["id"]] = {
             "t": doc["t"],
-            "l": doc["l"].replace(/^\.\.\/\.\./gi, '../' + PATH_PREPEND)
+            "l": doc["l"].replace(/^\.\.\/\.\.\/__site/gi, '/' + PATH_PREPEND)
         }
     }
     return result;
