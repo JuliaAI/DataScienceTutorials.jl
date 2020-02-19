@@ -1,3 +1,3 @@
 LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @ 8…26
+    solver = nothing) @ 1…81
