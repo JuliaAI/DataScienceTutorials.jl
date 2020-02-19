@@ -12,4 +12,4 @@ DeterministicEnsembleModel(
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @ 1…56
+    out_of_bag_measure = Any[]) @ 1…34
