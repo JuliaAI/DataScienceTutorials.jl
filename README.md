@@ -6,7 +6,7 @@
 
 MLJ   | MLJBase | MLJModels | Commit    | Note | Date
 ----- | ------- | --------- | --------- | ---- | ----
-0.9   | 0.11    | 0.8       |           |      | Feb 19, 2020
+0.9.1 | 0.11.7  | 0.8.0     |           |      | Feb 19, 2020
 0.6.0 | 0.9.1   | 0.6.2     | [9cf373d] | ✓    | Dec 31, 2019
 0.6.0 | 0.9.1   | 0.6.0     | [a4c2e3a] | ✓    | Dec 19, 2019    
 0.5.5 | 0.8.4   | 0.5.9     | [8433e41] | ✓    | Nov 29, 2019    
@@ -73,11 +73,11 @@ When it's time to push updates, **only** use `include("deploy.jl")` (assuming yo
 
 Say you've added a new script `A-my-tutorial.jl`, follow these steps to add a corresponding page on the website:
 
-1. copy one of the markdown file available in `src/pages/getting-started` and paste it somewhere appropriate e.g.: `src/pages/getting-started/my-tutorial.md`
+1. copy one of the markdown file available in `getting-started` and paste it somewhere appropriate e.g.: `getting-started/my-tutorial.md`
 2. modify the title on that page, `# My tutorial`
 3. modify the `\tutorial` command to `\tutorial{A-my-tutorial}` (no extensions)
 
-By now you have at `src/pages/getting-started/my-tutorial.md`
+By now you have at `getting-started/my-tutorial.md`
 
 ```markdown
 @def hascode = true
@@ -88,10 +88,10 @@ By now you have at `src/pages/getting-started/my-tutorial.md`
 \tutorial{A-my-tutorial}
 ```
 
-The last thing to do is to add a link to the page in `src/_html_parts/head.html` so that it can be navigated to, copy paste the appropriate list item modifying the names so for instance:
+The last thing to do is to add a link to the page in `_layout/head.html` so that it can be navigated to, copy paste the appropriate list item modifying the names so for instance:
 
 ```html
-<li class="pure-menu-item {{ispage pub/getting-started/my-tutorial.html}}pure-menu-selected{{end}}"><a href="/pub/getting-started/my-tutorial.html" class="pure-menu-link">⊳ My tutorial</a></li>
+<li class="pure-menu-item {{ispage /getting-started/my-tutorial/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/my-tutorial/index.html" class="pure-menu-link">⊳ My tutorial</a></li>
 ```
 
 ### Visualise modifications locally
@@ -118,9 +118,9 @@ It's best not to use `Plots.jl` because the loading time would risk making full 
 In order to display a plot, finish a code block defining a plot with
 
 ```
-savefig("assets/literate/MyTutorial-Fig1.svg") # hide
+savefig(joinpath(@OUTPUT, "MyTutorial-Fig1.svg")) # hide
 
-# ![](/assets/literate/MyTutorial-Fig1.svg)
+# \figalt{the alt here}{MyTutorial-Fig1.svg}
 ```
 
 Please do not use anything else than SVG; please also stick to this path and start the name of the file with the name of the tutorial (to help keep files organised).
