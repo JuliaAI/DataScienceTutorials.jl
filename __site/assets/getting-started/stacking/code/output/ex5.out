@@ -1,0 +1,6 @@
+
+ LinearRegressor @ 5…31 = 4.9779 ± 0.90056
+
+ KNNRegressor @ 1…34 = 6.3794 ± 0.89744
+
+ MyAverageTwo @ 1…06 = 4.9802 ± 0.94746
