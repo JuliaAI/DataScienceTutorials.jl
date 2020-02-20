@@ -229,3 +229,4 @@ ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # But the simple ridge regression seems to work best here.
+PyPlot.close_figs() # hide

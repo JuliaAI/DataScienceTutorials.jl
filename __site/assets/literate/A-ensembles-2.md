@@ -135,5 +135,7 @@ For instance we could look at predictions on the whole dataset:
 ```julia:ex12
 ŷ = predict(m, X)
 rms(ŷ, y)
+
+PyPlot.close_figs() # hide
 ```
 

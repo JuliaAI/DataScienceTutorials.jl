@@ -27,6 +27,7 @@ The package [ScientificTypes.jl](https://github.com/alan-turing-institute/Scient
 ```
 Found
 ├─ Known
+│  ├─ Textual
 │  ├─ Finite
 │  │  ├─ Multiclass
 │  │  └─ OrderedFactor
@@ -39,7 +40,8 @@ Found
 A *scientific type convention* is a specific implementation indicating how machine types can be related to scientific types. It may also provide helper functions to convert data to a given scitype.
 
 The convention used in MLJ is implemented in [MLJScientificTypes.jl](https://github.com/alan-turing-institute/ScientificTypes.jl).
-This is what we will use throughout; you never need to use ScientificTypes.jl unless you intend to implement your own scientific type convention.
+This is what we will use throughout; you never need to use ScientificTypes.jl
+unless you intend to implement your own scientific type convention.
 
 ### Inspecting the scitype
 
@@ -51,27 +53,35 @@ boston = dataset("MASS", "Boston")
 sch = schema(boston)
 ```
 
-In this cases, most of the variables have a (machine) type `Float64` and their default  interpretation is `Continuous`.
-There is also `:Chas`, `:Rad` and `:Tax` that have a (machine) type  `Int64` and their default interpretation is `Count`.
+In this cases, most of the variables have a (machine) type `Float64` and
+their default  interpretation is `Continuous`.
+There is also `:Chas`, `:Rad` and `:Tax` that have a (machine) type  `Int64`
+and their default interpretation is `Count`.
 
-While the interpretation as `Continuous` is usually fine, the interpretation as `Count` needs a bit more attention.
+While the interpretation as `Continuous` is usually fine, the interpretation
+as `Count` needs a bit more attention.
 For instance note that:
 
 ```julia:ex2
 unique(boston.Chas)
 ```
 
-so even  though it's got a machine type of `Int64` and consequently a default  interpretation of `Count`, it would be more appropriate to interpret it as an `OrderedFactor`.
+so even  though it's got a machine type of `Int64` and consequently a
+default  interpretation of `Count`, it would be more appropriate to interpret
+it as an `OrderedFactor`.
 
 ### Changing the scitype
 
-In order to re-specify the scitype(s) of  feature(s) in a dataset, you can  use the `coerce` function and  specify pairs of variable name and  scientific type:
+In order to re-specify the scitype(s) of  feature(s) in a dataset, you can
+use the `coerce` function and  specify pairs of variable name and  scientific
+type:
 
 ```julia:ex3
 boston2 = coerce(boston, :Chas => OrderedFactor);
 ```
 
-the effect of this is to convert the `:Chas` column to an ordered categorical vector:
+the effect of this is to convert the `:Chas` column to an ordered categorical
+vector:
 
 ```julia:ex4
 eltype(boston2.Chas)
@@ -91,7 +101,9 @@ boston3 = coerce(boston, :Chas => OrderedFactor, :Rad => OrderedFactor);
 
 ### String and Unknown
 
-If a feature in  your dataset has String elements, then the  default scitype is `Unknown`; you can either choose to  drop  such columns or to coerce them to categorical:
+If a feature in  your dataset has String elements, then the  default scitype
+is `Textual`; you can either choose to  drop  such columns or to coerce them
+to categorical:
 
 ```julia:ex7
 feature = ["AA", "BB", "AA", "AA", "BB"]
@@ -109,8 +121,11 @@ elscitype(feature2)
 
 ### Type to Type coercion
 
-In  some cases you will want to reinterpret all features currently interpreted as some scitype `S1` into some other scitype `S2`.
-An example  is if some features are currently interpreted as `Count` because their original type was `Int` but you  want  to  consider all such as `Continuous`:
+In  some cases you will want to reinterpret all features currently
+interpreted as some scitype `S1` into some other scitype `S2`.
+An example  is if some features are currently interpreted as `Count` because
+their original type was `Int` but you  want  to  consider all such as
+`Continuous`:
 
 ```julia:ex9
 data = select(boston, [:Rad, :Tax])
@@ -126,12 +141,17 @@ schema(data2)
 
 ### Autotype
 
-A last useful tool is `autotype` which allows you to specify *rules* to define the interpretation of features automatically.
-You can code your own rules but there are three useful ones that are pre-coded:
+A last useful tool is `autotype` which allows you to specify *rules* to
+define the interpretation of features automatically.
+You can code your own rules but there are three useful ones that are pre-
+coded:
 
-* the `:few_to_finite` rule which checks how many unique entries are present in a vector and if there are "few" suggests a categorical type,
-* the `:discrete_to_continuous` rule converts `Integer` or `Count` to `Continuous`
-* the `:string_to_multiclass` which returns `Multiclass` for any string-like column.
+* the `:few_to_finite` rule which checks how many unique entries are present
+in a vector and if there are "few" suggests a categorical type,
+* the `:discrete_to_continuous` rule converts `Integer` or `Count` to
+`Continuous`
+* the `:string_to_multiclass` which returns `Multiclass` for any string-like
+column.
 
 For instance:
 
@@ -140,5 +160,5 @@ boston3 = coerce(boston, autotype(boston, :few_to_finite))
 schema(boston3)
 ```
 
-You can also specify multiple rules, see [the docs](https://alan-turing-institute.github.io/ScientificTypes.jl/stable/#Automatic-type-conversion-for-tabular-data-1) for more information.
+You can also specify multiple rules, see [the docs](https://alan-turing-institute.github.io/MLJScientificTypes.jl/stable/#Automatic-type-conversion-for-tabular-data-1) for more information.
 

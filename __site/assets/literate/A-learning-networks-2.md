@@ -72,7 +72,9 @@ To form a model out of that network is easy using the `@from_network` macro:
                              ridge=ridge_model) <= ŷ;
 ```
 
-The macro defines a constructor `CompositeModel` and attributes a name to the different nodes; the ordering / connection between the nodes is inferred from `ŷ` via the `<= ŷ`.
+The macro defines a constructor CompositeModel and attributes a name to the
+different models; the ordering / connection between the nodes is inferred
+from `ŷ` via the `<= ŷ`.
 
 **Note**: had the model been probabilistic (e.g. `RidgeClassifier`) you would have needed to add `is_probabilistic=true` at the end.
 

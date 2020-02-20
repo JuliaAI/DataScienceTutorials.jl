@@ -28,4 +28,4 @@ ProbabilisticTunedModel(
     n = nothing,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
-    check_measure = true) @ 5…98
+    check_measure = true) @ 1…88

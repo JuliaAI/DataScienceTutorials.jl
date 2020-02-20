@@ -201,7 +201,8 @@ round(best_mdl.reg.gamma, sigdigits = 4) = 1893.0
 <p>And it&#39;s not too bad in terms of accuracy either</p>
 <pre><code class="julia hljs">ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">102500.0</code></pre>
-<p>But the simple ridge regression seems to work best here.
+<p>But the simple ridge regression seems to work best here.</p>
+
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

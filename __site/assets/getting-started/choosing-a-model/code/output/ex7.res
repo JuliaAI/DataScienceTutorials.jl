@@ -6,4 +6,4 @@ KNeighborsClassifier(
     p = 2,
     metric = "minkowski",
     metric_params = nothing,
-    n_jobs = nothing) @ 1…43
+    n_jobs = nothing) @ 7…74

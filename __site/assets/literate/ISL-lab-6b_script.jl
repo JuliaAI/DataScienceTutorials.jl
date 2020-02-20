@@ -163,3 +163,5 @@ best_mdl = fitted_params(mtm).best_model
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
+PyPlot.close_figs() # hide
+

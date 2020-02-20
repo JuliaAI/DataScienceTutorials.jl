@@ -3,7 +3,7 @@ auto = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >
 y, X = unpack(auto, ==(:MPG), col-&gt;<span class=hljs-literal >true</span>)
 train, test = partition(eachindex(y), <span class=hljs-number >0.5</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >444</span>);</code></pre> <p>Note the use of <code>rng&#61;</code> to seed the shuffling of indices so that the results are reproducible.</p> <h3 id=polynomial_regression ><a href="/MLJTutorials/isl/lab-5/index.html#polynomial_regression">Polynomial regression</a></h3> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @ 1…55</code></pre> <p>In this part we only build models with the <code>Horsepower</code> feature.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
+    solver = nothing) @ 1…07</code></pre> <p>In this part we only build models with the <code>Horsepower</code> feature.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
 
 figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
@@ -45,7 +45,7 @@ fit!(lr2, rows=train)
 
 lrm.fs.features = [:hp1, :hp2, :hp3] <span class=hljs-comment ># poly of degree 3</span>
 lr3 = machine(lrm, Xhp, y)
-fit!(lr3, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{LinMod} @ 1…19
+fit!(lr3, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{LinMod} @ 3…71
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="julia hljs">get_mse(lr) = rms(predict(lr, rows=test), y[test])^<span class=hljs-number >2</span>
@@ -87,8 +87,8 @@ r = range(lrm, :(fs.features), values=cases)
 
 tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-number >10</span>), measure=rms)</code></pre><pre><code class="plaintext hljs">DeterministicTunedModel(
     model = LinMod(
-            fs = FeatureSelector @ 1…78,
-            lr = LinearRegressor @ 7…99),
+            fs = FeatureSelector @ 4…32,
+            lr = LinearRegressor @ 4…54),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -109,7 +109,7 @@ tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-numbe
     n = nothing,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
-    check_measure = true) @ 9…00</code></pre>
+    check_measure = true) @ 1…71</code></pre>
 <p>Now we&#39;re left with fitting the tuned model</p>
 <pre><code class="julia hljs">mtm = machine(tm, Xhp, y)
 fit!(mtm)
@@ -136,7 +136,8 @@ yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<sp
 ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)</code></pre>
 <img src="/MLJTutorials/assets/isl/lab-5/code/output/ISL-lab-5-g4.svg" alt="5th order fit">
 <h2 id=the_bootstrap ><a href="/MLJTutorials/isl/lab-5/index.html#the_bootstrap">The Bootstrap</a></h2>
-<p><em>Bootstrapping is not currently supported in MLJ.</em>
+<p><em>Bootstrapping is not currently supported in MLJ.</em></p>
+
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

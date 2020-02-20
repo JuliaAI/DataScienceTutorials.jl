@@ -116,3 +116,5 @@ savefig(joinpath(@OUTPUT, "A-ensembles-heatmap.svg")) # hide
 
 ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])
+
+PyPlot.close_figs() # hide

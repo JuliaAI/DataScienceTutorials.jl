@@ -182,3 +182,5 @@ yticks(fontsize=12)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
 
+PyPlot.close_figs() # hide
+

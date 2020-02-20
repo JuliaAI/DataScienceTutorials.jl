@@ -1,4 +1,4 @@
-3×2 DataFrame
+3×2 DataFrames.DataFrame
 │ Row │ Species      │ PetalLength_mean │
 │     │ Categorical… │ Float64          │
 ├─────┼──────────────┼──────────────────┤

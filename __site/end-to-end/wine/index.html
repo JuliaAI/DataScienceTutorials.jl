@@ -85,7 +85,7 @@ Proline                       Count
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @ 9…91</code></pre>
+            solver = nothing)) @ 1…71</code></pre>
 <p>We can now fit this on a train split of the data setting aside 20&#37; of the data for eventual testing.</p>
 <pre><code class="julia hljs">train, test = partition(eachindex(yc), <span class=hljs-number >0.8</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >111</span>)
 Xtrain = selectrows(Xc, train)
@@ -94,7 +94,7 @@ ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
 <pre><code class="julia hljs">knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><pre><code class="plaintext hljs">Machine{MnPipe} @ 4…83
+multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><pre><code class="plaintext hljs">Machine{MnPipe} @ 6…23
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="julia hljs">opts = (resampling=Holdout(fraction_train=<span class=hljs-number >0.9</span>), measure=cross_entropy)
@@ -150,7 +150,8 @@ println(rpad(<span class=hljs-string >"KNN mcr:"</span>, <span class=hljs-number
 println(rpad(<span class=hljs-string >"MNC mcr:"</span>, <span class=hljs-number >10</span>), round(perf_m, sigdigits=<span class=hljs-number >3</span>))</code></pre><pre><code class="plaintext hljs">KNN mcr:  0.111
 MNC mcr:  0.0556
 </code></pre>
-<p>Pretty good for so little work&#33;
+<p>Pretty good for so little work&#33;</p>
+
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

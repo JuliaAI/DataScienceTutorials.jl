@@ -132,3 +132,4 @@ plot(mpg)
 savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
 
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
+PyPlot.close_figs() # hide

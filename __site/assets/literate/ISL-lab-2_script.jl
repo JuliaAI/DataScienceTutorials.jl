@@ -65,3 +65,5 @@ plot(mpg)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
 
+PyPlot.close_figs() # hide
+

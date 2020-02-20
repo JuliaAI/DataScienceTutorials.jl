@@ -1,4 +1,4 @@
-3×5 DataFrame
+3×5 DataFrames.DataFrame
 │ Row │ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │ Species      │
 │     │ Float64     │ Float64    │ Float64     │ Float64    │ Categorical… │
 ├─────┼─────────────┼────────────┼─────────────┼────────────┼──────────────┤

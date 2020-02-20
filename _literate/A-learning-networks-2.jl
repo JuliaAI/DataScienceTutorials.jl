@@ -59,7 +59,9 @@ ŷ = inverse_transform(box, ẑ)
 @from_network CompositeModel(std=std_model, box=box_model,
                              ridge=ridge_model) <= ŷ;
 
-# The macro defines a constructor `CompositeModel` and attributes a name to the different nodes; the ordering / connection between the nodes is inferred from `ŷ` via the `<= ŷ`.
+# The macro defines a constructor CompositeModel and attributes a name to the
+# different models; the ordering / connection between the nodes is inferred
+# from `ŷ` via the `<= ŷ`.
 #
 # **Note**: had the model been probabilistic (e.g. `RidgeClassifier`) you would have needed to add `is_probabilistic=true` at the end.
 

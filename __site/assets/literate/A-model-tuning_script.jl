@@ -71,3 +71,5 @@ yticks(fontsize=12)
 
 savefig(joinpath(@OUTPUT, "A-model-tuning-hm.svg")) # hide
 
+PyPlot.close_figs() # hide
+

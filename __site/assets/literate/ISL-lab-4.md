@@ -365,3 +365,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
 
 \figalt{ROC}{ISL-lab-4-roc.svg}
 
+```julia:ex37
+PyPlot.close_figs() # hide
+```
+

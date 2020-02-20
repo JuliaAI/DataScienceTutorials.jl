@@ -116,5 +116,7 @@ plot(Xnew.LStat, predict(mach, Xnew))
 
 
 # \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
+
+
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

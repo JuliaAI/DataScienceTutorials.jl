@@ -116,3 +116,4 @@ legend(["Group 1", "Group 2", "Group 3"], fontsize=13)
 savefig(joinpath(@OUTPUT, "ISL-lab-10-cluster.svg")) # hide
 
 # \fig{ISL-lab-10-cluster.svg}
+PyPlot.close_figs() # hide

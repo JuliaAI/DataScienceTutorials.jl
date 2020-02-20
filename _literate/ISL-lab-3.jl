@@ -147,3 +147,4 @@ plot(Xnew.LStat, predict(mach, Xnew))
 savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
 
 # \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
+PyPlot.close_figs() # hide

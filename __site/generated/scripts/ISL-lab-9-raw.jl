@@ -47,5 +47,7 @@ fit!(mtm)
 ypred = predict(mtm, X)
 misclassification_rate(ypred, y)
 
+
+
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

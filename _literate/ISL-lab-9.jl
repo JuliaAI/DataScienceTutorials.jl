@@ -61,3 +61,4 @@ ypred = predict(mtm, X)
 misclassification_rate(ypred, y)
 
 # You could also change the kernel etc.
+PyPlot.close_figs() # hide

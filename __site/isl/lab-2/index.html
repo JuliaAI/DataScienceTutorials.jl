@@ -27,7 +27,7 @@ sqrt(x) = 2.0
 <pre><code class="julia hljs">x = randn(<span class=hljs-number >1_000</span>) <span class=hljs-comment ># 1_000 points iid from a N(0, 1)</span>
 μ = mean(x)
 σ = std(x)
-<span class=hljs-meta >@show</span> (μ, σ)</code></pre><pre><code class="plaintext hljs">(μ, σ) = (0.04395350488998528, 0.9680406849488128)
+<span class=hljs-meta >@show</span> (μ, σ)</code></pre><pre><code class="plaintext hljs">(μ, σ) = (0.014946393332429867, 0.9948656295933646)
 </code></pre>
 <p>Indexing data starts at 1, use <code>:</code> to indicate the full range</p>
 <pre><code class="julia hljs">X = [<span class=hljs-number >1</span> <span class=hljs-number >2</span>; <span class=hljs-number >3</span> <span class=hljs-number >4</span>; <span class=hljs-number >5</span> <span class=hljs-number >6</span>]
@@ -123,6 +123,7 @@ ncol(auto) = 9
 figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(mpg)</code></pre>
 <img src="/MLJTutorials/assets/isl/lab-2/code/output/ISL-lab-2-mpg.svg" alt="Simple plot">
+
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

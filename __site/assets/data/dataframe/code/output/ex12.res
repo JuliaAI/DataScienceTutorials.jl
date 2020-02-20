@@ -1,4 +1,4 @@
-14×6 DataFrame
+14×6 DataFrames.DataFrame
 │ Row │ variable │ min     │ max     │ mean     │ median  │ std      │
 │     │ Symbol   │ Real    │ Real    │ Float64  │ Float64 │ Float64  │
 ├─────┼──────────┼─────────┼─────────┼──────────┼─────────┼──────────┤

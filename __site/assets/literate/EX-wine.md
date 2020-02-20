@@ -196,3 +196,7 @@ println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
 Pretty good for so little work!
 
+```julia:ex18
+PyPlot.close_figs() # hide
+```
+

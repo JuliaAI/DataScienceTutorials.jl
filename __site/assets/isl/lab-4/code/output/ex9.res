@@ -1,1 +1,1 @@
-Machine{LogisticClassifier} @ 1…44
+Machine{LogisticClassifier} @ 9…30

@@ -175,3 +175,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
 
 \figalt{Simple plot}{ISL-lab-2-mpg.svg}
 
+```julia:ex22
+PyPlot.close_figs() # hide
+```
+

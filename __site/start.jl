@@ -1,2 +1,2 @@
 using Pkg; Pkg.activate(".")
-using Franklin, MLJ
+using Franklin, MLJ, PyPlot

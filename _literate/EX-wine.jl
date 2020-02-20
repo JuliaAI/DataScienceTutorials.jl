@@ -160,3 +160,4 @@ println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
 # Pretty good for so little work!
+PyPlot.close_figs() # hide

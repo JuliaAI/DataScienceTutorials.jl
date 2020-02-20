@@ -1,4 +1,4 @@
-3×4 DataFrame
+3×4 DataFrames.DataFrame
 │ Row │ variable │ mean    │ median  │ foo     │
 │     │ Symbol   │ Float64 │ Float64 │ Float64 │
 ├─────┼──────────┼─────────┼─────────┼─────────┤

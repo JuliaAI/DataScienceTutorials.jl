@@ -1,4 +1,4 @@
-2×13 DataFrame
+2×13 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │ Indus   │ Chas  │ Rm      │ Age     │ Dis     │ Rad   │ Tax   │ PTRatio │ Black   │ LStat   │ MedV    │
 │     │ Float64 │ Float64 │ Float64 │ Int64 │ Float64 │ Float64 │ Float64 │ Int64 │ Int64 │ Float64 │ Float64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┼───────┼─────────┼─────────┼─────────┼───────┼───────┼─────────┼─────────┼─────────┼─────────┤

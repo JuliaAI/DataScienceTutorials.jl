@@ -42,7 +42,7 @@ curve = learning_curve!(xgbm, resampling=CV(nfolds=3),
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
-ylabel("Cross entropy", fontsize=14)
+ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
 yticks(1.46:0.005:1.475, fontsize=12)
 
@@ -130,6 +130,8 @@ xgb = fitted_params(mtm).best_model
 # We could continue with more fine tuning but given how small the dataset is, it doesn't make much sense.# How does it fare on the test set?
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

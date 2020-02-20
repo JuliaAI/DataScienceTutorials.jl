@@ -10,7 +10,7 @@ knn_model = KNNRegressor(K=<span class=hljs-number >10</span>)</code></pre><pre>
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @ 4…97</code></pre> <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p> <pre><code class="julia hljs">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{KNNRegressor} @ 1…32
+    weights = :uniform) @ 1…13</code></pre> <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p> <pre><code class="julia hljs">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{KNNRegressor} @ 1…02
 </code></pre> <p>and fit it</p> <pre><code class="julia hljs">fit!(knn, rows=train)
 ŷ = predict(knn, X[test, :]) <span class=hljs-comment ># or use rows=test</span>
 rms(ŷ, y[test])</code></pre><pre><code class="plaintext hljs">0.11590837511873998</code></pre>
@@ -97,7 +97,7 @@ ylabel(<span class=hljs-string >"Number of neighbors - K"</span>, fontsize=<span
 <img src="/MLJTutorials/assets/getting-started/ensembles/code/output/A-ensembles-heatmap.svg" alt="Hyperparameter heatmap">
 <p>Finally you can always just evaluate the model by reporting <code>rms</code> on the test set:</p>
 <pre><code class="julia hljs">ŷ = predict(tuned_ensemble, rows=test)
-rms(ŷ, y[test])</code></pre><pre><code class="plaintext hljs">0.15043436217402137</code></pre>
+rms(ŷ, y[test])</code></pre>
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

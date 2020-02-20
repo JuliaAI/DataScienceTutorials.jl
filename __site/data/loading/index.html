@@ -13,9 +13,15 @@ boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string
 
 <p>You can read it with CSV using</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV
-data = CSV.read(fpath)</code></pre><pre><code class="plaintext hljs">DataFrames.DataFrame(AbstractArray{T,1} where T[</code></pre>
+data = CSV.read(fpath)</code></pre><pre><code class="plaintext hljs">3×8 DataFrames.DataFrame
+│ Row │ col1    │ col2  │ col3    │ col4    │ col5   │ col6       │ col7                │ col8 │
+│     │ Missing │ Int64 │ Float64 │ Float64 │ String │ Dates.Date │ Dates.DateTime      │ Bool │
+├─────┼─────────┼───────┼─────────┼─────────┼────────┼────────────┼─────────────────────┼──────┤
+│ 1   │ missing │ 1     │ 1.0     │ 1.0     │ one    │ 2019-01-01 │ 2019-01-01T00:00:00 │ 1    │
+│ 2   │ missing │ 2     │ 2.0     │ 2.0     │ two    │ 2019-01-02 │ 2019-01-02T00:00:00 │ 0    │
+│ 3   │ missing │ 3     │ 3.0     │ 3.14    │ three  │ 2019-01-03 │ 2019-01-03T00:00:00 │ 1    │</code></pre>
 <p>Note that we use this <code>joinpath</code> for compatibility with  our system but you could pass any valid path on your system for instance <code>CSV.read&#40;&quot;path/to/file.csv&quot;&#41;</code>. The data is also returned as a dataframe</p>
-<pre><code class="julia hljs">typeof(data)</code></pre><pre><code class="plaintext hljs">DataFrame</code></pre>
+<pre><code class="julia hljs">typeof(data)</code></pre><pre><code class="plaintext hljs">DataFrames.DataFrame</code></pre>
 <p>Some of the useful arguments for <code>read</code> are:</p>
 <ul>
 <li><p><code>header&#61;</code> to specify whether there&#39;s a header, or which line the header is on or to specify a full header yourself,</p>
@@ -37,7 +43,7 @@ data = CSV.read(fpath)</code></pre><pre><code class="plaintext hljs">DataFrames.
 <pre><code class="julia hljs">header = [<span class=hljs-string >"CIC0"</span>, <span class=hljs-string >"SM1_Dz"</span>, <span class=hljs-string >"GATS1i"</span>,
           <span class=hljs-string >"NdsCH"</span>, <span class=hljs-string >"NdssC"</span>, <span class=hljs-string >"MLOGP"</span>, <span class=hljs-string >"LC50"</span>]
 data = CSV.read(fpath, header=header)
-first(data, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×7 DataFrame
+first(data, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×7 DataFrames.DataFrame
 │ Row │ CIC0    │ SM1_Dz  │ GATS1i  │ NdsCH │ NdssC │ MLOGP   │ LC50    │
 │     │ Float64 │ Float64 │ Float64 │ Int64 │ Int64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┼───────┼───────┼─────────┼─────────┤
@@ -49,7 +55,7 @@ first(data, <span class=hljs-number >3</span>)</code></pre><pre><code class="pla
 
 <p>It does not have a header and missing values indicated by <code>?</code>.</p>
 <pre><code class="julia hljs">data = CSV.read(fpath, header=<span class=hljs-literal >false</span>, missingstring=<span class=hljs-string >"?"</span>)
-first(data[:, <span class=hljs-number >1</span>:<span class=hljs-number >5</span>], <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×5 DataFrame
+first(data[:, <span class=hljs-number >1</span>:<span class=hljs-number >5</span>], <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×5 DataFrames.DataFrame
 │ Row │ Column1 │ Column2 │ Column3 │ Column4 │ Column5 │
 │     │ Int64   │ Int64⍰  │ Int64   │ Int64   │ Int64⍰  │
 ├─────┼─────────┼─────────┼─────────┼─────────┼─────────┤

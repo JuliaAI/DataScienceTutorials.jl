@@ -187,3 +187,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
 
 _Bootstrapping is not currently supported in MLJ._
 
+```julia:ex14
+PyPlot.close_figs() # hide
+```
+

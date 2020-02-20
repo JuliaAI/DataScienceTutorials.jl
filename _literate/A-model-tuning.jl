@@ -122,3 +122,4 @@ yticks(fontsize=12)
 savefig(joinpath(@OUTPUT, "A-model-tuning-hm.svg")) # hide
 
 # \figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
+PyPlot.close_figs() # hide

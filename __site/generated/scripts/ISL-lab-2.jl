@@ -94,5 +94,7 @@ plot(mpg)
 
 
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
+
+
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

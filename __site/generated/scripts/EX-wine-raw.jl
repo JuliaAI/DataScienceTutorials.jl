@@ -102,5 +102,7 @@ perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
 println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
+
+
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

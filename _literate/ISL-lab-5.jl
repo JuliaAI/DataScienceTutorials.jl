@@ -162,3 +162,4 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
 # ## The Bootstrap
 #
 # _Bootstrapping is not currently supported in MLJ._
+PyPlot.close_figs() # hide
