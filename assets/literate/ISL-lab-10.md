@@ -142,3 +142,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-10-cluster.svg")) # hide
 
 \fig{ISL-lab-10-cluster.svg}
 
+```julia:ex13
+PyPlot.close_figs() # hide
+```
+

@@ -269,3 +269,7 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 But the simple ridge regression seems to work best here.
 
+```julia:ex21
+PyPlot.close_figs() # hide
+```
+

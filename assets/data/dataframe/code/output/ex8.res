@@ -1,4 +1,4 @@
-5×2 DataFrame
+5×2 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │
 │     │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┤

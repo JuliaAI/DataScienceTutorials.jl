@@ -58,5 +58,7 @@ ypred = predict(mtm, X)
 misclassification_rate(ypred, y)
 
 # You could also change the kernel etc.
+
+
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

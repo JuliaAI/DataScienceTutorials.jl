@@ -63,7 +63,7 @@ ylabel(<span class=hljs-string >"Number of occurences"</span>, fontsize=<span cl
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 1…44
+clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 9…30
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="julia hljs">fit!(clf)
@@ -149,7 +149,7 @@ accuracy(ŷ, y[test]) |&gt; r3</code></pre><pre><code class="plaintext hljs">0.
     priors = nothing,
     reg_param = 0.0,
     store_covariance = false,
-    tol = 0.0001) @ 1…05</code></pre>
+    tol = 0.0001) @ 6…62</code></pre>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="julia hljs">clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)
@@ -238,6 +238,7 @@ ylabel(<span class=hljs-string >"True Positive Rate"</span>, fontsize=<span clas
 xticks(fontsize=<span class=hljs-number >12</span>)
 yticks(fontsize=<span class=hljs-number >12</span>)</code></pre>
 <img src="/MLJTutorials/assets/isl/lab-4/code/output/ISL-lab-4-roc.svg" alt=ROC >
+
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

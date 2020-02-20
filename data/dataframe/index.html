@@ -1,6 +1,6 @@
 <!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/MLJTutorials/libs/highlight/github.min.css"> <link rel=stylesheet  href="/MLJTutorials/css/franklin.css"> <link rel=stylesheet  href="/MLJTutorials/css/pure.css"> <link rel=stylesheet  href="/MLJTutorials/css/side-menu.css"> <link rel=stylesheet  href="/MLJTutorials/css/extra.css"> <title>Manipulating a DataFrame</title> <script src="/MLJTutorials/libs/lunr/lunr.min.js"></script> <script src="/MLJTutorials/libs/lunr/lunr_index.js"></script> <script src="/MLJTutorials/libs/lunr/lunrclient.min.js"></script> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/MLJTutorials/" id=menu-logo-link > <div class=menu-logo > <img id=menu-logo  alt="MLJ Logo" src="/MLJTutorials/assets/infra/MLJLogo2.svg" /> <p><strong>MLJ Tutorials</strong></p> </div> </a> <form id=lunrSearchForm  name=lunrSearchForm > <input class=search-input  name=q  placeholder="Enter search term" type=text > <input type=submit  value=Search  formaction="/MLJTutorials/search/index.html" style="visibility:hidden"> </form> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/MLJTutorials/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/data/loading/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/MLJTutorials/data/dataframe/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data Frames</a> <li class="pure-menu-item "><a href="/MLJTutorials/data/categorical/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a> <li class="pure-menu-item "><a href="/MLJTutorials/data/scitype/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Scientific Type</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/choosing-a-model/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/fit-and-predict/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/model-tuning/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/ensembles/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/ensembles-2/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/composing-models/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/learning-networks/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/MLJTutorials/getting-started/learning-networks-2/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-2/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-3/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-4/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-5/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-6b/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-8/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-9/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/MLJTutorials/isl/lab-10/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/AMES/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/wine/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/crabs-xgb/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/MLJTutorials/end-to-end/horse/index.html" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> </ul> </ul> </div> </div> <div id=main > <div class=franklin-content > <h1 id=manipulating_a_dataframe ><a href="/MLJTutorials/data/dataframe/index.html#manipulating_a_dataframe">Manipulating a DataFrame</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/notebooks/D0-dataframe.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/scripts/D0-dataframe-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/gh-pages/generated/scripts/D0-dataframe.jl" target=_blank ><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=franklin-toc ><ol><li><a href="/MLJTutorials/data/dataframe/index.html#basics">Basics</a><ol><li><a href="/MLJTutorials/data/dataframe/index.html#accessing_data">Accessing data</a><li><a href="/MLJTutorials/data/dataframe/index.html#describing_the_data">Describing the data</a><li><a href="/MLJTutorials/data/dataframe/index.html#converting_the_data">Converting the data</a><li><a href="/MLJTutorials/data/dataframe/index.html#adding_columns">Adding columns</a><li><a href="/MLJTutorials/data/dataframe/index.html#missing_values">Missing values</a></ol><li><a href="/MLJTutorials/data/dataframe/index.html#split-apply-combine">Split-Apply-Combine</a><ol><li><a href="/MLJTutorials/data/dataframe/index.html#groupby"><code>groupby</code></a><li><a href="/MLJTutorials/data/dataframe/index.html#by"><code>by</code></a><li><a href="/MLJTutorials/data/dataframe/index.html#aggregate"><code>aggregate</code></a></ol></ol></div>This tutorial is loosely adapted from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">this pandas tutorial</a> as well as the <a href="http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/">DataFrames.jl documentation</a>. It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.</p> <h2 id=basics ><a href="/MLJTutorials/data/dataframe/index.html#basics">Basics</a></h2> <p>To start with, we will use the <code>Boston</code> dataset which is very simple.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets, DataFrames
 
-boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"Boston"</span>);</code></pre> <p>The <code>dataset</code> function returns a <code>DataFrame</code> object:</p> <pre><code class="julia hljs">typeof(boston)</code></pre><pre><code class="plaintext hljs">DataFrame</code></pre>
+boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"Boston"</span>);</code></pre> <p>The <code>dataset</code> function returns a <code>DataFrame</code> object:</p> <pre><code class="julia hljs">typeof(boston)</code></pre><pre><code class="plaintext hljs">DataFrames.DataFrame</code></pre>
 <h3 id=accessing_data ><a href="/MLJTutorials/data/dataframe/index.html#accessing_data">Accessing data</a></h3>
 <p>Intuitively a DataFrame is just a wrapper around a number of columns, each of which is a <code>Vector</code> of some type with a name&quot;</p>
 <pre><code class="julia hljs">names(boston)</code></pre><pre><code class="plaintext hljs">14-element Array{Symbol,1}:
@@ -19,7 +19,7 @@ boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string
  :LStat
  :MedV</code></pre>
 <p>You can view the first few rows using <code>first</code> and specifying a number of rows:</p>
-<pre><code class="julia hljs">first(boston, <span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">4×14 DataFrame
+<pre><code class="julia hljs">first(boston, <span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">4×14 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │ Indus   │ Chas  │ NOx     │ Rm      │ Age     │ Dis     │ Rad   │ Tax   │ PTRatio │ Black   │ LStat   │ MedV    │
 │     │ Float64 │ Float64 │ Float64 │ Int64 │ Float64 │ Float64 │ Float64 │ Float64 │ Int64 │ Int64 │ Float64 │ Float64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┼───────┼─────────┼─────────┼─────────┼─────────┼───────┼───────┼─────────┼─────────┼─────────┼─────────┤
@@ -37,7 +37,7 @@ boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string
 <p>You can also just access the dataframe as you would a big matrix:</p>
 <pre><code class="julia hljs">boston[<span class=hljs-number >3</span>, <span class=hljs-number >5</span>]</code></pre><pre><code class="plaintext hljs">0.469</code></pre>
 <p>or specifying a range of rows/columns:</p>
-<pre><code class="julia hljs">boston[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>, [:Crim, :Zn]]</code></pre><pre><code class="plaintext hljs">5×2 DataFrame
+<pre><code class="julia hljs">boston[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>, [:Crim, :Zn]]</code></pre><pre><code class="plaintext hljs">5×2 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │
 │     │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┤
@@ -47,7 +47,7 @@ boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string
 │ 4   │ 0.03237 │ 0.0     │
 │ 5   │ 0.06905 │ 0.0     │</code></pre>
 <p>or, similarly,</p>
-<pre><code class="julia hljs">boston[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>, <span class=hljs-number >1</span>:<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">5×2 DataFrame
+<pre><code class="julia hljs">boston[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>, <span class=hljs-number >1</span>:<span class=hljs-number >2</span>]</code></pre><pre><code class="plaintext hljs">5×2 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │
 │     │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┤
@@ -58,7 +58,7 @@ boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string
 │ 5   │ 0.06905 │ 0.0     │</code></pre>
 <p>The <code>select</code> function is very convenient to get sub dataframes of interest:</p>
 <pre><code class="julia hljs">b1 = select(boston, [:Crim, :Zn, :Indus])
-first(b1, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">2×3 DataFrame
+first(b1, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">2×3 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │ Indus   │
 │     │ Float64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┤
@@ -66,7 +66,7 @@ first(b1, <span class=hljs-number >2</span>)</code></pre><pre><code class="plain
 │ 2   │ 0.02731 │ 0.0     │ 7.07    │</code></pre>
 <p>The <code>Not</code> syntax is  also very  useful:</p>
 <pre><code class="julia hljs">b2 = select(boston, Not(:NOx))
-first(b2, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">2×13 DataFrame
+first(b2, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">2×13 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │ Indus   │ Chas  │ Rm      │ Age     │ Dis     │ Rad   │ Tax   │ PTRatio │ Black   │ LStat   │ MedV    │
 │     │ Float64 │ Float64 │ Float64 │ Int64 │ Float64 │ Float64 │ Float64 │ Int64 │ Int64 │ Float64 │ Float64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┼───────┼─────────┼─────────┼─────────┼───────┼───────┼─────────┼─────────┼─────────┼─────────┤
@@ -74,7 +74,7 @@ first(b2, <span class=hljs-number >2</span>)</code></pre><pre><code class="plain
 │ 2   │ 0.02731 │ 0.0     │ 7.07    │ 0     │ 6.421   │ 78.9    │ 4.9671  │ 2     │ 242   │ 17.8    │ 396.9   │ 9.14    │ 21.6    │</code></pre>
 <p>Finally, if you would like to drop columns, you can use <code>select&#33;</code> which will mutate the dataframe in place:</p>
 <pre><code class="julia hljs">select!(b1, Not(:Crim))
-first(b1, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">2×2 DataFrame
+first(b1, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">2×2 DataFrames.DataFrame
 │ Row │ Zn      │ Indus   │
 │     │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┤
@@ -83,7 +83,7 @@ first(b1, <span class=hljs-number >2</span>)</code></pre><pre><code class="plain
 <h3 id=describing_the_data ><a href="/MLJTutorials/data/dataframe/index.html#describing_the_data">Describing the data</a></h3>
 <code>StatsBase</code> offers a convenient <code>describe</code> function which you can use on a DataFrame to get an overview of the data:</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> StatsBase
-describe(boston, :min, :max, :mean, :median, :std)</code></pre><pre><code class="plaintext hljs">14×6 DataFrame
+describe(boston, :min, :max, :mean, :median, :std)</code></pre><pre><code class="plaintext hljs">14×6 DataFrames.DataFrame
 │ Row │ variable │ min     │ max     │ mean     │ median  │ std      │
 │     │ Symbol   │ Real    │ Real    │ Float64  │ Float64 │ Float64  │
 ├─────┼──────────┼─────────┼─────────┼──────────┼─────────┼──────────┤
@@ -113,7 +113,7 @@ describe(boston, :min, :max, :mean, :median, :std)</code></pre><pre><code class=
 <p>You can also  pass your custom function with a pair <code>name &#61;&gt; function</code> for instance:</p>
 <pre><code class="julia hljs">foo(x) = sum(abs.(x)) / length(x)
 d = describe(boston, :mean, :median, :foo =&gt; foo)
-first(d, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×4 DataFrame
+first(d, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×4 DataFrames.DataFrame
 │ Row │ variable │ mean    │ median  │ foo     │
 │     │ Symbol   │ Float64 │ Float64 │ Float64 │
 ├─────┼──────────┼─────────┼─────────┼─────────┤
@@ -137,7 +137,7 @@ mat[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>, <span c
 <h3 id=missing_values ><a href="/MLJTutorials/data/dataframe/index.html#missing_values">Missing values</a></h3>
 <p>Let&#39;s load a dataset with missing values</p>
 <pre><code class="julia hljs">mao = dataset(<span class=hljs-string >"gap"</span>, <span class=hljs-string >"mao"</span>)
-describe(mao, :nmissing)</code></pre><pre><code class="plaintext hljs">19×2 DataFrame
+describe(mao, :nmissing)</code></pre><pre><code class="plaintext hljs">19×2 DataFrames.DataFrame
 │ Row │ variable │ nmissing │
 │     │ Symbol   │ Union…   │
 ├─────┼──────────┼──────────┤
@@ -167,7 +167,7 @@ describe(mao, :nmissing)</code></pre><pre><code class="plaintext hljs">19×2 Dat
 <h2 id=split-apply-combine ><a href="/MLJTutorials/data/dataframe/index.html#split-apply-combine">Split-Apply-Combine</a></h2>
 <p>This is a shorter version of the <a href="http://juliadata.github.io/DataFrames.jl/latest/man/split_apply_combine/">DataFrames.jl tutorial</a>.</p>
 <pre><code class="julia hljs">iris = dataset(<span class=hljs-string >"datasets"</span>, <span class=hljs-string >"iris"</span>)
-first(iris, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×5 DataFrame
+first(iris, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×5 DataFrames.DataFrame
 │ Row │ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │ Species      │
 │     │ Float64     │ Float64    │ Float64     │ Float64    │ Categorical… │
 ├─────┼─────────────┼────────────┼─────────────┼────────────┼──────────────┤
@@ -186,7 +186,7 @@ first(iris, <span class=hljs-number >3</span>)</code></pre><pre><code class="pla
 <pre><code class="julia hljs">gdf = groupby(iris, :Species);</code></pre>
 <p>The <code>gdf</code> object now corresponds to <strong>views</strong> of the original dataframe for each of the 3 species; the first species is <code>&quot;setosa&quot;</code> with:</p>
 <pre><code class="julia hljs">subdf_setosa = gdf[<span class=hljs-number >1</span>]
-describe(subdf_setosa, :min, :mean, :max)</code></pre><pre><code class="plaintext hljs">5×4 DataFrame
+describe(subdf_setosa, :min, :mean, :max)</code></pre><pre><code class="plaintext hljs">5×4 DataFrames.DataFrame
 │ Row │ variable    │ min    │ mean   │ max    │
 │     │ Symbol      │ Any    │ Union… │ Any    │
 ├─────┼─────────────┼────────┼────────┼────────┤
@@ -199,7 +199,7 @@ describe(subdf_setosa, :min, :mean, :max)</code></pre><pre><code class="plaintex
 <p>See <code>?groupby</code> for more information.</p>
 <h3 id=by ><a href="/MLJTutorials/data/dataframe/index.html#by"><code>by</code></a></h3>
 <p>The <code>by</code> function allows you to compute statistics on given columns for each group. Let&#39;s start with a very simple example:</p>
-<pre><code class="julia hljs">by(iris, :Species, :PetalLength =&gt; mean)</code></pre><pre><code class="plaintext hljs">3×2 DataFrame
+<pre><code class="julia hljs">by(iris, :Species, :PetalLength =&gt; mean)</code></pre><pre><code class="plaintext hljs">3×2 DataFrames.DataFrame
 │ Row │ Species      │ PetalLength_mean │
 │     │ Categorical… │ Float64          │
 ├─────┼──────────────┼──────────────────┤
@@ -208,7 +208,7 @@ describe(subdf_setosa, :min, :mean, :max)</code></pre><pre><code class="plaintex
 │ 3   │ virginica    │ 5.552            │</code></pre>
 <p>So this returns the mean of the <code>:PetaLength</code> feature for each <code>:Species</code>.</p>
 <p>You can do this for several columns/statistics at the time and give specific names to the results:</p>
-<pre><code class="julia hljs">by(iris, :Species, MPL = :PetalLength =&gt; mean, SPL = :PetalLength =&gt; std)</code></pre><pre><code class="plaintext hljs">3×3 DataFrame
+<pre><code class="julia hljs">by(iris, :Species, MPL = :PetalLength =&gt; mean, SPL = :PetalLength =&gt; std)</code></pre><pre><code class="plaintext hljs">3×3 DataFrames.DataFrame
 │ Row │ Species      │ MPL     │ SPL      │
 │     │ Categorical… │ Float64 │ Float64  │
 ├─────┼──────────────┼─────────┼──────────┤
@@ -218,7 +218,7 @@ describe(subdf_setosa, :min, :mean, :max)</code></pre><pre><code class="plaintex
 <p>See <code>?by</code> for more information.</p>
 <h3 id=aggregate ><a href="/MLJTutorials/data/dataframe/index.html#aggregate"><code>aggregate</code></a></h3>
 <p>The aggregate function is a bit like <code>by</code> except that it applies the given function on all columns:</p>
-<pre><code class="julia hljs">DataFrames.aggregate(iris, :Species, std)</code></pre><pre><code class="plaintext hljs">3×5 DataFrame
+<pre><code class="julia hljs">DataFrames.aggregate(iris, :Species, std)</code></pre><pre><code class="plaintext hljs">3×5 DataFrames.DataFrame
 │ Row │ Species      │ SepalLength_std │ SepalWidth_std │ PetalLength_std │ PetalWidth_std │
 │     │ Categorical… │ Float64         │ Float64        │ Float64         │ Float64        │
 ├─────┼──────────────┼─────────────────┼────────────────┼─────────────────┼────────────────┤

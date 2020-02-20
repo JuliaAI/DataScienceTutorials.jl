@@ -1,4 +1,4 @@
-3×3 DataFrame
+3×3 DataFrames.DataFrame
 │ Row │ Species      │ MPL     │ SPL      │
 │     │ Categorical… │ Float64 │ Float64  │
 ├─────┼──────────────┼─────────┼──────────┤

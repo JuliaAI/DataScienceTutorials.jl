@@ -7,4 +7,4 @@ MnPipe(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @ 9…91
+            solver = nothing)) @ 1…71

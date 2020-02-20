@@ -62,7 +62,7 @@ Let's have a look
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
-ylabel("Cross entropy", fontsize=14)
+ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
 yticks(1.46:0.005:1.475, fontsize=12)
 
@@ -193,5 +193,7 @@ How does it fare on the test set?
 ```julia:ex17
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+PyPlot.close_figs() # hide
 ```
 

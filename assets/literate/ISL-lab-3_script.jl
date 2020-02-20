@@ -86,3 +86,5 @@ plot(Xnew.LStat, predict(mach, Xnew))
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
 
+PyPlot.close_figs() # hide
+

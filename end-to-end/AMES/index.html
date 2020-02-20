@@ -16,7 +16,7 @@ first(X, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><pre><code 
 </code></pre> <p>and the target is a continuous vector:</p> <pre><code class="julia hljs"><span class=hljs-meta >@show</span> y[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>]
 scitype(y)</code></pre><pre><code class="plaintext hljs">y[1:3] = [138000.0, 369900.0, 180000.0]
 AbstractArray{Continuous,1}</code></pre> <p>so this is a standard regression problem with a mix of categorical and continuous input.</p> <h2 id=dummy_model ><a href="/MLJTutorials/end-to-end/AMES/index.html#dummy_model">Dummy model</a></h2> <p>Remember that a model is just a container for hyperparameters; let&#39;s take a particularly simple one: the constant regression.</p> <pre><code class="julia hljs">creg = ConstantRegressor()</code></pre><pre><code class="plaintext hljs">ConstantRegressor(
-    distribution_type = Distributions.Normal) @ 5…17</code></pre> <p>Wrapping the model in data creates a <em>machine</em> which will store training outcomes &#40;<em>fit-results</em>&#41;</p> <pre><code class="julia hljs">cmach = machine(creg, X, y)</code></pre><pre><code class="plaintext hljs">Machine{ConstantRegressor} @ 1…06
+    distribution_type = Distributions.Normal) @ 5…17</code></pre> <p>Wrapping the model in data creates a <em>machine</em> which will store training outcomes &#40;<em>fit-results</em>&#41;</p> <pre><code class="julia hljs">cmach = machine(creg, X, y)</code></pre><pre><code class="plaintext hljs">Machine{ConstantRegressor} @ 8…18
 </code></pre> <p>You can now train the machine specifying the data it should be trained on &#40;if unspecified, all the data will be used&#41;;</p> <pre><code class="julia hljs">train, test = partition(eachindex(y), <span class=hljs-number >0.70</span>, shuffle=<span class=hljs-literal >true</span>); <span class=hljs-comment ># 70:30 split</span>
 fit!(cmach, rows=train)
 ŷ = predict(cmach, rows=test)
@@ -49,11 +49,11 @@ ŷ[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>]</code><
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @ 1…95</code></pre>
+    weights = :uniform) @ 2…23</code></pre>
 <h3 id=using_the_expanded_syntax ><a href="/MLJTutorials/end-to-end/AMES/index.html#using_the_expanded_syntax">Using the expanded syntax</a></h3>
 <p>Let&#39;s start by defining the source nodes:</p>
 <pre><code class="julia hljs">Xs = source(X)
-ys = source(y, kind=:target)</code></pre><pre><code class="plaintext hljs">Source{:target} @ 1…91
+ys = source(y, kind=:target)</code></pre><pre><code class="plaintext hljs">Source{:target} @ 1…35
 </code></pre>
 <p>On the &quot;first layer&quot;, there&#39;s one hot encoder and a log transform, these will respectively lead to node <code>W</code> and node <code>z</code>:</p>
 <pre><code class="julia hljs">hot = machine(OneHotEncoder(), Xs)
@@ -65,7 +65,7 @@ z = log(ys);</code></pre>
 ridge = machine(RidgeRegressor(lambda=<span class=hljs-number >2.5</span>), W, z)
 
 ẑ₁ = predict(ridge, W)
-ẑ₂ = predict(knn, W)</code></pre><pre><code class="plaintext hljs">Node @ 1…37 = predict(1…76, transform(9…41, 9…98))</code></pre>
+ẑ₂ = predict(knn, W)</code></pre><pre><code class="plaintext hljs">Node @ 1…43 = predict(1…92, transform(2…65, 1…28))</code></pre>
 <p>On the &quot;third layer&quot;, there&#39;s a weighted combination of the two regression models:</p>
 <pre><code class="julia hljs">ẑ = <span class=hljs-number >0.3</span>ẑ₁ + <span class=hljs-number >0.7</span>ẑ₂;</code></pre>
 <p>And finally we need to invert the initial transformation of the target &#40;which was a log&#41;:</p>
@@ -144,8 +144,8 @@ l_range = range(krb, :(ridge_model.lambda), lower=<span class=hljs-number >1e-4<
 w_range = range(krb, :(knn_weight), lower=<span class=hljs-number >0.1</span>, upper=<span class=hljs-number >0.9</span>)
 
 ranges = [k_range, l_range, w_range]</code></pre><pre><code class="plaintext hljs">3-element Array{MLJBase.NumericRange{MLJBase.Bounded,T,Symbol} where T,1}:
- NumericRange @ 8…14
- NumericRange @ 3…25
+ NumericRange @ 4…51
+ NumericRange @ 4…66
  NumericRange @ 2…80</code></pre>
 <p>Now there remains to define how the tuning should be done, let&#39;s just specify a very coarse grid tuning with cross validation and instantiate a tuned model:</p>
 <pre><code class="julia hljs">tuning = Grid(resolution=<span class=hljs-number >3</span>)
@@ -154,8 +154,8 @@ resampling = CV(nfolds=<span class=hljs-number >6</span>)
 tm = TunedModel(model=krb, tuning=tuning, resampling=resampling,
                 ranges=ranges, measure=rmsl)</code></pre><pre><code class="plaintext hljs">DeterministicTunedModel(
     model = KNNRidgeBlend(
-            knn_model = KNNRegressor @ 1…65,
-            ridge_model = RidgeRegressor @ 4…91,
+            knn_model = KNNRegressor @ 4…17,
+            ridge_model = RidgeRegressor @ 1…72,
             knn_weight = 0.3),
     tuning = Grid(
             goal = nothing,
@@ -169,13 +169,13 @@ tm = TunedModel(model=krb, tuning=tuning, resampling=resampling,
     measure = rmsl(),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{MLJBase.Bounded,T,Symbol} where T[NumericRange @ 8…14, NumericRange @ 3…25, NumericRange @ 2…80],
+    range = MLJBase.NumericRange{MLJBase.Bounded,T,Symbol} where T[NumericRange @ 4…51, NumericRange @ 4…66, NumericRange @ 2…80],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
-    check_measure = true) @ 1…77</code></pre>
+    check_measure = true) @ 8…56</code></pre>
 <p>which we can now finally fit...</p>
 <pre><code class="julia hljs">mtm = machine(tm, X, y)
 fit!(mtm, rows=train);</code></pre>

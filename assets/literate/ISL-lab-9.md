@@ -75,3 +75,7 @@ misclassification_rate(ypred, y)
 
 You could also change the kernel etc.
 
+```julia:ex8
+PyPlot.close_figs() # hide
+```
+

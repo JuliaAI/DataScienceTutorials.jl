@@ -2,7 +2,7 @@
 
 <span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @ 1…81</code></pre> <p>Note: in order to be able to load this, you <strong>must</strong> have the relevant package in your environment, if you don&#39;t, you can always add it &#40;<code>using Pkg; Pkg.add&#40;&quot;MLJLinearModels&quot;&#41;</code>&#41;.</p> <p>Let&#39;s load the <em>boston</em> data set</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets, DataFrames
+    solver = nothing) @ 6…17</code></pre> <p>Note: in order to be able to load this, you <strong>must</strong> have the relevant package in your environment, if you don&#39;t, you can always add it &#40;<code>using Pkg; Pkg.add&#40;&quot;MLJLinearModels&quot;&#41;</code>&#41;.</p> <p>Let&#39;s load the <em>boston</em> data set</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets, DataFrames
 boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"Boston"</span>)
 first(boston, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×14 DataFrames.DataFrame
 │ Row │ Crim    │ Zn      │ Indus   │ Chas  │ NOx     │ Rm      │ Age     │ Dis     │ Rad   │ Tax   │ PTRatio │ Black   │ LStat   │ MedV    │
@@ -34,11 +34,11 @@ X = select(data, Not(:MedV));</code></pre>
 <p>Let&#39;s declare a simple multivariate linear regression model:</p>
 <pre><code class="julia hljs">mdl = LinearRegressor()</code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @ 1…18</code></pre>
+    solver = nothing) @ 1…37</code></pre>
 <p>First let&#39;s do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a <em>machine</em> which, in MLJ, is the composition of a model and data to apply the model on:</p>
 <pre><code class="julia hljs">X_uni = select(X, :LStat) <span class=hljs-comment ># only a single feature</span>
 mach_uni = machine(mdl, X_uni, y)
-fit!(mach_uni)</code></pre><pre><code class="plaintext hljs">Machine{LinearRegressor} @ 1…45
+fit!(mach_uni)</code></pre><pre><code class="plaintext hljs">Machine{LinearRegressor} @ 1…74
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="julia hljs">fp = fitted_params(mach_uni)
@@ -122,6 +122,7 @@ figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</sp
 plot(X.LStat, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
 plot(Xnew.LStat, predict(mach, Xnew))</code></pre>
 <img src="/MLJTutorials/assets/isl/lab-3/code/output/ISL-lab-3-lreg.svg" alt="Polynomial regression">
+
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

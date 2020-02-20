@@ -40,3 +40,5 @@ fit!(mtm)
 ypred = predict(mtm, X)
 misclassification_rate(ypred, y)
 
+PyPlot.close_figs() # hide
+

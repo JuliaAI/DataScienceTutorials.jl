@@ -1,4 +1,4 @@
-3×5 DataFrame
+3×5 DataFrames.DataFrame
 │ Row │ Column1 │ Column2 │ Column3 │ Column4 │ Column5 │
 │     │ Int64   │ Int64⍰  │ Int64   │ Int64   │ Int64⍰  │
 ├─────┼─────────┼─────────┼─────────┼─────────┼─────────┤

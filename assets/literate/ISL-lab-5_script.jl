@@ -115,3 +115,5 @@ ylabel("MPG", fontsize=14)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
 
+PyPlot.close_figs() # hide
+

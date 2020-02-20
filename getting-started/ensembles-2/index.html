@@ -23,7 +23,7 @@ Type:           Float64
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @ 7…41</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
+    merge_purity_threshold = 1.0) @ 1…98</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
 <span class=hljs-literal >e</span> = evaluate!(tree, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
               measure=[rms, rmslp1])
 <span class=hljs-literal >e</span> |&gt; pprint</code></pre><pre><code class="plaintext hljs">(measure = [rms, rmslp1],
@@ -97,7 +97,7 @@ ylabel(<span class=hljs-string >"Bagging fraction"</span>, fontsize=<span class=
 <p>Even though we&#39;ve only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around <code>0.75</code> work well.</p>
 <p>Now that the machine <code>m</code> is trained, you can use use it for predictions &#40;implicitly, this will use the best model&#41;. For instance we could look at predictions on the whole dataset:</p>
 <pre><code class="julia hljs">ŷ = predict(m, X)
-rms(ŷ, y)</code></pre><pre><code class="plaintext hljs">2.4013585313593353</code></pre>
+rms(ŷ, y)</code></pre>
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

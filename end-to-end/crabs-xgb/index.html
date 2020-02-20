@@ -54,14 +54,14 @@ xgb_model = XGBoostClassifier()</code></pre><pre><code class="plaintext hljs">XG
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @ 2…07</code></pre>
+    seed = 0) @ 5…23</code></pre>
 <p>Let&#39;s check whether the training and  is balanced, <code>StatsBase.countmap</code> is useful for that:</p>
 <pre><code class="julia hljs">countmap(y[train]) |&gt; pprint</code></pre><pre><code class="plaintext hljs">Dict("B" =&gt; 73, "O" =&gt; 67)</code></pre>
 <p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p>
 <h2 id=xgboost_machine ><a href="/MLJTutorials/end-to-end/crabs-xgb/index.html#xgboost_machine">XGBoost machine</a></h2>
 <p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p>
 <pre><code class="julia hljs">xgb  = XGBoostClassifier()
-xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext hljs">Machine{XGBoostClassifier} @ 1…09
+xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext hljs">Machine{XGBoostClassifier} @ 1…25
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="julia hljs">r = range(xgb, :num_round, lower=<span class=hljs-number >50</span>, upper=<span class=hljs-number >500</span>)
@@ -75,7 +75,7 @@ curve = learning_curve!(xgbm, resampling=CV(nfolds=<span class=hljs-number >3</s
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(curve.parameter_values, curve.measurements)
 xlabel(<span class=hljs-string >"Number of rounds"</span>, fontsize=<span class=hljs-number >14</span>)
-ylabel(<span class=hljs-string >"Cross entropy"</span>, fontsize=<span class=hljs-number >14</span>)
+ylabel(<span class=hljs-string >"HingeLoss"</span>, fontsize=<span class=hljs-number >14</span>)
 xticks([<span class=hljs-number >10</span>, <span class=hljs-number >100</span>, <span class=hljs-number >200</span>, <span class=hljs-number >500</span>], fontsize=<span class=hljs-number >12</span>)
 yticks(<span class=hljs-number >1.46</span>:<span class=hljs-number >0.005</span>:<span class=hljs-number >1.475</span>, fontsize=<span class=hljs-number >12</span>)</code></pre>
 <img src="/MLJTutorials/assets/end-to-end/crabs-xgb/code/output/EX-crabs-xgb-curve1.svg" alt="Cross entropy vs Num Round">
@@ -90,7 +90,7 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=<span class=hljs-number >8</sp
                 resampling=CV(rng=<span class=hljs-number >11</span>), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…73
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…17
 </code></pre>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
 <pre><code class="julia hljs">r = report(mtm)
@@ -111,8 +111,8 @@ yticks(fontsize=<span class=hljs-number >12</span>)</code></pre>
 <p>Let&#39;s extract the optimal model and inspect its parameters:</p>
 <pre><code class="julia hljs">xgb = fitted_params(mtm).best_model
 <span class=hljs-meta >@show</span> xgb.max_depth
-<span class=hljs-meta >@show</span> xgb.min_child_weight</code></pre><pre><code class="plaintext hljs">xgb.max_depth = 10
-xgb.min_child_weight = 1.4285714285714286
+<span class=hljs-meta >@show</span> xgb.min_child_weight</code></pre><pre><code class="plaintext hljs">xgb.max_depth = 3
+xgb.min_child_weight = 0.7142857142857143
 </code></pre>
 <h3 id=more_tuning_2 ><a href="/MLJTutorials/end-to-end/crabs-xgb/index.html#more_tuning_2">More tuning &#40;2&#41;</a></h3>
 <p>Let&#39;s examine the effect of <code>gamma</code>:</p>
@@ -123,8 +123,8 @@ curve = learning_curve!(xgbm, resampling=CV(),
                         measure=cross_entropy);</code></pre>
 <p>actually it doesn&#39;t look like it&#39;s changing much...:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@show</span> round(minimum(curve.measurements), sigdigits=<span class=hljs-number >3</span>)
-<span class=hljs-meta >@show</span> round(maximum(curve.measurements), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">round(minimum(curve.measurements), sigdigits = 3) = 0.729
-round(maximum(curve.measurements), sigdigits = 3) = 0.918
+<span class=hljs-meta >@show</span> round(maximum(curve.measurements), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">round(minimum(curve.measurements), sigdigits = 3) = 0.776
+round(maximum(curve.measurements), sigdigits = 3) = 0.949
 </code></pre>
 <h3 id=more_tuning_3 ><a href="/MLJTutorials/end-to-end/crabs-xgb/index.html#more_tuning_3">More tuning &#40;3&#41;</a></h3>
 <p>Let&#39;s examine the effect of <code>subsample</code> and <code>colsample_bytree</code>:</p>
@@ -134,7 +134,7 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=<span class=hljs-number >8</sp
                 resampling=CV(rng=<span class=hljs-number >234</span>), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 5…63
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…48
 </code></pre>
 <p>and the usual procedure to visualise it:</p>
 <pre><code class="julia hljs">r = report(mtm)
@@ -155,12 +155,12 @@ yticks(fontsize=<span class=hljs-number >12</span>)</code></pre>
 <p>Let&#39;s retrieve the best models:</p>
 <pre><code class="julia hljs">xgb = fitted_params(mtm).best_model
 <span class=hljs-meta >@show</span> xgb.subsample
-<span class=hljs-meta >@show</span> xgb.colsample_bytree</code></pre><pre><code class="plaintext hljs">xgb.subsample = 0.8857142857142857
-xgb.colsample_bytree = 0.9428571428571428
+<span class=hljs-meta >@show</span> xgb.colsample_bytree</code></pre><pre><code class="plaintext hljs">xgb.subsample = 0.6
+xgb.colsample_bytree = 0.8285714285714286
 </code></pre>
 <p>We could continue with more fine tuning but given how small the dataset is, it doesn&#39;t make much sense. How does it fare on the test set?</p>
 <pre><code class="julia hljs">ŷ = predict_mode(mtm, rows=test)
-round(accuracy(ŷ, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">0.9</code></pre>
+round(accuracy(ŷ, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre>
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

@@ -9,25 +9,25 @@ y = exp.(x1 - x2 -<span class=hljs-number >2</span>x3 + <span class=hljs-number 
 X = DataFrame(x1=x1, x2=x2, x3=x3)
 
 test, train = partition(eachindex(y), <span class=hljs-number >0.8</span>);</code></pre> <p>In this tutorial we will show how to generate a model from a network; there are two approaches:</p> <ul> <li><p>using the <code>@from_network</code> macro</p> <li><p>writing the model in full</p> </ul> <p>the first approach should usually be the one considered as it&#39;s simpler.</p> <p>Generating a model from a network allows subsequent composition of that network with other tasks and tuning of that network.</p> <h2 id=using_the_from_network_macro ><a href="/MLJTutorials/getting-started/learning-networks-2/index.html#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></h2> <p>Let&#39;s define a simple network</p> <p><em>Input layer</em></p> <pre><code class="julia hljs">Xs = source(X)
-ys = source(y, kind=:target)</code></pre><pre><code class="plaintext hljs">Source{:target} @ 2…14
+ys = source(y, kind=:target)</code></pre><pre><code class="plaintext hljs">Source{:target} @ 1…03
 </code></pre> <p><em>First layer</em></p> <pre><code class="julia hljs">std_model = Standardizer()
 stand = machine(std_model, Xs)
 W = transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
 box = machine(box_model, ys)
-z = transform(box, ys)</code></pre><pre><code class="plaintext hljs">Node @ 1…12 = transform(1…76, 2…14)</code></pre>
+z = transform(box, ys)</code></pre><pre><code class="plaintext hljs">Node @ 1…28 = transform(1…71, 1…03)</code></pre>
 <p><em>Second layer</em></p>
 <pre><code class="julia hljs">ridge_model = RidgeRegressor(lambda=<span class=hljs-number >0.1</span>)
 ridge = machine(ridge_model, W, z)
-ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext hljs">Node @ 3…30 = predict(8…67, transform(5…16, 1…92))</code></pre>
+ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext hljs">Node @ 1…90 = predict(3…17, transform(1…27, 8…48))</code></pre>
 <p><em>Output</em></p>
-<pre><code class="julia hljs">ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext hljs">Node @ 2…10 = inverse_transform(1…76, predict(8…67, transform(5…16, 1…92)))</code></pre>
+<pre><code class="julia hljs">ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext hljs">Node @ 1…17 = inverse_transform(1…71, predict(3…17, transform(1…27, 8…48)))</code></pre>
 <p>No fitting has been done thus far, we have just defined a sequence of operations.</p>
 <p>To form a model out of that network is easy using the <code>@from_network</code> macro:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@from_network</span> CompositeModel(std=std_model, box=box_model,
                              ridge=ridge_model) &lt;= ŷ;</code></pre>
-<p>The macro defines a constructor <code>CompositeModel</code> and attributes a name to the different nodes; the ordering / connection between the nodes is inferred from <code>ŷ</code> via the <code>&lt;&#61; ŷ</code>.</p>
+<p>The macro defines a constructor CompositeModel and attributes a name to the different models; the ordering / connection between the nodes is inferred from <code>ŷ</code> via the <code>&lt;&#61; ŷ</code>.</p>
 <p><strong>Note</strong>: had the model been probabilistic &#40;e.g. <code>RidgeClassifier</code>&#41; you would have needed to add <code>is_probabilistic&#61;true</code> at the end.</p>
 <pre><code class="julia hljs">cm = machine(CompositeModel(), X, y)
 res = evaluate!(cm, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
