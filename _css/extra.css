@@ -96,36 +96,6 @@ li.pure-menu-sublist-title {
     list-style-type: square;
 }
 
-/* a bit of restyling of code zones */
-.franklin-content pre code {
-    padding: 20px;
-    border-radius: 5px;
-    background: aliceblue;
-}
-
-/* Code output special formatting */
-.franklin-content .code_output{
-    /* padding-top: 0.5em; */
-    line-height: 0em;
-    border-left: 2px solid lightgray;
-    padding-left: 10px;}
-
-/* .franklin-content .code_output:before {
-    content: "Output:"
-} */
-
-.franklin-content .code_output {
-    padding-left: 10px;
-    font-family: georgia;
-    font-style: italic;
-    color: darkblue;}
-
-.franklin-content .code_output pre code {
-    background: floralwhite;
-    font-style: normal;
-    line-height: 1.14em;
-}
-
 ul#e2e.pure-menu-sublist {
     margin-bottom: 7em;
 }

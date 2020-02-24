@@ -257,6 +257,7 @@ fit!(y1_oos, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
+legend()
 
 savefig(joinpath(@OUTPUT, "s2.svg")) # hide
 ```
@@ -283,6 +284,7 @@ fit!(y2_oos, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
+legend()
 
 savefig(joinpath(@OUTPUT, "s3.svg")) # hide
 ```
@@ -331,6 +333,7 @@ fit!(yhat, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, yhat(), ls="none", marker="o", label="yhat")
+legend()
 
 savefig(joinpath(@OUTPUT, "s4.svg")) # hide
 ```

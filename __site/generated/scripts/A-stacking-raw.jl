@@ -107,6 +107,7 @@ fit!(y1_oos, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
+legend()
 
 
 
@@ -123,6 +124,7 @@ fit!(y2_oos, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
+legend()
 
 
 
@@ -142,6 +144,7 @@ fit!(yhat, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, yhat(), ls="none", marker="o", label="yhat")
+legend()
 
 
 

@@ -1,1 +1,1 @@
-NodalMachine @ 2…93 = machine(LinearRegressor @ 5…31, 8…47, 6…53)
+NodalMachine @ 1…88 = machine(LinearRegressor @ 5…77, 2…45, 1…29)

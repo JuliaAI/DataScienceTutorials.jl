@@ -1,17 +1,8 @@
 # This file was generated, do not modify it. # hide
-r = report(mtm)
-
-res = r.plotting
-
-ss = res.parameter_values[:,1]
-cbt = res.parameter_values[:,2]
-
-figure(figsize=(8,6))
-tricontourf(ss, cbt, res.measurements)
-
-xlabel("Sub sample", fontsize=14)
-ylabel("Col sample by tree", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
-
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap2.svg")) # hide
+r1 = range(xgb, :subsample, lower=0.6, upper=1.0)
+r2 = range(xgb, :colsample_bytree, lower=0.6, upper=1.0)
+tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
+                resampling=CV(rng=234), ranges=[r1,r2],
+                measure=cross_entropy)
+mtm = machine(tm, X, y)
+fit!(mtm, rows=train)

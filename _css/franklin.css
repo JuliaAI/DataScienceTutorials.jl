@@ -187,12 +187,6 @@ body { counter-reset: eqnum; }
     CODE & HIGHLIGHT.JS
 ================================================================== */
 
-.franklin-content code {
-    /* background-color: rgba(27,31,35,0.05); /*#f6f8fa;*/ */
-    padding: 0.1em 0.2em;
-    border-radius: 2px;
-    font-size: 90%; }
-
 /*
 NOTE if update `highlight.pack.js`, look for `julia>`, replace by (so that pkg and shell are recognised)
 return{c:[{cN:"metaj",b:/^julia>/,r:10,starts:{e:/^(?![ ]{6})/,sL:"julia"},aliases:["jldoctest"]},{cN:"metas",b:/^shell>/,r:10,starts:{e:/^(?![ ]{6})/,sL:"bash"},aliases:["jldoctest"]},{cN:"metap",b:/^\(.*\)\spkg>/,r:10,starts:{e:/^(?![ ]{6})/,sL:"julia"},aliases:["jldoctest"]}]}
@@ -210,6 +204,24 @@ return{c:[{cN:"metaj",b:/^julia>/,r:10,starts:{e:/^(?![ ]{6})/,sL:"julia"},alias
 .hljs-metas { color: red; }
 
 .hljs-metap { color: rgb(51, 131, 231); }
+
+
+
+/* a bit of restyling of code zones */
+.franklin-content pre code {
+    /* padding: 20px; */
+    border-radius: 5px;
+    background: aliceblue;
+}
+
+.franklin-content pre code.language-plaintext, code.plaintext.hljs {
+    border-radius: 5px;
+    background: rgba(27,31,35,.05);
+    line-height: 1.35em;
+    font-size: 90%;
+    display: block;
+    padding:10px;
+}
 
 /* ==================================================================
     BOXES

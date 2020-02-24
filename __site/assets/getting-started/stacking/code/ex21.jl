@@ -5,5 +5,6 @@ fit!(y2_oos, verbosity=0)
 figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
+legend()
 
 savefig(joinpath(@OUTPUT, "s3.svg")) # hide

@@ -20,6 +20,12 @@ first(X, 3) |> pretty
 # It's a classification problem with the following classes:
 levels(y) |> pprint
 
+# Note that the dataset is currently sorted by target, let's shuffle it to avoid the obvious issues this may cause
+Random.seed!(523)
+perm = randperm(length(y))
+X = X[perm,:]
+y = y[perm];
+
 # It's not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.
 train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
 @load XGBoostClassifier
@@ -34,8 +40,7 @@ xgbm = machine(xgb, X, y)
 
 # We will tune it varying the number of rounds used and generate a learning curve
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, resampling=CV(nfolds=3),
-                        range=r, resolution=50,
+curve = learning_curve!(xgbm, range=r, resolution=50,
                         measure=HingeLoss())
 
 # Let's have a look
@@ -44,7 +49,6 @@ plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
-yticks(1.46:0.005:1.475, fontsize=12)
 
 
 
@@ -87,8 +91,7 @@ xgb = fitted_params(mtm).best_model
 # ### More tuning (2)## Let's examine the effect of `gamma`:
 xgbm = machine(xgb, X, y)
 r = range(xgb, :gamma, lower=0, upper=10)
-curve = learning_curve!(xgbm, resampling=CV(),
-                        range=r, resolution=30,
+curve = learning_curve!(xgbm, range=r, resolution=30,
                         measure=cross_entropy);
 
 # actually it doesn't look like it's changing much...:

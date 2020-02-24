@@ -1,17 +1,9 @@
 # This file was generated, do not modify it. # hide
-r = report(mtm)
+r1 = range(xgb, :max_depth, lower=3, upper=10)
+r2 = range(xgb, :min_child_weight, lower=0, upper=5)
 
-res = r.plotting
-
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
-
-figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
-
-xlabel("Maximum tree depth", fontsize=14)
-ylabel("Minimum child weight", fontsize=14)
-xticks(3:2:10, fontsize=12)
-yticks(fontsize=12)
-
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap.svg")) # hide
+tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
+                resampling=CV(rng=11), ranges=[r1,r2],
+                measure=cross_entropy)
+mtm = machine(tm, X, y)
+fit!(mtm, rows=train)

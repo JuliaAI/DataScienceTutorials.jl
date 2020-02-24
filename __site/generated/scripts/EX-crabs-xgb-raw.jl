@@ -18,6 +18,11 @@ first(X, 3) |> pretty
 
 levels(y) |> pprint
 
+Random.seed!(523)
+perm = randperm(length(y))
+X = X[perm,:]
+y = y[perm];
+
 train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
 @load XGBoostClassifier
 xgb_model = XGBoostClassifier()
@@ -28,8 +33,7 @@ xgb  = XGBoostClassifier()
 xgbm = machine(xgb, X, y)
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, resampling=CV(nfolds=3),
-                        range=r, resolution=50,
+curve = learning_curve!(xgbm, range=r, resolution=50,
                         measure=HingeLoss())
 
 figure(figsize=(8,6))
@@ -37,7 +41,6 @@ plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
-yticks(1.46:0.005:1.475, fontsize=12)
 
 
 
@@ -75,8 +78,7 @@ xgb = fitted_params(mtm).best_model
 
 xgbm = machine(xgb, X, y)
 r = range(xgb, :gamma, lower=0, upper=10)
-curve = learning_curve!(xgbm, resampling=CV(),
-                        range=r, resolution=30,
+curve = learning_curve!(xgbm, range=r, resolution=30,
                         measure=cross_entropy);
 
 @show round(minimum(curve.measurements), sigdigits=3)
