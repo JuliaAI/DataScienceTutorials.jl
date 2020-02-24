@@ -59,14 +59,14 @@ xgb_model = XGBoostClassifier()</code></pre><pre><code class="plaintext hljs">XG
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @ 1…91</code></pre>
+    seed = 0) @ 5…05</code></pre>
 <p>Let&#39;s check whether the training and  is balanced, <code>StatsBase.countmap</code> is useful for that:</p>
 <pre><code class="julia hljs">countmap(y[train]) |&gt; pprint</code></pre><pre><code class="plaintext hljs">Dict("B" =&gt; 70, "O" =&gt; 70)</code></pre>
 <p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p>
 <h2 id=xgboost_machine ><a href="/MLJTutorials/end-to-end/crabs-xgb/index.html#xgboost_machine">XGBoost machine</a></h2>
 <p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p>
 <pre><code class="julia hljs">xgb  = XGBoostClassifier()
-xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext hljs">Machine{XGBoostClassifier} @ 1…58
+xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext hljs">Machine{XGBoostClassifier} @ 1…52
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="julia hljs">r = range(xgb, :num_round, lower=<span class=hljs-number >50</span>, upper=<span class=hljs-number >500</span>)
@@ -93,7 +93,7 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=<span class=hljs-number >8</sp
                 resampling=CV(rng=<span class=hljs-number >11</span>), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…79
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…22
 </code></pre>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
 <pre><code class="julia hljs">r = report(mtm)
@@ -136,7 +136,7 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=<span class=hljs-number >8</sp
                 resampling=CV(rng=<span class=hljs-number >234</span>), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 1…14
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 8…49
 </code></pre>
 <p>and the usual procedure to visualise it:</p>
 <pre><code class="julia hljs">r = report(mtm)
