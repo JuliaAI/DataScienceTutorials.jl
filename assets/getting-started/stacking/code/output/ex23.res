@@ -1,1 +1,1 @@
-NodalMachine @ 8…74 = machine(KNNRegressor @ 1…34, 6…44, 1…80)
+NodalMachine @ 1…76 = machine(KNNRegressor @ 1…63, 4…22, 5…04)

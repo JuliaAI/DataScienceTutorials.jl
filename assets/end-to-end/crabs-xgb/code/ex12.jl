@@ -1,6 +1,4 @@
 # This file was generated, do not modify it. # hide
-xgbm = machine(xgb, X, y)
-r = range(xgb, :gamma, lower=0, upper=10)
-curve = learning_curve!(xgbm, resampling=CV(),
-                        range=r, resolution=30,
-                        measure=cross_entropy);
+xgb = fitted_params(mtm).best_model
+@show xgb.max_depth
+@show xgb.min_child_weight

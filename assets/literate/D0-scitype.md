@@ -24,7 +24,7 @@ In many other cases however, there may be ambiguities, we list a few examples be
 
 The package [ScientificTypes.jl](https://github.com/alan-turing-institute/ScientificTypes.jl) defines a barebone type hierarchy which can be used to indicate how a particular feature should be interpreted; in particular:
 
-```
+```plaintext
 Found
 ├─ Known
 │  ├─ Textual
