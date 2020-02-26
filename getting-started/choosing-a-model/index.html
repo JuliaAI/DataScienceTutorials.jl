@@ -53,6 +53,7 @@ BayesianSubspaceLDA           (MultivariateStats)
 ConstantClassifier            (MLJModels)
 DecisionTreeClassifier        (DecisionTree)
 DummyClassifier               (ScikitLearn)
+EvoTreeClassifier             (EvoTrees)
 ExtraTreesClassifier          (ScikitLearn)
 GaussianNBClassifier          (NaiveBayes)
 GaussianNBClassifier          (ScikitLearn)
@@ -84,11 +85,11 @@ XGBoostClassifier             (XGBoost)
     p = 2,
     metric = "minkowski",
     metric_params = nothing,
-    n_jobs = nothing) @ 7…74</code></pre>
+    n_jobs = nothing) @ 9…71</code></pre>
 <p>In some cases, there may be several packages offering the same model, for instance <code>LinearRegressor</code> is offered by both <code><a href="https://github.com/JuliaStats/GLM.jl">GLM.jl</a></code> and <code><a href="https://github.com/cstjean/ScikitLearn.jl">ScikitLearn.jl</a></code> so you will need to specify the package you would like to use by adding <code>pkg&#61;&quot;ThePackage&quot;</code> in the load command:</p>
 <pre><code class="julia hljs">linreg = <span class=hljs-meta >@load</span> LinearRegressor pkg=<span class=hljs-string >"GLM"</span></code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    allowrankdeficient = false) @ 1…34</code></pre>
+    allowrankdeficient = false) @ 1…37</code></pre>
 <div class=page-foot >
   <div class=copyright >
     &copy; Anthony Blaom, Thibaut Lienart and collaborators. Last modified: February 19, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

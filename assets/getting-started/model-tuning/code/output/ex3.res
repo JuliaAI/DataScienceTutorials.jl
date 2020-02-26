@@ -22,10 +22,10 @@ ProbabilisticTunedModel(
             eps = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{MLJBase.Bounded,Int64,Symbol}[NumericRange @ 4…06],
+    range = MLJBase.NumericRange{MLJBase.Bounded,Int64,Symbol}[NumericRange @ 1…74],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
-    check_measure = true) @ 1…88
+    check_measure = true) @ 4…92

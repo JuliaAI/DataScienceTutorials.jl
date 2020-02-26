@@ -1,1 +1,1 @@
-Machine{MnPipe} @ 6…23
+Machine{MnPipe} @ 6…76

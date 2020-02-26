@@ -7,4 +7,4 @@ DecisionTreeClassifier(
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 1…75
+    display_depth = 5) @ 6…37

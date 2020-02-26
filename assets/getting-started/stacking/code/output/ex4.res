@@ -8,4 +8,4 @@ MyAverageTwo(
             metric = Distances.Euclidean(0.0),
             leafsize = 10,
             reorder = true,
-            weights = :uniform)) @ 1…15
+            weights = :uniform)) @ 3…65

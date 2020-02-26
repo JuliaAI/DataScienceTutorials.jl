@@ -9,14 +9,14 @@ X, y = <span class=hljs-meta >@load_iris</span>
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 1…75</code></pre> <h3 id=specifying_a_range_of_value ><a href="/MLJTutorials/getting-started/model-tuning/index.html#specifying_a_range_of_value">Specifying a range of value</a></h3> <p>To specify a range of value, you can use the <code>range</code> function:</p> <pre><code class="julia hljs">dtc = DecisionTreeClassifier()
+    display_depth = 5) @ 6…37</code></pre> <h3 id=specifying_a_range_of_value ><a href="/MLJTutorials/getting-started/model-tuning/index.html#specifying_a_range_of_value">Specifying a range of value</a></h3> <p>To specify a range of value, you can use the <code>range</code> function:</p> <pre><code class="julia hljs">dtc = DecisionTreeClassifier()
 r   = range(dtc, :max_depth, lower=<span class=hljs-number >1</span>, upper=<span class=hljs-number >5</span>)</code></pre><pre><code class="plaintext hljs">NumericRange(
     field = :max_depth,
     lower = 1,
     upper = 5,
     origin = 3.0,
     unit = 2.0,
-    scale = :linear) @ 4…06</code></pre> <p>As you can see, the range function takes a model &#40;<code>dtc</code>&#41;, a symbol for the hyperparameter of interest &#40;<code>:max_depth</code>&#41; and indication of how to samples values. For hyperparameters of type <code>&lt;:Real</code>, you should specify a range of values as done above. For hyperparameters of other type &#40;e.g. <code>Symbol</code>&#41;, you should use the <code>values&#61;...</code> keyword.</p> <p>Once a range of values has been defined, you can then wrap the model in a <code>TunedModel</code> specifying the tuning strategy:</p> <pre><code class="julia hljs">tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)</code></pre><pre><code class="plaintext hljs">ProbabilisticTunedModel(
+    scale = :linear) @ 1…74</code></pre> <p>As you can see, the range function takes a model &#40;<code>dtc</code>&#41;, a symbol for the hyperparameter of interest &#40;<code>:max_depth</code>&#41; and indication of how to samples values. For hyperparameters of type <code>&lt;:Real</code>, you should specify a range of values as done above. For hyperparameters of other type &#40;e.g. <code>Symbol</code>&#41;, you should use the <code>values&#61;...</code> keyword.</p> <p>Once a range of values has been defined, you can then wrap the model in a <code>TunedModel</code> specifying the tuning strategy:</p> <pre><code class="julia hljs">tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)</code></pre><pre><code class="plaintext hljs">ProbabilisticTunedModel(
     model = DecisionTreeClassifier(
             max_depth = -1,
             min_samples_leaf = 1,
@@ -40,14 +40,14 @@ r   = range(dtc, :max_depth, lower=<span class=hljs-number >1</span>, upper=<spa
             eps = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{MLJBase.Bounded,Int64,Symbol}[NumericRange @ 4…06],
+    range = MLJBase.NumericRange{MLJBase.Bounded,Int64,Symbol}[NumericRange @ 1…74],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
-    check_measure = true) @ 1…88</code></pre> <h3 id=fitting_and_inspecting_a_tuned_model ><a href="/MLJTutorials/getting-started/model-tuning/index.html#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></h3> <p>To fit a tuned model, you can use the usual syntax:</p> <pre><code class="julia hljs">m = machine(tm, X, y)
-fit!(m)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 2…81
+    check_measure = true) @ 4…92</code></pre> <h3 id=fitting_and_inspecting_a_tuned_model ><a href="/MLJTutorials/getting-started/model-tuning/index.html#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></h3> <p>To fit a tuned model, you can use the usual syntax:</p> <pre><code class="julia hljs">m = machine(tm, X, y)
+fit!(m)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel} @ 5…35
 </code></pre> <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p> <pre><code class="julia hljs">fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext hljs">1</code></pre>
 <p>Note that here we have tuned a probabilistic model and consequently used a probabilistic measure for the tuning. We could also have decided we only cared about the mode and the misclassification rate, to do this, just use <code>operation&#61;predict_mode</code> in the tuned model:</p>
 <pre><code class="julia hljs">tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
@@ -91,7 +91,7 @@ forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext hljs">D
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @ 4…70</code></pre>
+    out_of_bag_measure = Any[]) @ 5…53</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
 <pre><code class="julia hljs">params(forest) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(atom = (max_depth = -1,
          min_samples_leaf = 5,

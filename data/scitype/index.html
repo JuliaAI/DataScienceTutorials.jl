@@ -9,8 +9,7 @@
 │     └─ Count
 └─ Unknown</code></pre> <p>A <em>scientific type convention</em> is a specific implementation indicating how machine types can be related to scientific types. It may also provide helper functions to convert data to a given scitype.</p> <p>The convention used in MLJ is implemented in <a href="https://github.com/alan-turing-institute/ScientificTypes.jl">MLJScientificTypes.jl</a>. This is what we will use throughout; you never need to use ScientificTypes.jl unless you intend to implement your own scientific type convention.</p> <h3 id=inspecting_the_scitype ><a href="/MLJTutorials/data/scitype/index.html#inspecting_the_scitype">Inspecting the scitype</a></h3> <p>The <code>schema</code> function</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets, MLJScientificTypes
 boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"Boston"</span>)
-sch = schema(boston)</code></pre><pre><code class="plaintext hljs">_.table = 
-┌─────────┬─────────┬────────────┐
+sch = schema(boston)</code></pre><pre><code class="plaintext hljs">┌─────────┬─────────┬────────────┐
 │ _.names │ _.types │ _.scitypes │
 ├─────────┼─────────┼────────────┤
 │ Crim    │ Float64 │ Continuous │
@@ -49,8 +48,7 @@ elscitype(feature2)</code></pre><pre><code class="plaintext hljs">Multiclass{2}<
 <h3 id=type_to_type_coercion ><a href="/MLJTutorials/data/scitype/index.html#type_to_type_coercion">Type to Type coercion</a></h3>
 <p>In  some cases you will want to reinterpret all features currently interpreted as some scitype <code>S1</code> into some other scitype <code>S2</code>. An example  is if some features are currently interpreted as <code>Count</code> because their original type was <code>Int</code> but you  want  to  consider all such as <code>Continuous</code>:</p>
 <pre><code class="julia hljs">data = select(boston, [:Rad, :Tax])
-schema(data)</code></pre><pre><code class="plaintext hljs">_.table = 
-┌─────────┬─────────┬────────────┐
+schema(data)</code></pre><pre><code class="plaintext hljs">┌─────────┬─────────┬────────────┐
 │ _.names │ _.types │ _.scitypes │
 ├─────────┼─────────┼────────────┤
 │ Rad     │ Int64   │ Count      │
@@ -60,8 +58,7 @@ _.nrows = 506
 </code></pre>
 <p>let&#39;s coerce from <code>Count</code> to <code>Continuous</code>:</p>
 <pre><code class="julia hljs">data2 = coerce(data, Count =&gt; Continuous)
-schema(data2)</code></pre><pre><code class="plaintext hljs">_.table = 
-┌─────────┬─────────┬────────────┐
+schema(data2)</code></pre><pre><code class="plaintext hljs">┌─────────┬─────────┬────────────┐
 │ _.names │ _.types │ _.scitypes │
 ├─────────┼─────────┼────────────┤
 │ Rad     │ Float64 │ Continuous │
@@ -88,8 +85,7 @@ _.nrows = 506
 <p>column.</p>
 <p>For instance:</p>
 <pre><code class="julia hljs">boston3 = coerce(boston, autotype(boston, :few_to_finite))
-schema(boston3)</code></pre><pre><code class="plaintext hljs">_.table = 
-┌─────────┬────────────────────────────────────────────────────┬───────────────────┐
+schema(boston3)</code></pre><pre><code class="plaintext hljs">┌─────────┬────────────────────────────────────────────────────┬───────────────────┐
 │ _.names │ _.types                                            │ _.scitypes        │
 ├─────────┼────────────────────────────────────────────────────┼───────────────────┤
 │ Crim    │ Float64                                            │ Continuous        │

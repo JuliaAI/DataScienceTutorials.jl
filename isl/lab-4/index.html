@@ -63,7 +63,7 @@ ylabel(<span class=hljs-string >"Number of occurences"</span>, fontsize=<span cl
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 9…30
+clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext hljs">Machine{LogisticClassifier} @ 2…09
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="julia hljs">fit!(clf)
@@ -149,13 +149,13 @@ accuracy(ŷ, y[test]) |&gt; r3</code></pre><pre><code class="plaintext hljs">0.
     priors = nothing,
     reg_param = 0.0,
     store_covariance = false,
-    tol = 0.0001) @ 6…62</code></pre>
+    tol = 0.0001) @ 8…51</code></pre>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="julia hljs">clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-accuracy(ŷ, y[test]) |&gt; r3</code></pre><pre><code class="plaintext hljs">0.599</code></pre>
+accuracy(ŷ, y[test]) |&gt; r3</code></pre><pre><code class="plaintext hljs">0.571</code></pre>
 <h3 id=knn ><a href="/MLJTutorials/isl/lab-4/index.html#knn">KNN</a></h3>
 <p>We can use K-Nearest Neighbors models via the <a href="https://github.com/KristofferC/NearestNeighbors.jl"><code>NearestNeighbors</code></a> package:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> KNNClassifier pkg=NearestNeighbors
