@@ -4,4 +4,4 @@ NumericRange(
     upper = 5,
     origin = 3.0,
     unit = 2.0,
-    scale = :linear) @ 4…06
+    scale = :linear) @ 1…74

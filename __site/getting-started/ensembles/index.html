@@ -10,7 +10,7 @@ knn_model = KNNRegressor(K=<span class=hljs-number >10</span>)</code></pre><pre>
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @ 1…13</code></pre> <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p> <pre><code class="julia hljs">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{KNNRegressor} @ 1…02
+    weights = :uniform) @ 6…21</code></pre> <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p> <pre><code class="julia hljs">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{KNNRegressor} @ 9…02
 </code></pre> <p>and fit it</p> <pre><code class="julia hljs">fit!(knn, rows=train)
 ŷ = predict(knn, X[test, :]) <span class=hljs-comment ># or use rows=test</span>
 rms(ŷ, y[test])</code></pre><pre><code class="plaintext hljs">0.11590837511873998</code></pre>

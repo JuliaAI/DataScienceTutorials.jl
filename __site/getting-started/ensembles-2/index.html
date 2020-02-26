@@ -23,7 +23,7 @@ Type:           Float64
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @ 1…98</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
+    merge_purity_threshold = 1.0) @ 1…76</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
 <span class=hljs-literal >e</span> = evaluate!(tree, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
               measure=[rms, rmslp1])
 <span class=hljs-literal >e</span> |&gt; pprint</code></pre><pre><code class="plaintext hljs">(measure = [rms, rmslp1],

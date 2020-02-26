@@ -1,1 +1,1 @@
-Machine{LinearRegressor} @ 1…74
+Machine{LinearRegressor} @ 1…23

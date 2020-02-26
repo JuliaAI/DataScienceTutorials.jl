@@ -50,7 +50,7 @@ misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext h
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 3…96</code></pre>
+    display_depth = 5) @ 7…82</code></pre>
 <h3 id=decision_tree_regressor ><a href="/MLJTutorials/isl/lab-8/index.html#decision_tree_regressor">Decision Tree Regressor</a></h3>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> DecisionTreeRegressor pkg=DecisionTree
 
@@ -91,7 +91,7 @@ rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
 ypred = predict(rf, rows=test)
-round(rms(ypred, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3.74</code></pre>
+round(rms(ypred, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3.81</code></pre>
 <h2 id=gradient_boosting_machine ><a href="/MLJTutorials/isl/lab-8/index.html#gradient_boosting_machine">Gradient Boosting Machine</a></h2>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> XGBoostRegressor
 

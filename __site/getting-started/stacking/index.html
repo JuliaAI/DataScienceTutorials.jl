@@ -22,7 +22,7 @@ y1 = predict(m1, X)
 m2 = machine(model2, X, y)
 y2 = predict(m2, X)
 
-yhat = <span class=hljs-number >0.5</span>*y1 + <span class=hljs-number >0.5</span>*y2</code></pre><pre><code class="plaintext hljs">Node @ 5…28 = +(#80(predict(1…33, 1…12)), #80(predict(1…51, 1…12)))</code></pre>
+yhat = <span class=hljs-number >0.5</span>*y1 + <span class=hljs-number >0.5</span>*y2</code></pre><pre><code class="plaintext hljs">Node @ 1…35 = +(#80(predict(1…17, 6…94)), #80(predict(1…30, 6…94)))</code></pre>
 <p>And the macro call to define <code>MyAverageTwo</code> and an instance <code>average_two</code>:</p>
 <pre><code class="julia hljs">avg = <span class=hljs-meta >@from_network</span> MyAverageTwo(regressor1=model1,
                                  regressor2=model2) &lt;= yhat</code></pre><pre><code class="plaintext hljs">MyAverageTwo(
@@ -35,7 +35,7 @@ yhat = <span class=hljs-number >0.5</span>*y1 + <span class=hljs-number >0.5</sp
             metric = Distances.Euclidean(0.0),
             leafsize = 10,
             reorder = true,
-            weights = :uniform)) @ 1…15</code></pre>
+            weights = :uniform)) @ 3…65</code></pre>
 <p>Evaluating this average model on the Boston data set, and comparing with the base model predictions:</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >function</span> print_performance(model, data...)
     <span class=hljs-literal >e</span> = evaluate(model, data...;
@@ -52,11 +52,11 @@ X, y = <span class=hljs-meta >@load_boston</span>
 print_performance(linear, X, y)
 print_performance(knn, X, y)
 print_performance(avg, X, y)</code></pre><pre><code class="plaintext hljs">
- LinearRegressor @ 5…77 = 4.9779 ± 0.90056
+ LinearRegressor @ 1…16 = 4.9779 ± 0.90056
 
- KNNRegressor @ 1…63 = 6.3794 ± 0.89744
+ KNNRegressor @ 4…96 = 6.3794 ± 0.89744
 
- MyAverageTwo @ 1…15 = 4.9802 ± 0.94746
+ MyAverageTwo @ 3…65 = 4.9802 ± 0.94746
 </code></pre>
 <h2 id=stacking_proper ><a href="/MLJTutorials/getting-started/stacking/index.html#stacking_proper">Stacking proper</a></h2>  <h3 id=helper_functions ><a href="/MLJTutorials/getting-started/stacking/index.html#helper_functions">Helper functions:</a></h3>
 <p>To generate folds for generating out-of-sample predictions, we define</p>
@@ -104,16 +104,16 @@ model2 = knn</code></pre><pre><code class="plaintext hljs">KNNRegressor(
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @ 1…63</code></pre>
+    weights = :uniform) @ 4…96</code></pre>
 <p>The adjudicating model:</p>
 <pre><code class="julia hljs">judge = linear</code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @ 5…77</code></pre>
+    solver = nothing) @ 1…16</code></pre>
 <h3 id=define_the_training_nodes ><a href="/MLJTutorials/getting-started/stacking/index.html#define_the_training_nodes">Define the training nodes</a></h3>
 <p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above:</p>
 <p>Wrapped as source node:</p>
 <pre><code class="julia hljs">X = source(Xraw)
-y = source(yraw; kind=:target)</code></pre><pre><code class="plaintext hljs">Source{:target} @ 5…04
+y = source(yraw; kind=:target)</code></pre><pre><code class="plaintext hljs">Source{:target} @ 1…02
 </code></pre>
 <p>Our first internal node represents the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions:</p>
 <pre><code class="julia hljs">f = folds(X, <span class=hljs-number >3</span>)
@@ -121,7 +121,7 @@ f()</code></pre><pre><code class="plaintext hljs">([1, 2, 3], [4, 5, 6], [7, 8, 
 <p>Constructing machines for training <code>model1</code> on each fold-complement:</p>
 <pre><code class="julia hljs">m11 = machine(model1, corestrict(X, f, <span class=hljs-number >1</span>), corestrict(y, f, <span class=hljs-number >1</span>))
 m12 = machine(model1, corestrict(X, f, <span class=hljs-number >2</span>), corestrict(y, f, <span class=hljs-number >2</span>))
-m13 = machine(model1, corestrict(X, f, <span class=hljs-number >3</span>), corestrict(y, f, <span class=hljs-number >3</span>))</code></pre><pre><code class="plaintext hljs">NodalMachine @ 1…88 = machine(LinearRegressor @ 5…77, 2…45, 1…29)</code></pre>
+m13 = machine(model1, corestrict(X, f, <span class=hljs-number >3</span>), corestrict(y, f, <span class=hljs-number >3</span>))</code></pre><pre><code class="plaintext hljs">NodalMachine @ 1…44 = machine(LinearRegressor @ 1…16, 1…96, 6…97)</code></pre>
 <p>Define each out-of-sample prediction of <code>model1</code>:</p>
 <pre><code class="julia hljs">y11 = predict(m11, restrict(X, f, <span class=hljs-number >1</span>));
 y12 = predict(m12, restrict(X, f, <span class=hljs-number >2</span>));
@@ -154,16 +154,16 @@ legend()</code></pre>
 <img src="/MLJTutorials/assets/getting-started/stacking/code/output/s3.svg" alt="">
 <p>Now that we have the out-of-sample base learner predictions, we are ready to merge them into the adjudicator&#39;s input table and construct the machine for training the adjudicator:</p>
 <pre><code class="julia hljs">X_oos = MLJ.table(hcat(y1_oos, y2_oos))
-m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext hljs">NodalMachine @ 5…39 = machine(LinearRegressor @ 5…77, 9…44, 5…04)</code></pre>
+m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext hljs">NodalMachine @ 1…92 = machine(LinearRegressor @ 1…16, 1…20, 1…02)</code></pre>
 <p>Are we done with constructing machines? Well, not quite. Recall that when use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions on the base learners. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p>
 <pre><code class="julia hljs">m1 = machine(model1, X, y)
-m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext hljs">NodalMachine @ 1…76 = machine(KNNRegressor @ 1…63, 4…22, 5…04)</code></pre>
+m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext hljs">NodalMachine @ 8…37 = machine(KNNRegressor @ 4…96, 6…01, 1…02)</code></pre>
 <h3 id=define_nodes_still_needed_for_prediction ><a href="/MLJTutorials/getting-started/stacking/index.html#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></h3>
 <p>To obtain the final prediction, <code>yhat</code>, we get the base learner predictions, based on training with all data, and feed them to the adjudicator:</p>
 <pre><code class="julia hljs">y1 = predict(m1, X);
 y2 = predict(m2, X);
 X_judge = MLJ.table(hcat(y1, y2))
-yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext hljs">Node @ 6…75 = predict(5…39, table(hcat(predict(8…61, 4…22), predict(1…76, 4…22))))</code></pre>
+yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext hljs">Node @ 6…09 = predict(1…92, table(hcat(predict(1…90, 6…01), predict(8…37, 6…01))))</code></pre>
 <p>Let&#39;s check the final prediction node can be fit and called:</p>
 <pre><code class="julia hljs">fit!(yhat, verbosity=<span class=hljs-number >0</span>)
 
@@ -199,7 +199,7 @@ estack = 0.19577994695380313
             weights = :uniform),
     judge = LinearRegressor(
             fit_intercept = true,
-            solver = nothing)) @ 1…54</code></pre>
+            solver = nothing)) @ 9…87</code></pre>
 <p>And this completes the definition of our re-usable stacking model type.</p>
 <h2 id=applying_mytwomodelstack_to_ames_house_price_data ><a href="/MLJTutorials/getting-started/stacking/index.html#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></h2>
 <p>Without undertaking any hyperparameter optimization, we evaluate the performance of a random forest and ridge regressor on the well-known Ames House Prices data, and compare the performance with a stack &#40;and simple averaging&#41; using the random forest and ridge regressors as base learners. We then indicate some options for tuning the stack.</p>
@@ -255,13 +255,13 @@ all_models = [forest, ridge, avg, stack];
 <span class=hljs-keyword >for</span> model <span class=hljs-keyword >in</span> all_models
     print_performance(model, X, y)
 <span class=hljs-keyword >end</span>;</code></pre><pre><code class="plaintext hljs">
- RandomForestRegressor @ 1…85 = 0.36206 ± 0.01958
+ RandomForestRegressor @ 2…74 = 0.3621 ± 0.02018
 
- RidgeRegressor @ 8…54 = 0.33029 ± 0.01908
+ RidgeRegressor @ 1…05 = 0.33029 ± 0.01908
 
- MyAverageTwo @ 1…79 = 0.34675 ± 0.0153
+ MyAverageTwo @ 1…00 = 0.34723 ± 0.01402
 
- MyTwoModelStack @ 1…06 = 0.33028 ± 0.01938
+ MyTwoModelStack @ 3…21 = 0.33028 ± 0.01938
 </code></pre>
 <h4 id=tuning_a_stack ><a href="/MLJTutorials/getting-started/stacking/index.html#tuning_a_stack">Tuning a stack</a></h4>
 <p>A standard abuse of good data hygiene practice is to optimize stack component models <em>separately</em> and then tune the adjudicating model hyperparameters &#40;using the same resampling of the data&#41; with the base learners fixed. Although more computationally expensive, better generalization might be expected by applying tuning to the stack as a whole, either simultaneously, or in in cheaper sequential steps. Since our stack is a stand-alone model, this is readily implemented.</p>
@@ -278,7 +278,7 @@ best_stack = fitted_params(mach).best_model
 best_stack.regressor2.lambda</code></pre><pre><code class="plaintext hljs">10.27808532802195</code></pre>
 <p>Let&#39;s evaluate the best stack using the same data resampling used to the evaluate the assorted untuned models earlier &#40;now we are neglecting data hygeine&#33;&#41;:</p>
 <pre><code class="julia hljs">print_performance(best_stack, X, y)</code></pre><pre><code class="plaintext hljs">
- MyTwoModelStack @ 1…12 = 0.32861 ± 0.01914
+ MyTwoModelStack @ 1…84 = 0.32861 ± 0.01914
 </code></pre>
 <div class=page-foot >
   <div class=copyright >

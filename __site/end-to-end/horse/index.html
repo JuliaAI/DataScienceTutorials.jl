@@ -149,7 +149,7 @@ y, X = unpack(datac, ==(:outcome), name-&gt;<span class=hljs-literal >true</span
     penalty = :l2,
     fit_intercept = true,
     penalize_intercept = false,
-    solver = nothing) @ 1…58</code></pre>
+    solver = nothing) @ 4…68</code></pre>
 <p>Let&#39;s have convenient handles over the training data</p>
 <pre><code class="julia hljs">Xtrain = X[train,:]
 ytrain = y[train];</code></pre>
@@ -182,7 +182,7 @@ best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintex
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @ 1…54</code></pre>
+            solver = nothing)) @ 1…15</code></pre>
 <p>So it looks like it&#39;s useful to regularise a fair bit to get a lower cross entropy</p>
 <pre><code class="julia hljs">ŷ = MLJ.predict(mtm, Xtrain)
 cross_entropy(ŷ, ytrain) |&gt; mean</code></pre><pre><code class="plaintext hljs">0.6129047398190444</code></pre>
