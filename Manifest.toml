@@ -510,7 +510,7 @@ version = "0.11.9"
 
 [[MLJLinearModels]]
 deps = ["DocStringExtensions", "IterativeSolvers", "LinearAlgebra", "LinearMaps", "MLJModelInterface", "Optim", "Parameters"]
-path = "/Users/tlienart/.julia/dev/MLJLinearModels"
+git-tree-sha1 = "69782417b7812df9fbae888111e5308246e30a35"
 uuid = "6ee0df7b-362f-4a72-a706-9e79364fb692"
 version = "0.3.1"
 
@@ -528,7 +528,7 @@ version = "0.8.2"
 
 [[MLJScientificTypes]]
 deps = ["CategoricalArrays", "ColorTypes", "PrettyTables", "ScientificTypes", "Tables"]
-path = "/Users/tlienart/.julia/dev/MLJScientificTypes"
+git-tree-sha1 = "6323b656a470e4b36cdc8170fb165aa961cf3ca1"
 uuid = "2e2323e0-db8b-457b-ae0d-bdfb3bc63afd"
 version = "0.2.1"
 
