@@ -11,4 +11,4 @@ MyTwoModelStack(
             weights = :uniform),
     judge = LinearRegressor(
             fit_intercept = true,
-            solver = nothing)) @ 9…87
+            solver = nothing)) @ 3…75

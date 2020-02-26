@@ -1,8 +1,4 @@
-
- RandomForestRegressor @ 2…74 = 0.3621 ± 0.02018
-
- RidgeRegressor @ 1…05 = 0.33029 ± 0.01908
-
- MyAverageTwo @ 1…00 = 0.34723 ± 0.01402
-
- MyTwoModelStack @ 3…21 = 0.33028 ± 0.01938
+RandomForestRegressor @ 1…52 = 0.36153 ± 0.0196
+RidgeRegressor @ 4…61 = 0.33029 ± 0.01908
+MyAverageTwo @ 5…08 = 0.34554 ± 0.01264
+MyTwoModelStack @ 3…29 = 0.33028 ± 0.01938
