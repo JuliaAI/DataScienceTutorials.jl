@@ -74,6 +74,8 @@ for (root, _, files) in walkdir(scripts_dir), file in files
 #    splitdir(file)[2] ∉ ("ISL-lab-8.jl",) && continue
 #    startswith(splitdir(file)[2], "ISL-lab-4") || continue
 
+    file == ".DS_Store" && continue
+
     @testset "testing $file" begin
         println("\n\n>> looking at $file ...")
         path = joinpath(root, file)
