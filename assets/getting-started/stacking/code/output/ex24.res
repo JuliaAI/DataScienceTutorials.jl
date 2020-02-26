@@ -1,1 +1,1 @@
-Node @ 6…09 = predict(1…92, table(hcat(predict(1…90, 6…01), predict(8…37, 6…01))))
+Node @ 4…34 = predict(1…13, table(hcat(predict(1…38, 1…41), predict(1…96, 1…41))))
