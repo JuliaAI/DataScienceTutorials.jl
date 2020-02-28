@@ -13,8 +13,8 @@ select!(df, Not([:id, :date]))
 schema(df)
 
 coerce!(df, :zipcode => Multiclass)
-df.isrenovated  = @. !ismissing(df.yr_renovated)
-df.has_basement = @. !ismissing(df.sqft_basement)
+df.isrenovated  = @. !iszero(df.yr_renovated)
+df.has_basement = @. !iszero(df.sqft_basement)
 schema(df)
 
 coerce!(df, :isrenovated => OrderedFactor, :has_basement => OrderedFactor);
@@ -29,18 +29,11 @@ schema(df)
 
 df.price = df.price ./ 1000;
 
-for col in names(df)
-    nmissings = sum(ismissing, df[!,col])
-    if nmissings > 0
-        println(rpad("$col has ", 25), nmissings, " missings")
-    end
-end
-
 select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 
 plt.figure(figsize=(8,6))
 plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
-         density=true)
+         density=true, alpha=0.5)
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 plt.savefig(joinpath(@OUTPUT, "hist_price.svg")) # hide
@@ -94,7 +87,7 @@ r1 = range(xgb, :max_depth, lower=3, upper=10)
 r2 = range(xgb, :num_round, lower=1, upper=25);
 
 tm = TunedModel(model=xgb, tuning=Grid(resolution=7),
-                resampling=CV(rng=11), ranges=[r1,r2,r3,r4,r5,r6,r7],
+                resampling=CV(rng=11), ranges=[r1,r2],
                 measure=rms)
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
