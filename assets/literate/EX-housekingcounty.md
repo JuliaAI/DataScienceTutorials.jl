@@ -27,8 +27,8 @@ Afterwards, we convert the zip code to an unordered factor (`Multiclass`), we al
 
 ```julia:ex3
 coerce!(df, :zipcode => Multiclass)
-df.isrenovated  = @. !ismissing(df.yr_renovated)
-df.has_basement = @. !ismissing(df.sqft_basement)
+df.isrenovated  = @. !iszero(df.yr_renovated)
+df.has_basement = @. !iszero(df.sqft_basement)
 schema(df)
 ```
 
@@ -64,22 +64,9 @@ Let's also rescale the column `price` to be in 1000s of dollars:
 df.price = df.price ./ 1000;
 ```
 
-### What about missing values?
-
-Let's check what columns have missing values
+For simplicity let's just drop a few additional columns that don't seem to matter much:
 
 ```julia:ex9
-for col in names(df)
-    nmissings = sum(ismissing, df[!,col])
-    if nmissings > 0
-        println(rpad("$col has ", 25), nmissings, " missings")
-    end
-end
-```
-
-For simplicity let's just drop these two columns, note that the information is also contained in the derived `has_basement` and `isrenovated` that we created earlier. We will also drop the zip code.
-
-```julia:ex10
 select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 ```
 
@@ -87,20 +74,20 @@ select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 
 Let's plot a basic histogram of the prices to get an idea for the distribution:
 
-```julia:ex11
+```julia:ex10
 plt.figure(figsize=(8,6))
 plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
-         density=true)
+         density=true, alpha=0.5)
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 plt.savefig(joinpath(@OUTPUT, "hist_price.svg")) # hide
 ```
 
-\figalt{Histogram of the prices}{./hist_price.svg}
+\figalt{Histogram of the prices}{hist_price.svg}
 
 Let's see if there's a difference between renovated and unrenovated flats:
 
-```julia:ex12
+```julia:ex11
 plt.figure(figsize=(8,6))
 plt.hist(df.price[df.isrenovated .== true], color="blue", density=true,
         edgecolor="white", bins=50, label="renovated", alpha=0.5)
@@ -112,7 +99,7 @@ plt.legend(fontsize=12)
 plt.savefig(joinpath(@OUTPUT, "hist_price2.svg")) # hide
 ```
 
-\figalt{Histogram of the prices depending on renovation}{./hist_price2.svg}
+\figalt{Histogram of the prices depending on renovation}{hist_price2.svg}
 We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.
 
 
@@ -120,7 +107,7 @@ Likewise, this could be done to verify that `condition`, `waterfront` etc are im
 
 ## Fitting a first model
 
-```julia:ex13
+```julia:ex12
 @load DecisionTreeRegressor
 
 y, X = unpack(df, ==(:price), col -> true)
@@ -133,7 +120,7 @@ fit!(tree, rows=train);
 
 Let's see how it does
 
-```julia:ex14
+```julia:ex13
 rms(y[test], predict(tree, rows=test))
 ```
 
@@ -143,19 +130,19 @@ Let's try to do better.
 
 We might be able to improve upon the RMSE using more powerful learners.
 
-```julia:ex15
+```julia:ex14
 @load RandomForestRegressor pkg=ScikitLearn
 ```
 
 That model only accepts input in the form of `Count` and so we have to coerce all `Finite` types into `Count`:
 
-```julia:ex16
+```julia:ex15
 coerce!(X, Finite => Count);
 ```
 
 Now we can fit
 
-```julia:ex17
+```julia:ex16
 rf_mdl = RandomForestRegressor()
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
@@ -165,7 +152,7 @@ rms(y[test], predict(rf, rows=test))
 
 A bit better but it would be best to check this a bit more carefully:
 
-```julia:ex18
+```julia:ex17
 cv3 = CV(; nfolds=3)
 res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
                measure=rms, verbosity=0)
@@ -175,13 +162,13 @@ res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
 
 Let's try a different kind of model: Gradient Boosted Decision Trees from the package xgboost and we'll try to tune it too.
 
-```julia:ex19
+```julia:ex18
 @load XGBoostRegressor
 ```
 
 It expects a `Table(Continuous)` input so we need to coerce `X` again:
 
-```julia:ex20
+```julia:ex19
 coerce!(X, Count => Continuous)
 
 xgb  = XGBoostRegressor()
@@ -193,16 +180,16 @@ rms(y[test], predict(xgbm, rows=test))
 
 Let's try to tune it, first we define ranges for a number of useful parameters:
 
-```julia:ex21
+```julia:ex20
 r1 = range(xgb, :max_depth, lower=3, upper=10)
 r2 = range(xgb, :num_round, lower=1, upper=25);
 ```
 
 And now we tune, we use a very coarse resolution because we use so many ranges, `2^7` is already some 128 models...
 
-```julia:ex22
+```julia:ex21
 tm = TunedModel(model=xgb, tuning=Grid(resolution=7),
-                resampling=CV(rng=11), ranges=[r1,r2,r3,r4,r5,r6,r7],
+                resampling=CV(rng=11), ranges=[r1,r2],
                 measure=rms)
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
@@ -212,7 +199,7 @@ rms(y[test], predict(mtm, rows=test))
 
 Tuning helps a fair bit!
 
-```julia:ex23
+```julia:ex22
 PyPlot.close_figs() # hide
 ```
 

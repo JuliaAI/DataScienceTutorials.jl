@@ -23,8 +23,8 @@ schema(df)
 
 # Afterwards, we convert the zip code to an unordered factor (`Multiclass`), we also create two binary features `isrenovated` and `has_basement` derived from `yr_renovated` and `sqft_basement`:
 coerce!(df, :zipcode => Multiclass)
-df.isrenovated  = @. !ismissing(df.yr_renovated)
-df.has_basement = @. !ismissing(df.sqft_basement)
+df.isrenovated  = @. !iszero(df.yr_renovated)
+df.has_basement = @. !iszero(df.sqft_basement)
 schema(df)
 
 # These created variables should be treated as OrderedFactor,
@@ -44,26 +44,18 @@ schema(df)
 # Let's also rescale the column `price` to be in 1000s of dollars:
 df.price = df.price ./ 1000;
 
-# ### What about missing values?## Let's check what columns have missing values
-for col in names(df)
-    nmissings = sum(ismissing, df[!,col])
-    if nmissings > 0
-        println(rpad("$col has ", 25), nmissings, " missings")
-    end
-end
-
-# For simplicity let's just drop these two columns, note that the information is also contained in the derived `has_basement` and `isrenovated` that we created earlier. We will also drop the zip code.
+# For simplicity let's just drop a few additional columns that don't seem to matter much:
 select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 
 # ### Basic data visualisation## Let's plot a basic histogram of the prices to get an idea for the distribution:
 plt.figure(figsize=(8,6))
 plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
-         density=true)
+         density=true, alpha=0.5)
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 
 
-# \figalt{Histogram of the prices}{./hist_price.svg}
+# \figalt{Histogram of the prices}{hist_price.svg}
 # Let's see if there's a difference between renovated and unrenovated flats:
 plt.figure(figsize=(8,6))
 plt.hist(df.price[df.isrenovated .== true], color="blue", density=true,
@@ -75,7 +67,7 @@ plt.ylabel("Frequency", fontsize=14)
 plt.legend(fontsize=12)
 
 
-# \figalt{Histogram of the prices depending on renovation}{./hist_price2.svg}# We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.### Likewise, this could be done to verify that `condition`, `waterfront` etc are important features.
+# \figalt{Histogram of the prices depending on renovation}{hist_price2.svg}# We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.### Likewise, this could be done to verify that `condition`, `waterfront` etc are important features.
 # ## Fitting a first model
 @load DecisionTreeRegressor
 
@@ -127,7 +119,7 @@ r2 = range(xgb, :num_round, lower=1, upper=25);
 
 # And now we tune, we use a very coarse resolution because we use so many ranges, `2^7` is already some 128 models...
 tm = TunedModel(model=xgb, tuning=Grid(resolution=7),
-                resampling=CV(rng=11), ranges=[r1,r2,r3,r4,r5,r6,r7],
+                resampling=CV(rng=11), ranges=[r1,r2],
                 measure=rms)
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)

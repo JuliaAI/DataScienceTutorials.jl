@@ -20,7 +20,7 @@
 │ long          │ Float64                          │ Continuous        │
 │ sqft_living15 │ Int64                            │ Count             │
 │ sqft_lot15    │ Int64                            │ Count             │
-│ isrenovated   │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{1}  │
-│ has_basement  │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{1}  │
+│ isrenovated   │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{2}  │
+│ has_basement  │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{2}  │
 └───────────────┴──────────────────────────────────┴───────────────────┘
 _.nrows = 21613
