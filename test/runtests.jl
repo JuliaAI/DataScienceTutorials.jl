@@ -82,6 +82,7 @@ for (root, _, files) in walkdir(scripts_dir), file in files
         tf = tempname()
         write(tf, """
         module Tester
+            using Franklin
             import ..strip_code
             include(strip_code("$path"))
         end
