@@ -21,7 +21,7 @@ boston = dataset("MASS", "Boston");
 
 typeof(boston)
 
-# For a short introduction to DataFrame objects, see [this tutorial](/data/).
+# For a short introduction to DataFrame objects, see [this tutorial](/data/dataframe).
 
 # ## Using CSV
 #
