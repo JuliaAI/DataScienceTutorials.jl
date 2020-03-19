@@ -26,7 +26,7 @@ The `dataset` function returns a `DataFrame` object from the [DataFrames.jl](htt
 typeof(boston)
 ```
 
-For a short introduction to DataFrame objects, see [this tutorial](/data/).
+For a short introduction to DataFrame objects, see [this tutorial](/data/dataframe).
 
 ## Using CSV
 
