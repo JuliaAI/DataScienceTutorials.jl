@@ -66,7 +66,7 @@ When it's time to push updates, **only** use `include("deploy.jl")` (assuming yo
 ### Modifying literate scripts
 
 1. add packages if you need additional ones (`] add ...`), make sure to update explicit compat requirements in the `Project.toml` file
-1. add/modify tutorials in the `scripts/` folder
+1. add/modify tutorials in the `_literate/` folder
 1. to help display things neatly on the webpage (no horizontal overflow), prefer `pprint` from `PrettyPrinting.jl` to display things like `NamedTuple`
 1. add `;` at the end of final lines of code blocks if you want to suppress output
 
@@ -99,13 +99,13 @@ The last thing to do is to add a link to the page in `_layout/head.html` so that
 
 ```julia
 cd("path/to/MLJTutorials")
-using JuDoc
+using Franklin
 serve()
 ```
 
-If you have changed the *code* of some of the literate scripts, JuDoc will need to re-evaluate some of the code which may take some time, progress is indicated in the REPL.
+If you have changed the *code* of some of the literate scripts, Franklin will need to re-evaluate some of the code which may take some time, progress is indicated in the REPL.
 
-If you decide to change some of the code while `serve()` is running, this is fine, JuDoc will detect it and trigger an update of the relevant web pages (after evaluating the new code).
+If you decide to change some of the code while `serve()` is running, this is fine, Franklin will detect it and trigger an update of the relevant web pages (after evaluating the new code).
 
 **Notes**:
 - avoid modifying the literate file, killing the Julia session, then calling `serve()` that sequence can cause weird issues where Julia will complain about the age of the world...
@@ -132,13 +132,13 @@ Do not forget to add the `# hide` which will ensure the line is not displayed on
 
 #### Stale files
 
-It can happen that something went wrong and you'd like to force JuDoc to re-evaluate everything to clear things up. To do this, head to the parent markdown file (e.g. `my-tutorial.md`) and add below the other ones:
+It can happen that something went wrong and you'd like to force Franklin to re-evaluate everything to clear things up. To do this, head to the parent markdown file (e.g. `my-tutorial.md`) and add below the other ones:
 
 ```julia
 @def reeval = true
 ```
 
-save the file, wait for JuDoc to complete its update and then remove it (otherwise it will reevaluate the script every single pass which can slow things down a lot).
+save the file, wait for Franklin to complete its update and then remove it (otherwise it will reevaluate the script every single pass which can slow things down a lot).
 
 If you get an "age of the world" error, the `reeval` steps above usually works as well.
 
@@ -166,7 +166,7 @@ the first command will remove all stale generated HTML which may conflict with o
 *Requirements*:
 
 * admin access to the repo
-* `] add Literate JuDoc NodeJS`
+* `] add Literate Franklin NodeJS`
 * install `highlight.js` and `gh-pages` from within Julia: ``run(`sudo $(npm_cmd()) i highlight.js gh-pages`)``
 
 Assuming you have all that, just run
