@@ -1,0 +1,3 @@
+best_model.learning_rate = 0.1
+best_model.min_data_in_leaf = 6
+best_model.num_iterations = 75

@@ -18,11 +18,11 @@ df = CSV.read(req.body; header=[
        );
 df[1:5, :] |> pretty
 
-#
+# inspect the schema:
 
 schema(df)
 
-#-unpack into the data and labels.
+# unpack into the data and labels:
 
 y, X = unpack(df, ==(:Scaled_Sound), col -> true);
 
@@ -50,7 +50,7 @@ end
 
 # ## DecisionTreeRegressor
 #
-# We will first try out DecisionTreeRegressor. We load the DecisionTreeRegressor from DecisionTree.jl
+# We will first try out DecisionTreeRegressor:
 
 dcr = @load DecisionTreeRegressor pkg=DecisionTree
 
@@ -65,7 +65,7 @@ rms(pred_dcrm, y[test])
 
 # ## RandomForestRegressor
 #
-# Now let's try out RandomForestRegressor. We load the RandomForestRegressor from DecisionTree.jl
+# Now let's try out RandomForestRegressor:
 
 rfr = @load RandomForestRegressor pkg=DecisionTree
 
@@ -99,7 +99,8 @@ r = [r_maxD, r_samF];
 tuning = Grid(resolution=7)
 resampling = CV(nfolds=6)
 
-tm = TunedModel(model=rfr, tuning=tuning, resampling=resampling, ranges=r, measure=rms)
+tm = TunedModel(model=rfr, tuning=tuning,
+                resampling=resampling, ranges=r, measure=rms)
 
 rfr_tm = machine(tm, X, y);
 
@@ -137,3 +138,5 @@ yticks(fontsize=12)
 plt.savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
 
 # \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
+
+PyPlot.close_figs() # hide
