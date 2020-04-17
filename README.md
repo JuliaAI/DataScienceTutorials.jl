@@ -6,7 +6,8 @@
 
 MLJ   | MLJBase | MLJModels | Commit    | Note | Date
 ----- | ------- | --------- | --------- | ---- | ----
-0.9.1 | 0.11.7  | 0.8.0     | [4e4db42] |      | Feb 19, 2020
+0.10.3 | 0.12.8 | 0.9.4     | [df35415] | ✓    | Apr 16, 2020
+0.9.1 | 0.11.7  | 0.8.0     | [4e4db42] | ✓    | Feb 19, 2020
 0.6.0 | 0.9.1   | 0.6.2     | [9cf373d] | ✓    | Dec 31, 2019
 0.6.0 | 0.9.1   | 0.6.0     | [a4c2e3a] | ✓    | Dec 19, 2019    
 0.5.5 | 0.8.4   | 0.5.9     | [8433e41] | ✓    | Nov 29, 2019    
@@ -14,6 +15,7 @@ MLJ   | MLJBase | MLJModels | Commit    | Note | Date
 0.5.4 | 0.8.1   | 0.5.7     | [f96a4e5] | ✓    | Nov 19, 2019
 0.5.2 | 0.7.5   | 0.5.6     | [f556f62] | ✓    | Nov 13, 2019
 
+[df35415]: https://github.com/alan-turing-institute/MLJTutorials/commit/df3541557798c9f33303d0691d1f784701b1f4ee
 [4e4db42]: https://github.com/alan-turing-institute/MLJTutorials/commit/4e4db4255172c7f0674236a8e453fb8401a1c08f
 [9cf373d]: https://github.com/alan-turing-institute/MLJTutorials/commit/9cf373dc924380169f2c25a9b48b5f949eaa178f
 [a4c2e3a]: https://github.com/alan-turing-institute/MLJTutorials/commit/a4c2e3a7b423b2f2af4171e377beef0e3b6865fc
