@@ -9,4 +9,4 @@ SimplePipe(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @ 1…15
+            solver = nothing)) @ 1…10

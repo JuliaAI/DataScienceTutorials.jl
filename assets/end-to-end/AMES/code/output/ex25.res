@@ -1,4 +1,4 @@
-3-element Array{MLJBase.NumericRange{MLJBase.Bounded,T,Symbol} where T,1}:
- NumericRange @ 3…28
- NumericRange @ 1…52
- NumericRange @ 7…64
+3-element Array{MLJBase.NumericRange{T,MLJBase.Bounded,Symbol} where T,1}:
+ MLJBase.NumericRange(Int64, :(knn_model.K), ... )
+ MLJBase.NumericRange(Float64, :(ridge_model.lambda), ... )
+ MLJBase.NumericRange(Float64, :knn_weight, ... )

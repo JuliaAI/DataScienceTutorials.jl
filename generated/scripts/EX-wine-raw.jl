@@ -9,7 +9,7 @@
 
 using HTTP, CSV, MLJ, StatsBase, PyPlot
 
-req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
+req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
                 header=["Class", "Alcool", "Malic acid",
                         "Ash", "Alcalinity of ash", "Magnesium",

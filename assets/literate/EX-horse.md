@@ -1,7 +1,7 @@
 <!--This file was generated, do not modify it.-->
 ## Initial data processing
 
-In this example, we consider the [UCI "horse colic" dataset](https://archive.ics.uci.edu/ml/datasets/Horse+Colic)
+In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
 This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.
 
@@ -13,8 +13,8 @@ The data is pre-split in training and testing and we will keep it as such
 using MLJ, StatsBase
 MLJ.color_off() # hide
 using HTTP, CSV, DataFrames
-req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
-req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
     "rectal_temperature", "pulse",
     "respiratory_rate", "temperature_extremities",

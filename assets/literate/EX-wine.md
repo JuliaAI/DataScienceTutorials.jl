@@ -1,17 +1,17 @@
 <!--This file was generated, do not modify it.-->
 ## Initial data processing
 
-In this example, we consider the [UCI "wine" dataset](https://archive.ics.uci.edu/ml/datasets/wine)
+In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)
 
 > These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.
 
 ### Getting the data
-Let's download the data thanks to the [HTTP.jl](HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")) package and load it into a DataFrame via the [CSV.jl](https://github.com/JuliaData/CSV.jl) package:
+Let's download the data thanks to the [HTTP.jl](HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")) package and load it into a DataFrame via the [CSV.jl](https://github.com/JuliaData/CSV.jl) package:
 
 ```julia:ex1
 using HTTP, CSV, MLJ, StatsBase, PyPlot
 MLJ.color_off() # hide
-req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
+req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
                 header=["Class", "Alcool", "Malic acid",
                         "Ash", "Alcalinity of ash", "Magnesium",

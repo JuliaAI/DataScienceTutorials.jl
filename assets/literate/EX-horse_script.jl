@@ -3,8 +3,8 @@
 using MLJ, StatsBase
 MLJ.color_off() # hide
 using HTTP, CSV, DataFrames
-req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
-req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
     "rectal_temperature", "pulse",
     "respiratory_rate", "temperature_extremities",
