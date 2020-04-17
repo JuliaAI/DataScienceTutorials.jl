@@ -77,3 +77,4 @@ The examples can be followed in any order, the tags can guide you as to which tu
 * [Crabs XGB](/end-to-end/crabs-xgb/), *simple*, *classification*, *xg-boost*, *tuning*
 * [Horse](/end-to-end/horse/), *simple*, *classification*, *scientific type* and *autotype*, *missing values*, *imputation*, *one-hot*, *tuning*
 * [King County Houses](/end-to-end/HouseKingCounty/), *simple*, *regression*, *scientific type*, *tuning*, *xg-boost*.
+* [Airfoil](/end-to-end/airfoil/), *simple*, *regression*, *random forest*

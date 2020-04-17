@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
 using HTTP, CSV, MLJ, StatsBase, PyPlot
 MLJ.color_off() # hide
-req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
+req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
                 header=["Class", "Alcool", "Malic acid",
                         "Ash", "Alcalinity of ash", "Magnesium",

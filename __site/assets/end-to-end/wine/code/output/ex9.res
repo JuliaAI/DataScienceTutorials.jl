@@ -1,10 +1,13 @@
 MnPipe(
     std = Standardizer(
-            features = Symbol[]),
+            features = Symbol[],
+            ignore = false,
+            ordered_factor = false,
+            count = false),
     clf = MultinomialClassifier(
             lambda = 1.0,
             gamma = 0.0,
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @ 1…98
+            solver = nothing)) @ 1…92
