@@ -75,6 +75,8 @@ for (root, _, files) in walkdir(scripts_dir), file in files
 #    startswith(splitdir(file)[2], "ISL-lab-4") || continue
 
     file == ".DS_Store" && continue
+    # exclude stuff that depends on external data
+    splitdir(file)[2] ∈ ("EX-mm-2020.jl",) && continue
 
     @testset "testing $file" begin
         println("\n\n>> looking at $file ...")
