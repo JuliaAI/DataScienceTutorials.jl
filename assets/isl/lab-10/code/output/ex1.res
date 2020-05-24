@@ -1,6 +1,6 @@
-5-element Array{Symbol,1}:
- :State
- :Murder
- :Assault
- :UrbanPop
- :Rape
+5-element Array{String,1}:
+ "State"
+ "Murder"
+ "Assault"
+ "UrbanPop"
+ "Rape"

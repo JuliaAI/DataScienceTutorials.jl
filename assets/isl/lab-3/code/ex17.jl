@@ -1,5 +1,6 @@
 # This file was generated, do not modify it. # hide
-mach = machine(mdl, X2, y)
+X3 = hcat(X.LStat, X.LStat.^2)
+mach = machine(mdl, X3, y)
 fit!(mach)
-ŷ = predict(mach, X2)
+ŷ = predict(mach, X3)
 round(rms(ŷ, y), sigdigits=4)

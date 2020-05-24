@@ -7,7 +7,8 @@ It is by no means meant to be a complete introduction, rather, it focuses on som
 To start with, we will use the `Boston` dataset which is very simple.
 
 ```julia:ex1
-using RDatasets, DataFrames
+using RDatasets
+using DataFrames
 
 boston = dataset("MASS", "Boston");
 ```

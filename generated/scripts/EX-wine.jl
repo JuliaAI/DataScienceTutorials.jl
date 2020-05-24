@@ -8,7 +8,10 @@
 # ```
 
 # ## Initial data processing## In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)## > These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.## ### Getting the data# Let's download the data thanks to the [HTTP.jl](HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")) package and load it into a DataFrame via the [CSV.jl](https://github.com/JuliaData/CSV.jl) package:
-using HTTP, CSV, MLJ, StatsBase, PyPlot
+using HTTP
+using MLJ
+using PyPlot
+import DataFrames: describe
 
 req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
@@ -31,12 +34,7 @@ yc = coerce(y, OrderedFactor);
 scitype(X)
 
 # So there are `Continuous` values (encoded as floating point) and `Count` values (integer).# Note also that there are no missing value (otherwise one of the scientific type would have been a `Union{Missing,*}`).# Let's check which column is what:
-sch = schema(X)
-println(rpad(" Name", 28), "| Scitype")
-println("-"^45)
-for (name, scitype) in zip(sch.names, sch.scitypes)
-    println(rpad("$name", 30), scitype)
-end
+schema(X)
 
 # The two variable that are encoded as `Count` can  probably be re-interpreted; let's have a look at the `Proline` one to see what it looks like
 X[1:5, :Proline]

@@ -1,5 +1,5 @@
 # This file was generated, do not modify it. # hide
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 MLJ.color_off() # hide
-import Random.seed!
-seed!(1234)
+using StableRNGs

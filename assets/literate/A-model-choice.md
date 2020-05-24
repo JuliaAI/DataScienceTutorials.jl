@@ -11,7 +11,8 @@
 ### Machine type and scientific type
 
 ```julia:ex1
-using RDatasets, MLJ
+using RDatasets
+using MLJ
 MLJ.color_off() # hide
 iris = dataset("datasets", "iris")
 

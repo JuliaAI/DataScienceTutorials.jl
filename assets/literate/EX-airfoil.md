@@ -6,8 +6,14 @@ Here we use the [UCI "Airfoil Self-Noise" dataset](http://archive.ics.uci.edu/ml
 ### Loading and  preparing the data
 
 ```julia:ex1
-using MLJ, PrettyPrinting, DataFrames, Statistics, CSV
-using PyPlot, HTTP
+using MLJ
+using PrettyPrinting
+import DataFrames
+import Statistics
+using CSV
+using PyPlot
+using HTTP
+using StableRNGs
 
 MLJ.color_off() # hide
 
@@ -42,7 +48,7 @@ X = transform(fit!(machine(Standardizer(), X)), X);
 Partition into train and test set
 
 ```julia:ex5
-train, test = partition(eachindex(y), 0.7, shuffle=true);
+train, test = partition(eachindex(y), 0.7, shuffle=true, rng=StableRNG(612));
 ```
 
 Let's first see which models are compatible with the scientific type and machine type of our data
@@ -72,7 +78,7 @@ dcr = @load DecisionTreeRegressor pkg=DecisionTree
 
 dcrm = machine(dcr, X, y)
 
-fit!(dcrm, rows=train, force=true)
+fit!(dcrm, rows=train)
 pred_dcrm = MLJ.predict(dcrm, rows=test);
 ```
 

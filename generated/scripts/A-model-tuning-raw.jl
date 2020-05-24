@@ -7,7 +7,8 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
 
 X, y = @load_iris
 @load DecisionTreeClassifier

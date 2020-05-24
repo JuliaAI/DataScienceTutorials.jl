@@ -1,7 +1,10 @@
 # This file was generated, do not modify it. # hide
-using MLJ, PrettyPrinting, DataFrames, Statistics
-using PyPlot, Random
+using MLJ
+using PrettyPrinting
+import DataFrames
+import Statistics
+using PyPlot
+using StableRNGs
 
 MLJ.color_off() # hide
-Random.seed!(1212)
 @load LGBMRegressor

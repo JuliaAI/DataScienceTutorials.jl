@@ -12,7 +12,8 @@ Let's use a decision tree classifier and tune the maximum depth of the tree.
 As usual, start by loading data and the model
 
 ```julia:ex1
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
 MLJ.color_off() # hide
 X, y = @load_iris
 @load DecisionTreeClassifier

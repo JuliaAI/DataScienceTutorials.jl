@@ -1,4 +1,4 @@
-3×8 DataFrames.DataFrame
+3×8 DataFrame
 │ Row │ col1    │ col2  │ col3    │ col4    │ col5   │ col6       │ col7                │ col8 │
 │     │ Missing │ Int64 │ Float64 │ Float64 │ String │ Dates.Date │ Dates.DateTime      │ Bool │
 ├─────┼─────────┼───────┼─────────┼─────────┼────────┼────────────┼─────────────────────┼──────┤

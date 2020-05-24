@@ -10,7 +10,7 @@ spca2_mdl = SPCA2()
 spca2 = machine(spca2_mdl, X)
 fit!(spca2)
 
-assignments = report(spca2).reports[1].assignments
+assignments = first(values(report(spca2).report_given_machine)).assignments
 mask1 = assignments .== 1
 mask2 = assignments .== 2
 mask3 = assignments .== 3;

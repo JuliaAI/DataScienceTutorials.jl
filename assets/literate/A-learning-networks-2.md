@@ -4,16 +4,18 @@
 Let's start as with the previous tutorial:
 
 ```julia:ex1
-using MLJ, DataFrames, Random
+using MLJ
+using StableRNGs
+import DataFrames
 MLJ.color_off() # hide
 @load RidgeRegressor pkg=MultivariateStats
 
-Random.seed!(5) # for reproducibility
-x1 = rand(300)
-x2 = rand(300)
-x3 = rand(300)
-y = exp.(x1 - x2 -2x3 + 0.1*rand(300))
-X = DataFrame(x1=x1, x2=x2, x3=x3)
+rng = StableRNG(6616) # for reproducibility
+x1 = rand(rng, 300)
+x2 = rand(rng, 300)
+x3 = rand(rng, 300)
+y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
+X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
 
 test, train = partition(eachindex(y), 0.8);
 ```
@@ -80,7 +82,7 @@ from `ŷ` via the `<= ŷ`.
 
 ```julia:ex7
 cm = machine(CompositeModel(), X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=0.8),
+res = evaluate!(cm, resampling=Holdout(fraction_train=0.8, rng=51),
                 measure=rms)
 round(res.measurement[1], sigdigits=3)
 ```

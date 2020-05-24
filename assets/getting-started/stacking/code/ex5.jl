@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
 function print_performance(model, data...)
     e = evaluate(model, data...;
-                 resampling=CV(rng=1234, nfolds=8),
+                 resampling=CV(rng=StableRNG(1234), nfolds=8),
                  measure=rms,
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)

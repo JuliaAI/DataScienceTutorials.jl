@@ -1,4 +1,4 @@
-3×7 DataFrames.DataFrame
+3×7 DataFrame
 │ Row │ CIC0    │ SM1_Dz  │ GATS1i  │ NdsCH │ NdssC │ MLOGP   │ LC50    │
 │     │ Float64 │ Float64 │ Float64 │ Int64 │ Int64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┼───────┼───────┼─────────┼─────────┤

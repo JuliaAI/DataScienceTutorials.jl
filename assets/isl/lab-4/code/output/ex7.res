@@ -1,3 +1,3 @@
-2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
+2-element CategoricalArray{String,1,UInt32}:
  "Down"
  "Up"

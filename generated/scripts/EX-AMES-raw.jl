@@ -7,11 +7,14 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, PrettyPrinting, DataFrames, Statistics
+using MLJ
+using  PrettyPrinting
+import DataFrames
+import Statistics
 
 
 X, y = @load_reduced_ames
-X = DataFrame(X)
+X = DataFrames.DataFrame(X)
 @show size(X)
 first(X, 3) |> pretty
 

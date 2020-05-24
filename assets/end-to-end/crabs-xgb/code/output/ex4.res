@@ -1,5 +1,5 @@
 XGBoostClassifier(
-    num_round = 1,
+    num_round = 100,
     booster = "gbtree",
     disable_default_eval_metric = 0,
     eta = 0.3,
@@ -33,4 +33,4 @@ XGBoostClassifier(
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @ 2…05
+    seed = 0) @ 9…59

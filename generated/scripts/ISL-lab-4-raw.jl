@@ -7,8 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, RDatasets, DataFrames, Statistics
-import StatsBase: countmap
+using MLJ
+import RDatasets: dataset
+import DataFrames: DataFrame, describe, select, Not
+import StatsBase: countmap, cor, var
 
 using PrettyPrinting
 

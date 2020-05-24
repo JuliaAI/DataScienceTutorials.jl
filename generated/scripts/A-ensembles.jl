@@ -8,11 +8,18 @@
 # ```
 
 # ## Preliminary steps## Let's start by loading the relevant packages and generating some dummy data.
-using MLJ, DataFrames, Statistics, PrettyPrinting
+using MLJ
+import DataFrames
+import Statistics
+using PrettyPrinting
+using StableRNGs
 
-Xraw = rand(300, 3)
-y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(300))
-X = DataFrame(Xraw)
+
+
+rng = StableRNG(512)
+Xraw = rand(rng, 300, 3)
+y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(rng, 300))
+X = DataFrames.DataFrame(Xraw)
 
 train, test = partition(eachindex(y), 0.7);
 
@@ -29,7 +36,7 @@ ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
 # The few steps above are equivalent to just calling `evaluate!`:
-evaluate!(knn, resampling=Holdout(fraction_train=0.7),
+evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
           measure=rms) |> pprint
 
 # ## Homogenous ensembles## MLJ offers basic support for ensembling such as [_bagging_](https://en.wikipedia.org/wiki/Bootstrap_aggregating).# Defining such an ensemble of simple "atomic" models is done via the `EnsembleModel` constructor:
@@ -56,7 +63,7 @@ K_range = range(ensemble_model, :(atom.K),
 # the scale for a tuning grid is linear by default but can be specified to `:log10` for logarithmic ranges.# Now we have to define a `TunedModel` and fit it:
 tm = TunedModel(model=ensemble_model,
                 tuning=Grid(resolution=10), # 10x10 grid
-                resampling=Holdout(fraction_train=0.8, rng=42),
+                resampling=Holdout(fraction_train=0.8, rng=StableRNG(42)),
                 ranges=[B_range, K_range])
 
 tuned_ensemble = machine(tm, X, y)

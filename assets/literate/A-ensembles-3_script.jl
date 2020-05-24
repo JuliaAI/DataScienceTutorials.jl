@@ -1,6 +1,7 @@
 # This file was generated, do not modify it.
 
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 import Statistics
 
 Xs = source()

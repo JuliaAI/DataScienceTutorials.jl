@@ -1,4 +1,4 @@
-3×9 DataFrames.DataFrame
+3×9 DataFrame
 │ Row │ MPG     │ Cylinders │ Displacement │ Horsepower │ Weight  │ Acceleration │ Year    │ Origin  │ Name                      │
 │     │ Float64 │ Float64   │ Float64      │ Float64    │ Float64 │ Float64      │ Float64 │ Float64 │ String                    │
 ├─────┼─────────┼───────────┼──────────────┼────────────┼─────────┼──────────────┼─────────┼─────────┼───────────────────────────┤

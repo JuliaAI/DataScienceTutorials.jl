@@ -1,7 +1,7 @@
 KNNRegressor(
     K = 4,
     algorithm = :kdtree,
-    metric = Distances.Euclidean(0.0),
+    metric = Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @ 4…80
+    weights = :uniform) @ 2…05

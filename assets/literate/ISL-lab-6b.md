@@ -2,7 +2,9 @@
 ## Getting started
 
 ```julia:ex1
-using MLJ, RDatasets, PrettyPrinting
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
 MLJ.color_off() # hide
 import Distributions
 const D = Distributions
@@ -213,13 +215,15 @@ Pretty good! and the parameters are reasonably sparse as expected:
 
 ```julia:ex16
 coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
-round.(coefs, sigdigits=2)
+@show coefs
+@show intercept
 ```
 
 with around 50% sparsity:
 
 ```julia:ex17
-sum(coefs .≈ 0) / length(coefs)
+coef_vals = [c[2] for c in coefs]
+sum(coef_vals .≈ 0) / length(coefs)
 ```
 
 Let's visualise this:

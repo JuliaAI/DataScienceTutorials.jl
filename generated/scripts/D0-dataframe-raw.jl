@@ -7,7 +7,8 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using RDatasets, DataFrames
+using RDatasets
+using DataFrames
 
 boston = dataset("MASS", "Boston");
 

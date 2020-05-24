@@ -1,5 +1,5 @@
 (tree = Decision Tree
-Leaves: 8
+Leaves: 5
 Depth:  4,
  encoding = Dict("virginica" => 0x00000003,
                  "setosa" => 0x00000001,

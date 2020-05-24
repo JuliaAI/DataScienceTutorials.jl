@@ -8,7 +8,8 @@
 # ```
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl# [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl# [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl## ## Tuning a single hyperparameter## In MLJ, tuning is implemented as a model wrapper.# After wrapping a model in a _tuning strategy_ (e.g. cross-validation) and binding the wrapped model to data in a _machine_, fitting the machine initiates a search for optimal model hyperparameters.## Let's use a decision tree classifier and tune the maximum depth of the tree.# As usual, start by loading data and the model
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
 
 X, y = @load_iris
 @load DecisionTreeClassifier

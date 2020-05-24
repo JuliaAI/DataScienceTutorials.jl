@@ -1,5 +1,5 @@
 XGBoostRegressor(
-    num_round = 1,
+    num_round = 100,
     booster = "gbtree",
     disable_default_eval_metric = 0,
     eta = 0.3,
@@ -33,4 +33,4 @@ XGBoostRegressor(
     objective = "reg:linear",
     base_score = 0.5,
     eval_metric = "rmse",
-    seed = 0) @ 8…21
+    seed = 0) @ 1…83

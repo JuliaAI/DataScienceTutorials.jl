@@ -7,7 +7,8 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 import Statistics
 
 Xs = source()

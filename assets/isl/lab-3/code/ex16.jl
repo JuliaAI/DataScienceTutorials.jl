@@ -1,2 +1,5 @@
 # This file was generated, do not modify it. # hide
-rename!(X2, :x1 => :interaction);
+mach = machine(mdl, X2, y)
+fit!(mach)
+ŷ = predict(mach, X2)
+round(rms(ŷ, y), sigdigits=4)

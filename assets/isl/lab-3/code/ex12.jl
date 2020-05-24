@@ -1,3 +1,6 @@
 # This file was generated, do not modify it. # hide
-ŷ = predict(mach, X)
-round(rms(ŷ, y), sigdigits=4)
+figure(figsize=(8,6))
+res = ŷ .- y
+stem(res)
+
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide

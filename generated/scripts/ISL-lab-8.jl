@@ -8,7 +8,10 @@
 # ```
 
 # ## Getting started
-using MLJ, RDatasets, PrettyPrinting
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+import DataFrames: DataFrame, select, Not
 
 @load DecisionTreeClassifier pkg=DecisionTree
 

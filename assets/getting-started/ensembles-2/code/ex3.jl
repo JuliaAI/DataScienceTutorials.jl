@@ -2,4 +2,4 @@
 tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint
+e |> pprint # use PrettyPrinting

@@ -8,15 +8,19 @@
 # ```
 
 # ## Prelims## This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
-using MLJ, PyPlot, PrettyPrinting, Random,
-      DataFrames
+using MLJ
+using PyPlot
+using PrettyPrinting
+using StableRNGs
+import DataFrames
+
 
 X, y = @load_boston
 sch = schema(X)
 p = length(sch.names)
 n = sch.nrows
 @show (n, p)
-describe(y)
+DataFrames.describe(y)
 
 # Let's load the decision tree regressor
 @load DecisionTreeRegressor
@@ -25,7 +29,7 @@ describe(y)
 tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint
+e |> pprint # use PrettyPrinting
 
 # Note that multiple measures can be reported simultaneously.
 # ## Random forest## Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.
@@ -33,10 +37,10 @@ forest = EnsembleModel(atom=DecisionTreeRegressor())
 forest.atom.n_subfeatures = 3
 
 # (**NB**: we could have fixed `n_subfeatures` in the DTR constructor too).## To get an idea of how many trees are needed, we can follow the evaluation of the error (say the `rms`) for an increasing number of tree over several sampling round.
-Random.seed!(5) # for reproducibility
+rng = StableRNG(5123) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8),
+curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
                          range=r, measure=rms);
 
 # let's plot the curves
@@ -61,7 +65,7 @@ r_bf = range(forest, :bagging_fraction, lower=0.4, upper=1.0);
 # And build a tuned model as usual that we fit on a 80/20 split.# We use a low-resolution grid here to make this tutorial faster but you could of course use a finer grid.
 tuned_forest = TunedModel(model=forest,
                           tuning=Grid(resolution=3),
-                          resampling=CV(nfolds=6, rng=32),
+                          resampling=CV(nfolds=6, rng=StableRNG(32)),
                           ranges=[r_sf, r_bf],
                           measure=rms)
 m = machine(tuned_forest, X, y)

@@ -1,9 +1,13 @@
 # This file was generated, do not modify it. # hide
-using MLJ, PrettyPrinting, DataFrames, Statistics, CSV, Dates
-using PyPlot, HTTP
+using MLJ
+using PrettyPrinting
+import DataFrames: DataFrame, select!, Not, describe
+import Statistics
+using Dates
+using PyPlot
+using UrlDownload
+
 MLJ.color_off() # hide
 
-req = HTTP.get("https://raw.githubusercontent.com/bbrandom91/KC_Housing/master/kc_house_data.csv")
-
-df = CSV.read(req.body, missingstring="NA")
+df = DataFrame(urldownload("https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/kc_housing.csv", true))
 describe(df)

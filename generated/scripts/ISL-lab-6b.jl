@@ -8,7 +8,9 @@
 # ```
 
 # ## Getting started
-using MLJ, RDatasets, PrettyPrinting
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
 
 import Distributions
 const D = Distributions
@@ -156,10 +158,12 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Pretty good! and the parameters are reasonably sparse as expected:
 coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
-round.(coefs, sigdigits=2)
+@show coefs
+@show intercept
 
 # with around 50% sparsity:
-sum(coefs .≈ 0) / length(coefs)
+coef_vals = [c[2] for c in coefs]
+sum(coef_vals .≈ 0) / length(coefs)
 
 # Let's visualise this:
 figure(figsize=(8,6))
