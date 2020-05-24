@@ -33,7 +33,7 @@ The rest of this readme assumes that your current directory is `MLJTutorials` (a
 
 ## For readers
 
-You can read the tutorials [online](https://alan-turing-institute.github.io/MLJTutorials/).
+You can read the tutorials [online](https://alan-turing-institute.github.io/DataScienceTutorials.jl/).
 
 If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Manifest.toml) file.
 
