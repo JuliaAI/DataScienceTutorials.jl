@@ -1,1 +1,1 @@
-CategoricalArrays.CategoricalValue{Int64,UInt32}
+CategoricalValue{Int64,UInt32}

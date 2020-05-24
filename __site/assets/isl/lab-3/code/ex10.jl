@@ -3,5 +3,9 @@ mach = machine(mdl, X, y)
 fit!(mach)
 
 fp = fitted_params(mach)
-@show round.(fp.coefs[1:3], sigdigits=3)
-@show round(fp.intercept, sigdigits=3)
+coefs = fp.coefs
+intercept = fp.intercept
+for (name, val) in coefs
+    println("$(rpad(name, 8)):  $(round(val, sigdigits=3))")
+end
+println("Intercept: $(round(intercept, sigdigits=3))")

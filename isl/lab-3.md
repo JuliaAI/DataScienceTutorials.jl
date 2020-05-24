@@ -1,5 +1,4 @@
-@def hascode = true
-@def showall = true
+@def showall=true
 
 # Lab 3 - Linear Regression
 

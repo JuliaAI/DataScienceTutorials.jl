@@ -7,30 +7,34 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, PyPlot, PrettyPrinting, Random,
-      DataFrames
+using MLJ
+using PyPlot
+using PrettyPrinting
+using StableRNGs
+import DataFrames
+
 
 X, y = @load_boston
 sch = schema(X)
 p = length(sch.names)
 n = sch.nrows
 @show (n, p)
-describe(y)
+DataFrames.describe(y)
 
 @load DecisionTreeRegressor
 
 tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint
+e |> pprint # use PrettyPrinting
 
 forest = EnsembleModel(atom=DecisionTreeRegressor())
 forest.atom.n_subfeatures = 3
 
-Random.seed!(5) # for reproducibility
+rng = StableRNG(5123) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8),
+curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
                          range=r, measure=rms);
 
 figure(figsize=(8,6))
@@ -50,7 +54,7 @@ r_bf = range(forest, :bagging_fraction, lower=0.4, upper=1.0);
 
 tuned_forest = TunedModel(model=forest,
                           tuning=Grid(resolution=3),
-                          resampling=CV(nfolds=6, rng=32),
+                          resampling=CV(nfolds=6, rng=StableRNG(32)),
                           ranges=[r_sf, r_bf],
                           measure=rms)
 m = machine(tuned_forest, X, y)

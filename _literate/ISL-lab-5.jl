@@ -1,6 +1,8 @@
 # ## Getting started
 
-using MLJ, RDatasets
+using MLJ
+import RDatasets: dataset
+import DataFrames: DataFrame, select
 MLJ.color_off() # hide
 auto = dataset("ISLR", "Auto")
 y, X = unpack(auto, ==(:MPG), col->true)

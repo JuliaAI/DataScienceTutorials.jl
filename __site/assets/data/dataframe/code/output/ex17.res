@@ -1,4 +1,4 @@
-19×2 DataFrames.DataFrame
+19×2 DataFrame
 │ Row │ variable │ nmissing │
 │     │ Symbol   │ Union…   │
 ├─────┼──────────┼──────────┤

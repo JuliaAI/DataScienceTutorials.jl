@@ -33,4 +33,4 @@ LGBMRegressor(
     time_out = 120,
     machine_list_file = "",
     save_binary = false,
-    device_type = "cpu") @ 1…42
+    device_type = "cpu") @ 6…74

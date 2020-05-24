@@ -3,15 +3,14 @@ Add here global page variables to use throughout your
 website.
 The website_* must be defined for the RSS to work
 -->
-@def prepath = "MLJTutorials"
+@def prepath = "DataScienceTutorials.jl"
 
-@def website_title = "MLJ Tutorials"
-@def website_descr = "Tutorials for the MLJ universe"
-@def website_url   = "https://alan-turing-institute.github.io/MLJTutorials/"
+@def website_title = "Data Science Tutorials"
+@def website_descr = "Data Science Tutorials using Julia"
+@def website_url   = "https://alan-turing-institute.github.io/DataScienceTutorials.jl/"
 
-@def author = "Anthony Blaom, Thibaut Lienart and collaborators"
+@def author = "Thibaut Lienart, Anthony Blaom and collaborators"
 
-@def hasmath = false <!-- in general pages will not have maths, can adjust locally -->
 @def mintoclevel = 2 <!-- toc starts at h2 onwards -->
 @def maxtoclevel = 3 <!-- toc stops at h3 included -->
 

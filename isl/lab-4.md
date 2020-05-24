@@ -1,4 +1,3 @@
-@def hascode = true
 @def showall = true
 
 # Lab 4 - Logistic Regression, LDA, QDA, KNN

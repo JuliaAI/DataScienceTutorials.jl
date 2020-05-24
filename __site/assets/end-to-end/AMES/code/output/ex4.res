@@ -1,1 +1,1 @@
-Machine{ConstantRegressor} @ 1…94
+Machine{ConstantRegressor} @ 1…56

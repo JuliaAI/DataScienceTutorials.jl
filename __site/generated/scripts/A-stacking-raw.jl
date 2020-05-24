@@ -7,10 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 
-import Random.seed!
-seed!(1234)
+using StableRNGs
 
 linear = @load LinearRegressor pkg=MLJLinearModels
 ridge = @load RidgeRegressor pkg=MultivariateStats; ridge.lambda = 0.01
@@ -38,7 +38,7 @@ avg = @from_network MyAverageTwo(regressor1=model1,
 
 function print_performance(model, data...)
     e = evaluate(model, data...;
-                 resampling=CV(rng=1234, nfolds=8),
+                 resampling=CV(rng=StableRNG(1234), nfolds=8),
                  measure=rms,
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)

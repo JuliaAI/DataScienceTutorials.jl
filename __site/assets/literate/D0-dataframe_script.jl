@@ -1,6 +1,7 @@
 # This file was generated, do not modify it.
 
-using RDatasets, DataFrames
+using RDatasets
+using DataFrames
 
 boston = dataset("MASS", "Boston");
 

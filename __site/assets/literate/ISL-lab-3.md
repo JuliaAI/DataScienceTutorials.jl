@@ -20,7 +20,8 @@ Note: in order to be able to load this, you **must** have the relevant package i
 Let's load the _boston_ data set
 
 ```julia:ex2
-using RDatasets, DataFrames
+import RDatasets: dataset
+import DataFrames: describe, select, Not, rename!
 boston = dataset("MASS", "Boston")
 first(boston, 3)
 ```
@@ -65,8 +66,8 @@ You can then retrieve the  fitted parameters using `fitted_params`:
 
 ```julia:ex8
 fp = fitted_params(mach_uni)
-@show round.(fp.coefs, sigdigits=3)
-@show round(fp.intercept, sigdigits=3)
+@show fp.coefs
+@show fp.intercept
 ```
 
 You can also visualise this
@@ -91,31 +92,24 @@ mach = machine(mdl, X, y)
 fit!(mach)
 
 fp = fitted_params(mach)
-@show round.(fp.coefs[1:3], sigdigits=3)
-@show round(fp.intercept, sigdigits=3)
-```
-
-The coefficients here correspond to each of the feature
-
-```julia:ex11
-println(rpad(" Feature", 11), "| ", "Coefficient")
-println("-"^24)
-for (i, name) in enumerate(names(X))
-    println(rpad("$name", 11), "| ", round(fp.coefs[i], sigdigits=3))
+coefs = fp.coefs
+intercept = fp.intercept
+for (name, val) in coefs
+    println("$(rpad(name, 8)):  $(round(val, sigdigits=3))")
 end
-println(rpad("Intercept", 11), "| ", round(fp.intercept, sigdigits=3))
+println("Intercept: $(round(intercept, sigdigits=3))")
 ```
 
 You can use the `machine` in order to _predict_ values as well and, for instance, compute the root mean squared error:
 
-```julia:ex12
+```julia:ex11
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
 ```
 
 Let's see what the residuals look like
 
-```julia:ex13
+```julia:ex12
 figure(figsize=(8,6))
 res = ŷ .- y
 stem(res)
@@ -127,7 +121,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
 
 Maybe that a histogram is more appropriate here
 
-```julia:ex14
+```julia:ex13
 figure(figsize=(8,6))
 hist(res, density=true)
 
@@ -141,20 +135,20 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
 Let's say we want to also consider an interaction term of `lstat` and `age` taken together.
 To do this, just create a new dataframe with an additional column corresponding to the interaction term:
 
-```julia:ex15
+```julia:ex14
 X2 = hcat(X, X.LStat .* X.Age);
 ```
 
 So here we have a DataFrame with one extra column corresponding to the elementwise products between `:LStat` and `Age`.
 DataFrame gives this a default name (`:x1`) which we can change:
 
-```julia:ex16
+```julia:ex15
 rename!(X2, :x1 => :interaction);
 ```
 
 Ok cool, now let's try the linear regression again
 
-```julia:ex17
+```julia:ex16
 mach = machine(mdl, X2, y)
 fit!(mach)
 ŷ = predict(mach, X2)
@@ -165,7 +159,7 @@ We get slightly better results but nothing spectacular.
 
 Let's get back to the lab where they consider regressing the target variable on `lstat` and `lstat^2`; again, it's essentially a case of defining the right DataFrame:
 
-```julia:ex18
+```julia:ex17
 X3 = hcat(X.LStat, X.LStat.^2)
 mach = machine(mdl, X3, y)
 fit!(mach)
@@ -175,7 +169,7 @@ round(rms(ŷ, y), sigdigits=4)
 
 which again, we can visualise:
 
-```julia:ex19
+```julia:ex18
 Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
 figure(figsize=(8,6))
@@ -187,7 +181,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
 
 \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
 
-```julia:ex20
+```julia:ex19
 PyPlot.close_figs() # hide
 ```
 

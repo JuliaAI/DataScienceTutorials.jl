@@ -9,7 +9,11 @@
 #
 # As in "[choosing a model](/getting-started/choosing-a-model/)", let's load the Iris dataset and unpack it:
 
-using MLJ, Statistics, PrettyPrinting
+using MLJ
+import Statistics
+using PrettyPrinting
+using StableRNGs
+
 MLJ.color_off() # hide
 X, y = @load_iris;
 
@@ -37,7 +41,8 @@ tree = machine(tree_model, X, y)
 #
 # To split the data into a *training* and *testing* set, you can use the function `partition` to obtain indices for data points that should be considered either as training or testing data:
 
-train, test = partition(eachindex(y), 0.7, shuffle=true)
+rng = StableRNG(566)
+train, test = partition(eachindex(y), 0.7, shuffle=true, rng=rng)
 test[1:3]
 
 # ### Fitting and testing the machine

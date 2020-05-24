@@ -1,6 +1,9 @@
 # ## Getting started
 
-using MLJ, RDatasets, Random
+using MLJ
+import RDatasets: dataset
+import DataFrames: DataFrame, select, Not, describe
+using Random
 MLJ.color_off() # hide
 
 data = dataset("datasets", "USArrests")
@@ -61,8 +64,8 @@ names(W)
 
 # What kind of variance can we explain?
 
-r  = report(spca).reports[1]
-cs = cumsum(r.principalvars ./ r.tvar)
+rpca = first(values(report(spca).report_given_machine))
+cs = cumsum(rpca.principalvars ./ rpca.tvar)
 
 # Let's visualise this
 
@@ -95,7 +98,7 @@ spca2_mdl = SPCA2()
 spca2 = machine(spca2_mdl, X)
 fit!(spca2)
 
-assignments = report(spca2).reports[1].assignments
+assignments = first(values(report(spca2).report_given_machine)).assignments
 mask1 = assignments .== 1
 mask2 = assignments .== 2
 mask3 = assignments .== 3;

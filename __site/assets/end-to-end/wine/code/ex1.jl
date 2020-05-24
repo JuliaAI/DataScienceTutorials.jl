@@ -1,5 +1,8 @@
 # This file was generated, do not modify it. # hide
-using HTTP, CSV, MLJ, StatsBase, PyPlot
+using HTTP
+using MLJ
+using PyPlot
+import DataFrames: describe
 MLJ.color_off() # hide
 req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,

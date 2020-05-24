@@ -5,7 +5,8 @@
 #
 # To start with, we will use the `Boston` dataset which is very simple.
 
-using RDatasets, DataFrames
+using RDatasets
+using DataFrames
 
 boston = dataset("MASS", "Boston");
 

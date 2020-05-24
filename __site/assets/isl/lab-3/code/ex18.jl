@@ -1,6 +1,8 @@
 # This file was generated, do not modify it. # hide
-X3 = hcat(X.LStat, X.LStat.^2)
-mach = machine(mdl, X3, y)
-fit!(mach)
-ŷ = predict(mach, X3)
-round(rms(ŷ, y), sigdigits=4)
+Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
+
+figure(figsize=(8,6))
+plot(X.LStat, y, ls="none", marker="o")
+plot(Xnew.LStat, predict(mach, Xnew))
+
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide

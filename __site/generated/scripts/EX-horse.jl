@@ -8,9 +8,11 @@
 # ```
 
 # ## Initial data processing## In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)## This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.## ### Getting the data## The data is pre-split in training and testing and we will keep it as such
-using MLJ, StatsBase
+using MLJ
 
-using HTTP, CSV, DataFrames
+using HTTP
+using CSV
+import DataFrames: DataFrame, select!, Not
 req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
 req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
@@ -118,7 +120,7 @@ fit!(mtm)
 best_pipe = fitted_params(mtm).best_model
 
 # So it looks like it's useful to regularise a fair bit to get a lower cross entropy
-ŷ = MLJ.predict(mtm, Xtrain)
+ŷ = predict(mtm, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean
 
 # Interestingly this does not improve our missclassification rate
@@ -129,7 +131,7 @@ println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = MLJ.predict(dtc, Xtrain)
+ŷ = predict(dtc, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean
 
 # So we get a worse cross entropy but...

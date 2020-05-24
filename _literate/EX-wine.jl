@@ -7,7 +7,10 @@
 # ### Getting the data
 # Let's download the data thanks to the [HTTP.jl](HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")) package and load it into a DataFrame via the [CSV.jl](https://github.com/JuliaData/CSV.jl) package:
 
-using HTTP, CSV, MLJ, StatsBase, PyPlot
+using HTTP
+using MLJ
+using PyPlot
+import DataFrames: describe
 MLJ.color_off() # hide
 req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
@@ -38,12 +41,7 @@ scitype(X)
 # Note also that there are no missing value (otherwise one of the scientific type would have been a `Union{Missing,*}`).
 # Let's check which column is what:
 
-sch = schema(X)
-println(rpad(" Name", 28), "| Scitype")
-println("-"^45)
-for (name, scitype) in zip(sch.names, sch.scitypes)
-    println(rpad("$name", 30), scitype)
-end
+schema(X)
 
 # The two variable that are encoded as `Count` can  probably be re-interpreted; let's have a look at the `Proline` one to see what it looks like
 

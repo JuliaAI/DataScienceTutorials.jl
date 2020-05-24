@@ -1,14 +1,21 @@
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
-# 
+#
 # ## First steps
 #
 # Again, the crabs dataset is so common that there is a  simple load function for it:
 
-using MLJ, StatsBase, Random, PyPlot, CategoricalArrays
-using PrettyPrinting, DataFrames, LossFunctions
+using MLJ
+using StatsBase
+using Random
+using PyPlot
+using CategoricalArrays
+using PrettyPrinting
+import DataFrames
+using LossFunctions
+
 MLJ.color_off() # hide
 X, y = @load_crabs
-X = DataFrame(X)
+X = DataFrames.DataFrame(X)
 @show size(X)
 @show y[1:3]
 first(X, 3) |> pretty

@@ -10,7 +10,8 @@
 
 # ## Definition of composite model type
 
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 import Statistics
 
 # learning network (composite model spec):

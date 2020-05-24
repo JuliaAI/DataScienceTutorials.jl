@@ -1,1 +1,1 @@
-Machine{LinMod} @ 1…35
+Machine{LinMod} @ 1…60

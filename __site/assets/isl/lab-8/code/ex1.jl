@@ -1,5 +1,8 @@
 # This file was generated, do not modify it. # hide
-using MLJ, RDatasets, PrettyPrinting
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+import DataFrames: DataFrame, select, Not
 MLJ.color_off() # hide
 @load DecisionTreeClassifier pkg=DecisionTree
 

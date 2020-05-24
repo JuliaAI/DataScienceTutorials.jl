@@ -18,10 +18,10 @@
 # The base model predictions used to train the adjudicating model are# *not* the predictions of the base learners fitted to all the# training data. Rather, to prevent the adjudicator giving too much# weight to the base learners with low *training* error, the input# data is first split into a number of folds (as in cross-validation),# a base learner is trained on each fold complement individually, and# corresponding predictions on the folds are spliced together to form# a full-length prediction called the *out-of-sample.prediction*.
 # For illustrative purposes we use just three folds. Each base learner# will get three separate machines, for training on each fold# complement, and a fourth machine, trained on all the supplied data,# for use in the prediction flow.
 # We build the learning network with dummy data at the source nodes,# so the reader inspect the workings of the network as it is built (by# calling `fit!` on nodes, and by calling the nodes themselves). As# usual, this data is not seen by the exported composite model type,# and the component models we choose are just default values for the# hyperparameters of the composite model.
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 
-import Random.seed!
-seed!(1234)
+using StableRNGs
 
 # Some models we will use:
 linear = @load LinearRegressor pkg=MLJLinearModels
@@ -54,7 +54,7 @@ avg = @from_network MyAverageTwo(regressor1=model1,
 # Evaluating this average model on the Boston data set, and comparing# with the base model predictions:
 function print_performance(model, data...)
     e = evaluate(model, data...;
-                 resampling=CV(rng=1234, nfolds=8),
+                 resampling=CV(rng=StableRNG(1234), nfolds=8),
                  measure=rms,
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)

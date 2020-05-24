@@ -1,8 +1,10 @@
 # This file was generated, do not modify it.
 
-using MLJ, StatsBase
+using MLJ
 MLJ.color_off() # hide
-using HTTP, CSV, DataFrames
+using HTTP
+using CSV
+import DataFrames: DataFrame, select!, Not
 req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
 req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
@@ -92,7 +94,7 @@ mtm = machine(tm, Xtrain, ytrain)
 fit!(mtm)
 best_pipe = fitted_params(mtm).best_model
 
-ŷ = MLJ.predict(mtm, Xtrain)
+ŷ = predict(mtm, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean
 
 mcr = misclassification_rate(mode.(ŷ), ytrain)
@@ -101,7 +103,7 @@ println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = MLJ.predict(dtc, Xtrain)
+ŷ = predict(dtc, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean
 
 misclassification_rate(mode.(ŷ), ytrain)

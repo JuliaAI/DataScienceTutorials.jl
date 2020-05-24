@@ -1,1 +1,1 @@
-Machine{ProbabilisticTunedModel} @ 1…44
+Machine{ProbabilisticTunedModel{Grid,…}} @ 1…15

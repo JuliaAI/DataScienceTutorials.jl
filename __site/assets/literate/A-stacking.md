@@ -58,10 +58,10 @@ and the component models we choose are just default values for the
 hyperparameters of the composite model.
 
 ```julia:ex1
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 MLJ.color_off() # hide
-import Random.seed!
-seed!(1234)
+using StableRNGs
 ```
 
 Some models we will use:
@@ -109,7 +109,7 @@ with the base model predictions:
 ```julia:ex5
 function print_performance(model, data...)
     e = evaluate(model, data...;
-                 resampling=CV(rng=1234, nfolds=8),
+                 resampling=CV(rng=StableRNG(1234), nfolds=8),
                  measure=rms,
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)

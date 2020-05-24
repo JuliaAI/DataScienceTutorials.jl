@@ -1,5 +1,5 @@
 DecisionTreeClassifier(
-    max_depth = 9,
+    max_depth = 4,
     min_samples_leaf = 1,
     min_samples_split = 2,
     min_purity_increase = 0.0,
@@ -7,4 +7,4 @@ DecisionTreeClassifier(
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 7…82
+    display_depth = 5) @ 5…07

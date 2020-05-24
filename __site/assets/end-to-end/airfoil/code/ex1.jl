@@ -1,6 +1,12 @@
 # This file was generated, do not modify it. # hide
-using MLJ, PrettyPrinting, DataFrames, Statistics, CSV
-using PyPlot, HTTP
+using MLJ
+using PrettyPrinting
+import DataFrames
+import Statistics
+using CSV
+using PyPlot
+using HTTP
+using StableRNGs
 
 MLJ.color_off() # hide
 

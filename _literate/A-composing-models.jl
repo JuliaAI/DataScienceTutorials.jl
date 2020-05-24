@@ -2,7 +2,8 @@
 #
 # Let's start by generating some dummy data with both numerical values and categorical values:
 
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
 MLJ.color_off() # hide
 @load KNNRegressor
 ## input

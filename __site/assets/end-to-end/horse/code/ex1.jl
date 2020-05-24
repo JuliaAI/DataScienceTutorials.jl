@@ -1,7 +1,9 @@
 # This file was generated, do not modify it. # hide
-using MLJ, StatsBase
+using MLJ
 MLJ.color_off() # hide
-using HTTP, CSV, DataFrames
+using HTTP
+using CSV
+import DataFrames: DataFrame, select!, Not
 req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
 req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",

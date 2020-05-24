@@ -1,4 +1,4 @@
-14×4 DataFrames.DataFrame
+14×4 DataFrame
 │ Row │ variable │ mean     │ std      │ eltype   │
 │     │ Symbol   │ Float64  │ Float64  │ DataType │
 ├─────┼──────────┼──────────┼──────────┼──────────┤

@@ -7,7 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using HTTP, CSV, MLJ, StatsBase, PyPlot
+using HTTP
+using MLJ
+using PyPlot
+import DataFrames: describe
 
 req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
 data = CSV.read(req.body,
@@ -26,12 +29,7 @@ yc = coerce(y, OrderedFactor);
 
 scitype(X)
 
-sch = schema(X)
-println(rpad(" Name", 28), "| Scitype")
-println("-"^45)
-for (name, scitype) in zip(sch.names, sch.scitypes)
-    println(rpad("$name", 30), scitype)
-end
+schema(X)
 
 X[1:5, :Proline]
 

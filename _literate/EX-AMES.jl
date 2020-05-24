@@ -3,11 +3,14 @@
 # Let's load a reduced version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
 # As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduced version via `@load_reduced_ames`
 
-using MLJ, PrettyPrinting, DataFrames, Statistics
+using MLJ
+using  PrettyPrinting
+import DataFrames
+import Statistics
 MLJ.color_off() # hide
 
 X, y = @load_reduced_ames
-X = DataFrame(X)
+X = DataFrames.DataFrame(X)
 @show size(X)
 first(X, 3) |> pretty
 

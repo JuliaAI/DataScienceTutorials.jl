@@ -1,4 +1,4 @@
-2×3 DataFrames.DataFrame
+2×3 DataFrame
 │ Row │ Crim    │ Zn      │ Indus   │
 │     │ Float64 │ Float64 │ Float64 │
 ├─────┼─────────┼─────────┼─────────┤

@@ -24,7 +24,7 @@ function try_run(tf)
         catch e
             Logging.disable_logging(Logging.Debug)
             finish(bko, bke, wro, rdo, wre, rde)
-            throw(e)
+            @show e
         end
         Logging.disable_logging(Logging.Debug)
     end

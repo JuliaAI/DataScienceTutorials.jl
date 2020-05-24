@@ -4,15 +4,19 @@
 This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
 
 ```julia:ex1
-using MLJ, PyPlot, PrettyPrinting, Random,
-      DataFrames
+using MLJ
+using PyPlot
+using PrettyPrinting
+using StableRNGs
+import DataFrames
+
 MLJ.color_off() # hide
 X, y = @load_boston
 sch = schema(X)
 p = length(sch.names)
 n = sch.nrows
 @show (n, p)
-describe(y)
+DataFrames.describe(y)
 ```
 
 Let's load the decision tree regressor
@@ -27,7 +31,7 @@ Let's first check the performances of just a single Decision Tree Regressor (DTR
 tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint
+e |> pprint # use PrettyPrinting
 ```
 
 Note that multiple measures can be reported simultaneously.
@@ -46,10 +50,10 @@ forest.atom.n_subfeatures = 3
 To get an idea of how many trees are needed, we can follow the evaluation of the error (say the `rms`) for an increasing number of tree over several sampling round.
 
 ```julia:ex5
-Random.seed!(5) # for reproducibility
+rng = StableRNG(5123) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8),
+curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
                          range=r, measure=rms);
 ```
 
@@ -94,7 +98,7 @@ We use a low-resolution grid here to make this tutorial faster but you could of 
 ```julia:ex10
 tuned_forest = TunedModel(model=forest,
                           tuning=Grid(resolution=3),
-                          resampling=CV(nfolds=6, rng=32),
+                          resampling=CV(nfolds=6, rng=StableRNG(32)),
                           ranges=[r_sf, r_bf],
                           measure=rms)
 m = machine(tuned_forest, X, y)

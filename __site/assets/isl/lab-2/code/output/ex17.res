@@ -1,4 +1,4 @@
-9×4 DataFrames.DataFrame
+9×4 DataFrame
 │ Row │ variable     │ mean    │ median │ std      │
 │     │ Symbol       │ Union…  │ Union… │ Union…   │
 ├─────┼──────────────┼─────────┼────────┼──────────┤

@@ -1,4 +1,4 @@
-12×8 DataFrames.DataFrame
+12×8 DataFrame
 │ Row │ variable │ mean     │ min     │ median  │ max     │ nunique │ nmissing │ eltype   │
 │     │ Symbol   │ Float64  │ Float64 │ Float64 │ Float64 │ Nothing │ Nothing  │ DataType │
 ├─────┼──────────┼──────────┼─────────┼─────────┼─────────┼─────────┼──────────┼──────────┤

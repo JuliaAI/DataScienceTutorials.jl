@@ -1,6 +1,4 @@
-@def hascode = true
-@def showall = true
-@def hasmath = true
+@def showall =true
 
 # Lab 6b - Ridge and Lasso regression
 

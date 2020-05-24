@@ -8,7 +8,8 @@
 # ```
 
 # ## Generating dummy data## Let's start by generating some dummy data with both numerical values and categorical values:
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
 
 @load KNNRegressor
 # input

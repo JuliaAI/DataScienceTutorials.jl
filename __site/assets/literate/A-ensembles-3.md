@@ -12,7 +12,8 @@ for creating bagged ensembles with a few lines of code.
 ## Definition of composite model type
 
 ```julia:ex1
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 import Statistics
 ```
 

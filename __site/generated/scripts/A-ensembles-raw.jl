@@ -7,11 +7,18 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, DataFrames, Statistics, PrettyPrinting
+using MLJ
+import DataFrames
+import Statistics
+using PrettyPrinting
+using StableRNGs
 
-Xraw = rand(300, 3)
-y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(300))
-X = DataFrame(Xraw)
+
+
+rng = StableRNG(512)
+Xraw = rand(rng, 300, 3)
+y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(rng, 300))
+X = DataFrames.DataFrame(Xraw)
 
 train, test = partition(eachindex(y), 0.7);
 
@@ -24,7 +31,7 @@ fit!(knn, rows=train)
 ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
-evaluate!(knn, resampling=Holdout(fraction_train=0.7),
+evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
           measure=rms) |> pprint
 
 ensemble_model = EnsembleModel(atom=knn_model, n=20);
@@ -45,7 +52,7 @@ K_range = range(ensemble_model, :(atom.K),
 
 tm = TunedModel(model=ensemble_model,
                 tuning=Grid(resolution=10), # 10x10 grid
-                resampling=Holdout(fraction_train=0.8, rng=42),
+                resampling=Holdout(fraction_train=0.8, rng=StableRNG(42)),
                 ranges=[B_range, K_range])
 
 tuned_ensemble = machine(tm, X, y)

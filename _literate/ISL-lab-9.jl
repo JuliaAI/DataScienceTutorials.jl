@@ -1,6 +1,9 @@
 # ## Getting started
 
-using MLJ, RDatasets, PrettyPrinting, Random
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+using Random
 MLJ.color_off() # hide
 
 # We start by generating a 2D cloud of points

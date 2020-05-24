@@ -11,7 +11,8 @@
 # In this simple example, no bagging is used, so every atomic model# gets the same learned parameters, unless the atomic model training# algorithm has randomness, eg, DecisionTree with random subsampling# of features at nodes.
 # Note that MLJ has a built in model wrapper called `EnsembleModel`# for creating bagged ensembles with a few lines of code.
 # ## Definition of composite model type
-using MLJ, PyPlot
+using MLJ
+using PyPlot
 import Statistics
 
 # learning network (composite model spec):

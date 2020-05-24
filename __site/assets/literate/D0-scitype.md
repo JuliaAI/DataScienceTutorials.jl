@@ -48,7 +48,9 @@ unless you intend to implement your own scientific type convention.
 The `schema` function
 
 ```julia:ex1
-using RDatasets, MLJScientificTypes
+using RDatasets
+using MLJScientificTypes
+
 boston = dataset("MASS", "Boston")
 sch = schema(boston)
 ```

@@ -8,7 +8,11 @@
 # ```
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl# [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl# [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl## ## Preliminary steps## ### Data## As in "[choosing a model](/getting-started/choosing-a-model/)", let's load the Iris dataset and unpack it:
-using MLJ, Statistics, PrettyPrinting
+using MLJ
+import Statistics
+using PrettyPrinting
+using StableRNGs
+
 
 X, y = @load_iris;
 
@@ -20,7 +24,8 @@ tree_model = DecisionTreeClassifier()
 tree = machine(tree_model, X, y)
 
 # A machine is used both for supervised and unsupervised model.# In this tutorial we give an example for the supervised model first and then go on with the unsupervised case.## ## Training and testing a supervised model## Now that you've declared the model you'd like to consider and the data, we are left with the standard training and testing step for a supervised learning algorithm.## ### Splitting the data## To split the data into a *training* and *testing* set, you can use the function `partition` to obtain indices for data points that should be considered either as training or testing data:
-train, test = partition(eachindex(y), 0.7, shuffle=true)
+rng = StableRNG(566)
+train, test = partition(eachindex(y), 0.7, shuffle=true, rng=rng)
 test[1:3]
 
 # ### Fitting and testing the machine## To fit the machine, you can use the function `fit!` specifying the rows to be used for the training:

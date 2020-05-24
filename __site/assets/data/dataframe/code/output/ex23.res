@@ -1,4 +1,4 @@
-5×4 DataFrames.DataFrame
+5×4 DataFrame
 │ Row │ variable    │ min    │ mean   │ max    │
 │     │ Symbol      │ Any    │ Union… │ Any    │
 ├─────┼─────────────┼────────┼────────┼────────┤

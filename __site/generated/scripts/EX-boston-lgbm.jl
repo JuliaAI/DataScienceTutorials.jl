@@ -8,26 +8,30 @@
 # ```
 
 # **Main author**: Yaqub Alwan (IQVIA).## ## Getting started
-using MLJ, PrettyPrinting, DataFrames, Statistics
-using PyPlot, Random
+using MLJ
+using PrettyPrinting
+import DataFrames
+import Statistics
+using PyPlot
+using StableRNGs
 
 
-Random.seed!(1212)
 @load LGBMRegressor
 
 # Let us try LightGBM out by doing a regression task on the Boston house prices dataset.# This is a commonly used dataset so there is a loader built into MLJ.
 # Here, the objective is to show how LightGBM can do better than a Linear Regressor# with minimal effort.## We start out by taking a quick peek at the data itself and its statistical properties.
 features, targets = @load_boston
-features = DataFrame(features)
+features = DataFrames.DataFrame(features)
 @show size(features)
 @show targets[1:3]
 first(features, 3) |> pretty
 
 # We can also describe the dataframe
-describe(features)
+DataFrames.describe(features)
 
 # Do the usual train/test partitioning. This is important so we can estimate generalisation.
-train, test = partition(eachindex(targets), 0.70, shuffle=true, rng=52)
+train, test = partition(eachindex(targets), 0.70, shuffle=true,
+                        rng=StableRNG(52))
 
 # Let us investigation some of the commonly tweaked LightGBM parameters. We start with looking at a learning curve for number of boostings.
 lgb = LGBMRegressor() #initialised a model with default params
@@ -92,7 +96,7 @@ r1 = range(lgb, :num_iterations, lower=50, upper=100)
 r2 = range(lgb, :min_data_in_leaf, lower=2, upper=10)
 r3 = range(lgb, :learning_rate, lower=1e-1, upper=1e0)
 tm = TunedModel(model=lgb, tuning=Grid(resolution=5),
-                resampling=CV(rng=123), ranges=[r1,r2,r3],
+                resampling=CV(rng=StableRNG(123)), ranges=[r1,r2,r3],
                 measure=rms)
 mtm = machine(tm, features, targets)
 fit!(mtm, rows=train)

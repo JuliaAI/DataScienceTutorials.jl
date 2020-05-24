@@ -8,8 +8,14 @@
 # ```
 
 # **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).## ## Getting started# Here we use the [UCI "Airfoil Self-Noise" dataset](http://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise)# ### Loading and  preparing the data
-using MLJ, PrettyPrinting, DataFrames, Statistics, CSV
-using PyPlot, HTTP
+using MLJ
+using PrettyPrinting
+import DataFrames
+import Statistics
+using CSV
+using PyPlot
+using HTTP
+using StableRNGs
 
 
 
@@ -32,7 +38,7 @@ y, X = unpack(df, ==(:Scaled_Sound), col -> true);
 X = transform(fit!(machine(Standardizer(), X)), X);
 
 # Partition into train and test set
-train, test = partition(eachindex(y), 0.7, shuffle=true);
+train, test = partition(eachindex(y), 0.7, shuffle=true, rng=StableRNG(612));
 
 # Let's first see which models are compatible with the scientific type and machine type of our data
 for model in models(matching(X, y))
@@ -51,7 +57,7 @@ dcr = @load DecisionTreeRegressor pkg=DecisionTree
 
 dcrm = machine(dcr, X, y)
 
-fit!(dcrm, rows=train, force=true)
+fit!(dcrm, rows=train)
 pred_dcrm = MLJ.predict(dcrm, rows=test);
 
 # Now you can call a loss function to assess the performance on test set.

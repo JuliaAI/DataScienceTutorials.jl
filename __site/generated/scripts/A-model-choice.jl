@@ -8,7 +8,8 @@
 # ```
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl# [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl# [MLJModels.jl]: https://github.com/alan-turing-institute/MLJModels.jl# [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl# [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl# [GLM.jl]: https://github.com/JuliaStats/GLM.jl# [ScikitLearn.jl]: https://github.com/cstjean/ScikitLearn.jl# ## Data and its interpretation## ### Machine type and scientific type
-using RDatasets, MLJ
+using RDatasets
+using MLJ
 
 iris = dataset("datasets", "iris")
 

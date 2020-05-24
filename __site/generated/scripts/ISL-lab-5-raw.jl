@@ -7,7 +7,9 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, RDatasets
+using MLJ
+import RDatasets: dataset
+import DataFrames: DataFrame, select
 
 auto = dataset("ISLR", "Auto")
 y, X = unpack(auto, ==(:MPG), col->true)

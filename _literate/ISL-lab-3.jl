@@ -16,7 +16,8 @@ MLJ.color_off() # hide
 #
 # Let's load the _boston_ data set
 
-using RDatasets, DataFrames
+import RDatasets: dataset
+import DataFrames: describe, select, Not, rename!
 boston = dataset("MASS", "Boston")
 first(boston, 3)
 
@@ -49,8 +50,8 @@ fit!(mach_uni)
 # You can then retrieve the  fitted parameters using `fitted_params`:
 
 fp = fitted_params(mach_uni)
-@show round.(fp.coefs, sigdigits=3)
-@show round(fp.intercept, sigdigits=3)
+@show fp.coefs
+@show fp.intercept
 
 # You can also visualise this
 
@@ -71,17 +72,12 @@ mach = machine(mdl, X, y)
 fit!(mach)
 
 fp = fitted_params(mach)
-@show round.(fp.coefs[1:3], sigdigits=3)
-@show round(fp.intercept, sigdigits=3)
-
-# The coefficients here correspond to each of the feature
-
-println(rpad(" Feature", 11), "| ", "Coefficient")
-println("-"^24)
-for (i, name) in enumerate(names(X))
-    println(rpad("$name", 11), "| ", round(fp.coefs[i], sigdigits=3))
+coefs = fp.coefs
+intercept = fp.intercept
+for (name, val) in coefs
+    println("$(rpad(name, 8)):  $(round(val, sigdigits=3))")
 end
-println(rpad("Intercept", 11), "| ", round(fp.intercept, sigdigits=3))
+println("Intercept: $(round(intercept, sigdigits=3))")
 
 # You can use the `machine` in order to _predict_ values as well and, for instance, compute the root mean squared error:
 

@@ -1,4 +1,3 @@
-@def hascode = true
 @def showall = true
 
 # Lab 5 - Cross validation and the bootstrap

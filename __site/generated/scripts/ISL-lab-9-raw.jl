@@ -7,7 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using MLJ, RDatasets, PrettyPrinting, Random
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+using Random
 
 
 Random.seed!(3203)

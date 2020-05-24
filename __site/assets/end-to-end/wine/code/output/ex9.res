@@ -10,4 +10,5 @@ MnPipe(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @ 1…92
+            solver = nothing,
+            nclasses = 2)) @ 1…64

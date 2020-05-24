@@ -7,7 +7,8 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-using RDatasets, MLJ
+using RDatasets
+using MLJ
 
 iris = dataset("datasets", "iris")
 

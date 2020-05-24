@@ -1,0 +1,27 @@
+PyError ($(Expr(:escape, :(ccall(#= /Users/tlienart/.julia/packages/PyCall/zqDXB/src/pyfncall.jl:43 =# @pysym(:PyObject_Call), PyPtr, (PyPtr, PyPtr, PyPtr), o, pyargsptr, kw))))) <class 'TypeError'>
+TypeError("unhashable type: 'numpy.ndarray'")
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/pyplot.py", line 2926, in stem
+    None else {}))
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/__init__.py", line 1810, in inner
+    return func(ax, *args, **kwargs)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/axes/_axes.py", line 2678, in stem
+    marker=markermarker, label="_nolegend_")
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/__init__.py", line 1810, in inner
+    return func(ax, *args, **kwargs)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/axes/_axes.py", line 1611, in plot
+    for line in self._get_lines(*args, **kwargs):
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 393, in _grab_next_args
+    yield from self._plot_args(this, kwargs)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 370, in _plot_args
+    x, y = self._xy_from_xy(x, y)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/axes/_base.py", line 205, in _xy_from_xy
+    by = self.axes.yaxis.update_units(y)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/axis.py", line 1473, in update_units
+    default = self.converter.default_units(data, self)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/category.py", line 103, in default_units
+    axis.set_units(UnitData(data))
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/category.py", line 169, in __init__
+    self.update(data)
+  File "/Users/tlienart/.julia/conda/3/lib/python3.7/site-packages/matplotlib/category.py", line 186, in update
+    for val in OrderedDict.fromkeys(data):
+
