@@ -16,7 +16,7 @@ This repository contains the source code for a [set of tutorials](https://alan-t
 
 You can read the tutorials [online](https://alan-turing-institute.github.io/DataScienceTutorials.jl/).
 
-If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/tlienart/DataScienceTutorials.jl/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml) file.
+If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml) file.
 
 To do so, save both files in an appropriate folder, start Julia, `cd` to the folder and
 
