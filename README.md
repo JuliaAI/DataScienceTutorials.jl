@@ -1,20 +1,23 @@
 # MLJTutorials
 
-[![Tutorials status](https://travis-ci.com/alan-turing-institute/MLJTutorials.svg?branch=master)](https://travis-ci.com/alan-turing-institute/MLJTutorials)
+[![Tutorials status](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl.svg?branch=master)](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl)
 
 **Full checks** tracker: (these combination of versions are known to work fully together and with Julia 1.3)
 
-MLJ   | MLJBase | MLJModels | Commit    | Note | Date
------ | ------- | --------- | --------- | ---- | ----
-0.10.3 | 0.12.8 | 0.9.4     | [df35415] | ✓    | Apr 16, 2020
-0.9.1 | 0.11.7  | 0.8.0     | [4e4db42] | ✓    | Feb 19, 2020
-0.6.0 | 0.9.1   | 0.6.2     | [9cf373d] | ✓    | Dec 31, 2019
-0.6.0 | 0.9.1   | 0.6.0     | [a4c2e3a] | ✓    | Dec 19, 2019    
-0.5.5 | 0.8.4   | 0.5.9     | [8433e41] | ✓    | Nov 29, 2019    
-0.5.4 | 0.8.3   | 0.5.7     | [6b30fda] | ✓    | Nov 25, 2019
-0.5.4 | 0.8.1   | 0.5.7     | [f96a4e5] | ✓    | Nov 19, 2019
-0.5.2 | 0.7.5   | 0.5.6     | [f556f62] | ✓    | Nov 13, 2019
+MLJ    | MLJBase | MLJModels | Commit    | Note | Date
+------ | ------- | --------- | --------- | ---- | ----
+0.11.4 | 0.13.6  | 0.9.11    | [dfd1488] | ✓    | May 25, 2020
+0.10.3 | 0.12.8  | 0.9.4     | [df35415] | ✓    | Apr 16, 2020
+0.9.1  | 0.11.7  | 0.8.0     | [4e4db42] | ✓    | Feb 19, 2020
+0.6.0  | 0.9.1   | 0.6.2     | [9cf373d] | ✓    | Dec 31, 2019
+0.6.0  | 0.9.1   | 0.6.0     | [a4c2e3a] | ✓    | Dec 19, 2019    
+0.5.5  | 0.8.4   | 0.5.9     | [8433e41] | ✓    | Nov 29, 2019    
+0.5.4  | 0.8.3   | 0.5.7     | [6b30fda] | ✓    | Nov 25, 2019
+0.5.4  | 0.8.1   | 0.5.7     | [f96a4e5] | ✓    | Nov 19, 2019
+0.5.2  | 0.7.5   | 0.5.6     | [f556f62] | ✓    | Nov 13, 2019
 
+[dfd1488]: https://github.com/alan-turing-institute/DataScienceTutorials.jl/commit/dfd148871c1de0d0330d639254400a5f089060c3
+**old repo**
 [df35415]: https://github.com/alan-turing-institute/MLJTutorials/commit/df3541557798c9f33303d0691d1f784701b1f4ee
 [4e4db42]: https://github.com/alan-turing-institute/MLJTutorials/commit/4e4db4255172c7f0674236a8e453fb8401a1c08f
 [9cf373d]: https://github.com/alan-turing-institute/MLJTutorials/commit/9cf373dc924380169f2c25a9b48b5f949eaa178f
