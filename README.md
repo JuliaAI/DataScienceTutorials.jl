@@ -1,46 +1,22 @@
-# MLJTutorials
+# DataScienceTutorials.jl
 
-[![Tutorials status](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl.svg?branch=master)](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl)
+Latest CI build: [![Tutorials status](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl.svg?branch=master)](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl) with
 
-**Full checks** tracker: (these combination of versions are known to work fully together and with Julia 1.4)
+```
+[336ed68f] CSV v0.6.2
+[a93c6f00] DataFrames v0.21.1
+[add582a8] MLJ v0.11.4
+[a7f614a8] MLJBase v0.13.6
+[d491faf4] MLJModels v0.9.11
+```
 
-MLJ    | MLJBase | MLJModels | Commit    | Note | Date
------- | ------- | --------- | --------- | ---- | ----
-0.11.4 | 0.13.6  | 0.9.11    | [dfd1488] | ✓    | May 25, 2020
-0.10.3 | 0.12.8  | 0.9.4     | [df35415] | ✓    | Apr 16, 2020
-0.9.1  | 0.11.7  | 0.8.0     | [4e4db42] | ✓    | Feb 19, 2020
-0.6.0  | 0.9.1   | 0.6.2     | [9cf373d] | ✓    | Dec 31, 2019
-0.6.0  | 0.9.1   | 0.6.0     | [a4c2e3a] | ✓    | Dec 19, 2019    
-0.5.5  | 0.8.4   | 0.5.9     | [8433e41] | ✓    | Nov 29, 2019    
-0.5.4  | 0.8.3   | 0.5.7     | [6b30fda] | ✓    | Nov 25, 2019
-0.5.4  | 0.8.1   | 0.5.7     | [f96a4e5] | ✓    | Nov 19, 2019
-0.5.2  | 0.7.5   | 0.5.6     | [f556f62] | ✓    | Nov 13, 2019
-
-[dfd1488]: https://github.com/alan-turing-institute/DataScienceTutorials.jl/commit/dfd148871c1de0d0330d639254400a5f089060c3
-
-**old repo**
-
-[df35415]: https://github.com/alan-turing-institute/MLJTutorials/commit/df3541557798c9f33303d0691d1f784701b1f4ee
-[4e4db42]: https://github.com/alan-turing-institute/MLJTutorials/commit/4e4db4255172c7f0674236a8e453fb8401a1c08f
-[9cf373d]: https://github.com/alan-turing-institute/MLJTutorials/commit/9cf373dc924380169f2c25a9b48b5f949eaa178f
-[a4c2e3a]: https://github.com/alan-turing-institute/MLJTutorials/commit/a4c2e3a7b423b2f2af4171e377beef0e3b6865fc
-[8433e41]: https://github.com/alan-turing-institute/MLJTutorials/commit/8433e41b43636999cce0981c4323fc92029dd438
-[6b30fda]: https://github.com/alan-turing-institute/MLJTutorials/commit/6b30fda6829ee65a55477f98c8498315ba262c0f
-[f96a4e5]: https://github.com/alan-turing-institute/MLJTutorials/commit/f96a4e56bb00c49a52c47f07f5730ffe54cabfa8
-[f556f62]: https://github.com/alan-turing-institute/MLJTutorials/commit/f556f62dad3e9c0e6003faa9ba90d132769fb718
-
-This repository contains tutorials for MLJ.
-Currently the main aim is to add many tutorials presenting different perspectives and contexts through which the MLJ-way should become more apparent.
-The organisation is rudimentary at the moment and once there are more tutorials, we will try to improve that.
-If you have suggestions or recommendations or would like to help, please open an issue here, thanks!
-
-The rest of this readme assumes that your current directory is `MLJTutorials` (a local clone of this repository).
+This repository contains the source code for a [set of tutorials](https://alan-turing-institute.github.io/DataScienceTutorials.jl/) introducing the use of Julia and Julia packages such as MLJ (but not only) to do "data science" in Julia.
 
 ## For readers
 
 You can read the tutorials [online](https://alan-turing-institute.github.io/DataScienceTutorials.jl/).
 
-If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/tlienart/MLJTutorials/master/Manifest.toml) file.
+If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/tlienart/DataScienceTutorials.jl/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml) file.
 
 To do so, save both files in an appropriate folder, start Julia, `cd` to the folder and
 
@@ -52,11 +28,13 @@ Pkg.instantiate()
 
 Each tutorial has a link at the top for a notebook or the raw script which you can download by right-clicking on the link and selecting "*Save file as...*".
 
-**Note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/MLJTutorials/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
+**Note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/DataScienceTutorials.jl/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
 
 ---
 
 ## For developers
+
+The rest of these instructions assume that you've cloned the package and have `cd` to it.
 
 ### Important first steps
 
