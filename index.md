@@ -1,5 +1,4 @@
-@def title = "MLJ Tutorials"
-@def hascode = true
+@def title = "Data Science Tutorials in Julia"
 
 ## Learning by doing
 
@@ -8,7 +7,7 @@ On each tutorial page, you will find a link to download the raw script and the n
 
 Feedback and PRs are always welcome to help make these tutorials better, from the presentation to the content.
 
-In order to reproduce the environment that was used to generate these tutorials, please download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml} in a folder and, in that folder, do
+In order to reproduce the environment that was used to generate these tutorials, please download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml} in a folder and, in that folder, do
 
 ```julia-repl
 julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
