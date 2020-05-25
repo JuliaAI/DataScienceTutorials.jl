@@ -2,7 +2,7 @@
 
 [![Tutorials status](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl.svg?branch=master)](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl)
 
-**Full checks** tracker: (these combination of versions are known to work fully together and with Julia 1.3)
+**Full checks** tracker: (these combination of versions are known to work fully together and with Julia 1.4)
 
 MLJ    | MLJBase | MLJModels | Commit    | Note | Date
 ------ | ------- | --------- | --------- | ---- | ----
