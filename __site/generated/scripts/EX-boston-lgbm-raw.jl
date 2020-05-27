@@ -83,7 +83,7 @@ tm = TunedModel(model=lgb, tuning=Grid(resolution=5),
                 resampling=CV(rng=StableRNG(123)), ranges=[r1,r2,r3],
                 measure=rms)
 mtm = machine(tm, features, targets)
-fit!(mtm, rows=train)
+fit!(mtm, rows=train);
 
 best_model = fitted_params(mtm).best_model
 @show best_model.learning_rate
