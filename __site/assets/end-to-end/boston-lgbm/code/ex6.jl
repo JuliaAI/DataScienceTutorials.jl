@@ -9,8 +9,8 @@ curve = learning_curve!(lgbm, resampling=CV(nfolds=5),
 
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
-yscale("log")
-xlabel("Learning rate", fontsize=14)
-ylabel("RMSE (log scale)", fontsize=14)
+xscale("log")
+xlabel("Learning rate (log scale)", fontsize=14)
+ylabel("RMSE", fontsize=14)
 
 plt.savefig(joinpath(@OUTPUT, "lgbm_hp2.svg")) # hide
