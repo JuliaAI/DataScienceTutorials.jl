@@ -38,7 +38,7 @@
 #
 # A *scientific type convention* is a specific implementation indicating how machine types can be related to scientific types. It may also provide helper functions to convert data to a given scitype.
 #
-# The convention used in MLJ is implemented in [MLJScientificTypes.jl](https://github.com/alan-turing-institute/ScientificTypes.jl).
+# The convention used in MLJ is implemented in [MLJScientificTypes.jl](https://github.com/alan-turing-institute/MLJScientificTypes.jl).
 # This is what we will use throughout; you never need to use ScientificTypes.jl
 # unless you intend to implement your own scientific type convention.
 #
