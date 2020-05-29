@@ -1,6 +1,7 @@
 # This file was generated, do not modify it. # hide
 using HTTP
 using MLJ
+using CSV
 using PyPlot
 import DataFrames: describe
 MLJ.color_off() # hide

@@ -9,6 +9,7 @@
 
 using HTTP
 using MLJ
+using CSV
 using PyPlot
 import DataFrames: describe
 

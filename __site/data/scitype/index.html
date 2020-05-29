@@ -7,7 +7,7 @@
 │  └─ Infinite
 │     ├─ Continuous
 │     └─ Count
-└─ Unknown</code></pre> <p>A <em>scientific type convention</em> is a specific implementation indicating how machine types can be related to scientific types. It may also provide helper functions to convert data to a given scitype.</p> <p>The convention used in MLJ is implemented in <a href="https://github.com/alan-turing-institute/ScientificTypes.jl">MLJScientificTypes.jl</a>. This is what we will use throughout; you never need to use ScientificTypes.jl unless you intend to implement your own scientific type convention.</p> <h3 id=inspecting_the_scitype ><a href="#inspecting_the_scitype">Inspecting the scitype</a></h3> <p>The <code>schema</code> function</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets
+└─ Unknown</code></pre> <p>A <em>scientific type convention</em> is a specific implementation indicating how machine types can be related to scientific types. It may also provide helper functions to convert data to a given scitype.</p> <p>The convention used in MLJ is implemented in <a href="https://github.com/alan-turing-institute/MLJScientificTypes.jl">MLJScientificTypes.jl</a>. This is what we will use throughout; you never need to use ScientificTypes.jl unless you intend to implement your own scientific type convention.</p> <h3 id=inspecting_the_scitype ><a href="#inspecting_the_scitype">Inspecting the scitype</a></h3> <p>The <code>schema</code> function</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> RDatasets
 <span class=hljs-keyword >using</span> MLJScientificTypes
 
 boston = dataset(<span class=hljs-string >"MASS"</span>, <span class=hljs-string >"Boston"</span>)
