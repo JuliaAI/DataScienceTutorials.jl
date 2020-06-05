@@ -1,4 +1,4 @@
-@def title = "Search ⋅ MLJTutorials"
+@def title = "Search ⋅ DataScienceTutorials"
 
 ## Search
 

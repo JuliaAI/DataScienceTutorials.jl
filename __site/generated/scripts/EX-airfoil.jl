@@ -1,9 +1,9 @@
 # Before running this, please make sure to activate and instantiate the environment
-# corresponding to [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml) and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml)
+# corresponding to [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml) and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml)
 # so that you get an environment which matches the one used to generate the tutorials:
 #
 # ```julia
-# cd("MLJTutorials") # cd to folder with the *.toml
+# cd("DataScienceTutorials") # cd to folder with the *.toml
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
@@ -75,7 +75,7 @@ fit!(rfr_m, rows=train);
 pred_rfr = MLJ.predict(rfr_m, rows=test);
 rms(pred_rfr, y[test])
 
-# Unsurprisingly, the RandomForestRegressor does a better job.## Can we do even better? Yeah, we can!! We can make use of Model Tuning.## ## Tuning## In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-institute.github.io/MLJTutorials/isl/lab-5/) and [model-tuning](https://alan-turing-institute.github.io/MLJTutorials/getting-started/model-tuning/)## Range of values for parameters should be specified to do hyperparameter tuning
+# Unsurprisingly, the RandomForestRegressor does a better job.## Can we do even better? Yeah, we can!! We can make use of Model Tuning.## ## Tuning## In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/) and [model-tuning](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)## Range of values for parameters should be specified to do hyperparameter tuning
 r_maxD = range(rfr, :n_trees, lower=9, upper=15)
 r_samF = range(rfr, :sampling_fraction, lower=0.6, upper=0.8)
 r = [r_maxD, r_samF];

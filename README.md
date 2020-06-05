@@ -83,7 +83,7 @@ The last thing to do is to add a link to the page in `_layout/head.html` so that
 ### Visualise modifications locally
 
 ```julia
-cd("path/to/MLJTutorials")
+cd("path/to/DataScienceTutorials")
 using Franklin
 serve()
 ```
