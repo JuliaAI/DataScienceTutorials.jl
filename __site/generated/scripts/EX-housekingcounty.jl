@@ -7,7 +7,7 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-# ## Getting started## This tutorial is adapted from [the corresponding MLR tutorial](https://mlr3gallery.mlr-org.com/house-prices-in-king-county/).## ### Loading and  preparing the data
+# ## Getting started## This tutorial is adapted from [the corresponding MLR3 tutorial](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/).## ### Loading and  preparing the data
 using MLJ
 using PrettyPrinting
 import DataFrames: DataFrame, select!, Not, describe
