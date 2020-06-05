@@ -7,28 +7,32 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-# ## Initial data processing## In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)## > These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.## ### Getting the data# Let's download the data thanks to the [HTTP.jl](HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")) package and load it into a DataFrame via the [CSV.jl](https://github.com/JuliaData/CSV.jl) package:
+# ## Initial data processing## In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)## > These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.## ### Getting the data## Let's download the data thanks to the [UrlDownload.jl](https://github.com/Arkoniak/UrlDownload.jl) package and load it into a DataFrame:
 using HTTP
 using MLJ
-using CSV
 using PyPlot
-import DataFrames: describe
+import DataFrames: DataFrame, describe
+using UrlDownload
 
-req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
-data = CSV.read(req.body,
-                header=["Class", "Alcool", "Malic acid",
-                        "Ash", "Alcalinity of ash", "Magnesium",
-                        "Total phenols", "Flavanoids",
-                        "Nonflavanoid phenols", "Proanthcyanins",
-                        "Color intensity", "Hue",
-                        "OD280/OD315 of diluted wines", "Proline"])
-# the target is the Class column, everything else is a feature
-y, X = unpack(data, ==(:Class), colname->true);
+
+url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+header = ["Class", "Alcool", "Malic acid", "Ash", "Alcalinity of ash",
+          "Magnesium", "Total phenols", "Flavanoids",
+          "Nonflavanoid phenols", "Proanthcyanins", "Color intensity",
+          "Hue", "OD280/OD315 of diluted wines", "Proline"]
+data = urldownload(url, true, format=:CSV, header=header);
+
+# The second argument to `urldownload` adds a progress meter for the download,# the `format` helps indicate the format of the file and the `header` helps# pass the column names which are not in the file.
+df = DataFrame(data)
+describe(df)
+
+# the target is the `Class` column, everything else is a feature; we can# dissociate the two  using the `unpack` function:
+y, X = unpack(df, ==(:Class), colname->true);
 
 # ### Setting the scientific type## Let's explore the scientific type attributed by default to the target and the features
 scitype(y)
 
-# this should be changed as it should be considered as an ordered factor
+# this should be changed as it should be considered as an ordered factor. The# difference is as follows:## * a `Count` corresponds to an integer between 0 and infinity# * a `OrderedFactor` however is a categorical object (there are finitely many options) with ordering (`1 < 2 < 3`).
 yc = coerce(y, OrderedFactor);
 
 # Let's now consider the features
@@ -46,7 +50,7 @@ Xc = coerce(X, :Proline=>Continuous, :Magnesium=>Continuous);
 # Finally, let's have a quick look at the mean and standard deviation of each feature to get a feel for their amplitude:
 describe(Xc, :mean, :std)
 
-# Right so it varies a fair bit which would invite to standardise the data.## **Note**: to complete such a first step, one could explore histograms of the various features for instance, check that there is enough variation among the continuous features and that there does not seem to be problems in the encoding, we cut this out to shorten the tutorial. We could also have checked that the data was balanced.## ## Getting a baseline## It's a multiclass classification problem with continuous inputs so a sensible start is  to test two very simple classifiers to get a baseline.# We'll train two simple pipelines:# - a Standardizer + KNN classifier and# - a Standardizer + Multinomial classifier (logistic regression).
+# Right so it varies a fair bit which would invite to standardise the data.## **Note**: to complete such a first step, one could explore histograms of the various features for instance, check that there is enough variation among the continuous features and that there does not seem to be problems in the encoding, we cut this out to shorten the tutorial. We could also have checked that the data is balanced.## ## Getting a baseline## It's a multiclass classification problem with continuous inputs so a sensible start is  to test two very simple classifiers to get a baseline.# We'll train two simple pipelines:# - a Standardizer + KNN classifier and# - a Standardizer + Multinomial classifier (logistic regression).
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 

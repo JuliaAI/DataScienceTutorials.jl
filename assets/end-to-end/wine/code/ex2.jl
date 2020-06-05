@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-scitype(y)
+df = DataFrame(data)
+describe(df)
