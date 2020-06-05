@@ -90,7 +90,7 @@ We'll train two simple pipelines:
 @load MultinomialClassifier pkg="MLJLinearModels";
 
 @pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
-@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;
 ```
 
 We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
