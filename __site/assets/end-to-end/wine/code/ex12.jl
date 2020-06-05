@@ -1,4 +1,6 @@
 # This file was generated, do not modify it. # hide
-opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
-res = evaluate!(knn; opts...)
-round(res.measurement[1], sigdigits=3)
+train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+Xtrain = selectrows(Xc, train)
+Xtest = selectrows(Xc, test)
+ytrain = selectrows(yc, train)
+ytest = selectrows(yc, test);

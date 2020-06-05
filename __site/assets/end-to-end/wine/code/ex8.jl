@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-describe(Xc, :mean, :std)
+X[1:5, :Proline]

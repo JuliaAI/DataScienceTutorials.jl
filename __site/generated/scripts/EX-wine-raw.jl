@@ -9,20 +9,22 @@
 
 using HTTP
 using MLJ
-using CSV
 using PyPlot
-import DataFrames: describe
+import DataFrames: DataFrame, describe
+using UrlDownload
 
-req = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
-data = CSV.read(req.body,
-                header=["Class", "Alcool", "Malic acid",
-                        "Ash", "Alcalinity of ash", "Magnesium",
-                        "Total phenols", "Flavanoids",
-                        "Nonflavanoid phenols", "Proanthcyanins",
-                        "Color intensity", "Hue",
-                        "OD280/OD315 of diluted wines", "Proline"])
-# the target is the Class column, everything else is a feature
-y, X = unpack(data, ==(:Class), colname->true);
+
+url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+header = ["Class", "Alcool", "Malic acid", "Ash", "Alcalinity of ash",
+          "Magnesium", "Total phenols", "Flavanoids",
+          "Nonflavanoid phenols", "Proanthcyanins", "Color intensity",
+          "Hue", "OD280/OD315 of diluted wines", "Proline"]
+data = urldownload(url, true, format=:CSV, header=header);
+
+df = DataFrame(data)
+describe(df)
+
+y, X = unpack(df, ==(:Class), colname->true);
 
 scitype(y)
 
