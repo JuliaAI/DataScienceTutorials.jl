@@ -27,7 +27,8 @@ r   = range(dtc, :max_depth, lower=1, upper=5)
 # For hyperparameters of type `<:Real`, you should specify a range of values as done above.
 # For hyperparameters of other type (e.g. `Symbol`), you should use the `values=...` keyword.
 #
-# Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy:
+# Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy. 
+# A tuning strategy consists of (i) a model, (ii) a set of values for the tuned paramters and (iii) a measure to optimize:
 
 tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)
 
