@@ -38,6 +38,7 @@ preproc(s) = ACTIVATE * s
 
 # Remove lines that end with `# hide`
 postproc(s) = replace(s, r"(^|\n).*?#(\s)*?(?i)hide(?:all)?"=>s"\1")
+postproc_nb(s) = replace(s, r",?\n.*?\".*?#\s*?(?i)hide(?:all)?.*?\""=>"")
 
 # =============================================================================
 
@@ -45,9 +46,10 @@ get_fn(fp) = splitext(splitdir(fp)[2])[1]
 
 for file in ifiles
    # Generate annotated notebooks
-   Literate.notebook(file, nbpath,
-                      preprocess=preproc, postprocess=postproc,
-                      execute=false, documenter=false)
+   Literate.notebook(file, nbpath, preprocess=preproc,
+                     execute=false, documenter=false)
+   nbp = joinpath(nbpath, splitext(splitdir(file)[2])[1] * ".ipynb")
+   write(nbp, postproc_nb(read(nbp, String)))
 
    # Generate annotated scripts
    Literate.script(file, scpath,

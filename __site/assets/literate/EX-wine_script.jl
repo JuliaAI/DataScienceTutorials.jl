@@ -35,7 +35,7 @@ describe(Xc, :mean, :std)
 @load MultinomialClassifier pkg="MLJLinearModels";
 
 @pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
-@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;
 
 train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
 Xtrain = selectrows(Xc, train)
