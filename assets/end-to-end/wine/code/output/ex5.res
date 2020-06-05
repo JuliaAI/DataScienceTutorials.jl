@@ -1,1 +1,18 @@
-MLJScientificTypes.Schema{(:Alcool, Symbol("Malic acid"), :Ash, Symbol("Alcalinity of ash"), :Magnesium, Symbol("Total phenols"), :Flavanoids, Symbol("Nonflavanoid phenols"), :Proanthcyanins, Symbol("Color intensity"), :Hue, Symbol("OD280/OD315 of diluted wines"), :Proline),Tuple{Float64,Float64,Float64,Float64,Int64,Float64,Float64,Float64,Float64,Float64,Float64,Float64,Int64},Tuple{ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Count,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Continuous,ScientificTypes.Count},178}()
+┌──────────────────────────────┬─────────┬────────────┐
+│ _.names                      │ _.types │ _.scitypes │
+├──────────────────────────────┼─────────┼────────────┤
+│ Alcool                       │ Float64 │ Continuous │
+│ Malic acid                   │ Float64 │ Continuous │
+│ Ash                          │ Float64 │ Continuous │
+│ Alcalinity of ash            │ Float64 │ Continuous │
+│ Magnesium                    │ Int64   │ Count      │
+│ Total phenols                │ Float64 │ Continuous │
+│ Flavanoids                   │ Float64 │ Continuous │
+│ Nonflavanoid phenols         │ Float64 │ Continuous │
+│ Proanthcyanins               │ Float64 │ Continuous │
+│ Color intensity              │ Float64 │ Continuous │
+│ Hue                          │ Float64 │ Continuous │
+│ OD280/OD315 of diluted wines │ Float64 │ Continuous │
+│ Proline                      │ Int64   │ Count      │
+└──────────────────────────────┴─────────┴────────────┘
+_.nrows = 178
