@@ -8,6 +8,6 @@
  atomic_weights = [],
  bagging_fraction = 0.8,
  rng = Random._GLOBAL_RNG(),
- n = 300,
+ n = 150,
  acceleration = CPU1{Nothing}(nothing),
  out_of_bag_measure = [])

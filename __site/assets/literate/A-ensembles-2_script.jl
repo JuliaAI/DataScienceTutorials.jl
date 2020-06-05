@@ -32,13 +32,14 @@ curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
 
 figure(figsize=(8,6))
 plot(curves.parameter_values, curves.measurements)
-xlabel("Number of trees", fontsize=14)
-xticks([10, 250, 500, 750, 1000])
-ylim([4, 5])
+ylabel("Root Mean Squared error", fontsize=16)
+xlabel("Number of trees", fontsize=16)
+xticks([10, 250, 500, 750, 1000], fontsize=14)
+yticks(fontsize=14)
 
 savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
 
-forest.n = 300;
+forest.n = 150;
 
 params(forest) |> pprint
 

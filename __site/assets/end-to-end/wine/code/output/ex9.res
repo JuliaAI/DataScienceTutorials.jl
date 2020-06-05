@@ -1,1 +1,14 @@
-Main.FD_SANDBOX_6379546592481509243.MnPipe(MLJModels.Standardizer(Symbol[], false, false, false), MLJLinearModels.MultinomialClassifier(1.0, 0.0, :l2, true, false, nothing, 2))
+MnPipe(
+    std = Standardizer(
+            features = Symbol[],
+            ignore = false,
+            ordered_factor = false,
+            count = false),
+    clf = MultinomialClassifier(
+            lambda = 1.0,
+            gamma = 0.0,
+            penalty = :l2,
+            fit_intercept = true,
+            penalize_intercept = false,
+            solver = nothing,
+            nclasses = 2)) @ 8…98

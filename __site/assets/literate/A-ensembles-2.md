@@ -62,19 +62,20 @@ let's plot the curves
 ```julia:ex6
 figure(figsize=(8,6))
 plot(curves.parameter_values, curves.measurements)
-xlabel("Number of trees", fontsize=14)
-xticks([10, 250, 500, 750, 1000])
-ylim([4, 5])
+ylabel("Root Mean Squared error", fontsize=16)
+xlabel("Number of trees", fontsize=16)
+xticks([10, 250, 500, 750, 1000], fontsize=14)
+yticks(fontsize=14)
 
 savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
 ```
 
 \figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
 
-So out of this curve we could decide for instance to go for 300 trees:
+The curve is pretty noisy but let's just go for 150 trees:
 
 ```julia:ex7
-forest.n = 300;
+forest.n = 150;
 ```
 
 ### Tuning

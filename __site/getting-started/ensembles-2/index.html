@@ -27,12 +27,12 @@ Type:           Float64
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @ 9…95</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
+    merge_purity_threshold = 1.0) @ 1…81</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
 <span class=hljs-literal >e</span> = evaluate!(tree, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
               measure=[rms, rmslp1])
 <span class=hljs-literal >e</span> |&gt; pprint <span class=hljs-comment ># use PrettyPrinting</span></code></pre><pre><code class="plaintext hljs">(measure = [rms, rmslp1],
- measurement = [7.058450107747528, 0.3275559703714572],
- per_fold = [[7.058450107747528], [0.3275559703714572]],
+ measurement = [7.062202405332688, 0.3277498771713516],
+ per_fold = [[7.062202405332688], [0.3277498771713516]],
  per_observation = [missing, missing])</code></pre> <p>Note that multiple measures can be reported simultaneously.</p> <h2 id=random_forest ><a href="#random_forest">Random forest</a></h2> <p>Let&#39;s create an ensemble of DTR and fix the number of subfeatures to 3 for now.</p> <pre><code class="julia hljs">forest = EnsembleModel(atom=DecisionTreeRegressor())
 forest.atom.n_subfeatures = <span class=hljs-number >3</span></code></pre><pre><code class="plaintext hljs">3</code></pre>
 <p>&#40;<strong>NB</strong>: we could have fixed <code>n_subfeatures</code> in the DTR constructor too&#41;.</p>
@@ -45,12 +45,13 @@ curves = learning_curve!(m, resampling=Holdout(fraction_train=<span class=hljs-n
 <p>let&#39;s plot the curves</p>
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 plot(curves.parameter_values, curves.measurements)
-xlabel(<span class=hljs-string >"Number of trees"</span>, fontsize=<span class=hljs-number >14</span>)
-xticks([<span class=hljs-number >10</span>, <span class=hljs-number >250</span>, <span class=hljs-number >500</span>, <span class=hljs-number >750</span>, <span class=hljs-number >1000</span>])
-ylim([<span class=hljs-number >4</span>, <span class=hljs-number >5</span>])</code></pre>
+ylabel(<span class=hljs-string >"Root Mean Squared error"</span>, fontsize=<span class=hljs-number >16</span>)
+xlabel(<span class=hljs-string >"Number of trees"</span>, fontsize=<span class=hljs-number >16</span>)
+xticks([<span class=hljs-number >10</span>, <span class=hljs-number >250</span>, <span class=hljs-number >500</span>, <span class=hljs-number >750</span>, <span class=hljs-number >1000</span>], fontsize=<span class=hljs-number >14</span>)
+yticks(fontsize=<span class=hljs-number >14</span>)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/getting-started/ensembles-2/code/output/A-ensembles-2-curves.svg" alt="RMS vs number of trees">
-<p>So out of this curve we could decide for instance to go for 300 trees:</p>
-<pre><code class="julia hljs">forest.n = <span class=hljs-number >300</span>;</code></pre>
+<p>The curve is pretty noisy but let&#39;s just go for 150 trees:</p>
+<pre><code class="julia hljs">forest.n = <span class=hljs-number >150</span>;</code></pre>
 <h3 id=tuning ><a href="#tuning">Tuning</a></h3>
 <p>As <code>forest</code> is a composite model, it has nested hyperparameters:</p>
 <pre><code class="julia hljs">params(forest) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(atom = (max_depth = -1,
@@ -63,7 +64,7 @@ ylim([<span class=hljs-number >4</span>, <span class=hljs-number >5</span>])</co
  atomic_weights = [],
  bagging_fraction = 0.8,
  rng = Random._GLOBAL_RNG(),
- n = 300,
+ n = 150,
  acceleration = CPU1{Nothing}(nothing),
  out_of_bag_measure = [])</code></pre>
 <p>Let&#39;s define a range for the number of subfeatures and for the bagging fraction:</p>
@@ -79,8 +80,8 @@ m = machine(tuned_forest, X, y)
 <span class=hljs-literal >e</span> = evaluate!(m, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
               measure=[rms, rmslp1])
 <span class=hljs-literal >e</span> |&gt; pprint</code></pre><pre><code class="plaintext hljs">(measure = [rms, rmslp1],
- measurement = [3.9348782212945435, 0.24914331578455293],
- per_fold = [[3.9348782212945435], [0.24914331578455293]],
+ measurement = [3.9291969189624694, 0.24921244622176925],
+ per_fold = [[3.9291969189624694], [0.24921244622176925]],
  per_observation = [missing, missing])</code></pre>
 <h3 id=reporting ><a href="#reporting">Reporting</a></h3>  Again, you could show a 2D heatmap of the hyperparameters</p>
 <pre><code class="julia hljs">r = report(m)

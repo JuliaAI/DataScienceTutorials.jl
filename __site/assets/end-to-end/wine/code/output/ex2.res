@@ -1,1 +1,1 @@
-AbstractArray{ScientificTypes.Count,1}
+AbstractArray{Count,1}

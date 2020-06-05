@@ -1,4 +1,3 @@
-@def hascode = true
 @def showall = true
 
 # Wine
