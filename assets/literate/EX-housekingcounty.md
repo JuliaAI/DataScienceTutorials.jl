@@ -1,7 +1,7 @@
 <!--This file was generated, do not modify it.-->
 ## Getting started
 
-This tutorial is adapted from [the corresponding MLR tutorial](https://mlr3gallery.mlr-org.com/house-prices-in-king-county/).
+This tutorial is adapted from [the corresponding MLR3 tutorial](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/).
 
 ### Loading and  preparing the data
 
