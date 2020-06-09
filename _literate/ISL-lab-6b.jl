@@ -31,7 +31,7 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 using PyPlot
 
 figure(figsize=(8,6))
-plot(y, ls="none", marker="o")
+plt.plot(y, ls="none", marker="o")
 
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
@@ -51,7 +51,7 @@ xlabel("Salary", fontsize=14); ylabel("Density", fontsize=14)
 edfit = D.fit_mle(D.Exponential, y)
 xx = range(minimum(y), 2500, length=100)
 yy = pdf.(edfit, xx)
-plot(xx, yy, lw=3, label="Exponential distribution fit")
+plt.plot(xx, yy, lw=3, label="Exponential distribution fit")
 
 legend(fontsize=12)
 
@@ -106,8 +106,8 @@ xx = range(-1100, 1100, length=100)
 ndfit = D.fit_mle(D.Normal, res)
 lfit  = D.fit_mle(D.Laplace, res)
 
-plot(xx, pdf.(ndfit, xx), lw=3, color="orange", label="Normal fit")
-plot(xx, pdf.(lfit, xx), lw=3, color="magenta", label="Laplace fit")
+plt.plot(xx, pdf.(ndfit, xx), lw=3, color="orange", label="Normal fit")
+plt.plot(xx, pdf.(lfit, xx), lw=3, color="magenta", label="Laplace fit")
 
 legend(fontsize=12)
 
@@ -157,6 +157,7 @@ stem(res)
 
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
+xlim(0,size(res)[1])
 
 ylim([-1300, 1000])
 
