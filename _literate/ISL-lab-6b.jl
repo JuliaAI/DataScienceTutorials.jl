@@ -156,8 +156,9 @@ res = ŷ .- y[test]
 stem(res)
 
 xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
-xlim(0,size(res)[1])
+xlabel("Index", fontsize=14); 
+ylabel("Residual (ŷ - y)", fontsize=14)
+xlim(1, length(res))
 
 ylim([-1300, 1000])
 
