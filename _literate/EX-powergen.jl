@@ -171,7 +171,7 @@ X = data[:,[:Windspeed,:Temperature,:Radiation_dir,:Radiation_dif]]
 
 train, test = partition(eachindex(y_wind), 0.7, shuffle=true, rng=5)
 
-# Model tuning
+# ### Model tuning
 
 linReg = LinearRegressor()
 Lasso = LassoRegressor()
@@ -190,7 +190,9 @@ m_Lasso = machine(tm_Lasso, X, y_wind)
 fit!(m_linReg, rows=train)
 fit!(m_Lasso, rows=train)
 
-# We've now fitted both models on for wind generation.
+
+# ### Model evaluation
+# We've now fitted both models for wind power generation (Wind_gen).
 # Let's use them to predict values over the test set and investigate their perfomance
 
 y_hat =  predict(m_Lasso, rows=test)
@@ -222,7 +224,7 @@ plt.legend()
 # Yet, had we had a larger set of weather features, LASSO would most likely have been found to perform better.
 # In particular, it would have allowed to select the most relevant features and regularize their estimated effect.
 
-#3. Finally, let's plot the residuals to see if there is any obvious remaining structure in them.
+# 3. Finally, let's plot the residuals to see if there is any obvious remaining structure in them.
 
 res_lin = y_hat_lin .- y_wind[test]
 res = y_hat .- y_wind[test]
