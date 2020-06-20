@@ -4,10 +4,10 @@ Latest CI build: [![Tutorials status](https://travis-ci.com/alan-turing-institut
 
 ```
 [336ed68f] CSV v0.6.2
-[a93c6f00] DataFrames v0.21.1
+[a93c6f00] DataFrames v0.21.2
 [add582a8] MLJ v0.11.4
-[a7f614a8] MLJBase v0.13.6
-[d491faf4] MLJModels v0.9.11
+[a7f614a8] MLJBase v0.13.10
+[d491faf4] MLJModels v0.10.0
 ```
 
 This repository contains the source code for a [set of tutorials](https://alan-turing-institute.github.io/DataScienceTutorials.jl/) introducing the use of Julia and Julia packages such as MLJ (but not only) to do "data science" in Julia.

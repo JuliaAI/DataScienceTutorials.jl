@@ -134,9 +134,9 @@ version = "0.14.1"
 
 [[CodeTracking]]
 deps = ["InteractiveUtils", "UUIDs"]
-git-tree-sha1 = "9c173f62af93cce8af2bd3527d160b6ddd6eaf81"
+git-tree-sha1 = "cab4da992adc0a64f63fa30d2db2fd8bec40cab4"
 uuid = "da1fd8a2-8d9e-5ec2-8556-3022fb5608a2"
-version = "1.0.0"
+version = "0.5.11"
 
 [[CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
@@ -512,6 +512,12 @@ git-tree-sha1 = "b34d7cef7b337321e97d22242c3c2b91f476748e"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.0"
 
+[[JuliaInterpreter]]
+deps = ["CodeTracking", "InteractiveUtils", "Random", "UUIDs"]
+git-tree-sha1 = "79f97cb588ea37d4e0fe771924b4e8e53253f01b"
+uuid = "aa1ae85d-cabe-5617-a682-6adf51b2e16a"
+version = "0.7.22"
+
 [[Juno]]
 deps = ["Base64", "Logging", "Media", "Profile"]
 git-tree-sha1 = "a686b0cf235fa3e491b79b4783c2d2382292b436"
@@ -579,9 +585,9 @@ version = "1.16.0+3"
 
 [[LightGBM]]
 deps = ["Dates", "Libdl", "MLJModelInterface", "StatsBase"]
-git-tree-sha1 = "5ac0e4af16f4f5edd94ea3fa1e79d8933001912d"
+git-tree-sha1 = "cae192532a16a84190935389dae1a3a9cdc92ce4"
 uuid = "7acf609c-83a4-11e9-1ffb-b912bcd3b04a"
-version = "0.2.2"
+version = "0.3.1"
 
 [[LineSearches]]
 deps = ["LinearAlgebra", "NLSolversBase", "NaNMath", "Parameters", "Printf", "Test"]
@@ -620,6 +626,12 @@ git-tree-sha1 = "3cd347266e394a066ca7f17bd8ff589ff5ce1d35"
 uuid = "30fc2ffe-d236-52d8-8643-a9d8f7c094a7"
 version = "0.6.2"
 
+[[LoweredCodeUtils]]
+deps = ["JuliaInterpreter"]
+git-tree-sha1 = "225f0035f01c24858c0884f38bb519e22b0a5150"
+uuid = "6f1432cf-f94c-5a45-995e-cdbf5db27b0b"
+version = "0.4.5"
+
 [[MKL_jll]]
 deps = ["IntelOpenMP_jll", "Libdl", "Pkg"]
 git-tree-sha1 = "0ce9a7fa68c70cf83c49d05d2c04d91b47404b08"
@@ -628,33 +640,33 @@ version = "2020.1.216+0"
 
 [[MLJ]]
 deps = ["CategoricalArrays", "ComputationalResources", "Distributed", "Distributions", "LinearAlgebra", "MLJBase", "MLJModels", "MLJScientificTypes", "MLJTuning", "Pkg", "ProgressMeter", "Random", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "c21b261f43a76bcf624c9b01ad2f122832c1aebe"
+git-tree-sha1 = "653d40b28b7149f5211eb4923e1b89ba9a5ef61c"
 uuid = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-version = "0.11.4"
+version = "0.11.5"
 
 [[MLJBase]]
-deps = ["CategoricalArrays", "ComputationalResources", "Dates", "DelimitedFiles", "Distributed", "Distributions", "HTTP", "InteractiveUtils", "InvertedIndices", "JLSO", "JSON", "LinearAlgebra", "LossFunctions", "MLJModelInterface", "MLJScientificTypes", "Missings", "OrderedCollections", "Parameters", "PrettyTables", "ProgressMeter", "Random", "ScientificTypes", "StableRNGs", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "7acf9fefd139d08b858db28df96eb90d882dde8c"
+deps = ["CategoricalArrays", "ComputationalResources", "Dates", "DelimitedFiles", "Distributed", "Distributions", "HTTP", "InteractiveUtils", "InvertedIndices", "JLSO", "JSON", "LinearAlgebra", "LossFunctions", "MLJModelInterface", "MLJScientificTypes", "Missings", "OrderedCollections", "Parameters", "PrettyTables", "ProgressMeter", "Random", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
+git-tree-sha1 = "d8ba2063ffaaa7f0fe91ea5455a7bf838c1424ac"
 uuid = "a7f614a8-145f-11e9-1d2a-a57a1082229d"
-version = "0.13.6"
+version = "0.13.10"
 
 [[MLJLinearModels]]
 deps = ["DocStringExtensions", "IterativeSolvers", "LinearAlgebra", "LinearMaps", "MLJModelInterface", "Optim", "Parameters"]
-git-tree-sha1 = "8bb5fec6e2f635d66fe3ca0c30181edfd446d663"
+git-tree-sha1 = "01e7a3dc5c07982315c9163bbc3ad9d08811ea8e"
 uuid = "6ee0df7b-362f-4a72-a706-9e79364fb692"
-version = "0.4.0"
+version = "0.5.0"
 
 [[MLJModelInterface]]
 deps = ["Random", "ScientificTypes"]
-git-tree-sha1 = "3cc9bd71e52d3114f3a17cb71119ec3f69a0cf10"
+git-tree-sha1 = "b02b13fde7b0dc301adc070d650405aa4909e657"
 uuid = "e80e1ace-859a-464e-9ed9-23947d8ae3ea"
-version = "0.2.7"
+version = "0.3.0"
 
 [[MLJModels]]
 deps = ["CategoricalArrays", "Dates", "Distances", "Distributions", "InteractiveUtils", "LinearAlgebra", "MLJBase", "MLJModelInterface", "MultivariateStats", "OrderedCollections", "Parameters", "Pkg", "Random", "Requires", "ScientificTypes", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "8aa249225a074db78b5ea18502bca41721a16343"
+git-tree-sha1 = "c784f4f1594d3e399b69f4bf0dee30551a3be157"
 uuid = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
-version = "0.9.12"
+version = "0.10.0"
 
 [[MLJScientificTypes]]
 deps = ["CategoricalArrays", "ColorTypes", "Dates", "PrettyTables", "ScientificTypes", "Tables"]
@@ -957,10 +969,10 @@ uuid = "ae029012-a4dd-5104-9daa-d747884805df"
 version = "1.0.1"
 
 [[Revise]]
-deps = ["Distributed", "FileWatching", "InteractiveUtils", "LibGit2", "OrderedCollections", "Pkg", "REPL", "Random", "Test", "UUIDs", "Unicode"]
-git-tree-sha1 = "180959294ae0733fbca94c24611c97af5d7fb936"
+deps = ["CodeTracking", "Distributed", "FileWatching", "JuliaInterpreter", "LibGit2", "LoweredCodeUtils", "OrderedCollections", "Pkg", "REPL", "UUIDs", "Unicode"]
+git-tree-sha1 = "54ed37cdd109404edc02507409078f6d922fd279"
 uuid = "295af30f-e4ad-537b-8983-00126c2a3abe"
-version = "1.0.3"
+version = "2.7.2"
 
 [[Rmath]]
 deps = ["Random", "Rmath_jll"]
