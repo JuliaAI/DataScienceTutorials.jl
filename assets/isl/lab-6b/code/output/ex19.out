@@ -1,2 +1,2 @@
 round(best_mdl.reg.lambda, sigdigits = 4) = 2.154
-round(best_mdl.reg.gamma, sigdigits = 4) = 500.0
+round(best_mdl.reg.gamma, sigdigits = 4) = 2641.0
