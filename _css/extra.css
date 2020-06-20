@@ -144,3 +144,5 @@ h3 {
     border-radius: 4px;
     padding: 2px;
 }
+
+.franklin-content .img-wide img { width: 95%; padding-left: 0;}

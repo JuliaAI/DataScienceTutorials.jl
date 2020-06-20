@@ -82,3 +82,4 @@ The examples can be followed in any order, the tags can guide you as to which tu
 * [Airfoil](/end-to-end/airfoil/), *simple*, *regression*, *random forest*
 * [Boston LGBM](/end-to-end/boston-lgbm/), *intermediate*, *regression*, *LightGBM*
 * [Using GLM.jl](/end-to-end/glm/), *simple*, *regression*.
+* [Power Generation](/end-to-end/powergen/), *simple*, *feature pre-processing*, *regression*, *temporal data*.
