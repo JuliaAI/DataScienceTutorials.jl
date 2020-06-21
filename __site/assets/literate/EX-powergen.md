@@ -23,7 +23,7 @@ Note that the first row in both datasets contains headers; hence we don't need t
 ```julia:ex2
 data_repo = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"
 
-url_power = data_repo * "/power_syst/DE_power_hourly.csv"
+url_power   = data_repo * "/power_syst/DE_power_hourly.csv"
 url_weather = data_repo * "/power_syst/DE_weather_data.csv"
 
 power   = DataFrame(urldownload(url_power))
@@ -252,7 +252,7 @@ then we instantiate a model and fit it:
 ```julia:ex19
 linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
-fit!(m_linReg, rows=train)
+fit!(m_linReg, rows=train);
 ```
 
 ### Model evaluation
@@ -264,7 +264,7 @@ Let's use it to predict values over the test set and investigate the performance
 y_hat = predict(m_linReg, rows=test);
 ```
 
-We can start by visualising the observed and predicted values of wind power generation.
+We can start by visualising the observed and predicted valzes of wind power generation.
 
 ```julia:ex21
 figure(figsize=(8, 6))
@@ -322,7 +322,7 @@ hist(res, color="blue", edgecolor="white", bins=50,
 savefig(joinpath(@OUTPUT, "hist_residuals.svg")) # hide
 ```
 
-@@img-wide \figalt{Histogram of the residuals}{hist_residuals.svg} @@
+\figalt{Histogram of the residuals}{hist_residuals.svg}
 
-We leave it at that for now.
+We leave it at that for now, I hope you found this tutorial interesting.
 
