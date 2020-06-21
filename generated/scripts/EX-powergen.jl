@@ -19,7 +19,7 @@ using Statistics
 # The power generation and weather data come from two separate datasets.# We downloaded both datasets from [Open Power networks](https://open-power-system-data.org/).# The power generation data is available [here](https://data.open-power-system-data.org/time_series/) and the weather data is available [here](https://data.open-power-system-data.org/weather_data/).# Note that the first row in both datasets contains headers; hence we don't need to provide any.
 data_repo = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"
 
-url_power = data_repo * "/power_syst/DE_power_hourly.csv"
+url_power   = data_repo * "/power_syst/DE_power_hourly.csv"
 url_weather = data_repo * "/power_syst/DE_weather_data.csv"
 
 power   = DataFrame(urldownload(url_power))
@@ -168,12 +168,12 @@ train, test = partition(eachindex(y_wind), 0.7, shuffle=true, rng=5);
 # then we instantiate a model and fit it:
 linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
-fit!(m_linReg, rows=train)
+fit!(m_linReg, rows=train);
 
 # ### Model evaluation## We've now fitted the model for wind power generation (`Wind_gen`).# Let's use it to predict values over the test set and investigate the performance:
 y_hat = predict(m_linReg, rows=test);
 
-# We can start by visualising the observed and predicted values of wind power generation.
+# We can start by visualising the observed and predicted valzes of wind power generation.
 figure(figsize=(8, 6))
 plot(y_hat, color="blue", label="Predicted")
 plot(y_wind[test], color="red", label="Observed")
@@ -211,7 +211,7 @@ hist(res, color="blue", edgecolor="white", bins=50,
 
 
 
-# @@img-wide \figalt{Histogram of the residuals}{hist_residuals.svg} @@
-# We leave it at that for now.
+# \figalt{Histogram of the residuals}{hist_residuals.svg}
+# We leave it at that for now, I hope you found this tutorial interesting.
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

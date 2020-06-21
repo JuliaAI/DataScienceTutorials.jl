@@ -10,7 +10,7 @@ using Statistics
 
 data_repo = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"
 
-url_power = data_repo * "/power_syst/DE_power_hourly.csv"
+url_power   = data_repo * "/power_syst/DE_power_hourly.csv"
 url_weather = data_repo * "/power_syst/DE_weather_data.csv"
 
 power   = DataFrame(urldownload(url_power))
@@ -136,7 +136,7 @@ train, test = partition(eachindex(y_wind), 0.7, shuffle=true, rng=5);
 
 linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
-fit!(m_linReg, rows=train)
+fit!(m_linReg, rows=train);
 
 y_hat = predict(m_linReg, rows=test);
 
