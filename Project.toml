@@ -41,6 +41,7 @@ UrlDownload = "856ac37a-3032-4c1c-9122-f86d88358c8b"
 XGBoost = "009559a3-9522-5dbb-924b-0b6ed2b22bb9"
 
 [compat]
+CategoricalArrays = "0.8"
 MLJ = "0.11"
 MLJBase = "0.13"
 MLJLinearModels = "0.5"
