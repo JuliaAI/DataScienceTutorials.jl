@@ -47,6 +47,7 @@ MLJLinearModels = "0.5"
 MLJModelInterface = "0.3"
 MLJModels = "0.10"
 MLJScientificTypes = "0.2"
+PyPlot = "2.9"
 
 [extras]
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
