@@ -1,0 +1,5 @@
+__site/* linguist-vendored
+_layout/* linguist-vendored
+_libs/* linguist-vendored
+_assets/* linguist-vendored
+_css/* linguist-vendored
