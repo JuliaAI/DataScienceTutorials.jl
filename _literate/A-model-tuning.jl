@@ -27,10 +27,17 @@ r   = range(dtc, :max_depth, lower=1, upper=5)
 # For hyperparameters of type `<:Real`, you should specify a range of values as done above.
 # For hyperparameters of other type (e.g. `Symbol`), you should use the `values=...` keyword.
 #
-# Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy. 
-# A tuning strategy consists of (i) a model, (ii) a set of values for the tuned paramters and (iii) a measure to optimize:
+# Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy.
 
 tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)
+
+# Note that "wrapping a model in a tuning strategy" as above means creating a new "self-tuning" version of the model, tuned_model = TunedModel(model=...), in which further key-word arguments specify:
+# 1. the algorithm (a.k.a., tuning strategy) for searching the hyper-parameter space of the model (e.g., tuning=Random(rng=123)or tuning=Grid(goal=100)).
+# 2. the resampling strategy, used to evaluate performance for each value of the hyper-parameters (e.g., resampling=CV(nfolds=9, rng=123) or resampling=Holdout(fraction_train=0.7)).
+# 3. the measure (or measures) on which to base performance evaluations (and for reporting purposes) (e.g., measure = rms or measures=[rms, mae]).
+# 4. the range, usually describing the "space" of hyperparameters to be searched (but more generally whatever extra information is required to complete the search specification, e.g., initial values in gradient-descent optimization).
+
+# For more options do `?TunedModel`.
 
 # ### Fitting and inspecting a tuned model
 #
