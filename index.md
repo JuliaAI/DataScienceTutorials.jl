@@ -29,6 +29,7 @@ In these we provide an introduction to some of the fundamental packages in the J
 * Short intro to [dataframes](/data/dataframe/),
 * Dealing with [categorical data](/data/categorical/)
 * Specifying [data interpretation](/data/scitype/)
+* [Pre-processing data](/data/preprocessing/)
 
 ## Getting started with MLJ
 
