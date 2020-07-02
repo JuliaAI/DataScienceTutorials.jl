@@ -34,7 +34,7 @@ _.nrows = 506
  0
  1</code></pre> <p>so even though it&#39;s got a machine type of <code>Int64</code> and consequently a default interpretation of <code>Count</code>, it would be more appropriate to interpret it as an <code>OrderedFactor</code>.</p> <h3 id=changing_the_scitype ><a href="#changing_the_scitype">Changing the scitype</a></h3> <p>In order to re-specify the scitype&#40;s&#41; of feature&#40;s&#41; in a dataset, you can use the <code>coerce</code> function and specify pairs of variable name and scientific type:</p> <pre><code class="julia hljs">boston2 = coerce(boston, :Chas =&gt; OrderedFactor);</code></pre>
 <p>the effect of this is to convert the <code>:Chas</code> column to an ordered categorical vector:</p>
-<pre><code class="julia hljs">eltype(boston2.Chas)</code></pre><pre><code class="plaintext hljs">CategoricalValue{Int64,UInt32}</code></pre>
+<pre><code class="julia hljs">eltype(boston2.Chas)</code></pre><pre><code class="plaintext hljs">CategoricalArrays.CategoricalValue{Int64,UInt32}</code></pre>
 <p>corresponding to the <code>OrderedFactor</code> scitype:</p>
 <pre><code class="julia hljs">elscitype(boston2.Chas)</code></pre><pre><code class="plaintext hljs">OrderedFactor{2}</code></pre>
 <p>You can also specify multiple pairs in one shot with <code>coerce</code>:</p>
@@ -87,24 +87,24 @@ _.nrows = 506
 <p>column.</p>
 <p>For instance:</p>
 <pre><code class="julia hljs">boston3 = coerce(boston, autotype(boston, :few_to_finite))
-schema(boston3)</code></pre><pre><code class="plaintext hljs">┌─────────┬──────────────────────────────────┬───────────────────┐
-│ _.names │ _.types                          │ _.scitypes        │
-├─────────┼──────────────────────────────────┼───────────────────┤
-│ Crim    │ Float64                          │ Continuous        │
-│ Zn      │ CategoricalValue{Float64,UInt32} │ OrderedFactor{26} │
-│ Indus   │ Float64                          │ Continuous        │
-│ Chas    │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{2}  │
-│ NOx     │ Float64                          │ Continuous        │
-│ Rm      │ Float64                          │ Continuous        │
-│ Age     │ Float64                          │ Continuous        │
-│ Dis     │ Float64                          │ Continuous        │
-│ Rad     │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{9}  │
-│ Tax     │ Int64                            │ Count             │
-│ PTRatio │ CategoricalValue{Float64,UInt32} │ OrderedFactor{46} │
-│ Black   │ Float64                          │ Continuous        │
-│ LStat   │ Float64                          │ Continuous        │
-│ MedV    │ Float64                          │ Continuous        │
-└─────────┴──────────────────────────────────┴───────────────────┘
+schema(boston3)</code></pre><pre><code class="plaintext hljs">┌─────────┬────────────────────────────────────────────────────┬───────────────────┐
+│ _.names │ _.types                                            │ _.scitypes        │
+├─────────┼────────────────────────────────────────────────────┼───────────────────┤
+│ Crim    │ Float64                                            │ Continuous        │
+│ Zn      │ CategoricalArrays.CategoricalValue{Float64,UInt32} │ OrderedFactor{26} │
+│ Indus   │ Float64                                            │ Continuous        │
+│ Chas    │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{2}  │
+│ NOx     │ Float64                                            │ Continuous        │
+│ Rm      │ Float64                                            │ Continuous        │
+│ Age     │ Float64                                            │ Continuous        │
+│ Dis     │ Float64                                            │ Continuous        │
+│ Rad     │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{9}  │
+│ Tax     │ Int64                                              │ Count             │
+│ PTRatio │ CategoricalArrays.CategoricalValue{Float64,UInt32} │ OrderedFactor{46} │
+│ Black   │ Float64                                            │ Continuous        │
+│ LStat   │ Float64                                            │ Continuous        │
+│ MedV    │ Float64                                            │ Continuous        │
+└─────────┴────────────────────────────────────────────────────┴───────────────────┘
 _.nrows = 506
 </code></pre>
 <p>You can also specify multiple rules, see <a href="https://alan-turing-institute.github.io/MLJScientificTypes.jl/stable/#Automatic-type-conversion-for-tabular-data-1">the docs</a> for more information.<div class=page-foot >

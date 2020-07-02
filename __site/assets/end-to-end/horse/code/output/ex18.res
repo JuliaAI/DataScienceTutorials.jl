@@ -10,5 +10,4 @@ SimplePipe(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing,
-            nclasses = 3)) @ 1…87
+            solver = nothing)) @ 1…44

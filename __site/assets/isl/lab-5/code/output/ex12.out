@@ -1,2 +1,2 @@
-round.(res.measurements .^ 2, digits = 2) = [27.44, 20.96, 21.35, 20.91, 21.34, 20.91, 21.24, 88.61, 25.66, 223.98]
-argmin(res.measurements) = 4
+round.(res.measurements .^ 2, digits = 2) = [223.98, 20.91, 88.61, 20.96, 21.34, 25.66, 27.44, 20.91, 21.35, 21.24]
+argmin(res.measurements) = 2

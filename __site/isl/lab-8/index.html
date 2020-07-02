@@ -6,15 +6,15 @@
 
 carseats = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Carseats"</span>)
 
-first(carseats, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌────────────┬────────────┬────────────┬─────────────┬────────────┬────────────┬────────────────────────────────┬────────────┬────────────┬────────────────────────────────┬────────────────────────────────┐
-│ Sales      │ CompPrice  │ Income     │ Advertising │ Population │ Price      │ ShelveLoc                      │ Age        │ Education  │ Urban                          │ US                             │
-│ Float64    │ Float64    │ Float64    │ Float64     │ Float64    │ Float64    │ CategoricalValue{String,UInt8} │ Float64    │ Float64    │ CategoricalValue{String,UInt8} │ CategoricalValue{String,UInt8} │
-│ Continuous │ Continuous │ Continuous │ Continuous  │ Continuous │ Continuous │ Multiclass{3}                  │ Continuous │ Continuous │ Multiclass{2}                  │ Multiclass{2}                  │
-├────────────┼────────────┼────────────┼─────────────┼────────────┼────────────┼────────────────────────────────┼────────────┼────────────┼────────────────────────────────┼────────────────────────────────┤
-│ 9.5        │ 138.0      │ 73.0       │ 11.0        │ 276.0      │ 120.0      │ Bad                            │ 42.0       │ 17.0       │ Yes                            │ Yes                            │
-│ 11.22      │ 111.0      │ 48.0       │ 16.0        │ 260.0      │ 83.0       │ Good                           │ 65.0       │ 10.0       │ Yes                            │ Yes                            │
-│ 10.06      │ 113.0      │ 35.0       │ 10.0        │ 269.0      │ 80.0       │ Medium                         │ 59.0       │ 12.0       │ Yes                            │ Yes                            │
-└────────────┴────────────┴────────────┴─────────────┴────────────┴────────────┴────────────────────────────────┴────────────┴────────────┴────────────────────────────────┴────────────────────────────────┘
+first(carseats, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌────────────┬────────────┬────────────┬─────────────┬────────────┬────────────┬──────────────────────────────────────────────────┬────────────┬────────────┬──────────────────────────────────────────────────┬──────────────────────────────────────────────────┐
+│ Sales      │ CompPrice  │ Income     │ Advertising │ Population │ Price      │ ShelveLoc                                        │ Age        │ Education  │ Urban                                            │ US                                               │
+│ Float64    │ Float64    │ Float64    │ Float64     │ Float64    │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt8} │ Float64    │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt8} │ CategoricalArrays.CategoricalValue{String,UInt8} │
+│ Continuous │ Continuous │ Continuous │ Continuous  │ Continuous │ Continuous │ Multiclass{3}                                    │ Continuous │ Continuous │ Multiclass{2}                                    │ Multiclass{2}                                    │
+├────────────┼────────────┼────────────┼─────────────┼────────────┼────────────┼──────────────────────────────────────────────────┼────────────┼────────────┼──────────────────────────────────────────────────┼──────────────────────────────────────────────────┤
+│ 9.5        │ 138.0      │ 73.0       │ 11.0        │ 276.0      │ 120.0      │ Bad                                              │ 42.0       │ 17.0       │ Yes                                              │ Yes                                              │
+│ 11.22      │ 111.0      │ 48.0       │ 16.0        │ 260.0      │ 83.0       │ Good                                             │ 65.0       │ 10.0       │ Yes                                              │ Yes                                              │
+│ 10.06      │ 113.0      │ 35.0       │ 10.0        │ 269.0      │ 80.0       │ Medium                                           │ 59.0       │ 12.0       │ Yes                                              │ Yes                                              │
+└────────────┴────────────┴────────────┴─────────────┴────────────┴────────────┴──────────────────────────────────────────────────┴────────────┴────────────┴──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘
 </code></pre> <p>We encode a new variable <code>High</code> based on whether the sales are higher or lower than 8 and add that column to the dataframe:</p> <pre><code class="julia hljs">High = ifelse.(carseats.Sales .&lt;= <span class=hljs-number >8</span>, <span class=hljs-string >"No"</span>, <span class=hljs-string >"Yes"</span>) |&gt; categorical;
 carseats[!, :High] = High;</code></pre> <p>Let&#39;s now train a basic decision tree classifier for <code>High</code> given the other features after one-hot-encoding the categorical features:</p> <pre><code class="julia hljs">X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;</code></pre> <h3 id=decision_tree_classifier ><a href="#decision_tree_classifier">Decision Tree Classifier</a></h3> <pre><code class="julia hljs"><span class=hljs-meta >@pipeline</span> HotTreeClf(hot = OneHotEncoder(),
@@ -42,18 +42,18 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 ypred = predict_mode(mtm, rows=test)
-misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext hljs">0.295</code></pre>
+misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext hljs">0.315</code></pre>
 <p>We can inspect the parameters of the best model</p>
 <pre><code class="julia hljs">fitted_params(mtm).best_model.tree</code></pre><pre><code class="plaintext hljs">DecisionTreeClassifier(
-    max_depth = 4,
-    min_samples_leaf = 1,
+    max_depth = 5,
+    min_samples_leaf = 15,
     min_samples_split = 2,
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 5…07</code></pre>
+    display_depth = 5) @ 1…85</code></pre>
 <h3 id=decision_tree_regressor ><a href="#decision_tree_regressor">Decision Tree Regressor</a></h3>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> DecisionTreeRegressor pkg=DecisionTree
 
@@ -94,7 +94,7 @@ rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
 ypred = predict(rf, rows=test)
-round(rms(ypred, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3.73</code></pre>
+round(rms(ypred, y[test]), sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3.81</code></pre>
 <h2 id=gradient_boosting_machine ><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></h2>
 <pre><code class="julia hljs"><span class=hljs-meta >@load</span> XGBoostRegressor
 

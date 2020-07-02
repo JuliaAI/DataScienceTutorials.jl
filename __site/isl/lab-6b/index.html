@@ -117,10 +117,10 @@ mtm = machine(tm, Xc, y)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">3.728</code></pre>
+round(best_mdl.reg.lambda, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">0.02683</code></pre>
 <p>right, and  with that we get:</p>
 <pre><code class="julia hljs">ŷ = predict(mtm, rows=test)
-round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">98880.0</code></pre>
+round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">122400.0</code></pre>
 <p>Let&#39;s see:</p>
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 
@@ -142,19 +142,19 @@ mtm.model.range = range(model, :(reg.lambda), lower=<span class=hljs-number >500
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">3501.0</code></pre>
+round(best_mdl.reg.lambda, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">1830.0</code></pre>
 <p>Ok and let&#39;s see how that does:</p>
 <pre><code class="julia hljs">ŷ = predict(mtm, rows=test)
-round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">100900.0</code></pre>
+round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">96730.0</code></pre>
 <p>Pretty good&#33; and the parameters are reasonably sparse as expected:</p>
 <pre><code class="julia hljs">coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
 <span class=hljs-meta >@show</span> coefs
-<span class=hljs-meta >@show</span> intercept</code></pre><pre><code class="plaintext hljs">coefs = [:AtBat =&gt; 0.0, :Hits =&gt; 0.0, :HmRun =&gt; 0.0, :Runs =&gt; 80.6678178141269, :RBI =&gt; 0.0, :Walks =&gt; 37.03471312303758, :Years =&gt; 0.0, :CAtBat =&gt; 0.0, :CHits =&gt; 145.20304491814704, :CHmRun =&gt; 0.0, :CRuns =&gt; 0.0, :CRBI =&gt; 28.78708238416367, :CWalks =&gt; 0.0, :League__A =&gt; -0.0, :League__N =&gt; 0.0, :Division__E =&gt; 33.39622922758369, :Division__W =&gt; -5.6903059369871, :PutOuts =&gt; 58.494282041618256, :Assists =&gt; 0.0, :Errors =&gt; -0.0, :NewLeague__A =&gt; -0.0, :NewLeague__N =&gt; 0.0]
-intercept = 529.9504952264205
+<span class=hljs-meta >@show</span> intercept</code></pre><pre><code class="plaintext hljs">coefs = [:AtBat =&gt; -0.0, :Hits =&gt; 0.0, :HmRun =&gt; -0.0, :Runs =&gt; 85.87372716141819, :RBI =&gt; -0.0, :Walks =&gt; 37.54361036524584, :Years =&gt; -0.0, :CAtBat =&gt; 0.0, :CHits =&gt; 152.6951604622488, :CHmRun =&gt; -0.0, :CRuns =&gt; 0.0, :CRBI =&gt; 32.61544765504226, :CWalks =&gt; -0.0, :League__A =&gt; -9.488348872061188, :League__N =&gt; 5.043641178107364, :Division__E =&gt; 7.850282995453406, :Division__W =&gt; -81.40630660665762, :PutOuts =&gt; 67.65751125722745, :Assists =&gt; 0.0, :Errors =&gt; -3.3279984717940296, :NewLeague__A =&gt; -0.0, :NewLeague__N =&gt; 0.0]
+intercept = 584.3844981153318
 </code></pre>
 <p>with around 50&#37; sparsity:</p>
 <pre><code class="julia hljs">coef_vals = [c[<span class=hljs-number >2</span>] <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> coefs]
-sum(coef_vals .≈ <span class=hljs-number >0</span>) / length(coefs)</code></pre><pre><code class="plaintext hljs">0.6818181818181818</code></pre>
+sum(coef_vals .≈ <span class=hljs-number >0</span>) / length(coefs)</code></pre><pre><code class="plaintext hljs">0.5454545454545454</code></pre>
 <p>Let&#39;s visualise this:</p>
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 stem(coefs)
@@ -208,12 +208,12 @@ fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
 <span class=hljs-meta >@show</span> round(best_mdl.reg.lambda, sigdigits=<span class=hljs-number >4</span>)
-<span class=hljs-meta >@show</span> round(best_mdl.reg.gamma, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">round(best_mdl.reg.lambda, sigdigits = 4) = 2.154
-round(best_mdl.reg.gamma, sigdigits = 4) = 2641.0
+<span class=hljs-meta >@show</span> round(best_mdl.reg.gamma, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">round(best_mdl.reg.lambda, sigdigits = 4) = 1.0
+round(best_mdl.reg.gamma, sigdigits = 4) = 1893.0
 </code></pre>
 <p>And it&#39;s not too bad in terms of accuracy either</p>
 <pre><code class="julia hljs">ŷ = predict(mtm, rows=test)
-round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">98230.0</code></pre>
+round(rms(ŷ, y[test])^<span class=hljs-number >2</span>, sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">96700.0</code></pre>
 <p>But the simple ridge regression seems to work best here.</p>
 <div class=page-foot >
   <div class=copyright >

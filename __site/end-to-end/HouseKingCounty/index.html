@@ -60,31 +60,31 @@ _.nrows = 21613
 </code></pre> <p>Afterwards, we convert the zip code to an unordered factor &#40;<code>Multiclass</code>&#41;, we also create two binary features <code>isrenovated</code> and <code>has_basement</code> derived from <code>yr_renovated</code> and <code>sqft_basement</code>:</p> <pre><code class="julia hljs">coerce!(df, :zipcode =&gt; Multiclass)
 df.isrenovated  = @. !iszero(df.yr_renovated)
 df.has_basement = @. !iszero(df.sqft_basement)
-schema(df)</code></pre><pre><code class="plaintext hljs">┌───────────────┬────────────────────────────────┬────────────────┐
-│ _.names       │ _.types                        │ _.scitypes     │
-├───────────────┼────────────────────────────────┼────────────────┤
-│ price         │ Float64                        │ Continuous     │
-│ bedrooms      │ Int64                          │ Count          │
-│ bathrooms     │ Float64                        │ Continuous     │
-│ sqft_living   │ Int64                          │ Count          │
-│ sqft_lot      │ Int64                          │ Count          │
-│ floors        │ Float64                        │ Continuous     │
-│ waterfront    │ Int64                          │ Count          │
-│ view          │ Int64                          │ Count          │
-│ condition     │ Int64                          │ Count          │
-│ grade         │ Int64                          │ Count          │
-│ sqft_above    │ Int64                          │ Count          │
-│ sqft_basement │ Int64                          │ Count          │
-│ yr_built      │ Int64                          │ Count          │
-│ yr_renovated  │ Int64                          │ Count          │
-│ zipcode       │ CategoricalValue{Int64,UInt32} │ Multiclass{70} │
-│ lat           │ Float64                        │ Continuous     │
-│ long          │ Float64                        │ Continuous     │
-│ sqft_living15 │ Int64                          │ Count          │
-│ sqft_lot15    │ Int64                          │ Count          │
-│ isrenovated   │ Bool                           │ Count          │
-│ has_basement  │ Bool                           │ Count          │
-└───────────────┴────────────────────────────────┴────────────────┘
+schema(df)</code></pre><pre><code class="plaintext hljs">┌───────────────┬──────────────────────────────────────────────────┬────────────────┐
+│ _.names       │ _.types                                          │ _.scitypes     │
+├───────────────┼──────────────────────────────────────────────────┼────────────────┤
+│ price         │ Float64                                          │ Continuous     │
+│ bedrooms      │ Int64                                            │ Count          │
+│ bathrooms     │ Float64                                          │ Continuous     │
+│ sqft_living   │ Int64                                            │ Count          │
+│ sqft_lot      │ Int64                                            │ Count          │
+│ floors        │ Float64                                          │ Continuous     │
+│ waterfront    │ Int64                                            │ Count          │
+│ view          │ Int64                                            │ Count          │
+│ condition     │ Int64                                            │ Count          │
+│ grade         │ Int64                                            │ Count          │
+│ sqft_above    │ Int64                                            │ Count          │
+│ sqft_basement │ Int64                                            │ Count          │
+│ yr_built      │ Int64                                            │ Count          │
+│ yr_renovated  │ Int64                                            │ Count          │
+│ zipcode       │ CategoricalArrays.CategoricalValue{Int64,UInt32} │ Multiclass{70} │
+│ lat           │ Float64                                          │ Continuous     │
+│ long          │ Float64                                          │ Continuous     │
+│ sqft_living15 │ Int64                                            │ Count          │
+│ sqft_lot15    │ Int64                                            │ Count          │
+│ isrenovated   │ Bool                                             │ Count          │
+│ has_basement  │ Bool                                             │ Count          │
+└───────────────┴──────────────────────────────────────────────────┴────────────────┘
 _.nrows = 21613
 </code></pre> <p>These created variables should be treated as OrderedFactor,</p> <pre><code class="julia hljs">coerce!(df, :isrenovated =&gt; OrderedFactor, :has_basement =&gt; OrderedFactor);</code></pre>
 <p>The feature <code>waterfront</code> is currently encoded as a string, but it&#39;s really just a boolean:</p>
@@ -96,31 +96,31 @@ _.nrows = 21613
 coerce!(df, :waterfront =&gt; OrderedFactor);</code></pre>
 <p>For a number of the remaining features which are treated as <code>Count</code> there are few unique values in which case it might make more sense to recode them as OrderedFactor, this can be done with <code>autotype</code>:</p>
 <pre><code class="julia hljs">coerce!(df, autotype(df, :few_to_finite))
-schema(df)</code></pre><pre><code class="plaintext hljs">┌───────────────┬──────────────────────────────────┬───────────────────┐
-│ _.names       │ _.types                          │ _.scitypes        │
-├───────────────┼──────────────────────────────────┼───────────────────┤
-│ price         │ Float64                          │ Continuous        │
-│ bedrooms      │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{13} │
-│ bathrooms     │ CategoricalValue{Float64,UInt32} │ OrderedFactor{30} │
-│ sqft_living   │ Int64                            │ Count             │
-│ sqft_lot      │ Int64                            │ Count             │
-│ floors        │ CategoricalValue{Float64,UInt32} │ OrderedFactor{6}  │
-│ waterfront    │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{1}  │
-│ view          │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{5}  │
-│ condition     │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{5}  │
-│ grade         │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{12} │
-│ sqft_above    │ Int64                            │ Count             │
-│ sqft_basement │ Int64                            │ Count             │
-│ yr_built      │ Int64                            │ Count             │
-│ yr_renovated  │ CategoricalValue{Int64,UInt32}   │ OrderedFactor{70} │
-│ zipcode       │ CategoricalValue{Int64,UInt32}   │ Multiclass{70}    │
-│ lat           │ Float64                          │ Continuous        │
-│ long          │ Float64                          │ Continuous        │
-│ sqft_living15 │ Int64                            │ Count             │
-│ sqft_lot15    │ Int64                            │ Count             │
-│ isrenovated   │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{2}  │
-│ has_basement  │ CategoricalValue{Bool,UInt32}    │ OrderedFactor{2}  │
-└───────────────┴──────────────────────────────────┴───────────────────┘
+schema(df)</code></pre><pre><code class="plaintext hljs">┌───────────────┬────────────────────────────────────────────────────┬───────────────────┐
+│ _.names       │ _.types                                            │ _.scitypes        │
+├───────────────┼────────────────────────────────────────────────────┼───────────────────┤
+│ price         │ Float64                                            │ Continuous        │
+│ bedrooms      │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{13} │
+│ bathrooms     │ CategoricalArrays.CategoricalValue{Float64,UInt32} │ OrderedFactor{30} │
+│ sqft_living   │ Int64                                              │ Count             │
+│ sqft_lot      │ Int64                                              │ Count             │
+│ floors        │ CategoricalArrays.CategoricalValue{Float64,UInt32} │ OrderedFactor{6}  │
+│ waterfront    │ CategoricalArrays.CategoricalValue{Bool,UInt32}    │ OrderedFactor{1}  │
+│ view          │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{5}  │
+│ condition     │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{5}  │
+│ grade         │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{12} │
+│ sqft_above    │ Int64                                              │ Count             │
+│ sqft_basement │ Int64                                              │ Count             │
+│ yr_built      │ Int64                                              │ Count             │
+│ yr_renovated  │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ OrderedFactor{70} │
+│ zipcode       │ CategoricalArrays.CategoricalValue{Int64,UInt32}   │ Multiclass{70}    │
+│ lat           │ Float64                                            │ Continuous        │
+│ long          │ Float64                                            │ Continuous        │
+│ sqft_living15 │ Int64                                              │ Count             │
+│ sqft_lot15    │ Int64                                              │ Count             │
+│ isrenovated   │ CategoricalArrays.CategoricalValue{Bool,UInt32}    │ OrderedFactor{2}  │
+│ has_basement  │ CategoricalArrays.CategoricalValue{Bool,UInt32}    │ OrderedFactor{2}  │
+└───────────────┴────────────────────────────────────────────────────┴───────────────────┘
 _.nrows = 21613
 </code></pre>
 <p>Let&#39;s also rescale the column <code>price</code> to be in 1000s of dollars:</p>
@@ -156,7 +156,7 @@ tree = machine(DecisionTreeRegressor(), X, y)
 
 fit!(tree, rows=train);</code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="julia hljs">rms(y[test], predict(tree, rows=test))</code></pre><pre><code class="plaintext hljs">179.86946971693993</code></pre>
+<pre><code class="julia hljs">rms(y[test], predict(tree, rows=test))</code></pre><pre><code class="plaintext hljs">179.90538971911255</code></pre>
 <p>Let&#39;s try to do better.</p>
 <h3 id=random_forest_model ><a href="#random_forest_model">Random forest model</a></h3>
 <p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -175,7 +175,7 @@ fit!(tree, rows=train);</code></pre>
     n_jobs = nothing,
     random_state = nothing,
     verbose = 0,
-    warm_start = false) @ 5…84</code></pre>
+    warm_start = false) @ 1…51</code></pre>
 <p>That model only accepts input in the form of <code>Count</code> and so we have to coerce all <code>Finite</code> types into <code>Count</code>:</p>
 <pre><code class="julia hljs">coerce!(X, Finite =&gt; Count);</code></pre>
 <p>Now we can fit</p>
@@ -183,14 +183,14 @@ fit!(tree, rows=train);</code></pre>
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
-rms(y[test], predict(rf, rows=test))</code></pre><pre><code class="plaintext hljs">137.84977785477955</code></pre>
+rms(y[test], predict(rf, rows=test))</code></pre><pre><code class="plaintext hljs">137.0233662426847</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="julia hljs">cv3 = CV(; nfolds=<span class=hljs-number >3</span>)
 res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=<span class=hljs-literal >true</span>),
                measure=rms, verbosity=<span class=hljs-number >0</span>)</code></pre><pre><code class="plaintext hljs">┌───────────┬───────────────┬────────────────────────────────────────────┐
 │ _.measure │ _.measurement │ _.per_fold                                 │
 ├───────────┼───────────────┼────────────────────────────────────────────┤
-│ rms       │ 132.0         │ [137.0, 134.0, 124.0, 139.0, 135.0, 124.0] │
+│ rms       │ 135.0         │ [140.0, 134.0, 130.0, 136.0, 140.0, 128.0] │
 └───────────┴───────────────┴────────────────────────────────────────────┘
 _.per_observation = [missing]
 </code></pre>
@@ -231,7 +231,7 @@ _.per_observation = [missing]
     objective = "reg:linear",
     base_score = 0.5,
     eval_metric = "rmse",
-    seed = 0) @ 1…83</code></pre>
+    seed = 0) @ 6…56</code></pre>
 <p>It expects a <code>Table&#40;Continuous&#41;</code> input so we need to coerce <code>X</code> again:</p>
 <pre><code class="julia hljs">coerce!(X, Count =&gt; Continuous)
 
@@ -250,7 +250,7 @@ r2 = range(xgb, :num_round, lower=<span class=hljs-number >1</span>, upper=<span
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
-rms(y[test], predict(mtm, rows=test))</code></pre><pre><code class="plaintext hljs">147.35605482348706</code></pre>
+rms(y[test], predict(mtm, rows=test))</code></pre><pre><code class="plaintext hljs">145.80974204530304</code></pre>
 <p>Tuning helps a fair bit&#33;</p>
 <div class=page-foot >
   <div class=copyright >

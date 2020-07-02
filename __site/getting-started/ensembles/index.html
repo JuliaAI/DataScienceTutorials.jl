@@ -14,10 +14,10 @@ train, test = partition(eachindex(y), <span class=hljs-number >0.7</span>);</cod
 knn_model = KNNRegressor(K=<span class=hljs-number >10</span>)</code></pre><pre><code class="plaintext hljs">KNNRegressor(
     K = 10,
     algorithm = :kdtree,
-    metric = Euclidean(0.0),
+    metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @ 4…65</code></pre> <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p> <pre><code class="julia hljs">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{KNNRegressor} @ 8…13
+    weights = :uniform) @ 6…83</code></pre> <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p> <pre><code class="julia hljs">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{KNNRegressor} @ 6…64
 </code></pre> <p>and fit it</p> <pre><code class="julia hljs">fit!(knn, rows=train)
 ŷ = predict(knn, X[test, :]) <span class=hljs-comment ># or use rows=test</span>
 rms(ŷ, y[test])</code></pre><pre><code class="plaintext hljs">0.06389980172436367</code></pre>
@@ -36,25 +36,25 @@ rms(ŷ, y[test])</code></pre><pre><code class="plaintext hljs">0.06389980172436
 <pre><code class="julia hljs">ensemble = machine(ensemble_model, X, y)
 estimates = evaluate!(ensemble, resampling=CV())
 estimates |&gt; pprint</code></pre><pre><code class="plaintext hljs">(measure = [rms],
- measurement = [0.08503149347754926],
- per_fold = [[0.09035903547851924,
-              0.11393620422815447,
-              0.07159959505575259,
-              0.0905448081920966,
-              0.0637865091741936,
-              0.0695868688495624]],
+ measurement = [0.08632625417107473],
+ per_fold = [[0.09026140108605882,
+              0.11576981086241181,
+              0.07521211699253538,
+              0.09121570652392207,
+              0.06739636494364651,
+              0.06814782208803677]],
  per_observation = [missing])</code></pre>
 <p>here the implicit measure is the <code>rms</code> &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
 <pre><code class="julia hljs"><span class=hljs-meta >@show</span> estimates.measurement[<span class=hljs-number >1</span>]
-<span class=hljs-meta >@show</span> mean(estimates.per_fold[<span class=hljs-number >1</span>])</code></pre><pre><code class="plaintext hljs">estimates.measurement[1] = 0.08503149347754926
-mean(estimates.per_fold[1]) = 0.08330217016304647
+<span class=hljs-meta >@show</span> mean(estimates.per_fold[<span class=hljs-number >1</span>])</code></pre><pre><code class="plaintext hljs">estimates.measurement[1] = 0.08632625417107473
+mean(estimates.per_fold[1]) = 0.08466720374943522
 </code></pre>
 <p>Note that multiple measurements can be specified jointly. Here only on measurement is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both  the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
 <h3 id=systematic_tuning ><a href="#systematic_tuning">Systematic tuning</a></h3>
 <p>Let&#39;s simultaneously tune the ensemble&#39;s <code>bagging_fraction</code> and the K-Nearest neighbour hyperparameter <code>K</code>. Since one of our models is  a field of the  other, we have nested hyperparameters:</p>
 <pre><code class="julia hljs">params(ensemble_model) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(atom = (K = 10,
          algorithm = :kdtree,
-         metric = Euclidean(0.0),
+         metric = Distances.Euclidean(0.0),
          leafsize = 10,
          reorder = true,
          weights = :uniform),
@@ -82,8 +82,8 @@ fit!(tuned_ensemble, rows=train);</code></pre>
 <p>The best model can be accessed like so:</p>
 <pre><code class="julia hljs">best_ensemble = fitted_params(tuned_ensemble).best_model
 <span class=hljs-meta >@show</span> best_ensemble.atom.K
-<span class=hljs-meta >@show</span> best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext hljs">best_ensemble.atom.K = 12
-best_ensemble.bagging_fraction = 0.7777777777777778
+<span class=hljs-meta >@show</span> best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext hljs">best_ensemble.atom.K = 3
+best_ensemble.bagging_fraction = 0.5
 </code></pre>
 <p>The <code>report</code> method gives more detailed information on the tuning process:</p>
 <pre><code class="julia hljs">r = report(tuned_ensemble);</code></pre>

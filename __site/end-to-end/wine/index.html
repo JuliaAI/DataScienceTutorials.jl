@@ -111,7 +111,7 @@ ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
 <pre><code class="julia hljs">knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><pre><code class="plaintext hljs">Machine{MnPipe} @ 4…98
+multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><pre><code class="plaintext hljs">Machine{MnPipe} @ 1…31
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="julia hljs">opts = (resampling=Holdout(fraction_train=<span class=hljs-number >0.9</span>), measure=cross_entropy)

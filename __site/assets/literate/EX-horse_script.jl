@@ -69,6 +69,7 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
+X = coerce(X, autotype(X, :discrete_to_continuous))
 
 @load OneHotEncoder
 @load MultinomialClassifier pkg="MLJLinearModels"

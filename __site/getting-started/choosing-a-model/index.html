@@ -2,23 +2,23 @@
 <span class=hljs-keyword >using</span> MLJ
 iris = dataset(<span class=hljs-string >"datasets"</span>, <span class=hljs-string >"iris"</span>)
 
-first(iris, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────┬─────────────┬────────────┬────────────────────────────────┐
-│ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │ Species                        │
-│ Float64     │ Float64    │ Float64     │ Float64    │ CategoricalValue{String,UInt8} │
-│ Continuous  │ Continuous │ Continuous  │ Continuous │ Multiclass{3}                  │
-├─────────────┼────────────┼─────────────┼────────────┼────────────────────────────────┤
-│ 5.1         │ 3.5        │ 1.4         │ 0.2        │ setosa                         │
-│ 4.9         │ 3.0        │ 1.4         │ 0.2        │ setosa                         │
-│ 4.7         │ 3.2        │ 1.3         │ 0.2        │ setosa                         │
-└─────────────┴────────────┴─────────────┴────────────┴────────────────────────────────┘
+first(iris, <span class=hljs-number >3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────┬─────────────┬────────────┬──────────────────────────────────────────────────┐
+│ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │ Species                                          │
+│ Float64     │ Float64    │ Float64     │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt8} │
+│ Continuous  │ Continuous │ Continuous  │ Continuous │ Multiclass{3}                                    │
+├─────────────┼────────────┼─────────────┼────────────┼──────────────────────────────────────────────────┤
+│ 5.1         │ 3.5        │ 1.4         │ 0.2        │ setosa                                           │
+│ 4.9         │ 3.0        │ 1.4         │ 0.2        │ setosa                                           │
+│ 4.7         │ 3.2        │ 1.3         │ 0.2        │ setosa                                           │
+└─────────────┴────────────┴─────────────┴────────────┴──────────────────────────────────────────────────┘
 </code></pre> <p>Observe that below each column name there are two <em>types</em> given: the first one is the <em>machine type</em> and the second one is the <em>scientific type</em>.</p> <ul> <li><p><strong>machine type</strong>: is the Julia type the data is currently encoded as, for instance <code>Float64</code>,</p> <li><p><strong>scientific type</strong>: is a type corresponding to how the data should be <em>interpreted</em>, for instance <code>Multiclass&#123;3&#125;</code>.</p> </ul> <p>If you want to specify a different scientific type than the one inferred, you can do so by using the function <code>coerce</code> along with pairs of column names and scientific types:</p> <pre><code class="julia hljs">iris2 = coerce(iris, :PetalWidth =&gt; OrderedFactor)
-first(iris2[:, [:PetalLength, :PetalWidth]], <span class=hljs-number >1</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬──────────────────────────────────┐
-│ PetalLength │ PetalWidth                       │
-│ Float64     │ CategoricalValue{Float64,UInt32} │
-│ Continuous  │ OrderedFactor{22}                │
-├─────────────┼──────────────────────────────────┤
-│ 1.4         │ 0.2                              │
-└─────────────┴──────────────────────────────────┘
+first(iris2[:, [:PetalLength, :PetalWidth]], <span class=hljs-number >1</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────────────────────────────────────────────┐
+│ PetalLength │ PetalWidth                                         │
+│ Float64     │ CategoricalArrays.CategoricalValue{Float64,UInt32} │
+│ Continuous  │ OrderedFactor{22}                                  │
+├─────────────┼────────────────────────────────────────────────────┤
+│ 1.4         │ 0.2                                                │
+└─────────────┴────────────────────────────────────────────────────┘
 </code></pre> <h3 id=unpacking_data ><a href="#unpacking_data">Unpacking data</a></h3> <p>The function <code>unpack</code> helps specify the target and the input for a regression or classification task</p> <pre><code class="julia hljs">y, X = unpack(iris, ==(:Species), colname -&gt; <span class=hljs-literal >true</span>)
 first(X, <span class=hljs-number >1</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────┬─────────────┬────────────┐
 │ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │
@@ -64,11 +64,11 @@ KNNClassifier                 (NearestNeighbors)
 KNeighborsClassifier          (ScikitLearn)
 LDA                           (MultivariateStats)
 LGBMClassifier                (LightGBM)
-LinearBinaryClassifier        (GLM)
 LogisticCVClassifier          (ScikitLearn)
 LogisticClassifier            (MLJLinearModels)
 LogisticClassifier            (ScikitLearn)
 MultinomialClassifier         (MLJLinearModels)
+NeuralNetworkClassifier       (MLJFlux)
 ProbabilisticSGDClassifier    (ScikitLearn)
 RandomForestClassifier        (DecisionTree)
 RandomForestClassifier        (ScikitLearn)
@@ -87,11 +87,11 @@ XGBoostClassifier             (XGBoost)
     p = 2,
     metric = "minkowski",
     metric_params = nothing,
-    n_jobs = nothing) @ 1…65</code></pre>
+    n_jobs = nothing) @ 1…21</code></pre>
 <p>In some cases, there may be several packages offering the same model, for instance <code>LinearRegressor</code> is offered by both <code><a href="https://github.com/JuliaStats/GLM.jl">GLM.jl</a></code> and <code><a href="https://github.com/cstjean/ScikitLearn.jl">ScikitLearn.jl</a></code> so you will need to specify the package you would like to use by adding <code>pkg&#61;&quot;ThePackage&quot;</code> in the load command:</p>
 <pre><code class="julia hljs">linreg = <span class=hljs-meta >@load</span> LinearRegressor pkg=<span class=hljs-string >"GLM"</span></code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    allowrankdeficient = false) @ 1…86</code></pre><div class=page-foot >
+    allowrankdeficient = false) @ 1…76</code></pre><div class=page-foot >
   <div class=copyright >
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: May 24, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>

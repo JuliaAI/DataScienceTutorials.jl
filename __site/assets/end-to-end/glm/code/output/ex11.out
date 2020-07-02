@@ -5,7 +5,7 @@
  [0, 0, 0, 0, 0]
 
  ŷ 
- UnivariateFinite{Int64,UInt32,Float64}[UnivariateFinite(0=>0.881, 1=>0.119), UnivariateFinite(0=>0.838, 1=>0.162), UnivariateFinite(0=>0.866, 1=>0.134), UnivariateFinite(0=>0.936, 1=>0.0637), UnivariateFinite(0=>0.944, 1=>0.056)]
+ UnivariateFinite{OrderedFactor{2},Int64,UInt32,Float64}[UnivariateFinite{OrderedFactor{2}}(0=>0.881, 1=>0.119), UnivariateFinite{OrderedFactor{2}}(0=>0.838, 1=>0.162), UnivariateFinite{OrderedFactor{2}}(0=>0.866, 1=>0.134), UnivariateFinite{OrderedFactor{2}}(0=>0.936, 1=>0.0637), UnivariateFinite{OrderedFactor{2}}(0=>0.944, 1=>0.056)]
 
  residuals 
  [0.11944603346742211, 0.16182691493524637, 0.13445730373831222, 0.06370799769022917, 0.05604680411361729]

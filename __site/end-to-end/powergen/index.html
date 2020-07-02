@@ -6,13 +6,13 @@
 
 <span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    solver = nothing)e[34m @ 6…14e[39m</code></pre> <p>The power generation and weather data come from two separate datasets. We downloaded both datasets from <a href="https://open-power-system-data.org/">Open Power networks</a>. The power generation data is available <a href="https://data.open-power-system-data.org/time_series/">here</a> and the weather data is available <a href="https://data.open-power-system-data.org/weather_data/">here</a>. Note that the first row in both datasets contains headers; hence we don&#39;t need to provide any.</p> <pre><code class="julia hljs">data_repo = <span class=hljs-string >"https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"</span>
+    solver = nothing) @ 1…11</code></pre> <p>The power generation and weather data come from two separate datasets. We downloaded both datasets from <a href="https://open-power-system-data.org/">Open Power networks</a>. The power generation data is available <a href="https://data.open-power-system-data.org/time_series/">here</a> and the weather data is available <a href="https://data.open-power-system-data.org/weather_data/">here</a>. Note that the first row in both datasets contains headers; hence we don&#39;t need to provide any.</p> <pre><code class="julia hljs">data_repo = <span class=hljs-string >"https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"</span>
 
 url_power   = data_repo * <span class=hljs-string >"/power_syst/DE_power_hourly.csv"</span>
 url_weather = data_repo * <span class=hljs-string >"/power_syst/DE_weather_data.csv"</span>
 
 power   = DataFrame(urldownload(url_power))
-weather = DataFrame(urldownload(url_weather));</code></pre> <p>We&#39;ve loaded both datasets but only have a rough idea of what&#39;s in each of them. Let&#39;s get a quick overview of the power dataset:</p> <pre><code class="julia hljs">describe(power, :mean, :nmissing)</code></pre><pre><code class="plaintext hljs">18×3 DataFrames.DataFrame
+weather = DataFrame(urldownload(url_weather));</code></pre> <p>We&#39;ve loaded both datasets but only have a rough idea of what&#39;s in each of them. Let&#39;s get a quick overview of the power dataset:</p> <pre><code class="julia hljs">describe(power, :mean, :nmissing)</code></pre><pre><code class="plaintext hljs">18×3 DataFrame
 │ Row │ variable                               │ mean      │ nmissing │
 │     │ Symbol                                 │ Union…    │ Union…   │
 ├─────┼────────────────────────────────────────┼───────────┼──────────┤
@@ -33,7 +33,7 @@ weather = DataFrame(urldownload(url_weather));</code></pre> <p>We&#39;ve loaded 
 │ 15  │ DE_wind_offshore_profile               │ 0.371213  │ 1463     │
 │ 16  │ DE_wind_onshore_capacity               │ 41849.9   │          │
 │ 17  │ DE_wind_onshore_generation_actual      │ 8277.05   │          │
-│ 18  │ DE_wind_onshore_profile                │ 0.199535  │          │</code></pre> <p>and the weather dataset &#40;we only show the first 20 rows as there&#39;s 150 features&#41;:</p> <pre><code class="julia hljs">first(describe(weather, :mean, :nmissing), <span class=hljs-number >20</span>)</code></pre><pre><code class="plaintext hljs">20×3 DataFrames.DataFrame
+│ 18  │ DE_wind_onshore_profile                │ 0.199535  │          │</code></pre> <p>and the weather dataset &#40;we only show the first 20 rows as there&#39;s 150 features&#41;:</p> <pre><code class="julia hljs">first(describe(weather, :mean, :nmissing), <span class=hljs-number >20</span>)</code></pre><pre><code class="plaintext hljs">20×3 DataFrame
 │ Row │ variable                          │ mean    │ nmissing │
 │     │ Symbol                            │ Union…  │ Nothing  │
 ├─────┼───────────────────────────────────┼─────────┼──────────┤
@@ -81,7 +81,7 @@ col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];</code></pr
     Windspeed     = wind.windspeed_mean,
     Temperature   = temp.temp_mean,
     Radiation_dir = raddir.raddir_mean,
-    Radiation_dif = raddif.raddif_mean);</code></pre> <p>...and have a look at their summary statistics</p> <pre><code class="julia hljs">describe(data, :mean, :median, :nmissing)</code></pre><pre><code class="plaintext hljs">7×4 DataFrames.DataFrame
+    Radiation_dif = raddif.raddif_mean);</code></pre> <p>...and have a look at their summary statistics</p> <pre><code class="julia hljs">describe(data, :mean, :median, :nmissing)</code></pre><pre><code class="plaintext hljs">7×4 DataFrame
 │ Row │ variable      │ mean    │ median  │ nmissing │
 │     │ Symbol        │ Union…  │ Union…  │ Nothing  │
 ├─────┼───────────────┼─────────┼─────────┼──────────┤

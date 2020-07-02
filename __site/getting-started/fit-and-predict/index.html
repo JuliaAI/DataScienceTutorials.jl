@@ -13,20 +13,20 @@ tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext hl
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 7…09</code></pre> <h3 id=mlj_machine ><a href="#mlj_machine">MLJ Machine</a></h3> <p>In MLJ, remember that a <em>model</em> is an object that only serves as a container for the hyperparameters of the model. A <em>machine</em> is an object wrapping both a model and data and can contain information on the <em>trained</em> model; it does <em>not</em> fit the model by itself. However, it does check that the model is compatible with the scientific type of the data and will warn you otherwise.</p> <pre><code class="julia hljs">tree = machine(tree_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @ 1…51
+    display_depth = 5) @ 1…90</code></pre> <h3 id=mlj_machine ><a href="#mlj_machine">MLJ Machine</a></h3> <p>In MLJ, remember that a <em>model</em> is an object that only serves as a container for the hyperparameters of the model. A <em>machine</em> is an object wrapping both a model and data and can contain information on the <em>trained</em> model; it does <em>not</em> fit the model by itself. However, it does check that the model is compatible with the scientific type of the data and will warn you otherwise.</p> <pre><code class="julia hljs">tree = machine(tree_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @ 5…85
 </code></pre> <p>A machine is used both for supervised and unsupervised model. In this tutorial we give an example for the supervised model first and then go on with the unsupervised case.</p> <h2 id=training_and_testing_a_supervised_model ><a href="#training_and_testing_a_supervised_model">Training and testing a supervised model</a></h2> <p>Now that you&#39;ve declared the model you&#39;d like to consider and the data, we are left with the standard training and testing step for a supervised learning algorithm.</p> <h3 id=splitting_the_data ><a href="#splitting_the_data">Splitting the data</a></h3> <p>To split the data into a <em>training</em> and <em>testing</em> set, you can use the function <code>partition</code> to obtain indices for data points that should be considered either as training or testing data:</p> <pre><code class="julia hljs">rng = StableRNG(<span class=hljs-number >566</span>)
 train, test = partition(eachindex(y), <span class=hljs-number >0.7</span>, shuffle=<span class=hljs-literal >true</span>, rng=rng)
 test[<span class=hljs-number >1</span>:<span class=hljs-number >3</span>]</code></pre><pre><code class="plaintext hljs">3-element Array{Int64,1}:
  39
  54
-  9</code></pre> <h3 id=fitting_and_testing_the_machine ><a href="#fitting_and_testing_the_machine">Fitting and testing the machine</a></h3> <p>To fit the machine, you can use the function <code>fit&#33;</code> specifying the rows to be used for the training:</p> <pre><code class="julia hljs">fit!(tree, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @ 1…51
+  9</code></pre> <h3 id=fitting_and_testing_the_machine ><a href="#fitting_and_testing_the_machine">Fitting and testing the machine</a></h3> <p>To fit the machine, you can use the function <code>fit&#33;</code> specifying the rows to be used for the training:</p> <pre><code class="julia hljs">fit!(tree, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @ 5…85
 </code></pre> <p>Note that this <strong>modifies</strong> the machine which now contains the trained parameters of the decision tree. You can inspect the result of the fitting with the <code>fitted_params</code> method:</p> <pre><code class="julia hljs">fitted_params(tree) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(tree = Decision Tree
 Leaves: 5
 Depth:  4,
  encoding = Dict("virginica" =&gt; 0x00000003,
                  "setosa" =&gt; 0x00000001,
                  "versicolor" =&gt; 0x00000002))</code></pre> <p>This <code>fitresult</code> will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named &#40;so that predictions can be appropriately named&#41;.</p> <p>You can now use the machine to make predictions with the <code>predict</code> function specifying rows to be used for the prediction:</p> <pre><code class="julia hljs">ŷ = predict(tree, rows=test)
-<span class=hljs-meta >@show</span> ŷ[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">ŷ[1] = UnivariateFinite(setosa=&gt;1.0, versicolor=&gt;0.0, virginica=&gt;0.0)
+<span class=hljs-meta >@show</span> ŷ[<span class=hljs-number >1</span>]</code></pre><pre><code class="plaintext hljs">ŷ[1] = UnivariateFinite{Multiclass{3}}(setosa=&gt;1.0, versicolor=&gt;0.0, virginica=&gt;0.0)
 </code></pre> <p>Note that the output is <em>probabilistic</em>, effectively a vector with a score for each class. You could get the mode by using the <code>mode</code> function on <code>ŷ</code> or using <code>predict_mode</code>:</p> <pre><code class="julia hljs">ȳ = predict_mode(tree, rows=test)
 <span class=hljs-meta >@show</span> ȳ[<span class=hljs-number >1</span>]
 <span class=hljs-meta >@show</span> mode(ŷ[<span class=hljs-number >1</span>])</code></pre><pre><code class="plaintext hljs">ȳ[1] = "setosa"
@@ -37,7 +37,7 @@ round(mce, digits=<span class=hljs-number >4</span>)</code></pre><pre><code clas
 <p>Unsupervised models define a <code>transform</code> method, and may optionally implement an <code>inverse_transform</code> method. As in the supervised case, we use a machine to wrap the unsupervised model and the data:</p>
 <pre><code class="julia hljs">v = [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >4</span>]
 stand_model = UnivariateStandardizer()
-stand = machine(stand_model, v)</code></pre><pre><code class="plaintext hljs">Machine{UnivariateStandardizer} @ 1…79
+stand = machine(stand_model, v)</code></pre><pre><code class="plaintext hljs">Machine{UnivariateStandardizer} @ 7…22
 </code></pre>
 <p>We can then fit the machine and use it to apply the corresponding <em>data transformation</em>:</p>
 <pre><code class="julia hljs">fit!(stand)

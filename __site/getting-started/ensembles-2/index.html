@@ -27,12 +27,12 @@ Type:           Float64
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @ 1…81</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
+    merge_purity_threshold = 1.0) @ 8…49</code></pre> <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p> <pre><code class="julia hljs">tree = machine(DecisionTreeRegressor(), X, y)
 <span class=hljs-literal >e</span> = evaluate!(tree, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
               measure=[rms, rmslp1])
 <span class=hljs-literal >e</span> |&gt; pprint <span class=hljs-comment ># use PrettyPrinting</span></code></pre><pre><code class="plaintext hljs">(measure = [rms, rmslp1],
- measurement = [7.062202405332688, 0.3277498771713516],
- per_fold = [[7.062202405332688], [0.3277498771713516]],
+ measurement = [7.054322052311654, 0.32730942581047084],
+ per_fold = [[7.054322052311654], [0.32730942581047084]],
  per_observation = [missing, missing])</code></pre> <p>Note that multiple measures can be reported simultaneously.</p> <h2 id=random_forest ><a href="#random_forest">Random forest</a></h2> <p>Let&#39;s create an ensemble of DTR and fix the number of subfeatures to 3 for now.</p> <pre><code class="julia hljs">forest = EnsembleModel(atom=DecisionTreeRegressor())
 forest.atom.n_subfeatures = <span class=hljs-number >3</span></code></pre><pre><code class="plaintext hljs">3</code></pre>
 <p>&#40;<strong>NB</strong>: we could have fixed <code>n_subfeatures</code> in the DTR constructor too&#41;.</p>
@@ -80,8 +80,8 @@ m = machine(tuned_forest, X, y)
 <span class=hljs-literal >e</span> = evaluate!(m, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>),
               measure=[rms, rmslp1])
 <span class=hljs-literal >e</span> |&gt; pprint</code></pre><pre><code class="plaintext hljs">(measure = [rms, rmslp1],
- measurement = [3.9291969189624694, 0.24921244622176925],
- per_fold = [[3.9291969189624694], [0.24921244622176925]],
+ measurement = [3.9583844337606906, 0.25041059892141626],
+ per_fold = [[3.9583844337606906], [0.25041059892141626]],
  per_observation = [missing, missing])</code></pre>
 <h3 id=reporting ><a href="#reporting">Reporting</a></h3>  Again, you could show a 2D heatmap of the hyperparameters</p>
 <pre><code class="julia hljs">r = report(m)

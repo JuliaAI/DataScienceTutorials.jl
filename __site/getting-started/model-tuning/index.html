@@ -10,10 +10,10 @@ X, y = <span class=hljs-meta >@load_iris</span>
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @ 8…90</code></pre> <h3 id=specifying_a_range_of_value ><a href="#specifying_a_range_of_value">Specifying a range of value</a></h3> <p>To specify a range of value, you can use the <code>range</code> function:</p> <pre><code class="julia hljs">dtc = DecisionTreeClassifier()
+    display_depth = 5) @ 7…01</code></pre> <h3 id=specifying_a_range_of_value ><a href="#specifying_a_range_of_value">Specifying a range of value</a></h3> <p>To specify a range of value, you can use the <code>range</code> function:</p> <pre><code class="julia hljs">dtc = DecisionTreeClassifier()
 r   = range(dtc, :max_depth, lower=<span class=hljs-number >1</span>, upper=<span class=hljs-number >5</span>)</code></pre><pre><code class="plaintext hljs">MLJBase.NumericRange(Int64, :max_depth, ... )</code></pre>
 <p>As you can see, the range function takes a model &#40;<code>dtc</code>&#41;, a symbol for the hyperparameter of interest &#40;<code>:max_depth</code>&#41; and indication of how to samples values. For hyperparameters of type <code>&lt;:Real</code>, you should specify a range of values as done above. For hyperparameters of other type &#40;e.g. <code>Symbol</code>&#41;, you should use the <code>values&#61;...</code> keyword.</p>
-<p>Once a range of values has been defined, you can then wrap the model in a <code>TunedModel</code> specifying the tuning strategy:</p>
+<p>Once a range of values has been defined, you can then wrap the model in a <code>TunedModel</code> specifying the tuning strategy.</p>
 <pre><code class="julia hljs">tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)</code></pre><pre><code class="plaintext hljs">ProbabilisticTunedModel(
     model = DecisionTreeClassifier(
             max_depth = -1,
@@ -38,17 +38,29 @@ r   = range(dtc, :max_depth, lower=<span class=hljs-number >1</span>, upper=<spa
             eps = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64,MLJBase.Bounded,Symbol}[NumericRange{Int64,…} @ 2…26],
+    range = MLJBase.NumericRange{Int64,MLJBase.Bounded,Symbol}[NumericRange{Int64,…} @ 6…89],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @ 1…22</code></pre>
+    check_measure = true) @ 1…60</code></pre>
+<p>Note that &quot;wrapping a model in a tuning strategy&quot; as above means creating a new &quot;self-tuning&quot; version of the model, <code>tuned_model &#61; TunedModel&#40;model&#61;...&#41;</code>, in which further key-word arguments specify:</p>
+<ol>
+<li><p>the algorithm &#40;a.k.a., tuning strategy&#41; for searching the hyper-parameter space of the model &#40;e.g., <code>tuning &#61; Random&#40;rng&#61;123&#41;</code> or <code>tuning &#61; Grid&#40;goal&#61;100&#41;</code>&#41;.</p>
+
+<li><p>the resampling strategy, used to evaluate performance for each value of the hyper-parameters &#40;e.g., <code>resampling&#61;CV&#40;nfolds&#61;9, rng&#61;123&#41;</code> or <code>resampling&#61;Holdout&#40;fraction_train&#61;0.7&#41;</code>&#41;.</p>
+
+<li><p>the measure &#40;or measures&#41; on which to base performance evaluations &#40;and for reporting purposes&#41; &#40;e.g., <code>measure &#61; rms</code> or <code>measures &#61; &#91;rms, mae&#93;</code>&#41;.</p>
+
+<li><p>the range, usually describing the &quot;space&quot; of hyperparameters to be searched &#40;but more generally whatever extra information is required to complete the search specification, e.g., initial values in gradient-descent optimization&#41;.</p>
+
+</ol>
+<p>For more options do <code>?TunedModel</code>.</p>
 <h3 id=fitting_and_inspecting_a_tuned_model ><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></h3>
 <p>To fit a tuned model, you can use the usual syntax:</p>
 <pre><code class="julia hljs">m = machine(tm, X, y)
-fit!(m)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel{Grid,…}} @ 1…92
+fit!(m)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel{Grid,…}} @ 1…32
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="julia hljs">fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext hljs">1</code></pre>
@@ -61,7 +73,7 @@ fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext hl
 <p>Let&#39;s check the misclassification rate for the best model:</p>
 <pre><code class="julia hljs">r = report(m)
 r.best_result</code></pre><pre><code class="plaintext hljs">(measure = [misclassification_rate],
- measurement = [0.2],)</code></pre>
+ measurement = [0.1111111111111111],)</code></pre>
 <p>Anyone wants plots? of course:</p>
 <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
 figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
@@ -94,7 +106,7 @@ forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext hljs">D
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @ 1…51</code></pre>
+    out_of_bag_measure = Any[]) @ 1…45</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
 <pre><code class="julia hljs">params(forest) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(atom = (max_depth = -1,
          min_samples_leaf = 5,
@@ -120,7 +132,7 @@ fit!(m);</code></pre>
 <p>A useful function to inspect a model after fitting it is the <code>report</code> function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:</p>
 <pre><code class="julia hljs">r = report(m)
 r.best_result</code></pre><pre><code class="plaintext hljs">(measure = [rms],
- measurement = [0.1582066958450919],)</code></pre>
+ measurement = [0.17693333886269114],)</code></pre>
 <p>Let&#39;s visualise this</p>
 <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
 

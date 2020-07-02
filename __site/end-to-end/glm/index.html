@@ -4,7 +4,7 @@
 <span class=hljs-meta >@load</span> LinearRegressor pkg = GLM
 <span class=hljs-meta >@load</span> LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext hljs">LinearBinaryClassifier(
     fit_intercept = true,
-    link = GLM.LogitLink()) @ 4…94</code></pre> <h2 id=reading_the_data ><a href="#reading_the_data">Reading the data</a></h2> <p>The CollegeDistance dataset was stored in a CSV file. Here, we read the input file.</p> <pre><code class="julia hljs">baseurl = <span class=hljs-string >"https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"</span>
+    link = GLM.LogitLink()) @ 1…47</code></pre> <h2 id=reading_the_data ><a href="#reading_the_data">Reading the data</a></h2> <p>The CollegeDistance dataset was stored in a CSV file. Here, we read the input file.</p> <pre><code class="julia hljs">baseurl = <span class=hljs-string >"https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"</span>
 
 dfX = DataFrame(urldownload(baseurl * <span class=hljs-string >"X3.csv"</span>))
 dfYbinary = DataFrame(urldownload(baseurl * <span class=hljs-string >"Y3.csv"</span>))
@@ -64,6 +64,7 @@ LassoRegressor
 LinearRegressor
 LinearRegressor
 LinearRegressor
+NeuralNetworkRegressor
 NuSVR
 OrthogonalMatchingPursuitCVRegressor
 OrthogonalMatchingPursuitRegressor
@@ -78,7 +79,7 @@ RidgeRegressor
 RidgeRegressor
 RobustRegressor
 SGDRegressor
-SVMLRegressor
+SVMLinearRegressor
 SVMNuRegressor
 SVMRegressor
 TheilSenRegressor
@@ -97,8 +98,8 @@ yv = <span class=hljs-built_in >Vector</span>(y[:, <span class=hljs-number >1</s
 
 LinearModel = machine(LinearRegressorPipe(), X, yv)
 fit!(LinearModel)
-fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext hljs">(machines = Any[NodalMachine{LinearRegressor} @ 1…14, NodalMachine{OneHotEncoder} @ 6…57, NodalMachine{Standardizer} @ 9…32],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(NodalMachine{LinearRegressor} @ 1…14 =&gt; (coef = [1.0207869497405524, 1.0324289154699695, 0.009406292423317654, 0.026633915171207466, 0.2998591563637023], intercept = 0.015893883995789795),NodalMachine{OneHotEncoder} @ 6…57 =&gt; (fitresult = OneHotEncoderResult @ 1…59,),NodalMachine{Standardizer} @ 9…32 =&gt; (mean_and_std_given_feature = Dict(:V1 =&gt; (0.002445630070647992, 1.1309193246154066),:V2 =&gt; (-0.015561621122145304, 1.123889789756524),:V5 =&gt; (0.007703620970455889, 1.1421493464876624),:V3 =&gt; (0.024428898843138463, 2.3327135683191544),:V4 =&gt; (0.15168404285157286, 6.806065861835238)),)),)</code></pre> <h2 id=reading_the_output_of_fitting_the_linear_model ><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2> <p>We can quickly read the results of our models in MLJ. Remember to compute the accuracy of the linear model.</p> <pre><code class="julia hljs">ŷ = MLJ.predict(LinearModel, X)
+fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext hljs">(machines = Any[NodalMachine{LinearRegressor} @ 3…40, NodalMachine{OneHotEncoder} @ 1…96, NodalMachine{Standardizer} @ 3…59],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(NodalMachine{LinearRegressor} @ 3…40 =&gt; (coef = [1.0207869497405524, 1.0324289154699695, 0.009406292423317654, 0.026633915171207466, 0.2998591563637023], intercept = 0.015893883995789795),NodalMachine{OneHotEncoder} @ 1…96 =&gt; (fitresult = OneHotEncoderResult @ 1…66,),NodalMachine{Standardizer} @ 3…59 =&gt; (mean_and_std_given_feature = Dict(:V1 =&gt; (0.002445630070647992, 1.1309193246154066),:V2 =&gt; (-0.015561621122145304, 1.123889789756524),:V5 =&gt; (0.007703620970455889, 1.1421493464876624),:V3 =&gt; (0.024428898843138463, 2.3327135683191544),:V4 =&gt; (0.15168404285157286, 6.806065861835238)),)),)</code></pre> <h2 id=reading_the_output_of_fitting_the_linear_model ><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2> <p>We can quickly read the results of our models in MLJ. Remember to compute the accuracy of the linear model.</p> <pre><code class="julia hljs">ŷ = MLJ.predict(LinearModel, X)
 yhatResponse = [ŷ[i,<span class=hljs-number >1</span>].μ <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
@@ -144,8 +145,8 @@ yc = coerce(yc, OrderedFactor)
 
 LogisticModel = machine(LinearBinaryClassifierPipe(), X, yc)
 fit!(LogisticModel)
-fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext hljs">(machines = Any[NodalMachine{LinearBinaryClassifier{LogitLink}} @ 2…45, NodalMachine{OneHotEncoder} @ 1…40, NodalMachine{Standardizer} @ 1…26],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(NodalMachine{LinearBinaryClassifier{LogitLink}} @ 2…45 =&gt; (coef = [0.2025072937886874, 0.13075293910912894, 0.344951624939835, 0.9977565847160846, -0.5022315102984592, -0.478500562602165, -0.20440507809955008, -0.06922751403500096, 0.05892864973017093, -0.08344749828203225, -0.0023151433338598286, 0.4617765395578658, 0.3843262958100779], intercept = -1.0766338905793655),NodalMachine{OneHotEncoder} @ 1…40 =&gt; (fitresult = OneHotEncoderResult @ 1…23,),NodalMachine{Standardizer} @ 1…26 =&gt; (mean_and_std_given_feature = Dict(:wage =&gt; (9.500506478338005, 1.343067076107841),:unemp =&gt; (7.597214581091511, 2.7635808733448477),:tuition =&gt; (0.8146082493518823, 0.3395038198597174),:score =&gt; (50.88902933684601, 8.701909614072397)),)),)</code></pre>
+fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext hljs">(machines = Any[NodalMachine{LinearBinaryClassifier{LogitLink}} @ 8…15, NodalMachine{OneHotEncoder} @ 1…16, NodalMachine{Standardizer} @ 1…71],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(NodalMachine{LinearBinaryClassifier{LogitLink}} @ 8…15 =&gt; (coef = [0.2025072937886874, 0.13075293910912894, 0.344951624939835, 0.9977565847160846, -0.5022315102984592, -0.478500562602165, -0.20440507809955008, -0.06922751403500096, 0.05892864973017093, -0.08344749828203225, -0.0023151433338598286, 0.4617765395578658, 0.3843262958100779], intercept = -1.0766338905793655),NodalMachine{OneHotEncoder} @ 1…16 =&gt; (fitresult = OneHotEncoderResult @ 1…73,),NodalMachine{Standardizer} @ 1…71 =&gt; (mean_and_std_given_feature = Dict(:wage =&gt; (9.500506478338005, 1.343067076107841),:unemp =&gt; (7.597214581091511, 2.7635808733448477),:tuition =&gt; (0.8146082493518823, 0.3395038198597174),:score =&gt; (50.88902933684601, 8.701909614072397)),)),)</code></pre>
 <h2 id=reading_the_output_from_the_prediction_of_the_logistic_model ><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
 <pre><code class="julia hljs">ŷ = MLJ.predict(LogisticModel, X)
@@ -164,7 +165,7 @@ println(<span class=hljs-string >"\n Standard Error per Coefficient \n"</span>, 
  [0, 0, 0, 0, 0]
 
  ŷ 
- UnivariateFinite{Int64,UInt32,Float64}[UnivariateFinite(0=&gt;0.881, 1=&gt;0.119), UnivariateFinite(0=&gt;0.838, 1=&gt;0.162), UnivariateFinite(0=&gt;0.866, 1=&gt;0.134), UnivariateFinite(0=&gt;0.936, 1=&gt;0.0637), UnivariateFinite(0=&gt;0.944, 1=&gt;0.056)]
+ UnivariateFinite{OrderedFactor{2},Int64,UInt32,Float64}[UnivariateFinite{OrderedFactor{2}}(0=&gt;0.881, 1=&gt;0.119), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.838, 1=&gt;0.162), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.866, 1=&gt;0.134), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.936, 1=&gt;0.0637), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.944, 1=&gt;0.056)]
 
  residuals 
  [0.11944603346742211, 0.16182691493524637, 0.13445730373831222, 0.06370799769022917, 0.05604680411361729]

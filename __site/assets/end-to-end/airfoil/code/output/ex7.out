@@ -32,6 +32,7 @@ Model Name: LassoRegressor , Package: ScikitLearn
 Model Name: LinearRegressor , Package: GLM
 Model Name: LinearRegressor , Package: MLJLinearModels
 Model Name: LinearRegressor , Package: ScikitLearn
+Model Name: NeuralNetworkRegressor , Package: MLJFlux
 Model Name: NuSVR , Package: LIBSVM
 Model Name: OrthogonalMatchingPursuitCVRegressor , Package: ScikitLearn
 Model Name: OrthogonalMatchingPursuitRegressor , Package: ScikitLearn
@@ -46,7 +47,7 @@ Model Name: RidgeRegressor , Package: MultivariateStats
 Model Name: RidgeRegressor , Package: ScikitLearn
 Model Name: RobustRegressor , Package: MLJLinearModels
 Model Name: SGDRegressor , Package: ScikitLearn
-Model Name: SVMLRegressor , Package: ScikitLearn
+Model Name: SVMLinearRegressor , Package: ScikitLearn
 Model Name: SVMNuRegressor , Package: ScikitLearn
 Model Name: SVMRegressor , Package: ScikitLearn
 Model Name: TheilSenRegressor , Package: ScikitLearn

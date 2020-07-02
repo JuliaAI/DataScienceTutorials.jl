@@ -90,6 +90,7 @@ Model Name: LassoRegressor , Package: ScikitLearn
 Model Name: LinearRegressor , Package: GLM
 Model Name: LinearRegressor , Package: MLJLinearModels
 Model Name: LinearRegressor , Package: ScikitLearn
+Model Name: NeuralNetworkRegressor , Package: MLJFlux
 Model Name: NuSVR , Package: LIBSVM
 Model Name: OrthogonalMatchingPursuitCVRegressor , Package: ScikitLearn
 Model Name: OrthogonalMatchingPursuitRegressor , Package: ScikitLearn
@@ -104,7 +105,7 @@ Model Name: RidgeRegressor , Package: MultivariateStats
 Model Name: RidgeRegressor , Package: ScikitLearn
 Model Name: RobustRegressor , Package: MLJLinearModels
 Model Name: SGDRegressor , Package: ScikitLearn
-Model Name: SVMLRegressor , Package: ScikitLearn
+Model Name: SVMLinearRegressor , Package: ScikitLearn
 Model Name: SVMNuRegressor , Package: ScikitLearn
 Model Name: SVMRegressor , Package: ScikitLearn
 Model Name: TheilSenRegressor , Package: ScikitLearn
@@ -119,7 +120,7 @@ dcrm = machine(dcr, X, y)
 fit!(dcrm, rows=train)
 pred_dcrm = MLJ.predict(dcrm, rows=test);</code></pre>
 <p>Now you can call a loss function to assess the performance on test set.</p>
-<pre><code class="julia hljs">rms(pred_dcrm, y[test])</code></pre><pre><code class="plaintext hljs">3.038831008372535</code></pre>
+<pre><code class="julia hljs">rms(pred_dcrm, y[test])</code></pre><pre><code class="plaintext hljs">3.0364858673669266</code></pre>
 <h2 id=randomforestregressor ><a href="#randomforestregressor">RandomForestRegressor</a></h2>
 <p>Now let&#39;s try out RandomForestRegressor:</p>
 <pre><code class="julia hljs">rfr = <span class=hljs-meta >@load</span> RandomForestRegressor pkg=DecisionTree
@@ -129,7 +130,7 @@ rfr_m = machine(rfr, X, y);</code></pre>
 <pre><code class="julia hljs">fit!(rfr_m, rows=train);</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="julia hljs">pred_rfr = MLJ.predict(rfr_m, rows=test);
-rms(pred_rfr, y[test])</code></pre><pre><code class="plaintext hljs">2.2609972839690258</code></pre>
+rms(pred_rfr, y[test])</code></pre><pre><code class="plaintext hljs">2.1950756520760324</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <h2 id=tuning ><a href="#tuning">Tuning</a></h2>
@@ -150,7 +151,7 @@ rfr_tm = machine(tm, X, y);</code></pre>
 <pre><code class="julia hljs">fit!(rfr_tm, rows=train);</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="julia hljs">pred_rfr_tm = MLJ.predict(rfr_tm, rows=test);
-rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext hljs">2.1528289619346612</code></pre>
+rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext hljs">2.217570607428281</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="julia hljs">fitted_params(rfr_tm).best_model</code></pre><pre><code class="plaintext hljs">RandomForestRegressor(
@@ -159,9 +160,9 @@ rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext hljs">2.152828
     min_samples_split = 2,
     min_purity_increase = 0.0,
     n_subfeatures = 0,
-    n_trees = 15,
+    n_trees = 11,
     sampling_fraction = 0.7666666666666667,
-    pdf_smoothing = 0.0) @ 1…93</code></pre>
+    pdf_smoothing = 0.0) @ 1…03</code></pre>
 <p>Now we can investigate the tuning by using report. Let&#39;s plot a heatmap of the measurements:</p>
 <pre><code class="julia hljs">r = report(rfr_tm)
 res = r.plotting

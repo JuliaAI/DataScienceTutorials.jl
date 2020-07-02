@@ -89,6 +89,7 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
+X = coerce(X, autotype(X, :discrete_to_continuous))
 
 # ## A baseline model## Let's define a first sensible model and get a baseline, basic steps are:# - one-hot-encode the categoricals# - feed all this into a classifier
 @load OneHotEncoder
