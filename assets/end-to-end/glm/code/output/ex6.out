@@ -32,6 +32,7 @@ LassoRegressor
 LinearRegressor
 LinearRegressor
 LinearRegressor
+NeuralNetworkRegressor
 NuSVR
 OrthogonalMatchingPursuitCVRegressor
 OrthogonalMatchingPursuitRegressor
@@ -46,7 +47,7 @@ RidgeRegressor
 RidgeRegressor
 RobustRegressor
 SGDRegressor
-SVMLRegressor
+SVMLinearRegressor
 SVMNuRegressor
 SVMRegressor
 TheilSenRegressor

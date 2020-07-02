@@ -33,4 +33,4 @@ XGBoostClassifier(
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @ 9…59
+    seed = 0) @ 4…90

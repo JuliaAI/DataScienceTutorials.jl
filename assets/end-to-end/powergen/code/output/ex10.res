@@ -1,4 +1,4 @@
-7×4 DataFrames.DataFrame
+7×4 DataFrame
 │ Row │ variable      │ mean    │ median  │ nmissing │
 │     │ Symbol        │ Union…  │ Union…  │ Nothing  │
 ├─────┼───────────────┼─────────┼─────────┼──────────┤

@@ -1,4 +1,4 @@
-18×3 DataFrames.DataFrame
+18×3 DataFrame
 │ Row │ variable                               │ mean      │ nmissing │
 │     │ Symbol                                 │ Union…    │ Union…   │
 ├─────┼────────────────────────────────────────┼───────────┼──────────┤

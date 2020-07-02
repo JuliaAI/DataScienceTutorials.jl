@@ -1,7 +1,7 @@
 DeterministicTunedModel(
     model = LinMod(
-            fs = FeatureSelector @ 1…12,
-            lr = LinearRegressor @ 8…84),
+            fs = FeatureSelector @ 1…92,
+            lr = LinearRegressor @ 1…11),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -22,4 +22,4 @@ DeterministicTunedModel(
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @ 1…64
+    check_measure = true) @ 1…95
