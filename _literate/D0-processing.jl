@@ -5,7 +5,7 @@
 # More tutorials on the manipulation of DataFrames can be found [here](https://github.com/bkamins/Julia-DataFrames-Tutorial)
 # And some more information can be found on [this](https://en.wikibooks.org/wiki/Introducing_Julia/DataFrames) wikipage.
 
-import MLJ: schema, std, mean, median, coerce, coerce!, scitype
+import MLJ: schema, std, mean, median, coerce, coerce!, scitype, contains
 using DataFrames
 using UrlDownload
 using PyPlot
@@ -24,133 +24,155 @@ schema(data)
 # We see that a small number of features have values for all plants (i.e. for each row) present in the dataset.
 # However, (i) several features have missing values (Union{Missing, _.type}) and (ii) we are not interested in working with all of these features.
 # In particular, we're not intersted in the source of the information present in the dataset nor are we interested in the generation data.
-# Hence we drop all columns which contain information's source. Since these columns contain the string "source" and "generation" in their name, we can drop them from the dataframe by using a filter.
+# Hence we drop all columns which contain information's source.
+# We define a function `is_active()` that will return a `TRUE` boolean value if the column name does NOT (`!`) contain either of the strings "source" or "generation".
+# Note the conversion of column names from `:Symbol` to `:string` since the `occursing` function only accepts strings as arguments.
 
-is_active(col) = !contains(col, r"source|generation")
+is_active(col) = !occursin(r"source|generation", string(col))
 active_cols = [col for col in names(data) if is_active(col)]
 select!(data, active_cols);
 
-# We also drop a number of other unwanted columns
+# We also drop a number of other unwanted columns and take a look at our "new" dataframe.
 
 select!(data, Not([:wepp_id, :url, :owner]))
 schema(data)
 
-# Finally, we are left with a DataFrame containing a number of variables with two different scientific types: Continuous, Textual
-# Of which we can get an overview. *Note:* the `describe()` function is from the [Julia Base] whereas the `schema()` is from the MLJ package.
+# The remaining variables have two different scientific types: Continuous, Textual
+# Of which we can get an overview.
 
 describe(data)
 
 # The describe() function shows that there are several features with missing values.
+# *Note:* the `describe()` function is from the [Julia Base] whereas the `schema()` is from the MLJ package.
+
 
 ###
-# As a first (easy) step, let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
-capacity = select(data, [:country, :primary_fuel, :capacity_mw])
+# Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
+capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)
 
+# This dataframe contains several subgroups (country and technology type) and it would be interesting to get data aggregates by subgroup.
 # To obtain a `view` of the DataFrame by subgroup, we can use the `groupby` function.
 # (See the [DataFrame tutorial](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/#groupby) for an introduction to the use of `groupby`)
-cap_agg = groupby(capacity, [:country, :primary_fuel]);
+cap_gr = groupby(capacity, [:country, :primary_fuel]);
 
-# If we want to aggregate at the country-fuel type level and calculate summary statistics at this level, we can use the `aggregate` function.
-# This function takes the DataFrame, the symbols of aggregation keys and the measure of choice as arguments.
+# If we want to aggregate at the country-fuel-type level and calculate summary statistics at this level, we can use the `combine` function on the GroupedDataFrame that we just created.
+# This function takes the GroupedDataFrame, the symbol of the column on which to apply the measure of choice as arguments.
 
-cap_mean = DataFrames.aggregate(capacity, [:country, :primary_fuel], mean)
-cap_sum = DataFrames.aggregate(capacity, [:country, :primary_fuel], sum)
+cap_mean = combine(cap_gr, :capacity_mw => mean)
+cap_sum = combine(cap_gr, :capacity_mw => sum)
 first(cap_sum, 3)
-#
-# # Note that this function also accepts a GroupedDataFrame instead of a specification of the dataframe and the symbols of aggregation keys.
-# DataFrames.aggregate(cap_agg, mean)
-#
-# ctry_selec = ["AFG"]
-#
-# selec_con = (cap_sum[!, :country] .== ctry_selec) .& (cap_sum[!, :primary_fuel] .== "Solar")
-#
-# # Note the `.` for element-wise comparison
-#
-# # To select matching rows , use the function `filter`.
-# # filter()cap_sum[cap_sum[!, :country] .== ctry_selec, :]
-#
-# selec = cap_sum[selec_con, :]
-# # select = weather[filter(x -> occursin(["AFG"], String(x)), ), :]
-#
-# # Plot aggregate capacity data, by country and technology, for selected countries
-# figure(figsize=(8,6))
-#
-# plt.bar(selec.country, selec.capacity_mw_sum, width=0.35)
-# plt.xticks(rotation=90)
-#
-#
-# ###
-# # Calculate shares of installed capacity (as share of total installed capacity in DB)
-#
-#
-#
-# ###
-# # Now let's analyse features which exhibit some missing values.
-# # Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.
-# # First, the commissioning_year is not reported for all plants.
-# # We need to gauge the representativity of the plants for which it is available with regard to the full dataset.
-# # One way to count the missing values is
-# nMissings = length(findall(x -> ismissing(x), data.commissioning_year))
-#
-# # This represents about half of our observations
-# nMissings_share = nMissings/size(data)[1]
-#
-# # Second, the commissioning year is not reported as an integer. Fractions of years are reported too.
-# # As a result, the machine type of `data.commissioning_year`is Float64.
-#
-# typeof(data.commissioning_year)
-#
-# # Before calculating the average age, let's drop the missing values.
-#
-# data_nmiss = dropmissing(data, :commissioning_year)
-#
-# # And round the year to the closest integer. We can do this using the `round` function and a mapping function on the relevant DataFrame column.
-#
-# map!(x -> round(x, digits=0), data_nmiss.commissioning_year, data_nmiss.commissioning_year)
-#
-# # We can now calculate plant age for each plant (worth remembering that the dataset only contains active plants)
-#
-# current_year = fill!(Array{Float64}(undef, size(data_nmiss)[1]), 2020)
-# data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year]
-#
-# # Since the commissioning year is missing for about half the plants in the dataset (17340, see description of data above) and that missing values propagate,
-# # the plant age will only be available for 33643-17340 plants.
-#
-# mean_age = mean(skipmissing(data_nmiss.plant_age))
-# median_age = median(skipmissing(data_nmiss.plant_age))
-#
-# # Plot the distribution of plant age - we need to drop missing values from dataframe
-# figure(figsize=(8,6))
-#
-# plt.hist(dropmissing(data_nmiss, :plant_age).plant_age, color="blue", edgecolor="white", bins=100,
-#      density=true, alpha=0.5)
-# plt.axvline(mean_age)
-# plt.axvline(median_age)
-#
-# plt.xlim(0,)
-#
-# # Then calculate average plant age, by country and technology
-#
-# age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
-# age_mean = aggregate(age, [:country, :primary_fuel], mean)
-#
-# # Make sure all columns passed, other than the aggregation dimensions, are of type `Float` or `Int`, otherwise the function execution will fail.
-#
-# figure(figsize=(8,6))
-#
-# plt.hist(dropmissing(age_mean, :plant_age_mean).plant_age_mean, color="blue", edgecolor="white", bins=100,
-#      density=true, alpha=0.5)
-#
-# plt.xlim(0,)
-#
-# # Aside from the programming tricks, we also learn that [technology x] is younger than [technology y].
-#
-# ###
-# # #Data encoding
-# # Suppose now that for the purpose of later analysis we need to encode the country labels.
-# # An easy way to do this is to use the function `coerce`. Let's revert to the original dataset.
-#
-# test = coerce(data, autotype(data, :string_to_multiclass))
-#
-# ## It is also possible to resort to "OneHotEncoding" using the `Flux` package. This is not dealt with here
+
+# Now let's plot some of this aggregate data for a selection of countries, by country and technology type
+
+ctry_selec = r"BEL|FRA|DEU"
+tech_selec = r"Solar"
+
+cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_selec, cap_sum.primary_fuel), :]
+
+# Note the `.` for element-wise comparison
+# Before plotting, we can also sort values by decreasing order using `sort!()`.
+sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
+
+figure(figsize=(8,6))
+
+plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
+plt.xticks(rotation=90)
+
+savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
+
+###
+# Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.
+# To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
+cap_sum_ctry_gd = groupby(capacity, [:country]);
+cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
+
+# The we join this dataframe with the disaggregated one; which requires that we convert the two GroupedDataFrame into DataFrames.
+
+cap_sum = DataFrame(cap_sum);
+cap_sum_ctry = DataFrame(cap_sum_ctry);
+cap_share = join(cap_sum, cap_sum_ctry, on = :country, kind = :left, makeunique = true)
+cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw_sum_1;
+
+# Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
+
+###
+# Now let's analyse features which exhibit some missing values.
+# Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.
+# First, the commissioning_year is not reported for all plants.
+# We need to gauge the representativity of the plants for which it is available with regard to the full dataset.
+# One way to count the missing values is
+
+nMissings = length(findall(x -> ismissing(x), data.commissioning_year))
+
+# This represents about half of our observations
+nMissings_share = nMissings/size(data)[1]
+
+# Second, the commissioning year is not reported as an integer. Fractions of years are reported too.
+# As a result, the machine type of `data.commissioning_year`is Float64.
+
+typeof(data.commissioning_year)
+
+# Before calculating the average age, let's drop the missing values.
+
+data_nmiss = dropmissing(data, :commissioning_year);
+
+# And round the year to the closest integer. We can do this using the `round` function and a mapping function on the relevant DataFrame column.
+
+map!(x -> round(x, digits=0), data_nmiss.commissioning_year, data_nmiss.commissioning_year);
+
+# We can now calculate plant age for each plant (worth remembering that the dataset only contains active plants)
+
+current_year = fill!(Array{Float64}(undef, size(data_nmiss)[1]), 2020);
+data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year]
+
+# Since the commissioning year is missing for about half the plants in the dataset (17340, see description of data above) and that missing values propagate,
+# the plant age will only be available for 33643-17340 plants.
+# Let's see what the mean and median plant ages are across the plants for which we have the data
+
+mean_age = mean(skipmissing(data_nmiss.plant_age))
+median_age = median(skipmissing(data_nmiss.plant_age))
+
+# And bring this into a frequency plot of the plant age observations
+
+figure(figsize=(8,6))
+
+plt.hist(data_nmiss.plant_age, color="blue", edgecolor="white", bins=100,
+      density=true, alpha=0.5)
+plt.axvline(mean_age, label = "Mean", color = "red")
+plt.axvline(median_age, label = "Median")
+
+plt.legend()
+
+plt.xlim(0,)
+
+savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
+
+# We can also calculate and plot average plant age by country and technology
+# Make sure all columns passed, other than the aggregation dimensions, are of type `Float` or `Int`, otherwise the function execution will fail.
+
+age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
+age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
+
+
+labels = unique(age_mean.country)
+coal_means = age_mean[]
+gas_means = age_mean[]
+
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+
+fig, ax = plt.subplots()
+rects1 = ax.bar(x - width/2, coal_means, width, label='Coal')
+rects2 = ax.bar(x + width/2, gas_means, width, label='Gas')
+
+# Add some text for labels, title and custom x-axis tick labels, etc.
+ax.set_ylabel('Age')
+ax.set_title('Mean plant age by country and technology')
+ax.set_xticks(x)
+ax.set_xticklabels(labels)
+ax.legend()
+
+savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
+
+# Aside from the programming tricks, we also learn that [technology x] is younger than [technology y].
