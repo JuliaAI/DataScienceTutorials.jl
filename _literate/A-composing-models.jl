@@ -1,16 +1,8 @@
-# Before running this, please make sure to activate and instantiate the environment
-# corresponding to [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml) and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml)
-# so that you get an environment which matches the one used to generate the tutorials:
-#
-# ```julia
-# cd("DataScienceTutorials") # cd to folder with the *.toml
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
 # ## Generating dummy data
 # Let's start by generating some dummy data with both numerical values and categorical values:
 using MLJ
 using PrettyPrinting
+MLJ.color_off() # hide
 
 @load KNNRegressor
 ## input
