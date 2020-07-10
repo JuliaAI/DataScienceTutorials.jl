@@ -1,5 +1,7 @@
 # ## Generating dummy data
+
 # Let's start by generating some dummy data with both numerical values and categorical values:
+
 using MLJ
 using PrettyPrinting
 MLJ.color_off() # hide
@@ -18,6 +20,7 @@ scitype(X.age)
 # We will want to coerce that to `Continuous` so that it can be given to a regressor that expects such values.
 
 # ## Declaring a pipeline
+
 # A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data.
 # Let's say that we want to apply the following steps:
 # 1. standardize the target variable (`:height`)
