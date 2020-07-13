@@ -1,3 +1,6 @@
+# In this tutorial we are exploring the application of Ridge and Lasso
+# regression to the "Hitters" R dataset.
+
 # ## Getting started
 
 using MLJ
@@ -11,22 +14,32 @@ const D = Distributions
 @load RidgeRegressor pkg=MLJLinearModels
 @load LassoRegressor pkg=MLJLinearModels
 
+# We load the dataset using the `dataset` function, which takes the Package and
+# dataset names as arguments.
+
 hitters = dataset("ISLR", "Hitters")
 @show size(hitters)
 names(hitters) |> pprint
 
-# The target is `Salary`
+# Let's unpack the dataset with the `unpack` function.
+# In this case, the target is `Salary` (`==(:Salary)`) and all other columns are features (`col->true`).
 
 y, X = unpack(hitters, ==(:Salary), col->true);
 
-# It has missing values which we will just ignore:
-
+# The target has missing values which we will just ignore.
+# We extract the row indices corresponding to non-missing values of the target.
+# Note the use of the element-wise operator `.`.
 no_miss = .!ismissing.(y)
+
+# We collect the non missing values of the target in an Array.
+# And keep only the corresponding features values.
 y = collect(skipmissing(y))
 X = X[no_miss, :]
+
+# Let's now split our dataset into a train and test sets.
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
-#
+# Let's have a look at the target.
 
 using PyPlot
 
@@ -61,7 +74,10 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
 #
 # ### Data preparation
 #
-# Most features are currently encoded as integers but we will consider them as continuous
+# Most features are currently encoded as integers but we will consider them as continuous.
+# To coerce `int` features to `Float`, we nest the `autotype` function in the `coerce` function.
+# The `autotype` function returns a dictionary containing scientific types, which is then passed to the `coerce` function.
+# For more details on the use of `autotype`, see the [Scientific Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype)
 
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
@@ -192,8 +208,7 @@ coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
 
 # with around 50% sparsity:
 
-coef_vals = [c[2] for c in coefs]
-sum(coef_vals .≈ 0) / length(coefs)
+sum(coefs .≈ 0) / length(coefs)
 
 # Let's visualise this:
 
