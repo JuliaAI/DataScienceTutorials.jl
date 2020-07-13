@@ -5,7 +5,7 @@
 # More tutorials on the manipulation of DataFrames can be found [here](https://github.com/bkamins/Julia-DataFrames-Tutorial)
 # And some more information can be found on [this](https://en.wikibooks.org/wiki/Introducing_Julia/DataFrames) wikipage.
 
-import MLJ: schema, std, mean, median, coerce, coerce!, scitype, contains
+import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
 using PyPlot
@@ -155,24 +155,25 @@ age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 
 
-labels = unique(age_mean.country)
-coal_means = age_mean[]
-gas_means = age_mean[]
 
-x = np.arange(len(labels))  # the label locations
+coal_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Coal", age_mean.primary_fuel), :]
+gas_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Gas", age_mean.primary_fuel), :]
+
+
 width = 0.35  # the width of the bars
 
-fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, coal_means, width, label='Coal')
-rects2 = ax.bar(x + width/2, gas_means, width, label='Gas')
+fig, (ax1, ax2) = plt.subplots(1,2)
 
-# Add some text for labels, title and custom x-axis tick labels, etc.
-ax.set_ylabel('Age')
-ax.set_title('Mean plant age by country and technology')
-ax.set_xticks(x)
-ax.set_xticklabels(labels)
+fig.suptitle("Mean plant age by country and technology")
+
+ax1.bar(coal_means.country, coal_means.plant_age_mean, width, label="Coal")
+ax2.bar(gas_means.country, gas_means.plant_age_mean, width, label="Gas")
+
+ax1.set_ylabel("Age")
+
+ax1.set_title("Coal")
+ax2.set_title("Gas")
+
 ax.legend()
 
 savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
-
-# Aside from the programming tricks, we also learn that [technology x] is younger than [technology y].
