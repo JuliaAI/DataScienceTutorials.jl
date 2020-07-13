@@ -42,12 +42,8 @@ UrlDownload = "856ac37a-3032-4c1c-9122-f86d88358c8b"
 XGBoost = "009559a3-9522-5dbb-924b-0b6ed2b22bb9"
 
 [compat]
-MLJ = "0.11"
-MLJBase = "0.13"
-MLJLinearModels = "0.5"
-MLJModelInterface = "0.3"
-MLJModels = "0.10"
-MLJScientificTypes = "0.2"
+MLJ = "0.12"
+MLJBase = "0.14"
 
 [extras]
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
