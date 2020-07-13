@@ -16,7 +16,7 @@ describe(data, :mean, :std)
 # Let's extract the numerical component and coerce
 
 X = select(data, Not(:State))
-X = coerce(X, :UrbanPop=>Continuous);
+X = coerce(X, :UrbanPop=>Continuous, :Assault=>Continuous);
 
 # ## PCA pipeline
 #
@@ -27,7 +27,7 @@ X = coerce(X, :UrbanPop=>Continuous);
 pca_mdl = PCA(pratio=1)
 pca = machine(pca_mdl, X)
 fit!(pca)
-
+PCA
 W = transform(pca, X);
 
 # W is the PCA'd data; here we've used default settings for PCA and it has recovered 2 components:
