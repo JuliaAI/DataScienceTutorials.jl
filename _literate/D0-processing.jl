@@ -91,7 +91,7 @@ cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
 
 cap_sum = DataFrame(cap_sum);
 cap_sum_ctry = DataFrame(cap_sum_ctry);
-cap_share = join(cap_sum, cap_sum_ctry, on = :country, kind = :left, makeunique = true)
+cap_share = leftjoin(cap_sum, cap_sum_ctry, on = :country, makeunique = true)
 cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw_sum_1;
 
 # Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
@@ -154,11 +154,8 @@ savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
 age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 
-
-
 coal_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Coal", age_mean.primary_fuel), :]
 gas_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Gas", age_mean.primary_fuel), :]
-
 
 width = 0.35  # the width of the bars
 
@@ -173,7 +170,5 @@ ax1.set_ylabel("Age")
 
 ax1.set_title("Coal")
 ax2.set_title("Gas")
-
-ax.legend()
 
 savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
