@@ -54,17 +54,17 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 
 Random.seed!(1515)
 
-@pipeline SPCA(std = Standardizer(),
-               pca = PCA(pratio=1-1e-4))
-spca_mdl = SPCA()
-spca = machine(spca_mdl, X)
+SPCA = @pipeline(Standardizer(),
+                 PCA(pratio=1-1e-4))
+
+spca = machine(SPCA, X)
 fit!(spca)
 W = transform(spca, X)
 names(W)
 
 # What kind of variance can we explain?
 
-rpca = first(values(report(spca).report_given_machine))
+rpca = collect(values(report(spca).report_given_machine))[2]
 cs = cumsum(rpca.principalvars ./ rpca.tvar)
 
 # Let's visualise this
@@ -90,15 +90,14 @@ savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
 Random.seed!(1515)
 
 @load KMeans pkg=Clustering
-@pipeline SPCA2(std = Standardizer(),
-                pca = PCA(),
-                km = KMeans(k=3))
+SPCA2 = @pipeline(Standardizer(),
+                  PCA(),
+                  KMeans(k=3))
 
-spca2_mdl = SPCA2()
-spca2 = machine(spca2_mdl, X)
+spca2 = machine(SPCA2, X)
 fit!(spca2)
 
-assignments = first(values(report(spca2).report_given_machine)).assignments
+assignments = collect(values(report(spca2).report_given_machine))[3].assignments
 mask1 = assignments .== 1
 mask2 = assignments .== 2
 mask3 = assignments .== 3;
