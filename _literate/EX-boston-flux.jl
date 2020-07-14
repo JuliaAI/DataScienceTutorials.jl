@@ -116,13 +116,13 @@ r = MLJ.range(nnregressor, :epochs, lower=1, upper=30, scale=:log10)
 curve = MLJ.learning_curve(nnregressor, features, targets,
                        range=r,
                        resampling=MLJ.Holdout(fraction_train=0.7),
-                       measure=MLJ.rms)
+                       measure=MLJ.l2)
 
 plot(curve.parameter_values,
     curve.measurements,
     xlab=curve.parameter_name,
     xscale=curve.parameter_scale,
-    ylab = "RMS")
+    ylab = "l2")
 ## Tuning
 
 # As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
