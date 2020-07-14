@@ -66,12 +66,12 @@ fp = fitted_params(LinearModel)
 # We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.
 
 ŷ = MLJ.predict(LinearModel, X)
-yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
+yhatResponse = [ŷ[i,1] for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[1]
-println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+k = collect(keys(fp.fitted_params_given_machine))[3]
+println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coefs)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
@@ -92,13 +92,11 @@ coerce!(X, autotype(X, :string_to_multiclass))
 yc = CategoricalArray(y[:, 1])
 yc = coerce(yc, OrderedFactor)
 
-@pipeline LinearBinaryClassifierPipe(
-            std = Standardizer(),
-            hot = OneHotEncoder(drop_last = true),
-            reg = LinearBinaryClassifier()
-)
+LinearBinaryClassifierPipe = @pipeline(Standardizer(),
+                                       OneHotEncoder(drop_last = true),
+                                       LinearBinaryClassifier())
 
-LogisticModel = machine(LinearBinaryClassifierPipe(), X, yc)
+LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
 fp = fitted_params(LogisticModel)
 
@@ -110,7 +108,7 @@ fp = fitted_params(LogisticModel)
 residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[1]
+k = collect(keys(fp.fitted_params_given_machine))[3]
 println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
