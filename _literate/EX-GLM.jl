@@ -76,8 +76,6 @@ println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
 println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])
-println("\n Standard Error per Coefficient \n",
-        r.report_given_machine[k].stderror)
 
 # and get the accuracy
 
