@@ -1,1 +1,8 @@
-Node @ 1…08 = predict(9…82, transform(1…36, 5…52))
+Node{Machine{RidgeRegressor}} @574
+  args:
+    1:	Node{Machine{Standardizer}} @115
+    predict(
+        Machine{RidgeRegressor} @019, 
+        transform(
+            Machine{Standardizer} @158, 
+            Source @837))

@@ -1,1 +1,10 @@
-Node @ 1…01 = inverse_transform(2…16, predict(9…82, transform(1…36, 5…52)))
+Node{Machine{UnivariateBoxCoxTransformer}} @862
+  args:
+    1:	Node{Machine{RidgeRegressor}} @574
+    inverse_transform(
+        Machine{UnivariateBoxCoxTransformer} @909, 
+        predict(
+            Machine{RidgeRegressor} @019, 
+            transform(
+                Machine{Standardizer} @158, 
+                Source @837)))

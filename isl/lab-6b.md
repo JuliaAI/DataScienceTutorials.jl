@@ -1,4 +1,4 @@
-@def showall =true
+@def showall = true
 
 # Lab 6b - Ridge and Lasso regression
 

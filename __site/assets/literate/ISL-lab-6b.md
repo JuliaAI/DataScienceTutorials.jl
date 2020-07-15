@@ -2,10 +2,7 @@
 ## Getting started
 
 ```julia:ex1
-using MLJ
-import RDatasets: dataset
-using PrettyPrinting
-MLJ.color_off() # hide
+using MLJ, RDatasets, ScientificTypes, PrettyPrinting
 import Distributions
 const D = Distributions
 
@@ -42,10 +39,10 @@ plot(y, ls="none", marker="o")
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g1.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g1.svg") # hide
 ```
 
-\figalt{Salary}{ISL-lab-6-g1.svg}
+![Salary](/assets/literate/ISL-lab-6-g1.svg)
 
 That looks quite skewed, let's have a look at a histogram:
 
@@ -63,10 +60,10 @@ plot(xx, yy, lw=3, label="Exponential distribution fit")
 
 legend(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g2.svg") # hide
 ```
 
-\figalt{Distribution of salary}{ISL-lab-6-g2.svg}
+![Distribution of salary](/assets/literate/ISL-lab-6-g2.svg)
 
 ### Data preparation
 
@@ -109,10 +106,10 @@ xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
 
 ylim([-1300, 1000])
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g3.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g3.svg") # hide
 ```
 
-\figalt{Residuals}{ISL-lab-6-g3.svg}
+![Residuals](/assets/literate/ISL-lab-6-g3.svg)
 
 ```julia:ex9
 figure(figsize=(8,6))
@@ -131,10 +128,10 @@ xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Residual (ŷ - y)", fontsize=14); ylabel("Density", fontsize=14)
 xlim([-1100, 1100])
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g4.svg") # hide
 ```
 
-\figalt{Distribution of residuals}{ISL-lab-6-g4.svg}
+![Distribution of residuals](/assets/literate/ISL-lab-6-g4.svg)
 
 ### Basic Ridge
 
@@ -180,16 +177,14 @@ res = ŷ .- y[test]
 stem(res)
 
 xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14);
-ylabel("Residual (ŷ - y)", fontsize=14)
-xlim(1, length(res))
+xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
 
 ylim([-1300, 1000])
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g5.svg") # hide
 ```
 
-\figalt{Ridge residuals}{ISL-lab-6-g5.svg}
+![Ridge residuals](/assets/literate/ISL-lab-6-g5.svg)
 
 You can compare that with the residuals obtained earlier.
 
@@ -199,7 +194,7 @@ Let's do the same as above but using a Lasso model and adjusting the range a bit
 
 ```julia:ex14
 mtm.model.model.reg = LassoRegressor()
-mtm.model.range = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
+mtm.model.ranges = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
@@ -217,15 +212,13 @@ Pretty good! and the parameters are reasonably sparse as expected:
 
 ```julia:ex16
 coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
-@show coefs
-@show intercept
+round.(coefs, sigdigits=2)
 ```
 
 with around 50% sparsity:
 
 ```julia:ex17
-coef_vals = [c[2] for c in coefs]
-sum(coef_vals .≈ 0) / length(coefs)
+sum(coefs .≈ 0) / length(coefs)
 ```
 
 Let's visualise this:
@@ -245,10 +238,10 @@ xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g6.svg") # hide
 ```
 
-\figalt{Lasso coefficients}{ISL-lab-6-g6.svg}
+![Lasso coefficients](/assets/literate/ISL-lab-6-g6.svg)
 
 ## Elastic net pipeline
 
@@ -256,7 +249,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
 @load ElasticNetRegressor pkg=MLJLinearModels
 
 mtm.model.model.reg = ElasticNetRegressor()
-mtm.model.range = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
+mtm.model.ranges = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
                     range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
 mtm.model.tuning = Grid(resolution=10)
 fit!(mtm, rows=train)
@@ -274,8 +267,4 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 ```
 
 But the simple ridge regression seems to work best here.
-
-```julia:ex21
-PyPlot.close_figs() # hide
-```
 

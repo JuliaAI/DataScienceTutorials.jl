@@ -1,96 +1,207 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/DataScienceTutorials.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/franklin.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/pure.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/side-menu.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/extra.css"> <title>Lab 5 - Cross validation and the bootstrap</title> <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/DataScienceTutorials.jl/" id=menu-logo-link > <div class=menu-logo > <p><strong>Data Science Tutorials</strong></p> </div> </a> <form id=lunrSearchForm  name=lunrSearchForm > <input class=search-input  name=q  placeholder="Enter search term" type=text > <input type=submit  value=Search  formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden"> </form> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data Frames</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Scientific Type</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Stacking</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> King County Houses</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Airfoil </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Power Generation </a> </ul> </ul> </div> </div> <div id=main > <div class=franklin-content ><h1 id=lab_5_-_cross_validation_and_the_bootstrap ><a href="#lab_5_-_cross_validation_and_the_bootstrap">Lab 5 - Cross validation and the bootstrap</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-5.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5.jl" target=_blank ><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=franklin-toc ><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></ol><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a><li><a href="#the_bootstrap">The Bootstrap</a></ol></div><h2 id=getting_started ><a href="#getting_started">Getting started</a></h2> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ
-<span class=hljs-keyword >import</span> RDatasets: dataset
-<span class=hljs-keyword >import</span> DataFrames: DataFrame, select
-auto = dataset(<span class=hljs-string >"ISLR"</span>, <span class=hljs-string >"Auto"</span>)
-y, X = unpack(auto, ==(:MPG), col-&gt;<span class=hljs-literal >true</span>)
-train, test = partition(eachindex(y), <span class=hljs-number >0.5</span>, shuffle=<span class=hljs-literal >true</span>, rng=<span class=hljs-number >444</span>);</code></pre> <p>Note the use of <code>rng&#61;</code> to seed the shuffling of indices so that the results are reproducible.</p> <h3 id=polynomial_regression ><a href="#polynomial_regression">Polynomial regression</a></h3> <pre><code class="julia hljs"><span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext hljs">LinearRegressor(
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Lab 5 - Cross validation and the bootstrap</title>  
+  <!-- LUNR -->
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="lab_5_-_cross_validation_and_the_bootstrap"><a href="#lab_5_-_cross_validation_and_the_bootstrap">Lab 5 - Cross validation and the bootstrap</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-5.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></li></ol></li><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></li><li><a href="#the_bootstrap">The Bootstrap</a></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
+<pre><code class="language-julia">using MLJ
+import RDatasets: dataset
+import DataFrames: DataFrame, select
+auto = dataset("ISLR", "Auto")
+y, X = unpack(auto, ==(:MPG), col->true)
+train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);</code></pre>
+<p>Note the use of <code>rng&#61;</code> to seed the shuffling of indices so that the results are reproducible.</p>
+<h3 id="polynomial_regression"><a href="#polynomial_regression">Polynomial regression</a></h3>
+<pre><code class="language-julia">@load LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @ 1…53</code></pre> <p>In this part we only build models with the <code>Horsepower</code> feature.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> PyPlot
+    solver = nothing) @863</code></pre>
+<p>In this part we only build models with the <code>Horsepower</code> feature.</p>
+<pre><code class="language-julia">using PyPlot
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
 
-xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
-xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
-yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
-ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)</code></pre> <img src="/DataScienceTutorials.jl/assets/isl/lab-5/code/output/ISL-lab-5-g1.svg" alt="MPG v Horsepower"> <p>Let&#39;s get a baseline:</p> <pre><code class="julia hljs">lm = LinearRegressor()
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)</code></pre>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g1.svg" alt="MPG v Horsepower">
+<p>Let&#39;s get a baseline:</p>
+<pre><code class="language-julia">lm = LinearRegressor()
 mlm = machine(lm, select(X, :Horsepower), y)
 fit!(mlm, rows=train)
-rms(predict(mlm, rows=test), y[test])^<span class=hljs-number >2</span></code></pre><pre><code class="plaintext hljs">23.493990895007986</code></pre>
+rms(predict(mlm, rows=test), y[test])^2</code></pre><pre><code class="plaintext">23.493990895007986</code></pre>
 <p>Note that we square the measure to  match the results obtained in the ISL labs where the mean squared error &#40;here we use the <code>rms</code> which is the square root of that&#41;.</p>
-<pre><code class="julia hljs">xx = (Horsepower=range(<span class=hljs-number >50</span>, <span class=hljs-number >225</span>, length=<span class=hljs-number >100</span>) |&gt; collect, )
+<pre><code class="language-julia">xx = (Horsepower=range(50, 225, length=100) |> collect, )
 yy = predict(mlm, xx)
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
-plot(xx.Horsepower, yy, lw=<span class=hljs-number >3</span>)
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+plot(xx.Horsepower, yy, lw=3)
 
-xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
-xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
-yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
-ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)</code></pre>
-<img src="/DataScienceTutorials.jl/assets/isl/lab-5/code/output/ISL-lab-5-g2.svg" alt="1st order baseline">
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)</code></pre>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g2.svg" alt="1st order baseline">
 <p>We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:</p>
-<pre><code class="julia hljs">hp = X.Horsepower
-Xhp = DataFrame(hp1=hp, hp2=hp.^<span class=hljs-number >2</span>, hp3=hp.^<span class=hljs-number >3</span>);</code></pre>
+<pre><code class="language-julia">hp = X.Horsepower
+Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);</code></pre>
 <p>Now we  can write a simple pipeline where the first step selects the features we want &#40;and with it the degree of the polynomial&#41; and the second is the linear regressor:</p>
-<pre><code class="julia hljs"><span class=hljs-meta >@pipeline</span> LinMod(fs = FeatureSelector(features=[:hp1]),
-                 lr = LinearRegressor());</code></pre>
+<pre><code class="language-julia">LinMod = @pipeline(FeatureSelector(features=[:hp1]),
+                   LinearRegressor());</code></pre>
 <p>Then we can  instantiate and fit 3 models where we specify the features each time:</p>
-<pre><code class="julia hljs">lrm = LinMod()
-lr1 = machine(lrm, Xhp, y) <span class=hljs-comment ># poly of degree 1 (line)</span>
+<pre><code class="language-julia">lr1 = machine(LinMod, Xhp, y) # poly of degree 1 (line)
 fit!(lr1, rows=train)
 
-lrm.fs.features = [:hp1, :hp2] <span class=hljs-comment ># poly of degree 2</span>
-lr2 = machine(lrm, Xhp, y)
+LinMod.feature_selector.features = [:hp1, :hp2] # poly of degree 2
+lr2 = machine(LinMod, Xhp, y)
 fit!(lr2, rows=train)
 
-lrm.fs.features = [:hp1, :hp2, :hp3] <span class=hljs-comment ># poly of degree 3</span>
-lr3 = machine(lrm, Xhp, y)
-fit!(lr3, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{LinMod} @ 9…94
+LinMod.feature_selector.features = [:hp1, :hp2, :hp3] # poly of degree 3
+lr3 = machine(LinMod, Xhp, y)
+fit!(lr3, rows=train)</code></pre><pre><code class="plaintext">Machine{Pipeline310} @878 trained 1 time.
+  args: 
+    1:	Source @025 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @165 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
-<pre><code class="julia hljs">get_mse(lr) = rms(predict(lr, rows=test), y[test])^<span class=hljs-number >2</span>
+<pre><code class="language-julia">get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
 
-<span class=hljs-meta >@show</span> get_mse(lr1)
-<span class=hljs-meta >@show</span> get_mse(lr2)
-<span class=hljs-meta >@show</span> get_mse(lr3)</code></pre><pre><code class="plaintext hljs">get_mse(lr1) = 23.493990895007986
-get_mse(lr2) = 19.287175510952153
+@show get_mse(lr1)
+@show get_mse(lr2)
+@show get_mse(lr3)</code></pre><pre><code class="plaintext">get_mse(lr1) = 23.493990895007986
+get_mse(lr2) = 19.287175510952146
 get_mse(lr3) = 19.381831638657914
 </code></pre>
 <p>Let&#39;s visualise the models</p>
-<pre><code class="julia hljs">hpn  = xx.Horsepower
-Xnew = DataFrame(hp1=hpn, hp2=hpn.^<span class=hljs-number >2</span>, hp3=hpn.^<span class=hljs-number >3</span>)
+<pre><code class="language-julia">hpn  = xx.Horsepower
+Xnew = DataFrame(hp1=hpn, hp2=hpn.^2, hp3=hpn.^3)
 
 yy1 = predict(lr1, Xnew)
 yy2 = predict(lr2, Xnew)
 yy3 = predict(lr3, Xnew)
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
-plot(xx.Horsepower, yy1, lw=<span class=hljs-number >3</span>, label=<span class=hljs-string >"Order 1"</span>)
-plot(xx.Horsepower, yy2, lw=<span class=hljs-number >3</span>, label=<span class=hljs-string >"Order 2"</span>)
-plot(xx.Horsepower, yy3, lw=<span class=hljs-number >3</span>, label=<span class=hljs-string >"Order 3"</span>)
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+plot(xx.Horsepower, yy1, lw=3, label="Order 1")
+plot(xx.Horsepower, yy2, lw=3, label="Order 2")
+plot(xx.Horsepower, yy3, lw=3, label="Order 3")
 
-legend(fontsize=<span class=hljs-number >14</span>)
+legend(fontsize=14)
 
-xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
-xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
-yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
-ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)</code></pre>
-<img src="/DataScienceTutorials.jl/assets/isl/lab-5/code/output/ISL-lab-5-g3.svg" alt="1st, 2nd and 3d order fit">
-<h2 id=k-folds_cross_validation ><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></h2>
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)</code></pre>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g3.svg" alt="1st, 2nd and 3d order fit">
+<h2 id="k-folds_cross_validation"><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></h2>
 <p>Let&#39;s crossvalidate over the degree of the  polynomial.</p>
-<p><strong>Note</strong>: there&#39;s a  bit of gymnastics here because MLJ doesn&#39;t directly support a polynomial regression; see our tutorial on <a href="/DataScienceTutorials.jl/getting-started/model-tuning/">tuning models</a> for a gentler introduction to model tuning. The gist of the following code is to create a dataframe where each column is a power of the <code>Horsepower</code> feature from 1 to 10 and we build a series of regression models using incrementally more of those features &#40;higher degree&#41;:</p>
-<pre><code class="julia hljs">Xhp = DataFrame([hp.^i <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>])
+<p><strong>Note</strong>: there&#39;s a  bit of gymnastics here because MLJ doesn&#39;t directly support a polynomial regression; see our tutorial on <a href="/getting-started/model-tuning/">tuning models</a> for a gentler introduction to model tuning. The gist of the following code is to create a dataframe where each column is a power of the <code>Horsepower</code> feature from 1 to 10 and we build a series of regression models using incrementally more of those features &#40;higher degree&#41;:</p>
+<pre><code class="language-julia">Xhp = DataFrame([hp.^i for i in 1:10])
 
-cases = [[<span class=hljs-built_in >Symbol</span>(<span class=hljs-string >"x<span class=hljs-variable >$j</span>"</span>) <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:i] <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>]
-r = range(lrm, :(fs.features), values=cases)
+cases = [[Symbol("x$j") for j in 1:i] for i in 1:10]
+r = range(LinMod, :(feature_selector.features), values=cases)
 
-tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-number >10</span>), measure=rms)</code></pre><pre><code class="plaintext hljs">DeterministicTunedModel(
-    model = LinMod(
-            fs = FeatureSelector @ 1…92,
-            lr = LinearRegressor @ 1…11),
+tm = TunedModel(model=LinMod, ranges=r, resampling=CV(nfolds=10), measure=rms)</code></pre><pre><code class="plaintext">DeterministicTunedModel(
+    model = Pipeline310(
+            feature_selector = FeatureSelector @963,
+            linear_regressor = LinearRegressor @293),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -104,47 +215,55 @@ tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=<span class=hljs-numbe
     weights = nothing,
     operation = MLJModelInterface.predict,
     range = NominalRange(
-            field = :(fs.features),
+            field = :(feature_selector.features),
             values = ([:x1], [:x1, :x2], [:x1, :x2, :x3], [:x1, :x2, :x3, :x4], [:x1, :x2, :x3, :x4, :x5], [:x1, :x2, :x3, :x4, :x5, :x6], [:x1, :x2, :x3, :x4, :x5, :x6, :x7], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9], [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9, :x10])),
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @ 1…95</code></pre>
+    check_measure = true) @467</code></pre>
 <p>Now we&#39;re left with fitting the tuned model</p>
-<pre><code class="julia hljs">mtm = machine(tm, Xhp, y)
+<pre><code class="language-julia">mtm = machine(tm, Xhp, y)
 fit!(mtm)
 rep = report(mtm)
 
 res = rep.plotting
 
-<span class=hljs-meta >@show</span> round.(res.measurements.^<span class=hljs-number >2</span>, digits=<span class=hljs-number >2</span>)
-<span class=hljs-meta >@show</span> argmin(res.measurements)</code></pre><pre><code class="plaintext hljs">round.(res.measurements .^ 2, digits = 2) = [223.98, 20.91, 88.61, 20.96, 21.34, 25.66, 27.44, 20.91, 21.35, 21.24]
-argmin(res.measurements) = 2
+@show round.(res.measurements.^2, digits=2)
+@show argmin(res.measurements)</code></pre><pre><code class="plaintext">round.(res.measurements .^ 2, digits = 2) = [88.61, 21.24, 20.91, 25.66, 27.44, 21.35, 20.96, 223.98, 21.34, 20.91]
+argmin(res.measurements) = 3
 </code></pre>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>
 <p>In ISL they use a different seed so the results are a bit different but comparable.</p>
-<pre><code class="julia hljs">Xnew = DataFrame([hpn.^i <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >10</span>])
+<pre><code class="language-julia">Xnew = DataFrame([hpn.^i for i in 1:10])
 yy5 = predict(mtm, Xnew)
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-plot(X.Horsepower, y, ls=<span class=hljs-string >"none"</span>, marker=<span class=hljs-string >"o"</span>)
-plot(xx.Horsepower, yy5, lw=<span class=hljs-number >3</span>)
+figure(figsize=(8,6))
+plot(X.Horsepower, y, ls="none", marker="o")
+plot(xx.Horsepower, yy5, lw=3)
 
-xlabel(<span class=hljs-string >"Horsepower"</span>, fontsize=<span class=hljs-number >14</span>)
-xticks(<span class=hljs-number >50</span>:<span class=hljs-number >50</span>:<span class=hljs-number >250</span>, fontsize=<span class=hljs-number >12</span>)
-yticks(<span class=hljs-number >10</span>:<span class=hljs-number >10</span>:<span class=hljs-number >50</span>, fontsize=<span class=hljs-number >12</span>)
-ylabel(<span class=hljs-string >"MPG"</span>, fontsize=<span class=hljs-number >14</span>)</code></pre>
-<img src="/DataScienceTutorials.jl/assets/isl/lab-5/code/output/ISL-lab-5-g4.svg" alt="5th order fit">
-<h2 id=the_bootstrap ><a href="#the_bootstrap">The Bootstrap</a></h2>
+xlabel("Horsepower", fontsize=14)
+xticks(50:50:250, fontsize=12)
+yticks(10:10:50, fontsize=12)
+ylabel("MPG", fontsize=14)</code></pre>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g4.svg" alt="5th order fit">
+<h2 id="the_bootstrap"><a href="#the_bootstrap">The Bootstrap</a></h2>
 <p><em>Bootstrapping is not currently supported in MLJ.</em></p>
-<div class=page-foot >
-  <div class=copyright >
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: May 24, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
-</div>
-      </div> 
-  </div> 
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>
