@@ -88,6 +88,7 @@ mpg |> mean
 # For more detailed tutorials on basic data wrangling in Julia, consider## * the [learn x in y](https://learnxinyminutes.com/docs/julia/) julia tutorial# * the [`DataFrames.jl` docs](http://juliadata.github.io/DataFrames.jl/latest/)# * the [`StatsBases.jl` docs](https://juliastats.org/StatsBase.jl/latest/)## ## Plotting data## There are multiple libraries that can be used to  plot things in Julia:## * [Plots.jl](https://github.com/JuliaPlots/Plots.jl) which supports multiple plotting backends,# * [Gadfly.jl](https://github.com/GiovineItalia/Gadfly.jl) influenced by the grammar of graphics and `ggplot2`# * [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) basically matplotlib# * [PGFPlotsX.jl](https://github.com/KristofferC/PGFPlotsX.jl) and [PGFPlots](https://github.com/JuliaTeX/PGFPlots.jl) using the LaTeX package  pgfplots,# * [Makie](https://github.com/JuliaPlots/Makie.jl), [Gaston](https://github.com/mbaz/Gaston.jl), [Vega](https://github.com/queryverse/VegaLite.jl), ...## In these tutorials we use `PyPlot` but you could use another package of course.
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(mpg)
 

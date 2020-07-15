@@ -36,6 +36,7 @@ fp = fitted_params(mach_uni)
 
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)

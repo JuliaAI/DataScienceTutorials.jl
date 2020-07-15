@@ -25,7 +25,7 @@ test, train = partition(eachindex(y), 0.8);
 
 # In this tutorial we will show how to generate a model from a network; there are two approaches:# * using the `@from_network` macro# * writing the model in full## the first approach should usually be the one considered as it's simpler.## Generating a model from a network allows subsequent composition of that network with other tasks and tuning of that network.## ## Using the `@from_network` macro## Let's define a simple network## _Input layer_
 Xs = source(X)
-ys = source(y, kind=:target)
+ys = source(y)
 
 # _First layer_
 std_model = Standardizer()
@@ -63,14 +63,15 @@ end
 
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y, kind=:target)
+    ys = source(y)
     W = transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
     z = transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
-    fit!(ŷ, verbosity=0)
-    return fitresults(ŷ)
+    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
+    fit!(mach, verbosity=verbosity - 1)
+    return mach()
 end
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),

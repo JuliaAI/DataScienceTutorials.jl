@@ -9,10 +9,11 @@
 
 using MLJ
 using PyPlot
+
 import Statistics
 
 Xs = source()
-ys = source(kind=:target)
+ys = source()
 
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models

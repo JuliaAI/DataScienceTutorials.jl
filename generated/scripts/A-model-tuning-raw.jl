@@ -33,6 +33,7 @@ r = report(m)
 r.best_result
 
 using PyPlot
+
 figure(figsize=(8,6))
 res = r.plotting # contains all you need for plotting
 plot(res.parameter_values, res.measurements, ls="none", marker="o")

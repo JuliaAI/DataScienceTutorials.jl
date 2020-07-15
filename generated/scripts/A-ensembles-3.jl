@@ -13,11 +13,12 @@
 # ## Definition of composite model type
 using MLJ
 using PyPlot
+
 import Statistics
 
 # learning network (composite model spec):
 Xs = source()
-ys = source(kind=:target)
+ys = source()
 
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models

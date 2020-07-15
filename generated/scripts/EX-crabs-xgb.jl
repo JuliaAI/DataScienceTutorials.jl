@@ -12,6 +12,7 @@ using MLJ
 using StatsBase
 using Random
 using PyPlot
+
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames

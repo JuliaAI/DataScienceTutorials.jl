@@ -21,6 +21,7 @@
 using MLJ
 using PyPlot
 
+
 using StableRNGs
 
 # Some models we will use:
@@ -40,7 +41,7 @@ svm = @load SVMRegressor;
 # ### Warm-up exercise: Define a model type to average predictions
 # Let's define a composite model type `MyAverageTwo` that# averages the predictions of two deterministic regressors. Here's the learning network:
 X = source()
-y = source(kind=:target)
+y = source()
 
 model1 = linear
 model2 = knn
@@ -124,7 +125,7 @@ judge = linear
 # Let's instantiate some input and target source nodes for the# learning network, wrapping the play data defined above:
 # Wrapped as source node:
 X = source(Xraw)
-y = source(yraw; kind=:target)
+y = source(yraw)
 
 # Our first internal node represents the three folds (vectors of row# indices) for creating the out-of-sample predictions:
 f = folds(X, 3)

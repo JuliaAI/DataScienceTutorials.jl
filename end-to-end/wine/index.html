@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/css/franklin.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
    <title>Wine</title>  
   <!-- LUNR -->
-  <script src="/libs/lunr/lunr.min.js"></script>
-  <script src="/libs/lunr/lunr_index.js"></script>
-  <script src="/libs/lunr/lunrclient.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
 </head>
 <body>
   <div id="layout">
@@ -24,70 +24,70 @@
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
     <div id="menu">
       <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
           <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
         </form>
   <!-- LIST OF MENU ITEMS -->
   <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
 
     <!-- DATA BASICS -->
     <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
     <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
     <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
     <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
     </ul>
 
     <!-- INTRO TO STATS LEARNING -->
     <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
     <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
     </ul>
 
     <!-- END TO END EXAMPLES -->
     <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
     <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
     </ul>
   </ul>
   <!-- END OF LIST OF MENU ITEMS -->
@@ -105,21 +105,21 @@
 </blockquote>
 <h3 id="getting_the_data"><a href="#getting_the_data">Getting the data</a></h3>
 <p>Let&#39;s download the data thanks to the <a href="https://github.com/Arkoniak/UrlDownload.jl">UrlDownload.jl</a> package and load it into a DataFrame:</p>
-<pre><code class="language-julia">using HTTP
-using MLJ
-using PyPlot
-import DataFrames: DataFrame, describe
-using UrlDownload
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> HTTP
+<span class="hljs-keyword">using</span> MLJ
+<span class="hljs-keyword">using</span> PyPlot
+<span class="hljs-keyword">import</span> DataFrames: DataFrame, describe
+<span class="hljs-keyword">using</span> UrlDownload
 
-url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
-header = ["Class", "Alcool", "Malic acid", "Ash", "Alcalinity of ash",
-          "Magnesium", "Total phenols", "Flavanoids",
-          "Nonflavanoid phenols", "Proanthcyanins", "Color intensity",
-          "Hue", "OD280/OD315 of diluted wines", "Proline"]
-data = urldownload(url, true, format=:CSV, header=header);</code></pre>
+url = <span class="hljs-string">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data&quot;</span>
+header = [<span class="hljs-string">&quot;Class&quot;</span>, <span class="hljs-string">&quot;Alcool&quot;</span>, <span class="hljs-string">&quot;Malic acid&quot;</span>, <span class="hljs-string">&quot;Ash&quot;</span>, <span class="hljs-string">&quot;Alcalinity of ash&quot;</span>,
+          <span class="hljs-string">&quot;Magnesium&quot;</span>, <span class="hljs-string">&quot;Total phenols&quot;</span>, <span class="hljs-string">&quot;Flavanoids&quot;</span>,
+          <span class="hljs-string">&quot;Nonflavanoid phenols&quot;</span>, <span class="hljs-string">&quot;Proanthcyanins&quot;</span>, <span class="hljs-string">&quot;Color intensity&quot;</span>,
+          <span class="hljs-string">&quot;Hue&quot;</span>, <span class="hljs-string">&quot;OD280/OD315 of diluted wines&quot;</span>, <span class="hljs-string">&quot;Proline&quot;</span>]
+data = urldownload(url, <span class="hljs-literal">true</span>, format=:CSV, header=header);</code></pre>
 <p>The second argument to <code>urldownload</code> adds a progress meter for the download, the <code>format</code> helps indicate the format of the file and the <code>header</code> helps pass the column names which are not in the file.</p>
-<pre><code class="language-julia">df = DataFrame(data)
-describe(df)</code></pre><pre><code class="plaintext">14×8 DataFrame
+<pre><code class="julia hljs">df = DataFrame(data)
+describe(df)</code></pre><pre><code class="plaintext hljs">14×8 DataFrame
 │ Row │ variable                     │ mean     │ min   │ median  │ max   │ nunique │ nmissing │ eltype   │
 │     │ Symbol                       │ Float64  │ Real  │ Float64 │ Real  │ Nothing │ Nothing  │ DataType │
 ├─────┼──────────────────────────────┼──────────┼───────┼─────────┼───────┼─────────┼──────────┼──────────┤
@@ -138,10 +138,10 @@ describe(df)</code></pre><pre><code class="plaintext">14×8 DataFrame
 │ 13  │ OD280/OD315 of diluted wines │ 2.61169  │ 1.27  │ 2.78    │ 4.0   │         │          │ Float64  │
 │ 14  │ Proline                      │ 746.893  │ 278   │ 673.5   │ 1680  │         │          │ Int64    │</code></pre>
 <p>the target is the <code>Class</code> column, everything else is a feature; we can dissociate the two  using the <code>unpack</code> function:</p>
-<pre><code class="language-julia">y, X = unpack(df, ==(:Class), colname->true);</code></pre>
+<pre><code class="julia hljs">y, X = unpack(df, ==(:Class), colname-&gt;<span class="hljs-literal">true</span>);</code></pre>
 <h3 id="setting_the_scientific_type"><a href="#setting_the_scientific_type">Setting the scientific type</a></h3>
 <p>Let&#39;s explore the scientific type attributed by default to the target and the features</p>
-<pre><code class="language-julia">scitype(y)</code></pre><pre><code class="plaintext">AbstractArray{Count,1}</code></pre>
+<pre><code class="julia hljs">scitype(y)</code></pre><pre><code class="plaintext hljs">AbstractArray{Count,1}</code></pre>
 <p>this should be changed as it should be considered as an ordered factor. The difference is as follows:</p>
 <ul>
 <li><p>a <code>Count</code> corresponds to an integer between 0 and infinity</p>
@@ -149,11 +149,11 @@ describe(df)</code></pre><pre><code class="plaintext">14×8 DataFrame
 <li><p>a <code>OrderedFactor</code> however is a categorical object &#40;there are finitely many options&#41; with ordering &#40;<code>1 &lt; 2 &lt; 3</code>&#41;.</p>
 </li>
 </ul>
-<pre><code class="language-julia">yc = coerce(y, OrderedFactor);</code></pre>
+<pre><code class="julia hljs">yc = coerce(y, OrderedFactor);</code></pre>
 <p>Let&#39;s now consider the features</p>
-<pre><code class="language-julia">scitype(X)</code></pre><pre><code class="plaintext">Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}}}</code></pre>
+<pre><code class="julia hljs">scitype(X)</code></pre><pre><code class="plaintext hljs">Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}}}</code></pre>
 <p>So there are <code>Continuous</code> values &#40;encoded as floating point&#41; and <code>Count</code> values &#40;integer&#41;. Note also that there are no missing value &#40;otherwise one of the scientific type would have been a <code>Union&#123;Missing,*&#125;</code>&#41;. Let&#39;s check which column is what:</p>
-<pre><code class="language-julia">schema(X)</code></pre><pre><code class="plaintext">┌──────────────────────────────┬─────────┬────────────┐
+<pre><code class="julia hljs">schema(X)</code></pre><pre><code class="plaintext hljs">┌──────────────────────────────┬─────────┬────────────┐
 │ _.names                      │ _.types │ _.scitypes │
 ├──────────────────────────────┼─────────┼────────────┤
 │ Alcool                       │ Float64 │ Continuous │
@@ -173,16 +173,16 @@ describe(df)</code></pre><pre><code class="plaintext">14×8 DataFrame
 _.nrows = 178
 </code></pre>
 <p>The two variable that are encoded as <code>Count</code> can  probably be re-interpreted; let&#39;s have a look at the <code>Proline</code> one to see what it looks like</p>
-<pre><code class="language-julia">X[1:5, :Proline]</code></pre><pre><code class="plaintext">5-element Array{Int64,1}:
+<pre><code class="julia hljs">X[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>, :Proline]</code></pre><pre><code class="plaintext hljs">5-element Array{Int64,1}:
  1065
  1050
  1185
  1480
   735</code></pre>
 <p>It can likely be interpreted as a Continuous as well &#40;it would be better to know precisely what it is but for now let&#39;s just go with the hunch&#41;. We&#39;ll do the same with <code>:Magnesium</code>:</p>
-<pre><code class="language-julia">Xc = coerce(X, :Proline=>Continuous, :Magnesium=>Continuous);</code></pre>
+<pre><code class="julia hljs">Xc = coerce(X, :Proline=&gt;Continuous, :Magnesium=&gt;Continuous);</code></pre>
 <p>Finally, let&#39;s have a quick look at the mean and standard deviation of each feature to get a feel for their amplitude:</p>
-<pre><code class="language-julia">describe(Xc, :mean, :std)</code></pre><pre><code class="plaintext">13×3 DataFrame
+<pre><code class="julia hljs">describe(Xc, :mean, :std)</code></pre><pre><code class="plaintext hljs">13×3 DataFrame
 │ Row │ variable                     │ mean     │ std      │
 │     │ Symbol                       │ Float64  │ Float64  │
 ├─────┼──────────────────────────────┼──────────┼──────────┤
@@ -209,76 +209,76 @@ _.nrows = 178
 <li><p>a Standardizer &#43; Multinomial classifier &#40;logistic regression&#41;.</p>
 </li>
 </ul>
-<pre><code class="language-julia">@load KNNClassifier pkg="NearestNeighbors"
-@load MultinomialClassifier pkg="MLJLinearModels";
+<pre><code class="julia hljs"><span class="hljs-meta">@load</span> KNNClassifier pkg=<span class="hljs-string">&quot;NearestNeighbors&quot;</span>
+<span class="hljs-meta">@load</span> MultinomialClassifier pkg=<span class="hljs-string">&quot;MLJLinearModels&quot;</span>;
 
-@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
-@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;</code></pre><pre><code class="plaintext">LoadError: UndefVarError: MLJBase not defined
+<span class="hljs-meta">@pipeline</span> KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=<span class="hljs-literal">true</span>
+<span class="hljs-meta">@pipeline</span> MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=<span class="hljs-literal">true</span>;</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: MLJBase not defined
 in expression starting at none:2
 </code></pre>
 <p>We can now fit this on a train split of the data setting aside 20&#37; of the data for eventual testing.</p>
-<pre><code class="language-julia">train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+<pre><code class="julia hljs">train, test = partition(eachindex(yc), <span class="hljs-number">0.8</span>, shuffle=<span class="hljs-literal">true</span>, rng=<span class="hljs-number">111</span>)
 Xtrain = selectrows(Xc, train)
 Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
-<pre><code class="language-julia">knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><pre><code class="plaintext">UndefVarError: KnnPipe not defined
+<pre><code class="julia hljs">knn = machine(KnnPipe(), Xtrain, ytrain)
+multi = machine(MnPipe(), Xtrain, ytrain)</code></pre><pre><code class="plaintext hljs">UndefVarError: KnnPipe not defined
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
-<pre><code class="language-julia">opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
+<pre><code class="julia hljs">opts = (resampling=Holdout(fraction_train=<span class="hljs-number">0.9</span>), measure=cross_entropy)
 res = evaluate!(knn; opts...)
-round(res.measurement[1], sigdigits=3)</code></pre><pre><code class="plaintext">UndefVarError: knn not defined
+round(res.measurement[<span class="hljs-number">1</span>], sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: knn not defined
 </code></pre>
 <p>Now we do the same with a MultinomialClassifier</p>
-<pre><code class="language-julia">res = evaluate!(multi; opts...)
-round(res.measurement[1], sigdigits=3)</code></pre><pre><code class="plaintext">UndefVarError: multi not defined
+<pre><code class="julia hljs">res = evaluate!(multi; opts...)
+round(res.measurement[<span class="hljs-number">1</span>], sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: multi not defined
 </code></pre>
 <p>Both methods seem to offer comparable levels of performance. Let&#39;s check the misclassification over the full training set:</p>
-<pre><code class="language-julia">mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
+<pre><code class="julia hljs">mcr_k = misclassification_rate(predict_mode(knn, Xtrain), ytrain)
 mcr_m = misclassification_rate(predict_mode(multi, Xtrain), ytrain)
-println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
-println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))</code></pre><pre><code class="plaintext">UndefVarError: knn not defined
+println(rpad(<span class="hljs-string">&quot;KNN mcr:&quot;</span>, <span class="hljs-number">10</span>), round(mcr_k, sigdigits=<span class="hljs-number">3</span>))
+println(rpad(<span class="hljs-string">&quot;MNC mcr:&quot;</span>, <span class="hljs-number">10</span>), round(mcr_m, sigdigits=<span class="hljs-number">3</span>))</code></pre><pre><code class="plaintext hljs">UndefVarError: knn not defined
 </code></pre>
 <p>So here we have done no hyperparameter training and already have a misclassification rate below 5&#37;. Clearly the problem is not very difficult.</p>
 <h2 id="visualising_the_classes"><a href="#visualising_the_classes">Visualising the classes</a></h2>
 <p>One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here &#40;if you&#39;re on Julia &lt;&#61; 1.2, use the commented-out lines as you won&#39;t be able to use the arrow-syntax&#41;</p>
-<pre><code class="language-julia"># @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))
-# pca = machine(PCAPipe(), Xtrain)
-# fit!(pca, Xtrain)
-# W = transform(pca, Xtrain)
+<pre><code class="julia hljs"><span class="hljs-comment"># @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))</span>
+<span class="hljs-comment"># pca = machine(PCAPipe(), Xtrain)</span>
+<span class="hljs-comment"># fit!(pca, Xtrain)</span>
+<span class="hljs-comment"># W = transform(pca, Xtrain)</span>
 
-@load PCA
+<span class="hljs-meta">@load</span> PCA
 
-pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
+pca = Xc |&gt; Standardizer() |&gt; PCA(maxoutdim=<span class="hljs-number">2</span>)
 fit!(pca)
 W = pca(rows=train);</code></pre>
 <p>Let&#39;s now display this using different colours for the different classes:</p>
-<pre><code class="language-julia">x1 = W.x1
+<pre><code class="julia hljs">x1 = W.x1
 x2 = W.x2
 
-mask_1 = ytrain .== 1
-mask_2 = ytrain .== 2
-mask_3 = ytrain .== 3
+mask_1 = ytrain .== <span class="hljs-number">1</span>
+mask_2 = ytrain .== <span class="hljs-number">2</span>
+mask_3 = ytrain .== <span class="hljs-number">3</span>
 
-figure(figsize=(8, 6))
-plot(x1[mask_1], x2[mask_1], linestyle="none", marker="o", color="red")
-plot(x1[mask_2], x2[mask_2], linestyle="none", marker="o", color="blue")
-plot(x1[mask_3], x2[mask_3], linestyle="none", marker="o", color="magenta")
+figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">6</span>))
+plot(x1[mask_1], x2[mask_1], linestyle=<span class="hljs-string">&quot;none&quot;</span>, marker=<span class="hljs-string">&quot;o&quot;</span>, color=<span class="hljs-string">&quot;red&quot;</span>)
+plot(x1[mask_2], x2[mask_2], linestyle=<span class="hljs-string">&quot;none&quot;</span>, marker=<span class="hljs-string">&quot;o&quot;</span>, color=<span class="hljs-string">&quot;blue&quot;</span>)
+plot(x1[mask_3], x2[mask_3], linestyle=<span class="hljs-string">&quot;none&quot;</span>, marker=<span class="hljs-string">&quot;o&quot;</span>, color=<span class="hljs-string">&quot;magenta&quot;</span>)
 
-xlabel("PCA dimension 1", fontsize=14)
-ylabel("PCA dimension 2", fontsize=14)
-legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
-xticks(fontsize=12)
-yticks(fontsize=12)</code></pre>
-<img src="/assets/end-to-end/wine/code/output/EX-wine-pca.svg" alt="PCA">
+xlabel(<span class="hljs-string">&quot;PCA dimension 1&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+ylabel(<span class="hljs-string">&quot;PCA dimension 2&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+legend([<span class="hljs-string">&quot;Class 1&quot;</span>, <span class="hljs-string">&quot;Class 2&quot;</span>, <span class="hljs-string">&quot;Class 3&quot;</span>], fontsize=<span class="hljs-number">12</span>)
+xticks(fontsize=<span class="hljs-number">12</span>)
+yticks(fontsize=<span class="hljs-number">12</span>)</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/wine/code/output/EX-wine-pca.svg" alt="PCA">
 <p>On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers. At this point it&#39;s a bit pointless to dig much deaper into parameter tuning etc.</p>
 <p>As a last step, we can report performances of the models on the test set which we set aside earlier:</p>
-<pre><code class="language-julia">perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
+<pre><code class="julia hljs">perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
 perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
-println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
-println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))</code></pre><pre><code class="plaintext">UndefVarError: knn not defined
+println(rpad(<span class="hljs-string">&quot;KNN mcr:&quot;</span>, <span class="hljs-number">10</span>), round(perf_k, sigdigits=<span class="hljs-number">3</span>))
+println(rpad(<span class="hljs-string">&quot;MNC mcr:&quot;</span>, <span class="hljs-number">10</span>), round(perf_m, sigdigits=<span class="hljs-number">3</span>))</code></pre><pre><code class="plaintext hljs">UndefVarError: knn not defined
 </code></pre>
 <p>Pretty good for so little work&#33;</p>
 <div class="page-foot">
@@ -289,11 +289,11 @@ println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))</code></pre><pre><code
 </div><!-- CONTENT ENDS HERE -->
       </div> <!-- end of id=main -->
   </div> <!-- end of id=layout -->
-  <script src="/libs/pure/ui.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>

@@ -48,7 +48,7 @@ rmsl(ŷ, y[test])
 
 # ### Using the expanded syntax## Let's start by defining the source nodes:
 Xs = source(X)
-ys = source(y, kind=:target)
+ys = source(y)
 
 # On the "first layer", there's one hot encoder and a log transform, these will respectively lead to node `W` and node `z`:
 hot = machine(OneHotEncoder(), Xs)
@@ -103,7 +103,7 @@ end
 # We must specify how such a model should be fit, which is effectively just the learning network we had defined before except that now the parameters are contained in the struct:
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y, kind=:target)
+    ys = source(y)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
@@ -114,8 +114,10 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     # and finally
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
-    fit!(ŷ, verbosity=0)
-    return fitresults(ŷ)
+
+    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
+    fit!(mach, verbosity=verbosity - 1)
+    return mach()
 end
 
 # **Note**: you really  want to set `verbosity=0` here otherwise in the tuning you will get a lot of verbose output!## You can now instantiate and fit such a model:

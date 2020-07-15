@@ -10,6 +10,7 @@
 using MLJ
 using PyPlot
 
+
 using StableRNGs
 
 linear = @load LinearRegressor pkg=MLJLinearModels
@@ -26,7 +27,7 @@ forest.n_trees=500
 svm = @load SVMRegressor;
 
 X = source()
-y = source(kind=:target)
+y = source()
 
 model1 = linear
 model2 = knn
@@ -93,7 +94,7 @@ model2 = knn
 judge = linear
 
 X = source(Xraw)
-y = source(yraw; kind=:target)
+y = source(yraw)
 
 f = folds(X, 3)
 f()
