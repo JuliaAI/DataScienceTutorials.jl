@@ -2,7 +2,6 @@
 
 using MLJ
 using PyPlot
-ioff() # hide
 MLJ.color_off() # hide
 using StableRNGs
 
@@ -20,7 +19,7 @@ forest.n_trees=500
 svm = @load SVMRegressor;
 
 X = source()
-y = source()
+y = source(kind=:target)
 
 model1 = linear
 model2 = knn
@@ -87,7 +86,7 @@ model2 = knn
 judge = linear
 
 X = source(Xraw)
-y = source(yraw)
+y = source(yraw; kind=:target)
 
 f = folds(X, 3)
 f()

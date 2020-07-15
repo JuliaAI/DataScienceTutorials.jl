@@ -23,7 +23,6 @@ In this part we only build models with the `Horsepower` feature.
 
 ```julia:ex3
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")

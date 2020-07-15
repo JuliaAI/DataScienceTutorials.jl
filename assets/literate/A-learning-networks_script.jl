@@ -18,7 +18,7 @@ first(X, 3) |> pretty
 test, train = partition(eachindex(y), 0.8);
 
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 
 stand = machine(Standardizer(), Xs)
 W = transform(stand, Xs)

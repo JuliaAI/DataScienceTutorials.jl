@@ -1,6 +1,5 @@
 # This file was generated, do not modify it. # hide
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")

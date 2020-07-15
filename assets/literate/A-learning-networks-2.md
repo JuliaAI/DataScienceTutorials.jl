@@ -36,7 +36,7 @@ _Input layer_
 
 ```julia:ex2
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 ```
 
 _First layer_
@@ -100,15 +100,14 @@ end
 
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y)
+    ys = source(y, kind=:target)
     W = transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
     z = transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
-    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    fit!(ŷ, verbosity=0)
+    return fitresults(ŷ)
 end
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),

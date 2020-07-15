@@ -46,7 +46,7 @@ To define the source nodes, use the `source` function, you should specify whethe
 
 ```julia:ex3
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 ```
 
 To define an "trained-operation" node, you must simply create a machine wrapping a model and another node (the data) and indicate which operation should be performed (e.g. `transform`):

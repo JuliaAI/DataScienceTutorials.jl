@@ -11,7 +11,6 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 @load LinearRegressor pkg=MLJLinearModels
 
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")

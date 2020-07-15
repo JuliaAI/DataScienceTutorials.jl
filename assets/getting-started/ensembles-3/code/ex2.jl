@@ -1,6 +1,6 @@
 # This file was generated, do not modify it. # hide
 Xs = source()
-ys = source()
+ys = source(kind=:target)
 
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models

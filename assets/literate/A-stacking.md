@@ -60,7 +60,6 @@ hyperparameters of the composite model.
 ```julia:ex1
 using MLJ
 using PyPlot
-ioff() # hide
 MLJ.color_off() # hide
 using StableRNGs
 ```
@@ -89,7 +88,7 @@ averages the predictions of two deterministic regressors. Here's the learning ne
 
 ```julia:ex3
 X = source()
-y = source()
+y = source(kind=:target)
 
 model1 = linear
 model2 = knn
@@ -222,7 +221,7 @@ Wrapped as source node:
 
 ```julia:ex14
 X = source(Xraw)
-y = source(yraw)
+y = source(yraw; kind=:target)
 ```
 
 Our first internal node represents the three folds (vectors of row

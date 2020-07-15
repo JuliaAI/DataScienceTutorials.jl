@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
@@ -12,8 +12,6 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     # and finally
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
-
-    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    fit!(ŷ, verbosity=0)
+    return fitresults(ŷ)
 end

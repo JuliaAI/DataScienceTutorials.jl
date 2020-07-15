@@ -1,10 +1,10 @@
-Node{Machine{UnivariateBoxCoxTransformer}} @153
+Node{Machine{UnivariateBoxCoxTransformer}} @857
   args:
-    1:	Node{Machine{RidgeRegressor}} @524
+    1:	Node{Machine{RidgeRegressor}} @291
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer} @934, 
+        Machine{UnivariateBoxCoxTransformer} @359, 
         predict(
-            Machine{RidgeRegressor} @365, 
+            Machine{RidgeRegressor} @843, 
             transform(
-                Machine{Standardizer} @421, 
-                Source @024)))
+                Machine{Standardizer} @080, 
+                Source @203)))

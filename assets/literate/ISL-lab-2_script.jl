@@ -59,7 +59,6 @@ mpg |> mean
 @show ncol(auto)
 
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 plot(mpg)

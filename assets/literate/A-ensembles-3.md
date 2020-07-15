@@ -14,7 +14,6 @@ for creating bagged ensembles with a few lines of code.
 ```julia:ex1
 using MLJ
 using PyPlot
-ioff() # hide
 import Statistics
 ```
 
@@ -22,7 +21,7 @@ learning network (composite model spec):
 
 ```julia:ex2
 Xs = source()
-ys = source()
+ys = source(kind=:target)
 
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
