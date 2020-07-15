@@ -5,4 +5,4 @@ DecisionTreeRegressor(
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @697
+    merge_purity_threshold = 1.0) @274

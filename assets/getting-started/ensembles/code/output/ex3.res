@@ -1,4 +1,4 @@
-Machine{KNNRegressor} @827 trained 0 times.
+Machine{KNNRegressor} @273 trained 0 times.
   args: 
-    1:	Source @271 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @239 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @121 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @776 ⏎ `AbstractArray{Continuous,1}`

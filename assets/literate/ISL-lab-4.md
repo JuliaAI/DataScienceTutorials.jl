@@ -47,6 +47,7 @@ Let's see what the `:Volume` feature looks like:
 
 ```julia:ex6
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
 plot(X.Volume)
 xlabel("Tick number", fontsize=14)

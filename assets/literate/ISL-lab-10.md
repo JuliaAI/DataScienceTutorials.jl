@@ -90,6 +90,7 @@ Let's visualise this
 
 ```julia:ex10
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 

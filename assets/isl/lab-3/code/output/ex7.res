@@ -1,4 +1,4 @@
-Machine{LinearRegressor} @245 trained 1 time.
+Machine{LinearRegressor} @940 trained 1 time.
   args: 
-    1:	Source @247 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @328 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @060 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @137 ⏎ `AbstractArray{Continuous,1}`

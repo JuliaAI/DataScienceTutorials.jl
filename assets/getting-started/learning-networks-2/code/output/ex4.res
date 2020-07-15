@@ -1,8 +1,8 @@
-Node{Machine{RidgeRegressor}} @670
+Node{Machine{RidgeRegressor}} @145
   args:
-    1:	Node{Machine{Standardizer}} @385
+    1:	Node{Machine{Standardizer}} @289
     predict(
-        Machine{RidgeRegressor} @996, 
+        Machine{RidgeRegressor} @247, 
         transform(
-            Machine{Standardizer} @563, 
-            Source @695))
+            Machine{Standardizer} @412, 
+            Source @015))

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="ensemble_models_2"><a href="#ensemble_models_2">Ensemble models &#40;2&#41;</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-ensembles-2.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-2-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-2.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#prelims">Prelims</a></li><li><a href="#random_forest">Random forest</a><ol><li><a href="#tuning">Tuning</a></li><li><a href="#reporting">Reporting</a></li></ol></li></ol></div><h2 id="prelims"><a href="#prelims">Prelims</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-ensembles-2.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-2-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-2.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#prelims">Prelims</a></li><li><a href="#random_forest">Random forest</a><ol><li><a href="#tuning">Tuning</a></li><li><a href="#reporting">Reporting</a></li></ol></li></ol></div><h2 id="prelims"><a href="#prelims">Prelims</a></h2>
 <p>This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the &quot;boston&quot; dataset.</p>
 <pre><code class="language-julia">using MLJ
 using PyPlot
@@ -131,7 +131,7 @@ Type:           Float64
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @697</code></pre>
+    merge_purity_threshold = 1.0) @274</code></pre>
 <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p>
 <pre><code class="language-julia">tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
@@ -193,8 +193,7 @@ e |> pprint</code></pre><pre><code class="plaintext">(measure = [rms, rmslp1],
  measurement = [4.101757715103516, 0.2560638676698909],
  per_fold = [[4.101757715103516], [0.2560638676698909]],
  per_observation = [missing, missing])</code></pre>
-<h3 id="reporting"><a href="#reporting">Reporting</a></h3>
-<p>Again, you could show a 2D heatmap of the hyperparameters</p>
+<h3 id="reporting"><a href="#reporting">Reporting</a></h3>  Again, you could show a 2D heatmap of the hyperparameters</p>
 <pre><code class="language-julia">r = report(m)
 
 figure(figsize=(8,6))
@@ -213,9 +212,7 @@ ylabel("Bagging fraction", fontsize=14)</code></pre>
 <p>Even though we&#39;ve only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around <code>0.75</code> work well.</p>
 <p>Now that the machine <code>m</code> is trained, you can use use it for predictions &#40;implicitly, this will use the best model&#41;. For instance we could look at predictions on the whole dataset:</p>
 <pre><code class="language-julia">ŷ = predict(m, X)
-rms(ŷ, y)</code></pre>
-
-<div class="page-foot">
+rms(ŷ, y)</code></pre><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="manipulating_a_dataframe"><a href="#manipulating_a_dataframe">Manipulating a DataFrame</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/D0-dataframe.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-dataframe-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-dataframe.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#basics">Basics</a><ol><li><a href="#accessing_data">Accessing data</a></li><li><a href="#describing_the_data">Describing the data</a></li><li><a href="#converting_the_data">Converting the data</a></li><li><a href="#adding_columns">Adding columns</a></li><li><a href="#missing_values">Missing values</a></li></ol></li><li><a href="#split-apply-combine">Split-Apply-Combine</a><ol><li><a href="#groupby"><code>groupby</code></a></li><li><a href="#combine"><code>combine</code></a></li><li><a href="#combine_with_groupby"><code>combine</code> with <code>groupby</code></a></li></ol></li></ol></div><p>This tutorial is loosely adapted from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">this pandas tutorial</a> as well as the <a href="http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/">DataFrames.jl documentation</a>. It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/D0-dataframe.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-dataframe-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-dataframe.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#basics">Basics</a><ol><li><a href="#accessing_data">Accessing data</a></li><li><a href="#describing_the_data">Describing the data</a></li><li><a href="#converting_the_data">Converting the data</a></li><li><a href="#adding_columns">Adding columns</a></li><li><a href="#missing_values">Missing values</a></li></ol></li><li><a href="#split-apply-combine">Split-Apply-Combine</a><ol><li><a href="#groupby"><code>groupby</code></a></li><li><a href="#combine"><code>combine</code></a></li><li><a href="#combine_with_groupby"><code>combine</code> with <code>groupby</code></a></li></ol></li></ol></div>This tutorial is loosely adapted from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">this pandas tutorial</a> as well as the <a href="http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/">DataFrames.jl documentation</a>. It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.</p>
 <h2 id="basics"><a href="#basics">Basics</a></h2>
 <p>To start with, we will use the <code>Boston</code> dataset which is very simple.</p>
 <pre><code class="language-julia">using RDatasets
@@ -187,7 +187,7 @@ first(b1, 2)</code></pre><pre><code class="plaintext">2×2 DataFrame
 │ 1   │ 18.0    │ 2.31    │
 │ 2   │ 0.0     │ 7.07    │</code></pre>
 <h3 id="describing_the_data"><a href="#describing_the_data">Describing the data</a></h3>
-<p><code>StatsBase</code> offers a convenient <code>describe</code> function which you can use on a DataFrame to get an overview of the data:</p>
+<code>StatsBase</code> offers a convenient <code>describe</code> function which you can use on a DataFrame to get an overview of the data:</p>
 <pre><code class="language-julia">using StatsBase
 describe(boston, :min, :max, :mean, :median, :std)</code></pre><pre><code class="plaintext">14×6 DataFrame
 │ Row │ variable │ min     │ max     │ mean     │ median  │ std      │
@@ -348,13 +348,8 @@ combine(df, :a => foo, :b => bar)</code></pre><pre><code class="plaintext">2×2 
 </ol>
 <p>You can do this for several columns/statistics at the time and give new column names to the results:</p>
 <pre><code class="language-julia">gdf = groupby(iris, :Species)
-combine(gdf, MPL=:PetalLength=>mean, SPL=:PetalLength=>std)</code></pre><pre><code class="plaintext">3×3 DataFrame
-│ Row │ Species    │ MPL     │ SPL      │
-│     │ Cat…       │ Float64 │ Float64  │
-├─────┼────────────┼─────────┼──────────┤
-│ 1   │ setosa     │ 1.462   │ 0.173664 │
-│ 2   │ versicolor │ 4.26    │ 0.469911 │
-│ 3   │ virginica  │ 5.552   │ 0.551895 │</code></pre>
+combine(gdf, :PetalLength => mean => MPL, :PetalLength => std => SPL)</code></pre><pre><code class="plaintext">UndefVarError: MPL not defined
+</code></pre>
 <p>If you want to apply something on all columns apart from the grouping one, using <code>names</code> and <code>Not</code> comes in handy:</p>
 <pre><code class="language-julia">combine(gdf, names(iris, Not(:Species)) .=> std)</code></pre><pre><code class="plaintext">3×5 DataFrame
 │ Row │ Species    │ SepalLength_std │ SepalWidth_std │ PetalLength_std │ PetalWidth_std │
@@ -369,9 +364,7 @@ combine(gdf, MPL=:PetalLength=>mean, SPL=:PetalLength=>std)</code></pre><pre><co
  "SepalWidth"
  "PetalLength"
  "PetalWidth"</code></pre>
-<p>and note the use of <code>.</code> in <code>.&#61;&gt;</code> to indicate that we broadcast the function over each column.</p>
-
-<div class="page-foot">
+<p>and note the use of <code>.</code> in <code>.&#61;&gt;</code> to indicate that we broadcast the function over each column.<div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 15, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>

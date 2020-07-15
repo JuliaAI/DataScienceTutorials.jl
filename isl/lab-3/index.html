@@ -98,15 +98,15 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_3_-_linear_regression"><a href="#lab_3_-_linear_regression">Lab 3 - Linear Regression</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-3.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-3-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-3.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#simple_linear_regression">Simple linear regression</a></li><li><a href="#interaction_and_transformation">Interaction and transformation</a></li></ol></div><h2 id="simple_linear_regression"><a href="#simple_linear_regression">Simple linear regression</a></h2>
-<p><code>MLJ</code> essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-3.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-3-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-3.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#simple_linear_regression">Simple linear regression</a></li><li><a href="#interaction_and_transformation">Interaction and transformation</a></li></ol></div><h2 id="simple_linear_regression"><a href="#simple_linear_regression">Simple linear regression</a></h2>
+<code>MLJ</code> essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.</p>
 <p>The simple linear regression demonstrates this. Several packages offer it &#40;beyond just using the backslash operator&#41;: here we will use <code>MLJLinearModels</code> but we could also have used <code>GLM</code>, <code>ScikitLearn</code> etc.</p>
-<p>To load the model from a given package use <code>@load ModelName pkg&#61;PackageName</code></p>
+<p>To load the model from a given package use <code>@load ModelName pkg&#61;PackageName</code>
 <pre><code class="language-julia">using MLJ
 
 @load LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @875</code></pre>
+    solver = nothing) @618</code></pre>
 <p>Note: in order to be able to load this, you <strong>must</strong> have the relevant package in your environment, if you don&#39;t, you can always add it &#40;<code>using Pkg; Pkg.add&#40;&quot;MLJLinearModels&quot;&#41;</code>&#41;.</p>
 <p>Let&#39;s load the <em>boston</em> data set</p>
 <pre><code class="language-julia">import RDatasets: dataset
@@ -147,14 +147,14 @@ X = select(data, Not(:MedV));</code></pre>
 <p>Let&#39;s declare a simple multivariate linear regression model:</p>
 <pre><code class="language-julia">mdl = LinearRegressor()</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @195</code></pre>
+    solver = nothing) @848</code></pre>
 <p>First let&#39;s do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a <em>machine</em> which, in MLJ, is the composition of a model and data to apply the model on:</p>
 <pre><code class="language-julia">X_uni = select(X, :LStat) # only a single feature
 mach_uni = machine(mdl, X_uni, y)
-fit!(mach_uni)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @245 trained 1 time.
+fit!(mach_uni)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @940 trained 1 time.
   args: 
-    1:	Source @247 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @328 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @060 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @137 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp = fitted_params(mach_uni)
@@ -231,8 +231,6 @@ figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 plot(Xnew.LStat, predict(mach, Xnew))</code></pre>
 <img src="/assets/isl/lab-3/code/output/ISL-lab-3-lreg.svg" alt="Polynomial regression">
-
-
 <div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

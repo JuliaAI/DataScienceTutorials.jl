@@ -12,6 +12,7 @@ import DataFrames
 import Statistics
 using CSV
 using PyPlot
+ioff() # hide
 using HTTP
 using StableRNGs
 
