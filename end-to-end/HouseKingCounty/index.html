@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="house_king_county"><a href="#house_king_county">House King County</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-housekingcounty.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-housekingcounty-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-housekingcounty.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li><li><a href="#basic_data_visualisation">Basic data visualisation</a></li></ol></li><li><a href="#fitting_a_first_model">Fitting a first model</a><ol><li><a href="#random_forest_model">Random forest model</a></li><li><a href="#gbm">GBM</a></li></ol></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-housekingcounty.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-housekingcounty-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-housekingcounty.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li><li><a href="#basic_data_visualisation">Basic data visualisation</a></li></ol></li><li><a href="#fitting_a_first_model">Fitting a first model</a><ol><li><a href="#random_forest_model">Random forest model</a></li><li><a href="#gbm">GBM</a></li></ol></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
 <p>This tutorial is adapted from <a href="https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/">the corresponding MLR3 tutorial</a>.</p>
 <h3 id="loading_and_preparing_the_data"><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></h3>
 <pre><code class="language-julia">using MLJ
@@ -253,7 +253,7 @@ plt.hist(df.price[df.isrenovated .== false], color="red", density=true,
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 plt.legend(fontsize=12)</code></pre>
-<img src="/assets/end-to-end/HouseKingCounty/code/output/hist_price2.svg" alt="Histogram of the prices depending on renovation"> We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.</p>
+<p><img src="/assets/end-to-end/HouseKingCounty/code/output/hist_price2.svg" alt="Histogram of the prices depending on renovation"> We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.</p>
 <p>Likewise, this could be done to verify that <code>condition</code>, <code>waterfront</code> etc are important features.</p>
 <h2 id="fitting_a_first_model"><a href="#fitting_a_first_model">Fitting a first model</a></h2>
 <pre><code class="language-julia">@load DecisionTreeRegressor
@@ -265,7 +265,7 @@ tree = machine(DecisionTreeRegressor(), X, y)
 
 fit!(tree, rows=train);</code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms(y[test], predict(tree, rows=test))</code></pre><pre><code class="plaintext">179.73985558245036</code></pre>
+<pre><code class="language-julia">rms(y[test], predict(tree, rows=test))</code></pre><pre><code class="plaintext">179.82246218215758</code></pre>
 <p>Let&#39;s try to do better.</p>
 <h3 id="random_forest_model"><a href="#random_forest_model">Random forest model</a></h3>
 <p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -284,7 +284,7 @@ fit!(tree, rows=train);</code></pre>
     n_jobs = nothing,
     random_state = nothing,
     verbose = 0,
-    warm_start = false) @667</code></pre>
+    warm_start = false) @550</code></pre>
 <p>That model only accepts input in the form of <code>Count</code> and so we have to coerce all <code>Finite</code> types into <code>Count</code>:</p>
 <pre><code class="language-julia">coerce!(X, Finite => Count);</code></pre>
 <p>Now we can fit</p>
@@ -292,14 +292,14 @@ fit!(tree, rows=train);</code></pre>
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
-rms(y[test], predict(rf, rows=test))</code></pre><pre><code class="plaintext">136.47378977289372</code></pre>
+rms(y[test], predict(rf, rows=test))</code></pre><pre><code class="plaintext">136.99730245616317</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 = CV(; nfolds=3)
 res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
                measure=rms, verbosity=0)</code></pre><pre><code class="plaintext">┌───────────┬───────────────┬────────────────────────────────────────────┐
 │ _.measure │ _.measurement │ _.per_fold                                 │
 ├───────────┼───────────────┼────────────────────────────────────────────┤
-│ rms       │ 135.0         │ [147.0, 130.0, 124.0, 133.0, 136.0, 139.0] │
+│ rms       │ 137.0         │ [132.0, 134.0, 134.0, 147.0, 151.0, 122.0] │
 └───────────┴───────────────┴────────────────────────────────────────────┘
 _.per_observation = [missing]
 </code></pre>
@@ -340,7 +340,7 @@ _.per_observation = [missing]
     objective = "reg:linear",
     base_score = 0.5,
     eval_metric = "rmse",
-    seed = 0) @008</code></pre>
+    seed = 0) @384</code></pre>
 <p>It expects a <code>Table&#40;Continuous&#41;</code> input so we need to coerce <code>X</code> again:</p>
 <pre><code class="language-julia">coerce!(X, Count => Continuous)
 
@@ -359,11 +359,13 @@ r2 = range(xgb, :num_round, lower=1, upper=25);</code></pre>
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
-rms(y[test], predict(mtm, rows=test))</code></pre><pre><code class="plaintext">138.80147128835262</code></pre>
+rms(y[test], predict(mtm, rows=test))</code></pre><pre><code class="plaintext">140.91453933000128</code></pre>
 <p>Tuning helps a fair bit&#33;</p>
+
+
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

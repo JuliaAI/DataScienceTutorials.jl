@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="ensemble_models_-_extended_tutorial"><a href="#ensemble_models_-_extended_tutorial">Ensemble models - extended tutorial</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-ensembles-3.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-3-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-3.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#definition_of_composite_model_type">Definition of composite model type</a></li><li><a href="#application_to_data">Application to data</a></li></ol></div><h1 id="simple_example_of_a_homogeneous_ensemble_using_learning_networks"><a href="#simple_example_of_a_homogeneous_ensemble_using_learning_networks">Simple example of a homogeneous ensemble using learning networks</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-ensembles-3.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-3-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-3.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#definition_of_composite_model_type">Definition of composite model type</a></li><li><a href="#application_to_data">Application to data</a></li></ol></div><h1 id="simple_example_of_a_homogeneous_ensemble_using_learning_networks"><a href="#simple_example_of_a_homogeneous_ensemble_using_learning_networks">Simple example of a homogeneous ensemble using learning networks</a></h1>
 <p>In this simple example, no bagging is used, so every atomic model gets the same learned parameters, unless the atomic model training algorithm has randomness, eg, DecisionTree with random subsampling of features at nodes.</p>
 <p>Note that MLJ has a built in model wrapper called <code>EnsembleModel</code> for creating bagged ensembles with a few lines of code.</p>
 <h2 id="definition_of_composite_model_type"><a href="#definition_of_composite_model_type">Definition of composite model type</a></h2>
@@ -121,7 +121,7 @@ yhat = mean([predict(m, Xs) for  m in machines]);</code></pre>
 <p>new composite model type and instance:</p>
 <pre><code class="language-julia">one_hundred_models = @from_network OneHundredModels(atom=atom) <= yhat</code></pre><pre><code class="plaintext">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
 Closest candidates are:
-  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/GD/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
+  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
 in expression starting at none:1
 </code></pre>
 <h2 id="application_to_data"><a href="#application_to_data">Application to data</a></h2>
@@ -161,9 +161,11 @@ plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)</code></pre><pre><code class="plaintext">UndefVarError: one_hundred_models not defined
 </code></pre>
 <p><span style="color:red;">// Image matching '/assets/getting-started/ensembles-3/code/e2' not found. //</span></p>
+
+
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

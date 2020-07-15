@@ -33,4 +33,4 @@ XGBoostRegressor(
     objective = "reg:linear",
     base_score = 0.5,
     eval_metric = "rmse",
-    seed = 0) @008
+    seed = 0) @384

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_5_-_cross_validation_and_the_bootstrap"><a href="#lab_5_-_cross_validation_and_the_bootstrap">Lab 5 - Cross validation and the bootstrap</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-5.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></li></ol></li><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></li><li><a href="#the_bootstrap">The Bootstrap</a></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-5.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-5.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></li></ol></li><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></li><li><a href="#the_bootstrap">The Bootstrap</a></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, select
@@ -109,7 +109,7 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);</code></pre>
 <h3 id="polynomial_regression"><a href="#polynomial_regression">Polynomial regression</a></h3>
 <pre><code class="language-julia">@load LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @863</code></pre>
+    solver = nothing) @643</code></pre>
 <p>In this part we only build models with the <code>Horsepower</code> feature.</p>
 <pre><code class="language-julia">using PyPlot
 
@@ -155,10 +155,10 @@ fit!(lr2, rows=train)
 
 LinMod.feature_selector.features = [:hp1, :hp2, :hp3] # poly of degree 3
 lr3 = machine(LinMod, Xhp, y)
-fit!(lr3, rows=train)</code></pre><pre><code class="plaintext">Machine{Pipeline310} @878 trained 1 time.
+fit!(lr3, rows=train)</code></pre><pre><code class="plaintext">Machine{Pipeline427} @247 trained 1 time.
   args: 
-    1:	Source @025 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @165 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @861 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @384 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="language-julia">get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
@@ -199,9 +199,9 @@ cases = [[Symbol("x$j") for j in 1:i] for i in 1:10]
 r = range(LinMod, :(feature_selector.features), values=cases)
 
 tm = TunedModel(model=LinMod, ranges=r, resampling=CV(nfolds=10), measure=rms)</code></pre><pre><code class="plaintext">DeterministicTunedModel(
-    model = Pipeline310(
-            feature_selector = FeatureSelector @963,
-            linear_regressor = LinearRegressor @293),
+    model = Pipeline427(
+            feature_selector = FeatureSelector @247,
+            linear_regressor = LinearRegressor @183),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -222,7 +222,7 @@ tm = TunedModel(model=LinMod, ranges=r, resampling=CV(nfolds=10), measure=rms)</
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @467</code></pre>
+    check_measure = true) @636</code></pre>
 <p>Now we&#39;re left with fitting the tuned model</p>
 <pre><code class="language-julia">mtm = machine(tm, Xhp, y)
 fit!(mtm)
@@ -231,8 +231,8 @@ rep = report(mtm)
 res = rep.plotting
 
 @show round.(res.measurements.^2, digits=2)
-@show argmin(res.measurements)</code></pre><pre><code class="plaintext">round.(res.measurements .^ 2, digits = 2) = [88.61, 21.24, 20.91, 25.66, 27.44, 21.35, 20.96, 223.98, 21.34, 20.91]
-argmin(res.measurements) = 3
+@show argmin(res.measurements)</code></pre><pre><code class="plaintext">round.(res.measurements .^ 2, digits = 2) = [20.96, 20.91, 88.61, 25.66, 20.91, 223.98, 27.44, 21.24, 21.35, 21.34]
+argmin(res.measurements) = 5
 </code></pre>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>
 <p>In ISL they use a different seed so the results are a bit different but comparable.</p>
@@ -250,9 +250,11 @@ ylabel("MPG", fontsize=14)</code></pre>
 <img src="/assets/isl/lab-5/code/output/ISL-lab-5-g4.svg" alt="5th order fit">
 <h2 id="the_bootstrap"><a href="#the_bootstrap">The Bootstrap</a></h2>
 <p><em>Bootstrapping is not currently supported in MLJ.</em></p>
+
+
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

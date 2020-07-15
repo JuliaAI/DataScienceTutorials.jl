@@ -8,4 +8,4 @@ NeuralNetworkRegressor(
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false) @486
+    optimiser_changes_trigger_retraining = false) @743

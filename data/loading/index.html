@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="loading_and_elementary_processing_of_data"><a href="#loading_and_elementary_processing_of_data">Loading and elementary processing of data</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/D0-loading.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-loading-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-loading.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#using_rdatasets">Using RDatasets</a></li><li><a href="#using_csv">Using CSV</a><ol><li><a href="#basic_usage">Basic usage</a></li><li><a href="#example_1">Example 1</a></li><li><a href="#example_2">Example 2</a></li></ol></li></ol></div>In this short tutorial we discuss two ways to easily load data in Julia:</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/D0-loading.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-loading-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-loading.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#using_rdatasets">Using RDatasets</a></li><li><a href="#using_csv">Using CSV</a><ol><li><a href="#basic_usage">Basic usage</a></li><li><a href="#example_1">Example 1</a></li><li><a href="#example_2">Example 2</a></li></ol></li></ol></div><p>In this short tutorial we discuss two ways to easily load data in Julia:</p>
 <ol>
 <li><p>loading a standard dataset via <code>RDatasets.jl</code>,</p>
 </li>
@@ -174,9 +174,11 @@ first(data[:, 1:5], 3)</code></pre><pre><code class="plaintext">3×5 DataFrame
 ├─────┼─────────┼─────────┼─────────┼─────────┼─────────┤
 │ 1   │ 1       │ 0       │ 1       │ 0       │ 0       │
 │ 2   │ 0       │ missing │ 0       │ 0       │ 0       │
-│ 3   │ 1       │ 0       │ 1       │ 1       │ 0       │</code></pre><div class="page-foot">
+│ 3   │ 1       │ 0       │ 1       │ 1       │ 0       │</code></pre>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

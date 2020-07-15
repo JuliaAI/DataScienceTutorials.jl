@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_8_-_tree-based_models"><a href="#lab_8_-_tree-based_models">Lab 8 - Tree-based models</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-8.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-8-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-8.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-8.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-8-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-8.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
 using PrettyPrinting
@@ -190,7 +190,7 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 ypred = predict(mtm, rows=test)
-round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">5.05</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">4.98</code></pre>
 <h2 id="random_forest"><a href="#random_forest">Random Forest</a></h2>
 <p><strong>Note</strong>: the package <a href="https://github.com/bensadeghi/DecisionTree.jl"><code>DecisionTree.jl</code></a> also has a RandomForest model but it is not yet interfaced with in MLJ.</p>
 <pre><code class="language-julia">@load RandomForestRegressor pkg=ScikitLearn
@@ -200,7 +200,7 @@ rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
 ypred = predict(rf, rows=test)
-round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.8</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.81</code></pre>
 <h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></h2>
 <pre><code class="language-julia">@load XGBoostRegressor
 
@@ -210,9 +210,11 @@ fit!(xgb, rows=train)
 
 ypred = predict(xgb, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.96</code></pre>
-<p>Again we could do some tuning for this.<div class="page-foot">
+<p>Again we could do some tuning for this.</p>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
