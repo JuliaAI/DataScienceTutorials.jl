@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="crabs_with_xgboost"><a href="#crabs_with_xgboost">Crabs with XGBoost</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-crabs-xgb.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-crabs-xgb-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-crabs-xgb.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#first_steps">First steps</a></li><li><a href="#xgboost_machine">XGBoost machine</a><ol><li><a href="#more_tuning_1">More tuning &#40;1&#41;</a></li><li><a href="#more_tuning_2">More tuning &#40;2&#41;</a></li><li><a href="#more_tuning_3">More tuning &#40;3&#41;</a></li></ol></li></ol></div>This example is inspired from <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">this post</a> showing how to use XGBoost.</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-crabs-xgb.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-crabs-xgb-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-crabs-xgb.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#first_steps">First steps</a></li><li><a href="#xgboost_machine">XGBoost machine</a><ol><li><a href="#more_tuning_1">More tuning &#40;1&#41;</a></li><li><a href="#more_tuning_2">More tuning &#40;2&#41;</a></li><li><a href="#more_tuning_3">More tuning &#40;3&#41;</a></li></ol></li></ol></div><p>This example is inspired from <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">this post</a> showing how to use XGBoost.</p>
 <h2 id="first_steps"><a href="#first_steps">First steps</a></h2>
 <p>Again, the crabs dataset is so common that there is a  simple load function for it:</p>
 <pre><code class="language-julia">using MLJ
@@ -171,17 +171,17 @@ xgb_model = XGBoostClassifier()</code></pre><pre><code class="plaintext">XGBoost
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @659</code></pre>
+    seed = 0) @812</code></pre>
 <p>Let&#39;s check whether the training and  is balanced, <code>StatsBase.countmap</code> is useful for that:</p>
 <pre><code class="language-julia">countmap(y[train]) |> pprint</code></pre><pre><code class="plaintext">Dict("B" => 70, "O" => 70)</code></pre>
 <p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p>
 <h2 id="xgboost_machine"><a href="#xgboost_machine">XGBoost machine</a></h2>
 <p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p>
 <pre><code class="language-julia">xgb  = XGBoostClassifier()
-xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext">Machine{XGBoostClassifier} @858 trained 0 times.
+xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext">Machine{XGBoostClassifier} @974 trained 0 times.
   args: 
-    1:	Source @334 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @721 ⏎ `AbstractArray{Multiclass{2},1}`
+    1:	Source @548 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @672 ⏎ `AbstractArray{Multiclass{2},1}`
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="language-julia">r = range(xgb, :num_round, lower=50, upper=500)
@@ -208,10 +208,10 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
                 resampling=CV(rng=11), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @122 trained 1 time.
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @433 trained 1 time.
   args: 
-    1:	Source @949 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @446 ⏎ `AbstractArray{Multiclass{2},1}`
+    1:	Source @766 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @350 ⏎ `AbstractArray{Multiclass{2},1}`
 </code></pre>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r = report(mtm)
@@ -254,10 +254,10 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
                 resampling=CV(rng=234), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @977 trained 1 time.
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @302 trained 1 time.
   args: 
-    1:	Source @636 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @375 ⏎ `AbstractArray{Multiclass{2},1}`
+    1:	Source @325 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @230 ⏎ `AbstractArray{Multiclass{2},1}`
 </code></pre>
 <p>and the usual procedure to visualise it:</p>
 <pre><code class="language-julia">r = report(mtm)
@@ -283,9 +283,11 @@ xgb.colsample_bytree = 0.9428571428571428
 </code></pre>
 <p>We could continue with more fine tuning but given how small the dataset is, it doesn&#39;t make much sense. How does it fare on the test set?</p>
 <pre><code class="language-julia">ŷ = predict_mode(mtm, rows=test)
-round(accuracy(ŷ, y[test]), sigdigits=3)</code></pre><div class="page-foot">
+round(accuracy(ŷ, y[test]), sigdigits=3)</code></pre>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="learning_networks_2"><a href="#learning_networks_2">Learning networks 2</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-learning-networks-2.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></li><li><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-learning-networks-2.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></li><li><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
 <p>Let&#39;s start as with the previous tutorial:</p>
 <pre><code class="language-julia">using MLJ
 using StableRNGs
@@ -126,7 +126,7 @@ test, train = partition(eachindex(y), 0.8);</code></pre>
 <p>Let&#39;s define a simple network</p>
 <p><em>Input layer</em></p>
 <pre><code class="language-julia">Xs = source(X)
-ys = source(y, kind=:target)</code></pre><pre><code class="plaintext">Source @856 ⏎ `AbstractArray{Continuous,1}`</code></pre>
+ys = source(y, kind=:target)</code></pre><pre><code class="plaintext">Source @703 ⏎ `AbstractArray{Continuous,1}`</code></pre>
 <p><em>First layer</em></p>
 <pre><code class="language-julia">std_model = Standardizer()
 stand = machine(std_model, Xs)
@@ -134,40 +134,40 @@ W = transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
 box = machine(box_model, ys)
-z = transform(box, ys)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @226
+z = transform(box, ys)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @846
   args:
-    1:	Source @856
+    1:	Source @703
     transform(
-        Machine{UnivariateBoxCoxTransformer} @909, 
-        Source @856)</code></pre>
+        Machine{UnivariateBoxCoxTransformer} @675, 
+        Source @703)</code></pre>
 <p><em>Second layer</em></p>
 <pre><code class="language-julia">ridge_model = RidgeRegressor(lambda=0.1)
 ridge = machine(ridge_model, W, z)
-ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext">Node{Machine{RidgeRegressor}} @574
+ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext">Node{Machine{RidgeRegressor}} @670
   args:
-    1:	Node{Machine{Standardizer}} @115
+    1:	Node{Machine{Standardizer}} @385
     predict(
-        Machine{RidgeRegressor} @019, 
+        Machine{RidgeRegressor} @996, 
         transform(
-            Machine{Standardizer} @158, 
-            Source @837))</code></pre>
+            Machine{Standardizer} @563, 
+            Source @695))</code></pre>
 <p><em>Output</em></p>
-<pre><code class="language-julia">ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @862
+<pre><code class="language-julia">ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @085
   args:
-    1:	Node{Machine{RidgeRegressor}} @574
+    1:	Node{Machine{RidgeRegressor}} @670
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer} @909, 
+        Machine{UnivariateBoxCoxTransformer} @675, 
         predict(
-            Machine{RidgeRegressor} @019, 
+            Machine{RidgeRegressor} @996, 
             transform(
-                Machine{Standardizer} @158, 
-                Source @837)))</code></pre>
+                Machine{Standardizer} @563, 
+                Source @695)))</code></pre>
 <p>No fitting has been done thus far, we have just defined a sequence of operations.</p>
 <p>To form a model out of that network is easy using the <code>@from_network</code> macro:</p>
 <pre><code class="language-julia">@from_network CompositeModel(std=std_model, box=box_model,
                              ridge=ridge_model) <= ŷ;</code></pre><pre><code class="plaintext">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
 Closest candidates are:
-  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/GD/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
+  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
 in expression starting at none:1
 </code></pre>
 <p>The macro defines a constructor CompositeModel and attributes a name to the different models; the ordering / connection between the nodes is inferred from <code>ŷ</code> via the <code>&lt;&#61; ŷ</code>.</p>
@@ -202,9 +202,11 @@ mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),
 cm = machine(mdl, X, y)
 res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
 round(res.measurement[1], sigdigits=3)</code></pre><pre><code class="plaintext">0.0212</code></pre>
-<p>Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.<div class="page-foot">
+<p>Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.</p>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

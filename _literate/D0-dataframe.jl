@@ -143,25 +143,55 @@ describe(subdf_setosa, :min, :mean, :max)
 # Note that `subdf_setosa` is a `SubDataFrame` meaning that it is just a view of the parent dataframe `iris`; if you modify that parent dataframe then the sub dataframe is also  modified.
 #
 # See `?groupby` for more information.
-
-# ### `by`
 #
-# The `by` function allows you to compute statistics on given columns for each group.
-# Let's start with a very simple example:
-
-by(iris, :Species, :PetalLength => mean)
-
-# So this returns the mean of the `:PetaLength` feature for each `:Species`.
+# ### `combine`
 #
-# You can do this for several columns/statistics at the time and give specific names to the results:
+# The `combine` function allows to derive a new dataframe out of transformations of an existing one.
+# Here's an example taken from the official doc (see `?combine`):
 
-by(iris, :Species, MPL = :PetalLength => mean, SPL = :PetalLength => std)
+df = DataFrame(a=1:3, b=4:6)
+combine(df, :a => sum, nrow)
+
+# what happened here is that the derived DataFrame has two columns obtained respectively by (1) computing the sum of the first column and (2) applying the `nrow` function on the `df`.
+#
+# The transformation can produce one or several values, `combine` will try to concatenate these columns as it can, for instance:
+
+foo(v) = v[1:2]
+combine(df, :a => maximum, :b => foo)
+
+# here the maximum value of `a` is copied twice so that the two columns have the same number of rows.
+#
+
+bar(v) = v[end-1:end]
+combine(df, :a => foo, :b => bar)
+
+# ### `combine` with `groupby`
+#
+# Combining `groupby` with `combine` is very useful.
+# For instance you might want to compute statistics across groups for different variables:
+
+combine(groupby(iris, :Species), :PetalLength => mean)
+
+# let's decompose that:
+#
+# 1. the `groupby(iris, :Species)` creates groups using the `:Species` column (which has values `setosa`, `versicolor`, `virginica`)
+# 2. the `combine` creates a derived dataframe by applying the `mean` function to the `:PetalLength` column
+# 3. since there are three groups, we get one column (mean of `PetalLength`) and three rows (one per group).
+#
+#
+# You can do this for several columns/statistics at the time and give new column names to the results:
+
+gdf = groupby(iris, :Species)
+combine(gdf, MPL=:PetalLength=>mean, SPL=:PetalLength=>std)
+
+# If you want to apply something on all columns apart from the grouping one, using `names` and `Not` comes in handy:
+
+combine(gdf, names(iris, Not(:Species)) .=> std)
 
 #
-# See `?by` for more information.
-#
-# ### `aggregate`
-#
-# The aggregate function is a bit like `by` except that it applies the given function on all columns:
+# where
 
-DataFrames.aggregate(iris, :Species, std)
+names(iris, Not(:Species))
+
+#
+# and note the use of `.` in `.=>` to indicate that we broadcast the function over each column.

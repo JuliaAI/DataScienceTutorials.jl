@@ -1,4 +1,4 @@
-Machine{LogisticClassifier} @984 trained 0 times.
+Machine{LogisticClassifier} @537 trained 0 times.
   args: 
-    1:	Source @146 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @096 ⏎ `AbstractArray{OrderedFactor{2},1}`
+    1:	Source @995 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @405 ⏎ `AbstractArray{OrderedFactor{2},1}`

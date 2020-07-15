@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_4_-_logistic_regression_lda_qda_knn"><a href="#lab_4_-_logistic_regression_lda_qda_knn">Lab 4 - Logistic Regression, LDA, QDA, KNN</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-4.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-4-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-4.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#stock_market_data">Stock market data</a><ol><li><a href="#logistic_regression">Logistic Regression</a></li><li><a href="#lda">LDA</a></li><li><a href="#qda">QDA</a></li><li><a href="#knn">KNN</a></li></ol></li><li><a href="#caravan_insurance_data">Caravan insurance data</a><ol><li><a href="#roc_and_auc">ROC and AUC</a></li></ol></li></ol></div><h2 id="stock_market_data"><a href="#stock_market_data">Stock market data</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-4.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-4-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-4.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#stock_market_data">Stock market data</a><ol><li><a href="#logistic_regression">Logistic Regression</a></li><li><a href="#lda">LDA</a></li><li><a href="#qda">QDA</a></li><li><a href="#knn">KNN</a></li></ol></li><li><a href="#caravan_insurance_data">Caravan insurance data</a><ol><li><a href="#roc_and_auc">ROC and AUC</a></li></ol></li></ol></div><h2 id="stock_market_data"><a href="#stock_market_data">Stock market data</a></h2>
 <p>Let&#39;s load the usual packages and the data</p>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
@@ -169,10 +169,10 @@ ylabel("Number of occurences", fontsize=14)</code></pre>
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="language-julia">@load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext">Machine{LogisticClassifier} @984 trained 0 times.
+clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext">Machine{LogisticClassifier} @537 trained 0 times.
   args: 
-    1:	Source @146 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @096 ⏎ `AbstractArray{OrderedFactor{2},1}`
+    1:	Source @995 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @405 ⏎ `AbstractArray{OrderedFactor{2},1}`
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit!(clf)
@@ -257,13 +257,13 @@ accuracy(ŷ, y[test]) |> r3</code></pre><pre><code class="plaintext">0.548</cod
     priors = nothing,
     reg_param = 0.0,
     store_covariance = false,
-    tol = 0.0001) @290</code></pre>
+    tol = 0.0001) @731</code></pre>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="language-julia">clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 
-accuracy(ŷ, y[test]) |> r3</code></pre><pre><code class="plaintext">0.599</code></pre>
+accuracy(ŷ, y[test]) |> r3</code></pre><pre><code class="plaintext">0.587</code></pre>
 <h3 id="knn"><a href="#knn">KNN</a></h3>
 <p>We can use K-Nearest Neighbors models via the <a href="https://github.com/KristofferC/NearestNeighbors.jl"><code>NearestNeighbors</code></a> package:</p>
 <pre><code class="language-julia">@load KNNClassifier pkg=NearestNeighbors
@@ -346,9 +346,11 @@ ylabel("True Positive Rate", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)</code></pre>
 <img src="/assets/isl/lab-4/code/output/ISL-lab-4-roc.svg" alt="ROC">
+
+
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="boston_with_lightgbm"><a href="#boston_with_lightgbm">Boston with LightGBM</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-boston-flux.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li></ol></div><strong>Main author</strong>: Ayush Shridhar &#40;ayush-1506&#41;.</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-boston-flux.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li></ol></div><p><strong>Main author</strong>: Ayush Shridhar &#40;ayush-1506&#41;.</p>
 <h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
 <pre><code class="language-julia">import MLJFlux
 import MLJ
@@ -108,7 +108,10 @@ import Flux
 using Random
 using Plots
 
-Random.seed!(11)</code></pre><pre><code class="plaintext">MersenneTwister(UInt32[0x0000000b]) @ 1002</code></pre>
+Random.seed!(11)</code></pre><pre><code class="plaintext">ArgumentError: Package Plots not found in current path:
+- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+
+</code></pre>
 <p>Loading the Boston dataset. Our aim will be to implement a neural network regressor to predict the price of a house, given a number of features.</p>
 <pre><code class="language-julia">features, targets = MLJ.@load_boston
 features = DataFrames.DataFrame(features)
@@ -148,7 +151,7 @@ end</code></pre>
     return Flux.Chain(layer1, layer2, layer3)
 end</code></pre>
 <p>With all definitions ready, let us create an object of this:</p>
-<pre><code class="language-julia">myregressor = MyNetworkBuilder(20, 10)</code></pre><pre><code class="plaintext">MyNetworkBuilder @902
+<pre><code class="language-julia">myregressor = MyNetworkBuilder(20, 10)</code></pre><pre><code class="plaintext">MyNetworkBuilder @664
 </code></pre>
 <p>Since the boston dataset is a regression problem, we&#39;ll be using <code>NeuralNetworkRegressor</code> here. One thing to remember is that a <code>NeuralNetworkRegressor</code> object works seamlessly like any other MLJ model: you can wrap it in an  MLJ <code>machine</code> and do anything you&#39;d do otherwise.</p>
 <p>Let&#39;s start by defining our NeuralNetworkRegressor object, that takes <code>myregressor</code> as it&#39;s parameter.</p>
@@ -162,39 +165,39 @@ end</code></pre>
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false) @486</code></pre>
+    optimiser_changes_trigger_retraining = false) @743</code></pre>
 <p>Other parameters that NeuralNetworkRegressor takes can be found here: https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters</p>
-<code>nnregressor</code> now acts like any other MLJ model. Let&#39;s try wrapping it in a MLJ machine and calling <code>fit&#33;, predict</code>.</p>
-<pre><code class="language-julia">mach = MLJ.machine(nnregressor, features, targets)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @034 trained 0 times.
+<p><code>nnregressor</code> now acts like any other MLJ model. Let&#39;s try wrapping it in a MLJ machine and calling <code>fit&#33;, predict</code>.</p>
+<pre><code class="language-julia">mach = MLJ.machine(nnregressor, features, targets)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @802 trained 0 times.
   args: 
-    1:	Source @920 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @400 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @213 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @332 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>Let&#39;s fit this on the train set</p>
-<pre><code class="language-julia">MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @034 trained 1 time.
+<pre><code class="language-julia">MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @802 trained 1 time.
   args: 
-    1:	Source @920 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @400 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @213 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @332 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>As we can see, the training loss decreases at each epoch, showing the the neural network is gradually learning form the training set.</p>
 <pre><code class="language-julia">preds = MLJ.predict(mach, features[test, :])
 
-print(preds[1:5])</code></pre><pre><code class="plaintext">Float32[29.322287, 26.417507, 24.125174, -2.5468833, 20.77854]</code></pre>
+print(preds[1:5])</code></pre><pre><code class="plaintext">Float32[32.117565, 27.787401, 23.732939, -6.012513, 21.763313]</code></pre>
 <p>Now let&#39;s retrain our model. One thing to remember is that retrainig may OR may not re-initialize our neural network model parameters. For example, changing the number of epochs to 15 will not causes the model to train to 15 epcohs, but just 5 additional epochs.</p>
 <pre><code class="language-julia">nnregressor.epochs = 15
 
-MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @034 trained 2 times.
+MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @802 trained 2 times.
   args: 
-    1:	Source @920 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @400 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @213 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @332 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>You can always specify that you want to retrain the model from scratch using the force&#61;true parameter. &#40;Look at documentation for <code>fit&#33;</code> for more&#41;.</p>
 <p>However, changing parameters such as batch_size will necessarily cause re-training from scratch.</p>
 <pre><code class="language-julia">nnregressor.batch_size = 2
-MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @034 trained 3 times.
+MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @802 trained 3 times.
   args: 
-    1:	Source @920 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @400 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @213 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @332 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>Another bit to remember here is that changing the optimiser doesn&#39;t cause retaining by default. However, the <code>optimiser_changes_trigger_retraining</code> in NeuralNetworkRegressor can be toggled to accomodate this. This allows one to modify the learning rate, for example, after an initial burn-in period.</p>
 <pre><code class="language-julia"># Inspecting out-of-sample loss as a function of epochs
@@ -210,13 +213,14 @@ plot(curve.parameter_values,
     xlab=curve.parameter_name,
     xscale=curve.parameter_scale,
     ylab = "l2")
-# Tuning</code></pre><pre><code class="plaintext">Plot{Plots.GRBackend() n=1}</code></pre>
+# Tuning</code></pre><pre><code class="plaintext">UndefVarError: plot not defined
+</code></pre>
 <p>As mentioned above, <code>nnregressor</code> can act like any other MLJ model. Let&#39;s try to tune the batch_size parameter.</p>
 <pre><code class="language-julia">bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
 tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pre><pre><code class="plaintext">DeterministicTunedModel(
     model = NeuralNetworkRegressor(
-            builder = MyNetworkBuilder @902,
+            builder = MyNetworkBuilder @664,
             optimiser = Flux.Optimise.ADAM(0.001, (0.9, 0.999), IdDict{Any,Any}()),
             loss = Flux.mse,
             epochs = 15,
@@ -236,25 +240,27 @@ tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pr
     measure = l2(),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64,MLJBase.Bounded,Symbol}[NumericRange{Int64,…} @698],
+    range = MLJBase.NumericRange{Int64,MLJBase.Bounded,Symbol}[NumericRange{Int64,…} @577],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @586</code></pre>
+    check_measure = true) @468</code></pre>
 <p>For more on tuning, refer to the model-tuning tutorial.</p>
 <pre><code class="language-julia">m = MLJ.machine(tm, features, targets)
 
-MLJ.fit!(m)</code></pre><pre><code class="plaintext">Machine{DeterministicTunedModel{Grid,…}} @040 trained 1 time.
+MLJ.fit!(m)</code></pre><pre><code class="plaintext">Machine{DeterministicTunedModel{Grid,…}} @679 trained 1 time.
   args: 
-    1:	Source @397 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @373 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @876 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @135 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>This evaluated the model at each value of our range. The best value is:</p>
-<pre><code class="language-julia">MLJ.fitted_params(m).best_model.batch_size</code></pre><pre><code class="plaintext">2</code></pre><div class="page-foot">
+<pre><code class="language-julia">MLJ.fitted_params(m).best_model.batch_size</code></pre><pre><code class="plaintext">5</code></pre>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 15, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

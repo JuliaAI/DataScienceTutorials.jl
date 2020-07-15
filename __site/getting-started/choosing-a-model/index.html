@@ -98,7 +98,8 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="choosing_and_evaluating_a_model"><a href="#choosing_and_evaluating_a_model">Choosing and evaluating a model</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-model-choice.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-choice-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-choice.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#data_and_its_interpretation">Data and its interpretation</a><ol><li><a href="#machine_type_and_scientific_type">Machine type and scientific type</a></li><li><a href="#unpacking_data">Unpacking data</a></li></ol></li><li><a href="#choosing_a_model">Choosing a model</a><ol><li><a href="#model_search">Model search</a></li><li><a href="#loading_a_model">Loading a model</a></li></ol></li></ol></div><h2 id="data_and_its_interpretation"><a href="#data_and_its_interpretation">Data and its interpretation</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-model-choice.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-choice-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-choice.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#data_and_its_interpretation">Data and its interpretation</a><ol><li><a href="#machine_type_and_scientific_type">Machine type and scientific type</a></li><li><a href="#unpacking_data">Unpacking data</a></li></ol></li><li><a href="#choosing_a_model">Choosing a model</a><ol><li><a href="#model_search">Model search</a></li><li><a href="#loading_a_model">Loading a model</a></li></ol></li></ol></div><p></p>
+<h2 id="data_and_its_interpretation"><a href="#data_and_its_interpretation">Data and its interpretation</a></h2>
 <h3 id="machine_type_and_scientific_type"><a href="#machine_type_and_scientific_type">Machine type and scientific type</a></h3>
 <pre><code class="language-julia">using RDatasets
 using MLJ
@@ -212,13 +213,15 @@ XGBoostClassifier             (XGBoost)
     p = 2,
     metric = "minkowski",
     metric_params = nothing,
-    n_jobs = nothing) @147</code></pre>
+    n_jobs = nothing) @844</code></pre>
 <p>In some cases, there may be several packages offering the same model, for instance <code>LinearRegressor</code> is offered by both <code><a href="https://github.com/JuliaStats/GLM.jl">GLM.jl</a></code> and <code><a href="https://github.com/cstjean/ScikitLearn.jl">ScikitLearn.jl</a></code> so you will need to specify the package you would like to use by adding <code>pkg&#61;&quot;ThePackage&quot;</code> in the load command:</p>
 <pre><code class="language-julia">linreg = @load LinearRegressor pkg="GLM"</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    allowrankdeficient = false) @375</code></pre><div class="page-foot">
+    allowrankdeficient = false) @376</code></pre>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

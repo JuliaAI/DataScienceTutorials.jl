@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="ensemble_models"><a href="#ensemble_models">Ensemble models</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-ensembles.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#homogenous_ensembles">Homogenous ensembles</a><ol><li><a href="#training_and_testing_an_ensemble">Training and testing an ensemble</a></li><li><a href="#systematic_tuning">Systematic tuning</a></li><li><a href="#reporting_results">Reporting results</a></li></ol></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-ensembles.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-ensembles.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#homogenous_ensembles">Homogenous ensembles</a><ol><li><a href="#training_and_testing_an_ensemble">Training and testing an ensemble</a></li><li><a href="#systematic_tuning">Systematic tuning</a></li><li><a href="#reporting_results">Reporting results</a></li></ol></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
 <p>Let&#39;s start by loading the relevant packages and generating some dummy data.</p>
 <pre><code class="language-julia">using MLJ
 import DataFrames
@@ -121,12 +121,12 @@ knn_model = KNNRegressor(K=10)</code></pre><pre><code class="plaintext">KNNRegre
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @417</code></pre>
+    weights = :uniform) @173</code></pre>
 <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p>
-<pre><code class="language-julia">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @438 trained 0 times.
+<pre><code class="language-julia">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @827 trained 0 times.
   args: 
-    1:	Source @337 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @365 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @271 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @239 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>and fit it</p>
 <pre><code class="language-julia">fit!(knn, rows=train)
@@ -147,18 +147,18 @@ rms(ŷ, y[test])</code></pre><pre><code class="plaintext">0.06389980172436367</
 <pre><code class="language-julia">ensemble = machine(ensemble_model, X, y)
 estimates = evaluate!(ensemble, resampling=CV())
 estimates |> pprint</code></pre><pre><code class="plaintext">(measure = [rms],
- measurement = [0.08524739829927208],
- per_fold = [[0.08866161072583786,
-              0.11204787388781821,
-              0.07793015151727334,
-              0.08916673799997521,
-              0.06632003095260786,
-              0.06902857419121246]],
+ measurement = [0.08533109274154715],
+ per_fold = [[0.09015368219690051,
+              0.11187440071110444,
+              0.07795787408546391,
+              0.08792117252462257,
+              0.06613722785802259,
+              0.06973599331691727]],
  per_observation = [missing])</code></pre>
 <p>here the implicit measure is the <code>rms</code> &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
 <pre><code class="language-julia">@show estimates.measurement[1]
-@show mean(estimates.per_fold[1])</code></pre><pre><code class="plaintext">estimates.measurement[1] = 0.08524739829927208
-mean(estimates.per_fold[1]) = 0.08385916321245417
+@show mean(estimates.per_fold[1])</code></pre><pre><code class="plaintext">estimates.measurement[1] = 0.08533109274154715
+mean(estimates.per_fold[1]) = 0.08396339178217188
 </code></pre>
 <p>Note that multiple measurements can be specified jointly. Here only on measurement is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both  the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
 <h3 id="systematic_tuning"><a href="#systematic_tuning">Systematic tuning</a></h3>
@@ -194,7 +194,7 @@ fit!(tuned_ensemble, rows=train);</code></pre>
 <pre><code class="language-julia">best_ensemble = fitted_params(tuned_ensemble).best_model
 @show best_ensemble.atom.K
 @show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext">best_ensemble.atom.K = 3
-best_ensemble.bagging_fraction = 0.5
+best_ensemble.bagging_fraction = 0.5555555555555556
 </code></pre>
 <p>The <code>report</code> method gives more detailed information on the tuning process:</p>
 <pre><code class="language-julia">r = report(tuned_ensemble);</code></pre>
@@ -215,9 +215,11 @@ ylabel("Number of neighbors - K", fontsize=14)</code></pre>
 <img src="/assets/getting-started/ensembles/code/output/A-ensembles-heatmap.svg" alt="Hyperparameter heatmap">
 <p>Finally you can always just evaluate the model by reporting <code>rms</code> on the test set:</p>
 <pre><code class="language-julia">ŷ = predict(tuned_ensemble, rows=test)
-rms(ŷ, y[test])</code></pre><div class="page-foot">
+rms(ŷ, y[test])</code></pre>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_10_-_pca_and_clustering"><a href="#lab_10_-_pca_and_clustering">Lab 10 - PCA and Clustering</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-10.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-10-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-10.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li><li><a href="#pca_pipeline">PCA pipeline</a></li><li><a href="#more_interesting_data">More interesting data...</a><ol><li><a href="#pca_pipeline__2">PCA pipeline</a></li><li><a href="#clustering">Clustering</a></li></ol></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-10.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-10-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-10.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li><li><a href="#pca_pipeline">PCA pipeline</a></li><li><a href="#more_interesting_data">More interesting data...</a><ol><li><a href="#pca_pipeline__2">PCA pipeline</a></li><li><a href="#clustering">Clustering</a></li></ol></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, select, Not, describe
@@ -168,9 +168,9 @@ names(W)</code></pre><pre><code class="plaintext">6-element Array{String,1}:
 <p>What kind of variance can we explain?</p>
 <pre><code class="language-julia">rpca = collect(values(report(spca).report_given_machine))[2]
 cs = cumsum(rpca.principalvars ./ rpca.tvar)</code></pre><pre><code class="plaintext">6-element Array{Float64,1}:
- 0.4174696748484731
+ 0.417469674848473
  0.7233074812209765
- 0.9436456234171869
+ 0.9436456234171868
  0.9997505816044248
  0.9998956501446636
  0.9999999999999998</code></pre>
@@ -213,9 +213,11 @@ xlabel("PCA-1", fontsize=13)
 ylabel("PCA-2", fontsize=13)
 legend(["Group 1", "Group 2", "Group 3"], fontsize=13)</code></pre>
 <img src="/assets/isl/lab-10/code/output/ISL-lab-10-cluster.svg" alt="">
+
+
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

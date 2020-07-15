@@ -59,9 +59,21 @@ gdf = groupby(iris, :Species);
 subdf_setosa = gdf[1]
 describe(subdf_setosa, :min, :mean, :max)
 
-by(iris, :Species, :PetalLength => mean)
+df = DataFrame(a=1:3, b=4:6)
+combine(df, :a => sum, nrow)
 
-by(iris, :Species, MPL = :PetalLength => mean, SPL = :PetalLength => std)
+foo(v) = v[1:2]
+combine(df, :a => maximum, :b => foo)
 
-DataFrames.aggregate(iris, :Species, std)
+bar(v) = v[end-1:end]
+combine(df, :a => foo, :b => bar)
+
+combine(groupby(iris, :Species), :PetalLength => mean)
+
+gdf = groupby(iris, :Species)
+combine(gdf, MPL=:PetalLength=>mean, SPL=:PetalLength=>std)
+
+combine(gdf, names(iris, Not(:Species)) .=> std)
+
+names(iris, Not(:Species))
 

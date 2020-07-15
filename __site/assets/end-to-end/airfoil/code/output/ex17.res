@@ -4,6 +4,6 @@ RandomForestRegressor(
     min_samples_split = 2,
     min_purity_increase = 0.0,
     n_subfeatures = -1,
-    n_trees = 14,
-    sampling_fraction = 0.8,
-    pdf_smoothing = 0.0) @273
+    n_trees = 15,
+    sampling_fraction = 0.7333333333333333,
+    pdf_smoothing = 0.0) @418

@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="horse_colic_data"><a href="#horse_colic_data">Horse colic data</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-horse.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-horse-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-horse.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#getting_the_data">Getting the data</a></li><li><a href="#inspecting_columns">Inspecting columns</a></li><li><a href="#dealing_with_missing_values">Dealing with missing values</a></li></ol></li><li><a href="#a_baseline_model">A baseline model</a></li><li><a href="#trying_another_model">Trying another model</a></li></ol></div><h2 id="initial_data_processing"><a href="#initial_data_processing">Initial data processing</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-horse.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-horse-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-horse.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#getting_the_data">Getting the data</a></li><li><a href="#inspecting_columns">Inspecting columns</a></li><li><a href="#dealing_with_missing_values">Dealing with missing values</a></li></ol></li><li><a href="#a_baseline_model">A baseline model</a></li><li><a href="#trying_another_model">Trying another model</a></li></ol></div><h2 id="initial_data_processing"><a href="#initial_data_processing">Initial data processing</a></h2>
 <p>In this example, we consider the <a href="http://archive.ics.uci.edu/ml/datasets/Horse&#43;Colic">UCI &quot;horse colic&quot; dataset</a></p>
 <p>This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.</p>
 <h3 id="getting_the_data"><a href="#getting_the_data">Getting the data</a></h3>
@@ -186,7 +186,7 @@ cp_data                       OrderedFactor{2}
 <pre><code class="language-julia">length(unique(datac.hospital_number))</code></pre><pre><code class="plaintext">346</code></pre>
 <p>yeah let&#39;s drop that</p>
 <pre><code class="language-julia">datac = select!(datac, Not(:hospital_number));</code></pre>
-<p>let&#39;s also coerce the pulse and respiratory rate, in fact we can do that with <code>autotype</code> specifying as rule the <code>discrete_to_continuous</code>
+<p>let&#39;s also coerce the pulse and respiratory rate, in fact we can do that with <code>autotype</code> specifying as rule the <code>discrete_to_continuous</code></p>
 <pre><code class="language-julia">datac = coerce(datac, autotype(datac, rules=(:discrete_to_continuous,)));</code></pre>
 <h3 id="dealing_with_missing_values"><a href="#dealing_with_missing_values">Dealing with missing values</a></h3>
 <p>There&#39;s quite a lot of missing values, in this tutorial we&#39;ll be a bit rough in how we deal with them applying the following rules of thumb:</p>
@@ -633,7 +633,7 @@ X = coerce(X, autotype(X, :discrete_to_continuous))</code></pre><pre><code class
     penalty = :l2,
     fit_intercept = true,
     penalize_intercept = false,
-    solver = nothing) @667</code></pre>
+    solver = nothing) @910</code></pre>
 <p>Let&#39;s have convenient handles over the training data</p>
 <pre><code class="language-julia">Xtrain = X[train,:]
 ytrain = y[train];</code></pre>
@@ -678,9 +678,11 @@ cross_entropy(ŷ, ytrain) |> mean</code></pre><pre><code class="plaintext">0.02
 <p>So we get a worse cross entropy but...</p>
 <pre><code class="language-julia">misclassification_rate(mode.(ŷ), ytrain)</code></pre><pre><code class="plaintext">0.0033444816053511705</code></pre>
 <p>a significantly better misclassification rate.</p>
-<p>We could investigate more, do more tuning etc, but the key points of this tutorial was to show how to handle data with missing values.<div class="page-foot">
+<p>We could investigate more, do more tuning etc, but the key points of this tutorial was to show how to handle data with missing values.</p>
+
+<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

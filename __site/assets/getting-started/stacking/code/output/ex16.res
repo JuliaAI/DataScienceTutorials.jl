@@ -1,4 +1,4 @@
-Machine{LinearRegressor} @604 trained 0 times.
+Machine{LinearRegressor} @350 trained 0 times.
   args: 
-    1:	Node{Nothing} @276
-    2:	Node{Nothing} @203
+    1:	Node{Nothing} @725
+    2:	Node{Nothing} @006
