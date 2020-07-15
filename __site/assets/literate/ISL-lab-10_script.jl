@@ -46,6 +46,7 @@ rpca = collect(values(report(spca).report_given_machine))[2]
 cs = cumsum(rpca.principalvars ./ rpca.tvar)
 
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 

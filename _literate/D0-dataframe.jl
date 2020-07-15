@@ -182,8 +182,9 @@ combine(groupby(iris, :Species), :PetalLength => mean)
 # You can do this for several columns/statistics at the time and give new column names to the results:
 
 gdf = groupby(iris, :Species)
-combine(gdf, MPL=:PetalLength=>mean, SPL=:PetalLength=>std)
+combine(gdf, :PetalLength => mean => :MPL, :PetalLength => std => :SPL)
 
+# so here we assign the names `:MPL` and `:SPL` to the derived columns.
 # If you want to apply something on all columns apart from the grouping one, using `names` and `Not` comes in handy:
 
 combine(gdf, names(iris, Not(:Species)) .=> std)

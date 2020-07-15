@@ -42,6 +42,7 @@
 # # Let's have a look at the target.
 #
 # using PyPlot
+# ioff() # hide
 #
 # figure(figsize=(8,6))
 # plot(y, ls="none", marker="o")

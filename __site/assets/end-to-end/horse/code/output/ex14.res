@@ -4,4 +4,4 @@ MultinomialClassifier(
     penalty = :l2,
     fit_intercept = true,
     penalize_intercept = false,
-    solver = nothing) @910
+    solver = nothing) @770

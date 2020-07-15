@@ -98,10 +98,8 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="airfoil"><a href="#airfoil">Airfoil</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-airfoil.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-airfoil-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-airfoil.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li></ol></li><li><a href="#decisiontreeregressor">DecisionTreeRegressor</a></li><li><a href="#randomforestregressor">RandomForestRegressor</a></li><li><a href="#tuning">Tuning</a></li></ol></div><p><strong>Main author</strong>: <a href="https://github.com/ashryaagr">Ashrya Agrawal</a>.</p>
-<h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
-<p>Here we use the <a href="http://archive.ics.uci.edu/ml/datasets/Airfoil&#43;Self-Noise">UCI &quot;Airfoil Self-Noise&quot; dataset</a></p>
-<h3 id="loading_and_preparing_the_data"><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></h3>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-airfoil.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-airfoil-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-airfoil.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li></ol></li><li><a href="#decisiontreeregressor">DecisionTreeRegressor</a></li><li><a href="#randomforestregressor">RandomForestRegressor</a></li><li><a href="#tuning">Tuning</a></li></ol></div><strong>Main author</strong>: <a href="https://github.com/ashryaagr">Ashrya Agrawal</a>.</p>
+<h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>  Here we use the <a href="http://archive.ics.uci.edu/ml/datasets/Airfoil&#43;Self-Noise">UCI &quot;Airfoil Self-Noise&quot; dataset</a> <h3 id="loading_and_preparing_the_data"><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></h3>
 <pre><code class="language-julia">using MLJ
 using PrettyPrinting
 import DataFrames
@@ -238,7 +236,7 @@ rfr_m = machine(rfr, X, y);</code></pre>
 <pre><code class="language-julia">fit!(rfr_m, rows=train);</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr = MLJ.predict(rfr_m, rows=test);
-rms(pred_rfr, y[test])</code></pre><pre><code class="plaintext">2.4954688547822976</code></pre>
+rms(pred_rfr, y[test])</code></pre><pre><code class="plaintext">2.4353351012242643</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <h2 id="tuning"><a href="#tuning">Tuning</a></h2>
@@ -259,7 +257,7 @@ rfr_tm = machine(tm, X, y);</code></pre>
 <pre><code class="language-julia">fit!(rfr_tm, rows=train);</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm = MLJ.predict(rfr_tm, rows=test);
-rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext">2.2759482777051128</code></pre>
+rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext">2.197980908133719</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="language-julia">fitted_params(rfr_tm).best_model</code></pre><pre><code class="plaintext">RandomForestRegressor(
@@ -269,8 +267,8 @@ rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext">2.27594827770
     min_purity_increase = 0.0,
     n_subfeatures = -1,
     n_trees = 15,
-    sampling_fraction = 0.7333333333333333,
-    pdf_smoothing = 0.0) @418</code></pre>
+    sampling_fraction = 0.7666666666666667,
+    pdf_smoothing = 0.0) @916</code></pre>
 <p>Now we can investigate the tuning by using report. Let&#39;s plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r = report(rfr_tm)
 res = r.plotting
@@ -286,8 +284,6 @@ ylabel("Sampling fraction", fontsize=14)
 xticks(9:1:15, fontsize=12)
 yticks(fontsize=12)</code></pre>
 <img src="/assets/end-to-end/airfoil/code/output/airfoil_heatmap.svg" alt="Hyperparameter heatmap">
-
-
 <div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

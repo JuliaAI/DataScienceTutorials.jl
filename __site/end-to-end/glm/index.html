@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="using_glmjl"><a href="#using_glmjl">Using GLM.jl</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-GLM.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#reading_the_data">Reading the data</a></li><li><a href="#defining_the_linear_model">Defining the Linear Model</a></li><li><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></li><li><a href="#defining_the_logistic_model">Defining the Logistic Model</a></li><li><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></li></ol></div><p><strong>Main author</strong>: <a href="https://github.com/drcxcruz">Clarman Cruz</a>.</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-GLM.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#reading_the_data">Reading the data</a></li><li><a href="#defining_the_linear_model">Defining the Linear Model</a></li><li><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></li><li><a href="#defining_the_logistic_model">Defining the Logistic Model</a></li><li><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></li></ol></div><strong>Main author</strong>: <a href="https://github.com/drcxcruz">Clarman Cruz</a>.</p>
 <p>This juypter lab showcases MLJ in particular using the popular <a href="https://github.com/JuliaStats/GLM.jl">GLM</a> Julia package. We are using two datasets.  One dataset was created manually for testing purposes.  The other data set is the CollegeDistance dataset from the <a href="https://cran.r-project.org/web/packages/AER/index.html">AER</a> package in R.</p>
 <p>We can quickly define our models in MLJ and study their results.  It is very easy and consistent.</p>
 <pre><code class="language-julia">using MLJ, CategoricalArrays, PrettyPrinting
@@ -107,7 +107,7 @@ using UrlDownload
 @load LinearRegressor pkg = GLM
 @load LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext">LinearBinaryClassifier(
     fit_intercept = true,
-    link = GLM.LogitLink()) @589</code></pre>
+    link = GLM.LogitLink()) @718</code></pre>
 <h2 id="reading_the_data"><a href="#reading_the_data">Reading the data</a></h2>
 <p>The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.</p>
 <pre><code class="language-julia">baseurl = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"
@@ -214,11 +214,11 @@ LinearRegressorPipe = @pipeline(Standardizer(),
 LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext">(standardizer = (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),
- one_hot_encoder = (fitresult = OneHotEncoderResult @559,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult @252,),
  linear_regressor = (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225],
                      intercept = 0.015893883995789806,),
- machines = Machine[Machine{Standardizer} @883, Machine{OneHotEncoder} @467, Machine{LinearRegressor} @995],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @883 => (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),Machine{OneHotEncoder} @467 => (fitresult = OneHotEncoderResult @559,),Machine{LinearRegressor} @995 => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
+ machines = Machine[Machine{Standardizer} @418, Machine{OneHotEncoder} @090, Machine{LinearRegressor} @332],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @418 => (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),Machine{OneHotEncoder} @090 => (fitresult = OneHotEncoderResult @252,),Machine{LinearRegressor} @332 => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
 <h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2>
 <p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
 <pre><code class="language-julia">ŷ = MLJ.predict(LinearModel, X)
@@ -259,10 +259,10 @@ LinearBinaryClassifierPipe = @pipeline(Standardizer(),
 LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
 fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext">(standardizer = (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),
- one_hot_encoder = (fitresult = OneHotEncoderResult @417,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult @441,),
  linear_binary_classifier = Any[],
- machines = Machine[Machine{Standardizer} @576, Machine{OneHotEncoder} @222, Machine{LinearBinaryClassifier{LogitLink}} @859],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @576 => (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),Machine{OneHotEncoder} @222 => (fitresult = OneHotEncoderResult @417,),Machine{LinearBinaryClassifier{LogitLink}} @859 => (coef = [0.2025072937886873, 0.1307529391091288, 0.34495162493983483, 0.9977565847160845, -0.5022315102984596, -0.4785005626021655, -0.20440507809955027, -0.06922751403500114, 0.058928649730170986, -0.0834474982820323, -0.002315143333859671, 0.46177653955786546, 0.3843262958100772], intercept = -1.076633890579364)),)</code></pre>
+ machines = Machine[Machine{Standardizer} @169, Machine{OneHotEncoder} @402, Machine{LinearBinaryClassifier{LogitLink}} @499],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @169 => (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),Machine{OneHotEncoder} @402 => (fitresult = OneHotEncoderResult @441,),Machine{LinearBinaryClassifier{LogitLink}} @499 => (coef = [0.2025072937886873, 0.1307529391091288, 0.34495162493983483, 0.9977565847160845, -0.5022315102984596, -0.4785005626021655, -0.20440507809955027, -0.06922751403500114, 0.058928649730170986, -0.0834474982820323, -0.002315143333859671, 0.46177653955786546, 0.3843262958100772], intercept = -1.076633890579364)),)</code></pre>
 <h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
 <pre><code class="language-julia">ŷ = MLJ.predict(LogisticModel, X)
@@ -302,9 +302,7 @@ confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext">            
 ├─────────────┼─────────────┼─────────────┤
 │      1      │     236     │     389     │
 └─────────────┴─────────────┴─────────────┘
-</code></pre>
-
-<div class="page-foot">
+</code></pre><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>

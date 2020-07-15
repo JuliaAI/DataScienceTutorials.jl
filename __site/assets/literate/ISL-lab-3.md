@@ -74,6 +74,7 @@ You can also visualise this
 
 ```julia:ex9
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")

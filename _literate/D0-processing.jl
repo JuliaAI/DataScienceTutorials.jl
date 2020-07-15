@@ -9,6 +9,7 @@ import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
 using PyPlot
+ioff() # hide
 
 # Import data
 

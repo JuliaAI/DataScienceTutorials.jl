@@ -98,8 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="tuning_a_model"><a href="#tuning_a_model">Tuning a model</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-model-tuning.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-tuning-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-tuning.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a><ol><li><a href="#specifying_a_range_of_value">Specifying a range of value</a></li><li><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></li></ol></li><li><a href="#tuning_nested_hyperparameters">Tuning nested hyperparameters</a></li></ol></div><p></p>
-<h2 id="tuning_a_single_hyperparameter"><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-model-tuning.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-tuning-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-tuning.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a><ol><li><a href="#specifying_a_range_of_value">Specifying a range of value</a></li><li><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></li></ol></li><li><a href="#tuning_nested_hyperparameters">Tuning nested hyperparameters</a></li></ol></div> <h2 id="tuning_a_single_hyperparameter"><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a></h2>
 <p>In MLJ, tuning is implemented as a model wrapper. After wrapping a model in a <em>tuning strategy</em> &#40;e.g. cross-validation&#41; and binding the wrapped model to data in a <em>machine</em>, fitting the machine initiates a search for optimal model hyperparameters.</p>
 <p>Let&#39;s use a decision tree classifier and tune the maximum depth of the tree. As usual, start by loading data and the model</p>
 <pre><code class="language-julia">using MLJ
@@ -114,7 +113,7 @@ X, y = @load_iris
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @040</code></pre>
+    display_depth = 5) @310</code></pre>
 <h3 id="specifying_a_range_of_value"><a href="#specifying_a_range_of_value">Specifying a range of value</a></h3>
 <p>To specify a range of value, you can use the <code>range</code> function:</p>
 <pre><code class="language-julia">dtc = DecisionTreeClassifier()
@@ -151,7 +150,7 @@ r   = range(dtc, :max_depth, lower=1, upper=5)</code></pre><pre><code class="pla
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @897</code></pre>
+    check_measure = true) @558</code></pre>
 <p>Note that &quot;wrapping a model in a tuning strategy&quot; as above means creating a new &quot;self-tuning&quot; version of the model, <code>tuned_model &#61; TunedModel&#40;model&#61;...&#41;</code>, in which further key-word arguments specify:</p>
 <ol>
 <li><p>the algorithm &#40;a.k.a., tuning strategy&#41; for searching the hyper-parameter space of the model &#40;e.g., <code>tuning &#61; Random&#40;rng&#61;123&#41;</code> or <code>tuning &#61; Grid&#40;goal&#61;100&#41;</code>&#41;.</p>
@@ -167,10 +166,10 @@ r   = range(dtc, :max_depth, lower=1, upper=5)</code></pre><pre><code class="pla
 <h3 id="fitting_and_inspecting_a_tuned_model"><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></h3>
 <p>To fit a tuned model, you can use the usual syntax:</p>
 <pre><code class="language-julia">m = machine(tm, X, y)
-fit!(m)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @958 trained 1 time.
+fit!(m)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @160 trained 1 time.
   args: 
-    1:	Source @267 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @264 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @264 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @181 ⏎ `AbstractArray{Multiclass{3},1}`
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="language-julia">fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext">1</code></pre>
@@ -216,7 +215,7 @@ forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext">Determ
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @527</code></pre>
+    out_of_bag_measure = Any[]) @631</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
 <pre><code class="language-julia">params(forest) |> pprint</code></pre><pre><code class="plaintext">(atom = (max_depth = -1,
          min_samples_leaf = 5,
@@ -257,8 +256,6 @@ ylabel("Bagging fraction", fontsize=14)
 xticks([1, 2, 3], fontsize=12)
 yticks(fontsize=12)</code></pre>
 <img src="/assets/getting-started/model-tuning/code/output/A-model-tuning-hm.svg" alt="Hyperparameter heatmap">
-
-
 <div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.

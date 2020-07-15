@@ -67,6 +67,7 @@ r.best_result
 # Anyone wants plots? of course:
 
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
 res = r.plotting # contains all you need for plotting
 plot(res.parameter_values, res.measurements, ls="none", marker="o")

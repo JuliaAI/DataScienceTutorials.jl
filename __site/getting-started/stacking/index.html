@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="stacking"><a href="#stacking">Stacking</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-stacking.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></li></ol></li><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a></li><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></li><li><a href="#define_the_training_nodes">Define the training nodes</a></li><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></li></ol></li><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></li><li><a href="#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></li></ol></div><p>In stacking one blends the predictions of different regressors or classifiers to gain, in some cases, better performance than naive averaging or majority vote.</p>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-stacking.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></li></ol></li><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a></li><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></li><li><a href="#define_the_training_nodes">Define the training nodes</a></li><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></li></ol></li><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></li><li><a href="#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></li></ol></div>In stacking one blends the predictions of different regressors or classifiers to gain, in some cases, better performance than naive averaging or majority vote.</p>
 <p>Here we illustrate how to build a two-model stack as an MLJ learning network, which we export as a new stand-alone composite model type <code>MyTwoStack</code>. This will make the stack that we build completely re-usable &#40;new data, new models&#41; and means we can apply meta-algorithms, such as performance evaluation and tuning, to the stack, exaclty as we would for any other model.</p>
 <p>Our main purpose here is to demonstrate the flexibility of MLJ&#39;s composite model interface. Eventually, MLJ will provide built-in composite types or macros to achieve the same results in a few lines, which will suffice for routine stacking tasks.</p>
 <p>After defining the <code>MyTwoStack</code> model type, we instantiate it for an application to the Ames House Price data set.</p>
@@ -128,7 +128,7 @@ svm = @load SVMRegressor;</code></pre>
 <h3 id="warm-up_exercise_define_a_model_type_to_average_predictions"><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></h3>
 <p>Let&#39;s define a composite model type <code>MyAverageTwo</code> that averages the predictions of two deterministic regressors. Here&#39;s the learning network:</p>
 <pre><code class="language-julia">X = source()
-y = source(kind=:target)
+y = source()
 
 model1 = linear
 model2 = knn
@@ -139,19 +139,19 @@ y1 = predict(m1, X)
 m2 = machine(model2, X, y)
 y2 = predict(m2, X)
 
-yhat = 0.5*y1 + 0.5*y2</code></pre><pre><code class="plaintext">Node{Nothing} @027
+yhat = 0.5*y1 + 0.5*y2</code></pre><pre><code class="plaintext">Node{Nothing} @400
   args:
-    1:	Node{Nothing} @980
-    2:	Node{Nothing} @534
+    1:	Node{Nothing} @558
+    2:	Node{Nothing} @673
     +(
         #118(
             predict(
-                Machine{LinearRegressor} @242, 
-                Source @748)),
+                Machine{LinearRegressor} @832, 
+                Source @444)),
         #118(
             predict(
-                Machine{KNNRegressor} @597, 
-                Source @748)))</code></pre>
+                Machine{KNNRegressor} @431, 
+                Source @444)))</code></pre>
 <p>And the macro call to define <code>MyAverageTwo</code> and an instance <code>average_two</code>:</p>
 <pre><code class="language-julia">avg = @from_network MyAverageTwo(regressor1=model1,
                                  regressor2=model2) <= yhat</code></pre><pre><code class="plaintext">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
@@ -174,12 +174,11 @@ X, y = @load_boston
 
 print_performance(linear, X, y)
 print_performance(knn, X, y)
-print_performance(avg, X, y)</code></pre><pre><code class="plaintext">LinearRegressor @227 = 4.8635 ± 0.34864
-KNNRegressor @596 = 6.1602 ± 0.38348
+print_performance(avg, X, y)</code></pre><pre><code class="plaintext">LinearRegressor @737 = 4.8635 ± 0.34864
+KNNRegressor @184 = 6.1602 ± 0.38348
 UndefVarError: avg not defined
 </code></pre>
-<h2 id="stacking_proper"><a href="#stacking_proper">Stacking proper</a></h2>
-<h3 id="helper_functions"><a href="#helper_functions">Helper functions:</a></h3>
+<h2 id="stacking_proper"><a href="#stacking_proper">Stacking proper</a></h2>  <h3 id="helper_functions"><a href="#helper_functions">Helper functions:</a></h3>
 <p>To generate folds for generating out-of-sample predictions, we define</p>
 <pre><code class="language-julia">folds(data, nfolds) =
     partition(1:nrows(data), (1/nfolds for i in 1:(nfolds-1))...);</code></pre>
@@ -225,26 +224,26 @@ model2 = knn</code></pre><pre><code class="plaintext">KNNRegressor(
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @596</code></pre>
+    weights = :uniform) @184</code></pre>
 <p>The adjudicating model:</p>
 <pre><code class="language-julia">judge = linear</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @227</code></pre>
+    solver = nothing) @737</code></pre>
 <h3 id="define_the_training_nodes"><a href="#define_the_training_nodes">Define the training nodes</a></h3>
 <p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above:</p>
 <p>Wrapped as source node:</p>
 <pre><code class="language-julia">X = source(Xraw)
-y = source(yraw; kind=:target)</code></pre><pre><code class="plaintext">Source @723 ⏎ `AbstractArray{Count,1}`</code></pre>
+y = source(yraw)</code></pre><pre><code class="plaintext">Source @232 ⏎ `AbstractArray{Count,1}`</code></pre>
 <p>Our first internal node represents the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions:</p>
 <pre><code class="language-julia">f = folds(X, 3)
 f()</code></pre><pre><code class="plaintext">([1, 2, 3], [4, 5, 6], [7, 8, 9])</code></pre>
 <p>Constructing machines for training <code>model1</code> on each fold-complement:</p>
 <pre><code class="language-julia">m11 = machine(model1, corestrict(X, f, 1), corestrict(y, f, 1))
 m12 = machine(model1, corestrict(X, f, 2), corestrict(y, f, 2))
-m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @350 trained 0 times.
+m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @857 trained 0 times.
   args: 
-    1:	Node{Nothing} @725
-    2:	Node{Nothing} @006
+    1:	Node{Nothing} @231
+    2:	Node{Nothing} @874
 </code></pre>
 <p>Define each out-of-sample prediction of <code>model1</code>:</p>
 <pre><code class="language-julia">y11 = predict(m11, restrict(X, f, 1));
@@ -278,36 +277,36 @@ legend()</code></pre>
 <img src="/assets/getting-started/stacking/code/output/s3.svg" alt="">
 <p>Now that we have the out-of-sample base learner predictions, we are ready to merge them into the adjudicator&#39;s input table and construct the machine for training the adjudicator:</p>
 <pre><code class="language-julia">X_oos = MLJ.table(hcat(y1_oos, y2_oos))
-m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @478 trained 0 times.
+m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @092 trained 0 times.
   args: 
-    1:	Node{Nothing} @030
-    2:	Source @723 ⏎ `AbstractArray{Count,1}`
+    1:	Node{Nothing} @421
+    2:	Source @232 ⏎ `AbstractArray{Count,1}`
 </code></pre>
 <p>Are we done with constructing machines? Well, not quite. Recall that when use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions on the base learners. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p>
 <pre><code class="language-julia">m1 = machine(model1, X, y)
-m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @187 trained 0 times.
+m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @659 trained 0 times.
   args: 
-    1:	Source @550 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @723 ⏎ `AbstractArray{Count,1}`
+    1:	Source @900 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @232 ⏎ `AbstractArray{Count,1}`
 </code></pre>
 <h3 id="define_nodes_still_needed_for_prediction"><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></h3>
 <p>To obtain the final prediction, <code>yhat</code>, we get the base learner predictions, based on training with all data, and feed them to the adjudicator:</p>
 <pre><code class="language-julia">y1 = predict(m1, X);
 y2 = predict(m2, X);
 X_judge = MLJ.table(hcat(y1, y2))
-yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext">Node{Machine{LinearRegressor}} @718
+yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext">Node{Machine{LinearRegressor}} @254
   args:
-    1:	Node{Nothing} @741
+    1:	Node{Nothing} @040
     predict(
-        Machine{LinearRegressor} @478, 
+        Machine{LinearRegressor} @092, 
         table(
             hcat(
                 predict(
-                    Machine{LinearRegressor} @141, 
-                    Source @550),
+                    Machine{LinearRegressor} @104, 
+                    Source @900),
                 predict(
-                    Machine{KNNRegressor} @187, 
-                    Source @550))))</code></pre>
+                    Machine{KNNRegressor} @659, 
+                    Source @900))))</code></pre>
 <p>Let&#39;s check the final prediction node can be fit and called:</p>
 <pre><code class="language-julia">fit!(yhat, verbosity=0)
 
@@ -407,9 +406,7 @@ best_stack.regressor2.lambda</code></pre><pre><code class="plaintext">UndefVarEr
 </code></pre>
 <p>Let&#39;s evaluate the best stack using the same data resampling used to the evaluate the assorted untuned models earlier &#40;now we are neglecting data hygeine&#33;&#41;:</p>
 <pre><code class="language-julia">print_performance(best_stack, X, y)</code></pre><pre><code class="plaintext">UndefVarError: best_stack not defined
-</code></pre>
-
-<div class="page-foot">
+</code></pre><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>

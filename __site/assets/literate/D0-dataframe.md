@@ -235,7 +235,7 @@ You can do this for several columns/statistics at the time and give new column n
 
 ```julia:ex28
 gdf = groupby(iris, :Species)
-combine(gdf, MPL=:PetalLength=>mean, SPL=:PetalLength=>std)
+combine(gdf, :PetalLength => mean => MPL, :PetalLength => std => SPL)
 ```
 
 If you want to apply something on all columns apart from the grouping one, using `names` and `Not` comes in handy:

@@ -58,6 +58,7 @@
 
 using MLJ
 using PyPlot
+ioff() # hide
 MLJ.color_off() # hide
 using StableRNGs
 
@@ -82,7 +83,7 @@ svm = @load SVMRegressor;
 # averages the predictions of two deterministic regressors. Here's the learning network:
 
 X = source()
-y = source(kind=:target)
+y = source()
 
 model1 = linear
 model2 = knn
@@ -194,7 +195,7 @@ judge = linear
 # Wrapped as source node:
 
 X = source(Xraw)
-y = source(yraw; kind=:target)
+y = source(yraw)
 
 # Our first internal node represents the three folds (vectors of row
 # indices) for creating the out-of-sample predictions:

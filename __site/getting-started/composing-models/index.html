@@ -98,7 +98,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="composing_models"><a href="#composing_models">Composing models</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-composing-models.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div><h2 id="generating_dummy_data"><a href="#generating_dummy_data">Generating dummy data</a></h2>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-composing-models.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div><h2 id="generating_dummy_data"><a href="#generating_dummy_data">Generating dummy data</a></h2>
 <p>Let&#39;s start by generating some dummy data with both numerical values and categorical values:</p>
 <pre><code class="language-julia">using MLJ
 using PrettyPrinting
@@ -136,9 +136,7 @@ pipe.one_hot_encoder.drop_last = true;</code></pre>
          measure=rms) |> pprint</code></pre><pre><code class="plaintext">(measure = [rms],
  measurement = [11.5],
  per_fold = [[11.5]],
- per_observation = [missing])</code></pre>
-
-<div class="page-foot">
+ per_observation = [missing])</code></pre><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
