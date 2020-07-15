@@ -1,0 +1,4 @@
+could not load library "/Users/GD/.julia/packages/LightGBM/3uotD/src/lib_lightgbm.dylib"
+dlopen(/Users/GD/.julia/packages/LightGBM/3uotD/src/lib_lightgbm.dylib, 1): Library not loaded: /usr/local/opt/libomp/lib/libomp.dylib
+  Referenced from: /Users/GD/.julia/packages/LightGBM/3uotD/src/lib_lightgbm.dylib
+  Reason: image not found

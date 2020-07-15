@@ -1,9 +1,6 @@
 # This file was generated, do not modify it.
 
-using MLJ
-import RDatasets: dataset
-using PrettyPrinting
-MLJ.color_off() # hide
+using MLJ, RDatasets, ScientificTypes, PrettyPrinting
 import Distributions
 const D = Distributions
 
@@ -30,7 +27,7 @@ plot(y, ls="none", marker="o")
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g1.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g1.svg") # hide
 
 figure(figsize=(8,6))
 hist(y, bins=50, density=true)
@@ -45,7 +42,7 @@ plot(xx, yy, lw=3, label="Exponential distribution fit")
 
 legend(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g2.svg") # hide
 
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
@@ -70,7 +67,7 @@ xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
 
 ylim([-1300, 1000])
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g3.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g3.svg") # hide
 
 figure(figsize=(8,6))
 hist(res, bins=30, density=true, color="green")
@@ -88,7 +85,7 @@ xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Residual (ŷ - y)", fontsize=14); ylabel("Density", fontsize=14)
 xlim([-1100, 1100])
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g4.svg") # hide
 
 pipe.model.reg = RidgeRegressor()
 fit!(pipe, rows=train)
@@ -113,16 +110,14 @@ res = ŷ .- y[test]
 stem(res)
 
 xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14);
-ylabel("Residual (ŷ - y)", fontsize=14)
-xlim(1, length(res))
+xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
 
 ylim([-1300, 1000])
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g5.svg") # hide
 
 mtm.model.model.reg = LassoRegressor()
-mtm.model.range = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
+mtm.model.ranges = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
@@ -132,11 +127,9 @@ ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
-@show coefs
-@show intercept
+round.(coefs, sigdigits=2)
 
-coef_vals = [c[2] for c in coefs]
-sum(coef_vals .≈ 0) / length(coefs)
+sum(coefs .≈ 0) / length(coefs)
 
 figure(figsize=(8,6))
 stem(coefs)
@@ -152,12 +145,12 @@ xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
+savefig("assets/literate/ISL-lab-6-g6.svg") # hide
 
 @load ElasticNetRegressor pkg=MLJLinearModels
 
 mtm.model.model.reg = ElasticNetRegressor()
-mtm.model.range = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
+mtm.model.ranges = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
                     range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
 mtm.model.tuning = Grid(resolution=10)
 fit!(mtm, rows=train)
@@ -168,6 +161,4 @@ best_mdl = fitted_params(mtm).best_model
 
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
-
-PyPlot.close_figs() # hide
 

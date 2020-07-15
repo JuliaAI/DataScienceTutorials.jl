@@ -1,4 +1,1 @@
-RandomForestRegressor @ 3…40 = 0.36216 ± 0.03998
-RidgeRegressor @ 1…19 = 0.32813 ± 0.03102
-MyAverageTwo @ 1…35 = 0.35088 ± 0.03176
-MyTwoModelStack @ 8…81 = 6.2505 ± 4.33514
+UndefVarError: MyAverageTwo not defined

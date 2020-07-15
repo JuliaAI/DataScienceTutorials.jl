@@ -1,1 +1,4 @@
-NodalMachine @ 4…77 = machine(KNNRegressor @ 7…18, 1…80, 1…89)
+Machine{KNNRegressor} @758 trained 0 times.
+  args: 
+    1:	Source @048 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @315 ⏎ `AbstractArray{Count,1}`

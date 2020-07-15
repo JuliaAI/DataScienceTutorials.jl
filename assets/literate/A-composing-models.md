@@ -7,6 +7,7 @@ Let's start by generating some dummy data with both numerical values and categor
 using MLJ
 using PrettyPrinting
 MLJ.color_off() # hide
+
 @load KNNRegressor
 # input
 X = (age    = [23, 45, 34, 25, 67],
@@ -34,10 +35,10 @@ Let's say that we want to apply the following steps:
 The `@pipeline` macro helps you define such a simple (non-branching) pipeline of steps to be applied in order:
 
 ```julia:ex3
-pipe = @pipeline MyPipe(X -> coerce(X, :age=>Continuous),
-                       hot = OneHotEncoder(),
-                       knn = KNNRegressor(K=3),
-                       target = UnivariateStandardizer());
+pipe = @pipeline(X -> coerce(X, :age=>Continuous),
+                OneHotEncoder(),
+                KNNRegressor(K=3),
+                target = UnivariateStandardizer());
 ```
 
 Note the coercion of the `:age` variable to Continuous since `KNNRegressor` expects `Continuous` input.
@@ -46,8 +47,8 @@ Note also the `target` keyword where you can specify a transformation of the tar
 Hyperparameters of this pipeline can be accessed (and set) using dot syntax:
 
 ```julia:ex4
-pipe.knn.K = 2
-pipe.hot.drop_last = true;
+pipe.knn_regressor.K = 2
+pipe.one_hot_encoder.drop_last = true;
 ```
 
 Evaluation for a pipe can be done with the `evaluate!` method; implicitly it will construct machines that will contain the fitted parameters etc:

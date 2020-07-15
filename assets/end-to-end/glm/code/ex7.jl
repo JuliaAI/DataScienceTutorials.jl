@@ -5,12 +5,10 @@ y = copy(dfY1)
 coerce!(X, autotype(X, :string_to_multiclass))
 yv = Vector(y[:, 1])
 
-@pipeline LinearRegressorPipe(
-            std = Standardizer(),
-            hot = OneHotEncoder(drop_last = true),
-            reg = LinearRegressor()
-)
+LinearRegressorPipe = @pipeline(Standardizer(),
+                                OneHotEncoder(drop_last = true),
+                                LinearRegressor())
 
-LinearModel = machine(LinearRegressorPipe(), X, yv)
+LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)

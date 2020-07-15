@@ -1,1 +1,4 @@
-NodalMachine @ 4…43 = machine(LinearRegressor @ 4…30, 2…50, 1…89)
+Machine{LinearRegressor} @337 trained 0 times.
+  args: 
+    1:	Node{Nothing} @704
+    2:	Source @315 ⏎ `AbstractArray{Count,1}`

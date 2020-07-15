@@ -1,1 +1,13 @@
-Node @ 1…40 = +(#110(predict(8…12, 5…11)), #110(predict(8…86, 5…11)))
+Node{Nothing} @040
+  args:
+    1:	Node{Nothing} @559
+    2:	Node{Nothing} @580
+    +(
+        #118(
+            predict(
+                Machine{LinearRegressor} @982, 
+                Source @307)),
+        #118(
+            predict(
+                Machine{KNNRegressor} @749, 
+                Source @307)))
