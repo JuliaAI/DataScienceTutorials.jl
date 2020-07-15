@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/css/franklin.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
    <title>Boston with LightGBM</title>  
   <!-- LUNR -->
-  <script src="/libs/lunr/lunr.min.js"></script>
-  <script src="/libs/lunr/lunr_index.js"></script>
-  <script src="/libs/lunr/lunrclient.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
 </head>
 <body>
   <div id="layout">
@@ -24,70 +24,70 @@
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
     <div id="menu">
       <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
           <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
         </form>
   <!-- LIST OF MENU ITEMS -->
   <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
 
     <!-- DATA BASICS -->
     <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
     <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
     <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
     <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
     </ul>
 
     <!-- INTRO TO STATS LEARNING -->
     <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
     <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
     </ul>
 
     <!-- END TO END EXAMPLES -->
     <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
     <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
     </ul>
   </ul>
   <!-- END OF LIST OF MENU ITEMS -->
@@ -100,24 +100,24 @@
 <div class="franklin-content"><h1 id="boston_with_lightgbm"><a href="#boston_with_lightgbm">Boston with LightGBM</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-boston-flux.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li></ol></div><strong>Main author</strong>: Ayush Shridhar &#40;ayush-1506&#41;.</p>
 <h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
-<pre><code class="language-julia">import MLJFlux
-import MLJ
-import DataFrames
-import Statistics
-import Flux
-using Random
-using Plots
+<pre><code class="julia hljs"><span class="hljs-keyword">import</span> MLJFlux
+<span class="hljs-keyword">import</span> MLJ
+<span class="hljs-keyword">import</span> DataFrames
+<span class="hljs-keyword">import</span> Statistics
+<span class="hljs-keyword">import</span> Flux
+<span class="hljs-keyword">using</span> Random
+<span class="hljs-keyword">using</span> Plots
 
-Random.seed!(11)</code></pre><pre><code class="plaintext">ArgumentError: Package Plots not found in current path:
-- Run `import Pkg; Pkg.add("Plots")` to install the Plots package.
+Random.seed!(<span class="hljs-number">11</span>)</code></pre><pre><code class="plaintext hljs">ArgumentError: Package Plots not found in current path:
+- Run `import Pkg; Pkg.add(&quot;Plots&quot;)` to install the Plots package.
 
 </code></pre>
 <p>Loading the Boston dataset. Our aim will be to implement a neural network regressor to predict the price of a house, given a number of features.</p>
-<pre><code class="language-julia">features, targets = MLJ.@load_boston
+<pre><code class="julia hljs">features, targets = MLJ.<span class="hljs-meta">@load_boston</span>
 features = DataFrames.DataFrame(features)
-@show size(features)
-@show targets[1:3]
-first(features, 3) |> MLJ.pretty</code></pre><pre><code class="plaintext">size(features) = (506, 12)
+<span class="hljs-meta">@show</span> size(features)
+<span class="hljs-meta">@show</span> targets[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]
+first(features, <span class="hljs-number">3</span>) |&gt; MLJ.pretty</code></pre><pre><code class="plaintext hljs">size(features) = (506, 12)
 targets[1:3] = [24.0, 21.6, 34.7]
 ┌────────────┬────────────┬────────────┬────────────┬────────────┬────────────┬────────────┬────────────┬────────────┬────────────┬────────────┬────────────┐
 │ Crim       │ Zn         │ Indus      │ NOx        │ Rm         │ Age        │ Dis        │ Rad        │ Tax        │ PTRatio    │ Black      │ LStat      │
@@ -130,7 +130,7 @@ targets[1:3] = [24.0, 21.6, 34.7]
 └────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┘
 </code></pre>
 <p>Next obvious steps: partitioning into train and test set</p>
-<pre><code class="language-julia">train, test = MLJ.partition(MLJ.eachindex(targets), 0.70, rng=52)</code></pre><pre><code class="plaintext">([358, 422, 334, 476, 1, 441, 12, 115, 240, 104, 208, 158, 46, 504, 462, 101, 157, 92, 287, 360, 385, 330, 475, 465, 117, 300, 246, 230, 105, 38, 436, 481, 424, 44, 73, 296, 61, 244, 371, 14, 195, 444, 489, 235, 143, 428, 172, 66, 318, 323, 232, 74, 338, 77, 57, 23, 357, 437, 401, 127, 397, 356, 404, 136, 260, 4, 327, 121, 432, 445, 43, 19, 304, 468, 141, 47, 280, 85, 342, 440, 51, 169, 67, 168, 231, 361, 126, 54, 396, 190, 270, 164, 409, 176, 383, 352, 184, 322, 156, 416, 398, 197, 329, 220, 377, 60, 71, 494, 266, 491, 479, 130, 369, 109, 53, 214, 179, 380, 39, 119, 233, 316, 469, 213, 114, 457, 211, 152, 408, 324, 155, 319, 171, 276, 50, 102, 482, 82, 139, 420, 15, 206, 151, 486, 410, 209, 203, 364, 473, 10, 34, 282, 120, 285, 227, 68, 317, 98, 7, 459, 100, 133, 478, 439, 186, 97, 177, 159, 18, 228, 466, 362, 320, 99, 267, 212, 484, 40, 153, 279, 337, 339, 281, 249, 359, 349, 302, 224, 25, 325, 488, 69, 76, 265, 429, 268, 91, 255, 333, 123, 111, 415, 321, 33, 226, 256, 106, 129, 183, 307, 165, 95, 471, 196, 435, 229, 70, 348, 273, 137, 373, 26, 90, 506, 28, 303, 161, 449, 311, 447, 204, 414, 116, 378, 326, 480, 63, 382, 312, 306, 501, 8, 41, 247, 288, 393, 163, 388, 328, 310, 6, 474, 89, 375, 167, 16, 505, 201, 79, 443, 346, 49, 202, 347, 110, 374, 35, 405, 425, 309, 258, 187, 341, 86, 216, 24, 343, 138, 94, 248, 314, 455, 308, 88, 294, 419, 78, 81, 293, 215, 406, 427, 407, 417, 376, 194, 490, 344, 118, 27, 472, 103, 182, 42, 198, 36, 386, 236, 87, 200, 289, 52, 413, 456, 336, 400, 144, 83, 389, 237, 502, 412, 181, 162, 134, 191, 430, 219, 9, 331, 292, 173, 438, 243, 446, 125, 188, 252, 262, 58, 205, 175, 477, 301, 250, 497, 345, 132, 291, 277, 257, 379, 218, 166], [225, 189, 245, 418, 295, 135, 463, 487, 37, 207, 332, 434, 210, 283, 391, 21, 297, 59, 17, 238, 193, 387, 241, 275, 448, 217, 62, 458, 298, 452, 146, 150, 22, 470, 45, 503, 11, 426, 363, 467, 128, 498, 32, 154, 461, 56, 423, 160, 402, 251, 3, 131, 199, 464, 495, 353, 254, 64, 234, 96, 263, 284, 442, 372, 399, 313, 365, 500, 80, 454, 122, 5, 367, 113, 20, 223, 315, 29, 384, 72, 272, 499, 421, 394, 286, 174, 261, 453, 450, 112, 366, 269, 274, 93, 13, 185, 492, 148, 354, 278, 2, 305, 259, 239, 124, 335, 392, 75, 142, 108, 170, 140, 149, 350, 180, 460, 192, 340, 290, 451, 264, 431, 395, 485, 351, 381, 271, 145, 178, 55, 496, 411, 493, 370, 390, 107, 403, 65, 31, 222, 221, 299, 355, 483, 30, 433, 84, 242, 368, 147, 48, 253])</code></pre>
+<pre><code class="julia hljs">train, test = MLJ.partition(MLJ.eachindex(targets), <span class="hljs-number">0.70</span>, rng=<span class="hljs-number">52</span>)</code></pre><pre><code class="plaintext hljs">([358, 422, 334, 476, 1, 441, 12, 115, 240, 104, 208, 158, 46, 504, 462, 101, 157, 92, 287, 360, 385, 330, 475, 465, 117, 300, 246, 230, 105, 38, 436, 481, 424, 44, 73, 296, 61, 244, 371, 14, 195, 444, 489, 235, 143, 428, 172, 66, 318, 323, 232, 74, 338, 77, 57, 23, 357, 437, 401, 127, 397, 356, 404, 136, 260, 4, 327, 121, 432, 445, 43, 19, 304, 468, 141, 47, 280, 85, 342, 440, 51, 169, 67, 168, 231, 361, 126, 54, 396, 190, 270, 164, 409, 176, 383, 352, 184, 322, 156, 416, 398, 197, 329, 220, 377, 60, 71, 494, 266, 491, 479, 130, 369, 109, 53, 214, 179, 380, 39, 119, 233, 316, 469, 213, 114, 457, 211, 152, 408, 324, 155, 319, 171, 276, 50, 102, 482, 82, 139, 420, 15, 206, 151, 486, 410, 209, 203, 364, 473, 10, 34, 282, 120, 285, 227, 68, 317, 98, 7, 459, 100, 133, 478, 439, 186, 97, 177, 159, 18, 228, 466, 362, 320, 99, 267, 212, 484, 40, 153, 279, 337, 339, 281, 249, 359, 349, 302, 224, 25, 325, 488, 69, 76, 265, 429, 268, 91, 255, 333, 123, 111, 415, 321, 33, 226, 256, 106, 129, 183, 307, 165, 95, 471, 196, 435, 229, 70, 348, 273, 137, 373, 26, 90, 506, 28, 303, 161, 449, 311, 447, 204, 414, 116, 378, 326, 480, 63, 382, 312, 306, 501, 8, 41, 247, 288, 393, 163, 388, 328, 310, 6, 474, 89, 375, 167, 16, 505, 201, 79, 443, 346, 49, 202, 347, 110, 374, 35, 405, 425, 309, 258, 187, 341, 86, 216, 24, 343, 138, 94, 248, 314, 455, 308, 88, 294, 419, 78, 81, 293, 215, 406, 427, 407, 417, 376, 194, 490, 344, 118, 27, 472, 103, 182, 42, 198, 36, 386, 236, 87, 200, 289, 52, 413, 456, 336, 400, 144, 83, 389, 237, 502, 412, 181, 162, 134, 191, 430, 219, 9, 331, 292, 173, 438, 243, 446, 125, 188, 252, 262, 58, 205, 175, 477, 301, 250, 497, 345, 132, 291, 277, 257, 379, 218, 166], [225, 189, 245, 418, 295, 135, 463, 487, 37, 207, 332, 434, 210, 283, 391, 21, 297, 59, 17, 238, 193, 387, 241, 275, 448, 217, 62, 458, 298, 452, 146, 150, 22, 470, 45, 503, 11, 426, 363, 467, 128, 498, 32, 154, 461, 56, 423, 160, 402, 251, 3, 131, 199, 464, 495, 353, 254, 64, 234, 96, 263, 284, 442, 372, 399, 313, 365, 500, 80, 454, 122, 5, 367, 113, 20, 223, 315, 29, 384, 72, 272, 499, 421, 394, 286, 174, 261, 453, 450, 112, 366, 269, 274, 93, 13, 185, 492, 148, 354, 278, 2, 305, 259, 239, 124, 335, 392, 75, 142, 108, 170, 140, 149, 350, 180, 460, 192, 340, 290, 451, 264, 431, 395, 485, 351, 381, 271, 145, 178, 55, 496, 411, 493, 370, 390, 107, 403, 65, 31, 222, 221, 299, 355, 483, 30, 433, 84, 242, 368, 147, 48, 253])</code></pre>
 <p>Let us try to implement an Neural Network regressor using Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl deep learning framework. The package provides four essential models: <code>NeuralNetworkRegressor, MultitargetNeuralNetworkRegressor,
 NeuralNetworkClassifier</code> and <code>ImageClassifier</code>.</p>
 <p>At the heart of these models is a neural network. This is specified using the <code>builder</code> parameter. Creating a builder object consists of two steps:</p>
@@ -139,23 +139,23 @@ NeuralNetworkClassifier</code> and <code>ImageClassifier</code>.</p>
 </li>
 </ol>
 <p>is an abstract structure used for the purpose of dispatching. Suppose we define a new struct called <code>MyNetworkBuilder</code>. This can contain any attribute required to build the model later. &#40;Step 2&#41;. Let&#39;s use Dense Neural Network with 2 hidden layers.</p>
-<pre><code class="language-julia">mutable struct MyNetworkBuilder <: MLJFlux.Builder
-    n1::Int #Number of cells in the first hidden layer
-    n2::Int #Number of cells in the second hidden layer
-end</code></pre>
+<pre><code class="julia hljs"><span class="hljs-keyword">mutable struct</span> MyNetworkBuilder &lt;: MLJFlux.Builder
+    n1::<span class="hljs-built_in">Int</span> <span class="hljs-comment">#Number of cells in the first hidden layer</span>
+    n2::<span class="hljs-built_in">Int</span> <span class="hljs-comment">#Number of cells in the second hidden layer</span>
+<span class="hljs-keyword">end</span></code></pre>
 <p>Step 2: Building the neural network from this object. Extend the <code>MLJFlux.build</code> function. This takes in 3 arguments: The object of <code>MyNetworkBuilder</code>, input dimension &#40;ip&#41; and output dimension &#40;op&#41;.</p>
-<pre><code class="language-julia">function MLJFlux.build(model::MyNetworkBuilder, input_dims, output_dims)
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> MLJFlux.build(model::MyNetworkBuilder, input_dims, output_dims)
     layer1 = Flux.Dense(input_dims, model.n1)
     layer2 = Flux.Dense(model.n1, model.n2)
     layer3 = Flux.Dense(model.n2, output_dims)
-    return Flux.Chain(layer1, layer2, layer3)
-end</code></pre>
+    <span class="hljs-keyword">return</span> Flux.Chain(layer1, layer2, layer3)
+<span class="hljs-keyword">end</span></code></pre>
 <p>With all definitions ready, let us create an object of this:</p>
-<pre><code class="language-julia">myregressor = MyNetworkBuilder(20, 10)</code></pre><pre><code class="plaintext">MyNetworkBuilder @037
+<pre><code class="julia hljs">myregressor = MyNetworkBuilder(<span class="hljs-number">20</span>, <span class="hljs-number">10</span>)</code></pre><pre><code class="plaintext hljs">MyNetworkBuilder @037
 </code></pre>
 <p>Since the boston dataset is a regression problem, we&#39;ll be using <code>NeuralNetworkRegressor</code> here. One thing to remember is that a <code>NeuralNetworkRegressor</code> object works seamlessly like any other MLJ model: you can wrap it in an  MLJ <code>machine</code> and do anything you&#39;d do otherwise.</p>
 <p>Let&#39;s start by defining our NeuralNetworkRegressor object, that takes <code>myregressor</code> as it&#39;s parameter.</p>
-<pre><code class="language-julia">nnregressor = MLJFlux.NeuralNetworkRegressor(builder=myregressor, epochs=10)</code></pre><pre><code class="plaintext">NeuralNetworkRegressor(
+<pre><code class="julia hljs">nnregressor = MLJFlux.NeuralNetworkRegressor(builder=myregressor, epochs=<span class="hljs-number">10</span>)</code></pre><pre><code class="plaintext hljs">NeuralNetworkRegressor(
     builder = MyNetworkBuilder(
             n1 = 20,
             n2 = 10),
@@ -168,57 +168,57 @@ end</code></pre>
     optimiser_changes_trigger_retraining = false) @574</code></pre>
 <p>Other parameters that NeuralNetworkRegressor takes can be found here: https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters</p>
 <code>nnregressor</code> now acts like any other MLJ model. Let&#39;s try wrapping it in a MLJ machine and calling <code>fit&#33;, predict</code>.</p>
-<pre><code class="language-julia">mach = MLJ.machine(nnregressor, features, targets)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 0 times.
+<pre><code class="julia hljs">mach = MLJ.machine(nnregressor, features, targets)</code></pre><pre><code class="plaintext hljs">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 0 times.
   args: 
     1:	Source @555 ⏎ `Table{AbstractArray{Continuous,1}}`
     2:	Source @155 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>Let&#39;s fit this on the train set</p>
-<pre><code class="language-julia">MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 1 time.
+<pre><code class="julia hljs">MLJ.fit!(mach, rows=train, verbosity=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 1 time.
   args: 
     1:	Source @555 ⏎ `Table{AbstractArray{Continuous,1}}`
     2:	Source @155 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>As we can see, the training loss decreases at each epoch, showing the the neural network is gradually learning form the training set.</p>
-<pre><code class="language-julia">preds = MLJ.predict(mach, features[test, :])
+<pre><code class="julia hljs">preds = MLJ.predict(mach, features[test, :])
 
-print(preds[1:5])</code></pre><pre><code class="plaintext">Float32[31.206116, 28.724798, 24.98296, -8.994627, 22.655788]</code></pre>
+print(preds[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])</code></pre><pre><code class="plaintext hljs">Float32[31.206116, 28.724798, 24.98296, -8.994627, 22.655788]</code></pre>
 <p>Now let&#39;s retrain our model. One thing to remember is that retrainig may OR may not re-initialize our neural network model parameters. For example, changing the number of epochs to 15 will not causes the model to train to 15 epcohs, but just 5 additional epochs.</p>
-<pre><code class="language-julia">nnregressor.epochs = 15
+<pre><code class="julia hljs">nnregressor.epochs = <span class="hljs-number">15</span>
 
-MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 2 times.
+MLJ.fit!(mach, rows=train, verbosity=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 2 times.
   args: 
     1:	Source @555 ⏎ `Table{AbstractArray{Continuous,1}}`
     2:	Source @155 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>You can always specify that you want to retrain the model from scratch using the force&#61;true parameter. &#40;Look at documentation for <code>fit&#33;</code> for more&#41;.</p>
 <p>However, changing parameters such as batch_size will necessarily cause re-training from scratch.</p>
-<pre><code class="language-julia">nnregressor.batch_size = 2
-MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 3 times.
+<pre><code class="julia hljs">nnregressor.batch_size = <span class="hljs-number">2</span>
+MLJ.fit!(mach, rows=train, verbosity=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @487 trained 3 times.
   args: 
     1:	Source @555 ⏎ `Table{AbstractArray{Continuous,1}}`
     2:	Source @155 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>Another bit to remember here is that changing the optimiser doesn&#39;t cause retaining by default. However, the <code>optimiser_changes_trigger_retraining</code> in NeuralNetworkRegressor can be toggled to accomodate this. This allows one to modify the learning rate, for example, after an initial burn-in period.</p>
-<pre><code class="language-julia"># Inspecting out-of-sample loss as a function of epochs
+<pre><code class="julia hljs"><span class="hljs-comment"># Inspecting out-of-sample loss as a function of epochs</span>
 
-r = MLJ.range(nnregressor, :epochs, lower=1, upper=30, scale=:log10)
+r = MLJ.range(nnregressor, :epochs, lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">30</span>, scale=:log10)
 curve = MLJ.learning_curve(nnregressor, features, targets,
                        range=r,
-                       resampling=MLJ.Holdout(fraction_train=0.7),
+                       resampling=MLJ.Holdout(fraction_train=<span class="hljs-number">0.7</span>),
                        measure=MLJ.l2)
 
 plot(curve.parameter_values,
     curve.measurements,
     xlab=curve.parameter_name,
     xscale=curve.parameter_scale,
-    ylab = "l2")
-# Tuning</code></pre><pre><code class="plaintext">UndefVarError: plot not defined
+    ylab = <span class="hljs-string">&quot;l2&quot;</span>)
+<span class="hljs-comment"># Tuning</span></code></pre><pre><code class="plaintext hljs">UndefVarError: plot not defined
 </code></pre>
 <p>As mentioned above, <code>nnregressor</code> can act like any other MLJ model. Let&#39;s try to tune the batch_size parameter.</p>
-<pre><code class="language-julia">bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
+<pre><code class="julia hljs">bs = MLJ.range(nnregressor, :batch_size, lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">5</span>)
 
-tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pre><pre><code class="plaintext">DeterministicTunedModel(
+tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pre><pre><code class="plaintext hljs">DeterministicTunedModel(
     model = NeuralNetworkRegressor(
             builder = MyNetworkBuilder @037,
             optimiser = Flux.Optimise.ADAM(0.001, (0.9, 0.999), IdDict{Any,Any}()),
@@ -248,15 +248,15 @@ tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pr
     acceleration_resampling = CPU1{Nothing}(nothing),
     check_measure = true) @991</code></pre>
 <p>For more on tuning, refer to the model-tuning tutorial.</p>
-<pre><code class="language-julia">m = MLJ.machine(tm, features, targets)
+<pre><code class="julia hljs">m = MLJ.machine(tm, features, targets)
 
-MLJ.fit!(m)</code></pre><pre><code class="plaintext">Machine{DeterministicTunedModel{Grid,…}} @899 trained 1 time.
+MLJ.fit!(m)</code></pre><pre><code class="plaintext hljs">Machine{DeterministicTunedModel{Grid,…}} @899 trained 1 time.
   args: 
     1:	Source @422 ⏎ `Table{AbstractArray{Continuous,1}}`
     2:	Source @198 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>This evaluated the model at each value of our range. The best value is:</p>
-<pre><code class="language-julia">MLJ.fitted_params(m).best_model.batch_size</code></pre><pre><code class="plaintext">5</code></pre><div class="page-foot">
+<pre><code class="julia hljs">MLJ.fitted_params(m).best_model.batch_size</code></pre><pre><code class="plaintext hljs">5</code></pre><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 15, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
@@ -264,11 +264,11 @@ MLJ.fit!(m)</code></pre><pre><code class="plaintext">Machine{DeterministicTunedM
 </div><!-- CONTENT ENDS HERE -->
       </div> <!-- end of id=main -->
   </div> <!-- end of id=layout -->
-  <script src="/libs/pure/ui.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>

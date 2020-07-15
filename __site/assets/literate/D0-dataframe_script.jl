@@ -71,7 +71,7 @@ combine(df, :a => foo, :b => bar)
 combine(groupby(iris, :Species), :PetalLength => mean)
 
 gdf = groupby(iris, :Species)
-combine(gdf, :PetalLength => mean => MPL, :PetalLength => std => SPL)
+combine(gdf, :PetalLength => mean => :MPL, :PetalLength => std => :SPL)
 
 combine(gdf, names(iris, Not(:Species)) .=> std)
 
