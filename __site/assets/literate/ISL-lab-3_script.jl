@@ -1,17 +1,16 @@
 # This file was generated, do not modify it.
 
 using MLJ
-MLJ.color_off() # hide
 
 @load LinearRegressor pkg=MLJLinearModels
 
-import RDatasets: dataset
-import DataFrames: describe, select, Not, rename!
+using RDatasets, DataFrames
 boston = dataset("MASS", "Boston")
 first(boston, 3)
 
 describe(boston, :mean, :std, :eltype)
 
+using ScientificTypes
 data = coerce(boston, autotype(boston, :discrete_to_continuous));
 
 y = data.MedV
@@ -24,29 +23,31 @@ mach_uni = machine(mdl, X_uni, y)
 fit!(mach_uni)
 
 fp = fitted_params(mach_uni)
-@show fp.coefs
-@show fp.intercept
+@show round.(fp.coefs, sigdigits=3)
+@show round(fp.intercept, sigdigits=3)
 
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
 plot(Xnew.LStat, predict(mach_uni, Xnew))
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")) # hide
+savefig("assets/literate/ISL-lab-3-lm1.svg") # hide
 
 mach = machine(mdl, X, y)
 fit!(mach)
 
 fp = fitted_params(mach)
-coefs = fp.coefs
-intercept = fp.intercept
-for (name, val) in coefs
-    println("$(rpad(name, 8)):  $(round(val, sigdigits=3))")
+@show round.(fp.coefs[1:3], sigdigits=3)
+@show round(fp.intercept, sigdigits=3)
+
+println(rpad(" Feature", 11), "| ", "Coefficient")
+println("-"^24)
+for (i, name) in enumerate(names(X))
+    println(rpad("$name", 11), "| ", round(fp.coefs[i], sigdigits=3))
 end
-println("Intercept: $(round(intercept, sigdigits=3))")
+println(rpad("Intercept", 11), "| ", round(fp.intercept, sigdigits=3))
 
 ŷ = predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
@@ -55,12 +56,13 @@ figure(figsize=(8,6))
 res = ŷ .- y
 stem(res)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
+savefig("assets/literate/ISL-lab-3-res.svg") # hide
 
 figure(figsize=(8,6))
 hist(res, density=true)
+x = range(-20, 20, )
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
+savefig("assets/literate/ISL-lab-3-res2.svg") # hide
 
 X2 = hcat(X, X.LStat .* X.Age);
 
@@ -83,7 +85,5 @@ figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 plot(Xnew.LStat, predict(mach, Xnew))
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
-
-PyPlot.close_figs() # hide
+savefig("assets/literate/ISL-lab-3-lreg.svg") # hide
 

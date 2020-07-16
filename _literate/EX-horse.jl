@@ -153,29 +153,29 @@ round(res.measurement[1], sigdigits=3)
 # This is the cross entropy on some held-out 10% of the training set.
 # We can also just for the sake of getting a baseline, see the misclassification on the whole training data:
 
-ŷ = predict(mach, Xtrain)
-ȳ = mode(ŷ)
-mcr = misclassification_rate(ŷ, ytrain)
+ŷ = predict(mach, Xtrain)
+ȳ = mode(ŷ)
+mcr = misclassification_rate(ŷ, ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 # That's not bad at all actually.
 # Let's tune it a bit and see if we can get a bit better than that, not much point in going crazy, we might get a few percents but not much more.
 
-model = SimplePipe()
-lambdas = range(model, :(clf.lambda), lower=1e-3, upper=100, scale=:log10)
-tm = TunedModel(model=SimplePipe(), ranges=lambdas, measure=cross_entropy)
+model = SimplePipe
+lambdas = range(model, :(multinomial_classifier.lambda), lower=1e-3, upper=100, scale=:log10)
+tm = TunedModel(model=SimplePipe, ranges=lambdas, measure=cross_entropy)
 mtm = machine(tm, Xtrain, ytrain)
 fit!(mtm)
 best_pipe = fitted_params(mtm).best_model
 
 # So it looks like it's useful to regularise a fair bit to get a lower cross entropy
 
-ŷ = predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(mtm, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 
 # Interestingly this does not improve our missclassification rate
 
-mcr = misclassification_rate(mode.(ŷ), ytrain)
+mcr = misclassification_rate(mode.(ŷ), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 # We've probably reached the limit of a simple linear model.
@@ -187,12 +187,12 @@ println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(dtc, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 
 # So we get a worse cross entropy but...
 
-misclassification_rate(mode.(ŷ), ytrain)
+misclassification_rate(mode.(ŷ), ytrain)
 
 # a significantly better misclassification rate.
 #

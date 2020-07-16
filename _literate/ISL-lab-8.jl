@@ -23,10 +23,10 @@ y = carseats.High;
 
 # ### Decision Tree Classifier
 
-@pipeline HotTreeClf(hot = OneHotEncoder(),
-                     tree = DecisionTreeClassifier()) is_probabilistic=true
+HotTreeClf = @pipeline(OneHotEncoder(),
+                       DecisionTreeClassifier())
 
-mdl = HotTreeClf()
+mdl = HotTreeClf
 mach = machine(mdl, X, y)
 fit!(mach);
 
@@ -49,8 +49,8 @@ misclassification_rate(ypred, y[test])
 #
 # Let's try to do a bit of tuning
 
-r_mpi = range(mdl, :(tree.max_depth), lower=1, upper=10)
-r_msl = range(mdl, :(tree.min_samples_leaf), lower=1, upper=50)
+r_mpi = range(mdl, :(decision_tree_classifier.max_depth), lower=1, upper=10)
+r_msl = range(mdl, :(decision_tree_classifier.min_samples_leaf), lower=1, upper=50)
 
 tm = TunedModel(model=mdl, ranges=[r_mpi, r_msl], tuning=Grid(resolution=8),
                 resampling=CV(nfolds=5, rng=112),
@@ -63,7 +63,7 @@ misclassification_rate(ypred, y[test])
 
 # We can inspect the parameters of the best model
 
-fitted_params(mtm).best_model.tree
+fitted_params(mtm).best_model.decision_tree_classifier
 
 # ### Decision Tree Regressor
 #

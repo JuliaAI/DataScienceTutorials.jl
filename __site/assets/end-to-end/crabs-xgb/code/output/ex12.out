@@ -1,2 +1,0 @@
-xgb.max_depth = 3
-xgb.min_child_weight = 2.857142857142857

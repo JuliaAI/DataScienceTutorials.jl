@@ -4,20 +4,15 @@
 This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
 
 ```julia:ex1
-using MLJ
-using PyPlot
-using PrettyPrinting
-using StableRNGs
-import DataFrames
+using MLJ, PyPlot, PrettyPrinting, Random,
+      DataFrames
 
-MLJ.color_off() # hide
-ioff() # hide
 X, y = @load_boston
 sch = schema(X)
 p = length(sch.names)
 n = sch.nrows
 @show (n, p)
-DataFrames.describe(y)
+describe(y)
 ```
 
 Let's load the decision tree regressor
@@ -32,7 +27,7 @@ Let's first check the performances of just a single Decision Tree Regressor (DTR
 tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint # use PrettyPrinting
+e |> pprint
 ```
 
 Note that multiple measures can be reported simultaneously.
@@ -51,11 +46,11 @@ forest.atom.n_subfeatures = 3
 To get an idea of how many trees are needed, we can follow the evaluation of the error (say the `rms`) for an increasing number of tree over several sampling round.
 
 ```julia:ex5
-rng = StableRNG(5123) # for reproducibility
+Random.seed!(5) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
-                         range=r, measure=rms);
+curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8),
+                         range=r, measure=rms, n=4);
 ```
 
 let's plot the curves
@@ -63,20 +58,19 @@ let's plot the curves
 ```julia:ex6
 figure(figsize=(8,6))
 plot(curves.parameter_values, curves.measurements)
-ylabel("Root Mean Squared error", fontsize=16)
-xlabel("Number of trees", fontsize=16)
-xticks([10, 250, 500, 750, 1000], fontsize=14)
-yticks(fontsize=14)
+xlabel("Number of trees", fontsize=14)
+xticks([10, 250, 500, 750, 1000])
+ylim([4, 5])
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
+savefig("assets/literate/A-ensembles-2-curves.svg")
 ```
 
-\figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
+![RMS vs number of trees](/assets/literate/A-ensembles-2-curves.svg)
 
-The curve is pretty noisy but let's just go for 150 trees:
+So out of this curve we could decide for instance to go for 300 trees:
 
 ```julia:ex7
-forest.n = 150;
+forest.n = 300;
 ```
 
 ### Tuning
@@ -100,7 +94,7 @@ We use a low-resolution grid here to make this tutorial faster but you could of 
 ```julia:ex10
 tuned_forest = TunedModel(model=forest,
                           tuning=Grid(resolution=3),
-                          resampling=CV(nfolds=6, rng=StableRNG(32)),
+                          resampling=CV(nfolds=6, rng=32),
                           ranges=[r_sf, r_bf],
                           measure=rms)
 m = machine(tuned_forest, X, y)
@@ -117,21 +111,19 @@ r = report(m)
 
 figure(figsize=(8,6))
 
-res = r.plotting
+vals_sf = r.parameter_values[:, 1]
+vals_bf = r.parameter_values[:, 2]
 
-vals_sf = res.parameter_values[:, 1]
-vals_bf = res.parameter_values[:, 2]
-
-tricontourf(vals_sf, vals_bf, res.measurements)
+tricontourf(vals_sf, vals_bf, r.measurements)
 xticks(1:3:12, fontsize=12)
 xlabel("Number of sub-features", fontsize=14)
 yticks(0.4:0.2:1, fontsize=12)
 ylabel("Bagging fraction", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
+savefig("assets/literate/A-ensembles-2-heatmap.svg") # hide
 ```
 
-\fig{A-ensembles-2-heatmap.svg}
+![](/assets/literate/A-ensembles-2-heatmap.svg)
 
 Even though we've only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around `0.75` work well.
 
@@ -141,7 +133,5 @@ For instance we could look at predictions on the whole dataset:
 ```julia:ex12
 ŷ = predict(m, X)
 rms(ŷ, y)
-
-PyPlot.close_figs() # hide
 ```
 
