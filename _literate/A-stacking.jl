@@ -96,11 +96,15 @@ y2 = predict(m2, X)
 
 yhat = 0.5*y1 + 0.5*y2
 
-surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=yhat)
+# Somewhat paradoxically, one can wrap a learning network in a certain kind of machine,
+# called a learning network machine, before exporting it, and in fact,
+# the export process actually requires us to do so.
+#
+# Since a composite model type does not yet exist, one constructs the machine using a "surrogate" model,
+# whose name indicates the ultimate model supertype.
 
-fit!(yhat)
-ŷ(X[test, :])
+surrogate = Deterministic()
+mach = machine(surrogate, X, y; predict=yhat)
 
 # And the macro call to define `MyAverageTwo` and an instance `average_two`:
 
@@ -109,6 +113,10 @@ ŷ(X[test, :])
         regressor=model2
     end
 end
+
+# We can now create an instance of this type
+
+avg = MyAverageTwo()
 
 # Evaluating this average model on the Boston data set, and comparing
 # with the base model predictions:
@@ -321,10 +329,16 @@ estack = rms(yhat(), y())
 # amounts to a specification of a new composite model type for
 # two-model stacks, trained with three-fold resampling of base model
 # predictions. Let's create the new type `MyTwoModelStack`:
+#
+# Note: remember that the machine was constructed above. We do not repeat it here.
 
-@from_network MyTwoModelStack(regressor1=model1,
-                              regressor2=model2,
-                              judge=judge) <= yhat
+@from_network mach begin
+    mutable struct MyTwoModelStack
+        regressor=judge
+    end
+end
+
+MyTwoModelStack_inst = MyTwoModelStack()
 
 # And this completes the definition of our re-usable stacking model type.
 
