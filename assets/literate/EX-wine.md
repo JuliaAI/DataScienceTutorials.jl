@@ -13,6 +13,7 @@ Let's download the data thanks to the [UrlDownload.jl](https://github.com/Arkoni
 using HTTP
 using MLJ
 using PyPlot
+ioff() # hide
 import DataFrames: DataFrame, describe
 using UrlDownload
 MLJ.color_off() # hide
@@ -107,8 +108,8 @@ We'll train two simple pipelines:
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-KnnPipe = @pipeline(Standardizer(), KNNClassifier())
-MnPipe = @pipeline(Standardizer(), MultinomialClassifier());
+@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;
 ```
 
 We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
@@ -124,8 +125,8 @@ ytest = selectrows(yc, test);
 Let's now wrap an instance of these models with data (all hyperparameters are set to default here):
 
 ```julia:ex13
-knn = machine(KnnPipe, Xtrain, ytrain)
-multi = machine(MnPipe, Xtrain, ytrain)
+knn = machine(KnnPipe(), Xtrain, ytrain)
+multi = machine(MnPipe(), Xtrain, ytrain)
 ```
 
 Let's train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90% of the training data to train the model and the remaining 10% to evaluate it:

@@ -44,11 +44,11 @@ _First layer_
 ```julia:ex3
 std_model = Standardizer()
 stand = machine(std_model, Xs)
-W = MLJ.transform(stand, Xs)
+W = transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
-box_mach = machine(box_model, ys)
-z = MLJ.transform(box_mach, ys)
+box = machine(box_model, ys)
+z = transform(box, ys)
 ```
 
 _Second layer_
@@ -62,31 +62,16 @@ ẑ = predict(ridge, W)
 _Output_
 
 ```julia:ex5
-ŷ = inverse_transform(box_mach, ẑ)
+ŷ = inverse_transform(box, ẑ)
 ```
 
 No fitting has been done thus far, we have just defined a sequence of operations.
 
-As we show next, a learning network needs to be exported to create a new stand-alone model type. Instances of that type can be bound with data in a machine, which can then be evaluated, for example. Somewhat paradoxically, one can wrap a learning network in a certain kind of machine, called a learning network machine, before exporting it, and in fact, the export process actually requires us to do so. Since a composite model type does not yet exist, one constructs the machine using a "surrogate" model, whose name indicates the ultimate model supertype (Deterministic, Probabilistic, Unsupervised or Static). This surrogate model has no fields.
+To form a model out of that network is easy using the `@from_network` macro:
 
 ```julia:ex6
-surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=ŷ)
-
-fit!(ŷ)
-ŷ(X[test, :])
-```
-
-To form a model out of that network is easy using the `@from_network` macro.
-
-Having defined a learning network machine, mach, as above, the following code defines a new model subtype WrappedRegressor <: Supervised with a single field regressor
-
-```julia:ex7
-@from_network mach begin
-    mutable struct CompositeModel
-        regressor=ridge_model
-    end
-end
+@from_network CompositeModel(std=std_model, box=box_model,
+                             ridge=ridge_model) <= ŷ;
 ```
 
 The macro defines a constructor CompositeModel and attributes a name to the
@@ -95,7 +80,7 @@ from `ŷ` via the `<= ŷ`.
 
 **Note**: had the model been probabilistic (e.g. `RidgeClassifier`) you would have needed to add `is_probabilistic=true` at the end.
 
-```julia:ex8
+```julia:ex7
 cm = machine(CompositeModel(), X, y)
 res = evaluate!(cm, resampling=Holdout(fraction_train=0.8, rng=51),
                 measure=rms)
@@ -106,7 +91,7 @@ round(res.measurement[1], sigdigits=3)
 
 An alternative to the `@from_network`, is to fully define a new model with its `fit` method:
 
-```julia:ex9
+```julia:ex8
 mutable struct CompositeModel2 <: DeterministicNetwork
     std_model::Standardizer
     box_model::UnivariateBoxCoxTransformer
@@ -116,9 +101,9 @@ end
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     Xs = source(X)
     ys = source(y)
-    W = MLJ.transform(machine(m.std_model, Xs), Xs)
+    W = transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
-    z = MLJ.transform(box, ys)
+    z = transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
     mach = machine(Deterministic(), Xs, ys; predict=ŷ)

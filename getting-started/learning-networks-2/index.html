@@ -1,347 +1,222 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/DataScienceTutorials.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/franklin.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/pure.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/side-menu.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/extra.css"> <title>Learning networks 2</title> <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/DataScienceTutorials.jl/" id=menu-logo-link > <div class=menu-logo > <p><strong>Data Science Tutorials</strong></p> </div> </a> <form id=lunrSearchForm  name=lunrSearchForm > <input class=search-input  name=q  placeholder="Enter search term" type=text > <input type=submit  value=Search  formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden"> </form> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data Frames</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Scientific Type</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data processing</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Stacking</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> King County Houses</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Airfoil </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Power Generation </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a> </ul> </ul> </div> </div> <div id=main > <div class=franklin-content ><h1 id=learning_networks_2 ><a href="#learning_networks_2">Learning networks 2</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-learning-networks-2.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2.jl" target=_blank ><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=franklin-toc ><ol><li><a href="#preliminary_steps">Preliminary steps</a><li><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a><li><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></ol></div><h2 id=preliminary_steps ><a href="#preliminary_steps">Preliminary steps</a></h2> <p>Let&#39;s start as with the previous tutorial:</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ
-<span class=hljs-keyword >using</span> StableRNGs
-<span class=hljs-keyword >import</span> DataFrames
-<span class=hljs-meta >@load</span> RidgeRegressor pkg=MultivariateStats
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
+   <title>Learning networks 2</title>  
+  <!-- LUNR -->
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
 
-rng = StableRNG(<span class=hljs-number >6616</span>) <span class=hljs-comment ># for reproducibility</span>
-x1 = rand(rng, <span class=hljs-number >300</span>)
-x2 = rand(rng, <span class=hljs-number >300</span>)
-x3 = rand(rng, <span class=hljs-number >300</span>)
-y = exp.(x1 - x2 -<span class=hljs-number >2</span>x3 + <span class=hljs-number >0.1</span>*rand(rng, <span class=hljs-number >300</span>))
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="learning_networks_2"><a href="#learning_networks_2">Learning networks 2</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-learning-networks-2.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></li><li><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
+<p>Let&#39;s start as with the previous tutorial:</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
+<span class="hljs-keyword">using</span> StableRNGs
+<span class="hljs-keyword">import</span> DataFrames
+<span class="hljs-meta">@load</span> RidgeRegressor pkg=MultivariateStats
+
+rng = StableRNG(<span class="hljs-number">6616</span>) <span class="hljs-comment"># for reproducibility</span>
+x1 = rand(rng, <span class="hljs-number">300</span>)
+x2 = rand(rng, <span class="hljs-number">300</span>)
+x3 = rand(rng, <span class="hljs-number">300</span>)
+y = exp.(x1 - x2 -<span class="hljs-number">2</span>x3 + <span class="hljs-number">0.1</span>*rand(rng, <span class="hljs-number">300</span>))
 X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
 
-test, train = partition(eachindex(y), <span class=hljs-number >0.8</span>);</code></pre> <p>In this tutorial we will show how to generate a model from a network; there are two approaches:</p> <ul> <li><p>using the <code>@from_network</code> macro</p> <li><p>writing the model in full</p> </ul> <p>the first approach should usually be the one considered as it&#39;s simpler.</p> <p>Generating a model from a network allows subsequent composition of that network with other tasks and tuning of that network.</p> <h2 id=using_the_from_network_macro ><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></h2> <p>Let&#39;s define a simple network</p> <p><em>Input layer</em></p> <pre><code class="julia hljs">Xs = source(X)
-ys = source(y)</code></pre><pre><code class="plaintext hljs">Source @028 ⏎ `AbstractArray{Continuous,1}`</code></pre>
+test, train = partition(eachindex(y), <span class="hljs-number">0.8</span>);</code></pre>
+<p>In this tutorial we will show how to generate a model from a network; there are two approaches:</p>
+<ul>
+<li><p>using the <code>@from_network</code> macro</p>
+</li>
+<li><p>writing the model in full</p>
+</li>
+</ul>
+<p>the first approach should usually be the one considered as it&#39;s simpler.</p>
+<p>Generating a model from a network allows subsequent composition of that network with other tasks and tuning of that network.</p>
+<h2 id="using_the_from_network_macro"><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></h2>
+<p>Let&#39;s define a simple network</p>
+<p><em>Input layer</em></p>
+<pre><code class="julia hljs">Xs = source(X)
+ys = source(y)</code></pre><pre><code class="plaintext hljs">Source @441 ⏎ `AbstractArray{Continuous,1}`</code></pre>
 <p><em>First layer</em></p>
 <pre><code class="julia hljs">std_model = Standardizer()
 stand = machine(std_model, Xs)
-W = MLJ.transform(stand, Xs)
+W = transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
-box_mach = machine(box_model, ys)
-z = MLJ.transform(box_mach, ys)</code></pre><pre><code class="plaintext hljs">Node{Machine{UnivariateBoxCoxTransformer}} @887
+box = machine(box_model, ys)
+z = transform(box, ys)</code></pre><pre><code class="plaintext hljs">Node{Machine{UnivariateBoxCoxTransformer}} @753
   args:
-    1:	Source @028
-  formula:
+    1:	Source @441
     transform(
-        Machine{UnivariateBoxCoxTransformer} @492, 
-        Source @028)</code></pre>
+        Machine{UnivariateBoxCoxTransformer} @230, 
+        Source @441)</code></pre>
 <p><em>Second layer</em></p>
-<pre><code class="julia hljs">ridge_model = RidgeRegressor(lambda=<span class=hljs-number >0.1</span>)
+<pre><code class="julia hljs">ridge_model = RidgeRegressor(lambda=<span class="hljs-number">0.1</span>)
 ridge = machine(ridge_model, W, z)
-ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext hljs">Node{Machine{RidgeRegressor}} @601
+ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext hljs">Node{Machine{RidgeRegressor}} @145
   args:
-    1:	Node{Machine{Standardizer}} @809
-  formula:
+    1:	Node{Machine{Standardizer}} @289
     predict(
-        Machine{RidgeRegressor} @916, 
+        Machine{RidgeRegressor} @247, 
         transform(
-            Machine{Standardizer} @541, 
-            Source @488))</code></pre>
+            Machine{Standardizer} @412, 
+            Source @015))</code></pre>
 <p><em>Output</em></p>
-<pre><code class="julia hljs">ŷ = inverse_transform(box_mach, ẑ)</code></pre><pre><code class="plaintext hljs">Node{Machine{UnivariateBoxCoxTransformer}} @509
+<pre><code class="julia hljs">ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext hljs">Node{Machine{UnivariateBoxCoxTransformer}} @709
   args:
-    1:	Node{Machine{RidgeRegressor}} @601
-  formula:
+    1:	Node{Machine{RidgeRegressor}} @145
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer} @492, 
+        Machine{UnivariateBoxCoxTransformer} @230, 
         predict(
-            Machine{RidgeRegressor} @916, 
+            Machine{RidgeRegressor} @247, 
             transform(
-                Machine{Standardizer} @541, 
-                Source @488)))</code></pre>
+                Machine{Standardizer} @412, 
+                Source @015)))</code></pre>
 <p>No fitting has been done thus far, we have just defined a sequence of operations.</p>
-<p>As we show next, a learning network needs to be exported to create a new stand-alone model type. Instances of that type can be bound with data in a machine, which can then be evaluated, for example. Somewhat paradoxically, one can wrap a learning network in a certain kind of machine, called a learning network machine, before exporting it, and in fact, the export process actually requires us to do so. Since a composite model type does not yet exist, one constructs the machine using a &quot;surrogate&quot; model, whose name indicates the ultimate model supertype &#40;Deterministic, Probabilistic, Unsupervised or Static&#41;. This surrogate model has no fields.</p>
-<pre><code class="julia hljs">surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=ŷ)
-
-fit!(ŷ)
-ŷ(X[test, :])</code></pre><pre><code class="plaintext hljs">240-element Array{Float64,1}:
- 0.22207406272038532
- 0.1145988140862213
- 0.5637023411242004
- 0.6208523052884072
- 0.36914116568152006
- 0.4576661025246582
- 0.2652982910310236
- 0.7039599361138331
- 0.2082074098687588
- 0.8295202156675852
- 0.3352689024341577
- 0.4207597314788219
- 0.19768455962695944
- 1.229728894159908
- 0.18832174007790087
- 0.4137984363517761
- 1.0013470868551908
- 0.06991748253742187
- 0.12716082065172574
- 1.0452150515517054
- 1.5435997316620047
- 0.12291691901673749
- 1.0465020735805473
- 0.22995815976232145
- 0.528830178546798
- 0.09075690567793043
- 0.3193522631474464
- 1.0978637064786798
- 0.1495655214158896
- 0.1596057871570207
- 0.6614406154034158
- 0.2073189789778862
- 0.3487837631533114
- 0.9792539039551723
- 0.5028684077654835
- 0.16753236318981163
- 0.6533820020149574
- 0.34103107747586076
- 0.09078559912363737
- 0.8726405422415838
- 1.2896699588023464
- 0.14462849258881785
- 0.2054545258147281
- 0.4568252505834334
- 1.1825997851405947
- 0.241422886646272
- 1.2010475226431407
- 0.18634521272641558
- 0.2810267911168645
- 0.2649313840168209
- 0.5590049543852794
- 0.40845048433738274
- 0.16684914424264602
- 0.3053111839191845
- 0.2546968806817888
- 0.6489643975462733
- 0.23966363211152214
- 0.36743084720063895
- 0.279711380377228
- 0.37337589067920457
- 0.9453474729956315
- 0.6259153619883621
- 0.12132468621544694
- 0.5550923313687882
- 0.47389944662729144
- 1.3879621179895003
- 0.14348189520807142
- 0.5943666425272933
- 0.15209963761781198
- 0.3059165524303035
- 0.1492755601679349
- 1.2425398600103297
- 0.44656303425691135
- 0.5503841282223967
- 0.10561340294113879
- 0.08206752800401246
- 0.6807399675070533
- 0.2822549470904748
- 0.6354546237778046
- 0.5275133908865396
- 0.4850777045566878
- 0.4306353112078643
- 0.31753877486965537
- 0.2886956083169319
- 1.2691571545461668
- 0.24225090046588096
- 0.3603530854458195
- 0.49867145900566895
- 0.6494830441351286
- 0.28738706214537757
- 0.938577082392704
- 0.1883371004076129
- 0.5307530118918761
- 0.6246524873092248
- 0.48002999172054495
- 0.5194789778228848
- 0.23763505634384383
- 0.20149556792702442
- 0.1110268333408045
- 0.20318691927360755
- 0.19674022468155467
- 0.3160559043610995
- 0.32227643622213487
- 0.2141970359076678
- 0.19255535615647798
- 0.2461110776485596
- 0.8182871227069073
- 1.2242178515441013
- 0.47866423302843386
- 0.09938581020986309
- 2.3578820581877773
- 0.12804814521415533
- 0.3385191161663251
- 0.2353374084682602
- 0.5235817790371228
- 0.7897351717961201
- 0.10795803163897083
- 0.4787842391137282
- 0.12715424285431984
- 0.23056533418566683
- 0.4542955918374893
- 0.31430260143076727
- 0.20657585235676276
- 0.9515432794850778
- 0.43125106851971456
- 0.32473069466383836
- 0.2810463272394313
- 0.24681390317644328
- 0.6508132176147277
- 0.6186009390350206
- 0.523708370752755
- 0.5715646650117808
- 0.3894285166136982
- 0.4391473595784628
- 0.1581144077988926
- 0.44500484531535633
- 0.5601354014073503
- 0.344315573059154
- 0.31380551120752265
- 0.5174519099496117
- 0.6179727545277836
- 0.8982796163619761
- 0.4775232700076977
- 0.15611331137649856
- 0.46647465201924265
- 0.32039500050080455
- 0.9824151163345607
- 0.46649471718407515
- 0.31041342710553116
- 0.3803244714778587
- 0.2063246501840509
- 0.8431967390871699
- 0.33535126052991077
- 0.5614528595650831
- 0.8462358312498705
- 0.3406592381945503
- 1.1174445528340486
- 0.5367028113331364
- 0.3002606702709318
- 0.513522291480379
- 0.32612591003747965
- 1.0193877088068952
- 0.3726720308554231
- 0.2542603725703779
- 0.6808541157012314
- 0.4524235503967342
- 0.667926954261829
- 0.6354428251222699
- 0.1987253714698484
- 0.3926427987228003
- 1.0086139058464323
- 0.2714945876872291
- 0.21396396339613774
- 1.1158819523976555
- 0.4819837656775319
- 0.5506100775925608
- 0.5200775970453321
- 0.13855883330758884
- 0.2602946625525525
- 0.17412413380690384
- 0.42253334562826284
- 1.104356605551238
- 0.1851914205804936
- 0.2959099524932638
- 0.5483043758832401
- 0.2464817117832469
- 1.3778552361686642
- 0.4877565579791532
- 0.4040969473856881
- 0.27641542934411883
- 0.10946984216005326
- 0.6420072081130529
- 0.7316063807966302
- 0.2900800423247157
- 0.2007797839437173
- 0.5581678019196518
- 1.0295324700149333
- 0.5713265775261583
- 0.234706468991177
- 0.17360369512334273
- 0.4554898831349992
- 0.17541153695559494
- 0.30888746172738124
- 1.062155159562904
- 0.34680192690540135
- 0.07146667732404187
- 0.19077371145490227
- 0.14640331714538027
- 0.17346538397578373
- 0.3588856159185025
- 0.25152233681788294
- 0.5316425656868456
- 0.13919171905183972
- 0.36213647999916593
- 0.318625906718964
- 0.3055525851525285
- 0.2356692787606226
- 0.5809402073616075
- 0.24585995368087044
- 0.23992157971253808
- 0.4476564440868091
- 0.5122209463971508
- 0.7185337309838062
- 0.5926939980191016
- 0.18775451700971485
- 0.5202149619586018
- 0.3584952874385298
- 0.4499477776168489
- 0.964394491785016
- 0.8913636879745639
- 0.209929251397829
- 0.748367939062353
- 0.31930036221515834
- 0.5125700867796189
- 0.23699846406843947
- 0.17634591713345907
- 0.49924639670991894
- 0.5812624130473212
- 0.8036464973837717
- 0.49468930420890794</code></pre>
-<p>To form a model out of that network is easy using the <code>@from_network</code> macro.</p>
-<p>Having defined a learning network machine, mach, as above, the following code defines a new model subtype WrappedRegressor &lt;: Supervised with a single field regressor</p>
-<pre><code class="julia hljs"><span class=hljs-meta >@from_network</span> mach <span class=hljs-keyword >begin</span>
-    <span class=hljs-keyword >mutable struct</span> CompositeModel
-        regressor=ridge_model
-    <span class=hljs-keyword >end</span>
-<span class=hljs-keyword >end</span></code></pre>
+<p>To form a model out of that network is easy using the <code>@from_network</code> macro:</p>
+<pre><code class="julia hljs"><span class="hljs-meta">@from_network</span> CompositeModel(std=std_model, box=box_model,
+                             ridge=ridge_model) &lt;= ŷ;</code></pre><pre><code class="plaintext hljs">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
+Closest candidates are:
+  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
+in expression starting at none:1
+</code></pre>
 <p>The macro defines a constructor CompositeModel and attributes a name to the different models; the ordering / connection between the nodes is inferred from <code>ŷ</code> via the <code>&lt;&#61; ŷ</code>.</p>
 <p><strong>Note</strong>: had the model been probabilistic &#40;e.g. <code>RidgeClassifier</code>&#41; you would have needed to add <code>is_probabilistic&#61;true</code> at the end.</p>
 <pre><code class="julia hljs">cm = machine(CompositeModel(), X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>, rng=<span class=hljs-number >51</span>),
+res = evaluate!(cm, resampling=Holdout(fraction_train=<span class="hljs-number">0.8</span>, rng=<span class="hljs-number">51</span>),
                 measure=rms)
-round(res.measurement[<span class=hljs-number >1</span>], sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">0.0136</code></pre>
-<h2 id=defining_a_model_from_scratch ><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></h2>
+round(res.measurement[<span class="hljs-number">1</span>], sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: CompositeModel not defined
+</code></pre>
+<h2 id="defining_a_model_from_scratch"><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></h2>
 <p>An alternative to the <code>@from_network</code>, is to fully define a new model with its <code>fit</code> method:</p>
-<pre><code class="julia hljs"><span class=hljs-keyword >mutable struct</span> CompositeModel2 &lt;: DeterministicNetwork
+<pre><code class="julia hljs"><span class="hljs-keyword">mutable struct</span> CompositeModel2 &lt;: DeterministicNetwork
     std_model::Standardizer
     box_model::UnivariateBoxCoxTransformer
     ridge_model::RidgeRegressor
-<span class=hljs-keyword >end</span>
+<span class="hljs-keyword">end</span>
 
-<span class=hljs-keyword >function</span> MLJ.fit(m::CompositeModel2, verbosity::<span class=hljs-built_in >Int</span>, X, y)
+<span class="hljs-keyword">function</span> MLJ.fit(m::CompositeModel2, verbosity::<span class="hljs-built_in">Int</span>, X, y)
     Xs = source(X)
     ys = source(y)
-    W = MLJ.transform(machine(m.std_model, Xs), Xs)
+    W = transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
-    z = MLJ.transform(box, ys)
+    z = transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
     mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - <span class=hljs-number >1</span>)
-    <span class=hljs-keyword >return</span> mach()
-<span class=hljs-keyword >end</span>
+    fit!(mach, verbosity=verbosity - <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> mach()
+<span class="hljs-keyword">end</span>
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),
-                      RidgeRegressor(lambda=<span class=hljs-number >0.1</span>))
+                      RidgeRegressor(lambda=<span class="hljs-number">0.1</span>))
 cm = machine(mdl, X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=<span class=hljs-number >0.8</span>), measure=rms)
-round(res.measurement[<span class=hljs-number >1</span>], sigdigits=<span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">0.0212</code></pre>
-<p>Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.<div class=page-foot >
-  <div class=copyright >
+res = evaluate!(cm, resampling=Holdout(fraction_train=<span class="hljs-number">0.8</span>), measure=rms)
+round(res.measurement[<span class="hljs-number">1</span>], sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">0.0212</code></pre>
+<p>Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.<div class="page-foot">
+  <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
-</div>
-      </div> 
-  </div> 
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+  
+  
+      
+
+
+  
+</body>
+</html>

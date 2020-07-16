@@ -1,2 +1,3 @@
-LoadError: UndefVarError: @load_boston not defined
-in expression starting at none:2
+LinearRegressor @737 = 4.8635 ± 0.34864
+KNNRegressor @184 = 6.1602 ± 0.38348
+UndefVarError: avg not defined

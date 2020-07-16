@@ -17,10 +17,10 @@ carseats[!, :High] = High;
 X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;
 
-HotTreeClf = @pipeline(OneHotEncoder(),
-                       DecisionTreeClassifier())
+@pipeline HotTreeClf(hot = OneHotEncoder(),
+                     tree = DecisionTreeClassifier()) is_probabilistic=true
 
-mdl = HotTreeClf
+mdl = HotTreeClf()
 mach = machine(mdl, X, y)
 fit!(mach);
 
@@ -32,8 +32,8 @@ fit!(mach, rows=train)
 ypred = predict_mode(mach, rows=test)
 misclassification_rate(ypred, y[test])
 
-r_mpi = range(mdl, :(decision_tree_classifier.max_depth), lower=1, upper=10)
-r_msl = range(mdl, :(decision_tree_classifier.min_samples_leaf), lower=1, upper=50)
+r_mpi = range(mdl, :(tree.max_depth), lower=1, upper=10)
+r_msl = range(mdl, :(tree.min_samples_leaf), lower=1, upper=50)
 
 tm = TunedModel(model=mdl, ranges=[r_mpi, r_msl], tuning=Grid(resolution=8),
                 resampling=CV(nfolds=5, rng=112),
@@ -44,7 +44,7 @@ fit!(mtm, rows=train)
 ypred = predict_mode(mtm, rows=test)
 misclassification_rate(ypred, y[test])
 
-fitted_params(mtm).best_model.decision_tree_classifier
+fitted_params(mtm).best_model.tree
 
 @load DecisionTreeRegressor pkg=DecisionTree
 

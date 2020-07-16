@@ -2,5 +2,5 @@
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-KnnPipe = @pipeline(Standardizer(), KNNClassifier())
-MnPipe = @pipeline(Standardizer(), MultinomialClassifier());
+@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;
