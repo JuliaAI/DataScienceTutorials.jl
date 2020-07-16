@@ -45,6 +45,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -101,10 +102,10 @@
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-model-tuning.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-tuning-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-tuning.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a><ol><li><a href="#specifying_a_range_of_value">Specifying a range of value</a></li><li><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></li></ol></li><li><a href="#tuning_nested_hyperparameters">Tuning nested hyperparameters</a></li></ol></div> <h2 id="tuning_a_single_hyperparameter"><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a></h2>
 <p>In MLJ, tuning is implemented as a model wrapper. After wrapping a model in a <em>tuning strategy</em> &#40;e.g. cross-validation&#41; and binding the wrapped model to data in a <em>machine</em>, fitting the machine initiates a search for optimal model hyperparameters.</p>
 <p>Let&#39;s use a decision tree classifier and tune the maximum depth of the tree. As usual, start by loading data and the model</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
-<span class="hljs-keyword">using</span> PrettyPrinting
-X, y = <span class="hljs-meta">@load_iris</span>
-<span class="hljs-meta">@load</span> DecisionTreeClassifier</code></pre><pre><code class="plaintext hljs">DecisionTreeClassifier(
+<pre><code class="language-julia">using MLJ
+using PrettyPrinting
+X, y = @load_iris
+@load DecisionTreeClassifier</code></pre><pre><code class="plaintext">DecisionTreeClassifier(
     max_depth = -1,
     min_samples_leaf = 1,
     min_samples_split = 2,
@@ -113,14 +114,14 @@ X, y = <span class="hljs-meta">@load_iris</span>
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @310</code></pre>
+    display_depth = 5) @840</code></pre>
 <h3 id="specifying_a_range_of_value"><a href="#specifying_a_range_of_value">Specifying a range of value</a></h3>
 <p>To specify a range of value, you can use the <code>range</code> function:</p>
-<pre><code class="julia hljs">dtc = DecisionTreeClassifier()
-r   = range(dtc, :max_depth, lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">5</span>)</code></pre><pre><code class="plaintext hljs">MLJBase.NumericRange(Int64, :max_depth, ... )</code></pre>
+<pre><code class="language-julia">dtc = DecisionTreeClassifier()
+r   = range(dtc, :max_depth, lower=1, upper=5)</code></pre><pre><code class="plaintext">MLJBase.NumericRange(Int64, :max_depth, ... )</code></pre>
 <p>As you can see, the range function takes a model &#40;<code>dtc</code>&#41;, a symbol for the hyperparameter of interest &#40;<code>:max_depth</code>&#41; and indication of how to samples values. For hyperparameters of type <code>&lt;:Real</code>, you should specify a range of values as done above. For hyperparameters of other type &#40;e.g. <code>Symbol</code>&#41;, you should use the <code>values&#61;...</code> keyword.</p>
 <p>Once a range of values has been defined, you can then wrap the model in a <code>TunedModel</code> specifying the tuning strategy.</p>
-<pre><code class="julia hljs">tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)</code></pre><pre><code class="plaintext hljs">ProbabilisticTunedModel(
+<pre><code class="language-julia">tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)</code></pre><pre><code class="plaintext">ProbabilisticTunedModel(
     model = DecisionTreeClassifier(
             max_depth = -1,
             min_samples_leaf = 1,
@@ -144,13 +145,13 @@ r   = range(dtc, :max_depth, lower=<span class="hljs-number">1</span>, upper=<sp
             eps = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64,MLJBase.Bounded,Symbol}[NumericRange{Int64,…} @047],
+    range = MLJBase.NumericRange{Int64,MLJBase.Bounded,Symbol}[NumericRange{Int64,…} @917],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @558</code></pre>
+    check_measure = true) @692</code></pre>
 <p>Note that &quot;wrapping a model in a tuning strategy&quot; as above means creating a new &quot;self-tuning&quot; version of the model, <code>tuned_model &#61; TunedModel&#40;model&#61;...&#41;</code>, in which further key-word arguments specify:</p>
 <ol>
 <li><p>the algorithm &#40;a.k.a., tuning strategy&#41; for searching the hyper-parameter space of the model &#40;e.g., <code>tuning &#61; Random&#40;rng&#61;123&#41;</code> or <code>tuning &#61; Grid&#40;goal&#61;100&#41;</code>&#41;.</p>
@@ -165,43 +166,43 @@ r   = range(dtc, :max_depth, lower=<span class="hljs-number">1</span>, upper=<sp
 <p>For more options do <code>?TunedModel</code>.</p>
 <h3 id="fitting_and_inspecting_a_tuned_model"><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></h3>
 <p>To fit a tuned model, you can use the usual syntax:</p>
-<pre><code class="julia hljs">m = machine(tm, X, y)
-fit!(m)</code></pre><pre><code class="plaintext hljs">Machine{ProbabilisticTunedModel{Grid,…}} @160 trained 1 time.
+<pre><code class="language-julia">m = machine(tm, X, y)
+fit!(m)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @984 trained 1 time.
   args: 
-    1:	Source @264 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @181 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @007 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @641 ⏎ `AbstractArray{Multiclass{3},1}`
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
-<pre><code class="julia hljs">fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext hljs">1</code></pre>
+<pre><code class="language-julia">fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext">1</code></pre>
 <p>Note that here we have tuned a probabilistic model and consequently used a probabilistic measure for the tuning. We could also have decided we only cared about the mode and the misclassification rate, to do this, just use <code>operation&#61;predict_mode</code> in the tuned model:</p>
-<pre><code class="julia hljs">tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
+<pre><code class="language-julia">tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
                 measure=misclassification_rate)
 m = machine(tm, X, y)
 fit!(m)
-fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext hljs">2</code></pre>
+fitted_params(m).best_model.max_depth</code></pre><pre><code class="plaintext">2</code></pre>
 <p>Let&#39;s check the misclassification rate for the best model:</p>
-<pre><code class="julia hljs">r = report(m)
-r.best_result</code></pre><pre><code class="plaintext hljs">(measure = [misclassification_rate],
- measurement = [0.2],)</code></pre>
+<pre><code class="language-julia">r = report(m)
+r.best_result</code></pre><pre><code class="plaintext">(measure = [misclassification_rate],
+ measurement = [0.1111111111111111],)</code></pre>
 <p>Anyone wants plots? of course:</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> PyPlot
-figure(figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">6</span>))
-res = r.plotting <span class="hljs-comment"># contains all you need for plotting</span>
-plot(res.parameter_values, res.measurements, ls=<span class="hljs-string">&quot;none&quot;</span>, marker=<span class="hljs-string">&quot;o&quot;</span>)
+<pre><code class="language-julia">using PyPlot
+figure(figsize=(8,6))
+res = r.plotting # contains all you need for plotting
+plot(res.parameter_values, res.measurements, ls="none", marker="o")
 
-xticks(<span class="hljs-number">1</span>:<span class="hljs-number">5</span>, fontsize=<span class="hljs-number">12</span>)
-yticks(fontsize=<span class="hljs-number">12</span>)
-xlabel(<span class="hljs-string">&quot;Maximum depth&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Misclassification rate&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylim([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])</code></pre>
+xticks(1:5, fontsize=12)
+yticks(fontsize=12)
+xlabel("Maximum depth", fontsize=14)
+ylabel("Misclassification rate", fontsize=14)
+ylim([0, 1])</code></pre>
 <img src="/DataScienceTutorials.jl/assets/getting-started/model-tuning/code/output/A-model-tuning-hpt.svg" alt="hyperparameter heatmap">
 <h2 id="tuning_nested_hyperparameters"><a href="#tuning_nested_hyperparameters">Tuning nested hyperparameters</a></h2>
 <p>Let&#39;s generate simple dummy regression data</p>
-<pre><code class="julia hljs">X = (x1=rand(<span class="hljs-number">100</span>), x2=rand(<span class="hljs-number">100</span>), x3=rand(<span class="hljs-number">100</span>))
-y = <span class="hljs-number">2</span>X.x1 - X.x2 + <span class="hljs-number">0.05</span> * randn(<span class="hljs-number">100</span>);</code></pre>
+<pre><code class="language-julia">X = (x1=rand(100), x2=rand(100), x3=rand(100))
+y = 2X.x1 - X.x2 + 0.05 * randn(100);</code></pre>
 <p>Let&#39;s then build a simple ensemble model with decision tree regressors:</p>
-<pre><code class="julia hljs">dtr = <span class="hljs-meta">@load</span> DecisionTreeRegressor
-forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext hljs">DeterministicEnsembleModel(
+<pre><code class="language-julia">dtr = @load DecisionTreeRegressor
+forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext">DeterministicEnsembleModel(
     atom = DecisionTreeRegressor(
             max_depth = -1,
             min_samples_leaf = 5,
@@ -215,9 +216,9 @@ forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext hljs">D
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @631</code></pre>
+    out_of_bag_measure = Any[]) @033</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
-<pre><code class="julia hljs">params(forest) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(atom = (max_depth = -1,
+<pre><code class="language-julia">params(forest) |> pprint</code></pre><pre><code class="plaintext">(atom = (max_depth = -1,
          min_samples_leaf = 5,
          min_samples_split = 2,
          min_purity_increase = 0.0,
@@ -231,34 +232,34 @@ forest = EnsembleModel(atom=dtr)</code></pre><pre><code class="plaintext hljs">D
  acceleration = CPU1{Nothing}(nothing),
  out_of_bag_measure = [])</code></pre>
 <p>Range for nested hyperparameters are specified using dot syntax, the rest is done in much the same way as before:</p>
-<pre><code class="julia hljs">r1 = range(forest, :(atom.n_subfeatures), lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">3</span>)
-r2 = range(forest, :bagging_fraction, lower=<span class="hljs-number">0.4</span>, upper=<span class="hljs-number">1.0</span>)
-tm = TunedModel(model=forest, tuning=Grid(resolution=<span class="hljs-number">12</span>),
-                resampling=CV(nfolds=<span class="hljs-number">6</span>), ranges=[r1, r2],
+<pre><code class="language-julia">r1 = range(forest, :(atom.n_subfeatures), lower=1, upper=3)
+r2 = range(forest, :bagging_fraction, lower=0.4, upper=1.0)
+tm = TunedModel(model=forest, tuning=Grid(resolution=12),
+                resampling=CV(nfolds=6), ranges=[r1, r2],
                 measure=rms)
 m = machine(tm, X, y)
 fit!(m);</code></pre>
 <p>A useful function to inspect a model after fitting it is the <code>report</code> function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:</p>
-<pre><code class="julia hljs">r = report(m)
-r.best_result</code></pre><pre><code class="plaintext hljs">(measure = [rms],
- measurement = [0.1676474771597474],)</code></pre>
+<pre><code class="language-julia">r = report(m)
+r.best_result</code></pre><pre><code class="plaintext">(measure = [rms],
+ measurement = [0.15610176935337897],)</code></pre>
 <p>Let&#39;s visualise this</p>
-<pre><code class="julia hljs">figure(figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">6</span>))
+<pre><code class="language-julia">figure(figsize=(8,6))
 
 res = r.plotting
 
-vals_sf = res.parameter_values[:, <span class="hljs-number">1</span>]
-vals_bf = res.parameter_values[:, <span class="hljs-number">2</span>]
+vals_sf = res.parameter_values[:, 1]
+vals_bf = res.parameter_values[:, 2]
 
 tricontourf(vals_sf, vals_bf, res.measurements)
-xlabel(<span class="hljs-string">&quot;Number of sub-features&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Bagging fraction&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-xticks([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], fontsize=<span class="hljs-number">12</span>)
-yticks(fontsize=<span class="hljs-number">12</span>)</code></pre>
+xlabel("Number of sub-features", fontsize=14)
+ylabel("Bagging fraction", fontsize=14)
+xticks([1, 2, 3], fontsize=12)
+yticks(fontsize=12)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/getting-started/model-tuning/code/output/A-model-tuning-hm.svg" alt="Hyperparameter heatmap">
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -267,8 +268,8 @@ yticks(fontsize=<span class="hljs-number">12</span>)</code></pre>
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>

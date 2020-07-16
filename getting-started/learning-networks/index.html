@@ -101,22 +101,22 @@
 <div class="franklin-content"><h1 id="learning_networks"><a href="#learning_networks">Learning networks</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-learning-networks.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#defining_a_learning_network">Defining a learning network</a><ol><li><a href="#sources_and_nodes">Sources and nodes</a></li><li><a href="#modifying_hyperparameters">Modifying hyperparameters</a></li></ol></li><li><a href="#quotarrowquot_syntax">&quot;Arrow&quot; syntax</a></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
 <p>Let&#39;s generate a <code>DataFrame</code> with some dummy regression data, let&#39;s also load the good old ridge regressor.</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ, StableRNGs
-<span class="hljs-keyword">import</span> DataFrames
-<span class="hljs-meta">@load</span> RidgeRegressor pkg=MultivariateStats
+<pre><code class="language-julia">using MLJ, StableRNGs
+import DataFrames
+@load RidgeRegressor pkg=MultivariateStats
 
-rng = StableRNG(<span class="hljs-number">551234</span>) <span class="hljs-comment"># for reproducibility</span>
+rng = StableRNG(551234) # for reproducibility
 
-x1 = rand(rng, <span class="hljs-number">300</span>)
-x2 = rand(rng, <span class="hljs-number">300</span>)
-x3 = rand(rng, <span class="hljs-number">300</span>)
-y = exp.(x1 - x2 -<span class="hljs-number">2</span>x3 + <span class="hljs-number">0.1</span>*rand(rng, <span class="hljs-number">300</span>))
+x1 = rand(rng, 300)
+x2 = rand(rng, 300)
+x3 = rand(rng, 300)
+y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
 
 X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
-first(X, <span class="hljs-number">3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">InterruptException:
+first(X, 3) |> pretty</code></pre><pre><code class="plaintext">InterruptException:
 </code></pre>
 <p>Let&#39;s also prepare the train and test split which will be useful later on.</p>
-<pre><code class="julia hljs">test, train = partition(eachindex(y), <span class="hljs-number">0.8</span>);</code></pre><pre><code class="plaintext hljs">UndefVarError: y not defined
+<pre><code class="language-julia">test, train = partition(eachindex(y), 0.8);</code></pre><pre><code class="plaintext">UndefVarError: y not defined
 </code></pre>
 <h2 id="defining_a_learning_network"><a href="#defining_a_learning_network">Defining a learning network</a></h2>
 <p>In MLJ, a <em>learning network</em> is a directed acyclic graph &#40;DAG&#41; whose <em>nodes</em> apply trained or untrained operations such as a <code>predict</code> or <code>transform</code> &#40;trained&#41; or <code>&#43;</code>, <code>vcat</code> etc. &#40;untrained&#41;. Learning networks can be seen as pipelines on steroids.</p>
@@ -126,75 +126,75 @@ first(X, <span class="hljs-number">3</span>) |&gt; pretty</code></pre><pre><code
 <p><strong>Note</strong>: actually  this DAG is simple enough that it could also have been done with a pipeline.</p>
 <h3 id="sources_and_nodes"><a href="#sources_and_nodes">Sources and nodes</a></h3>
 <p>In MLJ a learning network starts at <strong>source</strong> nodes and flows through nodes &#40;<code>X</code> and <code>y</code>&#41; defining operations/transformations &#40;<code>W</code>, <code>z</code>, <code>ẑ</code>, <code>ŷ</code>&#41;. To define the source nodes, use the <code>source</code> function, you should specify whether it&#39;s a target:</p>
-<pre><code class="julia hljs">Xs = source(X)
-ys = source(y)</code></pre><pre><code class="plaintext hljs">UndefVarError: X not defined
+<pre><code class="language-julia">Xs = source(X)
+ys = source(y)</code></pre><pre><code class="plaintext">UndefVarError: X not defined
 </code></pre>
 <p>To define an &quot;trained-operation&quot; node, you must simply create a machine wrapping a model and another node &#40;the data&#41; and indicate which operation should be performed &#40;e.g. <code>transform</code>&#41;:</p>
-<pre><code class="julia hljs">stand = machine(Standardizer(), Xs)
-W = transform(stand, Xs)</code></pre><pre><code class="plaintext hljs">UndefVarError: Xs not defined
+<pre><code class="language-julia">stand = machine(Standardizer(), Xs)
+W = transform(stand, Xs)</code></pre><pre><code class="plaintext">UndefVarError: Xs not defined
 </code></pre>
 <p>You can <code>fit&#33;</code> a trained-operation node at any point, MLJ will fit whatever it needs that is upstream of that node. In this case, there is just a source node upstream of <code>W</code> so fitting <code>W</code> will just fit the standardizer:</p>
-<pre><code class="julia hljs">fit!(W, rows=train);</code></pre><pre><code class="plaintext hljs">UndefVarError: train not defined
+<pre><code class="language-julia">fit!(W, rows=train);</code></pre><pre><code class="plaintext">UndefVarError: train not defined
 </code></pre>
 <p>If you want to get the transformed data, you can then call the node speciying on which part of the data the operation should be performed:</p>
-<pre><code class="julia hljs">W()             <span class="hljs-comment"># transforms all data</span>
-W(rows=test, )  <span class="hljs-comment"># transforms only test data</span>
-W(X[<span class="hljs-number">3</span>:<span class="hljs-number">4</span>, :])    <span class="hljs-comment"># transforms specific data</span></code></pre><pre><code class="plaintext hljs">UndefVarError: W not defined
+<pre><code class="language-julia">W()             # transforms all data
+W(rows=test, )  # transforms only test data
+W(X[3:4, :])    # transforms specific data</code></pre><pre><code class="plaintext">UndefVarError: W not defined
 </code></pre>
 <p>Let&#39;s now define the other nodes:</p>
-<pre><code class="julia hljs">box_model = UnivariateBoxCoxTransformer()
+<pre><code class="language-julia">box_model = UnivariateBoxCoxTransformer()
 box = machine(box_model, ys)
 z = transform(box, ys)
 
-ridge_model = RidgeRegressor(lambda=<span class="hljs-number">0.1</span>)
+ridge_model = RidgeRegressor(lambda=0.1)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
-ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext hljs">UndefVarError: ys not defined
+ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext">UndefVarError: ys not defined
 </code></pre>
 <p>Note that we have not yet done any training, but if we now call <code>fit&#33;</code> on <code>ŷ</code>, it will fit all nodes upstream of <code>ŷ</code> that need to be re-trained:</p>
-<pre><code class="julia hljs">fit!(ŷ, rows=train);</code></pre><pre><code class="plaintext hljs">UndefVarError: train not defined
+<pre><code class="language-julia">fit!(ŷ, rows=train);</code></pre><pre><code class="plaintext">UndefVarError: train not defined
 </code></pre>
 <p>Now that <code>ŷ</code> has been fitted, you can apply the full graph on test data &#40;or any compatible data&#41;. For instance, let&#39;s get the <code>rms</code> between the ground truth and the predicted values:</p>
-<pre><code class="julia hljs">rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext hljs">UndefVarError: y not defined
+<pre><code class="language-julia">rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext">UndefVarError: y not defined
 </code></pre>
 <h3 id="modifying_hyperparameters"><a href="#modifying_hyperparameters">Modifying hyperparameters</a></h3>
 <p>Hyperparameters can be accessed using the dot syntax as usual. Let&#39;s modify the regularisation parameter of the ridge regression:</p>
-<pre><code class="julia hljs">ridge_model.lambda = <span class="hljs-number">5.0</span>;</code></pre><pre><code class="plaintext hljs">UndefVarError: ridge_model not defined
+<pre><code class="language-julia">ridge_model.lambda = 5.0;</code></pre><pre><code class="plaintext">UndefVarError: ridge_model not defined
 </code></pre>
 <p>Since the node <code>ẑ</code> corresponds to a machine that wraps <code>ridge_model</code>, that node has effectively changed and will be retrained:</p>
-<pre><code class="julia hljs">fit!(ŷ, rows=train)
-rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext hljs">UndefVarError: train not defined
+<pre><code class="language-julia">fit!(ŷ, rows=train)
+rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext">UndefVarError: train not defined
 </code></pre>
 <h2 id="quotarrowquot_syntax"><a href="#quotarrowquot_syntax">&quot;Arrow&quot; syntax</a></h2>  <strong>Important</strong>: for this to work, you need to be using <strong>Julia ≥ 1.3</strong>:</p>
 <p>The syntax to define nodes etc. is a bit verbose. MLJ supports a shorter syntax which abstracts away some of the steps. We will refer to it as the &quot;arrow&quot; syntax as it makes use of the <code>|&gt;</code> operator which can be interpreted as &quot;data flow&quot;.</p>
 <p>Let&#39;s start with <code>W</code> and <code>z</code> &#40;the &quot;first layer&quot;&#41;:</p>
-<pre><code class="julia hljs">W = X |&gt; Standardizer()
-z = y |&gt; UnivariateBoxCoxTransformer()</code></pre><pre><code class="plaintext hljs">UndefVarError: X not defined
+<pre><code class="language-julia">W = X |> Standardizer()
+z = y |> UnivariateBoxCoxTransformer()</code></pre><pre><code class="plaintext">UndefVarError: X not defined
 </code></pre>
 <p>Note that we feed <code>X</code> and <code>y</code> directly into models. In the background, MLJ will create source nodes and assumes that the operation is a <code>transform</code> given the models are unsupervised.</p>
 <p>For a node that corresponds to a supervised model, you can feed a tuple where the first element corresponds to the input &#40;here <code>W</code>&#41; and the second corresponds to the target &#40;here <code>z</code>&#41;, MLJ will assume the operation is a <code>predict</code>:</p>
-<pre><code class="julia hljs">ẑ = (W, z) |&gt; RidgeRegressor(lambda=<span class="hljs-number">0.1</span>);</code></pre><pre><code class="plaintext hljs">UndefVarError: W not defined
+<pre><code class="language-julia">ẑ = (W, z) |> RidgeRegressor(lambda=0.1);</code></pre><pre><code class="plaintext">UndefVarError: W not defined
 </code></pre>
 <p>Finally we need to apply the inverse of the transform encapsulated in the node <code>z</code>, for this:</p>
-<pre><code class="julia hljs">ŷ = ẑ |&gt; inverse_transform(z);</code></pre><pre><code class="plaintext hljs">UndefVarError: z not defined
+<pre><code class="language-julia">ŷ = ẑ |> inverse_transform(z);</code></pre><pre><code class="plaintext">UndefVarError: z not defined
 </code></pre>
 <p>That&#39;s it&#33; You can now fit the network as before:</p>
-<pre><code class="julia hljs">fit!(ŷ, rows=train)
-rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext hljs">UndefVarError: train not defined
+<pre><code class="language-julia">fit!(ŷ, rows=train)
+rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext">UndefVarError: train not defined
 </code></pre>
 <p>To <em>manually</em> modify hyperparameters on a node, you can access them like so:</p>
-<pre><code class="julia hljs">ẑ[:lambda] = <span class="hljs-number">5.0</span>;</code></pre><pre><code class="plaintext hljs">UndefVarError: ẑ not defined
+<pre><code class="language-julia">ẑ[:lambda] = 5.0;</code></pre><pre><code class="plaintext">UndefVarError: ẑ not defined
 </code></pre>
 <p>Here remember that <code>ẑ</code> is a node with a machine that wraps around a ridge regression with a parameter <code>lambda</code> so the syntax above is equivalent to</p>
-<pre><code class="julia hljs">ẑ.machine.model.lambda = <span class="hljs-number">5.0</span>;</code></pre><pre><code class="plaintext hljs">UndefVarError: ẑ not defined
+<pre><code class="language-julia">ẑ.machine.model.lambda = 5.0;</code></pre><pre><code class="plaintext">UndefVarError: ẑ not defined
 </code></pre>
 <p>which is relevant if you want to tune the hyperparameter using a <code>TunedModel</code>.</p>
-<pre><code class="julia hljs">fit!(ŷ, rows=train)
-rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext hljs">UndefVarError: train not defined
+<pre><code class="language-julia">fit!(ŷ, rows=train)
+rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext">UndefVarError: train not defined
 </code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -203,8 +203,8 @@ rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext hljs">Undef
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>

@@ -166,12 +166,17 @@ In these tutorials we use `PyPlot` but you could use another package of course.
 
 ```julia:ex21
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(mpg)
 
-savefig("assets/literate/ISL-lab-2-mpg.svg") # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
 ```
 
-![Simple plot](/assets/literate/ISL-lab-2-mpg.svg)
+\figalt{Simple plot}{ISL-lab-2-mpg.svg}
+
+```julia:ex22
+PyPlot.close_figs() # hide
+```
 
