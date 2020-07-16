@@ -21,6 +21,7 @@ which we can visualise
 
 ```julia:ex3
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
 
 ym1 = y .== -1

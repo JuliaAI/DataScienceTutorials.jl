@@ -40,7 +40,7 @@ test, train = partition(eachindex(y), 0.8);
 # To define the source nodes, use the `source` function, you should specify whether it's a target:
 
 Xs = source(X)
-ys = source(y, kind=:target)
+ys = source(y)
 
 # To define an "trained-operation" node, you must simply create a machine wrapping a model and another node (the data) and indicate which operation should be performed (e.g. `transform`):
 

@@ -70,6 +70,7 @@ cs = cumsum(rpca.principalvars ./ rpca.tvar)
 # Let's visualise this
 
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 

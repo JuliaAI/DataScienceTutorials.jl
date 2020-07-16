@@ -14,6 +14,8 @@ The website_* must be defined for the RSS to work
 @def mintoclevel = 2 <!-- toc starts at h2 onwards -->
 @def maxtoclevel = 3 <!-- toc stops at h3 included -->
 
+@def showall = true
+
 <!--
 Add here global latex commands to use throughout your
 pages. It can be math commands but does not need to be.
