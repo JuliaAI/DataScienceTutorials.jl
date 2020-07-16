@@ -1,1 +1,0 @@
-Table{AbstractArray{Continuous,1}}

@@ -2,11 +2,7 @@
 ## Getting started
 
 ```julia:ex1
-using MLJ
-import RDatasets: dataset
-import DataFrames: DataFrame, select, Not, describe
-using Random
-MLJ.color_off() # hide
+using MLJ, RDatasets, Random
 
 data = dataset("datasets", "USArrests")
 names(data)
@@ -22,7 +18,7 @@ Let's extract the numerical component and coerce
 
 ```julia:ex3
 X = select(data, Not(:State))
-X = coerce(X, :UrbanPop=>Continuous, :Assault=>Continuous);
+X = coerce(X, :UrbanPop=>Continuous);
 ```
 
 ## PCA pipeline
@@ -35,7 +31,7 @@ PCA is usually best done after standardization but we won't do it here:
 pca_mdl = PCA(pratio=1)
 pca = machine(pca_mdl, X)
 fit!(pca)
-PCA
+
 W = transform(pca, X);
 ```
 
@@ -70,10 +66,10 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 ```julia:ex8
 Random.seed!(1515)
 
-SPCA = @pipeline(Standardizer(),
-                 PCA(pratio=1-1e-4))
-
-spca = machine(SPCA, X)
+@pipeline SPCA(std = Standardizer(),
+               pca = PCA(pratio=1-1e-4))
+spca_mdl = SPCA()
+spca = machine(spca_mdl, X)
 fit!(spca)
 W = transform(spca, X)
 names(W)
@@ -82,15 +78,14 @@ names(W)
 What kind of variance can we explain?
 
 ```julia:ex9
-rpca = collect(values(report(spca).report_given_machine))[2]
-cs = cumsum(rpca.principalvars ./ rpca.tvar)
+r  = report(spca).reports[1]
+cs = cumsum(r.principalvars ./ r.tvar)
 ```
 
 Let's visualise this
 
 ```julia:ex10
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 
@@ -100,10 +95,10 @@ plot(1:length(cs), cs, color="red", marker="o")
 xlabel("Number of PCA features", fontsize=14)
 ylabel("Ratio of explained variance", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
+savefig("assets/literate/ISL-lab-10-g1.svg") # hide
 ```
 
-\figalt{PCA explained variance}{ISL-lab-10-g1.svg}
+![PCA explained variance](/assets/literate/ISL-lab-10-g1.svg)
 
 So 4 PCA features are enough to recover most of the variance.
 
@@ -112,15 +107,16 @@ So 4 PCA features are enough to recover most of the variance.
 ```julia:ex11
 Random.seed!(1515)
 
-@load KMeans pkg=Clustering
-SPCA2 = @pipeline(Standardizer(),
-                  PCA(),
-                  KMeans(k=3))
+@load KMeans
+@pipeline SPCA2(std = Standardizer(),
+                pca = PCA(),
+                km = KMeans(k=3))
 
-spca2 = machine(SPCA2, X)
+spca2_mdl = SPCA2()
+spca2 = machine(spca2_mdl, X)
 fit!(spca2)
 
-assignments = collect(values(report(spca2).report_given_machine))[3].assignments
+assignments = report(spca2).reports[1].assignments
 mask1 = assignments .== 1
 mask2 = assignments .== 2
 mask3 = assignments .== 3;
@@ -140,12 +136,8 @@ xlabel("PCA-1", fontsize=13)
 ylabel("PCA-2", fontsize=13)
 legend(["Group 1", "Group 2", "Group 3"], fontsize=13)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-10-cluster.svg")) # hide
+savefig("assets/literate/ISL-lab-10-cluster.svg") # hide
 ```
 
-\fig{ISL-lab-10-cluster.svg}
-
-```julia:ex13
-PyPlot.close_figs() # hide
-```
+![](/assets/literate/ISL-lab-10-cluster.svg)
 

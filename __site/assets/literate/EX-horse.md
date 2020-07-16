@@ -1,7 +1,7 @@
 <!--This file was generated, do not modify it.-->
 ## Initial data processing
 
-In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
+In this example, we consider the [UCI "horse colic" dataset](https://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
 This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.
 
@@ -10,13 +10,10 @@ This is a reasonably messy classification problem with missing values etc and so
 The data is pre-split in training and testing and we will keep it as such
 
 ```julia:ex1
-using MLJ
-MLJ.color_off() # hide
-using HTTP
-using CSV
-import DataFrames: DataFrame, select!, Not
-req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
-req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+using MLJ, StatsBase, ScientificTypes
+using HTTP, CSV, DataFrames
+req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
     "rectal_temperature", "pulse",
     "respiratory_rate", "temperature_extremities",
@@ -150,7 +147,6 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous))
 ```
 
 ## A baseline model

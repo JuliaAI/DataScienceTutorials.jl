@@ -1,11 +1,6 @@
 # This file was generated, do not modify it.
 
-using MLJ
-import Statistics
-using PrettyPrinting
-using StableRNGs
-
-MLJ.color_off() # hide
+using MLJ, Statistics, PrettyPrinting
 X, y = @load_iris;
 
 @load DecisionTreeClassifier
@@ -13,8 +8,7 @@ tree_model = DecisionTreeClassifier()
 
 tree = machine(tree_model, X, y)
 
-rng = StableRNG(566)
-train, test = partition(eachindex(y), 0.7, shuffle=true, rng=rng)
+train, test = partition(eachindex(y), 0.7, shuffle=true)
 test[1:3]
 
 fit!(tree, rows=train)

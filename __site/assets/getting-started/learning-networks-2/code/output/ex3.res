@@ -1,6 +1,7 @@
-Node{Machine{UnivariateBoxCoxTransformer}} @753
+Node{Machine{UnivariateBoxCoxTransformer}} @546
   args:
-    1:	Source @441
+    1:	Source @316
+  formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer} @230, 
-        Source @441)
+        Machine{UnivariateBoxCoxTransformer} @796, 
+        Source @316)
