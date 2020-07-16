@@ -1,6 +1,6 @@
 @def hascode = true
 @def showall = true
 
-# Boston with LightGBM
+# Boston with Flux
 
 \tutorial{EX-boston-flux}
