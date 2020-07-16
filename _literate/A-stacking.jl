@@ -106,17 +106,20 @@ yhat = 0.5*y1 + 0.5*y2
 surrogate = Deterministic()
 mach = machine(surrogate, X, y; predict=yhat)
 
+# Note that we do not fit this machine as no data has been passed yet.
+#
 # And the macro call to define `MyAverageTwo` and an instance `average_two`:
 
 @from_network mach begin
     mutable struct MyAverageTwo
-        regressor=model2
+        regressor1=model1
+        regressor2=model2
     end
 end
 
 # We can now create an instance of this type
 
-avg = MyAverageTwo()
+average_two = MyAverageTwo()
 
 # Evaluating this average model on the Boston data set, and comparing
 # with the base model predictions:
@@ -135,7 +138,7 @@ X, y = @load_boston
 
 print_performance(linear, X, y)
 print_performance(knn, X, y)
-print_performance(avg, X, y)
+print_performance(average_two, X, y)
 
 # ## Stacking proper
 # ### Helper functions:
@@ -334,11 +337,13 @@ estack = rms(yhat(), y())
 
 @from_network mach begin
     mutable struct MyTwoModelStack
-        regressor=judge
+        regressor1=model1
+        regressor2=model2
+        judge=judge
     end
 end
 
-MyTwoModelStack_inst = MyTwoModelStack()
+My_Two_Model_Stack = MyTwoModelStack()
 
 # And this completes the definition of our re-usable stacking model type.
 
