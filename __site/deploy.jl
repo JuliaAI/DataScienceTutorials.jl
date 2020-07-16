@@ -70,4 +70,4 @@ end
 
 commit = (@isdefined commit) ? commit : "fd-update"
 
-publish(message=commit, final=lunr)
+publish(message=commit, final=lunr, minify=false, prerender=false)
