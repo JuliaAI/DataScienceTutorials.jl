@@ -4,11 +4,18 @@
 Let's start by loading the relevant packages and generating some dummy data.
 
 ```julia:ex1
-using MLJ, DataFrames, Statistics, PrettyPrinting
+using MLJ
+import DataFrames
+import Statistics
+using PrettyPrinting
+using StableRNGs
 
-Xraw = rand(300, 3)
-y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(300))
-X = DataFrame(Xraw)
+MLJ.color_off() # hide
+
+rng = StableRNG(512)
+Xraw = rand(rng, 300, 3)
+y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(rng, 300))
+X = DataFrames.DataFrame(Xraw)
 
 train, test = partition(eachindex(y), 0.7);
 ```
@@ -37,7 +44,7 @@ rms(ŷ, y[test])
 The few steps above are equivalent to just calling `evaluate!`:
 
 ```julia:ex5
-evaluate!(knn, resampling=Holdout(fraction_train=0.7),
+evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
           measure=rms) |> pprint
 ```
 
@@ -94,7 +101,7 @@ Now we have to define a `TunedModel` and fit it:
 ```julia:ex11
 tm = TunedModel(model=ensemble_model,
                 tuning=Grid(resolution=10), # 10x10 grid
-                resampling=Holdout(fraction_train=0.8, rng=42),
+                resampling=Holdout(fraction_train=0.8, rng=StableRNG(42)),
                 ranges=[B_range, K_range])
 
 tuned_ensemble = machine(tm, X, y)
@@ -126,24 +133,27 @@ using PyPlot
 
 figure(figsize=(8,6))
 
-vals_b = r.parameter_values[:, 1]
-vals_k = r.parameter_values[:, 2]
+res = r.plotting
+vals_b = res.parameter_values[:, 1]
+vals_k = res.parameter_values[:, 2]
 
-tricontourf(vals_b, vals_k, r.measurements)
+tricontourf(vals_b, vals_k, res.measurements)
 xticks(0.5:0.1:1, fontsize=12)
 xlabel("Bagging fraction", fontsize=14)
 yticks([1, 5, 10, 15, 20], fontsize=12)
 ylabel("Number of neighbors - K", fontsize=14)
 
-savefig("assets/literate/A-ensembles-heatmap.svg") # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-heatmap.svg")) # hide
 ```
 
-![Hyperparameter heatmap](/assets/literate/A-ensembles-heatmap.svg)
+\figalt{Hyperparameter heatmap}{A-ensembles-heatmap.svg}
 
 Finally you can always just evaluate the model by reporting `rms` on the test set:
 
 ```julia:ex15
 ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])
+
+PyPlot.close_figs() # hide
 ```
 

@@ -2,7 +2,11 @@
 ## Getting started
 
 ```julia:ex1
-using MLJ, RDatasets, PrettyPrinting, Random
+using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+using Random
+MLJ.color_off() # hide
 ```
 
 We start by generating a 2D cloud of points
@@ -17,6 +21,7 @@ which we can visualise
 
 ```julia:ex3
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
 
 ym1 = y .== -1
@@ -24,10 +29,10 @@ ym2 = .!ym1
 plot(X[ym1, 1], X[ym1, 2], ls="none", marker="o")
 plot(X[ym2, 1], X[ym2, 2], ls="none", marker="x")
 
-savefig("assets/literate/ISL-lab-9-g1.svg") # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-9-g1.svg")) # hide
 ```
 
-![Toy points](/assets/literate/ISL-lab-9-g1.svg)
+\figalt{Toy points}{ISL-lab-9-g1.svg}
 
 let's wrap the data as a table:
 
@@ -73,4 +78,8 @@ misclassification_rate(ypred, y)
 ```
 
 You could also change the kernel etc.
+
+```julia:ex8
+PyPlot.close_figs() # hide
+```
 

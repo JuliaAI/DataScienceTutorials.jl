@@ -12,7 +12,9 @@ Let's use a decision tree classifier and tune the maximum depth of the tree.
 As usual, start by loading data and the model
 
 ```julia:ex1
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
+MLJ.color_off() # hide
 X, y = @load_iris
 @load DecisionTreeClassifier
 ```
@@ -30,11 +32,19 @@ As you can see, the range function takes a model (`dtc`), a symbol for the hyper
 For hyperparameters of type `<:Real`, you should specify a range of values as done above.
 For hyperparameters of other type (e.g. `Symbol`), you should use the `values=...` keyword.
 
-Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy:
+Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy.
 
 ```julia:ex3
 tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)
 ```
+
+Note that "wrapping a model in a tuning strategy" as above means creating a new "self-tuning" version of the model, `tuned_model = TunedModel(model=...)`, in which further key-word arguments specify:
+1. the algorithm (a.k.a., tuning strategy) for searching the hyper-parameter space of the model (e.g., `tuning = Random(rng=123)` or `tuning = Grid(goal=100)`).
+2. the resampling strategy, used to evaluate performance for each value of the hyper-parameters (e.g., `resampling=CV(nfolds=9, rng=123)` or `resampling=Holdout(fraction_train=0.7)`).
+3. the measure (or measures) on which to base performance evaluations (and for reporting purposes) (e.g., `measure = rms` or `measures = [rms, mae]`).
+4. the range, usually describing the "space" of hyperparameters to be searched (but more generally whatever extra information is required to complete the search specification, e.g., initial values in gradient-descent optimization).
+
+For more options do `?TunedModel`.
 
 ### Fitting and inspecting a tuned model
 
@@ -66,15 +76,17 @@ Let's check the misclassification rate for the best model:
 
 ```julia:ex7
 r = report(m)
-r.best_measurement
+r.best_result
 ```
 
 Anyone wants plots? of course:
 
 ```julia:ex8
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
-plot(r.parameter_values, r.measurements)
+res = r.plotting # contains all you need for plotting
+plot(res.parameter_values, res.measurements, ls="none", marker="o")
 
 xticks(1:5, fontsize=12)
 yticks(fontsize=12)
@@ -82,10 +94,10 @@ xlabel("Maximum depth", fontsize=14)
 ylabel("Misclassification rate", fontsize=14)
 ylim([0, 1])
 
-savefig("assets/literate/A-model-tuning-hpt.svg") # hide
+savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
 ```
 
-![Hyperparameter heatmap](/assets/literate/A-model-tuning-hpt.svg)
+\figalt{hyperparameter heatmap}{A-model-tuning-hpt}
 
 ## Tuning nested hyperparameters
 
@@ -126,7 +138,7 @@ A useful function to inspect a model after fitting it is the `report` function w
 
 ```julia:ex13
 r = report(m)
-r.best_measurement
+r.best_result
 ```
 
 Let's visualise this
@@ -134,17 +146,23 @@ Let's visualise this
 ```julia:ex14
 figure(figsize=(8,6))
 
-vals_sf = r.parameter_values[:, 1]
-vals_bf = r.parameter_values[:, 2]
+res = r.plotting
 
-tricontourf(vals_sf, vals_bf, r.measurements)
+vals_sf = res.parameter_values[:, 1]
+vals_bf = res.parameter_values[:, 2]
+
+tricontourf(vals_sf, vals_bf, res.measurements)
 xlabel("Number of sub-features", fontsize=14)
 ylabel("Bagging fraction", fontsize=14)
 xticks([1, 2, 3], fontsize=12)
 yticks(fontsize=12)
 
-savefig("assets/literate/A-model-tuning-hm.svg") # hide
+savefig(joinpath(@OUTPUT, "A-model-tuning-hm.svg")) # hide
 ```
 
-![Hyperparameter heatmap](/assets/literate/A-model-tuning-hm.svg)
+\figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
+
+```julia:ex15
+PyPlot.close_figs() # hide
+```
 

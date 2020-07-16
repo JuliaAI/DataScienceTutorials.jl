@@ -101,26 +101,26 @@
 <div class="franklin-content"><h1 id="boston_with_lightgbm"><a href="#boston_with_lightgbm">Boston with LightGBM</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-boston-flux.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-boston-flux.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li></ol></div><strong>Main author</strong>: Ayush Shridhar &#40;ayush-1506&#41;.</p>
 <h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
-<pre><code class="julia hljs"><span class="hljs-keyword">import</span> MLJFlux
-<span class="hljs-keyword">import</span> MLJ
-<span class="hljs-keyword">import</span> DataFrames
-<span class="hljs-keyword">import</span> Statistics
-<span class="hljs-keyword">import</span> Flux
-<span class="hljs-keyword">using</span> Random
-<span class="hljs-keyword">using</span> Plots
+<pre><code class="language-julia">import MLJFlux
+import MLJ
+import DataFrames
+import Statistics
+import Flux
+using Random
+using Plots
 
-Random.seed!(<span class="hljs-number">11</span>)</code></pre><pre><code class="plaintext hljs">InterruptException:
+Random.seed!(11)</code></pre><pre><code class="plaintext">InterruptException:
 </code></pre>
 <p>Loading the Boston dataset. Our aim will be to implement a neural network regressor to predict the price of a house, given a number of features.</p>
-<pre><code class="julia hljs">features, targets = MLJ.<span class="hljs-meta">@load_boston</span>
+<pre><code class="language-julia">features, targets = MLJ.@load_boston
 features = DataFrames.DataFrame(features)
-<span class="hljs-meta">@show</span> size(features)
-<span class="hljs-meta">@show</span> targets[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]
-first(features, <span class="hljs-number">3</span>) |&gt; MLJ.pretty</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: MLJ not defined
+@show size(features)
+@show targets[1:3]
+first(features, 3) |> MLJ.pretty</code></pre><pre><code class="plaintext">LoadError: UndefVarError: MLJ not defined
 in expression starting at none:1
 </code></pre>
 <p>Next obvious steps: partitioning into train and test set</p>
-<pre><code class="julia hljs">train, test = MLJ.partition(MLJ.eachindex(targets), <span class="hljs-number">0.70</span>, rng=<span class="hljs-number">52</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+<pre><code class="language-julia">train, test = MLJ.partition(MLJ.eachindex(targets), 0.70, rng=52)</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre>
 <p>Let us try to implement an Neural Network regressor using Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl deep learning framework. The package provides four essential models: <code>NeuralNetworkRegressor, MultitargetNeuralNetworkRegressor,
 NeuralNetworkClassifier</code> and <code>ImageClassifier</code>.</p>
@@ -130,79 +130,79 @@ NeuralNetworkClassifier</code> and <code>ImageClassifier</code>.</p>
 </li>
 </ol>
 <p>is an abstract structure used for the purpose of dispatching. Suppose we define a new struct called <code>MyNetworkBuilder</code>. This can contain any attribute required to build the model later. &#40;Step 2&#41;. Let&#39;s use Dense Neural Network with 2 hidden layers.</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">mutable struct</span> MyNetworkBuilder &lt;: MLJFlux.Builder
-    n1::<span class="hljs-built_in">Int</span> <span class="hljs-comment">#Number of cells in the first hidden layer</span>
-    n2::<span class="hljs-built_in">Int</span> <span class="hljs-comment">#Number of cells in the second hidden layer</span>
-<span class="hljs-keyword">end</span></code></pre><pre><code class="plaintext hljs">UndefVarError: MLJFlux not defined
+<pre><code class="language-julia">mutable struct MyNetworkBuilder <: MLJFlux.Builder
+    n1::Int #Number of cells in the first hidden layer
+    n2::Int #Number of cells in the second hidden layer
+end</code></pre><pre><code class="plaintext">UndefVarError: MLJFlux not defined
 </code></pre>
 <p>Step 2: Building the neural network from this object. Extend the <code>MLJFlux.build</code> function. This takes in 3 arguments: The object of <code>MyNetworkBuilder</code>, input dimension &#40;ip&#41; and output dimension &#40;op&#41;.</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">function</span> MLJFlux.build(model::MyNetworkBuilder, input_dims, output_dims)
+<pre><code class="language-julia">function MLJFlux.build(model::MyNetworkBuilder, input_dims, output_dims)
     layer1 = Flux.Dense(input_dims, model.n1)
     layer2 = Flux.Dense(model.n1, model.n2)
     layer3 = Flux.Dense(model.n2, output_dims)
-    <span class="hljs-keyword">return</span> Flux.Chain(layer1, layer2, layer3)
-<span class="hljs-keyword">end</span></code></pre><pre><code class="plaintext hljs">UndefVarError: MLJFlux not defined
+    return Flux.Chain(layer1, layer2, layer3)
+end</code></pre><pre><code class="plaintext">UndefVarError: MLJFlux not defined
 </code></pre>
 <p>With all definitions ready, let us create an object of this:</p>
-<pre><code class="julia hljs">myregressor = MyNetworkBuilder(<span class="hljs-number">20</span>, <span class="hljs-number">10</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: MyNetworkBuilder not defined
+<pre><code class="language-julia">myregressor = MyNetworkBuilder(20, 10)</code></pre><pre><code class="plaintext">UndefVarError: MyNetworkBuilder not defined
 </code></pre>
 <p>Since the boston dataset is a regression problem, we&#39;ll be using <code>NeuralNetworkRegressor</code> here. One thing to remember is that a <code>NeuralNetworkRegressor</code> object works seamlessly like any other MLJ model: you can wrap it in an  MLJ <code>machine</code> and do anything you&#39;d do otherwise.</p>
 <p>Let&#39;s start by defining our NeuralNetworkRegressor object, that takes <code>myregressor</code> as it&#39;s parameter.</p>
-<pre><code class="julia hljs">nnregressor = MLJFlux.NeuralNetworkRegressor(builder=myregressor, epochs=<span class="hljs-number">10</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: myregressor not defined
+<pre><code class="language-julia">nnregressor = MLJFlux.NeuralNetworkRegressor(builder=myregressor, epochs=10)</code></pre><pre><code class="plaintext">UndefVarError: myregressor not defined
 </code></pre>
 <p>Other parameters that NeuralNetworkRegressor takes can be found here: https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters</p>
 <code>nnregressor</code> now acts like any other MLJ model. Let&#39;s try wrapping it in a MLJ machine and calling <code>fit&#33;, predict</code>.</p>
-<pre><code class="julia hljs">mach = MLJ.machine(nnregressor, features, targets)</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+<pre><code class="language-julia">mach = MLJ.machine(nnregressor, features, targets)</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre>
 <p>Let&#39;s fit this on the train set</p>
-<pre><code class="julia hljs">MLJ.fit!(mach, rows=train, verbosity=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: train not defined
+<pre><code class="language-julia">MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">UndefVarError: train not defined
 </code></pre>
 <p>As we can see, the training loss decreases at each epoch, showing the the neural network is gradually learning form the training set.</p>
-<pre><code class="julia hljs">preds = MLJ.predict(mach, features[test, :])
+<pre><code class="language-julia">preds = MLJ.predict(mach, features[test, :])
 
-print(preds[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+print(preds[1:5])</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre>
 <p>Now let&#39;s retrain our model. One thing to remember is that retrainig may OR may not re-initialize our neural network model parameters. For example, changing the number of epochs to 15 will not causes the model to train to 15 epcohs, but just 5 additional epochs.</p>
-<pre><code class="julia hljs">nnregressor.epochs = <span class="hljs-number">15</span>
+<pre><code class="language-julia">nnregressor.epochs = 15
 
-MLJ.fit!(mach, rows=train, verbosity=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: nnregressor not defined
+MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">UndefVarError: nnregressor not defined
 </code></pre>
 <p>You can always specify that you want to retrain the model from scratch using the force&#61;true parameter. &#40;Look at documentation for <code>fit&#33;</code> for more&#41;.</p>
 <p>However, changing parameters such as batch_size will necessarily cause re-training from scratch.</p>
-<pre><code class="julia hljs">nnregressor.batch_size = <span class="hljs-number">2</span>
-MLJ.fit!(mach, rows=train, verbosity=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: nnregressor not defined
+<pre><code class="language-julia">nnregressor.batch_size = 2
+MLJ.fit!(mach, rows=train, verbosity=3)</code></pre><pre><code class="plaintext">UndefVarError: nnregressor not defined
 </code></pre>
 <p>Another bit to remember here is that changing the optimiser doesn&#39;t cause retaining by default. However, the <code>optimiser_changes_trigger_retraining</code> in NeuralNetworkRegressor can be toggled to accomodate this. This allows one to modify the learning rate, for example, after an initial burn-in period.</p>
-<pre><code class="julia hljs"><span class="hljs-comment"># Inspecting out-of-sample loss as a function of epochs</span>
+<pre><code class="language-julia"># Inspecting out-of-sample loss as a function of epochs
 
-r = MLJ.range(nnregressor, :epochs, lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">30</span>, scale=:log10)
+r = MLJ.range(nnregressor, :epochs, lower=1, upper=30, scale=:log10)
 curve = MLJ.learning_curve(nnregressor, features, targets,
                        range=r,
-                       resampling=MLJ.Holdout(fraction_train=<span class="hljs-number">0.7</span>),
+                       resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
 plot(curve.parameter_values,
     curve.measurements,
     xlab=curve.parameter_name,
     xscale=curve.parameter_scale,
-    ylab = <span class="hljs-string">&quot;l2&quot;</span>)
-<span class="hljs-comment"># Tuning</span></code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+    ylab = "l2")
+# Tuning</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre>
 <p>As mentioned above, <code>nnregressor</code> can act like any other MLJ model. Let&#39;s try to tune the batch_size parameter.</p>
-<pre><code class="julia hljs">bs = MLJ.range(nnregressor, :batch_size, lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">5</span>)
+<pre><code class="language-julia">bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
-tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre>
 <p>For more on tuning, refer to the model-tuning tutorial.</p>
-<pre><code class="julia hljs">m = MLJ.machine(tm, features, targets)
+<pre><code class="language-julia">m = MLJ.machine(tm, features, targets)
 
-MLJ.fit!(m)</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+MLJ.fit!(m)</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre>
 <p>This evaluated the model at each value of our range. The best value is:</p>
-<pre><code class="julia hljs">MLJ.fitted_params(m).best_model.batch_size</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
+<pre><code class="language-julia">MLJ.fitted_params(m).best_model.batch_size</code></pre><pre><code class="plaintext">UndefVarError: MLJ not defined
 </code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 15, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -211,8 +211,8 @@ MLJ.fit!(m)</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>

@@ -26,7 +26,7 @@ The `dataset` function returns a `DataFrame` object from the [DataFrames.jl](htt
 typeof(boston)
 ```
 
-For a short introduction to DataFrame objects, see [this tutorial](/pub/data/dataframe.html).
+For a short introduction to DataFrame objects, see [this tutorial](/data/dataframe).
 
 ## Using CSV
 
@@ -37,7 +37,7 @@ In particular the `CSV.read` function allows to read a file and return a DataFra
 
 Let's say you have a file `foo.csv` at some path `fpath=joinpath("data", "foo.csv")` with the content
 
-```plaintext
+```
 col1,col2,col3,col4,col5,col6,col7,col8
 ,1,1.0,1,one,2019-01-01,2019-01-01T00:00:00,true
 ,2,2.0,2,two,2019-01-02,2019-01-02T00:00:00,false

@@ -1,0 +1,4 @@
+(measure = [rms, rmslp1],
+ measurement = [4.636154685847627, 0.27138305869062235],
+ per_fold = [[4.636154685847627], [0.27138305869062235]],
+ per_observation = [missing, missing])

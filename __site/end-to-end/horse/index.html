@@ -104,47 +104,47 @@
 <p>This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.</p>
 <h3 id="getting_the_data"><a href="#getting_the_data">Getting the data</a></h3>
 <p>The data is pre-split in training and testing and we will keep it as such</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
-<span class="hljs-keyword">using</span> HTTP
-<span class="hljs-keyword">using</span> CSV
-<span class="hljs-keyword">import</span> DataFrames: DataFrame, select!, Not
-req1 = HTTP.get(<span class="hljs-string">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data&quot;</span>)
-req2 = HTTP.get(<span class="hljs-string">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test&quot;</span>)
-header = [<span class="hljs-string">&quot;surgery&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-string">&quot;hospital_number&quot;</span>,
-    <span class="hljs-string">&quot;rectal_temperature&quot;</span>, <span class="hljs-string">&quot;pulse&quot;</span>,
-    <span class="hljs-string">&quot;respiratory_rate&quot;</span>, <span class="hljs-string">&quot;temperature_extremities&quot;</span>,
-    <span class="hljs-string">&quot;peripheral_pulse&quot;</span>, <span class="hljs-string">&quot;mucous_membranes&quot;</span>,
-    <span class="hljs-string">&quot;capillary_refill_time&quot;</span>, <span class="hljs-string">&quot;pain&quot;</span>,
-    <span class="hljs-string">&quot;peristalsis&quot;</span>, <span class="hljs-string">&quot;abdominal_distension&quot;</span>,
-    <span class="hljs-string">&quot;nasogastric_tube&quot;</span>, <span class="hljs-string">&quot;nasogastric_reflux&quot;</span>,
-    <span class="hljs-string">&quot;nasogastric_reflux_ph&quot;</span>, <span class="hljs-string">&quot;feces&quot;</span>, <span class="hljs-string">&quot;abdomen&quot;</span>,
-    <span class="hljs-string">&quot;packed_cell_volume&quot;</span>, <span class="hljs-string">&quot;total_protein&quot;</span>,
-    <span class="hljs-string">&quot;abdomcentesis_appearance&quot;</span>, <span class="hljs-string">&quot;abdomcentesis_total_protein&quot;</span>,
-    <span class="hljs-string">&quot;outcome&quot;</span>, <span class="hljs-string">&quot;surgical_lesion&quot;</span>, <span class="hljs-string">&quot;lesion_1&quot;</span>, <span class="hljs-string">&quot;lesion_2&quot;</span>, <span class="hljs-string">&quot;lesion_3&quot;</span>,
-    <span class="hljs-string">&quot;cp_data&quot;</span>]
-csv_opts = (header=header, delim=<span class="hljs-string">&#x27; &#x27;</span>, missingstring=<span class="hljs-string">&quot;?&quot;</span>,
-            ignorerepeated=<span class="hljs-literal">true</span>)
+<pre><code class="language-julia">using MLJ
+using HTTP
+using CSV
+import DataFrames: DataFrame, select!, Not
+req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+header = ["surgery", "age", "hospital_number",
+    "rectal_temperature", "pulse",
+    "respiratory_rate", "temperature_extremities",
+    "peripheral_pulse", "mucous_membranes",
+    "capillary_refill_time", "pain",
+    "peristalsis", "abdominal_distension",
+    "nasogastric_tube", "nasogastric_reflux",
+    "nasogastric_reflux_ph", "feces", "abdomen",
+    "packed_cell_volume", "total_protein",
+    "abdomcentesis_appearance", "abdomcentesis_total_protein",
+    "outcome", "surgical_lesion", "lesion_1", "lesion_2", "lesion_3",
+    "cp_data"]
+csv_opts = (header=header, delim=' ', missingstring="?",
+            ignorerepeated=true)
 data_train = CSV.read(req1.body; csv_opts...)
 data_test  = CSV.read(req2.body; csv_opts...)
-<span class="hljs-meta">@show</span> size(data_train)
-<span class="hljs-meta">@show</span> size(data_test)</code></pre><pre><code class="plaintext hljs">size(data_train) = (300, 28)
+@show size(data_train)
+@show size(data_test)</code></pre><pre><code class="plaintext">size(data_train) = (300, 28)
 size(data_test) = (68, 28)
 </code></pre>
 <h3 id="inspecting_columns"><a href="#inspecting_columns">Inspecting columns</a></h3>
 <p>To simplify the analysis, we will drop the columns <code>Lesion *</code> as they would need specific re-encoding which would distract us a bit.</p>
-<pre><code class="julia hljs">unwanted = [:lesion_1, :lesion_2, :lesion_3]
+<pre><code class="language-julia">unwanted = [:lesion_1, :lesion_2, :lesion_3]
 data = vcat(data_train, data_test)
 select!(data, Not(unwanted));</code></pre>
 <p>Let&#39;s also keep track of the initial train-test split</p>
-<pre><code class="julia hljs">train = <span class="hljs-number">1</span>:nrows(data_train)
-test = last(train) .+ (<span class="hljs-number">1</span>:nrows(data_test));</code></pre>
+<pre><code class="language-julia">train = 1:nrows(data_train)
+test = last(train) .+ (1:nrows(data_test));</code></pre>
 <p>We know from reading the description that some of these features represent multiclass data; to facilitate the interpretation, we can use <code>autotype</code> from <code>ScientificTypes</code>. By default, <code>autotype</code> will check all columns and suggest a Finite type assuming there are relatively few distinct values in the column. More sophisticated rules can be passed, see <a href="https://alan-turing-institute.github.io/ScientificTypes.jl/dev/">ScientificTypes.jl</a>:</p>
-<pre><code class="julia hljs">datac = coerce(data, autotype(data));</code></pre>
+<pre><code class="language-julia">datac = coerce(data, autotype(data));</code></pre>
 <p>Let&#39;s see column by column whether it looks ok now</p>
-<pre><code class="julia hljs">sch = schema(datac)
-<span class="hljs-keyword">for</span> (name, scitype) <span class="hljs-keyword">in</span> zip(sch.names, sch.scitypes)
-    println(rpad(<span class="hljs-string">&quot;<span class="hljs-variable">$name</span>&quot;</span>, <span class="hljs-number">30</span>), scitype)
-<span class="hljs-keyword">end</span></code></pre><pre><code class="plaintext hljs">surgery                       Union{Missing, OrderedFactor{2}}
+<pre><code class="language-julia">sch = schema(datac)
+for (name, scitype) in zip(sch.names, sch.scitypes)
+    println(rpad("$name", 30), scitype)
+end</code></pre><pre><code class="plaintext">surgery                       Union{Missing, OrderedFactor{2}}
 age                           OrderedFactor{2}
 hospital_number               Count
 rectal_temperature            Union{Missing, Continuous}
@@ -184,11 +184,11 @@ cp_data                       OrderedFactor{2}
 <li><p>pulse and respiratory rate are still as count but the data description suggests that they can be considered as continuous</p>
 </li>
 </ul>
-<pre><code class="julia hljs">length(unique(datac.hospital_number))</code></pre><pre><code class="plaintext hljs">346</code></pre>
+<pre><code class="language-julia">length(unique(datac.hospital_number))</code></pre><pre><code class="plaintext">346</code></pre>
 <p>yeah let&#39;s drop that</p>
-<pre><code class="julia hljs">datac = select!(datac, Not(:hospital_number));</code></pre>
+<pre><code class="language-julia">datac = select!(datac, Not(:hospital_number));</code></pre>
 <p>let&#39;s also coerce the pulse and respiratory rate, in fact we can do that with <code>autotype</code> specifying as rule the <code>discrete_to_continuous</code>
-<pre><code class="julia hljs">datac = coerce(datac, autotype(datac, rules=(:discrete_to_continuous,)));</code></pre>
+<pre><code class="language-julia">datac = coerce(datac, autotype(datac, rules=(:discrete_to_continuous,)));</code></pre>
 <h3 id="dealing_with_missing_values"><a href="#dealing_with_missing_values">Dealing with missing values</a></h3>
 <p>There&#39;s quite a lot of missing values, in this tutorial we&#39;ll be a bit rough in how we deal with them applying the following rules of thumb:</p>
 <ul>
@@ -199,20 +199,20 @@ cp_data                       OrderedFactor{2}
 <li><p>simple imputation of whatever&#39;s left</p>
 </li>
 </ul>
-<pre><code class="julia hljs">missing_outcome = ismissing.(datac.outcome)
-idx_missing_outcome = missing_outcome |&gt; findall</code></pre><pre><code class="plaintext hljs">2-element Array{Int64,1}:
+<pre><code class="language-julia">missing_outcome = ismissing.(datac.outcome)
+idx_missing_outcome = missing_outcome |> findall</code></pre><pre><code class="plaintext">2-element Array{Int64,1}:
  133
  309</code></pre>
 <p>Ok there&#39;s only two row which is nice, let&#39;s remove them from the train/test indices and drop the rows</p>
-<pre><code class="julia hljs">train = setdiff!(train |&gt; collect, idx_missing_outcome)
-test = setdiff!(test |&gt; collect, idx_missing_outcome)
+<pre><code class="language-julia">train = setdiff!(train |> collect, idx_missing_outcome)
+test = setdiff!(test |> collect, idx_missing_outcome)
 datac = datac[.!missing_outcome, :];</code></pre>
 <p>Now let&#39;s look at how many missings there are per features</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> names(datac)
+<pre><code class="language-julia">for name in names(datac)
     col = datac[:, name]
-    ratio_missing = sum(ismissing.(col)) / nrows(datac) * <span class="hljs-number">100</span>
-    println(rpad(name, <span class="hljs-number">30</span>), round(ratio_missing, sigdigits=<span class="hljs-number">3</span>))
-<span class="hljs-keyword">end</span></code></pre><pre><code class="plaintext hljs">surgery                       0.0
+    ratio_missing = sum(ismissing.(col)) / nrows(datac) * 100
+    println(rpad(name, 30), round(ratio_missing, sigdigits=3))
+end</code></pre><pre><code class="plaintext">surgery                       0.0
 age                           0.0
 rectal_temperature            18.9
 pulse                         7.1
@@ -238,17 +238,17 @@ surgical_lesion               0.0
 cp_data                       0.0
 </code></pre>
 <p>Let&#39;s drop the ones with more than 20&#37; &#40;quite a few&#33;&#41;</p>
-<pre><code class="julia hljs">unwanted = [:peripheral_pulse, :nasogastric_tube, :nasogastric_reflux,
+<pre><code class="language-julia">unwanted = [:peripheral_pulse, :nasogastric_tube, :nasogastric_reflux,
         :nasogastric_reflux_ph, :feces, :abdomen, :abdomcentesis_appearance, :abdomcentesis_total_protein]
 select!(datac, Not(unwanted));</code></pre>
 <p>Note that we could have done this better and investigated the nature of the features for which there&#39;s a lot of missing values but don&#39;t forget that our goal is to showcase MLJ&#33;</p>
 <p>Let&#39;s conclude by filling all missing values and separating the feature matrix from the  target</p>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> FillImputer
+<pre><code class="language-julia">@load FillImputer
 filler = machine(FillImputer(), datac)
 fit!(filler)
 datac = transform(filler, datac)
 
-y, X = unpack(datac, ==(:outcome), name-&gt;<span class="hljs-literal">true</span>);
+y, X = unpack(datac, ==(:outcome), name->true);
 X = coerce(X, autotype(X, :discrete_to_continuous));</code></pre>
 <h2 id="a_baseline_model"><a href="#a_baseline_model">A baseline model</a></h2>
 <p>Let&#39;s define a first sensible model and get a baseline, basic steps are:</p>
@@ -258,8 +258,8 @@ X = coerce(X, autotype(X, :discrete_to_continuous));</code></pre>
 <li><p>feed all this into a classifier</p>
 </li>
 </ul>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> OneHotEncoder
-<span class="hljs-meta">@load</span> MultinomialClassifier pkg=<span class="hljs-string">&quot;MLJLinearModels&quot;</span></code></pre><pre><code class="plaintext hljs">MultinomialClassifier(
+<pre><code class="language-julia">@load OneHotEncoder
+@load MultinomialClassifier pkg="MLJLinearModels"</code></pre><pre><code class="plaintext">MultinomialClassifier(
     lambda = 1.0,
     gamma = 0.0,
     penalty = :l2,
@@ -267,31 +267,31 @@ X = coerce(X, autotype(X, :discrete_to_continuous));</code></pre>
     penalize_intercept = false,
     solver = nothing) @492</code></pre>
 <p>Let&#39;s have convenient handles over the training data</p>
-<pre><code class="julia hljs">Xtrain = X[train,:]
+<pre><code class="language-julia">Xtrain = X[train,:]
 ytrain = y[train];</code></pre>
 <p>And let&#39;s define a pipeline corresponding to the operations above</p>
-<pre><code class="julia hljs">SimplePipe = <span class="hljs-meta">@pipeline</span>(OneHotEncoder(),
+<pre><code class="language-julia">SimplePipe = @pipeline(OneHotEncoder(),
                        MultinomialClassifier(), prediction_type=:probabilistic)
 mach = machine(SimplePipe, Xtrain, ytrain)
-res = evaluate!(mach; resampling=Holdout(fraction_train=<span class="hljs-number">0.9</span>),
+res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
-round(res.measurement[<span class="hljs-number">1</span>], sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">0.704</code></pre>
+round(res.measurement[1], sigdigits=3)</code></pre><pre><code class="plaintext">0.704</code></pre>
 <p>This is the cross entropy on some held-out 10&#37; of the training set. We can also just for the sake of getting a baseline, see the misclassification on the whole training data:</p>
-<pre><code class="julia hljs">ŷ = predict(mach, Xtrain)
+<pre><code class="language-julia">ŷ = predict(mach, Xtrain)
 ȳ = mode(ŷ)
 mcr = misclassification_rate(ŷ, ytrain)
-println(rpad(<span class="hljs-string">&quot;MNC mcr:&quot;</span>, <span class="hljs-number">10</span>), round(mcr, sigdigits=<span class="hljs-number">3</span>))</code></pre><pre><code class="plaintext hljs">MethodError: no method matching (::MLJBase.MisclassificationRate)(::MLJBase.UnivariateFiniteArray{OrderedFactor{3},Int64,UInt32,Float64,1}, ::CategoricalArrays.CategoricalArray{Int64,1,UInt32,Int64,CategoricalArrays.CategoricalValue{Int64,UInt32},Union{}})
+println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))</code></pre><pre><code class="plaintext">MethodError: no method matching (::MLJBase.MisclassificationRate)(::MLJBase.UnivariateFiniteArray{OrderedFactor{3},Int64,UInt32,Float64,1}, ::CategoricalArrays.CategoricalArray{Int64,1,UInt32,Int64,CategoricalArrays.CategoricalValue{Int64,UInt32},Union{}})
 Closest candidates are:
-  (::MLJBase.MisclassificationRate)(!Matched::AbstractArray{var&quot;#s530&quot;,1} where var&quot;#s530&quot;&lt;:CategoricalArrays.CategoricalValue, ::AbstractArray{var&quot;#s529&quot;,1} where var&quot;#s529&quot;&lt;:CategoricalArrays.CategoricalValue) at /Users/tlienart/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:243
-  (::MLJBase.MisclassificationRate)(!Matched::AbstractArray{var&quot;#s530&quot;,1} where var&quot;#s530&quot;&lt;:CategoricalArrays.CategoricalValue, ::AbstractArray{var&quot;#s529&quot;,1} where var&quot;#s529&quot;&lt;:CategoricalArrays.CategoricalValue, !Matched::AbstractArray{var&quot;#s528&quot;,1} where var&quot;#s528&quot;&lt;:Real) at /Users/tlienart/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:247
+  (::MLJBase.MisclassificationRate)(!Matched::AbstractArray{var"#s530",1} where var"#s530"<:CategoricalArrays.CategoricalValue, ::AbstractArray{var"#s529",1} where var"#s529"<:CategoricalArrays.CategoricalValue) at /Users/tlienart/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:243
+  (::MLJBase.MisclassificationRate)(!Matched::AbstractArray{var"#s530",1} where var"#s530"<:CategoricalArrays.CategoricalValue, ::AbstractArray{var"#s529",1} where var"#s529"<:CategoricalArrays.CategoricalValue, !Matched::AbstractArray{var"#s528",1} where var"#s528"<:Real) at /Users/tlienart/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:247
 </code></pre>
 <p>That&#39;s not bad at all actually. Let&#39;s tune it a bit and see if we can get a bit better than that, not much point in going crazy, we might get a few percents but not much more.</p>
-<pre><code class="julia hljs">model = SimplePipe
-lambdas = range(model, :(multinomial_classifier.lambda), lower=<span class="hljs-number">1e-3</span>, upper=<span class="hljs-number">100</span>, scale=:log10)
+<pre><code class="language-julia">model = SimplePipe
+lambdas = range(model, :(multinomial_classifier.lambda), lower=1e-3, upper=100, scale=:log10)
 tm = TunedModel(model=SimplePipe, ranges=lambdas, measure=cross_entropy)
 mtm = machine(tm, Xtrain, ytrain)
 fit!(mtm)
-best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintext hljs">Pipeline267(
+best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintext">Pipeline267(
     one_hot_encoder = OneHotEncoder(
             features = Symbol[],
             drop_last = false,
@@ -305,26 +305,26 @@ best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintex
             penalize_intercept = false,
             solver = nothing)) @882</code></pre>
 <p>So it looks like it&#39;s useful to regularise a fair bit to get a lower cross entropy</p>
-<pre><code class="julia hljs">ŷ = predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |&gt; mean</code></pre><pre><code class="plaintext hljs">0.6129047398190444</code></pre>
+<pre><code class="language-julia">ŷ = predict(mtm, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean</code></pre><pre><code class="plaintext">0.6129047398190444</code></pre>
 <p>Interestingly this does not improve our missclassification rate</p>
-<pre><code class="julia hljs">mcr = misclassification_rate(mode.(ŷ), ytrain)
-println(rpad(<span class="hljs-string">&quot;MNC mcr:&quot;</span>, <span class="hljs-number">10</span>), round(mcr, sigdigits=<span class="hljs-number">3</span>))</code></pre><pre><code class="plaintext hljs">MNC mcr:  0.278
+<pre><code class="language-julia">mcr = misclassification_rate(mode.(ŷ), ytrain)
+println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))</code></pre><pre><code class="plaintext">MNC mcr:  0.278
 </code></pre>
 <p>We&#39;ve probably reached the limit of a simple linear model.</p>
 <h2 id="trying_another_model"><a href="#trying_another_model">Trying another model</a></h2>
 <p>There are lots of categoricals, so maybe  it&#39;s just better to use something that deals well with that like a tree-based classifier.</p>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> XGBoostClassifier
+<pre><code class="language-julia">@load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
 ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |&gt; mean</code></pre><pre><code class="plaintext hljs">0.024815097f0</code></pre>
+cross_entropy(ŷ, ytrain) |> mean</code></pre><pre><code class="plaintext">0.024815097f0</code></pre>
 <p>So we get a worse cross entropy but...</p>
-<pre><code class="julia hljs">misclassification_rate(mode.(ŷ), ytrain)</code></pre><pre><code class="plaintext hljs">0.0033444816053511705</code></pre>
+<pre><code class="language-julia">misclassification_rate(mode.(ŷ), ytrain)</code></pre><pre><code class="plaintext">0.0033444816053511705</code></pre>
 <p>a significantly better misclassification rate.</p>
 <p>We could investigate more, do more tuning etc, but the key points of this tutorial was to show how to handle data with missing values.<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -333,8 +333,8 @@ cross_entropy(ŷ, ytrain) |&gt; mean</code></pre><pre><code class="plaintext hlj
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>

@@ -1,0 +1,10 @@
+9-element Array{String,1}:
+ "MPG"
+ "Cylinders"
+ "Displacement"
+ "Horsepower"
+ "Weight"
+ "Acceleration"
+ "Year"
+ "Origin"
+ "Name"

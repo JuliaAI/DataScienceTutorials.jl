@@ -1,12 +1,14 @@
 # This file was generated, do not modify it.
 
-using RDatasets, MLJ
+using RDatasets
+using MLJ
+MLJ.color_off() # hide
 iris = dataset("datasets", "iris")
 
 first(iris, 3) |> pretty
 
 iris2 = coerce(iris, :PetalWidth => OrderedFactor)
-first(iris2[[:PetalLength, :PetalWidth]], 1) |> pretty
+first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty
 
 y, X = unpack(iris, ==(:Species), colname -> true)
 first(X, 1) |> pretty

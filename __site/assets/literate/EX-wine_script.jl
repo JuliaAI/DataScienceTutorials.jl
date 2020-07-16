@@ -1,16 +1,23 @@
 # This file was generated, do not modify it.
 
-using HTTP, CSV, MLJ, StatsBase, PyPlot
-req = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data")
-data = CSV.read(req.body,
-                header=["Class", "Alcool", "Malic acid",
-                        "Ash", "Alcalinity of ash", "Magnesium",
-                        "Total phenols", "Flavanoids",
-                        "Nonflavanoid phenols", "Proanthcyanins",
-                        "Color intensity", "Hue",
-                        "OD280/OD315 of diluted wines", "Proline"])
-# the target is the Class column, everything else is a feature
-y, X = unpack(data, ==(:Class), colname->true);
+using HTTP
+using MLJ
+using PyPlot
+import DataFrames: DataFrame, describe
+using UrlDownload
+MLJ.color_off() # hide
+
+url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+header = ["Class", "Alcool", "Malic acid", "Ash", "Alcalinity of ash",
+          "Magnesium", "Total phenols", "Flavanoids",
+          "Nonflavanoid phenols", "Proanthcyanins", "Color intensity",
+          "Hue", "OD280/OD315 of diluted wines", "Proline"]
+data = urldownload(url, true, format=:CSV, header=header);
+
+df = DataFrame(data)
+describe(df)
+
+y, X = unpack(df, ==(:Class), colname->true);
 
 scitype(y)
 
@@ -18,12 +25,7 @@ yc = coerce(y, OrderedFactor);
 
 scitype(X)
 
-sch = schema(X)
-println(rpad(" Name", 28), "| Scitype")
-println("-"^45)
-for (name, scitype) in zip(sch.names, sch.scitypes)
-    println(rpad("$name", 30), scitype)
-end
+schema(X)
 
 X[1:5, :Proline]
 
@@ -34,8 +36,8 @@ describe(Xc, :mean, :std)
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
-@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true
+KnnPipe = @pipeline(Standardizer(), KNNClassifier())
+MnPipe = @pipeline(Standardizer(), MultinomialClassifier());
 
 train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
 Xtrain = selectrows(Xc, train)
@@ -43,8 +45,8 @@ Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);
 
-knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)
+knn = machine(KnnPipe, Xtrain, ytrain)
+multi = machine(MnPipe, Xtrain, ytrain)
 
 opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
 res = evaluate!(knn; opts...)
@@ -87,10 +89,12 @@ legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig("assets/literate/EX-wine-pca.svg") # hide
+savefig(joinpath(@OUTPUT, "EX-wine-pca.svg")) # hide
 
 perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
 perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
 println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
+
+PyPlot.close_figs() # hide
 
