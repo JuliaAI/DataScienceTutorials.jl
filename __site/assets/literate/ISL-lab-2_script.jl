@@ -59,12 +59,9 @@ mpg |> mean
 @show ncol(auto)
 
 using PyPlot
-ioff() # hide
 
 figure(figsize=(8,6))
 plot(mpg)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
-
-PyPlot.close_figs() # hide
+savefig("assets/literate/ISL-lab-2-mpg.svg") # hide
 

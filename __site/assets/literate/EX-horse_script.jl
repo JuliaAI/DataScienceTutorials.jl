@@ -1,12 +1,9 @@
 # This file was generated, do not modify it.
 
-using MLJ
-MLJ.color_off() # hide
-using HTTP
-using CSV
-import DataFrames: DataFrame, select!, Not
-req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
-req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+using MLJ, StatsBase, ScientificTypes
+using HTTP, CSV, DataFrames
+req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
     "rectal_temperature", "pulse",
     "respiratory_rate", "temperature_extremities",
@@ -69,7 +66,6 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous))
 
 @load OneHotEncoder
 @load MultinomialClassifier pkg="MLJLinearModels"

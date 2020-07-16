@@ -1,28 +1,14 @@
 # This file was generated, do not modify it.
 
-using MLJ
-using StatsBase
-using Random
-using PyPlot
-ioff() # hide
-using CategoricalArrays
-using PrettyPrinting
-import DataFrames
-using LossFunctions
-
-MLJ.color_off() # hide
+using MLJ, StatsBase, Random, PyPlot, CategoricalArrays
+using PrettyPrinting, DataFrames, LossFunctions
 X, y = @load_crabs
-X = DataFrames.DataFrame(X)
+X = DataFrame(X)
 @show size(X)
 @show y[1:3]
 first(X, 3) |> pretty
 
 levels(y) |> pprint
-
-Random.seed!(523)
-perm = randperm(length(y))
-X = X[perm,:]
-y = y[perm];
 
 train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
 @load XGBoostClassifier
@@ -34,16 +20,18 @@ xgb  = XGBoostClassifier()
 xgbm = machine(xgb, X, y)
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, range=r, resolution=50,
+curve = learning_curve!(xgbm, resampling=CV(nfolds=3),
+                        range=r, resolution=50,
                         measure=HingeLoss())
 
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
-ylabel("HingeLoss", fontsize=14)
+ylabel("Cross entropy", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
+yticks(1.46:0.005:1.475, fontsize=12)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
+savefig("assets/literate/EX-crabs-xgb-curve1.svg") # hide
 
 xgb.num_round = 200;
 
@@ -58,20 +46,18 @@ fit!(mtm, rows=train)
 
 r = report(mtm)
 
-res = r.plotting
-
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
+md = r.parameter_values[:,1]
+mcw = r.parameter_values[:,2]
 
 figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
+tricontourf(md, mcw, r.measurements)
 
 xlabel("Maximum tree depth", fontsize=14)
 ylabel("Minimum child weight", fontsize=14)
 xticks(3:2:10, fontsize=12)
 yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap.svg")) # hide
+savefig("assets/literate/EX-crabs-xgb-heatmap.svg") # hide
 
 xgb = fitted_params(mtm).best_model
 @show xgb.max_depth
@@ -79,7 +65,8 @@ xgb = fitted_params(mtm).best_model
 
 xgbm = machine(xgb, X, y)
 r = range(xgb, :gamma, lower=0, upper=10)
-curve = learning_curve!(xgbm, range=r, resolution=30,
+curve = learning_curve!(xgbm, resampling=CV(),
+                        range=r, resolution=30,
                         measure=cross_entropy);
 
 @show round(minimum(curve.measurements), sigdigits=3)
@@ -94,21 +81,18 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 r = report(mtm)
-
-res = r.plotting
-
-ss = res.parameter_values[:,1]
-cbt = res.parameter_values[:,2]
+ss = r.parameter_values[:,1]
+cbt = r.parameter_values[:,2]
 
 figure(figsize=(8,6))
-tricontourf(ss, cbt, res.measurements)
+tricontourf(ss, cbt, r.measurements)
 
 xlabel("Sub sample", fontsize=14)
 ylabel("Col sample by tree", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap2.svg")) # hide
+savefig("assets/literate/EX-crabs-xgb-heatmap2.svg") # hide
 
 xgb = fitted_params(mtm).best_model
 @show xgb.subsample
@@ -116,6 +100,4 @@ xgb = fitted_params(mtm).best_model
 
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
-
-PyPlot.close_figs() # hide
 

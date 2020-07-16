@@ -124,7 +124,7 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous))
+X = coerce(X, autotype(X, :discrete_to_continuous));
 
 #
 # ## A baseline model
@@ -144,7 +144,7 @@ ytrain = y[train];
 # And let's define a pipeline corresponding to the operations above
 
 SimplePipe = @pipeline(OneHotEncoder(),
-                       MultinomialClassifier())
+                       MultinomialClassifier(), prediction_type=:probabilistic)
 mach = machine(SimplePipe, Xtrain, ytrain)
 res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
@@ -153,8 +153,9 @@ round(res.measurement[1], sigdigits=3)
 # This is the cross entropy on some held-out 10% of the training set.
 # We can also just for the sake of getting a baseline, see the misclassification on the whole training data:
 
-ŷ = predict_mode(mach, Xtrain)
-mcr = misclassification_rate(ŷ, ytrain)
+ŷ = predict(mach, Xtrain)
+ȳ = mode(ŷ)
+mcr = misclassification_rate(ŷ, ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 # That's not bad at all actually.
@@ -169,12 +170,12 @@ best_pipe = fitted_params(mtm).best_model
 
 # So it looks like it's useful to regularise a fair bit to get a lower cross entropy
 
-ŷ = predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(mtm, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 
 # Interestingly this does not improve our missclassification rate
 
-mcr = misclassification_rate(mode.(ŷ), ytrain)
+mcr = misclassification_rate(mode.(ŷ), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 # We've probably reached the limit of a simple linear model.
@@ -186,12 +187,12 @@ println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(dtc, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 
 # So we get a worse cross entropy but...
 
-misclassification_rate(mode.(ŷ), ytrain)
+misclassification_rate(mode.(ŷ), ytrain)
 
 # a significantly better misclassification rate.
 #
