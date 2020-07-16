@@ -1,8 +1,9 @@
-Node{Machine{KNNRegressor}} @198
+Node{Machine{KNNRegressor}} @645
   args:
-    1:	Node{Machine{OneHotEncoder}} @040
+    1:	Node{Machine{OneHotEncoder}} @244
+  formula:
     predict(
-        Machine{KNNRegressor} @449, 
+        Machine{KNNRegressor} @791, 
         transform(
-            Machine{OneHotEncoder} @184, 
-            Source @322))
+            Machine{OneHotEncoder} @890, 
+            Source @381))

@@ -1,17 +1,12 @@
 # This file was generated, do not modify it.
 
-using MLJ
-import RDatasets: dataset
-using PrettyPrinting
-using Random
-MLJ.color_off() # hide
+using MLJ, RDatasets, PrettyPrinting, Random
 
 Random.seed!(3203)
 X = randn(20, 2)
 y = vcat(-ones(10), ones(10))
 
 using PyPlot
-ioff() # hide
 figure(figsize=(8,6))
 
 ym1 = y .== -1
@@ -19,7 +14,7 @@ ym2 = .!ym1
 plot(X[ym1, 1], X[ym1, 2], ls="none", marker="o")
 plot(X[ym2, 1], X[ym2, 2], ls="none", marker="x")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-9-g1.svg")) # hide
+savefig("assets/literate/ISL-lab-9-g1.svg") # hide
 
 X = MLJ.table(X)
 y = categorical(y);
@@ -43,6 +38,4 @@ fit!(mtm)
 
 ypred = predict(mtm, X)
 misclassification_rate(ypred, y)
-
-PyPlot.close_figs() # hide
 
