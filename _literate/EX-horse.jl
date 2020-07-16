@@ -124,7 +124,7 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous))
+X = coerce(X, autotype(X, :discrete_to_continuous));
 
 #
 # ## A baseline model
@@ -143,9 +143,9 @@ ytrain = y[train];
 
 # And let's define a pipeline corresponding to the operations above
 
-@pipeline SimplePipe(hot = OneHotEncoder(),
-                     clf = MultinomialClassifier()) is_probabilistic=true
-mach = machine(SimplePipe(), Xtrain, ytrain)
+SimplePipe = @pipeline(OneHotEncoder(),
+                       MultinomialClassifier(), prediction_type=:probabilistic)
+mach = machine(SimplePipe, Xtrain, ytrain)
 res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
 round(res.measurement[1], sigdigits=3)
@@ -153,7 +153,8 @@ round(res.measurement[1], sigdigits=3)
 # This is the cross entropy on some held-out 10% of the training set.
 # We can also just for the sake of getting a baseline, see the misclassification on the whole training data:
 
-ŷ = predict_mode(mach, Xtrain)
+ŷ = predict(mach, Xtrain)
+ȳ = mode(ŷ)
 mcr = misclassification_rate(ŷ, ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
