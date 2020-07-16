@@ -7,14 +7,15 @@ end
 
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y, kind=:target)
+    ys = source(y)
     W = transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
     z = transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
-    fit!(ŷ, verbosity=0)
-    return fitresults(ŷ)
+    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
+    fit!(mach, verbosity=verbosity - 1)
+    return mach()
 end
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),

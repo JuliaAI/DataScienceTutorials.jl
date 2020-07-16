@@ -13,6 +13,7 @@ Let's download the data thanks to the [UrlDownload.jl](https://github.com/Arkoni
 using HTTP
 using MLJ
 using PyPlot
+ioff() # hide
 import DataFrames: DataFrame, describe
 using UrlDownload
 MLJ.color_off() # hide

@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/css/franklin.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
    <title>AMES</title>  
   <!-- LUNR -->
-  <script src="/libs/lunr/lunr.min.js"></script>
-  <script src="/libs/lunr/lunr_index.js"></script>
-  <script src="/libs/lunr/lunrclient.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
 </head>
 <body>
   <div id="layout">
@@ -24,70 +24,70 @@
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
     <div id="menu">
       <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
           <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
         </form>
   <!-- LIST OF MENU ITEMS -->
   <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
 
     <!-- DATA BASICS -->
     <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
     <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
     <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
     <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
     </ul>
 
     <!-- INTRO TO STATS LEARNING -->
     <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
     <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
     </ul>
 
     <!-- END TO END EXAMPLES -->
     <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
     <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
     </ul>
   </ul>
   <!-- END OF LIST OF MENU ITEMS -->
@@ -100,15 +100,15 @@
 <div class="franklin-content"><h1 id="ames"><a href="#ames">AMES</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-AMES.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-AMES-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-AMES.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#baby_steps">Baby steps</a></li><li><a href="#dummy_model">Dummy model</a></li><li><a href="#knn-ridge_blend">KNN-Ridge blend</a><ol><li><a href="#using_the_expanded_syntax">Using the expanded syntax</a></li><li><a href="#using_the_quotarrowquot_syntax">Using the &quot;arrow&quot; syntax</a></li><li><a href="#tuning_the_model">Tuning the model</a></li></ol></li></ol></div><h2 id="baby_steps"><a href="#baby_steps">Baby steps</a></h2>
 <p>Let&#39;s load a reduced version of the well-known Ames House Price data set &#40;containing six of the more important categorical features and six of the more important numerical features&#41;. As &quot;iris&quot; the dataset is so common that you can load it directly with <code>@load_ames</code> and the reduced version via <code>@load_reduced_ames</code>
-<pre><code class="language-julia">using MLJ
-using  PrettyPrinting
-import DataFrames
-import Statistics
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
+<span class="hljs-keyword">using</span>  PrettyPrinting
+<span class="hljs-keyword">import</span> DataFrames
+<span class="hljs-keyword">import</span> Statistics
 
-X, y = @load_reduced_ames
+X, y = <span class="hljs-meta">@load_reduced_ames</span>
 X = DataFrames.DataFrame(X)
-@show size(X)
-first(X, 3) |> pretty</code></pre><pre><code class="plaintext">size(X) = (1456, 12)
+<span class="hljs-meta">@show</span> size(X)
+first(X, <span class="hljs-number">3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">size(X) = (1456, 12)
 ┌──────────────────────────────────────────────────┬────────────┬───────────────────────────────────────────────────┬────────────┬─────────────┬────────────┬────────────┬────────────┬───────────────────────────────────────────────────┬────────────┬──────────────┬───────────┐
 │ OverallQual                                      │ GrLivArea  │ Neighborhood                                      │ x1stFlrSF  │ TotalBsmtSF │ BsmtFinSF1 │ LotArea    │ GarageCars │ MSSubClass                                        │ GarageArea │ YearRemodAdd │ YearBuilt │
 │ CategoricalArrays.CategoricalValue{Int64,UInt32} │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt32} │ Float64    │ Float64     │ Float64    │ Float64    │ Int64      │ CategoricalArrays.CategoricalValue{String,UInt32} │ Float64    │ Int64        │ Int64     │
@@ -120,36 +120,36 @@ first(X, 3) |> pretty</code></pre><pre><code class="plaintext">size(X) = (1456, 
 └──────────────────────────────────────────────────┴────────────┴───────────────────────────────────────────────────┴────────────┴─────────────┴────────────┴────────────┴────────────┴───────────────────────────────────────────────────┴────────────┴──────────────┴───────────┘
 </code></pre>
 <p>and the target is a continuous vector:</p>
-<pre><code class="language-julia">@show y[1:3]
-scitype(y)</code></pre><pre><code class="plaintext">y[1:3] = [138000.0, 369900.0, 180000.0]
+<pre><code class="julia hljs"><span class="hljs-meta">@show</span> y[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]
+scitype(y)</code></pre><pre><code class="plaintext hljs">y[1:3] = [138000.0, 369900.0, 180000.0]
 AbstractArray{Continuous,1}</code></pre>
 <p>so this is a standard regression problem with a mix of categorical and continuous input.</p>
 <h2 id="dummy_model"><a href="#dummy_model">Dummy model</a></h2>
 <p>Remember that a model is just a container for hyperparameters; let&#39;s take a particularly simple one: the constant regression.</p>
-<pre><code class="language-julia">creg = ConstantRegressor()</code></pre><pre><code class="plaintext">ConstantRegressor(
-    distribution_type = Distributions.Normal) @985</code></pre>
+<pre><code class="julia hljs">creg = ConstantRegressor()</code></pre><pre><code class="plaintext hljs">ConstantRegressor(
+    distribution_type = Distributions.Normal) @280</code></pre>
 <p>Wrapping the model in data creates a <em>machine</em> which will store training outcomes &#40;<em>fit-results</em>&#41;</p>
-<pre><code class="language-julia">cmach = machine(creg, X, y)</code></pre><pre><code class="plaintext">Machine{ConstantRegressor} @577 trained 0 times.
+<pre><code class="julia hljs">cmach = machine(creg, X, y)</code></pre><pre><code class="plaintext hljs">Machine{ConstantRegressor} @448 trained 0 times.
   args: 
-    1:	Source @208 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}, AbstractArray{Multiclass{15},1}, AbstractArray{Multiclass{25},1}, AbstractArray{OrderedFactor{10},1}}}`
-    2:	Source @853 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @393 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}, AbstractArray{Multiclass{15},1}, AbstractArray{Multiclass{25},1}, AbstractArray{OrderedFactor{10},1}}}`
+    2:	Source @001 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>You can now train the machine specifying the data it should be trained on &#40;if unspecified, all the data will be used&#41;;</p>
-<pre><code class="language-julia">train, test = partition(eachindex(y), 0.70, shuffle=true); # 70:30 split
+<pre><code class="julia hljs">train, test = partition(eachindex(y), <span class="hljs-number">0.70</span>, shuffle=<span class="hljs-literal">true</span>); <span class="hljs-comment"># 70:30 split</span>
 fit!(cmach, rows=train)
 ŷ = predict(cmach, rows=test)
-ŷ[1:3] |> pprint</code></pre><pre><code class="plaintext">[Distributions.Normal{Float64}(μ=179338.79587831208, σ=72945.29606828818),
- Distributions.Normal{Float64}(μ=179338.79587831208, σ=72945.29606828818),
- Distributions.Normal{Float64}(μ=179338.79587831208, σ=72945.29606828818)]</code></pre>
+ŷ[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>] |&gt; pprint</code></pre><pre><code class="plaintext hljs">[Distributions.Normal{Float64}(μ=180678.208047105, σ=75462.11044366747),
+ Distributions.Normal{Float64}(μ=180678.208047105, σ=75462.11044366747),
+ Distributions.Normal{Float64}(μ=180678.208047105, σ=75462.11044366747)]</code></pre>
 <p>Observe that the output is probabilistic, each element is a univariate normal distribution &#40;with the same mean and variance as it&#39;s a constant model&#41;.</p>
 <p>You can recover deterministic output by either computing the mean of predictions or using <code>predict_mean</code> directly &#40;the <code>mean</code> function can  bve applied to any distribution from <a href="https://github.com/JuliaStats/Distributions.jl"><code>Distributions.jl</code></a>&#41;:</p>
-<pre><code class="language-julia">ŷ = predict_mean(cmach, rows=test)
-ŷ[1:3]</code></pre><pre><code class="plaintext">3-element Array{Float64,1}:
- 179338.79587831208
- 179338.79587831208
- 179338.79587831208</code></pre>
+<pre><code class="julia hljs">ŷ = predict_mean(cmach, rows=test)
+ŷ[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]</code></pre><pre><code class="plaintext hljs">3-element Array{Float64,1}:
+ 180678.208047105
+ 180678.208047105
+ 180678.208047105</code></pre>
 <p>You can then call one of the loss functions to assess the quality of the model by comparing the performances on the test set:</p>
-<pre><code class="language-julia">rmsl(ŷ, y[test])</code></pre><pre><code class="plaintext">0.423173647088951</code></pre>
+<pre><code class="julia hljs">rmsl(ŷ, y[test])</code></pre><pre><code class="plaintext hljs">0.40588120109792303</code></pre>
 <h2 id="knn-ridge_blend"><a href="#knn-ridge_blend">KNN-Ridge blend</a></h2>
 <p>Let&#39;s try something a bit fancier than a constant regressor.</p>
 <ul>
@@ -165,70 +165,70 @@ ŷ[1:3]</code></pre><pre><code class="plaintext">3-element Array{Float64,1}:
 </li>
 </ul>
 <p>You will first define a fixed model where all hyperparameters are specified or set to default. Then you will see how to create a model around a learning network that can be tuned.</p>
-<pre><code class="language-julia">@load RidgeRegressor pkg="MultivariateStats"
-@load KNNRegressor</code></pre><pre><code class="plaintext">KNNRegressor(
+<pre><code class="julia hljs"><span class="hljs-meta">@load</span> RidgeRegressor pkg=<span class="hljs-string">&quot;MultivariateStats&quot;</span>
+<span class="hljs-meta">@load</span> KNNRegressor</code></pre><pre><code class="plaintext hljs">KNNRegressor(
     K = 5,
     algorithm = :kdtree,
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @453</code></pre>
+    weights = :uniform) @862</code></pre>
 <h3 id="using_the_expanded_syntax"><a href="#using_the_expanded_syntax">Using the expanded syntax</a></h3>
 <p>Let&#39;s start by defining the source nodes:</p>
-<pre><code class="language-julia">Xs = source(X)
-ys = source(y, kind=:target)</code></pre><pre><code class="plaintext">Source @825 ⏎ `AbstractArray{Continuous,1}`</code></pre>
+<pre><code class="julia hljs">Xs = source(X)
+ys = source(y)</code></pre><pre><code class="plaintext hljs">Source @314 ⏎ `AbstractArray{Continuous,1}`</code></pre>
 <p>On the &quot;first layer&quot;, there&#39;s one hot encoder and a log transform, these will respectively lead to node <code>W</code> and node <code>z</code>:</p>
-<pre><code class="language-julia">hot = machine(OneHotEncoder(), Xs)
+<pre><code class="julia hljs">hot = machine(OneHotEncoder(), Xs)
 
 W = transform(hot, Xs)
 z = log(ys);</code></pre>
 <p>On the &quot;second layer&quot;, there&#39;s a KNN regressor and a ridge regressor, these lead to node <code>ẑ₁</code> and <code>ẑ₂</code>
-<pre><code class="language-julia">knn   = machine(KNNRegressor(K=5), W, z)
-ridge = machine(RidgeRegressor(lambda=2.5), W, z)
+<pre><code class="julia hljs">knn   = machine(KNNRegressor(K=<span class="hljs-number">5</span>), W, z)
+ridge = machine(RidgeRegressor(lambda=<span class="hljs-number">2.5</span>), W, z)
 
 ẑ₁ = predict(ridge, W)
-ẑ₂ = predict(knn, W)</code></pre><pre><code class="plaintext">Node{Machine{KNNRegressor}} @545
+ẑ₂ = predict(knn, W)</code></pre><pre><code class="plaintext hljs">Node{Machine{KNNRegressor}} @198
   args:
-    1:	Node{Machine{OneHotEncoder}} @567
+    1:	Node{Machine{OneHotEncoder}} @040
     predict(
-        Machine{KNNRegressor} @094, 
+        Machine{KNNRegressor} @449, 
         transform(
-            Machine{OneHotEncoder} @764, 
-            Source @869))</code></pre>
+            Machine{OneHotEncoder} @184, 
+            Source @322))</code></pre>
 <p>On the &quot;third layer&quot;, there&#39;s a weighted combination of the two regression models:</p>
-<pre><code class="language-julia">ẑ = 0.3ẑ₁ + 0.7ẑ₂;</code></pre>
+<pre><code class="julia hljs">ẑ = <span class="hljs-number">0.3</span>ẑ₁ + <span class="hljs-number">0.7</span>ẑ₂;</code></pre>
 <p>And finally we need to invert the initial transformation of the target &#40;which was a log&#41;:</p>
-<pre><code class="language-julia">ŷ = exp(ẑ);</code></pre>
+<pre><code class="julia hljs">ŷ = exp(ẑ);</code></pre>
 <p>You&#39;ve now defined a full learning network which you can fit and use for prediction:</p>
-<pre><code class="language-julia">fit!(ŷ, rows=train)
+<pre><code class="julia hljs">fit!(ŷ, rows=train)
 ypreds = ŷ(rows=test)
-rmsl(y[test], ypreds)</code></pre><pre><code class="plaintext">0.1896640122741723</code></pre>
+rmsl(y[test], ypreds)</code></pre><pre><code class="plaintext hljs">0.18135487125219993</code></pre>
 <h3 id="using_the_quotarrowquot_syntax"><a href="#using_the_quotarrowquot_syntax">Using the &quot;arrow&quot; syntax</a></h3>
 <p>If you&#39;re using Julia 1.3, you can use the following syntax to do the same thing.</p>
 <p><em>First layer</em>: one hot encoding and log transform:</p>
-<pre><code class="language-julia">W = Xs |> OneHotEncoder()
-z = ys |> log;</code></pre>
+<pre><code class="julia hljs">W = Xs |&gt; OneHotEncoder()
+z = ys |&gt; log;</code></pre>
 <p><em>Second layer</em>: KNN Regression and Ridge regression</p>
-<pre><code class="language-julia">ẑ₁ = (W, z) |> KNNRegressor(K=5)
-ẑ₂ = (W, z) |> RidgeRegressor(lambda=2.5);</code></pre>
+<pre><code class="julia hljs">ẑ₁ = (W, z) |&gt; KNNRegressor(K=<span class="hljs-number">5</span>)
+ẑ₂ = (W, z) |&gt; RidgeRegressor(lambda=<span class="hljs-number">2.5</span>);</code></pre>
 <p><em>Third layer</em>: weighted sum of the two models:</p>
-<pre><code class="language-julia">ẑ = 0.3ẑ₁ + 0.7ẑ₂;</code></pre>
+<pre><code class="julia hljs">ẑ = <span class="hljs-number">0.3</span>ẑ₁ + <span class="hljs-number">0.7</span>ẑ₂;</code></pre>
 <p>then the inverse transform</p>
-<pre><code class="language-julia">ŷ = exp(ẑ);</code></pre>
+<pre><code class="julia hljs">ŷ = exp(ẑ);</code></pre>
 <p>You can then fit and evaluate the model as usual:</p>
-<pre><code class="language-julia">fit!(ŷ, rows=train)
-rmsl(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext">0.1474789307963238</code></pre>
+<pre><code class="julia hljs">fit!(ŷ, rows=train)
+rmsl(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext hljs">0.1369756703078795</code></pre>
 <h3 id="tuning_the_model"><a href="#tuning_the_model">Tuning the model</a></h3>
 <p>So far the hyperparameters were explicitly given but it makes more sense to learn them. For this, we define a model around the learning network which can then be trained and tuned as any model:</p>
-<pre><code class="language-julia">mutable struct KNNRidgeBlend <: DeterministicNetwork
+<pre><code class="julia hljs"><span class="hljs-keyword">mutable struct</span> KNNRidgeBlend &lt;: DeterministicNetwork
     knn_model::KNNRegressor
     ridge_model::RidgeRegressor
-    knn_weight::Float64
-end</code></pre>
+    knn_weight::<span class="hljs-built_in">Float64</span>
+<span class="hljs-keyword">end</span></code></pre>
 <p>We must specify how such a model should be fit, which is effectively just the learning network we had defined before except that now the parameters are contained in the struct:</p>
-<pre><code class="language-julia">function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> MLJ.fit(model::KNNRidgeBlend, verbosity::<span class="hljs-built_in">Int</span>, X, y)
     Xs = source(X)
-    ys = source(y, kind=:target)
+    ys = source(y)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
@@ -236,30 +236,32 @@ end</code></pre>
     knn_model = model.knn_model
     ridge = machine(ridge_model, W, z)
     knn = machine(knn_model, W, z)
-    # and finally
-    ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
+    <span class="hljs-comment"># and finally</span>
+    ẑ = model.knn_weight * predict(knn, W) + (<span class="hljs-number">1.0</span> - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
-    fit!(ŷ, verbosity=0)
-    return fitresults(ŷ)
-end</code></pre>
+
+    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
+    fit!(mach, verbosity=verbosity - <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> mach()
+<span class="hljs-keyword">end</span></code></pre>
 <p><strong>Note</strong>: you really  want to set <code>verbosity&#61;0</code> here otherwise in the tuning you will get a lot of verbose output&#33;</p>
 <p>You can now instantiate and fit such a model:</p>
-<pre><code class="language-julia">krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)
+<pre><code class="julia hljs">krb = KNNRidgeBlend(KNNRegressor(K=<span class="hljs-number">5</span>), RidgeRegressor(lambda=<span class="hljs-number">2.5</span>), <span class="hljs-number">0.3</span>)
 mach = machine(krb, X, y)
 fit!(mach, rows=train)
 
 preds = predict(mach, rows=test)
-rmsl(y[test], preds)</code></pre><pre><code class="plaintext">0.1474789307963238</code></pre>
+rmsl(y[test], preds)</code></pre><pre><code class="plaintext hljs">0.1369756703078795</code></pre>
 <p>But more interestingly, the hyperparameters of the model can be tuned.</p>
 <p>Before we get started, it&#39;s important to note that the hyperparameters of the model have different levels of <em>nesting</em>. This becomes explicit when trying to access elements:</p>
-<pre><code class="language-julia">@show krb.knn_weight
-@show krb.knn_model.K
-@show krb.ridge_model.lambda</code></pre><pre><code class="plaintext">krb.knn_weight = 0.3
+<pre><code class="julia hljs"><span class="hljs-meta">@show</span> krb.knn_weight
+<span class="hljs-meta">@show</span> krb.knn_model.K
+<span class="hljs-meta">@show</span> krb.ridge_model.lambda</code></pre><pre><code class="plaintext hljs">krb.knn_weight = 0.3
 krb.knn_model.K = 5
 krb.ridge_model.lambda = 2.5
 </code></pre>
 <p>You can also see all the hyperparameters using the <code>params</code> function:</p>
-<pre><code class="language-julia">params(krb) |> pprint</code></pre><pre><code class="plaintext">(knn_model = (K = 5,
+<pre><code class="julia hljs">params(krb) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(knn_model = (K = 5,
               algorithm = :kdtree,
               metric = Distances.Euclidean(0.0),
               leafsize = 10,
@@ -268,23 +270,23 @@ krb.ridge_model.lambda = 2.5
  ridge_model = (lambda = 2.5,),
  knn_weight = 0.3)</code></pre>
 <p>The range of values to do your hyperparameter tuning over should follow the nesting structure reflected by <code>params</code>:</p>
-<pre><code class="language-julia">k_range = range(krb, :(knn_model.K), lower=2, upper=100, scale=:log10)
-l_range = range(krb, :(ridge_model.lambda), lower=1e-4, upper=10, scale=:log10)
-w_range = range(krb, :(knn_weight), lower=0.1, upper=0.9)
+<pre><code class="julia hljs">k_range = range(krb, :(knn_model.K), lower=<span class="hljs-number">2</span>, upper=<span class="hljs-number">100</span>, scale=:log10)
+l_range = range(krb, :(ridge_model.lambda), lower=<span class="hljs-number">1e-4</span>, upper=<span class="hljs-number">10</span>, scale=:log10)
+w_range = range(krb, :(knn_weight), lower=<span class="hljs-number">0.1</span>, upper=<span class="hljs-number">0.9</span>)
 
-ranges = [k_range, l_range, w_range]</code></pre><pre><code class="plaintext">3-element Array{MLJBase.NumericRange{T,MLJBase.Bounded,Symbol} where T,1}:
- NumericRange{Int64,…} @865
- NumericRange{Float64,…} @691
- NumericRange{Float64,…} @599</code></pre>
+ranges = [k_range, l_range, w_range]</code></pre><pre><code class="plaintext hljs">3-element Array{MLJBase.NumericRange{T,MLJBase.Bounded,Symbol} where T,1}:
+ NumericRange{Int64,…} @491
+ NumericRange{Float64,…} @892
+ NumericRange{Float64,…} @136</code></pre>
 <p>Now there remains to define how the tuning should be done, let&#39;s just specify a very coarse grid tuning with cross validation and instantiate a tuned model:</p>
-<pre><code class="language-julia">tuning = Grid(resolution=3)
-resampling = CV(nfolds=6)
+<pre><code class="julia hljs">tuning = Grid(resolution=<span class="hljs-number">3</span>)
+resampling = CV(nfolds=<span class="hljs-number">6</span>)
 
 tm = TunedModel(model=krb, tuning=tuning, resampling=resampling,
-                ranges=ranges, measure=rmsl)</code></pre><pre><code class="plaintext">DeterministicTunedModel(
+                ranges=ranges, measure=rmsl)</code></pre><pre><code class="plaintext hljs">DeterministicTunedModel(
     model = KNNRidgeBlend(
-            knn_model = KNNRegressor @340,
-            ridge_model = RidgeRegressor @875,
+            knn_model = KNNRegressor @188,
+            ridge_model = RidgeRegressor @942,
             knn_weight = 0.3),
     tuning = Grid(
             goal = nothing,
@@ -298,39 +300,39 @@ tm = TunedModel(model=krb, tuning=tuning, resampling=resampling,
     measure = rmsl(),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{T,MLJBase.Bounded,Symbol} where T[NumericRange{Int64,…} @865, NumericRange{Float64,…} @691, NumericRange{Float64,…} @599],
+    range = MLJBase.NumericRange{T,MLJBase.Bounded,Symbol} where T[NumericRange{Int64,…} @491, NumericRange{Float64,…} @892, NumericRange{Float64,…} @136],
     train_best = true,
     repeats = 1,
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @081</code></pre>
+    check_measure = true) @844</code></pre>
 <p>which we can now finally fit...</p>
-<pre><code class="language-julia">mtm = machine(tm, X, y)
+<pre><code class="julia hljs">mtm = machine(tm, X, y)
 fit!(mtm, rows=train);</code></pre>
 <p>To retrieve the best model, you can use:</p>
-<pre><code class="language-julia">krb_best = fitted_params(mtm).best_model
-@show krb_best.knn_model.K
-@show krb_best.ridge_model.lambda
-@show krb_best.knn_weight</code></pre><pre><code class="plaintext">krb_best.knn_model.K = 2
+<pre><code class="julia hljs">krb_best = fitted_params(mtm).best_model
+<span class="hljs-meta">@show</span> krb_best.knn_model.K
+<span class="hljs-meta">@show</span> krb_best.ridge_model.lambda
+<span class="hljs-meta">@show</span> krb_best.knn_weight</code></pre><pre><code class="plaintext hljs">krb_best.knn_model.K = 14
 krb_best.ridge_model.lambda = 0.03162277660168379
 krb_best.knn_weight = 0.1
 </code></pre>
 <p>you can also use <code>mtm</code> to make predictions &#40;which will be done using the best model&#41;</p>
-<pre><code class="language-julia">preds = predict(mtm, rows=test)
-rmsl(y[test], preds)</code></pre><pre><code class="plaintext">0.13932972436067093</code></pre><div class="page-foot">
+<pre><code class="julia hljs">preds = predict(mtm, rows=test)
+rmsl(y[test], preds)</code></pre><pre><code class="plaintext hljs">0.129298397044358</code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
       </div> <!-- end of id=main -->
   </div> <!-- end of id=layout -->
-  <script src="/libs/pure/ui.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>

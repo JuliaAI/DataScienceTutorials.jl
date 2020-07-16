@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-by(iris, :Species, :PetalLength => mean)
+df = DataFrame(a=1:3, b=4:6)
+combine(df, :a => sum, nrow)

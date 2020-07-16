@@ -10,6 +10,7 @@ using MLJ
 using StatsBase
 using Random
 using PyPlot
+ioff() # hide
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames

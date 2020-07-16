@@ -166,6 +166,7 @@ In these tutorials we use `PyPlot` but you could use another package of course.
 
 ```julia:ex21
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(mpg)
