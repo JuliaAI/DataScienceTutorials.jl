@@ -38,7 +38,7 @@ mach = machine(surrogate, Xs, ys; predict=yhat)
 
 @from_network mach begin
     mutable struct OneHundredModels
-        regressor=atom
+        atom=atom
     end
 end
 
