@@ -1,6 +1,8 @@
 # This file was generated, do not modify it.
 
-using MLJ, PrettyPrinting
+using MLJ
+using PrettyPrinting
+MLJ.color_off() # hide
 
 @load KNNRegressor
 # input
@@ -11,13 +13,13 @@ height = [178, 194, 165, 173, 168];
 
 scitype(X.age)
 
-pipe = @pipeline MyPipe(X -> coerce(X, :age=>Continuous),
-                       hot = OneHotEncoder(),
-                       knn = KNNRegressor(K=3),
-                       target = UnivariateStandardizer());
+pipe = @pipeline(X -> coerce(X, :age=>Continuous),
+                OneHotEncoder(),
+                KNNRegressor(K=3),
+                target = UnivariateStandardizer());
 
-pipe.knn.K = 2
-pipe.hot.drop_last = true;
+pipe.knn_regressor.K = 2
+pipe.one_hot_encoder.drop_last = true;
 
 evaluate(pipe, X, height, resampling=Holdout(),
          measure=rms) |> pprint
