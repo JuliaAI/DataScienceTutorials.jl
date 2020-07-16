@@ -107,7 +107,7 @@ using DataFrames
 
 boston = dataset("MASS", "Boston");</code></pre>
 <p>The <code>dataset</code> function returns a <code>DataFrame</code> object:</p>
-<pre><code class="language-julia">typeof(boston)</code></pre><pre><code class="plaintext">DataFrames.DataFrame</code></pre>
+<pre><code class="language-julia">typeof(boston)</code></pre><pre><code class="plaintext">DataFrame</code></pre>
 <h3 id="accessing_data"><a href="#accessing_data">Accessing data</a></h3>
 <p>Intuitively a DataFrame is just a wrapper around a number of columns, each of which is a <code>Vector</code> of some type with a name&quot;</p>
 <pre><code class="language-julia">names(boston)</code></pre><pre><code class="plaintext">14-element Array{String,1}:
@@ -372,7 +372,7 @@ combine(gdf, :PetalLength => mean => :MPL, :PetalLength => std => :SPL)</code></
  "PetalWidth"</code></pre>
 <p>and note the use of <code>.</code> in <code>.&#61;&gt;</code> to indicate that we broadcast the function over each column.<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 16, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 15, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
