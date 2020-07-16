@@ -1,7 +1,7 @@
 <!--This file was generated, do not modify it.-->
 ## Initial data processing
 
-In this example, we consider the [UCI "horse colic" dataset](https://archive.ics.uci.edu/ml/datasets/Horse+Colic)
+In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
 This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.
 
@@ -10,10 +10,13 @@ This is a reasonably messy classification problem with missing values etc and so
 The data is pre-split in training and testing and we will keep it as such
 
 ```julia:ex1
-using MLJ, StatsBase, ScientificTypes
-using HTTP, CSV, DataFrames
-req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
-req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+using MLJ
+MLJ.color_off() # hide
+using HTTP
+using CSV
+import DataFrames: DataFrame, select!, Not
+req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
     "rectal_temperature", "pulse",
     "respiratory_rate", "temperature_extremities",
@@ -147,6 +150,7 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
+X = coerce(X, autotype(X, :discrete_to_continuous));
 ```
 
 ## A baseline model
@@ -170,9 +174,9 @@ ytrain = y[train];
 And let's define a pipeline corresponding to the operations above
 
 ```julia:ex16
-@pipeline SimplePipe(hot = OneHotEncoder(),
-                     clf = MultinomialClassifier()) is_probabilistic=true
-mach = machine(SimplePipe(), Xtrain, ytrain)
+SimplePipe = @pipeline(OneHotEncoder(),
+                       MultinomialClassifier(), prediction_type=:probabilistic)
+mach = machine(SimplePipe, Xtrain, ytrain)
 res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
 round(res.measurement[1], sigdigits=3)
@@ -182,8 +186,9 @@ This is the cross entropy on some held-out 10% of the training set.
 We can also just for the sake of getting a baseline, see the misclassification on the whole training data:
 
 ```julia:ex17
-ŷ = predict_mode(mach, Xtrain)
-mcr = misclassification_rate(ŷ, ytrain)
+ŷ = predict(mach, Xtrain)
+ȳ = mode(ŷ)
+mcr = misclassification_rate(ŷ, ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 ```
 
@@ -191,9 +196,9 @@ That's not bad at all actually.
 Let's tune it a bit and see if we can get a bit better than that, not much point in going crazy, we might get a few percents but not much more.
 
 ```julia:ex18
-model = SimplePipe()
-lambdas = range(model, :(clf.lambda), lower=1e-3, upper=100, scale=:log10)
-tm = TunedModel(model=SimplePipe(), ranges=lambdas, measure=cross_entropy)
+model = SimplePipe
+lambdas = range(model, :(multinomial_classifier.lambda), lower=1e-3, upper=100, scale=:log10)
+tm = TunedModel(model=SimplePipe, ranges=lambdas, measure=cross_entropy)
 mtm = machine(tm, Xtrain, ytrain)
 fit!(mtm)
 best_pipe = fitted_params(mtm).best_model
@@ -202,14 +207,14 @@ best_pipe = fitted_params(mtm).best_model
 So it looks like it's useful to regularise a fair bit to get a lower cross entropy
 
 ```julia:ex19
-ŷ = predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(mtm, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 ```
 
 Interestingly this does not improve our missclassification rate
 
 ```julia:ex20
-mcr = misclassification_rate(mode.(ŷ), ytrain)
+mcr = misclassification_rate(mode.(ŷ), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 ```
 
@@ -223,14 +228,14 @@ There are lots of categoricals, so maybe  it's just better to use something that
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(dtc, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 ```
 
 So we get a worse cross entropy but...
 
 ```julia:ex22
-misclassification_rate(mode.(ŷ), ytrain)
+misclassification_rate(mode.(ŷ), ytrain)
 ```
 
 a significantly better misclassification rate.

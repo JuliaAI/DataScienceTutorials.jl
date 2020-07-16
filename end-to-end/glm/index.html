@@ -45,6 +45,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -101,207 +102,106 @@
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-GLM.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#reading_the_data">Reading the data</a></li><li><a href="#defining_the_linear_model">Defining the Linear Model</a></li><li><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></li><li><a href="#defining_the_logistic_model">Defining the Logistic Model</a></li><li><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></li></ol></div><strong>Main author</strong>: <a href="https://github.com/drcxcruz">Clarman Cruz</a>.</p>
 <p>This juypter lab showcases MLJ in particular using the popular <a href="https://github.com/JuliaStats/GLM.jl">GLM</a> Julia package. We are using two datasets.  One dataset was created manually for testing purposes.  The other data set is the CollegeDistance dataset from the <a href="https://cran.r-project.org/web/packages/AER/index.html">AER</a> package in R.</p>
 <p>We can quickly define our models in MLJ and study their results.  It is very easy and consistent.</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ, CategoricalArrays, PrettyPrinting
-<span class="hljs-keyword">import</span> DataFrames: DataFrame, nrow
-<span class="hljs-keyword">using</span> UrlDownload
-<span class="hljs-meta">@load</span> LinearRegressor pkg = GLM
-<span class="hljs-meta">@load</span> LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext hljs">LinearBinaryClassifier(
-    fit_intercept = true,
-    link = GLM.LogitLink()) @718</code></pre>
+<pre><code class="language-julia">using MLJ, CategoricalArrays, PrettyPrinting
+import DataFrames: DataFrame, nrow
+using UrlDownload
+@load LinearRegressor pkg = GLM
+@load LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext">InterruptException:
+</code></pre>
 <h2 id="reading_the_data"><a href="#reading_the_data">Reading the data</a></h2>
 <p>The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.</p>
-<pre><code class="julia hljs">baseurl = <span class="hljs-string">&quot;https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/&quot;</span>
+<pre><code class="language-julia">baseurl = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"
 
-dfX = DataFrame(urldownload(baseurl * <span class="hljs-string">&quot;X3.csv&quot;</span>))
-dfYbinary = DataFrame(urldownload(baseurl * <span class="hljs-string">&quot;Y3.csv&quot;</span>))
-dfX1 = DataFrame(urldownload(baseurl * <span class="hljs-string">&quot;X1.csv&quot;</span>))
-dfY1 = DataFrame(urldownload(baseurl * <span class="hljs-string">&quot;Y1.csv&quot;</span>));</code></pre>
+dfX = DataFrame(urldownload(baseurl * "X3.csv"))
+dfYbinary = DataFrame(urldownload(baseurl * "Y3.csv"))
+dfX1 = DataFrame(urldownload(baseurl * "X1.csv"))
+dfY1 = DataFrame(urldownload(baseurl * "Y1.csv"));</code></pre><pre><code class="plaintext">UndefVarError: urldownload not defined
+</code></pre>
 <p>You can have a look at those using <code>first</code>:</p>
-<pre><code class="julia hljs">first(dfX, <span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">3×12 DataFrame
-│ Row │ gender │ ethnicity │ score   │ fcollege │ mcollege │ home   │ urban  │ unemp   │ wage    │ tuition │ income │ region │
-│     │ String │ String    │ Float64 │ String   │ String   │ String │ String │ Float64 │ Float64 │ Float64 │ String │ String │
-├─────┼────────┼───────────┼─────────┼──────────┼──────────┼────────┼────────┼─────────┼─────────┼─────────┼────────┼────────┤
-│ 1   │ male   │ other     │ 39.15   │ yes      │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ high   │ other  │
-│ 2   │ female │ other     │ 48.87   │ no       │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ low    │ other  │
-│ 3   │ male   │ other     │ 48.74   │ no       │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ low    │ other  │</code></pre>
+<pre><code class="language-julia">first(dfX, 3)</code></pre><pre><code class="plaintext">UndefVarError: dfX not defined
+</code></pre>
 <p>same for Y:</p>
-<pre><code class="julia hljs">first(dfY1, <span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">3×1 DataFrame
-│ Row │ Y         │
-│     │ Float64   │
-├─────┼───────────┤
-│ 1   │ -2.04463  │
-│ 2   │ -0.461529 │
-│ 3   │ 0.458262  │</code></pre>
+<pre><code class="language-julia">first(dfY1, 3)</code></pre><pre><code class="plaintext">UndefVarError: dfY1 not defined
+</code></pre>
 <h2 id="defining_the_linear_model"><a href="#defining_the_linear_model">Defining the Linear Model</a></h2>
 <p>Let see how many MLJ models handle our kind of target which is the y variable.</p>
-<pre><code class="julia hljs">ms = models() <span class="hljs-keyword">do</span> m
-    <span class="hljs-built_in">AbstractVector</span>{Count} &lt;: m.target_scitype
-<span class="hljs-keyword">end</span>
-foreach(m -&gt; println(m.name), ms)</code></pre><pre><code class="plaintext hljs">EvoTreeCount
-LinearCountRegressor
-XGBoostCount
+<pre><code class="language-julia">ms = models() do m
+    AbstractVector{Count} <: m.target_scitype
+end
+foreach(m -> println(m.name), ms)</code></pre><pre><code class="plaintext">InterruptException:
 </code></pre>
 <p>How about if the type was Continuous:</p>
-<pre><code class="julia hljs">ms = models() <span class="hljs-keyword">do</span> m
-    <span class="hljs-built_in">Vector</span>{Continuous} &lt;: m.target_scitype
-<span class="hljs-keyword">end</span>
-foreach(m -&gt; println(m.name), ms)</code></pre><pre><code class="plaintext hljs">ARDRegressor
-AdaBoostRegressor
-BaggingRegressor
-BayesianRidgeRegressor
-ConstantRegressor
-DecisionTreeRegressor
-DeterministicConstantRegressor
-DummyRegressor
-ElasticNetCVRegressor
-ElasticNetRegressor
-ElasticNetRegressor
-EpsilonSVR
-EvoTreeGaussian
-EvoTreeRegressor
-ExtraTreesRegressor
-GaussianProcessRegressor
-GradientBoostingRegressor
-HuberRegressor
-HuberRegressor
-KNNRegressor
-KNeighborsRegressor
-LADRegressor
-LGBMRegressor
-LarsCVRegressor
-LarsRegressor
-LassoCVRegressor
-LassoLarsCVRegressor
-LassoLarsICRegressor
-LassoLarsRegressor
-LassoRegressor
-LassoRegressor
-LinearRegressor
-LinearRegressor
-LinearRegressor
-NeuralNetworkRegressor
-NuSVR
-OrthogonalMatchingPursuitCVRegressor
-OrthogonalMatchingPursuitRegressor
-PassiveAggressiveRegressor
-QuantileRegressor
-RANSACRegressor
-RandomForestRegressor
-RandomForestRegressor
-RidgeCVRegressor
-RidgeRegressor
-RidgeRegressor
-RidgeRegressor
-RobustRegressor
-SGDRegressor
-SVMLinearRegressor
-SVMNuRegressor
-SVMRegressor
-TheilSenRegressor
-XGBoostRegressor
+<pre><code class="language-julia">ms = models() do m
+    Vector{Continuous} <: m.target_scitype
+end
+foreach(m -> println(m.name), ms)</code></pre><pre><code class="plaintext">InterruptException:
 </code></pre>
 <p>We can quickly define our models in MLJ.  It is very easy and consistent.</p>
-<pre><code class="julia hljs">X = copy(dfX1)
+<pre><code class="language-julia">X = copy(dfX1)
 y = copy(dfY1)
 
 coerce!(X, autotype(X, :string_to_multiclass))
-yv = <span class="hljs-built_in">Vector</span>(y[:, <span class="hljs-number">1</span>])
+yv = Vector(y[:, 1])
 
-LinearRegressorPipe = <span class="hljs-meta">@pipeline</span>(Standardizer(),
-                                OneHotEncoder(drop_last = <span class="hljs-literal">true</span>),
+LinearRegressorPipe = @pipeline(Standardizer(),
+                                OneHotEncoder(drop_last = true),
                                 LinearRegressor())
 
 LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
-fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext hljs">(standardizer = (mean_and_std_given_feature = Dict(:V1 =&gt; (0.0024456300706479973, 1.1309193246154066),:V2 =&gt; (-0.015561621122145304, 1.1238897897565245),:V5 =&gt; (0.0077036209704558975, 1.1421493464876622),:V3 =&gt; (0.02442889884313839, 2.332713568319154),:V4 =&gt; (0.15168404285157286, 6.806065861835239)),),
- one_hot_encoder = (fitresult = OneHotEncoderResult @252,),
- linear_regressor = (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225],
-                     intercept = 0.015893883995789806,),
- machines = Machine[Machine{Standardizer} @418, Machine{OneHotEncoder} @090, Machine{LinearRegressor} @332],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @418 =&gt; (mean_and_std_given_feature = Dict(:V1 =&gt; (0.0024456300706479973, 1.1309193246154066),:V2 =&gt; (-0.015561621122145304, 1.1238897897565245),:V5 =&gt; (0.0077036209704558975, 1.1421493464876622),:V3 =&gt; (0.02442889884313839, 2.332713568319154),:V4 =&gt; (0.15168404285157286, 6.806065861835239)),),Machine{OneHotEncoder} @090 =&gt; (fitresult = OneHotEncoderResult @252,),Machine{LinearRegressor} @332 =&gt; (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
+fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext">UndefVarError: dfX1 not defined
+</code></pre>
 <h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2>
 <p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
-<pre><code class="julia hljs">ŷ = MLJ.predict(LinearModel, X)
-yhatResponse = [ŷ[i,<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:nrow(y)]
+<pre><code class="language-julia">ŷ = MLJ.predict(LinearModel, X)
+yhatResponse = [ŷ[i,1] for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[<span class="hljs-number">3</span>]
-println(<span class="hljs-string">&quot;\n Coefficients:  &quot;</span>, fp.fitted_params_given_machine[k].coefs)
-println(<span class="hljs-string">&quot;\n y \n &quot;</span>, y[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>,<span class="hljs-number">1</span>])
-println(<span class="hljs-string">&quot;\n ŷ \n &quot;</span>, ŷ[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])
-println(<span class="hljs-string">&quot;\n yhatResponse \n &quot;</span>, yhatResponse[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])
-println(<span class="hljs-string">&quot;\n Residuals \n &quot;</span>, y[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>,<span class="hljs-number">1</span>] .- yhatResponse[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])</code></pre><pre><code class="plaintext hljs">MethodError: no method matching -(::Float64, ::Distributions.Normal{Float64})
-Closest candidates are:
-  -(::Float64, !Matched::Float64) at float.jl:403
-  -(::Float64) at float.jl:393
-  -(!Matched::PyCall.PyObject, ::Any) at /Users/tlienart/.julia/packages/PyCall/zqDXB/src/pyoperators.jl:13
-  ...
+k = collect(keys(fp.fitted_params_given_machine))[3]
+println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coefs)
+println("\n y \n ", y[1:5,1])
+println("\n ŷ \n ", ŷ[1:5])
+println("\n yhatResponse \n ", yhatResponse[1:5])
+println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])</code></pre><pre><code class="plaintext">UndefVarError: LinearModel not defined
 </code></pre>
 <p>and get the accuracy</p>
-<pre><code class="julia hljs">round(rms(yhatResponse, y[:,<span class="hljs-number">1</span>]), sigdigits=<span class="hljs-number">4</span>)</code></pre><pre><code class="plaintext hljs">MethodError: no method matching (::MLJBase.RMS)(::Array{Distributions.Normal{Float64},1}, ::Array{Float64,1})
-Closest candidates are:
-  Any(!Matched::AbstractArray{#s490,1} where #s490&lt;:Real, ::AbstractArray{#s489,1} where #s489&lt;:Real) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/measures/continuous.jl:75
-  Any(!Matched::AbstractArray{#s490,1} where #s490&lt;:Real, ::AbstractArray{#s489,1} where #s489&lt;:Real, !Matched::AbstractArray{#s488,1} where #s488&lt;:Real) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/measures/continuous.jl:86
+<pre><code class="language-julia">round(rms(yhatResponse, y[:,1]), sigdigits=4)</code></pre><pre><code class="plaintext">UndefVarError: y not defined
 </code></pre>
 <h2 id="defining_the_logistic_model"><a href="#defining_the_logistic_model">Defining the Logistic Model</a></h2>
-<pre><code class="julia hljs">X = copy(dfX)
+<pre><code class="language-julia">X = copy(dfX)
 y = copy(dfYbinary)
 
 coerce!(X, autotype(X, :string_to_multiclass))
-yc = CategoricalArray(y[:, <span class="hljs-number">1</span>])
+yc = CategoricalArray(y[:, 1])
 yc = coerce(yc, OrderedFactor)
 
-LinearBinaryClassifierPipe = <span class="hljs-meta">@pipeline</span>(Standardizer(),
-                                       OneHotEncoder(drop_last = <span class="hljs-literal">true</span>),
+LinearBinaryClassifierPipe = @pipeline(Standardizer(),
+                                       OneHotEncoder(drop_last = true),
                                        LinearBinaryClassifier())
 
 LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
-fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext hljs">(standardizer = (mean_and_std_given_feature = Dict(:wage =&gt; (9.500506478338009, 1.3430670761078416),:unemp =&gt; (7.597214581091511, 2.763580873344848),:tuition =&gt; (0.8146082493518824, 0.33950381985971717),:score =&gt; (50.88902933684601, 8.701909614072397)),),
- one_hot_encoder = (fitresult = OneHotEncoderResult @441,),
- linear_binary_classifier = Any[],
- machines = Machine[Machine{Standardizer} @169, Machine{OneHotEncoder} @402, Machine{LinearBinaryClassifier{LogitLink}} @499],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @169 =&gt; (mean_and_std_given_feature = Dict(:wage =&gt; (9.500506478338009, 1.3430670761078416),:unemp =&gt; (7.597214581091511, 2.763580873344848),:tuition =&gt; (0.8146082493518824, 0.33950381985971717),:score =&gt; (50.88902933684601, 8.701909614072397)),),Machine{OneHotEncoder} @402 =&gt; (fitresult = OneHotEncoderResult @441,),Machine{LinearBinaryClassifier{LogitLink}} @499 =&gt; (coef = [0.2025072937886873, 0.1307529391091288, 0.34495162493983483, 0.9977565847160845, -0.5022315102984596, -0.4785005626021655, -0.20440507809955027, -0.06922751403500114, 0.058928649730170986, -0.0834474982820323, -0.002315143333859671, 0.46177653955786546, 0.3843262958100772], intercept = -1.076633890579364)),)</code></pre>
+fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext">UndefVarError: dfX not defined
+</code></pre>
 <h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
-<pre><code class="julia hljs">ŷ = MLJ.predict(LogisticModel, X)
-residuals = [<span class="hljs-number">1</span> - pdf(ŷ[i], y[i,<span class="hljs-number">1</span>]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:nrow(y)]
+<pre><code class="language-julia">ŷ = MLJ.predict(LogisticModel, X)
+residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[<span class="hljs-number">3</span>]
-println(<span class="hljs-string">&quot;\n Coefficients:  &quot;</span>, fp.fitted_params_given_machine[k].coef)
-println(<span class="hljs-string">&quot;\n y \n &quot;</span>, y[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>,<span class="hljs-number">1</span>])
-println(<span class="hljs-string">&quot;\n ŷ \n &quot;</span>, ŷ[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])
-println(<span class="hljs-string">&quot;\n residuals \n &quot;</span>, residuals[<span class="hljs-number">1</span>:<span class="hljs-number">5</span>])
-println(<span class="hljs-string">&quot;\n Standard Error per Coefficient \n&quot;</span>, r.report_given_machine[k].stderror)</code></pre><pre><code class="plaintext hljs">
- Coefficients:  [0.2025072937886873, 0.1307529391091288, 0.34495162493983483, 0.9977565847160845, -0.5022315102984596, -0.4785005626021655, -0.20440507809955027, -0.06922751403500114, 0.058928649730170986, -0.0834474982820323, -0.002315143333859671, 0.46177653955786546, 0.3843262958100772]
-
- y 
- [0, 0, 0, 0, 0]
-
- ŷ 
- UnivariateFinite{OrderedFactor{2},Int64,UInt32,Float64}[UnivariateFinite{OrderedFactor{2}}(0=&gt;0.881, 1=&gt;0.119), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.838, 1=&gt;0.162), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.866, 1=&gt;0.134), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.936, 1=&gt;0.0637), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.944, 1=&gt;0.056)]
-
- residuals 
- [0.11944603346742211, 0.16182691493524637, 0.13445730373831233, 0.06370799769022917, 0.05604680411361729]
-
- Standard Error per Coefficient 
-[0.07542967234030673, 0.1226000420274196, 0.10934317995152515, 0.04661437250372939, 0.09609243724815351, 0.10743620672240187, 0.10642223545563924, 0.09190778860389329, 0.03922724536508866, 0.04118915117919154, 0.05115399636339276, 0.08454431256127862, 0.1228145565794003, 0.17884724866298302]
+k = collect(keys(fp.fitted_params_given_machine))[3]
+println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n y \n ", y[1:5,1])
+println("\n ŷ \n ", ŷ[1:5])
+println("\n residuals \n ", residuals[1:5])
+println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)</code></pre><pre><code class="plaintext">UndefVarError: LogisticModel not defined
 </code></pre>
 <p>No logistic analysis is complete without the confusion matrix:</p>
-<pre><code class="julia hljs">yMode = [mode(ŷ[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:length(ŷ)]
-y = coerce(y[:,<span class="hljs-number">1</span>], OrderedFactor)
+<pre><code class="language-julia">yMode = [mode(ŷ[i]) for i in 1:length(ŷ)]
+y = coerce(y[:,1], OrderedFactor)
 yMode = coerce(yMode, OrderedFactor)
-confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext hljs">              ┌───────────────────────────┐
-              │       Ground Truth        │
-┌─────────────┼─────────────┬─────────────┤
-│  Predicted  │      0      │      1      │
-├─────────────┼─────────────┼─────────────┤
-│      0      │    3283     │     831     │
-├─────────────┼─────────────┼─────────────┤
-│      1      │     236     │     389     │
-└─────────────┴─────────────┴─────────────┘
+confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext">UndefVarError: ŷ not defined
 </code></pre><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
@@ -313,8 +213,8 @@ confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext hljs">       
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>
