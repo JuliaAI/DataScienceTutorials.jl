@@ -1,1 +1,2 @@
-UndefVarError: tm not defined
+round.(res.measurements .^ 2, digits = 2) = [20.96, 21.24, 21.35, 88.61, 223.98, 25.66, 20.91, 21.34, 20.91, 27.44]
+argmin(res.measurements) = 9

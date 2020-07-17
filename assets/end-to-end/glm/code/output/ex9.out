@@ -1,1 +1,4 @@
-UndefVarError: y not defined
+MethodError: no method matching (::MLJBase.RMS)(::Array{Distributions.Normal{Float64},1}, ::Array{Float64,1})
+Closest candidates are:
+  Any(!Matched::AbstractArray{#s490,1} where #s490<:Real, ::AbstractArray{#s489,1} where #s489<:Real) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/measures/continuous.jl:75
+  Any(!Matched::AbstractArray{#s490,1} where #s490<:Real, ::AbstractArray{#s489,1} where #s489<:Real, !Matched::AbstractArray{#s488,1} where #s488<:Real) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/measures/continuous.jl:86

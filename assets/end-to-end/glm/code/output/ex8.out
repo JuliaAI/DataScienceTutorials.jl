@@ -1,1 +1,6 @@
-UndefVarError: LinearModel not defined
+MethodError: no method matching -(::Float64, ::Distributions.Normal{Float64})
+Closest candidates are:
+  -(::Float64, !Matched::Float64) at float.jl:403
+  -(::Float64) at float.jl:393
+  -(!Matched::PyCall.PyObject, ::Any) at /Users/GD/.julia/packages/PyCall/zqDXB/src/pyoperators.jl:13
+  ...
