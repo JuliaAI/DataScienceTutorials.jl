@@ -1,20 +1,134 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/DataScienceTutorials.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/franklin.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/pure.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/side-menu.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/extra.css"> <title>Stacking</title> <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/DataScienceTutorials.jl/" id=menu-logo-link > <div class=menu-logo > <p><strong>Data Science Tutorials</strong></p> </div> </a> <form id=lunrSearchForm  name=lunrSearchForm > <input class=search-input  name=q  placeholder="Enter search term" type=text > <input type=submit  value=Search  formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden"> </form> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data Frames</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Scientific Type</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data processing</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Stacking</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> King County Houses</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Airfoil </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Power Generation </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a> </ul> </ul> </div> </div> <div id=main > <div class=franklin-content ><h1 id=stacking ><a href="#stacking">Stacking</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-stacking.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking.jl" target=_blank ><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=franklin-toc ><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></ol><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a><li><a href="#define_the_training_nodes">Define the training nodes</a><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></ol><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a><li><a href="#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></ol></div>In stacking one blends the predictions of different regressors or classifiers to gain, in some cases, better performance than naive averaging or majority vote.</p> <p>Here we illustrate how to build a two-model stack as an MLJ learning network, which we export as a new stand-alone composite model type <code>MyTwoStack</code>. This will make the stack that we build completely re-usable &#40;new data, new models&#41; and means we can apply meta-algorithms, such as performance evaluation and tuning, to the stack, exaclty as we would for any other model.</p> <p>Our main purpose here is to demonstrate the flexibility of MLJ&#39;s composite model interface. Eventually, MLJ will provide built-in composite types or macros to achieve the same results in a few lines, which will suffice for routine stacking tasks.</p> <p>After defining the <code>MyTwoStack</code> model type, we instantiate it for an application to the Ames House Price data set.</p> <h2 id=basic_stacking_using_out-of-sample_base_learner_predictions ><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a></h2> <p>A rather general stacking protocol was first described in a <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231">1992 paper</a> by David Wolpert. For a generic introduction to the basic two-layer stack described here, see <a href="https://burakhimmetoglu.com/2016/12/01/stacking-models-for-improved-predictions/">this blog post</a> of Burak Himmetoglu.</p> <p>A basic stack consists of a number of base learners &#40;two, in this illustration&#41; and a single adjudicating model.</p> <p>When a stacked model is called to make a prediction, the individual predictions of the base learners are made the columns of an <em>input</em> table for the adjudicating model, which then outputs the final prediction. However, it is crucial to understand that the flow of data <em>during training</em> is not the same.</p> <p>The base model predictions used to train the adjudicating model are <em>not</em> the predictions of the base learners fitted to all the training data. Rather, to prevent the adjudicator giving too much weight to the base learners with low <em>training</em> error, the input data is first split into a number of folds &#40;as in cross-validation&#41;, a base learner is trained on each fold complement individually, and corresponding predictions on the folds are spliced together to form a full-length prediction called the <em>out-of-sample.prediction</em>.</p> <p>For illustrative purposes we use just three folds. Each base learner will get three separate machines, for training on each fold complement, and a fourth machine, trained on all the supplied data, for use in the prediction flow.</p> <p>We build the learning network with dummy data at the source nodes, so the reader inspect the workings of the network as it is built &#40;by calling <code>fit&#33;</code> on nodes, and by calling the nodes themselves&#41;. As usual, this data is not seen by the exported composite model type, and the component models we choose are just default values for the hyperparameters of the composite model.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ
-<span class=hljs-keyword >using</span> PyPlot
-<span class=hljs-keyword >using</span> StableRNGs</code></pre><pre><code class="plaintext hljs">InterruptException:
-</code></pre> <p>Some models we will use:</p> <pre><code class="julia hljs">linear = <span class=hljs-meta >@load</span> LinearRegressor pkg=MLJLinearModels
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
+   <title>Stacking</title>  
+  <!-- LUNR -->
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
 
-ridge = <span class=hljs-meta >@load</span> RidgeRegressor pkg=MultivariateStats
-ridge.lambda = <span class=hljs-number >0.01</span>
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
+    </ul>
 
-knn = <span class=hljs-meta >@load</span> KNNRegressor; knn.K = <span class=hljs-number >4</span>
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
 
-tree = <span class=hljs-meta >@load</span> DecisionTreeRegressor; min_samples_leaf=<span class=hljs-number >1</span>
-forest = <span class=hljs-meta >@load</span> RandomForestRegressor pkg=DecisionTree
-forest.n_trees=<span class=hljs-number >500</span>
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
 
-svm = <span class=hljs-meta >@load</span> SVMRegressor;</code></pre><pre><code class="plaintext hljs">LoadError: InterruptException:
-in expression starting at none:1
-</code></pre> <h3 id=warm-up_exercise_define_a_model_type_to_average_predictions ><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></h3> <p>Let&#39;s define a composite model type <code>MyAverageTwo</code> that averages the predictions of two deterministic regressors. Here&#39;s the learning network:</p> <pre><code class="julia hljs">X = source()
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="stacking"><a href="#stacking">Stacking</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-stacking.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-stacking.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></li></ol></li><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a></li><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></li><li><a href="#define_the_training_nodes">Define the training nodes</a></li><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></li></ol></li><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></li><li><a href="#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></li></ol></div>In stacking one blends the predictions of different regressors or classifiers to gain, in some cases, better performance than naive averaging or majority vote.</p>
+<p>Here we illustrate how to build a two-model stack as an MLJ learning network, which we export as a new stand-alone composite model type <code>MyTwoStack</code>. This will make the stack that we build completely re-usable &#40;new data, new models&#41; and means we can apply meta-algorithms, such as performance evaluation and tuning, to the stack, exaclty as we would for any other model.</p>
+<p>Our main purpose here is to demonstrate the flexibility of MLJ&#39;s composite model interface. Eventually, MLJ will provide built-in composite types or macros to achieve the same results in a few lines, which will suffice for routine stacking tasks.</p>
+<p>After defining the <code>MyTwoStack</code> model type, we instantiate it for an application to the Ames House Price data set.</p>
+<h2 id="basic_stacking_using_out-of-sample_base_learner_predictions"><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a></h2>
+<p>A rather general stacking protocol was first described in a <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231">1992 paper</a> by David Wolpert. For a generic introduction to the basic two-layer stack described here, see <a href="https://burakhimmetoglu.com/2016/12/01/stacking-models-for-improved-predictions/">this blog post</a> of Burak Himmetoglu.</p>
+<p>A basic stack consists of a number of base learners &#40;two, in this illustration&#41; and a single adjudicating model.</p>
+<p>When a stacked model is called to make a prediction, the individual predictions of the base learners are made the columns of an <em>input</em> table for the adjudicating model, which then outputs the final prediction. However, it is crucial to understand that the flow of data <em>during training</em> is not the same.</p>
+<p>The base model predictions used to train the adjudicating model are <em>not</em> the predictions of the base learners fitted to all the training data. Rather, to prevent the adjudicator giving too much weight to the base learners with low <em>training</em> error, the input data is first split into a number of folds &#40;as in cross-validation&#41;, a base learner is trained on each fold complement individually, and corresponding predictions on the folds are spliced together to form a full-length prediction called the <em>out-of-sample.prediction</em>.</p>
+<p>For illustrative purposes we use just three folds. Each base learner will get three separate machines, for training on each fold complement, and a fourth machine, trained on all the supplied data, for use in the prediction flow.</p>
+<p>We build the learning network with dummy data at the source nodes, so the reader inspect the workings of the network as it is built &#40;by calling <code>fit&#33;</code> on nodes, and by calling the nodes themselves&#41;. As usual, this data is not seen by the exported composite model type, and the component models we choose are just default values for the hyperparameters of the composite model.</p>
+<pre><code class="language-julia">using MLJ
+using PyPlot
+using StableRNGs</code></pre>
+<p>Some models we will use:</p>
+<pre><code class="language-julia">linear = @load LinearRegressor pkg=MLJLinearModels
+
+ridge = @load RidgeRegressor pkg=MultivariateStats
+ridge.lambda = 0.01
+
+knn = @load KNNRegressor; knn.K = 4
+
+tree = @load DecisionTreeRegressor; min_samples_leaf=1
+forest = @load RandomForestRegressor pkg=DecisionTree
+forest.n_trees=500
+
+svm = @load SVMRegressor;</code></pre>
+<h3 id="warm-up_exercise_define_a_model_type_to_average_predictions"><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></h3>
+<p>Let&#39;s define a composite model type <code>MyAverageTwo</code> that averages the predictions of two deterministic regressors. Here&#39;s the learning network:</p>
+<pre><code class="language-julia">X = source()
 y = source()
 
 model1 = linear
@@ -26,117 +140,246 @@ y1 = predict(m1, X)
 m2 = machine(model2, X, y)
 y2 = predict(m2, X)
 
-yhat = <span class=hljs-number >0.5</span>*y1 + <span class=hljs-number >0.5</span>*y2</code></pre><pre><code class="plaintext hljs">UndefVarError: linear not defined
-</code></pre> <p>And the macro call to define <code>MyAverageTwo</code> and an instance <code>average_two</code>:</p> <pre><code class="julia hljs">avg = <span class=hljs-meta >@from_network</span> MyAverageTwo(regressor1=model1,
-                                 regressor2=model2) &lt;= yhat</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: @from_network not defined
+yhat = 0.5*y1 + 0.5*y2</code></pre><pre><code class="plaintext">Node{Nothing} @529
+  args:
+    1:	Node{Nothing} @295
+    2:	Node{Nothing} @915
+  formula:
+    +(
+        #118(
+            predict(
+                Machine{LinearRegressor} @039, 
+                Source @886)),
+        #118(
+            predict(
+                Machine{KNNRegressor} @573, 
+                Source @886)))</code></pre>
+<p>And the macro call to define <code>MyAverageTwo</code> and an instance <code>average_two</code>:</p>
+<pre><code class="language-julia">avg = @from_network MyAverageTwo(regressor1=model1,
+                                 regressor2=model2) <= yhat</code></pre><pre><code class="plaintext">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
+Closest candidates are:
+  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/composition/models/from_network.jl:67
 in expression starting at none:1
-</code></pre> <p>Evaluating this average model on the Boston data set, and comparing with the base model predictions:</p> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> print_performance(model, data...)
-    <span class=hljs-literal >e</span> = evaluate(model, data...;
-                 resampling=CV(rng=StableRNG(<span class=hljs-number >1234</span>), nfolds=<span class=hljs-number >8</span>),
+</code></pre>
+<p>Evaluating this average model on the Boston data set, and comparing with the base model predictions:</p>
+<pre><code class="language-julia">function print_performance(model, data...)
+    e = evaluate(model, data...;
+                 resampling=CV(rng=StableRNG(1234), nfolds=8),
                  measure=rms,
-                 verbosity=<span class=hljs-number >0</span>)
-    μ = round(<span class=hljs-literal >e</span>.measurement[<span class=hljs-number >1</span>], sigdigits=<span class=hljs-number >5</span>)
-    ste = round(std(<span class=hljs-literal >e</span>.per_fold[<span class=hljs-number >1</span>])/sqrt(<span class=hljs-number >8</span>), digits=<span class=hljs-number >5</span>)
-    println(<span class=hljs-string >&quot;<span class=hljs-variable >$model</span> = <span class=hljs-variable >$μ</span> ± <span class=hljs-subst >$(<span class=hljs-number >2</span>*ste)</span>&quot;</span>)
-<span class=hljs-keyword >end</span>;
+                 verbosity=0)
+    μ = round(e.measurement[1], sigdigits=5)
+    ste = round(std(e.per_fold[1])/sqrt(8), digits=5)
+    println("$model = $μ ± $(2*ste)")
+end;
 
-X, y = <span class=hljs-meta >@load_boston</span>
+X, y = @load_boston
 
 print_performance(linear, X, y)
 print_performance(knn, X, y)
-print_performance(avg, X, y)</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: @load_boston not defined
-in expression starting at none:2
-</code></pre> <h2 id=stacking_proper ><a href="#stacking_proper">Stacking proper</a></h2> <h3 id=helper_functions ><a href="#helper_functions">Helper functions:</a></h3> <p>To generate folds for generating out-of-sample predictions, we define</p> <pre><code class="julia hljs">folds(data, nfolds) =
-    partition(<span class=hljs-number >1</span>:nrows(data), (<span class=hljs-number >1</span>/nfolds <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:(nfolds-<span class=hljs-number >1</span>))...);</code></pre> <p>For example, we have:</p> <pre><code class="julia hljs">f = folds(<span class=hljs-number >1</span>:<span class=hljs-number >10</span>, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: nrows not defined
-</code></pre> <p>In our learning network, the folds will depend on the input data, which will be wrapped as a source node. We therefore need to overload the <code>folds</code> function for nodes:</p> <pre><code class="julia hljs">folds(X::AbstractNode, nfolds) = node(XX -&gt; folds(XX, nfolds), X);</code></pre><pre><code class="plaintext hljs">UndefVarError: AbstractNode not defined
-</code></pre> <p>It will also be convenient to use the MLJ method <code>restrict&#40;X, f, i&#41;</code> that restricts data <code>X</code> to the <code>i</code>th element &#40;fold&#41; of <code>f</code>, and <code>corestrict&#40;X, f, i&#41;</code> that restricts to the corresponding fold complement &#40;the concatenation of all but the <code>i</code>th fold&#41;.</p> <p>For example, we have:</p> <pre><code class="julia hljs">corestrict(string.(<span class=hljs-number >1</span>:<span class=hljs-number >10</span>), f, <span class=hljs-number >2</span>)</code></pre><pre><code class="plaintext hljs">UndefVarError: corestrict not defined
-</code></pre> <p>Overloading these functions for nodes:</p> <pre><code class="julia hljs">MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -&gt; restrict(XX, ff, i), X, f);
+print_performance(avg, X, y)</code></pre><pre><code class="plaintext">LinearRegressor @030 = 4.8635 ± 0.34864
+KNNRegressor @379 = 6.1602 ± 0.38348
+UndefVarError: avg not defined
+</code></pre>
+<h2 id="stacking_proper"><a href="#stacking_proper">Stacking proper</a></h2>  <h3 id="helper_functions"><a href="#helper_functions">Helper functions:</a></h3>
+<p>To generate folds for generating out-of-sample predictions, we define</p>
+<pre><code class="language-julia">folds(data, nfolds) =
+    partition(1:nrows(data), (1/nfolds for i in 1:(nfolds-1))...);</code></pre>
+<p>For example, we have:</p>
+<pre><code class="language-julia">f = folds(1:10, 3)</code></pre><pre><code class="plaintext">([1, 2, 3], [4, 5, 6], [7, 8, 9, 10])</code></pre>
+<p>In our learning network, the folds will depend on the input data, which will be wrapped as a source node. We therefore need to overload the <code>folds</code> function for nodes:</p>
+<pre><code class="language-julia">folds(X::AbstractNode, nfolds) = node(XX -> folds(XX, nfolds), X);</code></pre>
+<p>It will also be convenient to use the MLJ method <code>restrict&#40;X, f, i&#41;</code> that restricts data <code>X</code> to the <code>i</code>th element &#40;fold&#41; of <code>f</code>, and <code>corestrict&#40;X, f, i&#41;</code> that restricts to the corresponding fold complement &#40;the concatenation of all but the <code>i</code>th fold&#41;.</p>
+<p>For example, we have:</p>
+<pre><code class="language-julia">corestrict(string.(1:10), f, 2)</code></pre><pre><code class="plaintext">7-element Array{String,1}:
+ "1"
+ "2"
+ "3"
+ "7"
+ "8"
+ "9"
+ "10"</code></pre>
+<p>Overloading these functions for nodes:</p>
+<pre><code class="language-julia">MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> restrict(XX, ff, i), X, f);
 MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -&gt; corestrict(XX, ff, i), X, f);</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
-</code></pre> <p>All the other data manipulations we will need &#40;<code>vcat</code>, <code>hcat</code>, <code>MLJ.table</code>&#41; are already overloaded to work with nodes.</p> <h3 id=choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model ><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></h3> <pre><code class="julia hljs">figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-steps(x) = x &lt; -<span class=hljs-number >3</span>/<span class=hljs-number >2</span> ? -<span class=hljs-number >1</span> : (x &lt; <span class=hljs-number >3</span>/<span class=hljs-number >2</span> ? <span class=hljs-number >0</span> : <span class=hljs-number >1</span>)
-x = <span class=hljs-built_in >Float64</span>[-<span class=hljs-number >4</span>, -<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, -<span class=hljs-number >3</span>, <span class=hljs-number >0</span>, <span class=hljs-number >3</span>, -<span class=hljs-number >2</span>, <span class=hljs-number >1</span>, <span class=hljs-number >4</span>]
+    node((XX, ff) -> corestrict(XX, ff, i), X, f);</code></pre>
+<p>All the other data manipulations we will need &#40;<code>vcat</code>, <code>hcat</code>, <code>MLJ.table</code>&#41; are already overloaded to work with nodes.</p>
+<h3 id="choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model"><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></h3>
+<pre><code class="language-julia">figure(figsize=(8,6))
+steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
+x = Float64[-4, -1, 2, -3, 0, 3, -2, 1, 4]
 Xraw = (x = x, )
 yraw = steps.(x);
 idxsort = sortperm(x)
 xsort = x[idxsort]
 ysort = yraw[idxsort]
-step(xsort, ysort, label=<span class=hljs-string >&quot;truth&quot;</span>, <span class=hljs-keyword >where</span>=<span class=hljs-string >&quot;mid&quot;</span>)
-plot(x, yraw, ls=<span class=hljs-string >&quot;none&quot;</span>, marker=<span class=hljs-string >&quot;o&quot;</span>, label=<span class=hljs-string >&quot;data&quot;</span>)
-xlim(-<span class=hljs-number >4.5</span>, <span class=hljs-number >4.5</span>)
-legend()</code></pre><pre><code class="plaintext hljs">UndefVarError: figure not defined
-</code></pre> <p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s1.svg' not found. //</span></p> <p>Some models to stack:</p> <pre><code class="julia hljs">model1 = linear
-model2 = knn</code></pre><pre><code class="plaintext hljs">UndefVarError: linear not defined
-</code></pre> <p>The adjudicating model:</p> <pre><code class="julia hljs">judge = linear</code></pre><pre><code class="plaintext hljs">UndefVarError: linear not defined
-</code></pre> <h3 id=define_the_training_nodes ><a href="#define_the_training_nodes">Define the training nodes</a></h3> <p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above:</p> <p>Wrapped as source node:</p> <pre><code class="julia hljs">X = source(Xraw)
-y = source(yraw)</code></pre><pre><code class="plaintext hljs">UndefVarError: source not defined
-</code></pre> <p>Our first internal node represents the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions:</p> <pre><code class="julia hljs">f = folds(X, <span class=hljs-number >3</span>)
-f()</code></pre><pre><code class="plaintext hljs">UndefVarError: X not defined
-</code></pre> <p>Constructing machines for training <code>model1</code> on each fold-complement:</p> <pre><code class="julia hljs">m11 = machine(model1, corestrict(X, f, <span class=hljs-number >1</span>), corestrict(y, f, <span class=hljs-number >1</span>))
-m12 = machine(model1, corestrict(X, f, <span class=hljs-number >2</span>), corestrict(y, f, <span class=hljs-number >2</span>))
-m13 = machine(model1, corestrict(X, f, <span class=hljs-number >3</span>), corestrict(y, f, <span class=hljs-number >3</span>))</code></pre><pre><code class="plaintext hljs">UndefVarError: corestrict not defined
-</code></pre> <p>Define each out-of-sample prediction of <code>model1</code>:</p> <pre><code class="julia hljs">y11 = predict(m11, restrict(X, f, <span class=hljs-number >1</span>));
-y12 = predict(m12, restrict(X, f, <span class=hljs-number >2</span>));
-y13 = predict(m13, restrict(X, f, <span class=hljs-number >3</span>));</code></pre><pre><code class="plaintext hljs">UndefVarError: restrict not defined
-</code></pre> <p>Splice together the out-of-sample predictions for model1:</p> <pre><code class="julia hljs">y1_oos = vcat(y11, y12, y13);</code></pre><pre><code class="plaintext hljs">UndefVarError: y11 not defined
-</code></pre> <p>Optionally, to check our network so far, we can fit and plot <code>y1_oos</code>:</p> <pre><code class="julia hljs">fit!(y1_oos, verbosity=<span class=hljs-number >0</span>)
+step(xsort, ysort, label="truth", where="mid")
+plot(x, yraw, ls="none", marker="o", label="data")
+xlim(-4.5, 4.5)
+legend()</code></pre>
+<img src="/DataScienceTutorials.jl/assets/getting-started/stacking/code/output/s1.svg" alt="">
+<p>Some models to stack:</p>
+<pre><code class="language-julia">model1 = linear
+model2 = knn</code></pre><pre><code class="plaintext">KNNRegressor(
+    K = 4,
+    algorithm = :kdtree,
+    metric = Distances.Euclidean(0.0),
+    leafsize = 10,
+    reorder = true,
+    weights = :uniform) @379</code></pre>
+<p>The adjudicating model:</p>
+<pre><code class="language-julia">judge = linear</code></pre><pre><code class="plaintext">LinearRegressor(
+    fit_intercept = true,
+    solver = nothing) @030</code></pre>
+<h3 id="define_the_training_nodes"><a href="#define_the_training_nodes">Define the training nodes</a></h3>
+<p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above:</p>
+<p>Wrapped as source node:</p>
+<pre><code class="language-julia">X = source(Xraw)
+y = source(yraw)</code></pre><pre><code class="plaintext">Source @006 ⏎ `AbstractArray{Count,1}`</code></pre>
+<p>Our first internal node represents the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions:</p>
+<pre><code class="language-julia">f = folds(X, 3)
+f()</code></pre><pre><code class="plaintext">([1, 2, 3], [4, 5, 6], [7, 8, 9])</code></pre>
+<p>Constructing machines for training <code>model1</code> on each fold-complement:</p>
+<pre><code class="language-julia">m11 = machine(model1, corestrict(X, f, 1), corestrict(y, f, 1))
+m12 = machine(model1, corestrict(X, f, 2), corestrict(y, f, 2))
+m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @856 trained 0 times.
+  args: 
+    1:	Node{Nothing} @911
+    2:	Node{Nothing} @172
+</code></pre>
+<p>Define each out-of-sample prediction of <code>model1</code>:</p>
+<pre><code class="language-julia">y11 = predict(m11, restrict(X, f, 1));
+y12 = predict(m12, restrict(X, f, 2));
+y13 = predict(m13, restrict(X, f, 3));</code></pre>
+<p>Splice together the out-of-sample predictions for model1:</p>
+<pre><code class="language-julia">y1_oos = vcat(y11, y12, y13);</code></pre>
+<p>Optionally, to check our network so far, we can fit and plot <code>y1_oos</code>:</p>
+<pre><code class="language-julia">fit!(y1_oos, verbosity=0)
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-step(xsort, ysort, label=<span class=hljs-string >&quot;truth&quot;</span>, <span class=hljs-keyword >where</span>=<span class=hljs-string >&quot;mid&quot;</span>)
-plot(x, y1_oos(), ls=<span class=hljs-string >&quot;none&quot;</span>, marker=<span class=hljs-string >&quot;o&quot;</span>, label=<span class=hljs-string >&quot;linear oos&quot;</span>)
-legend()</code></pre><pre><code class="plaintext hljs">UndefVarError: fit! not defined
-</code></pre> <p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s2.svg' not found. //</span></p> <p>We now repeat the procedure for the other model:</p> <pre><code class="julia hljs">m21 = machine(model2, corestrict(X, f, <span class=hljs-number >1</span>), corestrict(y, f, <span class=hljs-number >1</span>))
-m22 = machine(model2, corestrict(X, f, <span class=hljs-number >2</span>), corestrict(y, f, <span class=hljs-number >2</span>))
-m23 = machine(model2, corestrict(X, f, <span class=hljs-number >3</span>), corestrict(y, f, <span class=hljs-number >3</span>))
-y21 = predict(m21, restrict(X, f, <span class=hljs-number >1</span>));
-y22 = predict(m22, restrict(X, f, <span class=hljs-number >2</span>));
-y23 = predict(m23, restrict(X, f, <span class=hljs-number >3</span>));</code></pre><pre><code class="plaintext hljs">UndefVarError: corestrict not defined
-</code></pre> <p>And testing the knn out-of-sample prediction:</p> <pre><code class="julia hljs">y2_oos = vcat(y21, y22, y23);
-fit!(y2_oos, verbosity=<span class=hljs-number >0</span>)
+figure(figsize=(8,6))
+step(xsort, ysort, label="truth", where="mid")
+plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
+legend()</code></pre>
+<img src="/DataScienceTutorials.jl/assets/getting-started/stacking/code/output/s2.svg" alt="">
+<p>We now repeat the procedure for the other model:</p>
+<pre><code class="language-julia">m21 = machine(model2, corestrict(X, f, 1), corestrict(y, f, 1))
+m22 = machine(model2, corestrict(X, f, 2), corestrict(y, f, 2))
+m23 = machine(model2, corestrict(X, f, 3), corestrict(y, f, 3))
+y21 = predict(m21, restrict(X, f, 1));
+y22 = predict(m22, restrict(X, f, 2));
+y23 = predict(m23, restrict(X, f, 3));</code></pre>
+<p>And testing the knn out-of-sample prediction:</p>
+<pre><code class="language-julia">y2_oos = vcat(y21, y22, y23);
+fit!(y2_oos, verbosity=0)
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-step(xsort, ysort, label=<span class=hljs-string >&quot;truth&quot;</span>, <span class=hljs-keyword >where</span>=<span class=hljs-string >&quot;mid&quot;</span>)
-plot(x, y2_oos(), ls=<span class=hljs-string >&quot;none&quot;</span>, marker=<span class=hljs-string >&quot;o&quot;</span>, label=<span class=hljs-string >&quot;knn oos&quot;</span>)
-legend()</code></pre><pre><code class="plaintext hljs">UndefVarError: y21 not defined
-</code></pre> <p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s3.svg' not found. //</span></p> <p>Now that we have the out-of-sample base learner predictions, we are ready to merge them into the adjudicator&#39;s input table and construct the machine for training the adjudicator:</p> <pre><code class="julia hljs">X_oos = MLJ.table(hcat(y1_oos, y2_oos))
-m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext hljs">UndefVarError: MLJ not defined
-</code></pre> <p>Are we done with constructing machines? Well, not quite. Recall that when use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions on the base learners. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p> <pre><code class="julia hljs">m1 = machine(model1, X, y)
-m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext hljs">UndefVarError: machine not defined
-</code></pre> <h3 id=define_nodes_still_needed_for_prediction ><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></h3> <p>To obtain the final prediction, <code>yhat</code>, we get the base learner predictions, based on training with all data, and feed them to the adjudicator:</p> <pre><code class="julia hljs">y1 = predict(m1, X);
+figure(figsize=(8,6))
+step(xsort, ysort, label="truth", where="mid")
+plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
+legend()</code></pre>
+<img src="/DataScienceTutorials.jl/assets/getting-started/stacking/code/output/s3.svg" alt="">
+<p>Now that we have the out-of-sample base learner predictions, we are ready to merge them into the adjudicator&#39;s input table and construct the machine for training the adjudicator:</p>
+<pre><code class="language-julia">X_oos = MLJ.table(hcat(y1_oos, y2_oos))
+m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @483 trained 0 times.
+  args: 
+    1:	Node{Nothing} @884
+    2:	Source @006 ⏎ `AbstractArray{Count,1}`
+</code></pre>
+<p>Are we done with constructing machines? Well, not quite. Recall that when use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions on the base learners. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p>
+<pre><code class="language-julia">m1 = machine(model1, X, y)
+m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @479 trained 0 times.
+  args: 
+    1:	Source @279 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @006 ⏎ `AbstractArray{Count,1}`
+</code></pre>
+<h3 id="define_nodes_still_needed_for_prediction"><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></h3>
+<p>To obtain the final prediction, <code>yhat</code>, we get the base learner predictions, based on training with all data, and feed them to the adjudicator:</p>
+<pre><code class="language-julia">y1 = predict(m1, X);
 y2 = predict(m2, X);
 X_judge = MLJ.table(hcat(y1, y2))
-yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext hljs">UndefVarError: predict not defined
-</code></pre> <p>Let&#39;s check the final prediction node can be fit and called:</p> <pre><code class="julia hljs">fit!(yhat, verbosity=<span class=hljs-number >0</span>)
+yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext">Node{Machine{LinearRegressor}} @192
+  args:
+    1:	Node{Nothing} @902
+  formula:
+    predict(
+        Machine{LinearRegressor} @483, 
+        table(
+            hcat(
+                predict(
+                    Machine{LinearRegressor} @768, 
+                    Source @279),
+                predict(
+                    Machine{KNNRegressor} @479, 
+                    Source @279))))</code></pre>
+<p>Let&#39;s check the final prediction node can be fit and called:</p>
+<pre><code class="language-julia">fit!(yhat, verbosity=0)
 
-figure(figsize=(<span class=hljs-number >8</span>,<span class=hljs-number >6</span>))
-step(xsort, ysort, label=<span class=hljs-string >&quot;truth&quot;</span>, <span class=hljs-keyword >where</span>=<span class=hljs-string >&quot;mid&quot;</span>)
-plot(x, yhat(), ls=<span class=hljs-string >&quot;none&quot;</span>, marker=<span class=hljs-string >&quot;o&quot;</span>, label=<span class=hljs-string >&quot;yhat&quot;</span>)
-legend()</code></pre><pre><code class="plaintext hljs">UndefVarError: fit! not defined
-</code></pre> <p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s4' not found. //</span></p> <p>Although of little statistical significance here, we note that stacking gives a lower <em>training</em> error than naive averaging:</p> <pre><code class="julia hljs">e1 = rms(y1(), y())
+figure(figsize=(8,6))
+step(xsort, ysort, label="truth", where="mid")
+plot(x, yhat(), ls="none", marker="o", label="yhat")
+legend()</code></pre>
+<img src="/DataScienceTutorials.jl/assets/getting-started/stacking/code/output/s4.svg" alt="">
+<p>Although of little statistical significance here, we note that stacking gives a lower <em>training</em> error than naive averaging:</p>
+<pre><code class="language-julia">e1 = rms(y1(), y())
 e2 = rms(y2(), y())
-emean = rms(<span class=hljs-number >0.5</span>*y1() + <span class=hljs-number >0.5</span>*y2(), y())
+emean = rms(0.5*y1() + 0.5*y2(), y())
 estack = rms(yhat(), y())
-<span class=hljs-meta >@show</span> e1 e2 emean estack;</code></pre><pre><code class="plaintext hljs">UndefVarError: y1 not defined
-</code></pre> <h2 id=export_the_learning_network_as_a_new_model_type ><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></h2> <p>The learning network &#40;less the data wrapped in the source nodes&#41; amounts to a specification of a new composite model type for two-model stacks, trained with three-fold resampling of base model predictions. Let&#39;s create the new type <code>MyTwoModelStack</code>:</p> <pre><code class="julia hljs"><span class=hljs-meta >@from_network</span> MyTwoModelStack(regressor1=model1,
+@show e1 e2 emean estack;</code></pre><pre><code class="plaintext">e1 = 0.2581988897471611
+e2 = 0.25
+emean = 0.22126530078919587
+estack = 0.19577994695380313
+</code></pre>
+<h2 id="export_the_learning_network_as_a_new_model_type"><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></h2>
+<p>The learning network &#40;less the data wrapped in the source nodes&#41; amounts to a specification of a new composite model type for two-model stacks, trained with three-fold resampling of base model predictions. Let&#39;s create the new type <code>MyTwoModelStack</code>:</p>
+<pre><code class="language-julia">@from_network MyTwoModelStack(regressor1=model1,
                               regressor2=model2,
-                              judge=judge) &lt;= yhat</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: @from_network not defined
+                              judge=judge) <= yhat</code></pre><pre><code class="plaintext">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
+Closest candidates are:
+  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/composition/models/from_network.jl:67
 in expression starting at none:1
-</code></pre> <p>And this completes the definition of our re-usable stacking model type.</p> <h2 id=applying_mytwomodelstack_to_ames_house_price_data ><a href="#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></h2> <p>Without undertaking any hyperparameter optimization, we evaluate the performance of a random forest and ridge regressor on the well-known Ames House Prices data, and compare the performance with a stack &#40;and simple averaging&#41; using the random forest and ridge regressors as base learners. We then indicate some options for tuning the stack.</p> <h4 id=data_pre-processing ><a href="#data_pre-processing">Data pre-processing</a></h4> <p>Here we use a 12-feature reduced subset of the Ames House Price data set:</p> <pre><code class="julia hljs">X0, y0 = <span class=hljs-meta >@load_reduced_ames</span>;</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: @load_reduced_ames not defined
-in expression starting at none:1
-</code></pre> <p>Inspect scitypes:</p> <pre><code class="julia hljs">s = schema(X0)
-(names=collect(s.names), scitypes=collect(s.scitypes)) |&gt; pretty</code></pre><pre><code class="plaintext hljs">UndefVarError: schema not defined
-</code></pre> <p>Coerce counts and ordered factors to continuous:</p> <pre><code class="julia hljs">X1 = coerce(X0, :OverallQual =&gt; Continuous,
-            :GarageCars =&gt; Continuous,
-            :YearRemodAdd =&gt; Continuous,
-            :YearBuilt =&gt; Continuous);</code></pre><pre><code class="plaintext hljs">UndefVarError: Continuous not defined
-</code></pre> <p>One-hot encode the multiclass:</p> <pre><code class="julia hljs">hot_mach = fit!(machine(OneHotEncoder(), X1), verbosity=<span class=hljs-number >0</span>)
-X = transform(hot_mach, X1);</code></pre><pre><code class="plaintext hljs">UndefVarError: OneHotEncoder not defined
-</code></pre> <p>Check the final scitype:</p> <pre><code class="julia hljs">scitype(X)</code></pre><pre><code class="plaintext hljs">UndefVarError: scitype not defined
-</code></pre> <p>transform the target:</p> <pre><code class="julia hljs">y1 = log.(y0)
+</code></pre>
+<p>And this completes the definition of our re-usable stacking model type.</p>
+<h2 id="applying_mytwomodelstack_to_ames_house_price_data"><a href="#applying_mytwomodelstack_to_ames_house_price_data">Applying <code>MyTwoModelStack</code> to Ames House Price data</a></h2>
+<p>Without undertaking any hyperparameter optimization, we evaluate the performance of a random forest and ridge regressor on the well-known Ames House Prices data, and compare the performance with a stack &#40;and simple averaging&#41; using the random forest and ridge regressors as base learners. We then indicate some options for tuning the stack.</p>
+<h4 id="data_pre-processing"><a href="#data_pre-processing">Data pre-processing</a></h4>
+<p>Here we use a 12-feature reduced subset of the Ames House Price data set:</p>
+<pre><code class="language-julia">X0, y0 = @load_reduced_ames;</code></pre>
+<p>Inspect scitypes:</p>
+<pre><code class="language-julia">s = schema(X0)
+(names=collect(s.names), scitypes=collect(s.scitypes)) |> pretty</code></pre><pre><code class="plaintext">┌──────────────┬───────────────────┐
+│ names        │ scitypes          │
+│ Symbol       │ DataType          │
+│ Unknown      │ Unknown           │
+├──────────────┼───────────────────┤
+│ OverallQual  │ OrderedFactor{10} │
+│ GrLivArea    │ Continuous        │
+│ Neighborhood │ Multiclass{25}    │
+│ x1stFlrSF    │ Continuous        │
+│ TotalBsmtSF  │ Continuous        │
+│ BsmtFinSF1   │ Continuous        │
+│ LotArea      │ Continuous        │
+│ GarageCars   │ Count             │
+│ MSSubClass   │ Multiclass{15}    │
+│ GarageArea   │ Continuous        │
+│ YearRemodAdd │ Count             │
+│ YearBuilt    │ Count             │
+└──────────────┴───────────────────┘
+</code></pre>
+<p>Coerce counts and ordered factors to continuous:</p>
+<pre><code class="language-julia">X1 = coerce(X0, :OverallQual => Continuous,
+            :GarageCars => Continuous,
+            :YearRemodAdd => Continuous,
+            :YearBuilt => Continuous);</code></pre>
+<p>One-hot encode the multiclass:</p>
+<pre><code class="language-julia">hot_mach = fit!(machine(OneHotEncoder(), X1), verbosity=0)
+X = transform(hot_mach, X1);</code></pre>
+<p>Check the final scitype:</p>
+<pre><code class="language-julia">scitype(X)</code></pre><pre><code class="plaintext">Table{AbstractArray{Continuous,1}}</code></pre>
+<p>transform the target:</p>
+<pre><code class="language-julia">y1 = log.(y0)
 y = transform(fit!(machine(UnivariateStandardizer(), y1),
-                   verbosity=<span class=hljs-number >0</span>), y1);</code></pre><pre><code class="plaintext hljs">UndefVarError: y0 not defined
-</code></pre> <h4 id=define_the_stack_and_compare_performance ><a href="#define_the_stack_and_compare_performance">Define the stack and compare performance:</a></h4> <pre><code class="julia hljs">avg = MyAverageTwo(regressor1=forest,
+                   verbosity=0), y1);</code></pre>
+<h4 id="define_the_stack_and_compare_performance"><a href="#define_the_stack_and_compare_performance">Define the stack and compare performance:</a></h4>
+<pre><code class="language-julia">avg = MyAverageTwo(regressor1=forest,
                    regressor2=ridge)
 
 
@@ -146,18 +389,40 @@ stack = MyTwoModelStack(regressor1=forest,
 
 all_models = [forest, ridge, avg, stack];
 
-<span class=hljs-keyword >for</span> model <span class=hljs-keyword >in</span> all_models
+for model in all_models
     print_performance(model, X, y)
-<span class=hljs-keyword >end</span>;</code></pre><pre><code class="plaintext hljs">UndefVarError: forest not defined
-</code></pre> <h4 id=tuning_a_stack ><a href="#tuning_a_stack">Tuning a stack</a></h4> <p>A standard abuse of good data hygiene practice is to optimize stack component models <em>separately</em> and then tune the adjudicating model hyperparameters &#40;using the same resampling of the data&#41; with the base learners fixed. Although more computationally expensive, better generalization might be expected by applying tuning to the stack as a whole, either simultaneously, or in in cheaper sequential steps. Since our stack is a stand-alone model, this is readily implemented.</p> <p>As a proof of concept, let&#39;s see how to tune one of the base model hyperparameters, based on performance of the stack as a whole:</p> <pre><code class="julia hljs">r = range(stack, :(regressor2.lambda), lower = <span class=hljs-number >1</span>, upper = <span class=hljs-number >20</span>, scale=:log)
+end;</code></pre><pre><code class="plaintext">UndefVarError: MyAverageTwo not defined
+</code></pre>
+<h4 id="tuning_a_stack"><a href="#tuning_a_stack">Tuning a stack</a></h4>
+<p>A standard abuse of good data hygiene practice is to optimize stack component models <em>separately</em> and then tune the adjudicating model hyperparameters &#40;using the same resampling of the data&#41; with the base learners fixed. Although more computationally expensive, better generalization might be expected by applying tuning to the stack as a whole, either simultaneously, or in in cheaper sequential steps. Since our stack is a stand-alone model, this is readily implemented.</p>
+<p>As a proof of concept, let&#39;s see how to tune one of the base model hyperparameters, based on performance of the stack as a whole:</p>
+<pre><code class="language-julia">r = range(stack, :(regressor2.lambda), lower = 1, upper = 20, scale=:log)
 tuned_stack = TunedModel(model=stack,
                          ranges=r,
                          tuning=Grid(),
                          measure=rms,
                          resampling=Holdout())
 
-mach = fit!(machine(tuned_stack,  X, y), verbosity=<span class=hljs-number >0</span>)
+mach = fit!(machine(tuned_stack,  X, y), verbosity=0)
 best_stack = fitted_params(mach).best_model
-best_stack.regressor2.lambda</code></pre><pre><code class="plaintext hljs">UndefVarError: stack not defined
-</code></pre> <p>Let&#39;s evaluate the best stack using the same data resampling used to the evaluate the assorted untuned models earlier &#40;now we are neglecting data hygeine&#33;&#41;:</p> <pre><code class="julia hljs">print_performance(best_stack, X, y)</code></pre><pre><code class="plaintext hljs">UndefVarError: best_stack not defined
-</code></pre><div class=page-foot > <div class=copyright > &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>. </div> </div> </div> </div> </div> <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+best_stack.regressor2.lambda</code></pre><pre><code class="plaintext">UndefVarError: stack not defined
+</code></pre>
+<p>Let&#39;s evaluate the best stack using the same data resampling used to the evaluate the assorted untuned models earlier &#40;now we are neglecting data hygeine&#33;&#41;:</p>
+<pre><code class="language-julia">print_performance(best_stack, X, y)</code></pre><pre><code class="plaintext">UndefVarError: best_stack not defined
+</code></pre><div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

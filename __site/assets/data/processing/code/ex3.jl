@@ -1,2 +1,0 @@
-# This file was generated, do not modify it. # hide
-# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
