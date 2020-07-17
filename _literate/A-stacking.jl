@@ -345,7 +345,7 @@ estack = rms(yhat(), y())
     end
 end
 
-My_Two_Model_Stack = MyTwoModelStack()
+my_two_model_stack = MyTwoModelStack()
 
 # And this completes the definition of our re-usable stacking model type.
 
