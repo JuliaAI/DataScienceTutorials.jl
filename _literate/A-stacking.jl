@@ -106,7 +106,9 @@ yhat = 0.5*y1 + 0.5*y2
 surrogate = Deterministic()
 mach = machine(surrogate, X, y; predict=yhat)
 
-# Note that we do not fit this machine as no data has been passed yet.
+# Note that we cannot fit this machine because we chose not to wrap our source nodes
+# `X` and `y` in data. (If we wanted to test our network, we could have provided data,
+# but this data, and any fitting, is irrelevant as far as the final "exported" model type is concerned.)
 #
 # And the macro call to define `MyAverageTwo` and an instance `average_two`:
 
