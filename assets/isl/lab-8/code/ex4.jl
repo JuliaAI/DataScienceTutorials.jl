@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
-@pipeline HotTreeClf(hot = OneHotEncoder(),
-                     tree = DecisionTreeClassifier()) is_probabilistic=true
+HotTreeClf = @pipeline(OneHotEncoder(),
+                       DecisionTreeClassifier())
 
-mdl = HotTreeClf()
+mdl = HotTreeClf
 mach = machine(mdl, X, y)
 fit!(mach);

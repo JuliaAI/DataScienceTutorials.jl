@@ -1,3 +1,1 @@
-LinearRegressor(
-    fit_intercept = true,
-    solver = nothing) @737
+nothing
