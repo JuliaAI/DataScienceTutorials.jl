@@ -62,7 +62,7 @@ surrogate = Deterministic()
 mach = machine(surrogate, Xs, ys; predict=ŷ)
 
 fit!(ŷ)
-ŷ(X[test, :])
+ŷ(X[test[1:5], :])
 
 # To form a model out of that network is easy using the `@from_network` macro.
 #
