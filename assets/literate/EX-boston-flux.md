@@ -159,14 +159,12 @@ savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
 
 \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 
-```julia:ex14
-# Tuning
-```
+## Tuning
 
 As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
 batch_size parameter.
 
-```julia:ex15
+```julia:ex14
 bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
 tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)
@@ -174,7 +172,7 @@ tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)
 
 For more on tuning, refer to the model-tuning tutorial.
 
-```julia:ex16
+```julia:ex15
 m = MLJ.machine(tm, features, targets)
 
 MLJ.fit!(m)
@@ -183,7 +181,7 @@ MLJ.fit!(m)
 This evaluated the model at each value of our range.
 The best value is:
 
-```julia:ex17
+```julia:ex16
 MLJ.fitted_params(m).best_model.batch_size
 ```
 

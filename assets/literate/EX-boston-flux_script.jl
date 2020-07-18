@@ -69,8 +69,6 @@ ylabel("l2")
 
 savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
 
-# Tuning
-
 bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
 tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)

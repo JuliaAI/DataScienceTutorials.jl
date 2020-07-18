@@ -94,8 +94,7 @@ ylabel("l2")
 
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
-# Tuning
-
+# ## Tuning
 # As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the# batch_size parameter.
 bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
