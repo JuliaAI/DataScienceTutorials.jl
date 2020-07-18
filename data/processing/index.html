@@ -228,6 +228,7 @@ figure(figsize=(8,6))
 
 plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
 plt.xticks(rotation=90)</code></pre>
+<img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g1.svg" alt="the alt here">
 <hr /> Now that we have the total capacity by country and technology type, let&#39;s use it to calculate the share of each technology in total capacity. To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.</p>
 <pre><code class="language-julia">cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);</code></pre>
@@ -266,6 +267,7 @@ plt.axvline(median_age, label = "Median")
 plt.legend()
 
 plt.xlim(0,)</code></pre>
+<img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g2.svg" alt="the alt here">
 <p>We can also calculate and plot average plant age by country and technology Make sure all columns passed, other than the aggregation dimensions, are of type <code>Float</code> or <code>Int</code>, otherwise the function execution will fail.</p>
 <pre><code class="language-julia">age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
@@ -285,7 +287,8 @@ ax2.bar(gas_means.country, gas_means.plant_age_mean, width, label="Gas")
 ax1.set_ylabel("Age")
 
 ax1.set_title("Coal")
-ax2.set_title("Gas")</code></pre><div class="page-foot">
+ax2.set_title("Gas")</code></pre>
+<img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g3.svg" alt="the alt here"><div class="page-foot">
   <div class="copyright">
     &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 18, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>

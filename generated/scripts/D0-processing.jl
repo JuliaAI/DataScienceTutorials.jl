@@ -65,6 +65,7 @@ plt.xticks(rotation=90)
 
 
 
+# \figalt{the alt here}{D0-processing-g1.svg}
 # ---# Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.# To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
 cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
@@ -114,6 +115,7 @@ plt.xlim(0,)
 
 
 
+# \figalt{the alt here}{D0-processing-g2.svg}
 # We can also calculate and plot average plant age by country and technology# Make sure all columns passed, other than the aggregation dimensions, are of type `Float` or `Int`, otherwise the function execution will fail.
 age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
@@ -137,5 +139,6 @@ ax2.set_title("Gas")
 
 
 
+# \figalt{the alt here}{D0-processing-g3.svg}
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
