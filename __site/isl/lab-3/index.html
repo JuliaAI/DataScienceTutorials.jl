@@ -107,7 +107,7 @@
 
 @load LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @556</code></pre>
+    solver = nothing) @833</code></pre>
 <p>Note: in order to be able to load this, you <strong>must</strong> have the relevant package in your environment, if you don&#39;t, you can always add it &#40;<code>using Pkg; Pkg.add&#40;&quot;MLJLinearModels&quot;&#41;</code>&#41;.</p>
 <p>Let&#39;s load the <em>boston</em> data set</p>
 <pre><code class="language-julia">import RDatasets: dataset
@@ -148,14 +148,14 @@ X = select(data, Not(:MedV));</code></pre>
 <p>Let&#39;s declare a simple multivariate linear regression model:</p>
 <pre><code class="language-julia">mdl = LinearRegressor()</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @573</code></pre>
+    solver = nothing) @003</code></pre>
 <p>First let&#39;s do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a <em>machine</em> which, in MLJ, is the composition of a model and data to apply the model on:</p>
 <pre><code class="language-julia">X_uni = select(X, :LStat) # only a single feature
 mach_uni = machine(mdl, X_uni, y)
-fit!(mach_uni)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @916 trained 1 time.
+fit!(mach_uni)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @470 trained 1 time.
   args: 
-    1:	Source @452 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @040 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @957 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @518 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp = fitted_params(mach_uni)

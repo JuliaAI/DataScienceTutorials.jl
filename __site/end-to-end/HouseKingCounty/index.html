@@ -266,7 +266,7 @@ tree = machine(DecisionTreeRegressor(), X, y)
 
 fit!(tree, rows=train);</code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms(y[test], predict(tree, rows=test))</code></pre><pre><code class="plaintext">179.8428332931802</code></pre>
+<pre><code class="language-julia">rms(y[test], predict(tree, rows=test))</code></pre><pre><code class="plaintext">179.7653629352114</code></pre>
 <p>Let&#39;s try to do better.</p>
 <h3 id="random_forest_model"><a href="#random_forest_model">Random forest model</a></h3>
 <p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -285,7 +285,7 @@ fit!(tree, rows=train);</code></pre>
     n_jobs = nothing,
     random_state = nothing,
     verbose = 0,
-    warm_start = false) @566</code></pre>
+    warm_start = false) @062</code></pre>
 <p>That model only accepts input in the form of <code>Count</code> and so we have to coerce all <code>Finite</code> types into <code>Count</code>:</p>
 <pre><code class="language-julia">coerce!(X, Finite => Count);</code></pre>
 <p>Now we can fit</p>
@@ -293,14 +293,14 @@ fit!(tree, rows=train);</code></pre>
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
-rms(y[test], predict(rf, rows=test))</code></pre><pre><code class="plaintext">136.62705708934092</code></pre>
+rms(y[test], predict(rf, rows=test))</code></pre><pre><code class="plaintext">138.15321939385157</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 = CV(; nfolds=3)
 res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
                measure=rms, verbosity=0)</code></pre><pre><code class="plaintext">┌───────────┬───────────────┬────────────────────────────────────────────┐
 │ _.measure │ _.measurement │ _.per_fold                                 │
 ├───────────┼───────────────┼────────────────────────────────────────────┤
-│ rms       │ 135.0         │ [143.0, 124.0, 135.0, 128.0, 128.0, 147.0] │
+│ rms       │ 134.0         │ [121.0, 139.0, 131.0, 134.0, 131.0, 146.0] │
 └───────────┴───────────────┴────────────────────────────────────────────┘
 _.per_observation = [missing]
 </code></pre>
@@ -341,7 +341,7 @@ _.per_observation = [missing]
     objective = "reg:linear",
     base_score = 0.5,
     eval_metric = "rmse",
-    seed = 0) @946</code></pre>
+    seed = 0) @435</code></pre>
 <p>It expects a <code>Table&#40;Continuous&#41;</code> input so we need to coerce <code>X</code> again:</p>
 <pre><code class="language-julia">coerce!(X, Count => Continuous)
 
@@ -360,7 +360,7 @@ r2 = range(xgb, :num_round, lower=1, upper=25);</code></pre>
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
-rms(y[test], predict(mtm, rows=test))</code></pre><pre><code class="plaintext">136.87719407653867</code></pre>
+rms(y[test], predict(mtm, rows=test))</code></pre><pre><code class="plaintext">140.91453933000128</code></pre>
 <p>Tuning helps a fair bit&#33;</p>
 <div class="page-foot">
   <div class="copyright">

@@ -140,20 +140,20 @@ y1 = predict(m1, X)
 m2 = machine(model2, X, y)
 y2 = predict(m2, X)
 
-yhat = 0.5*y1 + 0.5*y2</code></pre><pre><code class="plaintext">Node{Nothing} @529
+yhat = 0.5*y1 + 0.5*y2</code></pre><pre><code class="plaintext">Node{Nothing} @863
   args:
-    1:	Node{Nothing} @295
-    2:	Node{Nothing} @915
+    1:	Node{Nothing} @479
+    2:	Node{Nothing} @008
   formula:
     +(
         #118(
             predict(
-                Machine{LinearRegressor} @039, 
-                Source @886)),
+                Machine{LinearRegressor} @666, 
+                Source @964)),
         #118(
             predict(
-                Machine{KNNRegressor} @573, 
-                Source @886)))</code></pre>
+                Machine{KNNRegressor} @412, 
+                Source @964)))</code></pre>
 <p>And the macro call to define <code>MyAverageTwo</code> and an instance <code>average_two</code>:</p>
 <pre><code class="language-julia">avg = @from_network MyAverageTwo(regressor1=model1,
                                  regressor2=model2) <= yhat</code></pre><pre><code class="plaintext">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
@@ -176,8 +176,8 @@ X, y = @load_boston
 
 print_performance(linear, X, y)
 print_performance(knn, X, y)
-print_performance(avg, X, y)</code></pre><pre><code class="plaintext">LinearRegressor @030 = 4.8635 ± 0.34864
-KNNRegressor @379 = 6.1602 ± 0.38348
+print_performance(avg, X, y)</code></pre><pre><code class="plaintext">LinearRegressor @504 = 4.8635 ± 0.34864
+KNNRegressor @422 = 6.1602 ± 0.38348
 UndefVarError: avg not defined
 </code></pre>
 <h2 id="stacking_proper"><a href="#stacking_proper">Stacking proper</a></h2>  <h3 id="helper_functions"><a href="#helper_functions">Helper functions:</a></h3>
@@ -226,26 +226,26 @@ model2 = knn</code></pre><pre><code class="plaintext">KNNRegressor(
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @379</code></pre>
+    weights = :uniform) @422</code></pre>
 <p>The adjudicating model:</p>
 <pre><code class="language-julia">judge = linear</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @030</code></pre>
+    solver = nothing) @504</code></pre>
 <h3 id="define_the_training_nodes"><a href="#define_the_training_nodes">Define the training nodes</a></h3>
 <p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above:</p>
 <p>Wrapped as source node:</p>
 <pre><code class="language-julia">X = source(Xraw)
-y = source(yraw)</code></pre><pre><code class="plaintext">Source @006 ⏎ `AbstractArray{Count,1}`</code></pre>
+y = source(yraw)</code></pre><pre><code class="plaintext">Source @464 ⏎ `AbstractArray{Count,1}`</code></pre>
 <p>Our first internal node represents the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions:</p>
 <pre><code class="language-julia">f = folds(X, 3)
 f()</code></pre><pre><code class="plaintext">([1, 2, 3], [4, 5, 6], [7, 8, 9])</code></pre>
 <p>Constructing machines for training <code>model1</code> on each fold-complement:</p>
 <pre><code class="language-julia">m11 = machine(model1, corestrict(X, f, 1), corestrict(y, f, 1))
 m12 = machine(model1, corestrict(X, f, 2), corestrict(y, f, 2))
-m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @856 trained 0 times.
+m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @908 trained 0 times.
   args: 
-    1:	Node{Nothing} @911
-    2:	Node{Nothing} @172
+    1:	Node{Nothing} @916
+    2:	Node{Nothing} @327
 </code></pre>
 <p>Define each out-of-sample prediction of <code>model1</code>:</p>
 <pre><code class="language-julia">y11 = predict(m11, restrict(X, f, 1));
@@ -279,37 +279,37 @@ legend()</code></pre>
 <img src="/DataScienceTutorials.jl/assets/getting-started/stacking/code/output/s3.svg" alt="">
 <p>Now that we have the out-of-sample base learner predictions, we are ready to merge them into the adjudicator&#39;s input table and construct the machine for training the adjudicator:</p>
 <pre><code class="language-julia">X_oos = MLJ.table(hcat(y1_oos, y2_oos))
-m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @483 trained 0 times.
+m_judge = machine(judge, X_oos, y)</code></pre><pre><code class="plaintext">Machine{LinearRegressor} @888 trained 0 times.
   args: 
-    1:	Node{Nothing} @884
-    2:	Source @006 ⏎ `AbstractArray{Count,1}`
+    1:	Node{Nothing} @915
+    2:	Source @464 ⏎ `AbstractArray{Count,1}`
 </code></pre>
 <p>Are we done with constructing machines? Well, not quite. Recall that when use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions on the base learners. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p>
 <pre><code class="language-julia">m1 = machine(model1, X, y)
-m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @479 trained 0 times.
+m2 = machine(model2, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @370 trained 0 times.
   args: 
-    1:	Source @279 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @006 ⏎ `AbstractArray{Count,1}`
+    1:	Source @471 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @464 ⏎ `AbstractArray{Count,1}`
 </code></pre>
 <h3 id="define_nodes_still_needed_for_prediction"><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></h3>
 <p>To obtain the final prediction, <code>yhat</code>, we get the base learner predictions, based on training with all data, and feed them to the adjudicator:</p>
 <pre><code class="language-julia">y1 = predict(m1, X);
 y2 = predict(m2, X);
 X_judge = MLJ.table(hcat(y1, y2))
-yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext">Node{Machine{LinearRegressor}} @192
+yhat = predict(m_judge, X_judge)</code></pre><pre><code class="plaintext">Node{Machine{LinearRegressor}} @373
   args:
-    1:	Node{Nothing} @902
+    1:	Node{Nothing} @911
   formula:
     predict(
-        Machine{LinearRegressor} @483, 
+        Machine{LinearRegressor} @888, 
         table(
             hcat(
                 predict(
-                    Machine{LinearRegressor} @768, 
-                    Source @279),
+                    Machine{LinearRegressor} @212, 
+                    Source @471),
                 predict(
-                    Machine{KNNRegressor} @479, 
-                    Source @279))))</code></pre>
+                    Machine{KNNRegressor} @370, 
+                    Source @471))))</code></pre>
 <p>Let&#39;s check the final prediction node can be fit and called:</p>
 <pre><code class="language-julia">fit!(yhat, verbosity=0)
 

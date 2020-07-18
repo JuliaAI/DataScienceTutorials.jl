@@ -134,16 +134,16 @@ first(X, 3) |> pretty</code></pre><pre><code class="plaintext">┌────�
 <h3 id="sources_and_nodes"><a href="#sources_and_nodes">Sources and nodes</a></h3>
 <p>In MLJ a learning network starts at <strong>source</strong> nodes and flows through nodes &#40;<code>X</code> and <code>y</code>&#41; defining operations/transformations &#40;<code>W</code>, <code>z</code>, <code>ẑ</code>, <code>ŷ</code>&#41;. To define the source nodes, use the <code>source</code> function, you should specify whether it&#39;s a target:</p>
 <pre><code class="language-julia">Xs = source(X)
-ys = source(y)</code></pre><pre><code class="plaintext">Source @624 ⏎ `AbstractArray{Continuous,1}`</code></pre>
+ys = source(y)</code></pre><pre><code class="plaintext">Source @772 ⏎ `AbstractArray{Continuous,1}`</code></pre>
 <p>To define an &quot;trained-operation&quot; node, you must simply create a machine wrapping a model and another node &#40;the data&#41; and indicate which operation should be performed &#40;e.g. <code>transform</code>&#41;:</p>
 <pre><code class="language-julia">stand = machine(Standardizer(), Xs)
-W = transform(stand, Xs)</code></pre><pre><code class="plaintext">Node{Machine{Standardizer}} @151
+W = transform(stand, Xs)</code></pre><pre><code class="plaintext">Node{Machine{Standardizer}} @240
   args:
-    1:	Source @158
+    1:	Source @483
   formula:
     transform(
-        Machine{Standardizer} @163, 
-        Source @158)</code></pre>
+        Machine{Standardizer} @820, 
+        Source @483)</code></pre>
 <p>You can <code>fit&#33;</code> a trained-operation node at any point, MLJ will fit whatever it needs that is upstream of that node. In this case, there is just a source node upstream of <code>W</code> so fitting <code>W</code> will just fit the standardizer:</p>
 <pre><code class="language-julia">fit!(W, rows=train);</code></pre>
 <p>If you want to get the transformed data, you can then call the node speciying on which part of the data the operation should be performed:</p>
@@ -164,17 +164,17 @@ ridge_model = RidgeRegressor(lambda=0.1)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
-ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @752
+ŷ = inverse_transform(box, ẑ)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @232
   args:
-    1:	Node{Machine{RidgeRegressor}} @899
+    1:	Node{Machine{RidgeRegressor}} @615
   formula:
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer} @989, 
+        Machine{UnivariateBoxCoxTransformer} @763, 
         predict(
-            Machine{RidgeRegressor} @541, 
+            Machine{RidgeRegressor} @400, 
             transform(
-                Machine{Standardizer} @163, 
-                Source @158)))</code></pre>
+                Machine{Standardizer} @820, 
+                Source @483)))</code></pre>
 <p>Note that we have not yet done any training, but if we now call <code>fit&#33;</code> on <code>ŷ</code>, it will fit all nodes upstream of <code>ŷ</code> that need to be re-trained:</p>
 <pre><code class="language-julia">fit!(ŷ, rows=train);</code></pre>
 <p>Now that <code>ŷ</code> has been fitted, you can apply the full graph on test data &#40;or any compatible data&#41;. For instance, let&#39;s get the <code>rms</code> between the ground truth and the predicted values:</p>
@@ -189,13 +189,13 @@ rms(y[test], ŷ(rows=test))</code></pre><pre><code class="plaintext">0.03834272
 <p>The syntax to define nodes etc. is a bit verbose. MLJ supports a shorter syntax which abstracts away some of the steps. We will refer to it as the &quot;arrow&quot; syntax as it makes use of the <code>|&gt;</code> operator which can be interpreted as &quot;data flow&quot;.</p>
 <p>Let&#39;s start with <code>W</code> and <code>z</code> &#40;the &quot;first layer&quot;&#41;:</p>
 <pre><code class="language-julia">W = X |> Standardizer()
-z = y |> UnivariateBoxCoxTransformer()</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @738
+z = y |> UnivariateBoxCoxTransformer()</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @959
   args:
-    1:	Source @437
+    1:	Source @547
   formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer} @816, 
-        Source @437)</code></pre>
+        Machine{UnivariateBoxCoxTransformer} @477, 
+        Source @547)</code></pre>
 <p>Note that we feed <code>X</code> and <code>y</code> directly into models. In the background, MLJ will create source nodes and assumes that the operation is a <code>transform</code> given the models are unsupervised.</p>
 <p>For a node that corresponds to a supervised model, you can feed a tuple where the first element corresponds to the input &#40;here <code>W</code>&#41; and the second corresponds to the target &#40;here <code>z</code>&#41;, MLJ will assume the operation is a <code>predict</code>:</p>
 <pre><code class="language-julia">ẑ = (W, z) |> RidgeRegressor(lambda=0.1);</code></pre>

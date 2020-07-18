@@ -132,7 +132,7 @@ Type:           Float64
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
-    merge_purity_threshold = 1.0) @088</code></pre>
+    merge_purity_threshold = 1.0) @386</code></pre>
 <p>Let&#39;s first check the performances of just a single Decision Tree Regressor &#40;DTR for short&#41;:</p>
 <pre><code class="language-julia">tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),

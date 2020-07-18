@@ -1,4 +1,6 @@
-# # This tutoral uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
+# ## More data processing
+#
+# This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
 # The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc
 # Hence plenty of material to work with!
 
@@ -17,7 +19,7 @@ raw_data = urldownload("https://github.com/tlienart/DataScienceTutorialsData.jl/
 data = DataFrame(raw_data);
 
 # This dataset contains information on power generation plants for a number of countries around the world.
-# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
+# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
 # The schema function enables us to get a quick overview of the variables it contains, including their machine and scentific types.
 
 schema(data)
@@ -46,8 +48,7 @@ describe(data)
 # The describe() function shows that there are several features with missing values.
 # *Note:* the `describe()` function is from the [Julia Base] whereas the `schema()` is from the MLJ package.
 
-
-###
+# ---
 # Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
 capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)
@@ -82,7 +83,7 @@ plt.xticks(rotation=90)
 
 savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
 
-###
+# ---
 # Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.
 # To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
 cap_sum_ctry_gd = groupby(capacity, [:country]);
@@ -97,7 +98,7 @@ cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw
 
 # Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
 
-###
+# ---
 # Now let's analyse features which exhibit some missing values.
 # Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.
 # First, the commissioning_year is not reported for all plants.
@@ -125,7 +126,7 @@ map!(x -> round(x, digits=0), data_nmiss.commissioning_year, data_nmiss.commissi
 # We can now calculate plant age for each plant (worth remembering that the dataset only contains active plants)
 
 current_year = fill!(Array{Float64}(undef, size(data_nmiss)[1]), 2020);
-data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year]
+data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year];
 
 # Since the commissioning year is missing for about half the plants in the dataset (17340, see description of data above) and that missing values propagate,
 # the plant age will only be available for 33643-17340 plants.

@@ -138,7 +138,7 @@ misclassification_rate(ypred, y)</code></pre><pre><code class="plaintext">0.0</c
 <pre><code class="language-julia">train, test = partition(eachindex(y), 0.5, shuffle=true, rng=333)
 fit!(mach, rows=train)
 ypred = predict_mode(mach, rows=test)
-misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext">0.245</code></pre>
+misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext">0.265</code></pre>
 <p>Not really...</p>
 <h3 id="tuning_a_dtc"><a href="#tuning_a_dtc">Tuning a DTC</a></h3>
 <p>Let&#39;s try to do a bit of tuning</p>
@@ -152,18 +152,18 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 ypred = predict_mode(mtm, rows=test)
-misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext">0.275</code></pre>
+misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext">0.26</code></pre>
 <p>We can inspect the parameters of the best model</p>
 <pre><code class="language-julia">fitted_params(mtm).best_model.decision_tree_classifier</code></pre><pre><code class="plaintext">DecisionTreeClassifier(
-    max_depth = 9,
-    min_samples_leaf = 22,
+    max_depth = 10,
+    min_samples_leaf = 1,
     min_samples_split = 2,
     min_purity_increase = 0.0,
     n_subfeatures = 0,
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @566</code></pre>
+    display_depth = 5) @341</code></pre>
 <h3 id="decision_tree_regressor"><a href="#decision_tree_regressor">Decision Tree Regressor</a></h3>
 <pre><code class="language-julia">@load DecisionTreeRegressor pkg=DecisionTree
 
@@ -194,7 +194,7 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 ypred = predict(mtm, rows=test)
-round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">5.05</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">4.98</code></pre>
 <h2 id="random_forest"><a href="#random_forest">Random Forest</a></h2>
 <p><strong>Note</strong>: the package <a href="https://github.com/bensadeghi/DecisionTree.jl"><code>DecisionTree.jl</code></a> also has a RandomForest model but it is not yet interfaced with in MLJ.</p>
 <pre><code class="language-julia">@load RandomForestRegressor pkg=ScikitLearn
@@ -204,7 +204,7 @@ rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
 ypred = predict(rf, rows=test)
-round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.78</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.86</code></pre>
 <h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></h2>
 <pre><code class="language-julia">@load XGBoostRegressor
 

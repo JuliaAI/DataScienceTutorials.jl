@@ -1,0 +1,2 @@
+coefs = [:AtBat => -0.0, :Hits => 0.0, :HmRun => -0.0, :Runs => 82.33487884749951, :RBI => 0.0, :Walks => 37.88394248222143, :Years => -0.0, :CAtBat => 0.0, :CHits => 152.33401765158266, :CHmRun => 0.0, :CRuns => 0.0, :CRBI => 28.535678620243, :CWalks => -0.0, :League__A => -0.0, :League__N => 0.0, :Division__E => 22.920702987660867, :Division__W => -45.33006538883337, :PutOuts => 64.09339067499211, :Assists => 0.0, :Errors => -0.0, :NewLeague__A => -0.0, :NewLeague__N => 0.0]
+intercept = 555.6709756637167

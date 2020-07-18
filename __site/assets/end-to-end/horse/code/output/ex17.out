@@ -1,4 +1,1 @@
-MethodError: no method matching (::MLJBase.MisclassificationRate)(::MLJBase.UnivariateFiniteArray{OrderedFactor{3},Int64,UInt32,Float64,1}, ::CategoricalArrays.CategoricalArray{Int64,1,UInt32,Int64,CategoricalArrays.CategoricalValue{Int64,UInt32},Union{}})
-Closest candidates are:
-  Any(!Matched::AbstractArray{#s490,1} where #s490<:CategoricalArrays.CategoricalValue, ::AbstractArray{#s489,1} where #s489<:CategoricalArrays.CategoricalValue) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:243
-  Any(!Matched::AbstractArray{#s490,1} where #s490<:CategoricalArrays.CategoricalValue, ::AbstractArray{#s489,1} where #s489<:CategoricalArrays.CategoricalValue, !Matched::AbstractArray{#s488,1} where #s488<:Real) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:247
+MNC mcr:  0.234

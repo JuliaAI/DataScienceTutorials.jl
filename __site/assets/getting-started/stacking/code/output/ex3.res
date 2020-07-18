@@ -1,14 +1,14 @@
-Node{Nothing} @529
+Node{Nothing} @863
   args:
-    1:	Node{Nothing} @295
-    2:	Node{Nothing} @915
+    1:	Node{Nothing} @479
+    2:	Node{Nothing} @008
   formula:
     +(
         #118(
             predict(
-                Machine{LinearRegressor} @039, 
-                Source @886)),
+                Machine{LinearRegressor} @666, 
+                Source @964)),
         #118(
             predict(
-                Machine{KNNRegressor} @573, 
-                Source @886)))
+                Machine{KNNRegressor} @412, 
+                Source @964)))
