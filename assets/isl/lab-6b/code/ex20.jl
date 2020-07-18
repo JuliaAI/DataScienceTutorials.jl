@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-ŷ = predict(mtm, rows=test)
-round(rms(ŷ, y[test])^2, sigdigits=4)
+coef_vals = [c[2] for c in coefs]
+sum(coef_vals .≈ 0) / length(coefs)

@@ -170,10 +170,10 @@ ylabel("Number of occurences", fontsize=14)</code></pre>
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="language-julia">@load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext">Machine{LogisticClassifier} @304 trained 0 times.
+clf = machine(LogisticClassifier(), X2, y)</code></pre><pre><code class="plaintext">Machine{LogisticClassifier} @216 trained 0 times.
   args: 
-    1:	Source @831 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @482 ⏎ `AbstractArray{OrderedFactor{2},1}`
+    1:	Source @540 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @218 ⏎ `AbstractArray{OrderedFactor{2},1}`
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit!(clf)
@@ -258,7 +258,7 @@ accuracy(ŷ, y[test]) |> r3</code></pre><pre><code class="plaintext">0.548</cod
     priors = nothing,
     reg_param = 0.0,
     store_covariance = false,
-    tol = 0.0001) @190</code></pre>
+    tol = 0.0001) @838</code></pre>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="language-julia">clf = machine(BayesianQDA(), X3, y)
 fit!(clf, rows=train)

@@ -186,9 +186,7 @@ This is the cross entropy on some held-out 10% of the training set.
 We can also just for the sake of getting a baseline, see the misclassification on the whole training data:
 
 ```julia:ex17
-ŷ = predict(mach, Xtrain)
-ȳ = mode(ŷ)
-mcr = misclassification_rate(ŷ, ytrain)
+mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 ```
 

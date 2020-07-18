@@ -1,4 +1,4 @@
-Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @651 trained 1 time.
+Machine{NeuralNetworkRegressor{MyNetworkBuilder,…}} @563 trained 1 time.
   args: 
-    1:	Source @291 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @553 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @922 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @873 ⏎ `AbstractArray{Continuous,1}`

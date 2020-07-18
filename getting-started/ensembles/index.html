@@ -122,12 +122,12 @@ knn_model = KNNRegressor(K=10)</code></pre><pre><code class="plaintext">KNNRegre
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = :uniform) @780</code></pre>
+    weights = :uniform) @373</code></pre>
 <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p>
-<pre><code class="language-julia">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @832 trained 0 times.
+<pre><code class="language-julia">knn = machine(knn_model, X, y)</code></pre><pre><code class="plaintext">Machine{KNNRegressor} @321 trained 0 times.
   args: 
-    1:	Source @737 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @564 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @835 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @786 ⏎ `AbstractArray{Continuous,1}`
 </code></pre>
 <p>and fit it</p>
 <pre><code class="language-julia">fit!(knn, rows=train)

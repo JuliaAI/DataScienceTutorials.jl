@@ -237,7 +237,7 @@ rfr_m = machine(rfr, X, y);</code></pre>
 <pre><code class="language-julia">fit!(rfr_m, rows=train);</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr = MLJ.predict(rfr_m, rows=test);
-rms(pred_rfr, y[test])</code></pre><pre><code class="plaintext">2.2640881873430914</code></pre>
+rms(pred_rfr, y[test])</code></pre><pre><code class="plaintext">2.3976941004643058</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <h2 id="tuning"><a href="#tuning">Tuning</a></h2>
@@ -258,7 +258,7 @@ rfr_tm = machine(tm, X, y);</code></pre>
 <pre><code class="language-julia">fit!(rfr_tm, rows=train);</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm = MLJ.predict(rfr_tm, rows=test);
-rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext">2.3760386666409894</code></pre>
+rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext">2.28281927705362</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="language-julia">fitted_params(rfr_tm).best_model</code></pre><pre><code class="plaintext">RandomForestRegressor(
@@ -267,9 +267,9 @@ rms(pred_rfr_tm, y[test])</code></pre><pre><code class="plaintext">2.37603866664
     min_samples_split = 2,
     min_purity_increase = 0.0,
     n_subfeatures = -1,
-    n_trees = 14,
+    n_trees = 15,
     sampling_fraction = 0.7666666666666667,
-    pdf_smoothing = 0.0) @878</code></pre>
+    pdf_smoothing = 0.0) @649</code></pre>
 <p>Now we can investigate the tuning by using report. Let&#39;s plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r = report(rfr_tm)
 res = r.plotting

@@ -28,4 +28,4 @@ ProbabilisticTunedModel(
     n = nothing,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @127
+    check_measure = true) @400

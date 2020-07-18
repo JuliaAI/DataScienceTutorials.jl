@@ -1,5 +1,7 @@
 <!--This file was generated, do not modify it.-->
-# This tutoral uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
+## More data processing
+
+This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
 The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc
 Hence plenty of material to work with!
 
@@ -22,14 +24,10 @@ data = DataFrame(raw_data);
 ```
 
 This dataset contains information on power generation plants for a number of countries around the world.
-
-```julia:ex3
-# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
-```
-
+The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
 The schema function enables us to get a quick overview of the variables it contains, including their machine and scentific types.
 
-```julia:ex4
+```julia:ex3
 schema(data)
 ```
 
@@ -40,7 +38,7 @@ Hence we drop all columns which contain information's source.
 We define a function `is_active()` that will return a `TRUE` boolean value if the column name does NOT (`!`) contain either of the strings "source" or "generation".
 Note the conversion of column names from `:Symbol` to `:string` since the `occursing` function only accepts strings as arguments.
 
-```julia:ex5
+```julia:ex4
 is_active(col) = !occursin(r"source|generation", string(col))
 active_cols = [col for col in names(data) if is_active(col)]
 select!(data, active_cols);
@@ -48,7 +46,7 @@ select!(data, active_cols);
 
 We also drop a number of other unwanted columns and take a look at our "new" dataframe.
 
-```julia:ex6
+```julia:ex5
 select!(data, Not([:wepp_id, :url, :owner]))
 schema(data)
 ```
@@ -56,7 +54,7 @@ schema(data)
 The remaining variables have two different scientific types: Continuous, Textual
 Of which we can get an overview.
 
-```julia:ex7
+```julia:ex6
 describe(data)
 
 # The describe() function shows that there are several features with missing values.
@@ -64,13 +62,10 @@ describe(data)
 
 *Note:* the `describe()` function is from the [Julia Base] whereas the `schema()` is from the MLJ package.
 
-```julia:ex8
-###
-```
-
+---
 Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
 
-```julia:ex9
+```julia:ex7
 capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)
 ```
@@ -79,14 +74,14 @@ This dataframe contains several subgroups (country and technology type) and it w
 To obtain a `view` of the DataFrame by subgroup, we can use the `groupby` function.
 (See the [DataFrame tutorial](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/#groupby) for an introduction to the use of `groupby`)
 
-```julia:ex10
+```julia:ex8
 cap_gr = groupby(capacity, [:country, :primary_fuel]);
 ```
 
 If we want to aggregate at the country-fuel-type level and calculate summary statistics at this level, we can use the `combine` function on the GroupedDataFrame that we just created.
 This function takes the GroupedDataFrame, the symbol of the column on which to apply the measure of choice as arguments.
 
-```julia:ex11
+```julia:ex9
 cap_mean = combine(cap_gr, :capacity_mw => mean)
 cap_sum = combine(cap_gr, :capacity_mw => sum)
 first(cap_sum, 3)
@@ -94,7 +89,7 @@ first(cap_sum, 3)
 
 Now let's plot some of this aggregate data for a selection of countries, by country and technology type
 
-```julia:ex12
+```julia:ex10
 ctry_selec = r"BEL|FRA|DEU"
 tech_selec = r"Solar"
 
@@ -104,7 +99,7 @@ cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_
 Note the `.` for element-wise comparison
 Before plotting, we can also sort values by decreasing order using `sort!()`.
 
-```julia:ex13
+```julia:ex11
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
 figure(figsize=(8,6))
@@ -113,21 +108,20 @@ plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
 plt.xticks(rotation=90)
 
 savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
-
-###
 ```
 
+---
 Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.
 To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
 
-```julia:ex14
+```julia:ex12
 cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
 ```
 
 The we join this dataframe with the disaggregated one; which requires that we convert the two GroupedDataFrame into DataFrames.
 
-```julia:ex15
+```julia:ex13
 cap_sum = DataFrame(cap_sum);
 cap_sum_ctry = DataFrame(cap_sum_ctry);
 cap_share = leftjoin(cap_sum, cap_sum_ctry, on = :country, makeunique = true)
@@ -136,62 +130,59 @@ cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw
 
 Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
 
-```julia:ex16
-###
-```
-
+---
 Now let's analyse features which exhibit some missing values.
 Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.
 First, the commissioning_year is not reported for all plants.
 We need to gauge the representativity of the plants for which it is available with regard to the full dataset.
 One way to count the missing values is
 
-```julia:ex17
+```julia:ex14
 nMissings = length(findall(x -> ismissing(x), data.commissioning_year))
 ```
 
 This represents about half of our observations
 
-```julia:ex18
+```julia:ex15
 nMissings_share = nMissings/size(data)[1]
 ```
 
 Second, the commissioning year is not reported as an integer. Fractions of years are reported too.
 As a result, the machine type of `data.commissioning_year`is Float64.
 
-```julia:ex19
+```julia:ex16
 typeof(data.commissioning_year)
 ```
 
 Before calculating the average age, let's drop the missing values.
 
-```julia:ex20
+```julia:ex17
 data_nmiss = dropmissing(data, :commissioning_year);
 ```
 
 And round the year to the closest integer. We can do this using the `round` function and a mapping function on the relevant DataFrame column.
 
-```julia:ex21
+```julia:ex18
 map!(x -> round(x, digits=0), data_nmiss.commissioning_year, data_nmiss.commissioning_year);
 
 # We can now calculate plant age for each plant (worth remembering that the dataset only contains active plants)
 
 current_year = fill!(Array{Float64}(undef, size(data_nmiss)[1]), 2020);
-data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year]
+data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year];
 ```
 
 Since the commissioning year is missing for about half the plants in the dataset (17340, see description of data above) and that missing values propagate,
 the plant age will only be available for 33643-17340 plants.
 Let's see what the mean and median plant ages are across the plants for which we have the data
 
-```julia:ex22
+```julia:ex19
 mean_age = mean(skipmissing(data_nmiss.plant_age))
 median_age = median(skipmissing(data_nmiss.plant_age))
 ```
 
 And bring this into a frequency plot of the plant age observations
 
-```julia:ex23
+```julia:ex20
 figure(figsize=(8,6))
 
 plt.hist(data_nmiss.plant_age, color="blue", edgecolor="white", bins=100,
@@ -209,7 +200,7 @@ savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
 We can also calculate and plot average plant age by country and technology
 Make sure all columns passed, other than the aggregation dimensions, are of type `Float` or `Int`, otherwise the function execution will fail.
 
-```julia:ex24
+```julia:ex21
 age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 

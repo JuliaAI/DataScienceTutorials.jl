@@ -108,7 +108,7 @@ using UrlDownload
 @load LinearRegressor pkg = GLM
 @load LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext">LinearBinaryClassifier(
     fit_intercept = true,
-    link = GLM.LogitLink()) @909</code></pre>
+    link = GLM.LogitLink()) @975</code></pre>
 <h2 id="reading_the_data"><a href="#reading_the_data">Reading the data</a></h2>
 <p>The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.</p>
 <pre><code class="language-julia">baseurl = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"
@@ -215,11 +215,11 @@ LinearRegressorPipe = @pipeline(Standardizer(),
 LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext">(standardizer = (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),
- one_hot_encoder = (fitresult = OneHotEncoderResult @843,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult @676,),
  linear_regressor = (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225],
                      intercept = 0.015893883995789806,),
- machines = Machine[Machine{Standardizer} @698, Machine{OneHotEncoder} @918, Machine{LinearRegressor} @490],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @698 => (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),Machine{OneHotEncoder} @918 => (fitresult = OneHotEncoderResult @843,),Machine{LinearRegressor} @490 => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
+ machines = Machine[Machine{Standardizer} @801, Machine{OneHotEncoder} @227, Machine{LinearRegressor} @459],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @801 => (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),Machine{OneHotEncoder} @227 => (fitresult = OneHotEncoderResult @676,),Machine{LinearRegressor} @459 => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
 <h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2>
 <p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
 <pre><code class="language-julia">ŷ = MLJ.predict(LinearModel, X)
@@ -260,10 +260,10 @@ LinearBinaryClassifierPipe = @pipeline(Standardizer(),
 LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
 fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext">(standardizer = (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),
- one_hot_encoder = (fitresult = OneHotEncoderResult @466,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult @113,),
  linear_binary_classifier = Any[],
- machines = Machine[Machine{Standardizer} @532, Machine{OneHotEncoder} @520, Machine{LinearBinaryClassifier{LogitLink}} @074],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @532 => (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),Machine{OneHotEncoder} @520 => (fitresult = OneHotEncoderResult @466,),Machine{LinearBinaryClassifier{LogitLink}} @074 => (coef = [0.20250729378868743, 0.130752939109129, 0.344951624939835, 0.9977565847160846, -0.502231510298459, -0.4785005626021652, -0.20440507809955, -0.06922751403500076, 0.05892864973017095, -0.0834474982820323, -0.002315143333859721, 0.4617765395578658, 0.38432629581007743], intercept = -1.0766338905793655)),)</code></pre>
+ machines = Machine[Machine{Standardizer} @402, Machine{OneHotEncoder} @008, Machine{LinearBinaryClassifier{LogitLink}} @719],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @402 => (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),Machine{OneHotEncoder} @008 => (fitresult = OneHotEncoderResult @113,),Machine{LinearBinaryClassifier{LogitLink}} @719 => (coef = [0.20250729378868743, 0.130752939109129, 0.344951624939835, 0.9977565847160846, -0.502231510298459, -0.4785005626021652, -0.20440507809955, -0.06922751403500076, 0.05892864973017095, -0.0834474982820323, -0.002315143333859721, 0.4617765395578658, 0.38432629581007743], intercept = -1.0766338905793655)),)</code></pre>
 <h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
 <pre><code class="language-julia">ŷ = MLJ.predict(LogisticModel, X)

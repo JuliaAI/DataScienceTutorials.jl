@@ -265,7 +265,7 @@ X = coerce(X, autotype(X, :discrete_to_continuous));</code></pre>
     penalty = :l2,
     fit_intercept = true,
     penalize_intercept = false,
-    solver = nothing) @698</code></pre>
+    solver = nothing) @923</code></pre>
 <p>Let&#39;s have convenient handles over the training data</p>
 <pre><code class="language-julia">Xtrain = X[train,:]
 ytrain = y[train];</code></pre>
@@ -277,13 +277,8 @@ res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
 round(res.measurement[1], sigdigits=3)</code></pre><pre><code class="plaintext">0.704</code></pre>
 <p>This is the cross entropy on some held-out 10&#37; of the training set. We can also just for the sake of getting a baseline, see the misclassification on the whole training data:</p>
-<pre><code class="language-julia">ŷ = predict(mach, Xtrain)
-ȳ = mode(ŷ)
-mcr = misclassification_rate(ŷ, ytrain)
-println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))</code></pre><pre><code class="plaintext">MethodError: no method matching (::MLJBase.MisclassificationRate)(::MLJBase.UnivariateFiniteArray{OrderedFactor{3},Int64,UInt32,Float64,1}, ::CategoricalArrays.CategoricalArray{Int64,1,UInt32,Int64,CategoricalArrays.CategoricalValue{Int64,UInt32},Union{}})
-Closest candidates are:
-  Any(!Matched::AbstractArray{#s490,1} where #s490<:CategoricalArrays.CategoricalValue, ::AbstractArray{#s489,1} where #s489<:CategoricalArrays.CategoricalValue) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:243
-  Any(!Matched::AbstractArray{#s490,1} where #s490<:CategoricalArrays.CategoricalValue, ::AbstractArray{#s489,1} where #s489<:CategoricalArrays.CategoricalValue, !Matched::AbstractArray{#s488,1} where #s488<:Real) at /Users/GD/.julia/packages/MLJBase/CcEkh/src/measures/finite.jl:247
+<pre><code class="language-julia">mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
+println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))</code></pre><pre><code class="plaintext">MNC mcr:  0.234
 </code></pre>
 <p>That&#39;s not bad at all actually. Let&#39;s tune it a bit and see if we can get a bit better than that, not much point in going crazy, we might get a few percents but not much more.</p>
 <pre><code class="language-julia">model = SimplePipe
@@ -291,7 +286,7 @@ lambdas = range(model, :(multinomial_classifier.lambda), lower=1e-3, upper=100, 
 tm = TunedModel(model=SimplePipe, ranges=lambdas, measure=cross_entropy)
 mtm = machine(tm, Xtrain, ytrain)
 fit!(mtm)
-best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintext">Pipeline462(
+best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintext">Pipeline1889(
     one_hot_encoder = OneHotEncoder(
             features = Symbol[],
             drop_last = false,
@@ -303,7 +298,7 @@ best_pipe = fitted_params(mtm).best_model</code></pre><pre><code class="plaintex
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @219</code></pre>
+            solver = nothing)) @801</code></pre>
 <p>So it looks like it&#39;s useful to regularise a fair bit to get a lower cross entropy</p>
 <pre><code class="language-julia">ŷ = predict(mtm, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean</code></pre><pre><code class="plaintext">0.6129047398190444</code></pre>

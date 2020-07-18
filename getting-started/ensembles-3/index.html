@@ -113,7 +113,7 @@ ys = source()
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
 
-machines = (machine(atom, Xs, ys) for i in 1:100)</code></pre><pre><code class="plaintext">Base.Generator{UnitRange{Int64},Main.FD_SANDBOX_15866893453267974565.var"#12#13"}(Main.FD_SANDBOX_15866893453267974565.var"#12#13"(), 1:100)</code></pre>
+machines = (machine(atom, Xs, ys) for i in 1:100)</code></pre><pre><code class="plaintext">Base.Generator{UnitRange{Int64},Main.FD_SANDBOX_15866893453267974565.var"#56#57"}(Main.FD_SANDBOX_15866893453267974565.var"#56#57"(), 1:100)</code></pre>
 <p>overload <code>mean</code> for nodes:</p>
 <pre><code class="language-julia">Statistics.mean(v...) = mean(v)
 Statistics.mean(v::AbstractVector{<:AbstractNode}) = node(mean, v...)
@@ -137,7 +137,7 @@ one_hundred_models = OneHundredModels()</code></pre><pre><code class="plaintext"
             min_purity_increase = 0.0,
             n_subfeatures = 4,
             post_prune = false,
-            merge_purity_threshold = 1.0)) @540</code></pre>
+            merge_purity_threshold = 1.0)) @500</code></pre>
 <h2 id="application_to_data"><a href="#application_to_data">Application to data</a></h2>
 <pre><code class="language-julia">X, y = @load_boston;</code></pre>
 <p>tune regularization parameter for a <em>single</em> tree:</p>

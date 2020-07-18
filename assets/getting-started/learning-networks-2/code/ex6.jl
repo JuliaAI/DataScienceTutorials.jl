@@ -3,4 +3,4 @@ surrogate = Deterministic()
 mach = machine(surrogate, Xs, ys; predict=ŷ)
 
 fit!(ŷ)
-ŷ(X[test, :])
+ŷ(X[test[1:5], :])

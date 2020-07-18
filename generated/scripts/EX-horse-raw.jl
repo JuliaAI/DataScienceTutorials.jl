@@ -91,9 +91,7 @@ res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
 round(res.measurement[1], sigdigits=3)
 
-ŷ = predict(mach, Xtrain)
-ȳ = mode(ŷ)
-mcr = misclassification_rate(ŷ, ytrain)
+mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 model = SimplePipe

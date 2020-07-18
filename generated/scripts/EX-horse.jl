@@ -108,9 +108,7 @@ res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
 round(res.measurement[1], sigdigits=3)
 
 # This is the cross entropy on some held-out 10% of the training set.# We can also just for the sake of getting a baseline, see the misclassification on the whole training data:
-ŷ = predict(mach, Xtrain)
-ȳ = mode(ŷ)
-mcr = misclassification_rate(ŷ, ytrain)
+mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 # That's not bad at all actually.# Let's tune it a bit and see if we can get a bit better than that, not much point in going crazy, we might get a few percents but not much more.

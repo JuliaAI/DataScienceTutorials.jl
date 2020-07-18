@@ -1,10 +1,11 @@
 # This file was generated, do not modify it. # hide
-@pipeline RegPipe(std = Standardizer(),
-                  hot = OneHotEncoder(),
-                  reg = LinearRegressor())
+using PyPlot
+ioff() # hide
 
-model = RegPipe()
-pipe  = machine(model, Xc, y)
-fit!(pipe, rows=train)
-ŷ = predict(pipe, rows=test)
-round(rms(ŷ, y[test])^2, sigdigits=4)
+figure(figsize=(8,6))
+plot(y, ls="none", marker="o")
+
+xticks(fontsize=12); yticks(fontsize=12)
+xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
+
+savefig(joinpath(@OUTPUT, "ISL-lab-6-g1.svg")) # hide

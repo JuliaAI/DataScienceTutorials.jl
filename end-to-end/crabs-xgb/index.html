@@ -172,17 +172,17 @@ xgb_model = XGBoostClassifier()</code></pre><pre><code class="plaintext">XGBoost
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @694</code></pre>
+    seed = 0) @696</code></pre>
 <p>Let&#39;s check whether the training and  is balanced, <code>StatsBase.countmap</code> is useful for that:</p>
 <pre><code class="language-julia">countmap(y[train]) |> pprint</code></pre><pre><code class="plaintext">Dict("B" => 70, "O" => 70)</code></pre>
 <p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p>
 <h2 id="xgboost_machine"><a href="#xgboost_machine">XGBoost machine</a></h2>
 <p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p>
 <pre><code class="language-julia">xgb  = XGBoostClassifier()
-xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext">Machine{XGBoostClassifier} @515 trained 0 times.
+xgbm = machine(xgb, X, y)</code></pre><pre><code class="plaintext">Machine{XGBoostClassifier} @364 trained 0 times.
   args: 
-    1:	Source @448 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @165 ⏎ `AbstractArray{Multiclass{2},1}`
+    1:	Source @659 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @860 ⏎ `AbstractArray{Multiclass{2},1}`
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="language-julia">r = range(xgb, :num_round, lower=50, upper=500)
@@ -209,10 +209,10 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
                 resampling=CV(rng=11), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @247 trained 1 time.
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @786 trained 1 time.
   args: 
-    1:	Source @999 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @496 ⏎ `AbstractArray{Multiclass{2},1}`
+    1:	Source @035 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @114 ⏎ `AbstractArray{Multiclass{2},1}`
 </code></pre>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r = report(mtm)
@@ -255,10 +255,10 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
                 resampling=CV(rng=234), ranges=[r1,r2],
                 measure=cross_entropy)
 mtm = machine(tm, X, y)
-fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @655 trained 1 time.
+fit!(mtm, rows=train)</code></pre><pre><code class="plaintext">Machine{ProbabilisticTunedModel{Grid,…}} @668 trained 1 time.
   args: 
-    1:	Source @095 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @495 ⏎ `AbstractArray{Multiclass{2},1}`
+    1:	Source @505 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @574 ⏎ `AbstractArray{Multiclass{2},1}`
 </code></pre>
 <p>and the usual procedure to visualise it:</p>
 <pre><code class="language-julia">r = report(mtm)
