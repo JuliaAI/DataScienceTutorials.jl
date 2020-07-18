@@ -110,7 +110,7 @@ plt.xticks(rotation=90)
 savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
 ```
 
-\figalt{the alt here}{D0-processing-g1.svg}
+\figalt{processing1}{D0-processing-g1.svg}
 
 ---
 Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.
@@ -199,7 +199,7 @@ plt.xlim(0,)
 savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
 ```
 
-\figalt{the alt here}{D0-processing-g2.svg}
+\figalt{processing2}{D0-processing-g2.svg}
 
 We can also calculate and plot average plant age by country and technology
 Make sure all columns passed, other than the aggregation dimensions, are of type `Float` or `Int`, otherwise the function execution will fail.
@@ -228,5 +228,5 @@ ax2.set_title("Gas")
 savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
 ```
 
-\figalt{the alt here}{D0-processing-g3.svg}
+\figalt{processing3}{D0-processing-g3.svg}
 
