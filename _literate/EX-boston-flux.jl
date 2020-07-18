@@ -8,13 +8,13 @@ import DataFrames
 import Statistics
 import Flux
 using Random
-using Plots
+using PyPlot
 
 MLJ.color_off() # hide
 Random.seed!(11)
 
 # Loading the Boston dataset. Our aim will be to implement a
-# neural network regressor to predict the price of a house, 
+# neural network regressor to predict the price of a house,
 # given a number of features.
 
 features, targets = MLJ.@load_boston
@@ -31,7 +31,7 @@ train, test = MLJ.partition(MLJ.eachindex(targets), 0.70, rng=52)
 # Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl
 # deep learning framework. The package provides four essential
 # models: `NeuralNetworkRegressor, MultitargetNeuralNetworkRegressor,
-# NeuralNetworkClassifier` and `ImageClassifier`. 
+# NeuralNetworkClassifier` and `ImageClassifier`.
 
 # At the heart of these models is a neural network. This is specified using
 # the `builder` parameter. Creating a builder object consists of two steps:
@@ -61,7 +61,7 @@ end
 myregressor = MyNetworkBuilder(20, 10)
 
 # Since the boston dataset is a regression problem, we'll be using
-# `NeuralNetworkRegressor` here. One thing to remember is that 
+# `NeuralNetworkRegressor` here. One thing to remember is that
 # a `NeuralNetworkRegressor` object works seamlessly like any other
 # MLJ model: you can wrap it in an  MLJ `machine` and do anything
 # you'd do otherwise.
@@ -71,10 +71,10 @@ myregressor = MyNetworkBuilder(20, 10)
 
 nnregressor = MLJFlux.NeuralNetworkRegressor(builder=myregressor, epochs=10)
 
-# Other parameters that NeuralNetworkRegressor takes can be found here: 
+# Other parameters that NeuralNetworkRegressor takes can be found here:
 # https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters
 
-# `nnregressor` now acts like any other MLJ model. Let's try wrapping it in a 
+# `nnregressor` now acts like any other MLJ model. Let's try wrapping it in a
 # MLJ machine and calling `fit!, predict`.
 
 mach = MLJ.machine(nnregressor, features, targets)
@@ -83,15 +83,15 @@ mach = MLJ.machine(nnregressor, features, targets)
 
 MLJ.fit!(mach, rows=train, verbosity=3)
 
-# As we can see, the training loss decreases at each epoch, showing the the neural network 
+# As we can see, the training loss decreases at each epoch, showing the the neural network
 # is gradually learning form the training set.
 
 preds = MLJ.predict(mach, features[test, :])
 
 print(preds[1:5])
 
-# Now let's retrain our model. One thing to remember is that retrainig may OR may not 
-# re-initialize our neural network model parameters. For example, changing the number of 
+# Now let's retrain our model. One thing to remember is that retrainig may OR may not
+# re-initialize our neural network model parameters. For example, changing the number of
 # epochs to 15 will not causes the model to train to 15 epcohs, but just 5 additional
 # epochs.
 
@@ -118,11 +118,19 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
-plot(curve.parameter_values,
-    curve.measurements,
-    xlab=curve.parameter_name,
-    xscale=curve.parameter_scale,
-    ylab = "l2")
+figure(figsize=(8,6))
+
+plt.plot(curve.parameter_values,
+    curve.measurements)
+
+yscale("log")
+xlabel(curve.parameter_name)
+ylabel("l2")
+
+savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
+
+# \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
+
 ## Tuning
 
 # As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
@@ -142,5 +150,3 @@ MLJ.fit!(m)
 # The best value is:
 
 MLJ.fitted_params(m).best_model.batch_size
-
-

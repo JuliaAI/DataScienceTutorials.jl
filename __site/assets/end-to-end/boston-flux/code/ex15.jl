@@ -1,4 +1,4 @@
 # This file was generated, do not modify it. # hide
-m = MLJ.machine(tm, features, targets)
+bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
-MLJ.fit!(m)
+tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)

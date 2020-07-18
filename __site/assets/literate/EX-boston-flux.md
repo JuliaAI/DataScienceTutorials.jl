@@ -10,7 +10,7 @@ import DataFrames
 import Statistics
 import Flux
 using Random
-using Plots
+using PyPlot
 
 MLJ.color_off() # hide
 Random.seed!(11)
@@ -145,18 +145,28 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
-plot(curve.parameter_values,
-    curve.measurements,
-    xlab=curve.parameter_name,
-    xscale=curve.parameter_scale,
-    ylab = "l2")
+figure(figsize=(8,6))
+
+plt.plot(curve.parameter_values,
+    curve.measurements)
+
+yscale("log")
+xlabel(curve.parameter_name)
+ylabel("l2")
+
+savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
+```
+
+\figalt{BostonFlux1}{EX-boston-flux-g1.svg}
+
+```julia:ex14
 # Tuning
 ```
 
 As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
 batch_size parameter.
 
-```julia:ex14
+```julia:ex15
 bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 
 tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)
@@ -164,7 +174,7 @@ tm = MLJ.TunedModel(model=nnregressor, ranges=[bs, ], measure=MLJ.l2)
 
 For more on tuning, refer to the model-tuning tutorial.
 
-```julia:ex15
+```julia:ex16
 m = MLJ.machine(tm, features, targets)
 
 MLJ.fit!(m)
@@ -173,7 +183,7 @@ MLJ.fit!(m)
 This evaluated the model at each value of our range.
 The best value is:
 
-```julia:ex16
+```julia:ex17
 MLJ.fitted_params(m).best_model.batch_size
 ```
 

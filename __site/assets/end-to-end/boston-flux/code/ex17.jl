@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-# Tuning
+MLJ.fitted_params(m).best_model.batch_size
