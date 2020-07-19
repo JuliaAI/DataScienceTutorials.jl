@@ -5,9 +5,9 @@
 # Here we illustrate how to build a two-model stack as an MLJ learning
 # network, which we export as a new stand-alone composite model
 # type `MyTwoStack`. This will make the stack that we build completely
-# re-usable (new data, new models) and means we can apply
+# re-usable (new data, new models). This means we can apply
 # meta-algorithms, such as performance evaluation and tuning, to the
-# stack, exaclty as we would for any other model.
+# stack, exactly as we would for any other model.
 
 # Our main purpose here is to demonstrate the flexibility of MLJ's
 # composite model interface. Eventually, MLJ will provide built-in
@@ -42,7 +42,7 @@
 # data is first split into a number of folds (as in cross-validation),
 # a base learner is trained on each fold complement individually, and
 # corresponding predictions on the folds are spliced together to form
-# a full-length prediction called the *out-of-sample.prediction*.
+# a full-length prediction called the *out-of-sample prediction*.
 
 # For illustrative purposes we use just three folds. Each base learner
 # will get three separate machines, for training on each fold
@@ -96,21 +96,19 @@ y2 = predict(m2, X)
 
 yhat = 0.5*y1 + 0.5*y2
 
-# Somewhat paradoxically, one can wrap a learning network in a certain kind of machine,
-# called a learning network machine, before exporting it, and in fact,
-# the export process actually requires us to do so.
-#
-# Since a composite model type does not yet exist, one constructs the machine using a "surrogate" model,
-# whose name indicates the ultimate model supertype.
+# In preparation for export, we wrap the whose learning network in a
+# learning network machine, which specifies what the source nodes are,
+# and which node is for prediction. As our exported model will make
+# point-predictions (as opposed to probabilistic ones), we use a
+# `Deterministic` ["surrogate" model](https://alan-turing-institute.github.io/MLJ.jl/dev/performance_measures/):
 
-surrogate = Deterministic()
-mach = machine(surrogate, X, y; predict=yhat)
+mach = machine(Deterministic(), X, y; predict=yhat)
 
-# Note that we cannot fit this machine because we chose not to wrap our source nodes
-# `X` and `y` in data. (If we wanted to test our network, we could have provided data,
-# but this data, and any fitting, is irrelevant as far as the final "exported" model type is concerned.)
-#
-# And the macro call to define `MyAverageTwo` and an instance `average_two`:
+# Note that we cannot actually fit this machine because we chose not
+# to wrap our source nodes `X` and `y` in data.
+
+# Here's the macro call that "exports" the learning network as a new
+# composite model `MyAverageTwo`:
 
 @from_network mach begin
     mutable struct MyAverageTwo
@@ -119,7 +117,11 @@ mach = machine(surrogate, X, y; predict=yhat)
     end
 end
 
-# We can now create an instance of this type
+# Note that, unlike a normal struct definition, the defaults `model1`
+# and `model2` must be specified, and they must refer to model
+# instances in the learning network.
+
+# We can now create an instance of the new type:
 
 average_two = MyAverageTwo()
 
@@ -153,12 +155,6 @@ folds(data, nfolds) =
 # For example, we have:
 f = folds(1:10, 3)
 
-# In our learning network, the folds will depend on the input data,
-# which will be wrapped as a source node. We therefore need to
-# overload the `folds` function for nodes:
-
-folds(X::AbstractNode, nfolds) = node(XX -> folds(XX, nfolds), X);
-
 # It will also be convenient to use the MLJ method `restrict(X, f, i)`
 # that restricts data `X` to the `i`th element (fold) of `f`, and
 # `corestrict(X, f, i)` that restricts to the corresponding fold
@@ -168,16 +164,6 @@ folds(X::AbstractNode, nfolds) = node(XX -> folds(XX, nfolds), X);
 # For example, we have:
 
 corestrict(string.(1:10), f, 2)
-
-# Overloading these functions for nodes:
-
-MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> restrict(XX, ff, i), X, f);
-MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> corestrict(XX, ff, i), X, f);
-
-# All the other data manipulations we will need (`vcat`, `hcat`,
-# `MLJ.table`) are already overloaded to work with nodes.
 
 
 # ### Choose some test data (optional) and some component models (defaults for the composite model):
@@ -212,20 +198,42 @@ judge = linear
 # ### Define the training nodes
 
 # Let's instantiate some input and target source nodes for the
-# learning network, wrapping the play data defined above:
-
-# Wrapped as source node:
+# learning network, wrapping the play data defined above in source
+# nodes:
 
 X = source(Xraw)
 y = source(yraw)
 
-# Our first internal node represents the three folds (vectors of row
-# indices) for creating the out-of-sample predictions:
+# Our first internal node will represent the three folds (vectors of row
+# indices) for creating the out-of-sample predictions. We would like
+# to define `f = folds(X, 3)` but this will not work because `X` is
+# not a table, just a node representing a table. We could fix this
+# by using the @node macro:
 
+f = @node folds(X, 3)
+
+# Now `f` is itself a node, and so callable:
+
+f()
+
+# However, we can also just overload `folds` to work on nodes, using the
+# `node` *function*:
+
+folds(X::AbstractNode, nfolds) = node(XX->folds(XX, nfolds), X)
 f = folds(X, 3)
 f()
 
-# Constructing machines for training `model1` on each fold-complement:
+# In the case of `restrict` and `corestrict`, which also don't
+# operation on nodes, method overloading will save us writing `@node`
+# all the time:
+
+MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> restrict(XX, ff, i), X, f);
+MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> corestrict(XX, ff, i), X, f);
+
+# We are now ready to define machines for training `model1` on each
+# fold-complement:
 
 m11 = machine(model1, corestrict(X, f, 1), corestrict(y, f, 1))
 m12 = machine(model1, corestrict(X, f, 2), corestrict(y, f, 2))
@@ -241,8 +249,12 @@ y13 = predict(m13, restrict(X, f, 3));
 
 y1_oos = vcat(y11, y12, y13);
 
-# Optionally, to check our network so far, we can fit and plot
-# `y1_oos`:
+# Note there is no need to overload the `vcat` function to work on
+# nodes; it does so out of the box, as does `hcat` and basic
+# arithmetic operations.
+
+# Since our source nodes are wrapping data, we can optionally check
+# our network so far, by calling fitting and calling `y1_oos`:
 
 fit!(y1_oos, verbosity=0)
 
@@ -287,10 +299,10 @@ m_judge = machine(judge, X_oos, y)
 
 # Are we done with constructing machines? Well, not quite. Recall that
 # when use the stack to make predictions on new data, we will be
-# feeding the adjudicator ordinary predictions on the base
-# learners. But so far, we have only defined machines to train the
-# base learners on fold complements, not on the full data, which we do
-# now:
+# feeding the adjudicator ordinary predictions of the base learners
+# (rather than out-of-sample predictions). But so far, we have only
+# defined machines to train the base learners on fold complements, not
+# on the full data, which we do now:
 
 m1 = machine(model1, X, y)
 m2 = machine(model2, X, y)
@@ -333,11 +345,10 @@ estack = rms(yhat(), y())
 # The learning network (less the data wrapped in the source nodes)
 # amounts to a specification of a new composite model type for
 # two-model stacks, trained with three-fold resampling of base model
-# predictions. Let's create the new type `MyTwoModelStack`:
-#
-# Note: remember that the machine was constructed above. We do not repeat it here.
+# predictions. Let's create the new type `MyTwoModelStack`, in the
+# same way we exported the network for model averaging:
 
-@from_network mach begin
+@from_network machine(Deterministic(), X, y; predict=yhat) begin
     mutable struct MyTwoModelStack
         regressor1=model1
         regressor2=model2
@@ -413,8 +424,8 @@ end;
 
 # #### Tuning a stack
 
-# A standard abuse of good data hygiene practice is to optimize stack
-# component models *separately* and then tune the adjudicating model
+# A standard abuse of good data hygiene is to optimize stack component
+# models *separately* and then tune the adjudicating model
 # hyperparameters (using the same resampling of the data) with the
 # base learners fixed. Although more computationally expensive, better
 # generalization might be expected by applying tuning to the stack as
@@ -437,9 +448,10 @@ best_stack = fitted_params(mach).best_model
 best_stack.regressor2.lambda
 
 # Let's evaluate the best stack using the same data resampling used to
-# the evaluate the assorted untuned models earlier (now we are neglecting
-# data hygeine!):
+# the evaluate the assorted un-tuned models earlier (now we are neglecting
+# data hygiene!):
 
 print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide
+
