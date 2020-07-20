@@ -46,7 +46,7 @@ schema(data)
 describe(data)
 
 # The describe() function shows that there are several features with missing values.
-# *Note:* the `describe()` function is from the [Julia Base] whereas the `schema()` is from the MLJ package.
+# *Note:* the `describe()` function is from the `DataFrames` package (and won't work with other, non DataFrames, tables) whereas the `schema()` is from the MLJ package.
 
 # ---
 # Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
