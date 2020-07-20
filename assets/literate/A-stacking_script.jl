@@ -7,16 +7,9 @@ MLJ.color_off() # hide
 using StableRNGs
 
 linear = @load LinearRegressor pkg=MLJLinearModels
-
-ridge = @load RidgeRegressor pkg=MultivariateStats
-ridge.lambda = 0.01
-
 knn = @load KNNRegressor; knn.K = 4
-
-tree = @load DecisionTreeRegressor; min_samples_leaf=1
-forest = @load RandomForestRegressor pkg=DecisionTree
-forest.n_trees=500
-
+tree_booster = @load EvoTreeRegressor; tree_booster.nrounds = 100
+forest = @load RandomForestRegressor pkg=DecisionTree; forest.n_trees = 500
 svm = @load SVMRegressor;
 
 X = source()
@@ -33,8 +26,16 @@ y2 = predict(m2, X)
 
 yhat = 0.5*y1 + 0.5*y2
 
-avg = @from_network MyAverageTwo(regressor1=model1,
-                                 regressor2=model2) <= yhat
+mach = machine(Deterministic(), X, y; predict=yhat)
+
+@from_network mach begin
+    mutable struct MyAverageTwo
+        regressor1=model1
+        regressor2=model2
+    end
+end
+
+average_two = MyAverageTwo()
 
 function print_performance(model, data...)
     e = evaluate(model, data...;
@@ -50,21 +51,14 @@ X, y = @load_boston
 
 print_performance(linear, X, y)
 print_performance(knn, X, y)
-print_performance(avg, X, y)
+print_performance(average_two, X, y)
 
 folds(data, nfolds) =
     partition(1:nrows(data), (1/nfolds for i in 1:(nfolds-1))...);
 
 f = folds(1:10, 3)
 
-folds(X::AbstractNode, nfolds) = node(XX -> folds(XX, nfolds), X);
-
 corestrict(string.(1:10), f, 2)
-
-MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> restrict(XX, ff, i), X, f);
-MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> corestrict(XX, ff, i), X, f);
 
 figure(figsize=(8,6))
 steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
@@ -89,8 +83,18 @@ judge = linear
 X = source(Xraw)
 y = source(yraw)
 
+f = @node folds(X, 3)
+
+f()
+
+folds(X::AbstractNode, nfolds) = node(XX->folds(XX, nfolds), X)
 f = folds(X, 3)
 f()
+
+MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> restrict(XX, ff, i), X, f);
+MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> corestrict(XX, ff, i), X, f);
 
 m11 = machine(model1, corestrict(X, f, 1), corestrict(y, f, 1))
 m12 = machine(model1, corestrict(X, f, 2), corestrict(y, f, 2))
@@ -154,53 +158,42 @@ emean = rms(0.5*y1() + 0.5*y2(), y())
 estack = rms(yhat(), y())
 @show e1 e2 emean estack;
 
-@from_network MyTwoModelStack(regressor1=model1,
-                              regressor2=model2,
-                              judge=judge) <= yhat
+@from_network machine(Deterministic(), X, y; predict=yhat) begin
+    mutable struct MyTwoModelStack
+        regressor1=model1
+        regressor2=model2
+        judge=judge
+    end
+end
 
-X0, y0 = @load_reduced_ames;
+my_two_model_stack = MyTwoModelStack()
 
-s = schema(X0)
-(names=collect(s.names), scitypes=collect(s.scitypes)) |> pretty
+X, y = make_regression(1000, 20; sparse=0.75, noise=0.1, rng=123);
 
-X1 = coerce(X0, :OverallQual => Continuous,
-            :GarageCars => Continuous,
-            :YearRemodAdd => Continuous,
-            :YearBuilt => Continuous);
-
-hot_mach = fit!(machine(OneHotEncoder(), X1), verbosity=0)
-X = transform(hot_mach, X1);
-
-scitype(X)
-
-y1 = log.(y0)
-y = transform(fit!(machine(UnivariateStandardizer(), y1),
-                   verbosity=0), y1);
-
-avg = MyAverageTwo(regressor1=forest,
-                   regressor2=ridge)
+avg = MyAverageTwo(regressor1=tree_booster,
+                   regressor2=svm)
 
 
-stack = MyTwoModelStack(regressor1=forest,
-                        regressor2=ridge,
-                        judge=linear)
+stack = MyTwoModelStack(regressor1=tree_booster,
+                        regressor2=svm,
+                        judge=forest) # judge=linear
 
-all_models = [forest, ridge, avg, stack];
+all_models = [tree_booster, svm, forest, avg, stack];
 
 for model in all_models
     print_performance(model, X, y)
-end;
+end
 
-r = range(stack, :(regressor2.lambda), lower = 1, upper = 20, scale=:log)
+r = range(stack, :(regressor2.C), lower = 0.01, upper = 10, scale=:log)
 tuned_stack = TunedModel(model=stack,
                          ranges=r,
-                         tuning=Grid(),
+                         tuning=Grid(shuffle=false),
                          measure=rms,
                          resampling=Holdout())
 
 mach = fit!(machine(tuned_stack,  X, y), verbosity=0)
 best_stack = fitted_params(mach).best_model
-best_stack.regressor2.lambda
+best_stack.regressor2.C
 
 print_performance(best_stack, X, y)
 

@@ -1,14 +1,4 @@
 # This file was generated, do not modify it. # hide
-avg = MyAverageTwo(regressor1=forest,
-                   regressor2=ridge)
+print_performance(best_stack, X, y)
 
-
-stack = MyTwoModelStack(regressor1=forest,
-                        regressor2=ridge,
-                        judge=linear)
-
-all_models = [forest, ridge, avg, stack];
-
-for model in all_models
-    print_performance(model, X, y)
-end;
+PyPlot.close_figs() # hide

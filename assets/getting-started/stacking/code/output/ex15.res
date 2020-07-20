@@ -1,1 +1,6 @@
-([1, 2, 3], [4, 5, 6], [7, 8, 9])
+Node{Nothing} @317
+  args:
+    1:	Source @478
+  formula:
+    #10(
+        Source @478)

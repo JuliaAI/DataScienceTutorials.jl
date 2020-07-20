@@ -42,7 +42,7 @@ NeuralNetworkClassifier` and `ImageClassifier`.
 
 At the heart of these models is a neural network. This is specified using
 the `builder` parameter. Creating a builder object consists of two steps:
-1. Creating a new struct inherited from `MLJFlux.Builder`. `MLJFlux.Builder`
+Step 1: Creating a new struct inherited from `MLJFlux.Builder`. `MLJFlux.Builder`
 is an abstract structure used for the purpose of dispatching. Suppose we define
 a new struct called `MyNetworkBuilder`. This can contain any attribute required to
 build the model later. (Step 2). Let's use Dense Neural Network with 2 hidden layers.
