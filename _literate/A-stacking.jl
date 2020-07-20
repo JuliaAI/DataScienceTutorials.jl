@@ -48,7 +48,7 @@
 # for use in the prediction flow.
 
 # We build the learning network with dummy data at the source nodes,
-# so the reader inspect the workings of the network as it is built (by
+# so the reader inspects the workings of the network as it is built (by
 # calling `fit!` on nodes, and by calling the nodes themselves). As
 # usual, this data is not seen by the exported composite model type,
 # and the component models we choose are just default values for the
@@ -88,7 +88,7 @@ y2 = predict(m2, X)
 
 yhat = 0.5*y1 + 0.5*y2
 
-# In preparation for export, we wrap the whose learning network in a
+# In preparation for export, we wrap the learning network in a
 # learning network machine, which specifies what the source nodes are,
 # and which node is for prediction. As our exported model will make
 # point-predictions (as opposed to probabilistic ones), we use a
@@ -216,7 +216,7 @@ f = folds(X, 3)
 f()
 
 # In the case of `restrict` and `corestrict`, which also don't
-# operation on nodes, method overloading will save us writing `@node`
+# operate on nodes, method overloading will save us writing `@node`
 # all the time:
 
 MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
@@ -290,7 +290,7 @@ X_oos = MLJ.table(hcat(y1_oos, y2_oos))
 m_judge = machine(judge, X_oos, y)
 
 # Are we done with constructing machines? Well, not quite. Recall that
-# when use the stack to make predictions on new data, we will be
+# when we use the stack to make predictions on new data, we will be
 # feeding the adjudicator ordinary predictions of the base learners
 # (rather than out-of-sample predictions). But so far, we have only
 # defined machines to train the base learners on fold complements, not

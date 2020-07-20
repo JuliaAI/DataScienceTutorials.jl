@@ -1,4 +1,1 @@
-Machine{LinearRegressor} @857 trained 0 times.
-  args: 
-    1:	Node{Nothing} @231
-    2:	Node{Nothing} @874
+([1, 2, 3], [4, 5, 6], [7, 8, 9])

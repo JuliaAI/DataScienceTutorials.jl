@@ -42,7 +42,7 @@ yhat(X[test, :])
 
 @from_network mach begin
     mutable struct one_hundred_models
-        regressor=atom
+        atom=atom
     end
 end
 

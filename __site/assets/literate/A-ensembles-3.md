@@ -42,7 +42,19 @@ yhat = mean([predict(m, Xs) for  m in machines]);
 new composite model type and instance:
 
 ```julia:ex4
-one_hundred_models = @from_network OneHundredModels(atom=atom) <= yhat
+surrogate = Deterministic()
+mach = machine(surrogate, Xs, ys; predict=yhat)
+
+fit!(yhat)
+yhat(X[test, :])
+
+@from_network mach begin
+    mutable struct one_hundred_models
+        atom=atom
+    end
+end
+
+one_hundred_models_instance = one_hundred_models()
 ```
 
 ## Application to data

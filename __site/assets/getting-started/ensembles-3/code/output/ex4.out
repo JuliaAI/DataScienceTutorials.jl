@@ -1,4 +1,9 @@
-LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
-Closest candidates are:
-  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
-in expression starting at none:1
+TaskFailedException:
+ArgumentError: Function `matrix` only supports AbstractMatrix or containers implementing the Tables interface.
+Stacktrace:
+ [1] fit_only!(::Machine{MLJModels.DecisionTree_.DecisionTreeRegressor}, ::Bool; kwargs::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at /Users/GD/.julia/packages/MLJBase/b1egR/src/machines.jl:487
+ [2] fit_only! at /Users/GD/.julia/packages/MLJBase/b1egR/src/machines.jl:468 [inlined]
+ [3] (::MLJBase.var"#98#100"{Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}},Machine{MLJModels.DecisionTree_.DecisionTreeRegressor}})() at ./task.jl:358
+
+...and 99 more exception(s).
+
