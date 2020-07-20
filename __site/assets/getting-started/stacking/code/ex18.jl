@@ -1,2 +1,5 @@
 # This file was generated, do not modify it. # hide
-y1_oos = vcat(y11, y12, y13);
+MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> restrict(XX, ff, i), X, f);
+MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> corestrict(XX, ff, i), X, f);

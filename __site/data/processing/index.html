@@ -186,7 +186,7 @@ _.nrows = 33643
 │ 11  │ other_fuel3           │         │ Biomass     │         │ Wind              │ 7       │ 33539    │ Union{Missing, String}  │
 │ 12  │ commissioning_year    │ 1995.49 │ 1896.0      │ 2005.0  │ 2018.0            │         │ 17340    │ Union{Missing, Float64} │
 │ 13  │ year_of_capacity_data │ 2016.86 │ 2000        │ 2017.0  │ 2018              │         │ 19900    │ Union{Missing, Int64}   │</code></pre>
-<p><em>Note:</em> the <code>describe&#40;&#41;</code> function is from the &#91;Julia Base&#93; whereas the <code>schema&#40;&#41;</code> is from the MLJ package.</p>
+<p><em>Note:</em> the <code>describe&#40;&#41;</code> function is from the <code>DataFrames</code> package &#40;and won&#39;t work with other, non DataFrames, tables&#41; whereas the <code>schema&#40;&#41;</code> is from the MLJ package.</p>
 <hr /> Let&#39;s play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions &#40;country and primary_fuel&#41;</p>
 <pre><code class="language-julia">capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)</code></pre><pre><code class="plaintext">5×3 DataFrame
@@ -290,7 +290,7 @@ ax1.set_title("Coal")
 ax2.set_title("Gas")</code></pre>
 <img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g3.svg" alt="processing3"><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 18, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 20, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

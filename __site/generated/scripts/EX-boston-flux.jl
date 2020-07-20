@@ -30,7 +30,7 @@ first(features, 3) |> MLJ.pretty
 train, test = MLJ.partition(MLJ.eachindex(targets), 0.70, rng=52)
 
 # Let us try to implement an Neural Network regressor using# Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl# deep learning framework. The package provides four essential# models: `NeuralNetworkRegressor, MultitargetNeuralNetworkRegressor,# NeuralNetworkClassifier` and `ImageClassifier`.
-# At the heart of these models is a neural network. This is specified using# the `builder` parameter. Creating a builder object consists of two steps:# 1. Creating a new struct inherited from `MLJFlux.Builder`. `MLJFlux.Builder`# is an abstract structure used for the purpose of dispatching. Suppose we define# a new struct called `MyNetworkBuilder`. This can contain any attribute required to# build the model later. (Step 2). Let's use Dense Neural Network with 2 hidden layers.
+# At the heart of these models is a neural network. This is specified using# the `builder` parameter. Creating a builder object consists of two steps:# Step 1: Creating a new struct inherited from `MLJFlux.Builder`. `MLJFlux.Builder`# is an abstract structure used for the purpose of dispatching. Suppose we define# a new struct called `MyNetworkBuilder`. This can contain any attribute required to# build the model later. (Step 2). Let's use Dense Neural Network with 2 hidden layers.
 mutable struct MyNetworkBuilder <: MLJFlux.Builder
     n1::Int #Number of cells in the first hidden layer
     n2::Int #Number of cells in the second hidden layer
