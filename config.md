@@ -9,7 +9,7 @@ The website_* must be defined for the RSS to work
 @def website_descr = "Data Science Tutorials using Julia"
 @def website_url   = "https://alan-turing-institute.github.io/DataScienceTutorials.jl/"
 
-@def author = "Thibaut Lienart, Anthony Blaom and collaborators"
+@def author = "Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators"
 
 @def mintoclevel = 2 <!-- toc starts at h2 onwards -->
 @def maxtoclevel = 3 <!-- toc stops at h3 included -->
