@@ -11,7 +11,6 @@
 using HTTP
 using MLJ
 using PyPlot
-
 import DataFrames: DataFrame, describe
 using UrlDownload
 
@@ -55,8 +54,8 @@ describe(Xc, :mean, :std)
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
-@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;
+KnnPipe = @pipeline(Standardizer(), KNNClassifier())
+MnPipe = @pipeline(Standardizer(), MultinomialClassifier());
 
 # We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
 train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
@@ -66,8 +65,8 @@ ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);
 
 # Let's now wrap an instance of these models with data (all hyperparameters are set to default here):
-knn = machine(KnnPipe(), Xtrain, ytrain)
-multi = machine(MnPipe(), Xtrain, ytrain)
+knn = machine(KnnPipe, Xtrain, ytrain)
+multi = machine(MnPipe, Xtrain, ytrain)
 
 # Let's train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90% of the training data to train the model and the remaining 10% to evaluate it:
 opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)

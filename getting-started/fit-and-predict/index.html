@@ -45,6 +45,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -101,15 +102,15 @@
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-fit-predict.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-fit-predict-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-fit-predict.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a><ol><li><a href="#data">Data</a></li><li><a href="#mlj_machine">MLJ Machine</a></li></ol></li><li><a href="#training_and_testing_a_supervised_model">Training and testing a supervised model</a><ol><li><a href="#splitting_the_data">Splitting the data</a></li><li><a href="#fitting_and_testing_the_machine">Fitting and testing the machine</a></li></ol></li><li><a href="#unsupervised_models">Unsupervised models</a></li></ol></div> <h2 id="preliminary_steps"><a href="#preliminary_steps">Preliminary steps</a></h2>
 <h3 id="data"><a href="#data">Data</a></h3>
 <p>As in &quot;<a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/">choosing a model</a>&quot;, let&#39;s load the Iris dataset and unpack it:</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
-<span class="hljs-keyword">import</span> Statistics
-<span class="hljs-keyword">using</span> PrettyPrinting
-<span class="hljs-keyword">using</span> StableRNGs
+<pre><code class="language-julia">using MLJ
+import Statistics
+using PrettyPrinting
+using StableRNGs
 
-X, y = <span class="hljs-meta">@load_iris</span>;</code></pre>
+X, y = @load_iris;</code></pre>
 <p>let&#39;s also load the <code>DecisionTreeClassifier</code>:</p>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> DecisionTreeClassifier
-tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext hljs">DecisionTreeClassifier(
+<pre><code class="language-julia">@load DecisionTreeClassifier
+tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext">DecisionTreeClassifier(
     max_depth = -1,
     min_samples_leaf = 1,
     min_samples_split = 2,
@@ -118,75 +119,75 @@ tree_model = DecisionTreeClassifier()</code></pre><pre><code class="plaintext hl
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @522</code></pre>
+    display_depth = 5) @130</code></pre>
 <h3 id="mlj_machine"><a href="#mlj_machine">MLJ Machine</a></h3>
 <p>In MLJ, remember that a <em>model</em> is an object that only serves as a container for the hyperparameters of the model. A <em>machine</em> is an object wrapping both a model and data and can contain information on the <em>trained</em> model; it does <em>not</em> fit the model by itself. However, it does check that the model is compatible with the scientific type of the data and will warn you otherwise.</p>
-<pre><code class="julia hljs">tree = machine(tree_model, X, y)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @330 trained 0 times.
+<pre><code class="language-julia">tree = machine(tree_model, X, y)</code></pre><pre><code class="plaintext">Machine{DecisionTreeClassifier} @319 trained 0 times.
   args: 
-    1:	Source @754 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @895 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @452 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @048 ⏎ `AbstractArray{Multiclass{3},1}`
 </code></pre>
 <p>A machine is used both for supervised and unsupervised model. In this tutorial we give an example for the supervised model first and then go on with the unsupervised case.</p>
 <h2 id="training_and_testing_a_supervised_model"><a href="#training_and_testing_a_supervised_model">Training and testing a supervised model</a></h2>
 <p>Now that you&#39;ve declared the model you&#39;d like to consider and the data, we are left with the standard training and testing step for a supervised learning algorithm.</p>
 <h3 id="splitting_the_data"><a href="#splitting_the_data">Splitting the data</a></h3>
 <p>To split the data into a <em>training</em> and <em>testing</em> set, you can use the function <code>partition</code> to obtain indices for data points that should be considered either as training or testing data:</p>
-<pre><code class="julia hljs">rng = StableRNG(<span class="hljs-number">566</span>)
-train, test = partition(eachindex(y), <span class="hljs-number">0.7</span>, shuffle=<span class="hljs-literal">true</span>, rng=rng)
-test[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]</code></pre><pre><code class="plaintext hljs">3-element Array{Int64,1}:
+<pre><code class="language-julia">rng = StableRNG(566)
+train, test = partition(eachindex(y), 0.7, shuffle=true, rng=rng)
+test[1:3]</code></pre><pre><code class="plaintext">3-element Array{Int64,1}:
  39
  54
   9</code></pre>
 <h3 id="fitting_and_testing_the_machine"><a href="#fitting_and_testing_the_machine">Fitting and testing the machine</a></h3>
 <p>To fit the machine, you can use the function <code>fit&#33;</code> specifying the rows to be used for the training:</p>
-<pre><code class="julia hljs">fit!(tree, rows=train)</code></pre><pre><code class="plaintext hljs">Machine{DecisionTreeClassifier} @330 trained 1 time.
+<pre><code class="language-julia">fit!(tree, rows=train)</code></pre><pre><code class="plaintext">Machine{DecisionTreeClassifier} @319 trained 1 time.
   args: 
-    1:	Source @754 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @895 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @452 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @048 ⏎ `AbstractArray{Multiclass{3},1}`
 </code></pre>
 <p>Note that this <strong>modifies</strong> the machine which now contains the trained parameters of the decision tree. You can inspect the result of the fitting with the <code>fitted_params</code> method:</p>
-<pre><code class="julia hljs">fitted_params(tree) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(tree = Decision Tree
+<pre><code class="language-julia">fitted_params(tree) |> pprint</code></pre><pre><code class="plaintext">(tree = Decision Tree
 Leaves: 5
 Depth:  4,
- encoding = Dict(&quot;virginica&quot; =&gt; 0x00000003,
-                 &quot;setosa&quot; =&gt; 0x00000001,
-                 &quot;versicolor&quot; =&gt; 0x00000002))</code></pre>
+ encoding = Dict("virginica" => 0x00000003,
+                 "setosa" => 0x00000001,
+                 "versicolor" => 0x00000002))</code></pre>
 <p>This <code>fitresult</code> will vary from model to model though classifiers will usually give out a tuple with the first element corresponding to the fitting and the second one keeping track of how classes are named &#40;so that predictions can be appropriately named&#41;.</p>
 <p>You can now use the machine to make predictions with the <code>predict</code> function specifying rows to be used for the prediction:</p>
-<pre><code class="julia hljs">ŷ = predict(tree, rows=test)
-<span class="hljs-meta">@show</span> ŷ[<span class="hljs-number">1</span>]</code></pre><pre><code class="plaintext hljs">ŷ[1] = UnivariateFinite{Multiclass{3}}(setosa=&gt;1.0, versicolor=&gt;0.0, virginica=&gt;0.0)
+<pre><code class="language-julia">ŷ = predict(tree, rows=test)
+@show ŷ[1]</code></pre><pre><code class="plaintext">ŷ[1] = UnivariateFinite{Multiclass{3}}(setosa=>1.0, versicolor=>0.0, virginica=>0.0)
 </code></pre>
 <p>Note that the output is <em>probabilistic</em>, effectively a vector with a score for each class. You could get the mode by using the <code>mode</code> function on <code>ŷ</code> or using <code>predict_mode</code>:</p>
-<pre><code class="julia hljs">ȳ = predict_mode(tree, rows=test)
-<span class="hljs-meta">@show</span> ȳ[<span class="hljs-number">1</span>]
-<span class="hljs-meta">@show</span> mode(ŷ[<span class="hljs-number">1</span>])</code></pre><pre><code class="plaintext hljs">ȳ[1] = &quot;setosa&quot;
-mode(ŷ[1]) = &quot;setosa&quot;
+<pre><code class="language-julia">ȳ = predict_mode(tree, rows=test)
+@show ȳ[1]
+@show mode(ŷ[1])</code></pre><pre><code class="plaintext">ȳ[1] = "setosa"
+mode(ŷ[1]) = "setosa"
 </code></pre>
 <p>To measure the discrepancy between <code>ŷ</code> and <code>y</code> you could use the average cross entropy:</p>
-<pre><code class="julia hljs">mce = cross_entropy(ŷ, y[test]) |&gt; mean
-round(mce, digits=<span class="hljs-number">4</span>)</code></pre><pre><code class="plaintext hljs">2.4029</code></pre>
+<pre><code class="language-julia">mce = cross_entropy(ŷ, y[test]) |> mean
+round(mce, digits=4)</code></pre><pre><code class="plaintext">2.4029</code></pre>
 <h2 id="unsupervised_models"><a href="#unsupervised_models">Unsupervised models</a></h2>
 <p>Unsupervised models define a <code>transform</code> method, and may optionally implement an <code>inverse_transform</code> method. As in the supervised case, we use a machine to wrap the unsupervised model and the data:</p>
-<pre><code class="julia hljs">v = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]
+<pre><code class="language-julia">v = [1, 2, 3, 4]
 stand_model = UnivariateStandardizer()
-stand = machine(stand_model, v)</code></pre><pre><code class="plaintext hljs">Machine{UnivariateStandardizer} @329 trained 0 times.
+stand = machine(stand_model, v)</code></pre><pre><code class="plaintext">Machine{UnivariateStandardizer} @138 trained 0 times.
   args: 
-    1:	Source @402 ⏎ `AbstractArray{Count,1}`
+    1:	Source @766 ⏎ `AbstractArray{Count,1}`
 </code></pre>
 <p>We can then fit the machine and use it to apply the corresponding <em>data transformation</em>:</p>
-<pre><code class="julia hljs">fit!(stand)
+<pre><code class="language-julia">fit!(stand)
 w = transform(stand, v)
-<span class="hljs-meta">@show</span> round.(w, digits=<span class="hljs-number">2</span>)
-<span class="hljs-meta">@show</span> mean(w)
-<span class="hljs-meta">@show</span> std(w)</code></pre><pre><code class="plaintext hljs">round.(w, digits = 2) = [-1.16, -0.39, 0.39, 1.16]
+@show round.(w, digits=2)
+@show mean(w)
+@show std(w)</code></pre><pre><code class="plaintext">round.(w, digits = 2) = [-1.16, -0.39, 0.39, 1.16]
 mean(w) = 0.0
 std(w) = 1.0
 </code></pre>
 <p>In this case, the model also has an inverse transform:</p>
-<pre><code class="julia hljs">vv = inverse_transform(stand, w)
-sum(abs.(vv .- v))</code></pre><pre><code class="plaintext hljs">0.0</code></pre><div class="page-foot">
+<pre><code class="language-julia">vv = inverse_transform(stand, w)
+sum(abs.(vv .- v))</code></pre><pre><code class="plaintext">0.0</code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -195,8 +196,8 @@ sum(abs.(vv .- v))</code></pre><pre><code class="plaintext hljs">0.0</code></pre
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>

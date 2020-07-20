@@ -14,7 +14,7 @@ import DataFrames
 import Statistics
 import Flux
 using Random
-using Plots
+using PyPlot
 
 
 Random.seed!(11)
@@ -82,13 +82,19 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
-plot(curve.parameter_values,
-    curve.measurements,
-    xlab=curve.parameter_name,
-    xscale=curve.parameter_scale,
-    ylab = "l2")
-# Tuning
+figure(figsize=(8,6))
 
+plt.plot(curve.parameter_values,
+    curve.measurements)
+
+yscale("log")
+xlabel(curve.parameter_name)
+ylabel("l2")
+
+
+
+# \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
+# ## Tuning
 # As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the# batch_size parameter.
 bs = MLJ.range(nnregressor, :batch_size, lower=1, upper=5)
 

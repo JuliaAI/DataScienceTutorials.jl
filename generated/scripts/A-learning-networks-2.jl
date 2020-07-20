@@ -30,11 +30,11 @@ ys = source(y)
 # _First layer_
 std_model = Standardizer()
 stand = machine(std_model, Xs)
-W = transform(stand, Xs)
+W = MLJ.transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
-box = machine(box_model, ys)
-z = transform(box, ys)
+box_mach = machine(box_model, ys)
+z = MLJ.transform(box_mach, ys)
 
 # _Second layer_
 ridge_model = RidgeRegressor(lambda=0.1)
@@ -42,11 +42,21 @@ ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
 # _Output_
-ŷ = inverse_transform(box, ẑ)
+ŷ = inverse_transform(box_mach, ẑ)
 
-# No fitting has been done thus far, we have just defined a sequence of operations.## To form a model out of that network is easy using the `@from_network` macro:
-@from_network CompositeModel(std=std_model, box=box_model,
-                             ridge=ridge_model) <= ŷ;
+# No fitting has been done thus far, we have just defined a sequence of operations.## As we show next, a learning network needs to be exported to create a new stand-alone model type. Instances of that type can be bound with data in a machine, which can then be evaluated, for example. Somewhat paradoxically, one can wrap a learning network in a certain kind of machine, called a learning network machine, before exporting it, and in fact, the export process actually requires us to do so. Since a composite model type does not yet exist, one constructs the machine using a "surrogate" model, whose name indicates the ultimate model supertype (Deterministic, Probabilistic, Unsupervised or Static). This surrogate model has no fields.
+surrogate = Deterministic()
+mach = machine(surrogate, Xs, ys; predict=ŷ)
+
+fit!(ŷ)
+ŷ(X[test[1:5], :])
+
+# To form a model out of that network is easy using the `@from_network` macro.## Having defined a learning network machine, mach, as above, the following code defines a new model subtype WrappedRegressor <: Supervised with a single field regressor
+@from_network mach begin
+    mutable struct CompositeModel
+        regressor=ridge_model
+    end
+end
 
 # The macro defines a constructor CompositeModel and attributes a name to the# different models; the ordering / connection between the nodes is inferred# from `ŷ` via the `<= ŷ`.## **Note**: had the model been probabilistic (e.g. `RidgeClassifier`) you would have needed to add `is_probabilistic=true` at the end.
 cm = machine(CompositeModel(), X, y)
@@ -64,9 +74,9 @@ end
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     Xs = source(X)
     ys = source(y)
-    W = transform(machine(m.std_model, Xs), Xs)
+    W = MLJ.transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
-    z = transform(box, ys)
+    z = MLJ.transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
     mach = machine(Deterministic(), Xs, ys; predict=ŷ)

@@ -7,7 +7,7 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-# # This tutoral uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.# The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc# Hence plenty of material to work with!
+# ## More data processing## This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.# The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc# Hence plenty of material to work with!
 # More tutorials on the manipulation of DataFrames can be found [here](https://github.com/bkamins/Julia-DataFrames-Tutorial)# And some more information can be found on [this](https://en.wikibooks.org/wiki/Introducing_Julia/DataFrames) wikipage.
 import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
@@ -19,10 +19,7 @@ using PyPlot
 raw_data = urldownload("https://github.com/tlienart/DataScienceTutorialsData.jl/blob/master/data/wri_global_power_plant_db_be_022020.csv?raw=true")
 data = DataFrame(raw_data);
 
-# This dataset contains information on power generation plants for a number of countries around the world.
-# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
-
-# The schema function enables us to get a quick overview of the variables it contains, including their machine and scentific types.
+# This dataset contains information on power generation plants for a number of countries around the world.# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.# The schema function enables us to get a quick overview of the variables it contains, including their machine and scentific types.
 schema(data)
 
 # We see that a small number of features have values for all plants (i.e. for each row) present in the dataset.# However, (i) several features have missing values (Union{Missing, _.type}) and (ii) we are not interested in working with all of these features.# In particular, we're not intersted in the source of the information present in the dataset nor are we interested in the generation data.# Hence we drop all columns which contain information's source.# We define a function `is_active()` that will return a `TRUE` boolean value if the column name does NOT (`!`) contain either of the strings "source" or "generation".# Note the conversion of column names from `:Symbol` to `:string` since the `occursing` function only accepts strings as arguments.
@@ -40,9 +37,7 @@ describe(data)
 # The describe() function shows that there are several features with missing values.
 
 # *Note:* the `describe()` function is from the [Julia Base] whereas the `schema()` is from the MLJ package.
-###
-
-# Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
+# ---# Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
 capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)
 
@@ -70,9 +65,8 @@ plt.xticks(rotation=90)
 
 
 
-###
-
-# Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.# To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
+# \figalt{processing1}{D0-processing-g1.svg}
+# ---# Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.# To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
 cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
 
@@ -83,9 +77,7 @@ cap_share = leftjoin(cap_sum, cap_sum_ctry, on = :country, makeunique = true)
 cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw_sum_1;
 
 # Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
-###
-
-# Now let's analyse features which exhibit some missing values.# Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.# First, the commissioning_year is not reported for all plants.# We need to gauge the representativity of the plants for which it is available with regard to the full dataset.# One way to count the missing values is
+# ---# Now let's analyse features which exhibit some missing values.# Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.# First, the commissioning_year is not reported for all plants.# We need to gauge the representativity of the plants for which it is available with regard to the full dataset.# One way to count the missing values is
 nMissings = length(findall(x -> ismissing(x), data.commissioning_year))
 
 # This represents about half of our observations
@@ -103,7 +95,7 @@ map!(x -> round(x, digits=0), data_nmiss.commissioning_year, data_nmiss.commissi
 # We can now calculate plant age for each plant (worth remembering that the dataset only contains active plants)
 
 current_year = fill!(Array{Float64}(undef, size(data_nmiss)[1]), 2020);
-data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year]
+data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year];
 
 # Since the commissioning year is missing for about half the plants in the dataset (17340, see description of data above) and that missing values propagate,# the plant age will only be available for 33643-17340 plants.# Let's see what the mean and median plant ages are across the plants for which we have the data
 mean_age = mean(skipmissing(data_nmiss.plant_age))
@@ -123,6 +115,7 @@ plt.xlim(0,)
 
 
 
+# \figalt{processing2}{D0-processing-g2.svg}
 # We can also calculate and plot average plant age by country and technology# Make sure all columns passed, other than the aggregation dimensions, are of type `Float` or `Int`, otherwise the function execution will fail.
 age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
@@ -146,5 +139,6 @@ ax2.set_title("Gas")
 
 
 
+# \figalt{processing3}{D0-processing-g3.svg}
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

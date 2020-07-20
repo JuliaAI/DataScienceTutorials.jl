@@ -1,1 +1,1 @@
-nothing
+MersenneTwister(UInt32[0x0000000b]) @ 1002

@@ -45,6 +45,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -99,15 +100,15 @@
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_8_-_tree-based_models"><a href="#lab_8_-_tree-based_models">Lab 8 - Tree-based models</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-8.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-8-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-8.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div><h2 id="getting_started"><a href="#getting_started">Getting started</a></h2>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
-<span class="hljs-keyword">import</span> RDatasets: dataset
-<span class="hljs-keyword">using</span> PrettyPrinting
-<span class="hljs-keyword">import</span> DataFrames: DataFrame, select, Not
-<span class="hljs-meta">@load</span> DecisionTreeClassifier pkg=DecisionTree
+<pre><code class="language-julia">using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+import DataFrames: DataFrame, select, Not
+@load DecisionTreeClassifier pkg=DecisionTree
 
-carseats = dataset(<span class="hljs-string">&quot;ISLR&quot;</span>, <span class="hljs-string">&quot;Carseats&quot;</span>)
+carseats = dataset("ISLR", "Carseats")
 
-first(carseats, <span class="hljs-number">3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌────────────┬────────────┬────────────┬─────────────┬────────────┬────────────┬──────────────────────────────────────────────────┬────────────┬────────────┬──────────────────────────────────────────────────┬──────────────────────────────────────────────────┐
+first(carseats, 3) |> pretty</code></pre><pre><code class="plaintext">┌────────────┬────────────┬────────────┬─────────────┬────────────┬────────────┬──────────────────────────────────────────────────┬────────────┬────────────┬──────────────────────────────────────────────────┬──────────────────────────────────────────────────┐
 │ Sales      │ CompPrice  │ Income     │ Advertising │ Population │ Price      │ ShelveLoc                                        │ Age        │ Education  │ Urban                                            │ US                                               │
 │ Float64    │ Float64    │ Float64    │ Float64     │ Float64    │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt8} │ Float64    │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt8} │ CategoricalArrays.CategoricalValue{String,UInt8} │
 │ Continuous │ Continuous │ Continuous │ Continuous  │ Continuous │ Continuous │ Multiclass{3}                                    │ Continuous │ Continuous │ Multiclass{2}                                    │ Multiclass{2}                                    │
@@ -118,60 +119,63 @@ first(carseats, <span class="hljs-number">3</span>) |&gt; pretty</code></pre><pr
 └────────────┴────────────┴────────────┴─────────────┴────────────┴────────────┴──────────────────────────────────────────────────┴────────────┴────────────┴──────────────────────────────────────────────────┴──────────────────────────────────────────────────┘
 </code></pre>
 <p>We encode a new variable <code>High</code> based on whether the sales are higher or lower than 8 and add that column to the dataframe:</p>
-<pre><code class="julia hljs">High = ifelse.(carseats.Sales .&lt;= <span class="hljs-number">8</span>, <span class="hljs-string">&quot;No&quot;</span>, <span class="hljs-string">&quot;Yes&quot;</span>) |&gt; categorical;
+<pre><code class="language-julia">High = ifelse.(carseats.Sales .<= 8, "No", "Yes") |> categorical;
 carseats[!, :High] = High;</code></pre>
 <p>Let&#39;s now train a basic decision tree classifier for <code>High</code> given the other features after one-hot-encoding the categorical features:</p>
-<pre><code class="julia hljs">X = select(carseats, Not([:Sales, :High]))
+<pre><code class="language-julia">X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;</code></pre>
 <h3 id="decision_tree_classifier"><a href="#decision_tree_classifier">Decision Tree Classifier</a></h3>
-<pre><code class="julia hljs"><span class="hljs-meta">@pipeline</span> HotTreeClf(hot = OneHotEncoder(),
-                     tree = DecisionTreeClassifier()) is_probabilistic=<span class="hljs-literal">true</span>
+<pre><code class="language-julia">HotTreeClf = @pipeline(OneHotEncoder(),
+                       DecisionTreeClassifier())
 
-mdl = HotTreeClf()
+mdl = HotTreeClf
 mach = machine(mdl, X, y)
-fit!(mach);</code></pre><pre><code class="plaintext hljs">LoadError: UndefVarError: MLJBase not defined
-in expression starting at none:1
-</code></pre>
+fit!(mach);</code></pre>
 <p>Note that this is trained on the whole data.</p>
-<pre><code class="julia hljs">ypred = predict_mode(mach, X)
-misclassification_rate(ypred, y)</code></pre><pre><code class="plaintext hljs">UndefVarError: mach not defined
-</code></pre>
+<pre><code class="language-julia">ypred = predict_mode(mach, X)
+misclassification_rate(ypred, y)</code></pre><pre><code class="plaintext">0.0</code></pre>
 <p>That&#39;s right... it gets it perfectly; this tends to be classic behaviour for a DTC to overfit the data it&#39;s trained on. Let&#39;s see if it generalises:</p>
-<pre><code class="julia hljs">train, test = partition(eachindex(y), <span class="hljs-number">0.5</span>, shuffle=<span class="hljs-literal">true</span>, rng=<span class="hljs-number">333</span>)
+<pre><code class="language-julia">train, test = partition(eachindex(y), 0.5, shuffle=true, rng=333)
 fit!(mach, rows=train)
 ypred = predict_mode(mach, rows=test)
-misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext hljs">UndefVarError: mach not defined
-</code></pre>
+misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext">0.265</code></pre>
 <p>Not really...</p>
 <h3 id="tuning_a_dtc"><a href="#tuning_a_dtc">Tuning a DTC</a></h3>
 <p>Let&#39;s try to do a bit of tuning</p>
-<pre><code class="julia hljs">r_mpi = range(mdl, :(tree.max_depth), lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">10</span>)
-r_msl = range(mdl, :(tree.min_samples_leaf), lower=<span class="hljs-number">1</span>, upper=<span class="hljs-number">50</span>)
+<pre><code class="language-julia">r_mpi = range(mdl, :(decision_tree_classifier.max_depth), lower=1, upper=10)
+r_msl = range(mdl, :(decision_tree_classifier.min_samples_leaf), lower=1, upper=50)
 
-tm = TunedModel(model=mdl, ranges=[r_mpi, r_msl], tuning=Grid(resolution=<span class="hljs-number">8</span>),
-                resampling=CV(nfolds=<span class="hljs-number">5</span>, rng=<span class="hljs-number">112</span>),
+tm = TunedModel(model=mdl, ranges=[r_mpi, r_msl], tuning=Grid(resolution=8),
+                resampling=CV(nfolds=5, rng=112),
                 operation=predict_mode, measure=misclassification_rate)
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 ypred = predict_mode(mtm, rows=test)
-misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext hljs">UndefVarError: mdl not defined
-</code></pre>
+misclassification_rate(ypred, y[test])</code></pre><pre><code class="plaintext">0.26</code></pre>
 <p>We can inspect the parameters of the best model</p>
-<pre><code class="julia hljs">fitted_params(mtm).best_model.tree</code></pre><pre><code class="plaintext hljs">UndefVarError: mtm not defined
-</code></pre>
+<pre><code class="language-julia">fitted_params(mtm).best_model.decision_tree_classifier</code></pre><pre><code class="plaintext">DecisionTreeClassifier(
+    max_depth = 10,
+    min_samples_leaf = 1,
+    min_samples_split = 2,
+    min_purity_increase = 0.0,
+    n_subfeatures = 0,
+    post_prune = false,
+    merge_purity_threshold = 1.0,
+    pdf_smoothing = 0.0,
+    display_depth = 5) @341</code></pre>
 <h3 id="decision_tree_regressor"><a href="#decision_tree_regressor">Decision Tree Regressor</a></h3>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> DecisionTreeRegressor pkg=DecisionTree
+<pre><code class="language-julia">@load DecisionTreeRegressor pkg=DecisionTree
 
-boston = dataset(<span class="hljs-string">&quot;MASS&quot;</span>, <span class="hljs-string">&quot;Boston&quot;</span>)
+boston = dataset("MASS", "Boston")
 
-y, X = unpack(boston, ==(:MedV), col -&gt; <span class="hljs-literal">true</span>)
+y, X = unpack(boston, ==(:MedV), col -> true)
 
-train, test = partition(eachindex(y), <span class="hljs-number">0.5</span>, shuffle=<span class="hljs-literal">true</span>, rng=<span class="hljs-number">551</span>);
+train, test = partition(eachindex(y), 0.5, shuffle=true, rng=551);
 
-scitype(X)</code></pre><pre><code class="plaintext hljs">Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}}}</code></pre>
+scitype(X)</code></pre><pre><code class="plaintext">Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}}}</code></pre>
 <p>Let&#39;s recode the Count as Continuous and then fit a DTR</p>
-<pre><code class="julia hljs">X = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
+<pre><code class="language-julia">X = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 
 dtr_model = DecisionTreeRegressor()
 dtr = machine(dtr_model, X, y)
@@ -179,40 +183,40 @@ dtr = machine(dtr_model, X, y)
 fit!(dtr, rows=train)
 
 ypred = predict(dtr, rows=test)
-round(rms(ypred, y[test]), sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">4.98</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">4.98</code></pre>
 <p>Again we can try tuning this a bit, since it&#39;s the same idea as before, let&#39;s just try to adjust the depth of the tree:</p>
-<pre><code class="julia hljs">r_depth = range(dtr_model, :max_depth, lower=<span class="hljs-number">2</span>, upper=<span class="hljs-number">20</span>)
+<pre><code class="language-julia">r_depth = range(dtr_model, :max_depth, lower=2, upper=20)
 
-tm = TunedModel(model=dtr_model, ranges=[r_depth], tuning=Grid(resolution=<span class="hljs-number">10</span>),
-                resampling=CV(nfolds=<span class="hljs-number">5</span>, rng=<span class="hljs-number">1254</span>), measure=rms)
+tm = TunedModel(model=dtr_model, ranges=[r_depth], tuning=Grid(resolution=10),
+                resampling=CV(nfolds=5, rng=1254), measure=rms)
 mtm = machine(tm, X, y)
 
 fit!(mtm, rows=train)
 
 ypred = predict(mtm, rows=test)
-round(rms(ypred, y[test]), sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">4.98</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">4.98</code></pre>
 <h2 id="random_forest"><a href="#random_forest">Random Forest</a></h2>
 <p><strong>Note</strong>: the package <a href="https://github.com/bensadeghi/DecisionTree.jl"><code>DecisionTree.jl</code></a> also has a RandomForest model but it is not yet interfaced with in MLJ.</p>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> RandomForestRegressor pkg=ScikitLearn
+<pre><code class="language-julia">@load RandomForestRegressor pkg=ScikitLearn
 
 rf_mdl = RandomForestRegressor()
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
 ypred = predict(rf, rows=test)
-round(rms(ypred, y[test]), sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">3.7</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.86</code></pre>
 <h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></h2>
-<pre><code class="julia hljs"><span class="hljs-meta">@load</span> XGBoostRegressor
+<pre><code class="language-julia">@load XGBoostRegressor
 
-xgb_mdl = XGBoostRegressor(num_round=<span class="hljs-number">10</span>, max_depth=<span class="hljs-number">10</span>)
+xgb_mdl = XGBoostRegressor(num_round=10, max_depth=10)
 xgb = machine(xgb_mdl, X, y)
 fit!(xgb, rows=train)
 
 ypred = predict(xgb, rows=test)
-round(rms(ypred, y[test]), sigdigits=<span class="hljs-number">3</span>)</code></pre><pre><code class="plaintext hljs">3.96</code></pre>
+round(rms(ypred, y[test]), sigdigits=3)</code></pre><pre><code class="plaintext">3.96</code></pre>
 <p>Again we could do some tuning for this.<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -221,8 +225,8 @@ round(rms(ypred, y[test]), sigdigits=<span class="hljs-number">3</span>)</code><
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>

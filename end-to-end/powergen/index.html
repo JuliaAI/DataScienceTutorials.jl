@@ -45,6 +45,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -100,25 +101,25 @@
 <div class="franklin-content"><h1 id="power_generation"><a href="#power_generation">Power Generation</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-powergen.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-powergen-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-powergen.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></li></ol></li><li><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></li><li><a href="#models">Models</a><ol><li><a href="#model_evaluation">Model evaluation</a></li></ol></li></ol></div><strong>Main author</strong>: <a href="https://github.com/gd1989">Geoffroy Dolphin</a></p>
 <h2 id="initial_data_processing"><a href="#initial_data_processing">Initial data processing</a></h2>  In this tutorial we are fitting solar and wind power generation output for Germany using weather data. We focus on the use of a simple linear estimator. Let&#39;s load the required packages to get started.</p>
-<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
-<span class="hljs-keyword">using</span> UrlDownload
-<span class="hljs-keyword">using</span> PyPlot
-<span class="hljs-keyword">import</span> DataFrames: DataFrame, describe, names, select!
-<span class="hljs-keyword">using</span> Statistics
+<pre><code class="language-julia">using MLJ
+using UrlDownload
+using PyPlot
+import DataFrames: DataFrame, describe, names, select!
+using Statistics
 
-<span class="hljs-meta">@load</span> LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext hljs">LinearRegressor(
+@load LinearRegressor pkg=MLJLinearModels</code></pre><pre><code class="plaintext">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @198</code></pre>
+    solver = nothing) @926</code></pre>
 <p>The power generation and weather data come from two separate datasets. We downloaded both datasets from <a href="https://open-power-system-data.org/">Open Power networks</a>. The power generation data is available <a href="https://data.open-power-system-data.org/time_series/">here</a> and the weather data is available <a href="https://data.open-power-system-data.org/weather_data/">here</a>. Note that the first row in both datasets contains headers; hence we don&#39;t need to provide any.</p>
-<pre><code class="julia hljs">data_repo = <span class="hljs-string">&quot;https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data&quot;</span>
+<pre><code class="language-julia">data_repo = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"
 
-url_power   = data_repo * <span class="hljs-string">&quot;/power_syst/DE_power_hourly.csv&quot;</span>
-url_weather = data_repo * <span class="hljs-string">&quot;/power_syst/DE_weather_data.csv&quot;</span>
+url_power   = data_repo * "/power_syst/DE_power_hourly.csv"
+url_weather = data_repo * "/power_syst/DE_weather_data.csv"
 
 power   = DataFrame(urldownload(url_power))
 weather = DataFrame(urldownload(url_weather));</code></pre>
 <p>We&#39;ve loaded both datasets but only have a rough idea of what&#39;s in each of them. Let&#39;s get a quick overview of the power dataset:</p>
-<pre><code class="julia hljs">describe(power, :mean, :nmissing)</code></pre><pre><code class="plaintext hljs">18×3 DataFrame
+<pre><code class="language-julia">describe(power, :mean, :nmissing)</code></pre><pre><code class="plaintext">18×3 DataFrame
 │ Row │ variable                               │ mean      │ nmissing │
 │     │ Symbol                                 │ Union…    │ Union…   │
 ├─────┼────────────────────────────────────────┼───────────┼──────────┤
@@ -141,7 +142,7 @@ weather = DataFrame(urldownload(url_weather));</code></pre>
 │ 17  │ DE_wind_onshore_generation_actual      │ 8277.05   │          │
 │ 18  │ DE_wind_onshore_profile                │ 0.199535  │          │</code></pre>
 <p>and the weather dataset &#40;we only show the first 20 rows as there&#39;s 150 features&#41;:</p>
-<pre><code class="julia hljs">first(describe(weather, :mean, :nmissing), <span class="hljs-number">20</span>)</code></pre><pre><code class="plaintext hljs">20×3 DataFrame
+<pre><code class="language-julia">first(describe(weather, :mean, :nmissing), 20)</code></pre><pre><code class="plaintext">20×3 DataFrame
 │ Row │ variable                          │ mean    │ nmissing │
 │     │ Symbol                            │ Union…  │ Nothing  │
 ├─────┼───────────────────────────────────┼─────────┼──────────┤
@@ -166,33 +167,33 @@ weather = DataFrame(urldownload(url_weather));</code></pre>
 │ 19  │ DE21_temperature                  │ 8.1148  │          │
 │ 20  │ DE21_radiation_direct_horizontal  │ 82.7924 │          │</code></pre>
 <p>Let&#39;s first consider the columns of the power DataFrame. For the purpose of this tutorial we are only interested in actual wind and solar generation. So we select a subset of the power dataframe containing only <code>:utc_timestamp, :DE_solar_generation_actual</code> and <code>:DE_wind_generation_actual</code>:</p>
-<pre><code class="julia hljs">select!(power, [
+<pre><code class="language-julia">select!(power, [
     :utc_timestamp,
     :DE_solar_generation_actual,
     :DE_wind_generation_actual]);</code></pre>
 <p>Inspection of the column names in the weather DataFrame shows that we have weather data at the regional level &#40;38 NUTS-2 statistical regions&#41;, which consists of four different weather variables: <code>_windspeed_10m, _temperature, _radiation_direct_horizontal, _radiation_diffuse_horizontal</code>. To match the structure of the power data, we need to aggregate at the country level. We do this by calculating the country-level average across all 38 regions, for each weather variable. This means we need to calculate an average across columns of the DataFrame that refer to the same weather variable. To do this we define a simple function to filter columns based on weather variable name and create new dataframes.</p>
-<pre><code class="julia hljs">colnames = names(weather)
+<pre><code class="language-julia">colnames = names(weather)
 
 filter_by_name(name, cols) =
-    filter(cn -&gt; occursin(name, <span class="hljs-built_in">String</span>(cn)), cols)
+    filter(cn -> occursin(name, String(cn)), cols)
 
-wind   = weather[:, filter_by_name(<span class="hljs-string">&quot;windspeed&quot;</span>, colnames)]
-temp   = weather[:, filter_by_name(<span class="hljs-string">&quot;temperature&quot;</span>, colnames)]
-raddir = weather[:, filter_by_name(<span class="hljs-string">&quot;radiation_direct&quot;</span>, colnames)]
-raddif = weather[:, filter_by_name(<span class="hljs-string">&quot;radiation_diffuse&quot;</span>, colnames)];</code></pre>
+wind   = weather[:, filter_by_name("windspeed", colnames)]
+temp   = weather[:, filter_by_name("temperature", colnames)]
+raddir = weather[:, filter_by_name("radiation_direct", colnames)]
+raddif = weather[:, filter_by_name("radiation_diffuse", colnames)];</code></pre>
 <p>Next, we create a new column in each DataFrame to store the country-level mean and calculate the mean. We use a nested loop. The lower level loop iterates over all rows of a given DataFrame, the higher-level loop iterates over all dataframes in the df Array.</p>
-<pre><code class="julia hljs">dfs = [wind, temp, raddir, raddif]
+<pre><code class="language-julia">dfs = [wind, temp, raddir, raddif]
 col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];</code></pre>
 <p>the zip function associates elements of two objects in the same position with one another:</p>
-<pre><code class="julia hljs">nrows = size(first(dfs), <span class="hljs-number">1</span>)
-<span class="hljs-keyword">for</span> (df, name) <span class="hljs-keyword">in</span> zip(dfs, col_mean)
+<pre><code class="language-julia">nrows = size(first(dfs), 1)
+for (df, name) in zip(dfs, col_mean)
     df[!, name] = zeros(nrows)
-    <span class="hljs-keyword">for</span> (i, row) <span class="hljs-keyword">in</span> enumerate(eachrow(df))
+    for (i, row) in enumerate(eachrow(df))
       df[i, name] = mean(row)
-    <span class="hljs-keyword">end</span>
-<span class="hljs-keyword">end</span>;</code></pre>
+    end
+end;</code></pre>
 <p>Now that we have all variables we need to conduct our analysis, let&#39;s gather them in a single DataFrame...</p>
-<pre><code class="julia hljs">data = DataFrame(
+<pre><code class="language-julia">data = DataFrame(
     Timestamp     = weather.utc_timestamp,
     Solar_gen     = power.DE_solar_generation_actual,
     Wind_gen      = power.DE_wind_generation_actual,
@@ -201,7 +202,7 @@ col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];</code></pr
     Radiation_dir = raddir.raddir_mean,
     Radiation_dif = raddif.raddif_mean);</code></pre>
 <p>...and have a look at their summary statistics</p>
-<pre><code class="julia hljs">describe(data, :mean, :median, :nmissing)</code></pre><pre><code class="plaintext hljs">7×4 DataFrame
+<pre><code class="language-julia">describe(data, :mean, :median, :nmissing)</code></pre><pre><code class="plaintext">7×4 DataFrame
 │ Row │ variable      │ mean    │ median  │ nmissing │
 │     │ Symbol        │ Union…  │ Union…  │ Nothing  │
 ├─────┼───────────────┼─────────┼─────────┼──────────┤
@@ -215,7 +216,7 @@ col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];</code></pr
 <p>Note that the <code>describe&#40;&#41;</code> function provides you with information about missing values for each of the columns. Fortunately, there are none.</p>
 <h3 id="adjusting_the_scientific_types"><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></h3>
 <p>Let&#39;s check the default scientific type that&#39;s currently associated with the data features:</p>
-<pre><code class="julia hljs">schema(data)</code></pre><pre><code class="plaintext hljs">┌───────────────┬─────────┬────────────┐
+<pre><code class="language-julia">schema(data)</code></pre><pre><code class="plaintext">┌───────────────┬─────────┬────────────┐
 │ _.names       │ _.types │ _.scitypes │
 ├───────────────┼─────────┼────────────┤
 │ Timestamp     │ String  │ Textual    │
@@ -229,10 +230,10 @@ col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];</code></pr
 _.nrows = 10247
 </code></pre>
 <p>It is important that the scientific type of the variables corresponds to one of the types allowed for use with the models you are planning to use. &#40;For more guidance on this, see the <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/">Scientific Type</a> tutorial. The scientific type of both <code>Wind_gen</code> and <code>Solar_gen</code> is currently <code>Count</code>. Let&#39;s coerce them to <code>Continuous</code>.</p>
-<pre><code class="julia hljs">coerce!(data, :Wind_gen =&gt; Continuous)
-coerce!(data, :Solar_gen =&gt; Continuous)
+<pre><code class="language-julia">coerce!(data, :Wind_gen => Continuous)
+coerce!(data, :Solar_gen => Continuous)
 
-schema(data)</code></pre><pre><code class="plaintext hljs">┌───────────────┬─────────┬────────────┐
+schema(data)</code></pre><pre><code class="plaintext">┌───────────────┬─────────┬────────────┐
 │ _.names       │ _.types │ _.scitypes │
 ├───────────────┼─────────┼────────────┤
 │ Timestamp     │ String  │ Textual    │
@@ -248,111 +249,111 @@ _.nrows = 10247
 <p>We&#39;re now ready to go&#33;</p>
 <h2 id="exploratory_data_analysis"><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></h2>
 <p>To get a better understanding of our targets, let&#39;s plot their respective distributions.</p>
-<pre><code class="julia hljs">figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">6</span>))
-hist(data.Solar_gen, color=<span class="hljs-string">&quot;blue&quot;</span>, edgecolor=<span class="hljs-string">&quot;white&quot;</span>, bins=<span class="hljs-number">100</span>,
-     density=<span class="hljs-literal">true</span>, alpha=<span class="hljs-number">0.5</span>)
-xlabel(<span class="hljs-string">&quot;Solar power generation (MWh)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Frequency&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-xticks(fontsize=<span class="hljs-number">12</span>)
-yticks([<span class="hljs-number">0</span>, <span class="hljs-number">1e-3</span>, <span class="hljs-number">2e-3</span>], fontsize=<span class="hljs-number">12</span>)</code></pre>
+<pre><code class="language-julia">figure(figsize=(8, 6))
+hist(data.Solar_gen, color="blue", edgecolor="white", bins=100,
+     density=true, alpha=0.5)
+xlabel("Solar power generation (MWh)", fontsize=14)
+ylabel("Frequency", fontsize=14)
+xticks(fontsize=12)
+yticks([0, 1e-3, 2e-3], fontsize=12)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/hist_solar.svg" alt="Histogram of the solar power generated">
 <p>As one might expect, the sun doesn&#39;t always shine &#40;and certainly not at night&#41;, hence there is a very high proportion of observations whose value is equal or close to 0. The distribution of wind power generation looks markedly different</p>
-<pre><code class="julia hljs">figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">6</span>))
-hist(data.Wind_gen, color=<span class="hljs-string">&quot;blue&quot;</span>, edgecolor = <span class="hljs-string">&quot;white&quot;</span>, bins=<span class="hljs-number">50</span>,
-     density=<span class="hljs-literal">true</span>, alpha=<span class="hljs-number">0.5</span>)
-xlabel(<span class="hljs-string">&quot;Wind power generation (MWh)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Frequency&quot;</span>, fontsize=<span class="hljs-number">14</span>)</code></pre>
+<pre><code class="language-julia">figure(figsize=(8, 6))
+hist(data.Wind_gen, color="blue", edgecolor = "white", bins=50,
+     density=true, alpha=0.5)
+xlabel("Wind power generation (MWh)", fontsize=14)
+ylabel("Frequency", fontsize=14)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/hist_wind.svg" alt="Histogram of the wind power generated">
 <p>Finally, before fitting the estimator, we might want to gauge what to expect from them by looking at scatter plots. Let&#39;s look at solar power first.</p>
-<pre><code class="julia hljs">fig = figure(figsize=(<span class="hljs-number">15</span>, <span class="hljs-number">15</span>))
+<pre><code class="language-julia">fig = figure(figsize=(15, 15))
 
-subplot(<span class="hljs-number">221</span>)
+subplot(221)
 scatter(data.Solar_gen, data.Radiation_dir)
-xlabel(<span class="hljs-string">&quot;Solar power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Solar radiation - directional&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+xlabel("Solar power (kW)", fontsize=14)
+ylabel("Solar radiation - directional", fontsize=14)
 
-subplot(<span class="hljs-number">222</span>)
+subplot(222)
 scatter(data.Solar_gen, data.Radiation_dif)
-xlabel(<span class="hljs-string">&quot;Solar power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Solar radiation - diffuse&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+xlabel("Solar power (kW)", fontsize=14)
+ylabel("Solar radiation - diffuse", fontsize=14)
 
-subplot(<span class="hljs-number">223</span>)
+subplot(223)
 scatter(data.Solar_gen, data.Windspeed)
-xlabel(<span class="hljs-string">&quot;Solar power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Wind speed (m/s)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+xlabel("Solar power (kW)", fontsize=14)
+ylabel("Wind speed (m/s)", fontsize=14)
 
-subplot(<span class="hljs-number">224</span>)
+subplot(224)
 scatter(data.Solar_gen, data.Temperature)
-xlabel(<span class="hljs-string">&quot;Solar power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Temperature (C)&quot;</span>, fontsize=<span class="hljs-number">14</span>)</code></pre>
+xlabel("Solar power (kW)", fontsize=14)
+ylabel("Temperature (C)", fontsize=14)</code></pre>
 <div class="img-wide"><img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/solar_scatter.png" alt="Solar power scatter plots"></div>
 <p>Then at wind generation</p>
-<pre><code class="julia hljs">fig = figure(figsize=(<span class="hljs-number">15</span>, <span class="hljs-number">15</span>))
+<pre><code class="language-julia">fig = figure(figsize=(15, 15))
 
-subplot(<span class="hljs-number">221</span>)
+subplot(221)
 scatter(data.Wind_gen, data.Radiation_dir)
-xlabel(<span class="hljs-string">&quot;Wind power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Solar radiation - directional&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+xlabel("Wind power (kW)", fontsize=14)
+ylabel("Solar radiation - directional", fontsize=14)
 
-subplot(<span class="hljs-number">222</span>)
+subplot(222)
 scatter(data.Wind_gen, data.Radiation_dif)
-xlabel(<span class="hljs-string">&quot;Wind power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Solar radiation - diffuse&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+xlabel("Wind power (kW)", fontsize=14)
+ylabel("Solar radiation - diffuse", fontsize=14)
 
-subplot(<span class="hljs-number">223</span>)
+subplot(223)
 scatter(data.Wind_gen, data.Windspeed)
-xlabel(<span class="hljs-string">&quot;Wind power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Wind speed (m/s)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+xlabel("Wind power (kW)", fontsize=14)
+ylabel("Wind speed (m/s)", fontsize=14)
 
-subplot(<span class="hljs-number">224</span>)
+subplot(224)
 scatter(data.Wind_gen, data.Temperature)
-xlabel(<span class="hljs-string">&quot;Wind power (kW)&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Temperature (C)&quot;</span>, fontsize=<span class="hljs-number">14</span>)</code></pre>
+xlabel("Wind power (kW)", fontsize=14)
+ylabel("Temperature (C)", fontsize=14)</code></pre>
 <div class="img-wide"><img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/wind_scatter.png" alt="Wind power scatter plots"></div>
 <p>As expected, solar power generation shows a strong relationship to solar irradiance while wind power generation denotes a strong relationship to wind speed.</p>
 <h2 id="models"><a href="#models">Models</a></h2>
 <p>Let&#39;s fit a linear regression to our data. We focus on fitting the wind power generation but the same procedure could be applied for the solar power generation &#40;a good exercise&#33;&#41;.</p>
-<pre><code class="julia hljs">y_wind = data.Wind_gen
+<pre><code class="language-julia">y_wind = data.Wind_gen
 X = data[:, [:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif]];</code></pre>
 <p>Next, we partition the data in training and test set; we choose the usual 70-30 split:</p>
-<pre><code class="julia hljs">train, test = partition(eachindex(y_wind), <span class="hljs-number">0.7</span>, shuffle=<span class="hljs-literal">true</span>, rng=<span class="hljs-number">5</span>);</code></pre>
+<pre><code class="language-julia">train, test = partition(eachindex(y_wind), 0.7, shuffle=true, rng=5);</code></pre>
 <p>then we instantiate a model and fit it:</p>
-<pre><code class="julia hljs">linReg = LinearRegressor()
+<pre><code class="language-julia">linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
 fit!(m_linReg, rows=train);</code></pre>
 <h3 id="model_evaluation"><a href="#model_evaluation">Model evaluation</a></h3>
 <p>We&#39;ve now fitted the model for wind power generation &#40;<code>Wind_gen</code>&#41;. Let&#39;s use it to predict values over the test set and investigate the performance:</p>
-<pre><code class="julia hljs">y_hat = predict(m_linReg, rows=test);</code></pre>
+<pre><code class="language-julia">y_hat = predict(m_linReg, rows=test);</code></pre>
 <p>We can start by visualising the observed and predicted valzes of wind power generation.</p>
-<pre><code class="julia hljs">figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">6</span>))
-plot(y_hat, color=<span class="hljs-string">&quot;blue&quot;</span>, label=<span class="hljs-string">&quot;Predicted&quot;</span>)
-plot(y_wind[test], color=<span class="hljs-string">&quot;red&quot;</span>, label=<span class="hljs-string">&quot;Observed&quot;</span>)
-xlabel(<span class="hljs-string">&quot;Time&quot;</span>, fontsize=<span class="hljs-number">14</span>)
-ylabel(<span class="hljs-string">&quot;Power generation&quot;</span>, fontsize=<span class="hljs-number">14</span>)
+<pre><code class="language-julia">figure(figsize=(8, 6))
+plot(y_hat, color="blue", label="Predicted")
+plot(y_wind[test], color="red", label="Observed")
+xlabel("Time", fontsize=14)
+ylabel("Power generation", fontsize=14)
 xticks([])
-yticks(fontsize=<span class="hljs-number">12</span>)
-xlim(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>)
-legend(fontsize=<span class="hljs-number">14</span>)</code></pre>
+yticks(fontsize=12)
+xlim(0, 100)
+legend(fontsize=14)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/obs_v_pred.svg" alt="Observed vs Predicted">
 <p>Let&#39;s look at the RMSE on the training and test sets.</p>
-<pre><code class="julia hljs">rms(y_wind[train], predict(m_linReg, rows=train))</code></pre><pre><code class="plaintext hljs">2934.5999638857506</code></pre>
+<pre><code class="language-julia">rms(y_wind[train], predict(m_linReg, rows=train))</code></pre><pre><code class="plaintext">2934.5999638857506</code></pre>
 <p>on the test set...</p>
-<pre><code class="julia hljs">rms(y_wind[test], y_hat)</code></pre><pre><code class="plaintext hljs">2872.517439095296</code></pre>
+<pre><code class="language-julia">rms(y_wind[test], y_hat)</code></pre><pre><code class="plaintext">2872.517439095296</code></pre>
 <p>Finally, let&#39;s plot the residuals to see if there is any obvious remaining structure in them.</p>
-<pre><code class="julia hljs">res = y_hat .- y_wind[test];</code></pre>
+<pre><code class="language-julia">res = y_hat .- y_wind[test];</code></pre>
 <p>Let&#39;s look at the stem plot of the residuals to check if there&#39;s any structure we might not have picked up:</p>
-<pre><code class="julia hljs">figure(figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">6</span>))
+<pre><code class="language-julia">figure(figsize=(12, 6))
 stem(res)
-xlim(<span class="hljs-number">0</span>, length(res))</code></pre>
+xlim(0, length(res))</code></pre>
 <div class="img-wide"><img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/residuals.png" alt="Residuals"></div>
 <p>Nothing really stands out, the distribution also looks ok:</p>
-<pre><code class="julia hljs">figure(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">6</span>))
-hist(res, color=<span class="hljs-string">&quot;blue&quot;</span>, edgecolor=<span class="hljs-string">&quot;white&quot;</span>, bins=<span class="hljs-number">50</span>,
-     density=<span class="hljs-literal">true</span>, alpha=<span class="hljs-number">0.5</span>)</code></pre>
+<pre><code class="language-julia">figure(figsize=(8, 6))
+hist(res, color="blue", edgecolor="white", bins=50,
+     density=true, alpha=0.5)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/hist_residuals.svg" alt="Histogram of the residuals">
 <p>We leave it at that for now, I hope you found this tutorial interesting.<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -361,8 +362,8 @@ hist(res, color=<span class="hljs-string">&quot;blue&quot;</span>, edgecolor=<sp
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      
-
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
   
 </body>
