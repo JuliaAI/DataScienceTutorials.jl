@@ -2,5 +2,5 @@
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(dtc, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean

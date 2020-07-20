@@ -16,6 +16,8 @@ using PyPlot
 raw_data = urldownload("https://github.com/tlienart/DataScienceTutorialsData.jl/blob/master/data/wri_global_power_plant_db_be_022020.csv?raw=true")
 data = DataFrame(raw_data);
 
+# The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features.
+
 schema(data)
 
 is_active(col) = !occursin(r"source|generation", string(col))
@@ -28,6 +30,8 @@ schema(data)
 describe(data)
 
 # The describe() function shows that there are several features with missing values.
+
+###
 
 capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)
@@ -52,6 +56,8 @@ plt.xticks(rotation=90)
 
 
 
+###
+
 cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
 
@@ -59,6 +65,8 @@ cap_sum = DataFrame(cap_sum);
 cap_sum_ctry = DataFrame(cap_sum_ctry);
 cap_share = leftjoin(cap_sum, cap_sum_ctry, on = :country, makeunique = true)
 cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw_sum_1;
+
+###
 
 nMissings = length(findall(x -> ismissing(x), data.commissioning_year))
 
@@ -73,7 +81,7 @@ map!(x -> round(x, digits=0), data_nmiss.commissioning_year, data_nmiss.commissi
 # We can now calculate plant age for each plant (worth remembering that the dataset only contains active plants)
 
 current_year = fill!(Array{Float64}(undef, size(data_nmiss)[1]), 2020);
-data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year];
+data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year]
 
 mean_age = mean(skipmissing(data_nmiss.plant_age))
 median_age = median(skipmissing(data_nmiss.plant_age))

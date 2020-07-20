@@ -45,7 +45,6 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -101,17 +100,17 @@
 <div class="franklin-content"><h1 id="composing_models"><a href="#composing_models">Composing models</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-composing-models.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div><h2 id="generating_dummy_data"><a href="#generating_dummy_data">Generating dummy data</a></h2>
 <p>Let&#39;s start by generating some dummy data with both numerical values and categorical values:</p>
-<pre><code class="language-julia">using MLJ
-using PrettyPrinting
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
+<span class="hljs-keyword">using</span> PrettyPrinting
 
-@load KNNRegressor
-# input
-X = (age    = [23, 45, 34, 25, 67],
-     gender = categorical(['m', 'm', 'f', 'm', 'f']))
-# target
-height = [178, 194, 165, 173, 168];</code></pre>
+<span class="hljs-meta">@load</span> KNNRegressor
+<span class="hljs-comment"># input</span>
+X = (age    = [<span class="hljs-number">23</span>, <span class="hljs-number">45</span>, <span class="hljs-number">34</span>, <span class="hljs-number">25</span>, <span class="hljs-number">67</span>],
+     gender = categorical([<span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>]))
+<span class="hljs-comment"># target</span>
+height = [<span class="hljs-number">178</span>, <span class="hljs-number">194</span>, <span class="hljs-number">165</span>, <span class="hljs-number">173</span>, <span class="hljs-number">168</span>];</code></pre>
 <p>Note that the scientific type of <code>age</code> is <code>Count</code> here:</p>
-<pre><code class="language-julia">scitype(X.age)</code></pre><pre><code class="plaintext">AbstractArray{Count,1}</code></pre>
+<pre><code class="julia hljs">scitype(X.age)</code></pre><pre><code class="plaintext hljs">AbstractArray{Count,1}</code></pre>
 <p>We will want to coerce that to <code>Continuous</code> so that it can be given to a regressor that expects such values.</p>
 <h2 id="declaring_a_pipeline"><a href="#declaring_a_pipeline">Declaring a pipeline</a></h2>
 <p>A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data. Let&#39;s say that we want to apply the following steps:</p>
@@ -124,22 +123,22 @@ height = [178, 194, 165, 173, 168];</code></pre>
 </li>
 </ol>
 <p>The <code>@pipeline</code> macro helps you define such a simple &#40;non-branching&#41; pipeline of steps to be applied in order:</p>
-<pre><code class="language-julia">pipe = @pipeline(X -> coerce(X, :age=>Continuous),
+<pre><code class="julia hljs">pipe = <span class="hljs-meta">@pipeline</span>(X -&gt; coerce(X, :age=&gt;Continuous),
                 OneHotEncoder(),
-                KNNRegressor(K=3),
+                KNNRegressor(K=<span class="hljs-number">3</span>),
                 target = UnivariateStandardizer());</code></pre>
 <p>Note the coercion of the <code>:age</code> variable to Continuous since <code>KNNRegressor</code> expects <code>Continuous</code> input. Note also the <code>target</code> keyword where you can specify a transformation of the target variable.</p>
 <p>Hyperparameters of this pipeline can be accessed &#40;and set&#41; using dot syntax:</p>
-<pre><code class="language-julia">pipe.knn_regressor.K = 2
-pipe.one_hot_encoder.drop_last = true;</code></pre>
+<pre><code class="julia hljs">pipe.knn_regressor.K = <span class="hljs-number">2</span>
+pipe.one_hot_encoder.drop_last = <span class="hljs-literal">true</span>;</code></pre>
 <p>Evaluation for a pipe can be done with the <code>evaluate&#33;</code> method; implicitly it will construct machines that will contain the fitted parameters etc:</p>
-<pre><code class="language-julia">evaluate(pipe, X, height, resampling=Holdout(),
-         measure=rms) |> pprint</code></pre><pre><code class="plaintext">(measure = [rms],
+<pre><code class="julia hljs">evaluate(pipe, X, height, resampling=Holdout(),
+         measure=rms) |&gt; pprint</code></pre><pre><code class="plaintext hljs">(measure = [rms],
  measurement = [11.5],
  per_fold = [[11.5]],
  per_observation = [missing])</code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -148,8 +147,8 @@ pipe.one_hot_encoder.drop_last = true;</code></pre>
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>

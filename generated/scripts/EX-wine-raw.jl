@@ -10,6 +10,7 @@
 using HTTP
 using MLJ
 using PyPlot
+
 import DataFrames: DataFrame, describe
 using UrlDownload
 
@@ -43,8 +44,8 @@ describe(Xc, :mean, :std)
 @load KNNClassifier pkg="NearestNeighbors"
 @load MultinomialClassifier pkg="MLJLinearModels";
 
-KnnPipe = @pipeline(Standardizer(), KNNClassifier())
-MnPipe = @pipeline(Standardizer(), MultinomialClassifier());
+@pipeline KnnPipe(std=Standardizer(), clf=KNNClassifier()) is_probabilistic=true
+@pipeline MnPipe(std=Standardizer(), clf=MultinomialClassifier()) is_probabilistic=true;
 
 train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
 Xtrain = selectrows(Xc, train)
@@ -52,8 +53,8 @@ Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)
 ytest = selectrows(yc, test);
 
-knn = machine(KnnPipe, Xtrain, ytrain)
-multi = machine(MnPipe, Xtrain, ytrain)
+knn = machine(KnnPipe(), Xtrain, ytrain)
+multi = machine(MnPipe(), Xtrain, ytrain)
 
 opts = (resampling=Holdout(fraction_train=0.9), measure=cross_entropy)
 res = evaluate!(knn; opts...)

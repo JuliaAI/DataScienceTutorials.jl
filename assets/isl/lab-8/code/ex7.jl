@@ -1,6 +1,6 @@
 # This file was generated, do not modify it. # hide
-r_mpi = range(mdl, :(decision_tree_classifier.max_depth), lower=1, upper=10)
-r_msl = range(mdl, :(decision_tree_classifier.min_samples_leaf), lower=1, upper=50)
+r_mpi = range(mdl, :(tree.max_depth), lower=1, upper=10)
+r_msl = range(mdl, :(tree.min_samples_leaf), lower=1, upper=50)
 
 tm = TunedModel(model=mdl, ranges=[r_mpi, r_msl], tuning=Grid(resolution=8),
                 resampling=CV(nfolds=5, rng=112),

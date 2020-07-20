@@ -45,7 +45,6 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -103,80 +102,68 @@
 <p>In this simple example, no bagging is used, so every atomic model gets the same learned parameters, unless the atomic model training algorithm has randomness, eg, DecisionTree with random subsampling of features at nodes.</p>
 <p>Note that MLJ has a built in model wrapper called <code>EnsembleModel</code> for creating bagged ensembles with a few lines of code.</p>
 <h2 id="definition_of_composite_model_type"><a href="#definition_of_composite_model_type">Definition of composite model type</a></h2>
-<pre><code class="language-julia">using MLJ
-using PyPlot
-import Statistics</code></pre>
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> MLJ
+<span class="hljs-keyword">using</span> PyPlot
+<span class="hljs-keyword">import</span> Statistics</code></pre>
 <p>learning network &#40;composite model spec&#41;:</p>
-<pre><code class="language-julia">Xs = source()
+<pre><code class="julia hljs">Xs = source()
 ys = source()
 
-atom = @load DecisionTreeRegressor
-atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
+atom = <span class="hljs-meta">@load</span> DecisionTreeRegressor
+atom.n_subfeatures = <span class="hljs-number">4</span> <span class="hljs-comment"># to ensure diversity among trained atomic models</span>
 
-machines = (machine(atom, Xs, ys) for i in 1:100)</code></pre><pre><code class="plaintext">Base.Generator{UnitRange{Int64},Main.FD_SANDBOX_15866893453267974565.var"#56#57"}(Main.FD_SANDBOX_15866893453267974565.var"#56#57"(), 1:100)</code></pre>
+machines = (machine(atom, Xs, ys) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:<span class="hljs-number">100</span>)</code></pre><pre><code class="plaintext hljs">Base.Generator{UnitRange{Int64},Main.FD_SANDBOX_15866893453267974565.var&quot;#1#2&quot;}(Main.FD_SANDBOX_15866893453267974565.var&quot;#1#2&quot;(), 1:100)</code></pre>
 <p>overload <code>mean</code> for nodes:</p>
-<pre><code class="language-julia">Statistics.mean(v...) = mean(v)
-Statistics.mean(v::AbstractVector{<:AbstractNode}) = node(mean, v...)
+<pre><code class="julia hljs">Statistics.mean(v...) = mean(v)
+Statistics.mean(v::<span class="hljs-built_in">AbstractVector</span>{&lt;:AbstractNode}) = node(mean, v...)
 
-yhat = mean([predict(m, Xs) for  m in machines]);</code></pre>
+yhat = mean([predict(m, Xs) <span class="hljs-keyword">for</span>  m <span class="hljs-keyword">in</span> machines]);</code></pre>
 <p>new composite model type and instance:</p>
-<pre><code class="language-julia">surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=yhat)
-
-@from_network mach begin
-    mutable struct OneHundredModels
-        atom=atom
-    end
-end
-
-one_hundred_models = OneHundredModels()</code></pre><pre><code class="plaintext">OneHundredModels(
-    atom = DecisionTreeRegressor(
-            max_depth = -1,
-            min_samples_leaf = 5,
-            min_samples_split = 2,
-            min_purity_increase = 0.0,
-            n_subfeatures = 4,
-            post_prune = false,
-            merge_purity_threshold = 1.0)) @500</code></pre>
+<pre><code class="julia hljs">one_hundred_models = <span class="hljs-meta">@from_network</span> OneHundredModels(atom=atom) &lt;= yhat</code></pre><pre><code class="plaintext hljs">LoadError: MethodError: no method matching from_network_preprocess(::Module, ::Expr)
+Closest candidates are:
+  from_network_preprocess(::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/b1egR/src/composition/models/from_network.jl:67
+in expression starting at none:1
+</code></pre>
 <h2 id="application_to_data"><a href="#application_to_data">Application to data</a></h2>
-<pre><code class="language-julia">X, y = @load_boston;</code></pre>
+<pre><code class="julia hljs">X, y = <span class="hljs-meta">@load_boston</span>;</code></pre>
 <p>tune regularization parameter for a <em>single</em> tree:</p>
-<pre><code class="language-julia">r = range(atom,
+<pre><code class="julia hljs">r = range(atom,
           :min_samples_split,
-          lower=2,
-          upper=100, scale=:log)
+          lower=<span class="hljs-number">2</span>,
+          upper=<span class="hljs-number">100</span>, scale=:log)
 
 mach = machine(atom, X, y)
 
 curve = learning_curve!(mach,
                         range=r,
                         measure=mav,
-                        resampling=CV(nfolds=9),
-                        verbosity=0)
+                        resampling=CV(nfolds=<span class="hljs-number">9</span>),
+                        verbosity=<span class="hljs-number">0</span>)
 
 plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)</code></pre>
 <img src="/DataScienceTutorials.jl/assets/getting-started/ensembles-3/code/output/e1.svg" alt="">
 <p>tune regularization parameter for all trees in ensemble simultaneously:</p>
-<pre><code class="language-julia">r = range(one_hundred_models,
+<pre><code class="julia hljs">r = range(one_hundred_models,
           :(atom.min_samples_split),
-          lower=2,
-          upper=100, scale=:log)
+          lower=<span class="hljs-number">2</span>,
+          upper=<span class="hljs-number">100</span>, scale=:log)
 
 mach = machine(one_hundred_models, X, y)
 
 curve = learning_curve!(mach,
                         range=r,
                         measure=mav,
-                        resampling=CV(nfolds=9),
-                        verbosity=0)
+                        resampling=CV(nfolds=<span class="hljs-number">9</span>),
+                        verbosity=<span class="hljs-number">0</span>)
 
 plot(curve.parameter_values, curve.measurements)
-xlabel(curve.parameter_name)</code></pre>
-<img src="/DataScienceTutorials.jl/assets/getting-started/ensembles-3/code/output/e2.svg" alt="">
+xlabel(curve.parameter_name)</code></pre><pre><code class="plaintext hljs">UndefVarError: one_hundred_models not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/getting-started/ensembles-3/code/e2' not found. //</span></p>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -185,8 +172,8 @@ xlabel(curve.parameter_name)</code></pre>
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>

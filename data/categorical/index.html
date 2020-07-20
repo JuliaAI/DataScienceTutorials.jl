@@ -45,7 +45,6 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -101,61 +100,61 @@
 <div class="franklin-content"><h1 id="handling_categorical_data"><a href="#handling_categorical_data">Handling categorical data</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/D0-categorical.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-categorical-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/D0-categorical.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#defining_a_categorical_vector">Defining a categorical vector</a></li><li><a href="#working_with_categoricals">Working with categoricals</a><ol><li><a href="#ordered_categoricals">Ordered categoricals</a></li><li><a href="#missing_values">Missing values</a></li></ol></li></ol></div>This tutorial follows loosely <a href="https://juliadata.github.io/CategoricalArrays.jl/latest/using.html">the docs</a>.</p>
 <h2 id="defining_a_categorical_vector"><a href="#defining_a_categorical_vector">Defining a categorical vector</a></h2>
-<pre><code class="language-julia">using CategoricalArrays
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> CategoricalArrays
 
-v = categorical(["AA", "BB", "CC", "AA", "BB", "CC"])</code></pre><pre><code class="plaintext">6-element CategoricalArrays.CategoricalArray{String,1,UInt32}:
- "AA"
- "BB"
- "CC"
- "AA"
- "BB"
- "CC"</code></pre>
+v = categorical([<span class="hljs-string">&quot;AA&quot;</span>, <span class="hljs-string">&quot;BB&quot;</span>, <span class="hljs-string">&quot;CC&quot;</span>, <span class="hljs-string">&quot;AA&quot;</span>, <span class="hljs-string">&quot;BB&quot;</span>, <span class="hljs-string">&quot;CC&quot;</span>])</code></pre><pre><code class="plaintext hljs">6-element CategoricalArrays.CategoricalArray{String,1,UInt32}:
+ &quot;AA&quot;
+ &quot;BB&quot;
+ &quot;CC&quot;
+ &quot;AA&quot;
+ &quot;BB&quot;
+ &quot;CC&quot;</code></pre>
 <p>This declares a categorical vector, i.e. a Vector whose entries are expected to represent a group or category. You can retrieve the group labels using <code>levels</code>:</p>
-<pre><code class="language-julia">levels(v)</code></pre><pre><code class="plaintext">3-element Array{String,1}:
- "AA"
- "BB"
- "CC"</code></pre>
+<pre><code class="julia hljs">levels(v)</code></pre><pre><code class="plaintext hljs">3-element Array{String,1}:
+ &quot;AA&quot;
+ &quot;BB&quot;
+ &quot;CC&quot;</code></pre>
 <p>which, by  default, returns the labels in lexicographic order.</p>
 <h2 id="working_with_categoricals"><a href="#working_with_categoricals">Working with categoricals</a></h2>
 <h3 id="ordered_categoricals"><a href="#ordered_categoricals">Ordered categoricals</a></h3>
 <p>You can specify that categories are <em>ordered</em> by specifying <code>ordered&#61;true</code>, the order then follows that of the levels. If you wish to change that order, you  need to  use the <code>levels&#33;</code> function. Let&#39;s see two examples.</p>
-<pre><code class="language-julia">v = categorical([1, 2, 3, 1, 2, 3, 1, 2, 3], ordered=true)
+<pre><code class="julia hljs">v = categorical([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], ordered=<span class="hljs-literal">true</span>)
 
-levels(v)</code></pre><pre><code class="plaintext">3-element Array{Int64,1}:
+levels(v)</code></pre><pre><code class="plaintext hljs">3-element Array{Int64,1}:
  1
  2
  3</code></pre>
 <p>Here the lexicographic order matches what we want so no  need to change it, since we&#39;ve specified  that the categories are ordered we can do:</p>
-<pre><code class="language-julia">v[1] < v[2]</code></pre><pre><code class="plaintext">true</code></pre>
+<pre><code class="julia hljs">v[<span class="hljs-number">1</span>] &lt; v[<span class="hljs-number">2</span>]</code></pre><pre><code class="plaintext hljs">true</code></pre>
 <p>Let&#39;s now consider another example</p>
-<pre><code class="language-julia">v = categorical(["high", "med", "low", "high", "med", "low"], ordered=true)
+<pre><code class="julia hljs">v = categorical([<span class="hljs-string">&quot;high&quot;</span>, <span class="hljs-string">&quot;med&quot;</span>, <span class="hljs-string">&quot;low&quot;</span>, <span class="hljs-string">&quot;high&quot;</span>, <span class="hljs-string">&quot;med&quot;</span>, <span class="hljs-string">&quot;low&quot;</span>], ordered=<span class="hljs-literal">true</span>)
 
-levels(v)</code></pre><pre><code class="plaintext">3-element Array{String,1}:
- "high"
- "low"
- "med"</code></pre>
+levels(v)</code></pre><pre><code class="plaintext hljs">3-element Array{String,1}:
+ &quot;high&quot;
+ &quot;low&quot;
+ &quot;med&quot;</code></pre>
 <p>The levels follow the lexicographic order which  is not what  we want:</p>
-<pre><code class="language-julia">v[1] < v[2]</code></pre><pre><code class="plaintext">true</code></pre>
+<pre><code class="julia hljs">v[<span class="hljs-number">1</span>] &lt; v[<span class="hljs-number">2</span>]</code></pre><pre><code class="plaintext hljs">true</code></pre>
 <p>In order to re-specify the order we need to  use <code>levels&#33;</code>:</p>
-<pre><code class="language-julia">levels!(v, ["low", "med", "high"])</code></pre><pre><code class="plaintext">6-element CategoricalArrays.CategoricalArray{String,1,UInt32}:
- "high"
- "med"
- "low"
- "high"
- "med"
- "low"</code></pre>
+<pre><code class="julia hljs">levels!(v, [<span class="hljs-string">&quot;low&quot;</span>, <span class="hljs-string">&quot;med&quot;</span>, <span class="hljs-string">&quot;high&quot;</span>])</code></pre><pre><code class="plaintext hljs">6-element CategoricalArrays.CategoricalArray{String,1,UInt32}:
+ &quot;high&quot;
+ &quot;med&quot;
+ &quot;low&quot;
+ &quot;high&quot;
+ &quot;med&quot;
+ &quot;low&quot;</code></pre>
 <p>now things are properly ordered:</p>
-<pre><code class="language-julia">v[1] < v[2]</code></pre><pre><code class="plaintext">false</code></pre>
+<pre><code class="julia hljs">v[<span class="hljs-number">1</span>] &lt; v[<span class="hljs-number">2</span>]</code></pre><pre><code class="plaintext hljs">false</code></pre>
 <h3 id="missing_values"><a href="#missing_values">Missing values</a></h3>
 <p>You can also have a categorical vector with missing values:</p>
-<pre><code class="language-julia">v = categorical(["AA", "BB", missing, "AA", "BB", "CC"]);</code></pre>
+<pre><code class="julia hljs">v = categorical([<span class="hljs-string">&quot;AA&quot;</span>, <span class="hljs-string">&quot;BB&quot;</span>, missing, <span class="hljs-string">&quot;AA&quot;</span>, <span class="hljs-string">&quot;BB&quot;</span>, <span class="hljs-string">&quot;CC&quot;</span>]);</code></pre>
 <p>that doesn&#39;t change the levels:</p>
-<pre><code class="language-julia">levels(v)</code></pre><pre><code class="plaintext">3-element Array{String,1}:
- "AA"
- "BB"
- "CC"</code></pre><div class="page-foot">
+<pre><code class="julia hljs">levels(v)</code></pre><pre><code class="plaintext hljs">3-element Array{String,1}:
+ &quot;AA&quot;
+ &quot;BB&quot;
+ &quot;CC&quot;</code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -164,8 +163,8 @@ levels(v)</code></pre><pre><code class="plaintext">3-element Array{String,1}:
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>

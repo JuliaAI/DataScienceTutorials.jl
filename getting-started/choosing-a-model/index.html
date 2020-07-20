@@ -45,7 +45,6 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
     </ul>
 
     <!-- GETTING STARTED WITH MLJ -->
@@ -101,11 +100,11 @@
 <div class="franklin-content"><h1 id="choosing_and_evaluating_a_model"><a href="#choosing_and_evaluating_a_model">Choosing and evaluating a model</a></h1>
 <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-model-choice.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-choice-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-model-choice.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#data_and_its_interpretation">Data and its interpretation</a><ol><li><a href="#machine_type_and_scientific_type">Machine type and scientific type</a></li><li><a href="#unpacking_data">Unpacking data</a></li></ol></li><li><a href="#choosing_a_model">Choosing a model</a><ol><li><a href="#model_search">Model search</a></li><li><a href="#loading_a_model">Loading a model</a></li></ol></li></ol></div><h2 id="data_and_its_interpretation"><a href="#data_and_its_interpretation">Data and its interpretation</a></h2>
 <h3 id="machine_type_and_scientific_type"><a href="#machine_type_and_scientific_type">Machine type and scientific type</a></h3>
-<pre><code class="language-julia">using RDatasets
-using MLJ
-iris = dataset("datasets", "iris")
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> RDatasets
+<span class="hljs-keyword">using</span> MLJ
+iris = dataset(<span class="hljs-string">&quot;datasets&quot;</span>, <span class="hljs-string">&quot;iris&quot;</span>)
 
-first(iris, 3) |> pretty</code></pre><pre><code class="plaintext">┌─────────────┬────────────┬─────────────┬────────────┬──────────────────────────────────────────────────┐
+first(iris, <span class="hljs-number">3</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────┬─────────────┬────────────┬──────────────────────────────────────────────────┐
 │ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │ Species                                          │
 │ Float64     │ Float64    │ Float64     │ Float64    │ CategoricalArrays.CategoricalValue{String,UInt8} │
 │ Continuous  │ Continuous │ Continuous  │ Continuous │ Multiclass{3}                                    │
@@ -123,8 +122,8 @@ first(iris, 3) |> pretty</code></pre><pre><code class="plaintext">┌───�
 </li>
 </ul>
 <p>If you want to specify a different scientific type than the one inferred, you can do so by using the function <code>coerce</code> along with pairs of column names and scientific types:</p>
-<pre><code class="language-julia">iris2 = coerce(iris, :PetalWidth => OrderedFactor)
-first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty</code></pre><pre><code class="plaintext">┌─────────────┬────────────────────────────────────────────────────┐
+<pre><code class="julia hljs">iris2 = coerce(iris, :PetalWidth =&gt; OrderedFactor)
+first(iris2[:, [:PetalLength, :PetalWidth]], <span class="hljs-number">1</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────────────────────────────────────────────┐
 │ PetalLength │ PetalWidth                                         │
 │ Float64     │ CategoricalArrays.CategoricalValue{Float64,UInt32} │
 │ Continuous  │ OrderedFactor{22}                                  │
@@ -134,8 +133,8 @@ first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty</code></pre><pre><code
 </code></pre>
 <h3 id="unpacking_data"><a href="#unpacking_data">Unpacking data</a></h3>
 <p>The function <code>unpack</code> helps specify the target and the input for a regression or classification task</p>
-<pre><code class="language-julia">y, X = unpack(iris, ==(:Species), colname -> true)
-first(X, 1) |> pretty</code></pre><pre><code class="plaintext">┌─────────────┬────────────┬─────────────┬────────────┐
+<pre><code class="julia hljs">y, X = unpack(iris, ==(:Species), colname -&gt; <span class="hljs-literal">true</span>)
+first(X, <span class="hljs-number">1</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────┬─────────────┬────────────┐
 │ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │
 │ Float64     │ Float64    │ Float64     │ Float64    │
 │ Continuous  │ Continuous │ Continuous  │ Continuous │
@@ -151,8 +150,8 @@ first(X, 1) |> pretty</code></pre><pre><code class="plaintext">┌────�
 </li>
 </ul>
 <p>Let&#39;s try another one:</p>
-<pre><code class="language-julia">y, X = unpack(iris, ==(:Species), !=(:PetalLength))
-first(X, 1) |> pretty</code></pre><pre><code class="plaintext">┌─────────────┬────────────┬────────────┐
+<pre><code class="julia hljs">y, X = unpack(iris, ==(:Species), !=(:PetalLength))
+first(X, <span class="hljs-number">1</span>) |&gt; pretty</code></pre><pre><code class="plaintext hljs">┌─────────────┬────────────┬────────────┐
 │ SepalLength │ SepalWidth │ PetalWidth │
 │ Float64     │ Float64    │ Float64    │
 │ Continuous  │ Continuous │ Continuous │
@@ -161,16 +160,16 @@ first(X, 1) |> pretty</code></pre><pre><code class="plaintext">┌────�
 └─────────────┴────────────┴────────────┘
 </code></pre>
 <p>You can also use the shorthand <code>@load_iris</code> for such common examples:</p>
-<pre><code class="language-julia">X, y = @load_iris;</code></pre>
+<pre><code class="julia hljs">X, y = <span class="hljs-meta">@load_iris</span>;</code></pre>
 <h2 id="choosing_a_model"><a href="#choosing_a_model">Choosing a model</a></h2>
 <h3 id="model_search"><a href="#model_search">Model search</a></h3>
 <p>In MLJ, a <em>model</em> is a struct storing the <em>hyperparameters</em> of the learning algorithm indicated by the struct name &#40;and only that&#41;.</p>
 <p>A number of models are available in MLJ, usually thanks to external packages interfacing with MLJ &#40;see also <code><a href="https://github.com/alan-turing-institute/MLJModels.jl">MLJModels.jl</a></code>&#41;. In order to see which ones are appropriate for the data you have and its scientific interpretation, you can use the function <code>models</code> along with the function <code>matching</code>; let us look specifically at models which support a probabilistic output:</p>
-<pre><code class="language-julia">for m in models(matching(X, y))
-    if m.prediction_type == :probabilistic
-        println(rpad(m.name, 30), "($(m.package_name))")
-    end
-end</code></pre><pre><code class="plaintext">AdaBoostClassifier            (ScikitLearn)
+<pre><code class="julia hljs"><span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> models(matching(X, y))
+    <span class="hljs-keyword">if</span> m.prediction_type == :probabilistic
+        println(rpad(m.name, <span class="hljs-number">30</span>), <span class="hljs-string">&quot;(<span class="hljs-subst">$(m.package_name)</span>)&quot;</span>)
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></code></pre><pre><code class="plaintext hljs">AdaBoostClassifier            (ScikitLearn)
 AdaBoostStumpClassifier       (DecisionTree)
 BaggingClassifier             (ScikitLearn)
 BayesianLDA                   (MultivariateStats)
@@ -205,21 +204,21 @@ XGBoostClassifier             (XGBoost)
 <p>Most models are implemented outside of the MLJ ecosystem; you therefore have to <em>load models</em> using the <code>@load</code> command.</p>
 <p><strong>Note</strong>: you <em>must</em> have the package from which the model is loaded available in your environment &#40;in this case <code><a href="https://github.com/bensadeghi/DecisionTree.jl">DecisionTree.jl</a></code>&#41; otherwise MLJ will not be able to load the model.</p>
 <p>For instance, let&#39;s say you want to fit a K-Nearest Neighbours classifier:</p>
-<pre><code class="language-julia">knc = @load KNeighborsClassifier</code></pre><pre><code class="plaintext">KNeighborsClassifier(
+<pre><code class="julia hljs">knc = <span class="hljs-meta">@load</span> KNeighborsClassifier</code></pre><pre><code class="plaintext hljs">KNeighborsClassifier(
     n_neighbors = 5,
-    weights = "uniform",
-    algorithm = "auto",
+    weights = &quot;uniform&quot;,
+    algorithm = &quot;auto&quot;,
     leaf_size = 30,
     p = 2,
-    metric = "minkowski",
+    metric = &quot;minkowski&quot;,
     metric_params = nothing,
-    n_jobs = nothing) @659</code></pre>
+    n_jobs = nothing) @397</code></pre>
 <p>In some cases, there may be several packages offering the same model, for instance <code>LinearRegressor</code> is offered by both <code><a href="https://github.com/JuliaStats/GLM.jl">GLM.jl</a></code> and <code><a href="https://github.com/cstjean/ScikitLearn.jl">ScikitLearn.jl</a></code> so you will need to specify the package you would like to use by adding <code>pkg&#61;&quot;ThePackage&quot;</code> in the load command:</p>
-<pre><code class="language-julia">linreg = @load LinearRegressor pkg="GLM"</code></pre><pre><code class="plaintext">LinearRegressor(
+<pre><code class="julia hljs">linreg = <span class="hljs-meta">@load</span> LinearRegressor pkg=<span class="hljs-string">&quot;GLM&quot;</span></code></pre><pre><code class="plaintext hljs">LinearRegressor(
     fit_intercept = true,
-    allowrankdeficient = false) @969</code></pre><div class="page-foot">
+    allowrankdeficient = false) @843</code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -228,8 +227,8 @@ XGBoostClassifier             (XGBoost)
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
   
   
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
   
 </body>
