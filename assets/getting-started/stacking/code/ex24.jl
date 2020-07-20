@@ -1,10 +1,5 @@
 # This file was generated, do not modify it. # hide
-y2_oos = vcat(y21, y22, y23);
-fit!(y2_oos, verbosity=0)
-
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
-legend()
-
-savefig(joinpath(@OUTPUT, "s3.svg")) # hide
+y1 = predict(m1, X);
+y2 = predict(m2, X);
+X_judge = MLJ.table(hcat(y1, y2))
+yhat = predict(m_judge, X_judge)

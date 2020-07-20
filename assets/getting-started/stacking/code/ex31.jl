@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-X, y = make_regression(1000, 20; sparse=0.75, noise=0.1, rng=123);
+hot_mach = fit!(machine(OneHotEncoder(), X1), verbosity=0)
+X = transform(hot_mach, X1);

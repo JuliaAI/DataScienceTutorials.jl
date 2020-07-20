@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-mach = machine(Deterministic(), X, y; predict=yhat)
+avg = @from_network MyAverageTwo(regressor1=model1,
+                                 regressor2=model2) <= yhat

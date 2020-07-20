@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-f = folds(1:10, 3)
+corestrict(string.(1:10), f, 2)
