@@ -14,8 +14,6 @@
 # composite types or macros to achieve the same results in a few
 # lines, which will suffice for routine stacking tasks.
 
-# After defining the `MyTwoStack` model type, we instantiate it for an
-# application to the Ames House Price data set.
 
 # ## Basic stacking using out-of-sample base learner predictions
 
@@ -65,17 +63,11 @@ using StableRNGs
 # Some models we will use:
 
 linear = @load LinearRegressor pkg=MLJLinearModels
-
-ridge = @load RidgeRegressor pkg=MultivariateStats
-ridge.lambda = 0.01
-
 knn = @load KNNRegressor; knn.K = 4
-
-tree = @load DecisionTreeRegressor; min_samples_leaf=1
-forest = @load RandomForestRegressor pkg=DecisionTree
-forest.n_trees=500
-
+tree_booster = @load EvoTreeRegressor; tree_booster.nrounds = 100
+forest = @load RandomForestRegressor pkg=DecisionTree; forest.n_trees = 500
 svm = @load SVMRegressor;
+
 
 # ### Warm-up exercise: Define a model type to average predictions
 
@@ -185,7 +177,7 @@ savefig(joinpath(@OUTPUT, "s1.svg")) # hide
 
 # \fig{s1.svg}
 
-# Some models to stack:
+# Some models to stack (which we can change later):
 
 model1 = linear
 model2 = knn
@@ -361,65 +353,37 @@ my_two_model_stack = MyTwoModelStack()
 # And this completes the definition of our re-usable stacking model type.
 
 
-# ## Applying `MyTwoModelStack` to Ames House Price data
+# ## Applying `MyTwoModelStack` to some data
 
 # Without undertaking any hyperparameter optimization, we evaluate the
-# performance of a random forest and ridge regressor on the well-known
-# Ames House Prices data, and compare the performance with a stack
-# (and simple averaging) using the random forest and ridge regressors
-# as base learners. We then indicate some options for tuning the
-# stack.
+# performance of a tree boosting algorithm and a support vector
+# machine on a synthetic data set. As adjudicator, we'll use a random
+# forest.
 
-# #### Data pre-processing
+# We use a synthetic set to give an example where stacking is
+# effective but the data is not too large. (As synthetic data is based
+# on perturbations to linear models, we are deliberately avoiding
+# linear models in stacking illustration.)
 
-# Here we use a 12-feature reduced subset of the Ames House Price data
-# set:
-
-X0, y0 = @load_reduced_ames;
-
-# Inspect scitypes:
-
-s = schema(X0)
-(names=collect(s.names), scitypes=collect(s.scitypes)) |> pretty
-
-# Coerce counts and ordered factors to continuous:
-
-X1 = coerce(X0, :OverallQual => Continuous,
-            :GarageCars => Continuous,
-            :YearRemodAdd => Continuous,
-            :YearBuilt => Continuous);
-
-# One-hot encode the multiclass:
-
-hot_mach = fit!(machine(OneHotEncoder(), X1), verbosity=0)
-X = transform(hot_mach, X1);
-
-# Check the final scitype:
-
-scitype(X)
-
-# transform the target:
-
-y1 = log.(y0)
-y = transform(fit!(machine(UnivariateStandardizer(), y1),
-                   verbosity=0), y1);
+X, y = make_regression(1000, 20; sparse=0.75, noise=0.1, rng=123);
 
 
-# #### Define the stack and compare performance:
-
-avg = MyAverageTwo(regressor1=forest,
-                   regressor2=ridge)
+# #### Define the stack and compare performance
 
 
-stack = MyTwoModelStack(regressor1=forest,
-                        regressor2=ridge,
-                        judge=linear)
+avg = MyAverageTwo(regressor1=tree_booster,
+                   regressor2=svm)
 
-all_models = [forest, ridge, avg, stack];
+
+stack = MyTwoModelStack(regressor1=tree_booster,
+                        regressor2=svm,
+                        judge=forest) # judge=linear
+
+all_models = [tree_booster, svm, forest, avg, stack];
 
 for model in all_models
     print_performance(model, X, y)
-end;
+end
 
 
 # #### Tuning a stack
@@ -436,22 +400,23 @@ end;
 # As a proof of concept, let's see how to tune one of the base model
 # hyperparameters, based on performance of the stack as a whole:
 
-r = range(stack, :(regressor2.lambda), lower = 1, upper = 20, scale=:log)
+r = range(stack, :(regressor2.C), lower = 0.01, upper = 10, scale=:log)
 tuned_stack = TunedModel(model=stack,
                          ranges=r,
-                         tuning=Grid(),
+                         tuning=Grid(shuffle=false),
                          measure=rms,
                          resampling=Holdout())
 
 mach = fit!(machine(tuned_stack,  X, y), verbosity=0)
 best_stack = fitted_params(mach).best_model
-best_stack.regressor2.lambda
+best_stack.regressor2.C
 
 # Let's evaluate the best stack using the same data resampling used to
-# the evaluate the assorted un-tuned models earlier (now we are neglecting
+# the evaluate the various untuned models earlier (now we are neglecting
 # data hygiene!):
 
 print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide
 
+Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
