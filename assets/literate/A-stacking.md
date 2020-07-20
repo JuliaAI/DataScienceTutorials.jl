@@ -6,17 +6,14 @@ averaging or majority vote.
 Here we illustrate how to build a two-model stack as an MLJ learning
 network, which we export as a new stand-alone composite model
 type `MyTwoStack`. This will make the stack that we build completely
-re-usable (new data, new models) and means we can apply
+re-usable (new data, new models). This means we can apply
 meta-algorithms, such as performance evaluation and tuning, to the
-stack, exaclty as we would for any other model.
+stack, exactly as we would for any other model.
 
 Our main purpose here is to demonstrate the flexibility of MLJ's
 composite model interface. Eventually, MLJ will provide built-in
 composite types or macros to achieve the same results in a few
 lines, which will suffice for routine stacking tasks.
-
-After defining the `MyTwoStack` model type, we instantiate it for an
-application to the Ames House Price data set.
 
 ## Basic stacking using out-of-sample base learner predictions
 
@@ -43,7 +40,7 @@ weight to the base learners with low *training* error, the input
 data is first split into a number of folds (as in cross-validation),
 a base learner is trained on each fold complement individually, and
 corresponding predictions on the folds are spliced together to form
-a full-length prediction called the *out-of-sample.prediction*.
+a full-length prediction called the *out-of-sample prediction*.
 
 For illustrative purposes we use just three folds. Each base learner
 will get three separate machines, for training on each fold
@@ -51,7 +48,7 @@ complement, and a fourth machine, trained on all the supplied data,
 for use in the prediction flow.
 
 We build the learning network with dummy data at the source nodes,
-so the reader inspect the workings of the network as it is built (by
+so the reader inspects the workings of the network as it is built (by
 calling `fit!` on nodes, and by calling the nodes themselves). As
 usual, this data is not seen by the exported composite model type,
 and the component models we choose are just default values for the
@@ -69,16 +66,9 @@ Some models we will use:
 
 ```julia:ex2
 linear = @load LinearRegressor pkg=MLJLinearModels
-
-ridge = @load RidgeRegressor pkg=MultivariateStats
-ridge.lambda = 0.01
-
 knn = @load KNNRegressor; knn.K = 4
-
-tree = @load DecisionTreeRegressor; min_samples_leaf=1
-forest = @load RandomForestRegressor pkg=DecisionTree
-forest.n_trees=500
-
+tree_booster = @load EvoTreeRegressor; tree_booster.nrounds = 100
+forest = @load RandomForestRegressor pkg=DecisionTree; forest.n_trees = 500
 svm = @load SVMRegressor;
 ```
 
@@ -103,17 +93,45 @@ y2 = predict(m2, X)
 yhat = 0.5*y1 + 0.5*y2
 ```
 
-And the macro call to define `MyAverageTwo` and an instance `average_two`:
+In preparation for export, we wrap the learning network in a
+learning network machine, which specifies what the source nodes are,
+and which node is for prediction. As our exported model will make
+point-predictions (as opposed to probabilistic ones), we use a
+`Deterministic` ["surrogate" model](https://alan-turing-institute.github.io/MLJ.jl/dev/performance_measures/):
 
 ```julia:ex4
-avg = @from_network MyAverageTwo(regressor1=model1,
-                                 regressor2=model2) <= yhat
+mach = machine(Deterministic(), X, y; predict=yhat)
+```
+
+Note that we cannot actually fit this machine because we chose not
+to wrap our source nodes `X` and `y` in data.
+
+Here's the macro call that "exports" the learning network as a new
+composite model `MyAverageTwo`:
+
+```julia:ex5
+@from_network mach begin
+    mutable struct MyAverageTwo
+        regressor1=model1
+        regressor2=model2
+    end
+end
+```
+
+Note that, unlike a normal struct definition, the defaults `model1`
+and `model2` must be specified, and they must refer to model
+instances in the learning network.
+
+We can now create an instance of the new type:
+
+```julia:ex6
+average_two = MyAverageTwo()
 ```
 
 Evaluating this average model on the Boston data set, and comparing
 with the base model predictions:
 
-```julia:ex5
+```julia:ex7
 function print_performance(model, data...)
     e = evaluate(model, data...;
                  resampling=CV(rng=StableRNG(1234), nfolds=8),
@@ -128,7 +146,7 @@ X, y = @load_boston
 
 print_performance(linear, X, y)
 print_performance(knn, X, y)
-print_performance(avg, X, y)
+print_performance(average_two, X, y)
 ```
 
 ## Stacking proper
@@ -136,23 +154,15 @@ print_performance(avg, X, y)
 
 To generate folds for generating out-of-sample predictions, we define
 
-```julia:ex6
+```julia:ex8
 folds(data, nfolds) =
     partition(1:nrows(data), (1/nfolds for i in 1:(nfolds-1))...);
 ```
 
 For example, we have:
 
-```julia:ex7
+```julia:ex9
 f = folds(1:10, 3)
-```
-
-In our learning network, the folds will depend on the input data,
-which will be wrapped as a source node. We therefore need to
-overload the `folds` function for nodes:
-
-```julia:ex8
-folds(X::AbstractNode, nfolds) = node(XX -> folds(XX, nfolds), X);
 ```
 
 It will also be convenient to use the MLJ method `restrict(X, f, i)`
@@ -163,21 +173,9 @@ fold).
 
 For example, we have:
 
-```julia:ex9
+```julia:ex10
 corestrict(string.(1:10), f, 2)
 ```
-
-Overloading these functions for nodes:
-
-```julia:ex10
-MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> restrict(XX, ff, i), X, f);
-MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> corestrict(XX, ff, i), X, f);
-```
-
-All the other data manipulations we will need (`vcat`, `hcat`,
-`MLJ.table`) are already overloaded to work with nodes.
 
 ### Choose some test data (optional) and some component models (defaults for the composite model):
 
@@ -200,7 +198,7 @@ savefig(joinpath(@OUTPUT, "s1.svg")) # hide
 
 \fig{s1.svg}
 
-Some models to stack:
+Some models to stack (which we can change later):
 
 ```julia:ex12
 model1 = linear
@@ -216,26 +214,54 @@ judge = linear
 ### Define the training nodes
 
 Let's instantiate some input and target source nodes for the
-learning network, wrapping the play data defined above:
-
-Wrapped as source node:
+learning network, wrapping the play data defined above in source
+nodes:
 
 ```julia:ex14
 X = source(Xraw)
 y = source(yraw)
 ```
 
-Our first internal node represents the three folds (vectors of row
-indices) for creating the out-of-sample predictions:
+Our first internal node will represent the three folds (vectors of row
+indices) for creating the out-of-sample predictions. We would like
+to define `f = folds(X, 3)` but this will not work because `X` is
+not a table, just a node representing a table. We could fix this
+by using the @node macro:
 
 ```julia:ex15
+f = @node folds(X, 3)
+```
+
+Now `f` is itself a node, and so callable:
+
+```julia:ex16
+f()
+```
+
+However, we can also just overload `folds` to work on nodes, using the
+`node` *function*:
+
+```julia:ex17
+folds(X::AbstractNode, nfolds) = node(XX->folds(XX, nfolds), X)
 f = folds(X, 3)
 f()
 ```
 
-Constructing machines for training `model1` on each fold-complement:
+In the case of `restrict` and `corestrict`, which also don't
+operate on nodes, method overloading will save us writing `@node`
+all the time:
 
-```julia:ex16
+```julia:ex18
+MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> restrict(XX, ff, i), X, f);
+MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
+    node((XX, ff) -> corestrict(XX, ff, i), X, f);
+```
+
+We are now ready to define machines for training `model1` on each
+fold-complement:
+
+```julia:ex19
 m11 = machine(model1, corestrict(X, f, 1), corestrict(y, f, 1))
 m12 = machine(model1, corestrict(X, f, 2), corestrict(y, f, 2))
 m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))
@@ -243,7 +269,7 @@ m13 = machine(model1, corestrict(X, f, 3), corestrict(y, f, 3))
 
 Define each out-of-sample prediction of `model1`:
 
-```julia:ex17
+```julia:ex20
 y11 = predict(m11, restrict(X, f, 1));
 y12 = predict(m12, restrict(X, f, 2));
 y13 = predict(m13, restrict(X, f, 3));
@@ -251,14 +277,18 @@ y13 = predict(m13, restrict(X, f, 3));
 
 Splice together the out-of-sample predictions for model1:
 
-```julia:ex18
+```julia:ex21
 y1_oos = vcat(y11, y12, y13);
 ```
 
-Optionally, to check our network so far, we can fit and plot
-`y1_oos`:
+Note there is no need to overload the `vcat` function to work on
+nodes; it does so out of the box, as does `hcat` and basic
+arithmetic operations.
 
-```julia:ex19
+Since our source nodes are wrapping data, we can optionally check
+our network so far, by calling fitting and calling `y1_oos`:
+
+```julia:ex22
 fit!(y1_oos, verbosity=0)
 
 figure(figsize=(8,6))
@@ -273,7 +303,7 @@ savefig(joinpath(@OUTPUT, "s2.svg")) # hide
 
 We now repeat the procedure for the other model:
 
-```julia:ex20
+```julia:ex23
 m21 = machine(model2, corestrict(X, f, 1), corestrict(y, f, 1))
 m22 = machine(model2, corestrict(X, f, 2), corestrict(y, f, 2))
 m23 = machine(model2, corestrict(X, f, 3), corestrict(y, f, 3))
@@ -284,7 +314,7 @@ y23 = predict(m23, restrict(X, f, 3));
 
 And testing the knn out-of-sample prediction:
 
-```julia:ex21
+```julia:ex24
 y2_oos = vcat(y21, y22, y23);
 fit!(y2_oos, verbosity=0)
 
@@ -302,19 +332,19 @@ Now that we have the out-of-sample base learner predictions, we are
 ready to merge them into the adjudicator's input table and construct
 the machine for training the adjudicator:
 
-```julia:ex22
+```julia:ex25
 X_oos = MLJ.table(hcat(y1_oos, y2_oos))
 m_judge = machine(judge, X_oos, y)
 ```
 
 Are we done with constructing machines? Well, not quite. Recall that
-when use the stack to make predictions on new data, we will be
-feeding the adjudicator ordinary predictions on the base
-learners. But so far, we have only defined machines to train the
-base learners on fold complements, not on the full data, which we do
-now:
+when we use the stack to make predictions on new data, we will be
+feeding the adjudicator ordinary predictions of the base learners
+(rather than out-of-sample predictions). But so far, we have only
+defined machines to train the base learners on fold complements, not
+on the full data, which we do now:
 
-```julia:ex23
+```julia:ex26
 m1 = machine(model1, X, y)
 m2 = machine(model2, X, y)
 ```
@@ -325,7 +355,7 @@ To obtain the final prediction, `yhat`, we get the base learner
 predictions, based on training with all data, and feed them to the
 adjudicator:
 
-```julia:ex24
+```julia:ex27
 y1 = predict(m1, X);
 y2 = predict(m2, X);
 X_judge = MLJ.table(hcat(y1, y2))
@@ -334,7 +364,7 @@ yhat = predict(m_judge, X_judge)
 
 Let's check the final prediction node can be fit and called:
 
-```julia:ex25
+```julia:ex28
 fit!(yhat, verbosity=0)
 
 figure(figsize=(8,6))
@@ -350,7 +380,7 @@ savefig(joinpath(@OUTPUT, "s4.svg")) # hide
 Although of little statistical significance here, we note that
 stacking gives a lower *training* error than naive averaging:
 
-```julia:ex26
+```julia:ex29
 e1 = rms(y1(), y())
 e2 = rms(y2(), y())
 emean = rms(0.5*y1() + 0.5*y2(), y())
@@ -363,93 +393,61 @@ estack = rms(yhat(), y())
 The learning network (less the data wrapped in the source nodes)
 amounts to a specification of a new composite model type for
 two-model stacks, trained with three-fold resampling of base model
-predictions. Let's create the new type `MyTwoModelStack`:
+predictions. Let's create the new type `MyTwoModelStack`, in the
+same way we exported the network for model averaging:
 
-```julia:ex27
-@from_network MyTwoModelStack(regressor1=model1,
-                              regressor2=model2,
-                              judge=judge) <= yhat
+```julia:ex30
+@from_network machine(Deterministic(), X, y; predict=yhat) begin
+    mutable struct MyTwoModelStack
+        regressor1=model1
+        regressor2=model2
+        judge=judge
+    end
+end
+
+my_two_model_stack = MyTwoModelStack()
 ```
 
 And this completes the definition of our re-usable stacking model type.
 
-## Applying `MyTwoModelStack` to Ames House Price data
+## Applying `MyTwoModelStack` to some data
 
 Without undertaking any hyperparameter optimization, we evaluate the
-performance of a random forest and ridge regressor on the well-known
-Ames House Prices data, and compare the performance with a stack
-(and simple averaging) using the random forest and ridge regressors
-as base learners. We then indicate some options for tuning the
-stack.
+performance of a tree boosting algorithm and a support vector
+machine on a synthetic data set. As adjudicator, we'll use a random
+forest.
 
-#### Data pre-processing
-
-Here we use a 12-feature reduced subset of the Ames House Price data
-set:
-
-```julia:ex28
-X0, y0 = @load_reduced_ames;
-```
-
-Inspect scitypes:
-
-```julia:ex29
-s = schema(X0)
-(names=collect(s.names), scitypes=collect(s.scitypes)) |> pretty
-```
-
-Coerce counts and ordered factors to continuous:
-
-```julia:ex30
-X1 = coerce(X0, :OverallQual => Continuous,
-            :GarageCars => Continuous,
-            :YearRemodAdd => Continuous,
-            :YearBuilt => Continuous);
-```
-
-One-hot encode the multiclass:
+We use a synthetic set to give an example where stacking is
+effective but the data is not too large. (As synthetic data is based
+on perturbations to linear models, we are deliberately avoiding
+linear models in stacking illustration.)
 
 ```julia:ex31
-hot_mach = fit!(machine(OneHotEncoder(), X1), verbosity=0)
-X = transform(hot_mach, X1);
+X, y = make_regression(1000, 20; sparse=0.75, noise=0.1, rng=123);
 ```
 
-Check the final scitype:
+#### Define the stack and compare performance
 
 ```julia:ex32
-scitype(X)
-```
-
-transform the target:
-
-```julia:ex33
-y1 = log.(y0)
-y = transform(fit!(machine(UnivariateStandardizer(), y1),
-                   verbosity=0), y1);
-```
-
-#### Define the stack and compare performance:
-
-```julia:ex34
-avg = MyAverageTwo(regressor1=forest,
-                   regressor2=ridge)
+avg = MyAverageTwo(regressor1=tree_booster,
+                   regressor2=svm)
 
 
-stack = MyTwoModelStack(regressor1=forest,
-                        regressor2=ridge,
-                        judge=linear)
+stack = MyTwoModelStack(regressor1=tree_booster,
+                        regressor2=svm,
+                        judge=forest) # judge=linear
 
-all_models = [forest, ridge, avg, stack];
+all_models = [tree_booster, svm, forest, avg, stack];
 
 for model in all_models
     print_performance(model, X, y)
-end;
+end
 ```
 
 #### Tuning a stack
 
-A standard abuse of good data hygiene practice is to optimize stack
-component models *separately* and then tune the adjudicating model
+A standard abuse of good data hygiene is to optimize stack component
+models *separately* and then tune the adjudicating model
 hyperparameters (using the same resampling of the data) with the
 base learners fixed. Although more computationally expensive, better
 generalization might be expected by applying tuning to the stack as
@@ -460,24 +458,24 @@ implemented.
 As a proof of concept, let's see how to tune one of the base model
 hyperparameters, based on performance of the stack as a whole:
 
-```julia:ex35
-r = range(stack, :(regressor2.lambda), lower = 1, upper = 20, scale=:log)
+```julia:ex33
+r = range(stack, :(regressor2.C), lower = 0.01, upper = 10, scale=:log)
 tuned_stack = TunedModel(model=stack,
                          ranges=r,
-                         tuning=Grid(),
+                         tuning=Grid(shuffle=false),
                          measure=rms,
                          resampling=Holdout())
 
 mach = fit!(machine(tuned_stack,  X, y), verbosity=0)
 best_stack = fitted_params(mach).best_model
-best_stack.regressor2.lambda
+best_stack.regressor2.C
 ```
 
 Let's evaluate the best stack using the same data resampling used to
-the evaluate the assorted untuned models earlier (now we are neglecting
-data hygeine!):
+the evaluate the various untuned models earlier (now we are neglecting
+data hygiene!):
 
-```julia:ex36
+```julia:ex34
 print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide

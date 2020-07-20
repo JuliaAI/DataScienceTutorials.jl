@@ -25,16 +25,7 @@ Statistics.mean(v::AbstractVector{<:AbstractNode}) = node(mean, v...)
 
 yhat = mean([predict(m, Xs) for  m in machines]);
 
-surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=yhat)
-
-@from_network mach begin
-    mutable struct OneHundredModels
-        atom=atom
-    end
-end
-
-one_hundred_models = OneHundredModels()
+one_hundred_models = @from_network OneHundredModels(atom=atom) <= yhat
 
 X, y = @load_boston;
 

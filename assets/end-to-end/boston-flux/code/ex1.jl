@@ -5,7 +5,7 @@ import DataFrames
 import Statistics
 import Flux
 using Random
-using PyPlot
+using Plots
 
 MLJ.color_off() # hide
 Random.seed!(11)

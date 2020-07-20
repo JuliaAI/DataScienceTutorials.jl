@@ -1,3 +1,3 @@
 LinearRegressor(
     fit_intercept = true,
-    allowrankdeficient = false) @969
+    allowrankdeficient = false) @843

@@ -1,6 +1,3 @@
 # This file was generated, do not modify it. # hide
-surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=ŷ)
-
-fit!(ŷ)
-ŷ(X[test[1:5], :])
+@from_network CompositeModel(std=std_model, box=box_model,
+                             ridge=ridge_model) <= ŷ;
