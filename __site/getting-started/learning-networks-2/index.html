@@ -127,7 +127,7 @@ test, train = partition(eachindex(y), 0.8);</code></pre>
 <p>Let&#39;s define a simple network</p>
 <p><em>Input layer</em></p>
 <pre><code class="language-julia">Xs = source(X)
-ys = source(y)</code></pre><pre><code class="plaintext">Source @693 ⏎ `AbstractArray{Continuous,1}`</code></pre>
+ys = source(y)</code></pre><pre><code class="plaintext">Source @644 ⏎ `AbstractArray{Continuous,1}`</code></pre>
 <p><em>First layer</em></p>
 <pre><code class="language-julia">std_model = Standardizer()
 stand = machine(std_model, Xs)
@@ -135,44 +135,44 @@ W = MLJ.transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
 box_mach = machine(box_model, ys)
-z = MLJ.transform(box_mach, ys)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @075
+z = MLJ.transform(box_mach, ys)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @347
   args:
-    1:	Source @693
+    1:	Source @644
   formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer} @607, 
-        Source @693)</code></pre>
+        Machine{UnivariateBoxCoxTransformer} @156, 
+        Source @644)</code></pre>
 <p><em>Second layer</em></p>
 <pre><code class="language-julia">ridge_model = RidgeRegressor(lambda=0.1)
 ridge = machine(ridge_model, W, z)
-ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext">Node{Machine{RidgeRegressor}} @093
+ẑ = predict(ridge, W)</code></pre><pre><code class="plaintext">Node{Machine{RidgeRegressor}} @064
   args:
-    1:	Node{Machine{Standardizer}} @319
+    1:	Node{Machine{Standardizer}} @070
   formula:
     predict(
-        Machine{RidgeRegressor} @208, 
+        Machine{RidgeRegressor} @310, 
         transform(
-            Machine{Standardizer} @996, 
-            Source @834))</code></pre>
+            Machine{Standardizer} @498, 
+            Source @912))</code></pre>
 <p><em>Output</em></p>
-<pre><code class="language-julia">ŷ = inverse_transform(box_mach, ẑ)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @037
+<pre><code class="language-julia">ŷ = inverse_transform(box_mach, ẑ)</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer}} @605
   args:
-    1:	Node{Machine{RidgeRegressor}} @093
+    1:	Node{Machine{RidgeRegressor}} @064
   formula:
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer} @607, 
+        Machine{UnivariateBoxCoxTransformer} @156, 
         predict(
-            Machine{RidgeRegressor} @208, 
+            Machine{RidgeRegressor} @310, 
             transform(
-                Machine{Standardizer} @996, 
-                Source @834)))</code></pre>
+                Machine{Standardizer} @498, 
+                Source @912)))</code></pre>
 <p>No fitting has been done thus far, we have just defined a sequence of operations.</p>
 <p>As we show next, a learning network needs to be exported to create a new stand-alone model type. Instances of that type can be bound with data in a machine, which can then be evaluated, for example. Somewhat paradoxically, one can wrap a learning network in a certain kind of machine, called a learning network machine, before exporting it, and in fact, the export process actually requires us to do so. Since a composite model type does not yet exist, one constructs the machine using a &quot;surrogate&quot; model, whose name indicates the ultimate model supertype &#40;Deterministic, Probabilistic, Unsupervised or Static&#41;. This surrogate model has no fields.</p>
 <pre><code class="language-julia">surrogate = Deterministic()
 mach = machine(surrogate, Xs, ys; predict=ŷ)
 
-fit!(ŷ)
-ŷ(X[test[1:5], :])</code></pre><pre><code class="plaintext">5-element Array{Float64,1}:
+fit!(mach)
+predict(mach, X[test[1:5], :])</code></pre><pre><code class="plaintext">5-element Array{Float64,1}:
  0.22207406272038532
  0.1145988140862213
  0.5637023411242004
@@ -219,7 +219,7 @@ res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
 round(res.measurement[1], sigdigits=3)</code></pre><pre><code class="plaintext">0.0212</code></pre>
 <p>Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.<div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

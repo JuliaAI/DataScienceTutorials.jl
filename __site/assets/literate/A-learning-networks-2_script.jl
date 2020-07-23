@@ -35,8 +35,8 @@ ŷ = inverse_transform(box_mach, ẑ)
 surrogate = Deterministic()
 mach = machine(surrogate, Xs, ys; predict=ŷ)
 
-fit!(ŷ)
-ŷ(X[test[1:5], :])
+fit!(mach)
+predict(mach, X[test[1:5], :])
 
 @from_network mach begin
     mutable struct CompositeModel

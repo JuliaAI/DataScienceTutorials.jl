@@ -242,7 +242,7 @@ xgb.min_child_weight = 2.857142857142857
 r = range(xgb, :gamma, lower=0, upper=10)
 curve = learning_curve!(xgbm, range=r, resolution=30,
                         measure=cross_entropy);</code></pre>
-<p>actually it doesn&#39;t look like it&#39;s changing much...:</p>
+<p>it looks like the <code>gamma</code> parameter substantially affects model performance:</p>
 <pre><code class="language-julia">@show round(minimum(curve.measurements), sigdigits=3)
 @show round(maximum(curve.measurements), sigdigits=3)</code></pre><pre><code class="plaintext">round(minimum(curve.measurements), sigdigits = 3) = 0.211
 round(maximum(curve.measurements), sigdigits = 3) = 0.464
@@ -286,7 +286,7 @@ xgb.colsample_bytree = 0.9428571428571428
 <pre><code class="language-julia">ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)</code></pre><div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
