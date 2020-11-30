@@ -10,6 +10,7 @@ using MLJ
 using StatsBase
 using Random
 using PyPlot
+ioff() # hide
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
@@ -148,7 +149,7 @@ curve = learning_curve!(xgbm, range=r, resolution=30,
                         measure=cross_entropy);
 ```
 
-actually it doesn't look like it's changing much...:
+it looks like the `gamma` parameter substantially affects model performance:
 
 ```julia:ex14
 @show round(minimum(curve.measurements), sigdigits=3)

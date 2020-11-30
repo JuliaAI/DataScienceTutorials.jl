@@ -28,7 +28,7 @@ test, train = partition(eachindex(y), 0.8);
 
 # ## Defining a learning network## In MLJ, a *learning network* is a directed acyclic graph (DAG) whose *nodes* apply trained or untrained operations such as a `predict` or `transform` (trained) or `+`, `vcat` etc. (untrained).# Learning networks can be seen as pipelines on steroids.## Let's consider the following simple DAG:## ![Operation DAG](/assets/diagrams/composite1.svg)## It corresponds to a fairly standard regression workflow: the data is standardized, the target is transformed using a Box-Cox transformation, a ridge regression is applied and the result is converted back by inverting the transform.## **Note**: actually  this DAG is simple enough that it could also have been done with a pipeline.## ### Sources and nodes## In MLJ a learning network starts at **source** nodes and flows through nodes (`X` and `y`) defining operations/transformations (`W`, `z`, `ẑ`, `ŷ`).# To define the source nodes, use the `source` function, you should specify whether it's a target:
 Xs = source(X)
-ys = source(y, kind=:target)
+ys = source(y)
 
 # To define an "trained-operation" node, you must simply create a machine wrapping a model and another node (the data) and indicate which operation should be performed (e.g. `transform`):
 stand = machine(Standardizer(), Xs)

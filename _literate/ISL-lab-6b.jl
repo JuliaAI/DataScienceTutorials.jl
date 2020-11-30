@@ -1,3 +1,6 @@
+# In this tutorial, we are exploring the application of Ridge and Lasso
+# regression to the Hitters R dataset.
+#
 # ## Getting started
 
 using MLJ
@@ -11,24 +14,35 @@ const D = Distributions
 @load RidgeRegressor pkg=MLJLinearModels
 @load LassoRegressor pkg=MLJLinearModels
 
+# We load the dataset using the `dataset` function, which takes the Package and
+# dataset names as arguments.
+
 hitters = dataset("ISLR", "Hitters")
 @show size(hitters)
 names(hitters) |> pprint
 
-# The target is `Salary`
+# Let's unpack the dataset with the `unpack` function.
+# In this case, the target is `Salary` (`==(:Salary)`) and all other columns are features (`col->true`).
 
 y, X = unpack(hitters, ==(:Salary), col->true);
 
-# It has missing values which we will just ignore:
+# The target has missing values which we will just ignore.
+# We extract the row indices corresponding to non-missing values of the target.
+# Note the use of the element-wise operator `.`.
+no_miss = .!ismissing.(y);
 
-no_miss = .!ismissing.(y)
+# We collect the non missing values of the target in an Array.
+# And keep only the corresponding features values.
 y = collect(skipmissing(y))
 X = X[no_miss, :]
+
+# Let's now split our dataset into a train and test sets.
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
-#
+# Let's have a look at the target.
 
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(y, ls="none", marker="o")
@@ -61,7 +75,10 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
 #
 # ### Data preparation
 #
-# Most features are currently encoded as integers but we will consider them as continuous
+# Most features are currently encoded as integers but we will consider them as continuous.
+# To coerce `int` features to `Float`, we nest the `autotype` function in the `coerce` function.
+# The `autotype` function returns a dictionary containing scientific types, which is then passed to the `coerce` function.
+# For more details on the use of `autotype`, see the [Scientific Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype)
 
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
@@ -73,11 +90,10 @@ scitype(Xc)
 #
 # Let's first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:
 
-@pipeline RegPipe(std = Standardizer(),
-                  hot = OneHotEncoder(),
-                  reg = LinearRegressor())
+model = @pipeline(Standardizer(),
+                     OneHotEncoder(),
+                     LinearRegressor())
 
-model = RegPipe()
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
@@ -122,8 +138,9 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
 # ### Basic Ridge
 #
 # Let's now swap the linear regressor for a Ridge one without specifying the penalty (`1` by default):
+# We modify the supervised model in the pipeline directly.
 
-pipe.model.reg = RidgeRegressor()
+pipe.model.linear_regressor = RidgeRegressor()
 fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
@@ -132,16 +149,16 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # ### Cross validating
 
-# What penalty should you use? Let's do a simple CV to try  to find out:
+# What penalty should you use? Let's do a simple CV to try to find out:
 
-r  = range(model, :(reg.lambda), lower=1e-2, upper=100_000, scale=:log10)
+r  = range(model, :(linear_regressor.lambda), lower=1e-2, upper=100_000, scale=:log10)
 tm = TunedModel(model=model, ranges=r, tuning=Grid(resolution=50),
                 resampling=CV(nfolds=3, rng=4141), measure=rms)
 mtm = machine(tm, Xc, y)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.linear_regressor.lambda, sigdigits=4)
 
 # right, and  with that we get:
 
@@ -156,7 +173,7 @@ res = ŷ .- y[test]
 stem(res)
 
 xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14); 
+xlabel("Index", fontsize=14);
 ylabel("Residual (ŷ - y)", fontsize=14)
 xlim(1, length(res))
 
@@ -172,12 +189,12 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")) # hide
 #
 # Let's do the same as above but using a Lasso model and adjusting the range a bit:
 
-mtm.model.model.reg = LassoRegressor()
-mtm.model.range = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
+mtm.model.model.linear_regressor = LassoRegressor()
+mtm.model.range = range(model, :(linear_regressor.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.linear_regressor.lambda, sigdigits=4)
 
 # Ok and let's see how that does:
 
@@ -186,7 +203,7 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Pretty good! and the parameters are reasonably sparse as expected:
 
-coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
+coefs, intercept = fitted_params(mtm.fitresult).linear_regressor
 @show coefs
 @show intercept
 
@@ -198,7 +215,7 @@ sum(coef_vals .≈ 0) / length(coefs)
 # Let's visualise this:
 
 figure(figsize=(8,6))
-stem(coefs)
+stem(coef_vals)
 
 ## name of the features including one-hot-encoded ones
 all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
@@ -206,7 +223,7 @@ all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
              :League__A, :League__N, :Div_E, :Div_W,
              :PutOuts, :Assists, :Errors, :NewLeague_A, :NewLeague_N]
 
-idxshow = collect(1:length(coefs))[abs.(coefs) .> 10]
+idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 10]
 xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
@@ -219,15 +236,15 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
 
 @load ElasticNetRegressor pkg=MLJLinearModels
 
-mtm.model.model.reg = ElasticNetRegressor()
-mtm.model.range = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
-                    range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
+mtm.model.model.linear_regressor = ElasticNetRegressor()
+mtm.model.range = [range(model, :(linear_regressor.lambda), lower=0.1, upper=100, scale=:log10),
+                    range(model, :(linear_regressor.gamma),  lower=500, upper=10_000, scale=:log10)]
 mtm.model.tuning = Grid(resolution=10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-@show round(best_mdl.reg.lambda, sigdigits=4)
-@show round(best_mdl.reg.gamma, sigdigits=4)
+@show round(best_mdl.linear_regressor.lambda, sigdigits=4)
+@show round(best_mdl.linear_regressor.gamma, sigdigits=4)
 
 # And it's not too bad in terms of accuracy either
 

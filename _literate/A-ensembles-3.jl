@@ -12,12 +12,13 @@
 
 using MLJ
 using PyPlot
+ioff() # hide
 import Statistics
 
 # learning network (composite model spec):
 
 Xs = source()
-ys = source(kind=:target)
+ys = source()
 
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
@@ -30,10 +31,18 @@ Statistics.mean(v::AbstractVector{<:AbstractNode}) = node(mean, v...)
 
 yhat = mean([predict(m, Xs) for  m in machines]);
 
-
 # new composite model type and instance:
 
-one_hundred_models = @from_network OneHundredModels(atom=atom) <= yhat
+surrogate = Deterministic()
+mach = machine(surrogate, Xs, ys; predict=yhat)
+
+@from_network mach begin
+    mutable struct OneHundredModels
+        atom=atom
+    end
+end
+
+one_hundred_models = OneHundredModels()
 
 # ## Application to data
 

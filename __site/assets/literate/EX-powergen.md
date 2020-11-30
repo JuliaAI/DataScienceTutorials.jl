@@ -9,6 +9,7 @@ We focus on the use of a simple linear estimator. Let's load the required packag
 using MLJ
 using UrlDownload
 using PyPlot
+ioff() # hide
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 

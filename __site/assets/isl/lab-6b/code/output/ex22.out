@@ -1,0 +1,2 @@
+round(best_mdl.linear_regressor.lambda, sigdigits = 4) = 46.42
+round(best_mdl.linear_regressor.gamma, sigdigits = 4) = 972.9

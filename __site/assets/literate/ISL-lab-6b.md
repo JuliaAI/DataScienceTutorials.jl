@@ -1,7 +1,13 @@
 <!--This file was generated, do not modify it.-->
+```julia:ex1
+# In this tutorial, we are exploring the application of Ridge and Lasso
+```
+
+regression to the Hitters R dataset.
+
 ## Getting started
 
-```julia:ex1
+```julia:ex2
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
@@ -12,29 +18,48 @@ const D = Distributions
 @load LinearRegressor pkg=MLJLinearModels
 @load RidgeRegressor pkg=MLJLinearModels
 @load LassoRegressor pkg=MLJLinearModels
+```
 
+We load the dataset using the `dataset` function, which takes the Package and
+dataset names as arguments.
+
+```julia:ex3
 hitters = dataset("ISLR", "Hitters")
 @show size(hitters)
 names(hitters) |> pprint
 ```
 
-The target is `Salary`
+Let's unpack the dataset with the `unpack` function.
+In this case, the target is `Salary` (`==(:Salary)`) and all other columns are features (`col->true`).
 
-```julia:ex2
+```julia:ex4
 y, X = unpack(hitters, ==(:Salary), col->true);
 ```
 
-It has missing values which we will just ignore:
+The target has missing values which we will just ignore.
+We extract the row indices corresponding to non-missing values of the target.
+Note the use of the element-wise operator `.`.
 
-```julia:ex3
-no_miss = .!ismissing.(y)
+```julia:ex5
+no_miss = .!ismissing.(y);
+```
+
+We collect the non missing values of the target in an Array.
+
+```julia:ex6
+# And keep only the corresponding features values.
 y = collect(skipmissing(y))
 X = X[no_miss, :]
+
+# Let's now split our dataset into a train and test sets.
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 ```
 
-```julia:ex4
+Let's have a look at the target.
+
+```julia:ex7
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(y, ls="none", marker="o")
@@ -49,7 +74,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g1.svg")) # hide
 
 That looks quite skewed, let's have a look at a histogram:
 
-```julia:ex5
+```julia:ex8
 figure(figsize=(8,6))
 hist(y, bins=50, density=true)
 
@@ -70,9 +95,12 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
 
 ### Data preparation
 
-Most features are currently encoded as integers but we will consider them as continuous
+Most features are currently encoded as integers but we will consider them as continuous.
+To coerce `int` features to `Float`, we nest the `autotype` function in the `coerce` function.
+The `autotype` function returns a dictionary containing scientific types, which is then passed to the `coerce` function.
+For more details on the use of `autotype`, see the [Scientific Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype)
 
-```julia:ex6
+```julia:ex9
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
 ```
@@ -84,12 +112,11 @@ There're a few features that are categorical which we'll one-hot-encode.
 
 Let's first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:
 
-```julia:ex7
-@pipeline RegPipe(std = Standardizer(),
-                  hot = OneHotEncoder(),
-                  reg = LinearRegressor())
+```julia:ex10
+model = @pipeline(Standardizer(),
+                     OneHotEncoder(),
+                     LinearRegressor())
 
-model = RegPipe()
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
@@ -98,7 +125,7 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 Let's get a feel for how we're doing
 
-```julia:ex8
+```julia:ex11
 figure(figsize=(8,6))
 
 res = ŷ .- y[test]
@@ -114,7 +141,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g3.svg")) # hide
 
 \figalt{Residuals}{ISL-lab-6-g3.svg}
 
-```julia:ex9
+```julia:ex12
 figure(figsize=(8,6))
 hist(res, bins=30, density=true, color="green")
 
@@ -139,9 +166,10 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
 ### Basic Ridge
 
 Let's now swap the linear regressor for a Ridge one without specifying the penalty (`1` by default):
+We modify the supervised model in the pipeline directly.
 
-```julia:ex10
-pipe.model.reg = RidgeRegressor()
+```julia:ex13
+pipe.model.linear_regressor = RidgeRegressor()
 fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
@@ -151,29 +179,29 @@ Ok that's a bit better but surely we can do better with an appropriate selection
 
 ### Cross validating
 
-What penalty should you use? Let's do a simple CV to try  to find out:
+What penalty should you use? Let's do a simple CV to try to find out:
 
-```julia:ex11
-r  = range(model, :(reg.lambda), lower=1e-2, upper=100_000, scale=:log10)
+```julia:ex14
+r  = range(model, :(linear_regressor.lambda), lower=1e-2, upper=100_000, scale=:log10)
 tm = TunedModel(model=model, ranges=r, tuning=Grid(resolution=50),
                 resampling=CV(nfolds=3, rng=4141), measure=rms)
 mtm = machine(tm, Xc, y)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.linear_regressor.lambda, sigdigits=4)
 ```
 
 right, and  with that we get:
 
-```julia:ex12
+```julia:ex15
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 ```
 
 Let's see:
 
-```julia:ex13
+```julia:ex16
 figure(figsize=(8,6))
 
 res = ŷ .- y[test]
@@ -197,42 +225,42 @@ You can compare that with the residuals obtained earlier.
 
 Let's do the same as above but using a Lasso model and adjusting the range a bit:
 
-```julia:ex14
-mtm.model.model.reg = LassoRegressor()
-mtm.model.range = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
+```julia:ex17
+mtm.model.model.linear_regressor = LassoRegressor()
+mtm.model.range = range(model, :(linear_regressor.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.linear_regressor.lambda, sigdigits=4)
 ```
 
 Ok and let's see how that does:
 
-```julia:ex15
+```julia:ex18
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 ```
 
 Pretty good! and the parameters are reasonably sparse as expected:
 
-```julia:ex16
-coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
+```julia:ex19
+coefs, intercept = fitted_params(mtm.fitresult).linear_regressor
 @show coefs
 @show intercept
 ```
 
 with around 50% sparsity:
 
-```julia:ex17
+```julia:ex20
 coef_vals = [c[2] for c in coefs]
 sum(coef_vals .≈ 0) / length(coefs)
 ```
 
 Let's visualise this:
 
-```julia:ex18
+```julia:ex21
 figure(figsize=(8,6))
-stem(coefs)
+stem(coef_vals)
 
 # name of the features including one-hot-encoded ones
 all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
@@ -240,7 +268,7 @@ all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
              :League__A, :League__N, :Div_E, :Div_W,
              :PutOuts, :Assists, :Errors, :NewLeague_A, :NewLeague_N]
 
-idxshow = collect(1:length(coefs))[abs.(coefs) .> 10]
+idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 10]
 xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
@@ -252,30 +280,30 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
 
 ## Elastic net pipeline
 
-```julia:ex19
+```julia:ex22
 @load ElasticNetRegressor pkg=MLJLinearModels
 
-mtm.model.model.reg = ElasticNetRegressor()
-mtm.model.range = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
-                    range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
+mtm.model.model.linear_regressor = ElasticNetRegressor()
+mtm.model.range = [range(model, :(linear_regressor.lambda), lower=0.1, upper=100, scale=:log10),
+                    range(model, :(linear_regressor.gamma),  lower=500, upper=10_000, scale=:log10)]
 mtm.model.tuning = Grid(resolution=10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-@show round(best_mdl.reg.lambda, sigdigits=4)
-@show round(best_mdl.reg.gamma, sigdigits=4)
+@show round(best_mdl.linear_regressor.lambda, sigdigits=4)
+@show round(best_mdl.linear_regressor.gamma, sigdigits=4)
 ```
 
 And it's not too bad in terms of accuracy either
 
-```julia:ex20
+```julia:ex23
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 ```
 
 But the simple ridge regression seems to work best here.
 
-```julia:ex21
+```julia:ex24
 PyPlot.close_figs() # hide
 ```
 

@@ -56,6 +56,7 @@ fp = fitted_params(mach_uni)
 # You can also visualise this
 
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")

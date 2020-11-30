@@ -1,5 +1,4 @@
-@def hascode = true
-@def showall = true
+<!-- @def reeval = true -->
 
 # Manipulating a DataFrame
 

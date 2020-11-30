@@ -1,1 +1,9 @@
-Node @ 3…74 = predict(8…33, transform(1…12, 1…93))
+Node{Machine{KNNRegressor}} @873
+  args:
+    1:	Node{Machine{OneHotEncoder}} @846
+  formula:
+    predict(
+        Machine{KNNRegressor} @456, 
+        transform(
+            Machine{OneHotEncoder} @746, 
+            Source @759))

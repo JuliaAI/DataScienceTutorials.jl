@@ -1,3 +1,6 @@
 # This file was generated, do not modify it. # hide
-@from_network CompositeModel(std=std_model, box=box_model,
-                             ridge=ridge_model) <= ŷ;
+surrogate = Deterministic()
+mach = machine(surrogate, Xs, ys; predict=ŷ)
+
+fit!(mach)
+predict(mach, X[test[1:5], :])

@@ -67,6 +67,7 @@ mpg |> mean
 
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(mpg)
 

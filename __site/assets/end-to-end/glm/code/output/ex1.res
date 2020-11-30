@@ -1,3 +1,3 @@
 LinearBinaryClassifier(
     fit_intercept = true,
-    link = GLM.LogitLink()) @ 1…47
+    link = GLM.LogitLink()) @403

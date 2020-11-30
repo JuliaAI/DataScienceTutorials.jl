@@ -1,14 +1,14 @@
-MyTwoModelStack(
-    regressor1 = LinearRegressor(
-            fit_intercept = true,
-            solver = nothing),
-    regressor2 = KNNRegressor(
-            K = 4,
-            algorithm = :kdtree,
-            metric = Distances.Euclidean(0.0),
-            leafsize = 10,
-            reorder = true,
-            weights = :uniform),
-    judge = LinearRegressor(
-            fit_intercept = true,
-            solver = nothing)) @ 8…52
+Node{Machine{LinearRegressor}} @693
+  args:
+    1:	Node{Nothing} @951
+  formula:
+    predict(
+        Machine{LinearRegressor} @724, 
+        table(
+            hcat(
+                predict(
+                    Machine{LinearRegressor} @691, 
+                    Source @478),
+                predict(
+                    Machine{KNNRegressor} @714, 
+                    Source @478))))

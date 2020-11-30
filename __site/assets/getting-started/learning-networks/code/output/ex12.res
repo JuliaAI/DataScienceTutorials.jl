@@ -1,1 +1,7 @@
-Node @ 1…29 = transform(6…16, 8…61)
+Node{Machine{UnivariateBoxCoxTransformer}} @959
+  args:
+    1:	Source @547
+  formula:
+    transform(
+        Machine{UnivariateBoxCoxTransformer} @477, 
+        Source @547)

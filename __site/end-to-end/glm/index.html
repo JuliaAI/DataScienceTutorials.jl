@@ -1,36 +1,152 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/DataScienceTutorials.jl/libs/highlight/github.min.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/franklin.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/pure.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/side-menu.css"> <link rel=stylesheet  href="/DataScienceTutorials.jl/css/extra.css"> <title>Using GLM.jl</title> <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script> <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script> <div id=layout > <a href="#menu" id=menuLink  class=menu-link ><span></span></a> <div id=menu > <div class=pure-menu > <a href="/DataScienceTutorials.jl/" id=menu-logo-link > <div class=menu-logo > <p><strong>Data Science Tutorials</strong></p> </div> </a> <form id=lunrSearchForm  name=lunrSearchForm > <input class=search-input  name=q  placeholder="Enter search term" type=text > <input type=submit  value=Search  formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden"> </form> <ul class=pure-menu-list > <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class=pure-menu-link ><strong>Home</strong></a> <li class=pure-menu-sublist-title ><strong>Data basics</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Loading data</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Data Frames</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Scientific Type</a> </ul> <li class=pure-menu-sublist-title ><strong>Getting started</strong> <ul class=pure-menu-sublist > <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Choosing a model</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Model tuning</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Composing models</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Stacking</a> </ul> <li class=pure-menu-sublist-title ><strong>Intro to Stats Learning</strong> <ul class=pure-menu-sublist  id=isl> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 2</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 3</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 4</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 5</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 6b</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 8</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 9</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Lab 10</a> </ul> <li class=pure-menu-sublist-title ><strong>End to end examples</strong> <ul class=pure-menu-sublist  id=e2e> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> AMES</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Wine</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Horse</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> King County Houses</a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Airfoil </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a> <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class=pure-menu-link ><span style="padding-right:0.5rem;">•</span> Power Generation </a> </ul> </ul> </div> </div> <div id=main > <div class=franklin-content ><h1 id=using_glmjl ><a href="#using_glmjl">Using GLM.jl</a></h1> <em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-GLM.ipynb" target=_blank ><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM-raw.jl" target=_blank ><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM.jl" target=_blank ><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class=franklin-toc ><ol><li><a href="#reading_the_data">Reading the data</a><li><a href="#defining_the_linear_model">Defining the Linear Model</a><li><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a><li><a href="#defining_the_logistic_model">Defining the Logistic Model</a><li><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></ol></div><strong>Main author</strong>: <a href="https://github.com/drcxcruz">Clarman Cruz</a>.</p> <p>This juypter lab showcases MLJ in particular using the popular <a href="https://github.com/JuliaStats/GLM.jl">GLM</a> Julia package. We are using two datasets. One dataset was created manually for testing purposes. The other data set is the CollegeDistance dataset from the <a href="https://cran.r-project.org/web/packages/AER/index.html">AER</a> package in R.</p> <p>We can quickly define our models in MLJ and study their results. It is very easy and consistent.</p> <pre><code class="julia hljs"><span class=hljs-keyword >using</span> MLJ, CategoricalArrays, PrettyPrinting
-<span class=hljs-keyword >import</span> DataFrames: DataFrame, nrow
-<span class=hljs-keyword >using</span> UrlDownload
-<span class=hljs-meta >@load</span> LinearRegressor pkg = GLM
-<span class=hljs-meta >@load</span> LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext hljs">LinearBinaryClassifier(
-    fit_intercept = true,
-    link = GLM.LogitLink()) @ 1…47</code></pre> <h2 id=reading_the_data ><a href="#reading_the_data">Reading the data</a></h2> <p>The CollegeDistance dataset was stored in a CSV file. Here, we read the input file.</p> <pre><code class="julia hljs">baseurl = <span class=hljs-string >"https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"</span>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
+   <title>Using GLM.jl</title>  
+  <!-- LUNR -->
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
 
-dfX = DataFrame(urldownload(baseurl * <span class=hljs-string >"X3.csv"</span>))
-dfYbinary = DataFrame(urldownload(baseurl * <span class=hljs-string >"Y3.csv"</span>))
-dfX1 = DataFrame(urldownload(baseurl * <span class=hljs-string >"X1.csv"</span>))
-dfY1 = DataFrame(urldownload(baseurl * <span class=hljs-string >"Y1.csv"</span>));</code></pre> <p>You can have a look at those using <code>first</code>:</p> <pre><code class="julia hljs">first(dfX, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×12 DataFrame
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="using_glmjl"><a href="#using_glmjl">Using GLM.jl</a></h1>
+<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-GLM.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-GLM.jl" target="_blank"><em>annotated script</em></a> <em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#reading_the_data">Reading the data</a></li><li><a href="#defining_the_linear_model">Defining the Linear Model</a></li><li><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></li><li><a href="#defining_the_logistic_model">Defining the Logistic Model</a></li><li><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></li></ol></div><strong>Main author</strong>: <a href="https://github.com/drcxcruz">Clarman Cruz</a>.</p>
+<p>This juypter lab showcases MLJ in particular using the popular <a href="https://github.com/JuliaStats/GLM.jl">GLM</a> Julia package. We are using two datasets.  One dataset was created manually for testing purposes.  The other data set is the CollegeDistance dataset from the <a href="https://cran.r-project.org/web/packages/AER/index.html">AER</a> package in R.</p>
+<p>We can quickly define our models in MLJ and study their results.  It is very easy and consistent.</p>
+<pre><code class="language-julia">using MLJ, CategoricalArrays, PrettyPrinting
+import DataFrames: DataFrame, nrow
+using UrlDownload
+@load LinearRegressor pkg = GLM
+@load LinearBinaryClassifier pkg=GLM</code></pre><pre><code class="plaintext">LinearBinaryClassifier(
+    fit_intercept = true,
+    link = GLM.LogitLink()) @403</code></pre>
+<h2 id="reading_the_data"><a href="#reading_the_data">Reading the data</a></h2>
+<p>The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.</p>
+<pre><code class="language-julia">baseurl = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"
+
+dfX = DataFrame(urldownload(baseurl * "X3.csv"))
+dfYbinary = DataFrame(urldownload(baseurl * "Y3.csv"))
+dfX1 = DataFrame(urldownload(baseurl * "X1.csv"))
+dfY1 = DataFrame(urldownload(baseurl * "Y1.csv"));</code></pre>
+<p>You can have a look at those using <code>first</code>:</p>
+<pre><code class="language-julia">first(dfX, 3)</code></pre><pre><code class="plaintext">3×12 DataFrame
 │ Row │ gender │ ethnicity │ score   │ fcollege │ mcollege │ home   │ urban  │ unemp   │ wage    │ tuition │ income │ region │
 │     │ String │ String    │ Float64 │ String   │ String   │ String │ String │ Float64 │ Float64 │ Float64 │ String │ String │
 ├─────┼────────┼───────────┼─────────┼──────────┼──────────┼────────┼────────┼─────────┼─────────┼─────────┼────────┼────────┤
 │ 1   │ male   │ other     │ 39.15   │ yes      │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ high   │ other  │
 │ 2   │ female │ other     │ 48.87   │ no       │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ low    │ other  │
-│ 3   │ male   │ other     │ 48.74   │ no       │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ low    │ other  │</code></pre> <p>same for Y:</p> <pre><code class="julia hljs">first(dfY1, <span class=hljs-number >3</span>)</code></pre><pre><code class="plaintext hljs">3×1 DataFrame
+│ 3   │ male   │ other     │ 48.74   │ no       │ no       │ yes    │ yes    │ 6.2     │ 8.09    │ 0.88915 │ low    │ other  │</code></pre>
+<p>same for Y:</p>
+<pre><code class="language-julia">first(dfY1, 3)</code></pre><pre><code class="plaintext">3×1 DataFrame
 │ Row │ Y         │
 │     │ Float64   │
 ├─────┼───────────┤
 │ 1   │ -2.04463  │
 │ 2   │ -0.461529 │
-│ 3   │ 0.458262  │</code></pre> <h2 id=defining_the_linear_model ><a href="#defining_the_linear_model">Defining the Linear Model</a></h2> <p>Let see how many MLJ models handle our kind of target which is the y variable.</p> <pre><code class="julia hljs">ms = models() <span class=hljs-keyword >do</span> m
-    <span class=hljs-built_in >AbstractVector</span>{Count} &lt;: m.target_scitype
-<span class=hljs-keyword >end</span>
-foreach(m -&gt; println(m.name), ms)</code></pre><pre><code class="plaintext hljs">EvoTreeCount
+│ 3   │ 0.458262  │</code></pre>
+<h2 id="defining_the_linear_model"><a href="#defining_the_linear_model">Defining the Linear Model</a></h2>
+<p>Let see how many MLJ models handle our kind of target which is the y variable.</p>
+<pre><code class="language-julia">ms = models() do m
+    AbstractVector{Count} <: m.target_scitype
+end
+foreach(m -> println(m.name), ms)</code></pre><pre><code class="plaintext">EvoTreeCount
 LinearCountRegressor
 XGBoostCount
-</code></pre> <p>How about if the type was Continuous:</p> <pre><code class="julia hljs">ms = models() <span class=hljs-keyword >do</span> m
-    <span class=hljs-built_in >Vector</span>{Continuous} &lt;: m.target_scitype
-<span class=hljs-keyword >end</span>
-foreach(m -&gt; println(m.name), ms)</code></pre><pre><code class="plaintext hljs">ARDRegressor
+</code></pre>
+<p>How about if the type was Continuous:</p>
+<pre><code class="language-julia">ms = models() do m
+    Vector{Continuous} <: m.target_scitype
+end
+foreach(m -> println(m.name), ms)</code></pre><pre><code class="plaintext">ARDRegressor
 AdaBoostRegressor
 BaggingRegressor
 BayesianRidgeRegressor
@@ -84,100 +200,109 @@ SVMNuRegressor
 SVMRegressor
 TheilSenRegressor
 XGBoostRegressor
-</code></pre> <p>We can quickly define our models in MLJ. It is very easy and consistent.</p> <pre><code class="julia hljs">X = copy(dfX1)
+</code></pre>
+<p>We can quickly define our models in MLJ.  It is very easy and consistent.</p>
+<pre><code class="language-julia">X = copy(dfX1)
 y = copy(dfY1)
 
 coerce!(X, autotype(X, :string_to_multiclass))
-yv = <span class=hljs-built_in >Vector</span>(y[:, <span class=hljs-number >1</span>])
+yv = Vector(y[:, 1])
 
-<span class=hljs-meta >@pipeline</span> LinearRegressorPipe(
-            std = Standardizer(),
-            hot = OneHotEncoder(drop_last = <span class=hljs-literal >true</span>),
-            reg = LinearRegressor()
-)
+LinearRegressorPipe = @pipeline(Standardizer(),
+                                OneHotEncoder(drop_last = true),
+                                LinearRegressor())
 
-LinearModel = machine(LinearRegressorPipe(), X, yv)
+LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
-fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext hljs">(machines = Any[NodalMachine{LinearRegressor} @ 3…40, NodalMachine{OneHotEncoder} @ 1…96, NodalMachine{Standardizer} @ 3…59],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(NodalMachine{LinearRegressor} @ 3…40 =&gt; (coef = [1.0207869497405524, 1.0324289154699695, 0.009406292423317654, 0.026633915171207466, 0.2998591563637023], intercept = 0.015893883995789795),NodalMachine{OneHotEncoder} @ 1…96 =&gt; (fitresult = OneHotEncoderResult @ 1…66,),NodalMachine{Standardizer} @ 3…59 =&gt; (mean_and_std_given_feature = Dict(:V1 =&gt; (0.002445630070647992, 1.1309193246154066),:V2 =&gt; (-0.015561621122145304, 1.123889789756524),:V5 =&gt; (0.007703620970455889, 1.1421493464876624),:V3 =&gt; (0.024428898843138463, 2.3327135683191544),:V4 =&gt; (0.15168404285157286, 6.806065861835238)),)),)</code></pre> <h2 id=reading_the_output_of_fitting_the_linear_model ><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2> <p>We can quickly read the results of our models in MLJ. Remember to compute the accuracy of the linear model.</p> <pre><code class="julia hljs">ŷ = MLJ.predict(LinearModel, X)
-yhatResponse = [ŷ[i,<span class=hljs-number >1</span>].μ <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:nrow(y)]
+fp = fitted_params(LinearModel)</code></pre><pre><code class="plaintext">(standardizer = (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),
+ one_hot_encoder = (fitresult = OneHotEncoderResult @631,),
+ linear_regressor = (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225],
+                     intercept = 0.015893883995789806,),
+ machines = Machine[Machine{Standardizer} @577, Machine{OneHotEncoder} @580, Machine{LinearRegressor} @579],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @577 => (mean_and_std_given_feature = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066),:V2 => (-0.015561621122145304, 1.1238897897565245),:V5 => (0.0077036209704558975, 1.1421493464876622),:V3 => (0.02442889884313839, 2.332713568319154),:V4 => (0.15168404285157286, 6.806065861835239)),),Machine{OneHotEncoder} @580 => (fitresult = OneHotEncoderResult @631,),Machine{LinearRegressor} @579 => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
+<h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model">Reading the Output of Fitting the Linear Model</a></h2>
+<p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
+<pre><code class="language-julia">ŷ = MLJ.predict(LinearModel, X)
+yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[<span class=hljs-number >1</span>]
-println(<span class=hljs-string >"\n Coefficients:  "</span>, fp.fitted_params_given_machine[k].coef)
-println(<span class=hljs-string >"\n y \n "</span>, y[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>,<span class=hljs-number >1</span>])
-println(<span class=hljs-string >"\n ŷ \n "</span>, ŷ[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>])
-println(<span class=hljs-string >"\n yhatResponse \n "</span>, yhatResponse[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>])
-println(<span class=hljs-string >"\n Residuals \n "</span>, y[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>,<span class=hljs-number >1</span>] .- yhatResponse[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>])
-println(<span class=hljs-string >"\n Standard Error per Coefficient \n"</span>,
-        r.report_given_machine[k].stderror)</code></pre><pre><code class="plaintext hljs">
- Coefficients:  [1.0207869497405524, 1.0324289154699695, 0.009406292423317654, 0.026633915171207466, 0.2998591563637023]
+k = collect(keys(fp.fitted_params_given_machine))[3]
+println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n y \n ", y[1:5,1])
+println("\n ŷ \n ", ŷ[1:5])
+println("\n yhatResponse \n ", yhatResponse[1:5])
+println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])
+println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)</code></pre><pre><code class="plaintext">
+ Coefficients:  [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225]
 
  y 
  [-2.0446341129015, -0.461528671336098, 0.458261960749596, 2.2746223981481, -0.969887403007307]
 
  ŷ 
- Distributions.Normal{Float64}[Distributions.Normal{Float64}(μ=-1.6915415373374758, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=1.412005563203644, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.47362968068623923, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.7266938985590493, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=-1.8396459459760566, σ=0.9580569656804974)]
+ Distributions.Normal{Float64}[Distributions.Normal{Float64}(μ=-1.6915415373374758, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=1.412005563203644, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.47362968068623923, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.7266938985590492, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=-1.8396459459760566, σ=0.9580569656804974)]
 
  yhatResponse 
- [-1.6915415373374758, 1.412005563203644, 0.47362968068623923, 0.7266938985590493, -1.8396459459760566]
+ [-1.6915415373374758, 1.412005563203644, 0.47362968068623923, 0.7266938985590492, -1.8396459459760566]
 
  Residuals 
- [-0.3530925755640242, -1.8735342345397419, -0.01536771993664321, 1.5479284995890508, 0.8697585429687495]
+ [-0.3530925755640242, -1.8735342345397419, -0.01536771993664321, 1.547928499589051, 0.8697585429687495]
 
  Standard Error per Coefficient 
-[0.01587640310780568, 0.01586278250314491, 0.015159005873214764, 0.015156676986003866, 0.01654672161232937, 0.015148210698700702]
-</code></pre> <p>and get the accuracy</p> <pre><code class="julia hljs">round(rms(yhatResponse, y[:,<span class=hljs-number >1</span>]), sigdigits=<span class=hljs-number >4</span>)</code></pre><pre><code class="plaintext hljs">0.9573</code></pre>
-<h2 id=defining_the_logistic_model ><a href="#defining_the_logistic_model">Defining the Logistic Model</a></h2>
-<pre><code class="julia hljs">X = copy(dfX)
+[0.01587640310780568, 0.015862782503144917, 0.01515900587321476, 0.01515667698600387, 0.016546721612329368, 0.015148210698700702]
+</code></pre>
+<p>and get the accuracy</p>
+<pre><code class="language-julia">round(rms(yhatResponse, y[:,1]), sigdigits=4)</code></pre><pre><code class="plaintext">0.9573</code></pre>
+<h2 id="defining_the_logistic_model"><a href="#defining_the_logistic_model">Defining the Logistic Model</a></h2>
+<pre><code class="language-julia">X = copy(dfX)
 y = copy(dfYbinary)
 
 coerce!(X, autotype(X, :string_to_multiclass))
-yc = CategoricalArray(y[:, <span class=hljs-number >1</span>])
+yc = CategoricalArray(y[:, 1])
 yc = coerce(yc, OrderedFactor)
 
-<span class=hljs-meta >@pipeline</span> LinearBinaryClassifierPipe(
-            std = Standardizer(),
-            hot = OneHotEncoder(drop_last = <span class=hljs-literal >true</span>),
-            reg = LinearBinaryClassifier()
-)
+LinearBinaryClassifierPipe = @pipeline(Standardizer(),
+                                       OneHotEncoder(drop_last = true),
+                                       LinearBinaryClassifier())
 
-LogisticModel = machine(LinearBinaryClassifierPipe(), X, yc)
+LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
-fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext hljs">(machines = Any[NodalMachine{LinearBinaryClassifier{LogitLink}} @ 8…15, NodalMachine{OneHotEncoder} @ 1…16, NodalMachine{Standardizer} @ 1…71],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(NodalMachine{LinearBinaryClassifier{LogitLink}} @ 8…15 =&gt; (coef = [0.2025072937886874, 0.13075293910912894, 0.344951624939835, 0.9977565847160846, -0.5022315102984592, -0.478500562602165, -0.20440507809955008, -0.06922751403500096, 0.05892864973017093, -0.08344749828203225, -0.0023151433338598286, 0.4617765395578658, 0.3843262958100779], intercept = -1.0766338905793655),NodalMachine{OneHotEncoder} @ 1…16 =&gt; (fitresult = OneHotEncoderResult @ 1…73,),NodalMachine{Standardizer} @ 1…71 =&gt; (mean_and_std_given_feature = Dict(:wage =&gt; (9.500506478338005, 1.343067076107841),:unemp =&gt; (7.597214581091511, 2.7635808733448477),:tuition =&gt; (0.8146082493518823, 0.3395038198597174),:score =&gt; (50.88902933684601, 8.701909614072397)),)),)</code></pre>
-<h2 id=reading_the_output_from_the_prediction_of_the_logistic_model ><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></h2>
+fp = fitted_params(LogisticModel)</code></pre><pre><code class="plaintext">(standardizer = (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),
+ one_hot_encoder = (fitresult = OneHotEncoderResult @199,),
+ linear_binary_classifier = Any[],
+ machines = Machine[Machine{Standardizer} @204, Machine{OneHotEncoder} @981, Machine{LinearBinaryClassifier{LogitLink}} @865],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any,Any,Array{Any,1},Array{Any,1}}(Machine{Standardizer} @204 => (mean_and_std_given_feature = Dict(:wage => (9.500506478338009, 1.3430670761078416),:unemp => (7.597214581091511, 2.763580873344848),:tuition => (0.8146082493518824, 0.33950381985971717),:score => (50.88902933684601, 8.701909614072397)),),Machine{OneHotEncoder} @981 => (fitresult = OneHotEncoderResult @199,),Machine{LinearBinaryClassifier{LogitLink}} @865 => (coef = [0.20250729378868743, 0.130752939109129, 0.344951624939835, 0.9977565847160846, -0.502231510298459, -0.4785005626021652, -0.20440507809955, -0.06922751403500076, 0.05892864973017095, -0.0834474982820323, -0.002315143333859721, 0.4617765395578658, 0.38432629581007743], intercept = -1.0766338905793655)),)</code></pre>
+<h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
-<pre><code class="julia hljs">ŷ = MLJ.predict(LogisticModel, X)
-residuals = [<span class=hljs-number >1</span> - pdf(ŷ[i], y[i,<span class=hljs-number >1</span>]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:nrow(y)]
+<pre><code class="language-julia">ŷ = MLJ.predict(LogisticModel, X)
+residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[<span class=hljs-number >1</span>]
-println(<span class=hljs-string >"\n Coefficients:  "</span>, fp.fitted_params_given_machine[k].coef)
-println(<span class=hljs-string >"\n y \n "</span>, y[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>,<span class=hljs-number >1</span>])
-println(<span class=hljs-string >"\n ŷ \n "</span>, ŷ[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>])
-println(<span class=hljs-string >"\n residuals \n "</span>, residuals[<span class=hljs-number >1</span>:<span class=hljs-number >5</span>])
-println(<span class=hljs-string >"\n Standard Error per Coefficient \n"</span>, r.report_given_machine[k].stderror)</code></pre><pre><code class="plaintext hljs">
- Coefficients:  [0.2025072937886874, 0.13075293910912894, 0.344951624939835, 0.9977565847160846, -0.5022315102984592, -0.478500562602165, -0.20440507809955008, -0.06922751403500096, 0.05892864973017093, -0.08344749828203225, -0.0023151433338598286, 0.4617765395578658, 0.3843262958100779]
+k = collect(keys(fp.fitted_params_given_machine))[3]
+println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n y \n ", y[1:5,1])
+println("\n ŷ \n ", ŷ[1:5])
+println("\n residuals \n ", residuals[1:5])
+println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)</code></pre><pre><code class="plaintext">
+ Coefficients:  [0.20250729378868743, 0.130752939109129, 0.344951624939835, 0.9977565847160846, -0.502231510298459, -0.4785005626021652, -0.20440507809955, -0.06922751403500076, 0.05892864973017095, -0.0834474982820323, -0.002315143333859721, 0.4617765395578658, 0.38432629581007743]
 
  y 
  [0, 0, 0, 0, 0]
 
  ŷ 
- UnivariateFinite{OrderedFactor{2},Int64,UInt32,Float64}[UnivariateFinite{OrderedFactor{2}}(0=&gt;0.881, 1=&gt;0.119), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.838, 1=&gt;0.162), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.866, 1=&gt;0.134), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.936, 1=&gt;0.0637), UnivariateFinite{OrderedFactor{2}}(0=&gt;0.944, 1=&gt;0.056)]
+ UnivariateFinite{OrderedFactor{2},Int64,UInt32,Float64}[UnivariateFinite{OrderedFactor{2}}(0=>0.881, 1=>0.119), UnivariateFinite{OrderedFactor{2}}(0=>0.838, 1=>0.162), UnivariateFinite{OrderedFactor{2}}(0=>0.866, 1=>0.134), UnivariateFinite{OrderedFactor{2}}(0=>0.936, 1=>0.0637), UnivariateFinite{OrderedFactor{2}}(0=>0.944, 1=>0.056)]
 
  residuals 
- [0.11944603346742211, 0.16182691493524637, 0.13445730373831222, 0.06370799769022917, 0.05604680411361729]
+ [0.119446033467422, 0.16182691493524637, 0.13445730373831222, 0.06370799769022906, 0.05604680411361729]
 
  Standard Error per Coefficient 
-[0.07542967234030677, 0.12260004202741963, 0.10934317995152518, 0.04661437250372941, 0.09609243724815364, 0.10743620672240188, 0.10642223545563924, 0.0919077886038934, 0.03922724536508866, 0.041189151179191516, 0.0511539963633928, 0.08454431256127867, 0.12281455657940035, 0.17884724866298368]
+[0.07542967234030673, 0.12260004202741961, 0.10934317995152518, 0.04661437250372939, 0.09609243724815358, 0.10743620672240184, 0.10642223545563925, 0.09190778860389334, 0.03922724536508866, 0.04118915117919154, 0.05115399636339275, 0.08454431256127862, 0.12281455657940024, 0.17884724866298302]
 </code></pre>
 <p>No logistic analysis is complete without the confusion matrix:</p>
-<pre><code class="julia hljs">yMode = [mode(ŷ[i]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:length(ŷ)]
-y = coerce(y[:,<span class=hljs-number >1</span>], OrderedFactor)
+<pre><code class="language-julia">yMode = [mode(ŷ[i]) for i in 1:length(ŷ)]
+y = coerce(y[:,1], OrderedFactor)
 yMode = coerce(yMode, OrderedFactor)
-confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext hljs">              ┌───────────────────────────┐
+confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext">              ┌───────────────────────────┐
               │       Ground Truth        │
 ┌─────────────┼─────────────┬─────────────┤
 │  Predicted  │      0      │      1      │
@@ -186,12 +311,20 @@ confusion_matrix(yMode, y)</code></pre><pre><code class="plaintext hljs">       
 ├─────────────┼─────────────┼─────────────┤
 │      1      │     236     │     389     │
 └─────────────┴─────────────┴─────────────┘
-</code></pre><div class=page-foot >
-  <div class=copyright >
-    &copy; Thibaut Lienart, Anthony Blaom and collaborators. Last modified: June 05, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+</code></pre><div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 14, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
-</div>
-      </div> 
-  </div> 
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
   <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

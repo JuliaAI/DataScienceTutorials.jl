@@ -39,7 +39,7 @@ rmsl(ŷ, y[test])
 @load KNNRegressor
 
 Xs = source(X)
-ys = source(y, kind=:target)
+ys = source(y)
 
 hot = machine(OneHotEncoder(), Xs)
 
@@ -81,7 +81,7 @@ end
 
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y, kind=:target)
+    ys = source(y)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
@@ -92,8 +92,10 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     # and finally
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
-    fit!(ŷ, verbosity=0)
-    return fitresults(ŷ)
+
+    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
+    fit!(mach, verbosity=verbosity - 1)
+    return mach()
 end
 
 krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)

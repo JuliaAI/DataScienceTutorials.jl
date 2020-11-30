@@ -1,1 +1,7 @@
-Node @ 1…97 = transform(1…05, 5…33)
+Node{Machine{Standardizer}} @240
+  args:
+    1:	Source @483
+  formula:
+    transform(
+        Machine{Standardizer} @820, 
+        Source @483)

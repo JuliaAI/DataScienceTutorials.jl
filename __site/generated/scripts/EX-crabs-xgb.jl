@@ -12,6 +12,7 @@ using MLJ
 using StatsBase
 using Random
 using PyPlot
+
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
@@ -101,7 +102,7 @@ r = range(xgb, :gamma, lower=0, upper=10)
 curve = learning_curve!(xgbm, range=r, resolution=30,
                         measure=cross_entropy);
 
-# actually it doesn't look like it's changing much...:
+# it looks like the `gamma` parameter substantially affects model performance:
 @show round(minimum(curve.measurements), sigdigits=3)
 @show round(maximum(curve.measurements), sigdigits=3)
 

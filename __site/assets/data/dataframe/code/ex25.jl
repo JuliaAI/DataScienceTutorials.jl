@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-by(iris, :Species, MPL = :PetalLength => mean, SPL = :PetalLength => std)
+foo(v) = v[1:2]
+combine(df, :a => maximum, :b => foo)

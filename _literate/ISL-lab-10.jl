@@ -16,7 +16,7 @@ describe(data, :mean, :std)
 # Let's extract the numerical component and coerce
 
 X = select(data, Not(:State))
-X = coerce(X, :UrbanPop=>Continuous);
+X = coerce(X, :UrbanPop=>Continuous, :Assault=>Continuous);
 
 # ## PCA pipeline
 #
@@ -27,7 +27,7 @@ X = coerce(X, :UrbanPop=>Continuous);
 pca_mdl = PCA(pratio=1)
 pca = machine(pca_mdl, X)
 fit!(pca)
-
+PCA
 W = transform(pca, X);
 
 # W is the PCA'd data; here we've used default settings for PCA and it has recovered 2 components:
@@ -54,22 +54,23 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 
 Random.seed!(1515)
 
-@pipeline SPCA(std = Standardizer(),
-               pca = PCA(pratio=1-1e-4))
-spca_mdl = SPCA()
-spca = machine(spca_mdl, X)
+SPCA = @pipeline(Standardizer(),
+                 PCA(pratio=1-1e-4))
+
+spca = machine(SPCA, X)
 fit!(spca)
 W = transform(spca, X)
 names(W)
 
 # What kind of variance can we explain?
 
-rpca = first(values(report(spca).report_given_machine))
+rpca = collect(values(report(spca).report_given_machine))[2]
 cs = cumsum(rpca.principalvars ./ rpca.tvar)
 
 # Let's visualise this
 
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 
@@ -90,15 +91,14 @@ savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
 Random.seed!(1515)
 
 @load KMeans pkg=Clustering
-@pipeline SPCA2(std = Standardizer(),
-                pca = PCA(),
-                km = KMeans(k=3))
+SPCA2 = @pipeline(Standardizer(),
+                  PCA(),
+                  KMeans(k=3))
 
-spca2_mdl = SPCA2()
-spca2 = machine(spca2_mdl, X)
+spca2 = machine(SPCA2, X)
 fit!(spca2)
 
-assignments = first(values(report(spca2).report_given_machine)).assignments
+assignments = collect(values(report(spca2).report_given_machine))[3].assignments
 mask1 = assignments .== 1
 mask2 = assignments .== 2
 mask3 = assignments .== 3;

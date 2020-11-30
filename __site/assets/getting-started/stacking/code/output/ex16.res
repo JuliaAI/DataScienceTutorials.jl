@@ -1,1 +1,1 @@
-NodalMachine @ 5…65 = machine(LinearRegressor @ 4…30, 3…29, 8…71)
+([1, 2, 3], [4, 5, 6], [7, 8, 9])

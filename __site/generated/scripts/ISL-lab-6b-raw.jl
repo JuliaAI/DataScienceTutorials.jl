@@ -7,6 +7,8 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+# In this tutorial, we are exploring the application of Ridge and Lasso
+
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
@@ -24,12 +26,17 @@ names(hitters) |> pprint
 
 y, X = unpack(hitters, ==(:Salary), col->true);
 
-no_miss = .!ismissing.(y)
+no_miss = .!ismissing.(y);
+
+# And keep only the corresponding features values.
 y = collect(skipmissing(y))
 X = X[no_miss, :]
+
+# Let's now split our dataset into a train and test sets.
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
 using PyPlot
+
 
 figure(figsize=(8,6))
 plot(y, ls="none", marker="o")
@@ -57,11 +64,10 @@ legend(fontsize=12)
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
 
-@pipeline RegPipe(std = Standardizer(),
-                  hot = OneHotEncoder(),
-                  reg = LinearRegressor())
+model = @pipeline(Standardizer(),
+                     OneHotEncoder(),
+                     LinearRegressor())
 
-model = RegPipe()
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
@@ -97,19 +103,19 @@ xlim([-1100, 1100])
 
 
 
-pipe.model.reg = RidgeRegressor()
+pipe.model.linear_regressor = RidgeRegressor()
 fit!(pipe, rows=train)
 ŷ = predict(pipe, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
-r  = range(model, :(reg.lambda), lower=1e-2, upper=100_000, scale=:log10)
+r  = range(model, :(linear_regressor.lambda), lower=1e-2, upper=100_000, scale=:log10)
 tm = TunedModel(model=model, ranges=r, tuning=Grid(resolution=50),
                 resampling=CV(nfolds=3, rng=4141), measure=rms)
 mtm = machine(tm, Xc, y)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.linear_regressor.lambda, sigdigits=4)
 
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
@@ -128,17 +134,17 @@ ylim([-1300, 1000])
 
 
 
-mtm.model.model.reg = LassoRegressor()
-mtm.model.range = range(model, :(reg.lambda), lower=500, upper=100_000, scale=:log10)
+mtm.model.model.linear_regressor = LassoRegressor()
+mtm.model.range = range(model, :(linear_regressor.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-round(best_mdl.reg.lambda, sigdigits=4)
+round(best_mdl.linear_regressor.lambda, sigdigits=4)
 
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
-coefs, intercept = fitted_params(mtm.fitresult.fitresult.machine)
+coefs, intercept = fitted_params(mtm.fitresult).linear_regressor
 @show coefs
 @show intercept
 
@@ -146,7 +152,7 @@ coef_vals = [c[2] for c in coefs]
 sum(coef_vals .≈ 0) / length(coefs)
 
 figure(figsize=(8,6))
-stem(coefs)
+stem(coef_vals)
 
 # name of the features including one-hot-encoded ones
 all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
@@ -154,7 +160,7 @@ all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
              :League__A, :League__N, :Div_E, :Div_W,
              :PutOuts, :Assists, :Errors, :NewLeague_A, :NewLeague_N]
 
-idxshow = collect(1:length(coefs))[abs.(coefs) .> 10]
+idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 10]
 xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
@@ -163,15 +169,15 @@ ylabel("Amplitude", fontsize=14)
 
 @load ElasticNetRegressor pkg=MLJLinearModels
 
-mtm.model.model.reg = ElasticNetRegressor()
-mtm.model.range = [range(model, :(reg.lambda), lower=0.1, upper=100, scale=:log10),
-                    range(model, :(reg.gamma),  lower=500, upper=10_000, scale=:log10)]
+mtm.model.model.linear_regressor = ElasticNetRegressor()
+mtm.model.range = [range(model, :(linear_regressor.lambda), lower=0.1, upper=100, scale=:log10),
+                    range(model, :(linear_regressor.gamma),  lower=500, upper=10_000, scale=:log10)]
 mtm.model.tuning = Grid(resolution=10)
 fit!(mtm, rows=train)
 
 best_mdl = fitted_params(mtm).best_model
-@show round(best_mdl.reg.lambda, sigdigits=4)
-@show round(best_mdl.reg.gamma, sigdigits=4)
+@show round(best_mdl.linear_regressor.lambda, sigdigits=4)
+@show round(best_mdl.linear_regressor.gamma, sigdigits=4)
 
 ŷ = predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)

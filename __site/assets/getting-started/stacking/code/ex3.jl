@@ -1,6 +1,6 @@
 # This file was generated, do not modify it. # hide
 X = source()
-y = source(kind=:target)
+y = source()
 
 model1 = linear
 model2 = knn

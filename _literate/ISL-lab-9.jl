@@ -15,6 +15,7 @@ y = vcat(-ones(10), ones(10))
 # which we can visualise
 
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
 
 ym1 = y .== -1

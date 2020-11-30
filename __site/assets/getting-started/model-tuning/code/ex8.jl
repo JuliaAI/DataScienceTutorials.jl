@@ -1,5 +1,6 @@
 # This file was generated, do not modify it. # hide
 using PyPlot
+ioff() # hide
 figure(figsize=(8,6))
 res = r.plotting # contains all you need for plotting
 plot(res.parameter_values, res.measurements, ls="none", marker="o")

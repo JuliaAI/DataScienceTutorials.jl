@@ -53,13 +53,11 @@ y = copy(dfY1)
 coerce!(X, autotype(X, :string_to_multiclass))
 yv = Vector(y[:, 1])
 
-@pipeline LinearRegressorPipe(
-            std = Standardizer(),
-            hot = OneHotEncoder(drop_last = true),
-            reg = LinearRegressor()
-)
+LinearRegressorPipe = @pipeline(Standardizer(),
+                                OneHotEncoder(drop_last = true),
+                                LinearRegressor())
 
-LinearModel = machine(LinearRegressorPipe(), X, yv)
+LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)
 
@@ -72,14 +70,13 @@ yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[1]
+k = collect(keys(fp.fitted_params_given_machine))[3]
 println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
 println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])
-println("\n Standard Error per Coefficient \n",
-        r.report_given_machine[k].stderror)
+println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)
 
 # and get the accuracy
 
@@ -94,13 +91,11 @@ coerce!(X, autotype(X, :string_to_multiclass))
 yc = CategoricalArray(y[:, 1])
 yc = coerce(yc, OrderedFactor)
 
-@pipeline LinearBinaryClassifierPipe(
-            std = Standardizer(),
-            hot = OneHotEncoder(drop_last = true),
-            reg = LinearBinaryClassifier()
-)
+LinearBinaryClassifierPipe = @pipeline(Standardizer(),
+                                       OneHotEncoder(drop_last = true),
+                                       LinearBinaryClassifier())
 
-LogisticModel = machine(LinearBinaryClassifierPipe(), X, yc)
+LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
 fp = fitted_params(LogisticModel)
 
@@ -112,7 +107,7 @@ fp = fitted_params(LogisticModel)
 residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[1]
+k = collect(keys(fp.fitted_params_given_machine))[3]
 println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])

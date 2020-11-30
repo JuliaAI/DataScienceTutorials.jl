@@ -18,6 +18,7 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 # In this part we only build models with the `Horsepower` feature.
 
 using PyPlot
+ioff() # hide
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")
@@ -63,21 +64,20 @@ Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 
 # Now we  can write a simple pipeline where the first step selects the features we want (and with it the degree of the polynomial) and the second is the linear regressor:
 
-@pipeline LinMod(fs = FeatureSelector(features=[:hp1]),
-                 lr = LinearRegressor());
+LinMod = @pipeline(FeatureSelector(features=[:hp1]),
+                   LinearRegressor());
 
 # Then we can  instantiate and fit 3 models where we specify the features each time:
 
-lrm = LinMod()
-lr1 = machine(lrm, Xhp, y) # poly of degree 1 (line)
+lr1 = machine(LinMod, Xhp, y) # poly of degree 1 (line)
 fit!(lr1, rows=train)
 
-lrm.fs.features = [:hp1, :hp2] # poly of degree 2
-lr2 = machine(lrm, Xhp, y)
+LinMod.feature_selector.features = [:hp1, :hp2] # poly of degree 2
+lr2 = machine(LinMod, Xhp, y)
 fit!(lr2, rows=train)
 
-lrm.fs.features = [:hp1, :hp2, :hp3] # poly of degree 3
-lr3 = machine(lrm, Xhp, y)
+LinMod.feature_selector.features = [:hp1, :hp2, :hp3] # poly of degree 3
+lr3 = machine(LinMod, Xhp, y)
 fit!(lr3, rows=train)
 
 # Let's check the performances on the test set
@@ -124,9 +124,9 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")) # hide
 Xhp = DataFrame([hp.^i for i in 1:10])
 
 cases = [[Symbol("x$j") for j in 1:i] for i in 1:10]
-r = range(lrm, :(fs.features), values=cases)
+r = range(LinMod, :(feature_selector.features), values=cases)
 
-tm = TunedModel(model=lrm, ranges=r, resampling=CV(nfolds=10), measure=rms)
+tm = TunedModel(model=LinMod, ranges=r, resampling=CV(nfolds=10), measure=rms)
 
 # Now we're left with fitting the tuned model
 

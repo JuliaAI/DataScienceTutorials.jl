@@ -9,10 +9,11 @@
 
 using MLJ
 using PyPlot
+
 import Statistics
 
 Xs = source()
-ys = source(kind=:target)
+ys = source()
 
 atom = @load DecisionTreeRegressor
 atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
@@ -24,7 +25,16 @@ Statistics.mean(v::AbstractVector{<:AbstractNode}) = node(mean, v...)
 
 yhat = mean([predict(m, Xs) for  m in machines]);
 
-one_hundred_models = @from_network OneHundredModels(atom=atom) <= yhat
+surrogate = Deterministic()
+mach = machine(surrogate, Xs, ys; predict=yhat)
+
+@from_network mach begin
+    mutable struct OneHundredModels
+        atom=atom
+    end
+end
+
+one_hundred_models = OneHundredModels()
 
 X, y = @load_boston;
 

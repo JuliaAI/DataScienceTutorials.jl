@@ -6,4 +6,4 @@ OneHundredModels(
             min_purity_increase = 0.0,
             n_subfeatures = 4,
             post_prune = false,
-            merge_purity_threshold = 1.0)) @ 1…54
+            merge_purity_threshold = 1.0)) @500
