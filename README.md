@@ -1,6 +1,6 @@
 # DataScienceTutorials.jl
 
-Latest CI build: [![Tutorials status](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl.svg?branch=master)](https://travis-ci.com/alan-turing-institute/DataScienceTutorials.jl) with
+Latest CI build: [![Tutorials status](https://github.com/alan-turing-institute/DataScienceTutorials.jl/workflows/CI/badge.svg)](https://github.com/alan-turing-institute/DataScienceTutorials.jl/actions) with
 
 ```
 [336ed68f] CSV v0.6.2
