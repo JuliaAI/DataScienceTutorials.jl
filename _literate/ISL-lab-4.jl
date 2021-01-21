@@ -15,7 +15,7 @@ smarket = dataset("ISLR", "Smarket")
 
 # Since we often  want  to only show a few significant digits for the metrics etc, let's introduce a very simple function  that does that:
 
-r3 = x -> round(x, sigdigits=3)
+r3(x) = round(x, sigdigits=3)
 r3(pi)
 
 # Let's get a description too
