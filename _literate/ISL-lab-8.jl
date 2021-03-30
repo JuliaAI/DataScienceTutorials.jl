@@ -5,7 +5,7 @@ import RDatasets: dataset
 using PrettyPrinting
 import DataFrames: DataFrame, select, Not
 MLJ.color_off() # hide
-@load DecisionTreeClassifier pkg=DecisionTree
+DTC = @load DecisionTreeClassifier pkg=DecisionTree
 
 carseats = dataset("ISLR", "Carseats")
 
@@ -24,7 +24,7 @@ y = carseats.High;
 # ### Decision Tree Classifier
 
 HotTreeClf = @pipeline(OneHotEncoder(),
-                       DecisionTreeClassifier())
+                       DTC())
 
 mdl = HotTreeClf
 mach = machine(mdl, X, y)
@@ -68,7 +68,7 @@ fitted_params(mtm).best_model.decision_tree_classifier
 # ### Decision Tree Regressor
 #
 
-@load DecisionTreeRegressor pkg=DecisionTree
+DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
 boston = dataset("MASS", "Boston")
 
@@ -82,7 +82,7 @@ scitype(X)
 
 X = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 
-dtr_model = DecisionTreeRegressor()
+dtr_model = DTR()
 dtr = machine(dtr_model, X, y)
 
 fit!(dtr, rows=train)
@@ -107,9 +107,9 @@ round(rms(ypred, y[test]), sigdigits=3)
 #
 # **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
-@load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=ScikitLearn
 
-rf_mdl = RandomForestRegressor()
+rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
@@ -118,9 +118,9 @@ round(rms(ypred, y[test]), sigdigits=3)
 
 # ## Gradient Boosting Machine
 
-@load XGBoostRegressor
+XGBR = @load XGBoostRegressor
 
-xgb_mdl = XGBoostRegressor(num_round=10, max_depth=10)
+xgb_mdl = XGBR(num_round=10, max_depth=10)
 xgb = machine(xgb_mdl, X, y)
 fit!(xgb, rows=train)
 

@@ -18,7 +18,7 @@ MLJ.color_off() # hide
 
 req = HTTP.get("https://raw.githubusercontent.com/rupakc/UCI-Data-Analysis/master/Airfoil%20Dataset/airfoil_self_noise.dat");
 
-df = CSV.read(req.body; header=[
+df = CSV.read(req.body, DataFrames.DataFrame; header=[
                   "Frequency","Attack_Angle","Chord+Length",
                   "Free_Velocity","Suction_Side","Scaled_Sound"
               ]
@@ -59,9 +59,9 @@ end
 #
 # We will first try out DecisionTreeRegressor:
 
-dcr = @load DecisionTreeRegressor pkg=DecisionTree
+DCR = @load DecisionTreeRegressor pkg=DecisionTree
 
-dcrm = machine(dcr, X, y)
+dcrm = machine(DCR(), X, y)
 
 fit!(dcrm, rows=train)
 pred_dcrm = MLJ.predict(dcrm, rows=test);
@@ -74,7 +74,8 @@ rms(pred_dcrm, y[test])
 #
 # Now let's try out RandomForestRegressor:
 
-rfr = @load RandomForestRegressor pkg=DecisionTree
+RFR = @load RandomForestRegressor pkg=DecisionTree
+rfr = RFR()
 
 rfr_m = machine(rfr, X, y);
 

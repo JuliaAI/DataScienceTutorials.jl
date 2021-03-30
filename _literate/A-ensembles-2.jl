@@ -20,11 +20,11 @@ DataFrames.describe(y)
 
 # Let's load the decision tree regressor
 
-@load DecisionTreeRegressor
+DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
 # Let's first check the performances of just a single Decision Tree Regressor (DTR for short):
 
-tree = machine(DecisionTreeRegressor(), X, y)
+tree = machine(DTR(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
 e |> pprint # use PrettyPrinting
@@ -35,7 +35,7 @@ e |> pprint # use PrettyPrinting
 #
 # Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.
 
-forest = EnsembleModel(atom=DecisionTreeRegressor())
+forest = EnsembleModel(atom=DTR())
 forest.atom.n_subfeatures = 3
 
 # (**NB**: we could have fixed `n_subfeatures` in the DTR constructor too).
