@@ -1,6 +1,6 @@
 # ## Introduction
 # This tutorial covers the concepts of iterative model selection on the popular ["Breast Cancer Wisconsin (Diagnostic) Data Set"](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)) 
-# from the UCI archives. The tutorial also covers basic data preprocessing and 
+# from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.
 
 # ## Loading the relevant packages
 # For a guide to package intsllation in Julia please refer this [link](https://docs.julialang.org/en/v1/stdlib/Pkg/) taken directly from Juliav1 documentation
