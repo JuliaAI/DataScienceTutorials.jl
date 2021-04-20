@@ -19,8 +19,8 @@ train, test = partition(eachindex(y), 0.7);
 
 # Let's also load a simple model:
 
-@load KNNRegressor
-knn_model = KNNRegressor(K=10)
+KNNR = @load KNNRegressor
+knn_model = KNNR(K=10)
 
 # As before, let's instantiate a machine that wraps the model and data:
 

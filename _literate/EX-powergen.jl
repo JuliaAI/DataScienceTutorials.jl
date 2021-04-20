@@ -69,9 +69,9 @@ col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];
 
 # the zip function associates elements of two objects in the same position with one another:
 
-nrows = size(first(dfs), 1)
+n_rows = size(first(dfs), 1)
 for (df, name) in zip(dfs, col_mean)
-    df[!, name] = zeros(nrows)
+    df[!, name] = zeros(n_rows)
     for (i, row) in enumerate(eachrow(df))
       df[i, name] = mean(row)
     end
@@ -223,7 +223,7 @@ fit!(m_linReg, rows=train);
 # We've now fitted the model for wind power generation (`Wind_gen`).
 # Let's use it to predict values over the test set and investigate the performance:
 
-y_hat = predict(m_linReg, rows=test);
+y_hat = MLJ.predict(m_linReg, rows=test);
 
 # We can start by visualising the observed and predicted valzes of wind power generation.
 
@@ -243,7 +243,7 @@ savefig(joinpath(@OUTPUT, "obs_v_pred.svg")) # hide
 
 # Let's look at the RMSE on the training and test sets.
 
-rms(y_wind[train], predict(m_linReg, rows=train))
+rms(y_wind[train], MLJ.predict(m_linReg, rows=train))
 
 # on the test set...
 

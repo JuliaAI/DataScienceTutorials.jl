@@ -1,0 +1,2 @@
+ArgumentError: The package "NearestNeighbors" does not appear to provide the model "KNNClassifier". 
+Use models() to list all models. 

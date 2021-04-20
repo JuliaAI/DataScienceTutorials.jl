@@ -1,0 +1,6 @@
+MethodError: no method matching predict(::typeof(clf); rows=1:1000)
+Closest candidates are:
+  predict(!Matched::Union{DeterministicComposite, IntervalComposite, JointProbabilisticComposite, ProbabilisticComposite}, !Matched::Node, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/models/methods.jl:125 got unsupported keyword argument "rows"
+  predict(!Matched::Union{Composite, Surrogate}, !Matched::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/operations.jl:114 got unsupported keyword argument "rows"
+  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, !Matched::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJTuning/9sSuR/src/tuned_models.jl:625 got unsupported keyword argument "rows"
+  ...

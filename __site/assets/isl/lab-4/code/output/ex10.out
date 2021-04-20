@@ -1,0 +1,6 @@
+MethodError: no method matching fit!(::typeof(clf))
+Closest candidates are:
+  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at /Users/tlienart/.julia/packages/StatsBase/Lc3YW/src/statmodels.jl:164
+  fit!(!Matched::Machine{var"#s815", C} where {var"#s815"<:Surrogate, C}; kwargs...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/machines.jl:143
+  fit!(!Matched::MLJBase.Source; args...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/nodes.jl:207
+  ...

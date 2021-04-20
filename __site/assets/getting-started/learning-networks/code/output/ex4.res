@@ -1,7 +1,7 @@
-Node{Machine{Standardizer}} @240
+Node{Machine{Standardizer,…}} @306
   args:
-    1:	Source @483
+    1:	Source @630
   formula:
     transform(
-        Machine{Standardizer} @820, 
-        Source @483)
+        Machine{Standardizer,…} @296, 
+        Source @630)

@@ -1,0 +1,3 @@
+import NearestNeighborModelsArgumentError: Package NearestNeighborModels not found in current path:
+- Run `import Pkg; Pkg.add("NearestNeighborModels")` to install the NearestNeighborModels package.
+

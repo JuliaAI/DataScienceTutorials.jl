@@ -11,6 +11,7 @@
 # To load such a dataset, you will need to specify which R package it belongs to as well as its name; for instance `Boston` is part of `MASS`.
 
 using RDatasets
+import DataFrames
 
 boston = dataset("MASS", "Boston");
 
@@ -53,7 +54,7 @@ write(fpath, c);
 # You can read it with CSV using
 
 using CSV
-data = CSV.read(fpath)
+data = CSV.read(fpath, DataFrames.DataFrame)
 
 # Note that we use this `joinpath` for compatibility with  our system but you could pass any valid path on your system for instance `CSV.read("path/to/file.csv")`.
 # The data is also returned as a dataframe
@@ -107,7 +108,7 @@ write(fpath, c);
 
 header = ["CIC0", "SM1_Dz", "GATS1i",
           "NdsCH", "NdssC", "MLOGP", "LC50"]
-data = CSV.read(fpath, header=header)
+data = CSV.read(fpath, DataFrames.DataFrame, header=header)
 first(data, 3)
 
 # ### Example 2
@@ -142,5 +143,5 @@ write(fpath, c);
 
 # It does not have a header and missing values indicated by `?`.
 
-data = CSV.read(fpath, header=false, missingstring="?")
+data = CSV.read(fpath, DataFrames.DataFrame, header=false, missingstring="?")
 first(data[:, 1:5], 3)

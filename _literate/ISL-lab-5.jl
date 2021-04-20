@@ -13,7 +13,7 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 # ### Polynomial regression
 #
 
-@load LinearRegressor pkg=MLJLinearModels
+LR = @load LinearRegressor pkg=MLJLinearModels
 
 # In this part we only build models with the `Horsepower` feature.
 
@@ -34,15 +34,15 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")) # hide
 
 # Let's get a baseline:
 
-lm = LinearRegressor()
+lm = LR()
 mlm = machine(lm, select(X, :Horsepower), y)
 fit!(mlm, rows=train)
-rms(predict(mlm, rows=test), y[test])^2
+rms(MLJ.predict(mlm, rows=test), y[test])^2
 
 # Note that we square the measure to  match the results obtained in the ISL labs where the mean squared error (here we use the `rms` which is the square root of that).
 
 xx = (Horsepower=range(50, 225, length=100) |> collect, )
-yy = predict(mlm, xx)
+yy = MLJ.predict(mlm, xx)
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")
@@ -82,7 +82,7 @@ fit!(lr3, rows=train)
 
 # Let's check the performances on the test set
 
-get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
+get_mse(lr) = rms(MLJ.predict(lr, rows=test), y[test])^2
 
 @show get_mse(lr1)
 @show get_mse(lr2)
@@ -93,9 +93,9 @@ get_mse(lr) = rms(predict(lr, rows=test), y[test])^2
 hpn  = xx.Horsepower
 Xnew = DataFrame(hp1=hpn, hp2=hpn.^2, hp3=hpn.^3)
 
-yy1 = predict(lr1, Xnew)
-yy2 = predict(lr2, Xnew)
-yy3 = predict(lr3, Xnew)
+yy1 = MLJ.predict(lr1, Xnew)
+yy2 = MLJ.predict(lr2, Xnew)
+yy3 = MLJ.predict(lr3, Xnew)
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")
@@ -146,7 +146,7 @@ res = rep.plotting
 #
 
 Xnew = DataFrame([hpn.^i for i in 1:10])
-yy5 = predict(mtm, Xnew)
+yy5 = MLJ.predict(mtm, Xnew)
 
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")

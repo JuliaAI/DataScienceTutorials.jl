@@ -6,7 +6,7 @@ using MLJ
 using StableRNGs
 import DataFrames
 MLJ.color_off() # hide
-@load RidgeRegressor pkg=MultivariateStats
+Ridge = @load RidgeRegressor pkg=MultivariateStats
 
 rng = StableRNG(6616) # for reproducibility
 x1 = rand(rng, 300)
@@ -46,7 +46,7 @@ z = MLJ.transform(box_mach, ys)
 
 # _Second layer_
 
-ridge_model = RidgeRegressor(lambda=0.1)
+ridge_model = Ridge(lambda=0.1)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
@@ -93,7 +93,7 @@ round(res.measurement[1], sigdigits=3)
 mutable struct CompositeModel2 <: DeterministicNetwork
     std_model::Standardizer
     box_model::UnivariateBoxCoxTransformer
-    ridge_model::RidgeRegressor
+    ridge_model::Ridge
 end
 
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
@@ -110,7 +110,7 @@ function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
 end
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),
-                      RidgeRegressor(lambda=0.1))
+                      Ridge(lambda=0.1))
 cm = machine(mdl, X, y)
 res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
 round(res.measurement[1], sigdigits=3)

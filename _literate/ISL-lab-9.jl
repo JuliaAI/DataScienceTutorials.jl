@@ -34,7 +34,7 @@ y = categorical(y);
 
 # and fit a SVM classifier
 
-@load SVC pkg=LIBSVM
+SVC = @load SVC pkg=LIBSVM
 
 svc_mdl = SVC()
 svc = machine(svc_mdl, X, y)
@@ -43,7 +43,7 @@ fit!(svc);
 
 # As usual we can check how it performs
 
-ypred = predict(svc, X)
+ypred = MLJ.predict(svc, X)
 misclassification_rate(ypred, y)
 
 # Not bad.
@@ -61,7 +61,7 @@ mtm = machine(tm, X, y)
 
 fit!(mtm)
 
-ypred = predict(mtm, X)
+ypred = MLJ.predict(mtm, X)
 misclassification_rate(ypred, y)
 
 # You could also change the kernel etc.

@@ -19,8 +19,8 @@ X, y = @load_iris;
 
 # let's also load the `DecisionTreeClassifier`:
 
-@load DecisionTreeClassifier
-tree_model = DecisionTreeClassifier()
+DTC = @load DecisionTreeClassifier pkg=DecisionTree
+tree_model = DTC()
 
 # ### MLJ Machine
 #

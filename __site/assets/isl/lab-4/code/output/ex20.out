@@ -1,0 +1,2 @@
+import MLJMultivariateStatsInterface ✔
+UndefVarError: BayesianLDA not defined

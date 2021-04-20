@@ -35,7 +35,7 @@ cmach = machine(creg, X, y)
 
 train, test = partition(eachindex(y), 0.70, shuffle=true); # 70:30 split
 fit!(cmach, rows=train)
-ŷ = predict(cmach, rows=test)
+ŷ = MLJ.predict(cmach, rows=test)
 ŷ[1:3] |> pprint
 
 # Observe that the output is probabilistic, each element is a univariate normal distribution (with the same mean and variance as it's a constant model).
@@ -62,8 +62,8 @@ rmsl(ŷ, y[test])
 #
 # You will first define a fixed model where all hyperparameters are specified or set to default. Then you will see how to create a model around a learning network that can be tuned.
 
-@load RidgeRegressor pkg="MultivariateStats"
-@load KNNRegressor
+RR = @load RidgeRegressor pkg="MultivariateStats"
+KNNR = @load KNNRegressor
 
 # ### Using the expanded syntax
 #
@@ -76,16 +76,16 @@ ys = source(y)
 
 hot = machine(OneHotEncoder(), Xs)
 
-W = transform(hot, Xs)
+W = MLJ.transform(hot, Xs)
 z = log(ys);
 
 # On the "second layer", there's a KNN regressor and a ridge regressor, these lead to node `ẑ₁` and `ẑ₂`
 
-knn   = machine(KNNRegressor(K=5), W, z)
-ridge = machine(RidgeRegressor(lambda=2.5), W, z)
+knn   = machine(KNNR(K=5), W, z)
+ridge = machine(RR(lambda=2.5), W, z)
 
-ẑ₁ = predict(ridge, W)
-ẑ₂ = predict(knn, W)
+ẑ₁ = MLJ.predict(ridge, W)
+ẑ₂ = MLJ.predict(knn, W)
 
 # On the "third layer", there's a weighted combination of the two regression models:
 
@@ -112,8 +112,8 @@ z = ys |> log;
 
 # *Second layer*: KNN Regression and Ridge regression
 
-ẑ₁ = (W, z) |> KNNRegressor(K=5)
-ẑ₂ = (W, z) |> RidgeRegressor(lambda=2.5);
+ẑ₁ = (W, z) |> KNNR(K=5)
+ẑ₂ = (W, z) |> RR(lambda=2.5);
 
 # *Third layer*: weighted sum of the two models:
 
@@ -134,8 +134,8 @@ rmsl(y[test], ŷ(rows=test))
 # For this, we define a model around the learning network which can then be trained and tuned as any model:
 
 mutable struct KNNRidgeBlend <: DeterministicNetwork
-    knn_model::KNNRegressor
-    ridge_model::RidgeRegressor
+    knn_model::KNNR
+    ridge_model::RR
     knn_weight::Float64
 end
 
@@ -164,7 +164,7 @@ end
 #
 # You can now instantiate and fit such a model:
 
-krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)
+krb = KNNRidgeBlend(KNNR(K=5), RR(lambda=2.5), 0.3)
 mach = machine(krb, X, y)
 fit!(mach, rows=train)
 

@@ -1,0 +1,6 @@
+MethodError: no method matching fit!(::Vector{Float64}; rows=[765, 879, 930, 1343, 284, 960, 627, 1108, 1184, 1103  …  463, 227, 1370, 367, 548, 810, 806, 1240, 324, 952])
+Closest candidates are:
+  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at /Users/tlienart/.julia/packages/StatsBase/Lc3YW/src/statmodels.jl:164 got unsupported keyword argument "rows"
+  fit!(!Matched::Machine{var"#s815", C} where {var"#s815"<:Surrogate, C}; kwargs...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/machines.jl:143
+  fit!(!Matched::MLJBase.Source; args...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/nodes.jl:207
+  ...

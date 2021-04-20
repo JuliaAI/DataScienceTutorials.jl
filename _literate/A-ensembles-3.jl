@@ -20,10 +20,9 @@ import Statistics
 Xs = source()
 ys = source()
 
-atom = @load DecisionTreeRegressor
-atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
+atom = @load DecisionTreeRegressor pkg=DecisionTree
 
-machines = (machine(atom, Xs, ys) for i in 1:100)
+machines = (machine(atom(), Xs, ys) for i in 1:100)
 
 # overload `mean` for nodes:
 Statistics.mean(v...) = mean(v)

@@ -1,4 +1,4 @@
-Machine{DeterministicTunedModel{Grid,…}} @972 trained 1 time.
+Machine{DeterministicTunedModel{Grid,…},…} @075 trained 1 time; caches data
   args: 
-    1:	Source @386 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @367 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @505 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @080 ⏎ `AbstractVector{Continuous}`

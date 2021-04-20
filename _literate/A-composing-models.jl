@@ -6,7 +6,7 @@ using MLJ
 using PrettyPrinting
 MLJ.color_off() # hide
 
-@load KNNRegressor
+KNNR = @load KNNRegressor
 ## input
 X = (age    = [23, 45, 34, 25, 67],
      gender = categorical(['m', 'm', 'f', 'm', 'f']))
@@ -31,7 +31,7 @@ scitype(X.age)
 
 pipe = @pipeline(X -> coerce(X, :age=>Continuous),
                 OneHotEncoder(),
-                KNNRegressor(K=3),
+                KNNR(K=3),
                 target = UnivariateStandardizer());
 
 # Note the coercion of the `:age` variable to Continuous since `KNNRegressor` expects `Continuous` input.

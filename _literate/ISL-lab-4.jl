@@ -58,7 +58,7 @@ classes(y[1])
 
 figure(figsize=(8,6))
 cm = countmap(y)
-bar([1, 2], [cm["Down"], cm["Up"]])
+PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
 xticks([1, 2], ["Down", "Up"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
@@ -145,7 +145,7 @@ mode.(ŷ)
 #
 # Let's do a similar thing but with a LDA model this time:
 
-@load BayesianLDA pkg=MultivariateStats
+BayesianLDA = @load BayesianLDA pkg=MultivariateStats
 
 clf = machine(BayesianLDA(), X3, y)
 fit!(clf, rows=train)
@@ -156,7 +156,7 @@ accuracy(ŷ, y[test]) |> r3
 # Note: `BayesianLDA` is LDA using a multivariate normal model for each class with a default prior inferred from the proportions for each class in the training data.
 # You can also use the bare `LDA` model which does not make these assumptions and allows using a different metric in the transformed space, see the docs for details.
 
-@load LDA pkg=MultivariateStats
+LDA = @load LDA pkg=MultivariateStats
 using Distances
 
 clf = machine(LDA(dist=CosineDist()), X3, y)
@@ -169,7 +169,7 @@ accuracy(ŷ, y[test]) |> r3
 #
 # Bayesian QDA is available via ScikitLearn:
 
-@load BayesianQDA pkg=ScikitLearn
+BayesianQDA = @load BayesianQDA pkg=ScikitLearn
 
 # Using it is done in much the same way as before:
 
@@ -183,7 +183,7 @@ accuracy(ŷ, y[test]) |> r3
 #
 # We can use K-Nearest Neighbors models via the [`NearestNeighbors`](https://github.com/KristofferC/NearestNeighbors.jl) package:
 
-@load KNNClassifier pkg=NearestNeighbors
+KNNClassifier = @load KNNClassifier
 
 knnc = KNNClassifier(K=1)
 clf = machine(knnc, X3, y)
@@ -223,7 +223,7 @@ println("#$(vals[2]) ", nl2)
 
 figure(figsize=(8,6))
 cm = countmap(purchase)
-bar([1, 2], [cm["No"], cm["Yes"]])
+PyPlot.bar([1, 2], [cm["No"], cm["Yes"]])
 xticks([1, 2], ["No", "Yes"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
@@ -240,7 +240,7 @@ y, X = unpack(caravan, ==(:Purchase), col->true)
 
 mstd = machine(Standardizer(), X)
 fit!(mstd)
-Xs = transform(mstd, X)
+Xs = MLJ.transform(mstd, X)
 
 var(Xs[:,1]) |> r3
 

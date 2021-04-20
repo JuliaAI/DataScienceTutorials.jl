@@ -71,7 +71,7 @@ describe(boston, :min, :max, :mean, :median, :std)
 # You can also  pass your custom function with a pair `name => function` for instance:
 
 foo(x) = sum(abs.(x)) / length(x)
-d = describe(boston, :mean, :median, :foo => foo)
+d = describe(boston, :mean, :median, foo => :foo)
 first(d, 3)
 
 # The `describe` function returns a derived object with one row per feature and one column per required statistic.
@@ -85,7 +85,7 @@ using Statistics
 #
 # If you want to get the content of the dataframe as one big matrix, use `convert`:
 
-mat = convert(Matrix, boston)
+mat = Matrix(boston)
 mat[1:3, 1:3]
 
 # ### Adding columns

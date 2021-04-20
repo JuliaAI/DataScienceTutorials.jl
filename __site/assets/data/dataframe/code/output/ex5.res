@@ -1,4 +1,4 @@
-5-element Array{Float64,1}:
+5-element Vector{Float64}:
  0.00632
  0.02731
  0.02729

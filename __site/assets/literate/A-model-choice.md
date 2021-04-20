@@ -11,9 +11,7 @@
 ### Machine type and scientific type
 
 ```julia:ex1
-using RDatasets
-using MLJ
-MLJ.color_off() # hide
+using RDatasets, MLJ
 iris = dataset("datasets", "iris")
 
 first(iris, 3) |> pretty
@@ -28,7 +26,7 @@ If you want to specify a different scientific type than the one inferred, you ca
 
 ```julia:ex2
 iris2 = coerce(iris, :PetalWidth => OrderedFactor)
-first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty
+first(iris2[[:PetalLength, :PetalWidth]], 1) |> pretty
 ```
 
 ### Unpacking data
