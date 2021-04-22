@@ -1,4 +1,4 @@
-14-element Array{String,1}:
+14-element Vector{String}:
  "Crim"
  "Zn"
  "Indus"

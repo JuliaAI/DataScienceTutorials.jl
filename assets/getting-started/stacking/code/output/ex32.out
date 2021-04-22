@@ -1,5 +1,0 @@
-EvoTreeRegressor{Float32,…} @275 = 1.0419 ± 0.09772
-SVMRegressor @823 = 0.96529 ± 0.12352
-RandomForestRegressor @976 = 1.722 ± 0.10648
-MyAverageTwo @231 = 0.88237 ± 0.1077
-MyTwoModelStack @178 = 0.79411 ± 0.07484

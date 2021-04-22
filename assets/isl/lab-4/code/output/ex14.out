@@ -1,6 +1,4 @@
-false_positive(cm) = 458
-accuracy(ŷ, y) |> r3 = 0.521
-accuracy(cm) |> r3 = 0.521
-precision(ŷ, y) |> r3 = 0.525
-recall(ŷ, y) |> r3 = 0.782
-f1score(ŷ, y) |> r3 = 0.629
+MethodError: no method matching (::FalsePositive)(::Dict{CategoricalArrays.CategoricalValue{String, UInt8}, Int64})
+Closest candidates are:
+  (::FalsePositive)(::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/measures/finite.jl:649
+  (::FalsePositive)(!Matched::MLJBase.ConfusionMatrixObject{2}) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/measures/finite.jl:636

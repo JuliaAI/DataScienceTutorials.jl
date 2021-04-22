@@ -1,4 +1,4 @@
-3-element Array{String,1}:
+3-element Vector{String}:
  "setosa"
  "versicolor"
  "virginica"

@@ -1,1 +1,1 @@
-Array{Union{Missing, Float64},1}
+SentinelVector{Float64, Float64, Missing, Vector{Float64}} (alias for SentinelArrays.SentinelArray{Float64, 1, Float64, Missing, Array{Float64, 1}})

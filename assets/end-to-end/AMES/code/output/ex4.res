@@ -1,4 +1,4 @@
-Machine{ConstantRegressor} @651 trained 0 times.
+Machine{ConstantRegressor,…} @126 trained 0 times; caches data
   args: 
-    1:	Source @296 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Count,1}, AbstractArray{Multiclass{15},1}, AbstractArray{Multiclass{25},1}, AbstractArray{OrderedFactor{10},1}}}`
-    2:	Source @795 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @791 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Count}, AbstractVector{Multiclass{15}}, AbstractVector{Multiclass{25}}, AbstractVector{OrderedFactor{10}}}}`
+    2:	Source @996 ⏎ `AbstractVector{Continuous}`
