@@ -420,4 +420,3 @@ print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide
 
-Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
