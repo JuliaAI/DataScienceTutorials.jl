@@ -7,8 +7,8 @@
 using MLJ, CategoricalArrays, PrettyPrinting
 import DataFrames: DataFrame, nrow
 using UrlDownload
-@load LinearRegressor pkg = GLM
-@load LinearBinaryClassifier pkg=GLM
+const LinearRegressor = @load LinearRegressor pkg = GLM
+const LinearBinaryClassifier = @load LinearBinaryClassifier pkg=GLM
 
 # ## Reading the data
 #
