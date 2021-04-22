@@ -83,11 +83,11 @@ describe(Xc, :mean, :std)
 # - a Standardizer + KNN classifier and
 # - a Standardizer + Multinomial classifier (logistic regression).
 
-@load KNNClassifier pkg="NearestNeighbors"
-@load MultinomialClassifier pkg="MLJLinearModels";
+KNNC = @load KNNClassifier
+MNC = @load MultinomialClassifier pkg="MLJLinearModels";
 
-KnnPipe = @pipeline(Standardizer(), KNNClassifier())
-MnPipe = @pipeline(Standardizer(), MultinomialClassifier());
+KnnPipe = @pipeline(Standardizer(), KNNC())
+MnPipe = @pipeline(Standardizer(), MNC());
 
 # We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
 
@@ -133,7 +133,7 @@ println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 ## fit!(pca, Xtrain)
 ## W = transform(pca, Xtrain)
 
-@load PCA
+PCA = @load PCA
 
 pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
 fit!(pca)

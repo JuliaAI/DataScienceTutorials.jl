@@ -96,7 +96,7 @@ model = @pipeline(Standardizer(),
 
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)
-ŷ = predict(pipe, rows=test)
+ŷ = MLJ.predict(pipe, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Let's get a feel for how we're doing
@@ -142,7 +142,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
 
 pipe.model.linear_regressor = RidgeRegressor()
 fit!(pipe, rows=train)
-ŷ = predict(pipe, rows=test)
+ŷ = MLJ.predict(pipe, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Ok that's a bit better but surely we can do better with an appropriate selection of the hyperparameter.
@@ -162,7 +162,7 @@ round(best_mdl.linear_regressor.lambda, sigdigits=4)
 
 # right, and  with that we get:
 
-ŷ = predict(mtm, rows=test)
+ŷ = MLJ.predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Let's see:
@@ -198,7 +198,7 @@ round(best_mdl.linear_regressor.lambda, sigdigits=4)
 
 # Ok and let's see how that does:
 
-ŷ = predict(mtm, rows=test)
+ŷ = MLJ.predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Pretty good! and the parameters are reasonably sparse as expected:
@@ -248,7 +248,7 @@ best_mdl = fitted_params(mtm).best_model
 
 # And it's not too bad in terms of accuracy either
 
-ŷ = predict(mtm, rows=test)
+ŷ = MLJ.predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # But the simple ridge regression seems to work best here.

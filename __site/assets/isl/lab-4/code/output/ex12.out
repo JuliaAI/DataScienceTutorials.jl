@@ -1,0 +1,6 @@
+MethodError: no method matching predict_mode(::typeof(clf), ::DataFrames.DataFrame)
+Closest candidates are:
+  predict_mode(::Any, ::Any, !Matched::Any, !Matched::Val{var"#s101"} where var"#s101"<:Union{AbstractArray{Continuous, N} where N, Table{var"#s46"} where var"#s46"<:(AbstractVector{var"#s9"} where var"#s9"<:Continuous)}) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/interface/model_api.jl:12
+  predict_mode(::Any, ::Any, !Matched::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/interface/model_api.jl:10
+  predict_mode(!Matched::Union{ProbabilisticSurrogate, ProbabilisticComposite}, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/operations.jl:124
+  ...

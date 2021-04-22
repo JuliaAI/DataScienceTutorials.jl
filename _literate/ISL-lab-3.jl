@@ -61,7 +61,7 @@ ioff() # hide
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
-plot(Xnew.LStat, predict(mach_uni, Xnew))
+plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")) # hide
 
@@ -82,7 +82,7 @@ println("Intercept: $(round(intercept, sigdigits=3))")
 
 # You can use the `machine` in order to _predict_ values as well and, for instance, compute the root mean squared error:
 
-ŷ = predict(mach, X)
+ŷ = MLJ.predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
 
 # Let's see what the residuals look like
@@ -120,7 +120,7 @@ rename!(X2, :x1 => :interaction);
 
 mach = machine(mdl, X2, y)
 fit!(mach)
-ŷ = predict(mach, X2)
+ŷ = MLJ.predict(mach, X2)
 round(rms(ŷ, y), sigdigits=4)
 
 # We get slightly better results but nothing spectacular.
@@ -130,7 +130,7 @@ round(rms(ŷ, y), sigdigits=4)
 X3 = hcat(X.LStat, X.LStat.^2)
 mach = machine(mdl, X3, y)
 fit!(mach)
-ŷ = predict(mach, X3)
+ŷ = MLJ.predict(mach, X3)
 round(rms(ŷ, y), sigdigits=4)
 
 # which again, we can visualise:
@@ -139,7 +139,7 @@ Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
-plot(Xnew.LStat, predict(mach, Xnew))
+plot(Xnew.LStat, MLJ.predict(mach, Xnew))
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
 

@@ -29,8 +29,8 @@ header = ["surgery", "age", "hospital_number",
     "cp_data"]
 csv_opts = (header=header, delim=' ', missingstring="?",
             ignorerepeated=true)
-data_train = CSV.read(req1.body; csv_opts...)
-data_test  = CSV.read(req2.body; csv_opts...)
+data_train = CSV.read(req1.body, DataFrame; csv_opts...)
+data_test  = CSV.read(req2.body, DataFrame; csv_opts...)
 @show size(data_train)
 @show size(data_test)
 
@@ -121,7 +121,7 @@ select!(datac, Not(unwanted));
 @load FillImputer
 filler = machine(FillImputer(), datac)
 fit!(filler)
-datac = transform(filler, datac)
+datac = MLJ.transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
 X = coerce(X, autotype(X, :discrete_to_continuous));
@@ -168,7 +168,7 @@ best_pipe = fitted_params(mtm).best_model
 
 # So it looks like it's useful to regularise a fair bit to get a lower cross entropy
 
-ŷ = predict(mtm, Xtrain)
+ŷ = MLJ.predict(mtm, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean
 
 # Interestingly this does not improve our missclassification rate
@@ -182,10 +182,10 @@ println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 #
 # There are lots of categoricals, so maybe  it's just better to use something that deals well with that like a tree-based classifier.
 
-@load XGBoostClassifier
-dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
+XGBC = @load XGBoostClassifier
+dtc = machine(XGBC(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = predict(dtc, Xtrain)
+ŷ = MLJ.predict(dtc, Xtrain)
 cross_entropy(ŷ, ytrain) |> mean
 
 # So we get a worse cross entropy but...

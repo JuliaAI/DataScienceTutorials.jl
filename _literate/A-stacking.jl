@@ -62,11 +62,12 @@ using StableRNGs
 
 # Some models we will use:
 
-linear = @load LinearRegressor pkg=MLJLinearModels
-knn = @load KNNRegressor; knn.K = 4
-tree_booster = @load EvoTreeRegressor; tree_booster.nrounds = 100
-forest = @load RandomForestRegressor pkg=DecisionTree; forest.n_trees = 500
-svm = @load SVMRegressor;
+linear = (@load LinearRegressor pkg=MLJLinearModels)()
+knn = (@load KNNRegressor)()
+
+tree_booster = (@load EvoTreeRegressor)()
+forest = (@load RandomForestRegressor pkg=DecisionTree)()
+svm = (@load SVMRegressor)()
 
 
 # ### Warm-up exercise: Define a model type to average predictions
@@ -377,7 +378,7 @@ avg = MyAverageTwo(regressor1=tree_booster,
 
 stack = MyTwoModelStack(regressor1=tree_booster,
                         regressor2=svm,
-                        judge=forest) # judge=linear
+                        judge=forest)
 
 all_models = [tree_booster, svm, forest, avg, stack];
 
@@ -419,4 +420,3 @@ print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide
 
-Literate.notebook(@__FILE__, @__DIR__, execute=false) #src

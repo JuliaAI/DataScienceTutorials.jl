@@ -5,7 +5,7 @@
 using MLJ, StableRNGs
 import DataFrames
 MLJ.color_off() # hide
-@load RidgeRegressor pkg=MultivariateStats
+Ridge = @load RidgeRegressor pkg=MultivariateStats
 
 rng = StableRNG(551234) # for reproducibility
 
@@ -64,7 +64,7 @@ box_model = UnivariateBoxCoxTransformer()
 box = machine(box_model, ys)
 z = transform(box, ys)
 
-ridge_model = RidgeRegressor(lambda=0.1)
+ridge_model = Ridge(lambda=0.1)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
@@ -104,7 +104,7 @@ z = y |> UnivariateBoxCoxTransformer()
 #
 # For a node that corresponds to a supervised model, you can feed a tuple where the first element corresponds to the input (here `W`) and the second corresponds to the target (here `z`), MLJ will assume the operation is a `predict`:
 
-ẑ = (W, z) |> RidgeRegressor(lambda=0.1);
+ẑ = (W, z) |> Ridge(lambda=0.1);
 
 # Finally we need to apply the inverse of the transform encapsulated in the node `z`, for this:
 

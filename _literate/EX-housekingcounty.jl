@@ -89,18 +89,18 @@ plt.savefig(joinpath(@OUTPUT, "hist_price2.svg")) # hide
 
 # ## Fitting a first model
 
-@load DecisionTreeRegressor
+DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
 y, X = unpack(df, ==(:price), col -> true)
 train, test = partition(eachindex(y), 0.7, shuffle=true, rng=5)
 
-tree = machine(DecisionTreeRegressor(), X, y)
+tree = machine(DTR(), X, y)
 
 fit!(tree, rows=train);
 
 # Let's see how it does
 
-rms(y[test], predict(tree, rows=test))
+rms(y[test], MLJ.predict(tree, rows=test))
 
 # Let's try to do better.
 
@@ -108,7 +108,7 @@ rms(y[test], predict(tree, rows=test))
 
 # We might be able to improve upon the RMSE using more powerful learners.
 
-@load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=ScikitLearn
 
 # That model only accepts input in the form of `Count` and so we have to coerce all `Finite` types into `Count`:
 
@@ -116,11 +116,11 @@ coerce!(X, Finite => Count);
 
 # Now we can fit
 
-rf_mdl = RandomForestRegressor()
+rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)
 fit!(rf, rows=train)
 
-rms(y[test], predict(rf, rows=test))
+rms(y[test], MLJ.predict(rf, rows=test))
 
 # A bit better but it would be best to check this a bit more carefully:
 
@@ -132,17 +132,17 @@ res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
 #
 # Let's try a different kind of model: Gradient Boosted Decision Trees from the package xgboost and we'll try to tune it too.
 
-@load XGBoostRegressor
+XGBR = @load XGBoostRegressor
 
 # It expects a `Table(Continuous)` input so we need to coerce `X` again:
 
 coerce!(X, Count => Continuous)
 
-xgb  = XGBoostRegressor()
+xgb  = XGBR()
 xgbm = machine(xgb, X, y)
 fit!(xgbm, rows=train)
 
-rms(y[test], predict(xgbm, rows=test))
+rms(y[test], MLJ.predict(xgbm, rows=test))
 
 # Let's try to tune it, first we define ranges for a number of useful parameters:
 
@@ -157,7 +157,7 @@ tm = TunedModel(model=xgb, tuning=Grid(resolution=7),
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
-rms(y[test], predict(mtm, rows=test))
+rms(y[test], MLJ.predict(mtm, rows=test))
 
 # Tuning helps a fair bit!
 

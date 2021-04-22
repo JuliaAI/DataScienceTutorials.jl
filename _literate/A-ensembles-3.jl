@@ -15,23 +15,23 @@ using PyPlot
 ioff() # hide
 import Statistics
 
-# learning network (composite model spec):
+# Defining the learning network (composite model spec):
 
 Xs = source()
 ys = source()
 
-atom = @load DecisionTreeRegressor
-atom.n_subfeatures = 4 # to ensure diversity among trained atomic models
+const DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
+atom = DecisionTreeRegressor()
 
 machines = (machine(atom, Xs, ys) for i in 1:100)
 
-# overload `mean` for nodes:
+# Overloading `mean` for nodes:
 Statistics.mean(v...) = mean(v)
 Statistics.mean(v::AbstractVector{<:AbstractNode}) = node(mean, v...)
 
 yhat = mean([predict(m, Xs) for  m in machines]);
 
-# new composite model type and instance:
+# Defining the new composite model type and instance:
 
 surrogate = Deterministic()
 mach = machine(surrogate, Xs, ys; predict=yhat)

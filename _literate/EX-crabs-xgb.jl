@@ -35,8 +35,8 @@ y = y[perm];
 # It's not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.
 
 train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
-@load XGBoostClassifier
-xgb_model = XGBoostClassifier()
+XGBC = @load XGBoostClassifier
+xgb_model = XGBC()
 
 # Let's check whether the training and  is balanced, `StatsBase.countmap` is useful for that:
 
@@ -48,7 +48,7 @@ countmap(y[train]) |> pprint
 #
 # Wrap a machine around an XGBoost model (XGB) and the data:
 
-xgb  = XGBoostClassifier()
+xgb  = XGBC()
 xgbm = machine(xgb, X, y)
 
 # We will tune it varying the number of rounds used and generate a learning curve

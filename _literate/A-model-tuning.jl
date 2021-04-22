@@ -14,13 +14,13 @@ using MLJ
 using PrettyPrinting
 MLJ.color_off() # hide
 X, y = @load_iris
-@load DecisionTreeClassifier
+DTC = @load DecisionTreeClassifier pkg=DecisionTree
 
 # ### Specifying a range of value
 #
 # To specify a range of value, you can use the `range` function:
 
-dtc = DecisionTreeClassifier()
+dtc = DTC()
 r   = range(dtc, :max_depth, lower=1, upper=5)
 
 # As you can see, the range function takes a model (`dtc`), a symbol for the hyperparameter of interest (`:max_depth`) and indication of how to samples values.
@@ -62,7 +62,7 @@ fitted_params(m).best_model.max_depth
 # Let's check the misclassification rate for the best model:
 
 r = report(m)
-r.best_result
+r.best_history_entry.measurement[1]
 
 # Anyone wants plots? of course:
 
@@ -91,8 +91,8 @@ y = 2X.x1 - X.x2 + 0.05 * randn(100);
 
 # Let's then build a simple ensemble model with decision tree regressors:
 
-dtr = @load DecisionTreeRegressor
-forest = EnsembleModel(atom=dtr)
+DTR = @load DecisionTreeRegressor pkg=DecisionTree
+forest = EnsembleModel(atom=DTR())
 
 # Such a model has *nested* hyperparameters in that the ensemble has hyperparameters (e.g. the `:bagging_fraction`) and the atom has hyperparameters (e.g. `:n_subfeatures` or `:max_depth`).
 # You can see this by inspecting the parameters using `params`:
@@ -112,7 +112,7 @@ fit!(m);
 # A useful function to inspect a model after fitting it is the `report` function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:
 
 r = report(m)
-r.best_result
+r.best_history_entry.measurement[1]
 
 # Let's visualise this
 

@@ -28,7 +28,7 @@ pca_mdl = PCA(pratio=1)
 pca = machine(pca_mdl, X)
 fit!(pca)
 PCA
-W = transform(pca, X);
+W = MLJ.transform(pca, X);
 
 # W is the PCA'd data; here we've used default settings for PCA and it has recovered 2 components:
 
@@ -59,7 +59,7 @@ SPCA = @pipeline(Standardizer(),
 
 spca = machine(SPCA, X)
 fit!(spca)
-W = transform(spca, X)
+W = MLJ.transform(spca, X)
 names(W)
 
 # What kind of variance can we explain?
@@ -74,7 +74,7 @@ ioff() # hide
 
 figure(figsize=(8,6))
 
-bar(1:length(cs), cs)
+PyPlot.bar(1:length(cs), cs)
 plot(1:length(cs), cs, color="red", marker="o")
 
 xlabel("Number of PCA features", fontsize=14)
@@ -90,7 +90,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
 
 Random.seed!(1515)
 
-@load KMeans pkg=Clustering
+KMeans = @load KMeans pkg=Clustering
 SPCA2 = @pipeline(Standardizer(),
                   PCA(),
                   KMeans(k=3))
