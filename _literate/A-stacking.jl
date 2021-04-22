@@ -62,12 +62,12 @@ using StableRNGs
 
 # Some models we will use:
 
-linear = @load LinearRegressor pkg=MLJLinearModels
-knn = @load KNNRegressor
+linear = (@load LinearRegressor pkg=MLJLinearModels)()
+knn = (@load KNNRegressor)()
 
-tree_booster = @load EvoTreeRegressor
-forest = @load RandomForestRegressor pkg=DecisionTree
-svm = @load SVMRegressor
+tree_booster = (@load EvoTreeRegressor)()
+forest = (@load RandomForestRegressor pkg=DecisionTree)()
+svm = (@load SVMRegressor)()
 
 
 # ### Warm-up exercise: Define a model type to average predictions
@@ -81,10 +81,10 @@ y = source()
 model1 = linear
 model2 = knn
 
-m1 = machine(model1(), X, y)
+m1 = machine(model1, X, y)
 y1 = predict(m1, X)
 
-m2 = machine(model2(), X, y)
+m2 = machine(model2, X, y)
 y2 = predict(m2, X)
 
 yhat = 0.5*y1 + 0.5*y2
@@ -133,8 +133,8 @@ end;
 
 X, y = @load_boston
 
-print_performance(linear(), X, y)
-print_performance(knn(), X, y)
+print_performance(linear, X, y)
+print_performance(knn, X, y)
 print_performance(average_two, X, y)
 
 # ## Stacking proper
@@ -378,7 +378,7 @@ avg = MyAverageTwo(regressor1=tree_booster,
 
 stack = MyTwoModelStack(regressor1=tree_booster,
                         regressor2=svm,
-                        judge=forest) # judge=linear
+                        judge=forest)
 
 all_models = [tree_booster, svm, forest, avg, stack];
 
