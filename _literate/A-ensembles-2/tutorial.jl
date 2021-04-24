@@ -1,3 +1,18 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "PrettyPrinting",
+    "DataFrames",
+    "StableRNGs",
+    "PyPlot",
+    "MLJDecisionTreeInterface"
+])
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # ## Prelims
 #
 # This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
@@ -7,24 +22,24 @@ using MLJ
 using PyPlot
 using PrettyPrinting
 using StableRNGs
-import DataFrames
-
+import DataFrames: DataFrame, describe
 MLJ.color_off() # hide
 ioff() # hide
+
 X, y = @load_boston
 sch = schema(X)
 p = length(sch.names)
 n = sch.nrows
 @show (n, p)
-DataFrames.describe(y)
+describe(y)  # From DataFrames
 
 # Let's load the decision tree regressor
 
-DTR = @load DecisionTreeRegressor pkg=DecisionTree
+DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
 
 # Let's first check the performances of just a single Decision Tree Regressor (DTR for short):
 
-tree = machine(DTR(), X, y)
+tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
 e |> pprint # use PrettyPrinting
@@ -35,7 +50,7 @@ e |> pprint # use PrettyPrinting
 #
 # Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.
 
-forest = EnsembleModel(atom=DTR())
+forest = EnsembleModel(atom=DecisionTreeRegressor())
 forest.atom.n_subfeatures = 3
 
 # (**NB**: we could have fixed `n_subfeatures` in the DTR constructor too).

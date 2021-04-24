@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "RDatasets",
+    "MLJScientificTypes",
+])
+
 # ## Machine type vs Scientific Type
 #
 # ### Why make a distinction?

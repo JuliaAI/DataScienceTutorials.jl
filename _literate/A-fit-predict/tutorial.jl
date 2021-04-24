@@ -1,4 +1,14 @@
-#
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "Statistics",
+    "PrettyPrinting",
+    "StableRNGs",
+    "MLJDecisionTreeInterface"
+])
+
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl
@@ -19,8 +29,8 @@ X, y = @load_iris;
 
 # let's also load the `DecisionTreeClassifier`:
 
-DTC = @load DecisionTreeClassifier pkg=DecisionTree
-tree_model = DTC()
+DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
+tree_model = DecisionTreeClassifier()
 
 # ### MLJ Machine
 #

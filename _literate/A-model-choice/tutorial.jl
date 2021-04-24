@@ -1,3 +1,14 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "RDatasets",
+    "NearestNeighbors",
+    "MLJGLMInterface",
+    "MLJScikitLearnInterface"
+])
+
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [MLJModels.jl]: https://github.com/alan-turing-institute/MLJModels.jl
@@ -75,4 +86,4 @@ knc = @load KNeighborsClassifier
 
 # In some cases, there may be several packages offering the same model, for instance `LinearRegressor` is offered by both `[GLM.jl]` and `[ScikitLearn.jl]` so you will need to specify the package you would like to use by adding `pkg="ThePackage"` in the load command:
 
-linreg = @load LinearRegressor pkg="GLM"
+linreg = @load LinearRegressor pkg=GLM

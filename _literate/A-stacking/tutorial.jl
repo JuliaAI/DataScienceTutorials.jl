@@ -1,3 +1,20 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "MLJLinearModels",
+    "PyPlot",
+    "EvoTrees",
+    "MLJDecisionTreeInterface",
+    "MLJScikitLearnInterface",
+    "NearestNeighborModels",
+    "StableRNGs"
+])
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # In stacking one blends the predictions of different regressors or
 # classifiers to gain, in some cases, better performance than naive
 # averaging or majority vote.
@@ -419,4 +436,3 @@ best_stack.regressor2.C
 print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide
-

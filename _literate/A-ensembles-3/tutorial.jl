@@ -1,3 +1,16 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "Statistics",
+    "PyPlot",
+    "MLJDecisionTreeInterface"
+])
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # # Simple example of a homogeneous ensemble using learning networks
 
 # In this simple example, no bagging is used, so every atomic model
@@ -20,7 +33,7 @@ import Statistics
 Xs = source()
 ys = source()
 
-const DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
+DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
 atom = DecisionTreeRegressor()
 
 machines = (machine(atom, Xs, ys) for i in 1:100)

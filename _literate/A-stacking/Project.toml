@@ -1,0 +1,9 @@
+[deps]
+EvoTrees = "f6006082-12f8-11e9-0c9c-0d5d367ab1e5"
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJDecisionTreeInterface = "c6f25543-311c-4c74-83dc-3ea6d1015661"
+MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
+MLJScikitLearnInterface = "5ae90465-5518-4432-b9d2-8a1def2f0cab"
+NearestNeighborModels = "636a865e-7cf4-491e-846c-de09b730eb36"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+StableRNGs = "860ef19b-820b-49d6-a774-d7a799459cd3"

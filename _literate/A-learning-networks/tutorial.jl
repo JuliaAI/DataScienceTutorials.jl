@@ -1,3 +1,14 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "Statistics",
+    "StableRNGs",
+    "DataFrames",
+    "MLJMultivariateStatsInterface"
+])
+
 # ## Preliminary steps
 #
 # Let's generate a `DataFrame` with some dummy regression data, let's also load the good old ridge regressor.
@@ -14,7 +25,7 @@ x2 = rand(rng, 300)
 x3 = rand(rng, 300)
 y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
 
-X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
+X = DataFrame(x1=x1, x2=x2, x3=x3)
 first(X, 3) |> pretty
 
 # Let's also prepare the train and test split which will be useful later on.

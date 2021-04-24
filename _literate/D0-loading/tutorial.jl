@@ -1,3 +1,13 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "RDatasets",
+    "DataFrames",
+    "CSV"
+])
+
+
 # In this short tutorial we discuss two ways to easily load data in Julia:
 #
 # 1. loading a standard dataset via `RDatasets.jl`,

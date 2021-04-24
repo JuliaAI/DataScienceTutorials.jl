@@ -1,10 +1,23 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "Statistics",
+    "PrettyPrinting",
+    "StableRNGs",
+    "DataFrames",
+    "MLJMultivariateStatsInterface"
+])
+
+
 # ## Preliminary steps
 #
 # Let's start as with the previous tutorial:
 
 using MLJ
 using StableRNGs
-import DataFrames
+import DataFrames: DataFrame
 MLJ.color_off() # hide
 Ridge = @load RidgeRegressor pkg=MultivariateStats
 
@@ -13,7 +26,7 @@ x1 = rand(rng, 300)
 x2 = rand(rng, 300)
 x3 = rand(rng, 300)
 y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
-X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
+X = DataFrame(x1=x1, x2=x2, x3=x3)
 
 test, train = partition(eachindex(y), 0.8);
 
@@ -38,11 +51,11 @@ ys = source(y)
 
 std_model = Standardizer()
 stand = machine(std_model, Xs)
-W = MLJ.transform(stand, Xs)
+W = transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
 box_mach = machine(box_model, ys)
-z = MLJ.transform(box_mach, ys)
+z = transform(box_mach, ys)
 
 # _Second layer_
 

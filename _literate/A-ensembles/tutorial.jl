@@ -1,26 +1,39 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "PrettyPrinting",
+    "DataFrames",
+    "StableRNGs",
+    "PyPlot",
+    "NearestNeighborModels"
+])
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # ## Preliminary steps
 #
 # Let's start by loading the relevant packages and generating some dummy data.
 
 using MLJ
-import DataFrames
-import Statistics
+import DataFrames: DataFrame
 using PrettyPrinting
 using StableRNGs
-
 MLJ.color_off() # hide
 
 rng = StableRNG(512)
 Xraw = rand(rng, 300, 3)
 y = exp.(Xraw[:,1] - Xraw[:,2] - 2Xraw[:,3] + 0.1*rand(rng, 300))
-X = DataFrames.DataFrame(Xraw)
+X = DataFrame(Xraw, :auto)
 
 train, test = partition(eachindex(y), 0.7);
 
 # Let's also load a simple model:
 
-KNNR = @load KNNRegressor
-knn_model = KNNR(K=10)
+KNNRegressor = @load KNNRegressor
+knn_model = KNNRegressor(K=10)
 
 # As before, let's instantiate a machine that wraps the model and data:
 

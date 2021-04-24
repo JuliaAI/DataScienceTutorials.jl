@@ -1,12 +1,20 @@
-# ## Generating dummy data
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "PrettyPrinting",
+    "NearestNeighborModels"
+])
 
+# ## Generating dummy data
 # Let's start by generating some dummy data with both numerical values and categorical values:
 
 using MLJ
 using PrettyPrinting
 MLJ.color_off() # hide
 
-KNNR = @load KNNRegressor
+KNNRegressor = @load KNNRegressor
 ## input
 X = (age    = [23, 45, 34, 25, 67],
      gender = categorical(['m', 'm', 'f', 'm', 'f']))
@@ -29,10 +37,11 @@ scitype(X.age)
 
 # The `@pipeline` macro helps you define such a simple (non-branching) pipeline of steps to be applied in order:
 
-pipe = @pipeline(X -> coerce(X, :age=>Continuous),
-                OneHotEncoder(),
-                KNNR(K=3),
-                target = UnivariateStandardizer());
+pipe = @pipeline(
+    X -> coerce(X, :age=>Continuous),
+    OneHotEncoder(),
+    KNNRegressor(K=3),
+    target = UnivariateStandardizer());
 
 # Note the coercion of the `:age` variable to Continuous since `KNNRegressor` expects `Continuous` input.
 # Note also the `target` keyword where you can specify a transformation of the target variable.

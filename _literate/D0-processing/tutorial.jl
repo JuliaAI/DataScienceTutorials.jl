@@ -1,3 +1,16 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.add([
+    "MLJ",
+    "DataFrames",
+    "UrlDownload",
+    "PyPlot"
+])
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # ## More data processing
 #
 # This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
