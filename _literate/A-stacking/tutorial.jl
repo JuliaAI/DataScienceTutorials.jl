@@ -1,16 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "MLJ",
-    "MLJLinearModels",
-    "PyPlot",
-    "EvoTrees",
-    "MLJDecisionTreeInterface",
-    "MLJScikitLearnInterface",
-    "NearestNeighborModels",
-    "StableRNGs"
-])
+Pkg.instantiate()
 macro OUTPUT()
     return "/tmp/"
 end

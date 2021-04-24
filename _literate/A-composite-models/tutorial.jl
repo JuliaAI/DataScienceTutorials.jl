@@ -1,11 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "MLJ",
-    "PrettyPrinting",
-    "NearestNeighborModels"
-])
+Pkg.instantiate()
 
 # ## Generating dummy data
 # Let's start by generating some dummy data with both numerical values and categorical values:

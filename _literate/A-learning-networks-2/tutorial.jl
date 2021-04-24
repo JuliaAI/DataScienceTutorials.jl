@@ -1,14 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "MLJ",
-    "Statistics",
-    "PrettyPrinting",
-    "StableRNGs",
-    "DataFrames",
-    "MLJMultivariateStatsInterface"
-])
+Pkg.instantiate()
 
 
 # ## Preliminary steps

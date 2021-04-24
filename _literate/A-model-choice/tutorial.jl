@@ -1,13 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "MLJ",
-    "RDatasets",
-    "NearestNeighbors",
-    "MLJGLMInterface",
-    "MLJScikitLearnInterface"
-])
+Pkg.instantiate()
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl

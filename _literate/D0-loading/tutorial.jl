@@ -1,11 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "RDatasets",
-    "DataFrames",
-    "CSV"
-])
+Pkg.instantiate()
 
 
 # In this short tutorial we discuss two ways to easily load data in Julia:

@@ -1,14 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "MLJ",
-    "PrettyPrinting",
-    "DataFrames",
-    "StableRNGs",
-    "PyPlot",
-    "MLJDecisionTreeInterface"
-])
+Pkg.instantiate()
 macro OUTPUT()
     return "/tmp/"
 end

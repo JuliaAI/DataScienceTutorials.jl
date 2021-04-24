@@ -1,12 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "MLJ",
-    "DataFrames",
-    "UrlDownload",
-    "PyPlot"
-])
+Pkg.instantiate()
 macro OUTPUT()
     return "/tmp/"
 end

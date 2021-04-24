@@ -1,10 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.add([
-    "RDatasets",
-    "MLJScientificTypes",
-])
+Pkg.instantiate()
 
 # ## Machine type vs Scientific Type
 #
