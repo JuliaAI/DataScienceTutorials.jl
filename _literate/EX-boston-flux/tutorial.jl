@@ -1,10 +1,18 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # **Main author**: Ayush Shridhar (ayush-1506).
 #
 # ## Getting started
 
 import MLJFlux
 import MLJ
-import DataFrames
+import DataFrames: DataFrame
 import Statistics
 import Flux
 using Random
@@ -18,7 +26,7 @@ Random.seed!(11)
 # given a number of features.
 
 features, targets = MLJ.@load_boston
-features = DataFrames.DataFrame(features)
+features = DataFrame(features)
 @show size(features)
 @show targets[1:3]
 first(features, 3) |> MLJ.pretty
