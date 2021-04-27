@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # Before running this, please make sure to activate and instantiate the environment
 # corresponding to [this `Project.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Project.toml) and [this `Manifest.toml`](https://raw.githubusercontent.com/alan-turing-institute/MLJTutorials/master/Manifest.toml)
 # so that you get an environment which matches the one used to generate the tutorials:

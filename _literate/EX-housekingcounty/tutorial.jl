@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # ## Getting started
 #
 # This tutorial is adapted from [the corresponding MLR3 tutorial](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/).
@@ -93,7 +101,6 @@ DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
 y, X = unpack(df, ==(:price), col -> true)
 train, test = partition(eachindex(y), 0.7, shuffle=true, rng=5)
-
 tree = machine(DTR(), X, y)
 
 fit!(tree, rows=train);

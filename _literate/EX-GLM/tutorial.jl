@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # **Main author**: [Clarman Cruz](https://github.com/drcxcruz).
 #
 # This juypter lab showcases MLJ in particular using the popular [GLM](https://github.com/JuliaStats/GLM.jl) Julia package. We are using two datasets.  One dataset was created manually for testing purposes.  The other data set is the CollegeDistance dataset from the [AER](https://cran.r-project.org/web/packages/AER/index.html) package in R.
@@ -7,8 +15,9 @@
 using MLJ, CategoricalArrays, PrettyPrinting
 import DataFrames: DataFrame, nrow
 using UrlDownload
-const LinearRegressor = @load LinearRegressor pkg = GLM
-const LinearBinaryClassifier = @load LinearBinaryClassifier pkg=GLM
+
+LinearRegressor = @load LinearRegressor pkg=GLM
+LinearBinaryClassifier = @load LinearBinaryClassifier pkg=GLM
 
 # ## Reading the data
 #

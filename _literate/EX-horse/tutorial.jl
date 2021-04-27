@@ -1,3 +1,8 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+
 # ## Initial data processing
 #
 # In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
@@ -134,7 +139,7 @@ X = coerce(X, autotype(X, :discrete_to_continuous));
 # - feed all this into a classifier
 
 @load OneHotEncoder
-@load MultinomialClassifier pkg="MLJLinearModels"
+MultinomialClassifier = @load MultinomialClassifier pkg="MLJLinearModels"
 
 # Let's have convenient handles over the training data
 

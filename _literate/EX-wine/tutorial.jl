@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # ## Initial data processing
 #
 # In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)
@@ -84,7 +92,7 @@ describe(Xc, :mean, :std)
 # - a Standardizer + Multinomial classifier (logistic regression).
 
 KNNC = @load KNNClassifier
-MNC = @load MultinomialClassifier pkg="MLJLinearModels";
+MNC = @load MultinomialClassifier pkg=MLJLinearModels;
 
 KnnPipe = @pipeline(Standardizer(), KNNC())
 MnPipe = @pipeline(Standardizer(), MNC());

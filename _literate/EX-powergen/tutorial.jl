@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # **Main author**: [Geoffroy Dolphin](https://github.com/gd1989)
 #
 # ## Initial data processing
@@ -11,7 +19,7 @@ ioff() # hide
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 
-@load LinearRegressor pkg=MLJLinearModels
+LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
 
 # The power generation and weather data come from two separate datasets.
 # We downloaded both datasets from [Open Power networks](https://open-power-system-data.org/).
