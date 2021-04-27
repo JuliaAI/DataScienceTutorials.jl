@@ -2,9 +2,6 @@
 using Pkg
 Pkg.activate(@__DIR__)
 Pkg.instantiate()
-macro OUTPUT()
-    return "/tmp/"
-end
 
 # ## Baby steps
 #
