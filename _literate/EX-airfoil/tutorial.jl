@@ -1,3 +1,11 @@
+# hideall
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+macro OUTPUT()
+    return "/tmp/"
+end
+
 # **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
 #
 # ## Getting started
@@ -59,12 +67,12 @@ end
 #
 # We will first try out DecisionTreeRegressor:
 
-DCR = @load DecisionTreeRegressor pkg=DecisionTree
+DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
 
-dcrm = machine(DCR(), X, y)
+dcrm = machine(DecisionTreeRegressor(), X, y)
 
 fit!(dcrm, rows=train)
-pred_dcrm = MLJ.predict(dcrm, rows=test);
+pred_dcrm = predict(dcrm, rows=test);
 
 # Now you can call a loss function to assess the performance on test set.
 
@@ -74,8 +82,8 @@ rms(pred_dcrm, y[test])
 #
 # Now let's try out RandomForestRegressor:
 
-RFR = @load RandomForestRegressor pkg=DecisionTree
-rfr = RFR()
+RandomForestRegressor = @load RandomForestRegressor pkg=DecisionTree
+rfr = RandomForestRegressor()
 
 rfr_m = machine(rfr, X, y);
 
@@ -85,7 +93,7 @@ fit!(rfr_m, rows=train);
 
 # predict values on the rows corresponding to test
 
-pred_rfr = MLJ.predict(rfr_m, rows=test);
+pred_rfr = predict(rfr_m, rows=test);
 rms(pred_rfr, y[test])
 
 # Unsurprisingly, the RandomForestRegressor does a better job.
@@ -118,7 +126,7 @@ fit!(rfr_tm, rows=train);
 
 # predict values on the rows corresponding to test
 
-pred_rfr_tm = MLJ.predict(rfr_tm, rows=test);
+pred_rfr_tm = predict(rfr_tm, rows=test);
 rms(pred_rfr_tm, y[test])
 
 # That was great! We have further improved the accuracy
