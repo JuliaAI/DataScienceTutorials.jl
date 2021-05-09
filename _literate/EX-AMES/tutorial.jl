@@ -161,8 +161,7 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     ŷ = exp(ẑ)
 
     mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    return!(mach, model, verbosity)
 end
 
 # **Note**: you really  want to set `verbosity=0` here otherwise in the tuning you will get a lot of verbose output!
