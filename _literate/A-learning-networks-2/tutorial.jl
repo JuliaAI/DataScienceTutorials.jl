@@ -111,8 +111,7 @@ function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
     mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    return!(mach, m, verbosity - 1)
 end
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),
