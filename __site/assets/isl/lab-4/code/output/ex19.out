@@ -1,1 +1,1 @@
-MLJBase.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.504, Up=>0.496)]
+MLJBase.UnivariateFinite{OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{OrderedFactor{2}}(Down=>0.504, Up=>0.496)]

@@ -14,7 +14,10 @@ showall = true
 
 ignore = ["data/", "getting-started/", "isl/", "end-to-end/"]
 
-current = "data/"
+# current = "data/"
+current = "isl/"
+
+
 ignore = [d for d in ignore if d != current]
 +++
 

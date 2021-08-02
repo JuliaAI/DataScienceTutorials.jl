@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_6b_-_ridge_and_lasso_regression"><a href="#lab_6b_-_ridge_and_lasso_regression" class="header-anchor">Lab 6b - Ridge and Lasso regression</a></h1>
-<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#data_preparation">Data preparation</a></li></ol></li><li><a href="#ridge_pipeline">Ridge pipeline</a><ol><li><a href="#baseline">Baseline</a></li><li><a href="#basic_ridge">Basic Ridge</a></li><li><a href="#cross_validating">Cross validating</a></li></ol></li><li><a href="#lasso_pipeline">Lasso pipeline</a></li><li><a href="#elastic_net_pipeline">Elastic net pipeline</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#data_preparation">Data preparation</a></li></ol></li><li><a href="#ridge_pipeline">Ridge pipeline</a><ol><li><a href="#baseline">Baseline</a></li><li><a href="#basic_ridge">Basic Ridge</a></li><li><a href="#cross_validating">Cross validating</a></li></ol></li><li><a href="#lasso_pipeline">Lasso pipeline</a></li><li><a href="#elastic_net_pipeline">Elastic net pipeline</a></li></ol></div>
 <p>regression to the Hitters R dataset.</p>
 <h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
 <pre><code class="language-julia">using MLJ
@@ -157,7 +157,7 @@ plot&#40;y, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;&#41;
 
 xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
 xlabel&#40;&quot;Index&quot;, fontsize&#61;14&#41;, ylabel&#40;&quot;Salary&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-6b/code/ISL-lab-6-g1.svg' not found. //</span></p>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g1.svg" alt="Salary">
 <p>That looks quite skewed, let&#39;s have a look at a histogram:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 hist&#40;y, bins&#61;50, density&#61;true&#41;
@@ -171,11 +171,11 @@ yy &#61; pdf.&#40;edfit, xx&#41;
 plot&#40;xx, yy, lw&#61;3, label&#61;&quot;Exponential distribution fit&quot;&#41;
 
 legend&#40;fontsize&#61;12&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-6b/code/ISL-lab-6-g2.svg' not found. //</span></p>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g2.svg" alt="Distribution of salary">
 <h3 id="data_preparation"><a href="#data_preparation" class="header-anchor">Data preparation</a></h3>
 <p>Most features are currently encoded as integers but we will consider them as continuous. To coerce <code>int</code> features to <code>Float</code>, we nest the <code>autotype</code> function in the <code>coerce</code> function. The <code>autotype</code> function returns a dictionary containing scientific types, which is then passed to the <code>coerce</code> function. For more details on the use of <code>autotype</code>, see the <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype">Scientific Types</a></p>
 <pre><code class="language-julia">Xc &#61; coerce&#40;X, autotype&#40;X, rules&#61;&#40;:discrete_to_continuous,&#41;&#41;&#41;
-scitype&#40;Xc&#41;</code></pre><pre><code class="plaintext code-output">ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}}}</code></pre>
+scitype&#40;Xc&#41;</code></pre><pre><code class="plaintext code-output">Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}}}</code></pre>
 <p>There&#39;re a few features that are categorical which we&#39;ll one-hot-encode.</p>
 <h2 id="ridge_pipeline"><a href="#ridge_pipeline" class="header-anchor">Ridge pipeline</a></h2>
 <h3 id="baseline"><a href="#baseline" class="header-anchor">Baseline</a></h3>
@@ -198,7 +198,7 @@ xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
 xlabel&#40;&quot;Index&quot;, fontsize&#61;14&#41;; ylabel&#40;&quot;Residual &#40;ŷ - y&#41;&quot;, fontsize&#61;14&#41;
 
 ylim&#40;&#91;-1300, 1000&#93;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-6b/code/ISL-lab-6-g3.svg' not found. //</span></p>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g3.svg" alt="Residuals">
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 hist&#40;res, bins&#61;30, density&#61;true, color&#61;&quot;green&quot;&#41;
 
@@ -214,7 +214,7 @@ legend&#40;fontsize&#61;12&#41;
 xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
 xlabel&#40;&quot;Residual &#40;ŷ - y&#41;&quot;, fontsize&#61;14&#41;; ylabel&#40;&quot;Density&quot;, fontsize&#61;14&#41;
 xlim&#40;&#91;-1100, 1100&#93;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-6b/code/ISL-lab-6-g4.svg' not found. //</span></p>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g4.svg" alt="Distribution of residuals">
 <h3 id="basic_ridge"><a href="#basic_ridge" class="header-anchor">Basic Ridge</a></h3>
 <p>Let&#39;s now swap the linear regressor for a Ridge one without specifying the penalty &#40;<code>1</code> by default&#41;: We modify the supervised model in the pipeline directly.</p>
 <pre><code class="language-julia">pipe.model.linear_regressor &#61; RidgeRegressor&#40;&#41;
@@ -247,7 +247,7 @@ ylabel&#40;&quot;Residual &#40;ŷ - y&#41;&quot;, fontsize&#61;14&#41;
 xlim&#40;1, length&#40;res&#41;&#41;
 
 ylim&#40;&#91;-1300, 1000&#93;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-6b/code/ISL-lab-6-g5.svg' not found. //</span></p>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g5.svg" alt="Ridge residuals">
 <p>You can compare that with the residuals obtained earlier.</p>
 <h2 id="lasso_pipeline"><a href="#lasso_pipeline" class="header-anchor">Lasso pipeline</a></h2>
 <p>Let&#39;s do the same as above but using a Lasso model and adjusting the range a bit:</p>
@@ -283,7 +283,7 @@ idxshow &#61; collect&#40;1:length&#40;coef_vals&#41;&#41;&#91;abs.&#40;coef_val
 xticks&#40;idxshow .- 1, all_names&#91;idxshow&#93;, rotation&#61;45, fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;
 ylabel&#40;&quot;Amplitude&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-6b/code/ISL-lab-6-g6.svg' not found. //</span></p>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g6.svg" alt="Lasso coefficients">
 <h2 id="elastic_net_pipeline"><a href="#elastic_net_pipeline" class="header-anchor">Elastic net pipeline</a></h2>
 <pre><code class="language-julia">ElasticNetRegressor &#61; @load ElasticNetRegressor pkg&#61;MLJLinearModels
 

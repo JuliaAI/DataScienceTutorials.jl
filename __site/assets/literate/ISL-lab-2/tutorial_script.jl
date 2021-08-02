@@ -5,7 +5,7 @@ Pkg.activate("_literate/ISL-lab-2/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 x = [1, 3, 2, 5]
 @show x

@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_2"><a href="#lab_2" class="header-anchor">Lab 2</a></h1>
-<div class="franklin-toc"><ol><li><a href="#basic_commands">Basic commands</a></li><li><a href="#loading_data">Loading data</a></li><li><a href="#plotting_data">Plotting data</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#basic_commands">Basic commands</a></li><li><a href="#loading_data">Loading data</a></li><li><a href="#plotting_data">Plotting data</a></li></ol></div>
 <h2 id="basic_commands"><a href="#basic_commands" class="header-anchor">Basic commands</a></h2>
 <p>This is a very brief and rough primer if you&#39;re new to Julia and wondering how to do simple things that are relevant for data analysis.</p>
 <p>Defining a vector</p>
@@ -149,7 +149,7 @@ sqrt(x) = 2.0
 <pre><code class="language-julia">x &#61; randn&#40;1_000&#41; # 1_000 points iid from a N&#40;0, 1&#41;
 μ &#61; mean&#40;x&#41;
 σ &#61; std&#40;x&#41;
-@show &#40;μ, σ&#41;</code></pre><pre><code class="plaintext code-output">(μ, σ) = (-0.026768594440215364, 0.989975884297108)
+@show &#40;μ, σ&#41;</code></pre><pre><code class="plaintext code-output">(μ, σ) = (0.017365031444298816, 1.027183612153308)
 </code></pre>
 <p>Indexing data starts at 1, use <code>:</code> to indicate the full range</p>
 <pre><code class="language-julia">X &#61; &#91;1 2; 3 4; 5 6&#93;
@@ -244,7 +244,7 @@ ncol(auto) = 9
 
 figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;mpg&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-2/code/ISL-lab-2-mpg.svg' not found. //</span></p>
+<img src="/assets/isl/lab-2/code/output/ISL-lab-2-mpg.svg" alt="Simple plot">
 
 
 <div class="page-foot">

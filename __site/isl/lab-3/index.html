@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_3_-_linear_regression"><a href="#lab_3_-_linear_regression" class="header-anchor">Lab 3 - Linear Regression</a></h1>
-<div class="franklin-toc"><ol><li><a href="#simple_linear_regression">Simple linear regression</a></li><li><a href="#interaction_and_transformation">Interaction and transformation</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#simple_linear_regression">Simple linear regression</a></li><li><a href="#interaction_and_transformation">Interaction and transformation</a></li></ol></div>
 <h2 id="simple_linear_regression"><a href="#simple_linear_regression" class="header-anchor">Simple linear regression</a></h2>
 <p><code>MLJ</code> essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.</p>
 <p>The simple linear regression demonstrates this. Several packages offer it &#40;beyond just using the backslash operator&#41;: here we will use <code>MLJLinearModels</code> but we could also have used <code>GLM</code>, <code>ScikitLearn</code> etc.</p>
@@ -148,14 +148,14 @@ X &#61; select&#40;data, Not&#40;:MedV&#41;&#41;;</code></pre>
 <p>Let&#39;s declare a simple multivariate linear regression model:</p>
 <pre><code class="language-julia">mdl &#61; LinearRegressor&#40;&#41;</code></pre><pre><code class="plaintext code-output">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @760</code></pre>
+    solver = nothing) @262</code></pre>
 <p>First let&#39;s do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a <em>machine</em> which, in MLJ, is the composition of a model and data to apply the model on:</p>
 <pre><code class="language-julia">X_uni &#61; select&#40;X, :LStat&#41; # only a single feature
 mach_uni &#61; machine&#40;mdl, X_uni, y&#41;
-fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @147 trained 1 time; caches data
+fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @196 trained 1 time; caches data
   args: 
-    1:	Source @139 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @963 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @293 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @836 ⏎ `AbstractVector{Continuous}`
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp &#61; fitted_params&#40;mach_uni&#41;
@@ -170,7 +170,7 @@ figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;X.LStat, y, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;&#41;
 Xnew &#61; &#40;LStat &#61; collect&#40;range&#40;extrema&#40;X.LStat&#41;..., length&#61;100&#41;&#41;,&#41;
 plot&#40;Xnew.LStat, MLJ.predict&#40;mach_uni, Xnew&#41;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-3/code/ISL-lab-3-lm1.svg' not found. //</span></p>
+<img src="/assets/isl/lab-3/code/output/ISL-lab-3-lm1.svg" alt="Univariate regression">
 <p>The  multivariate case is very similar</p>
 <pre><code class="language-julia">mach &#61; machine&#40;mdl, X, y&#41;
 fit&#33;&#40;mach&#41;
@@ -203,11 +203,11 @@ round&#40;rms&#40;ŷ, y&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 res &#61; ŷ .- y
 stem&#40;res&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-3/code/ISL-lab-3-res.svg' not found. //</span></p>
+<img src="/assets/isl/lab-3/code/output/ISL-lab-3-res.svg" alt="Plot of the residuals">
 <p>Maybe that a histogram is more appropriate here</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 hist&#40;res, density&#61;true&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-3/code/ISL-lab-3-res2.svg' not found. //</span></p>
+<img src="/assets/isl/lab-3/code/output/ISL-lab-3-res2.svg" alt="Histogram of the residuals">
 <h2 id="interaction_and_transformation"><a href="#interaction_and_transformation" class="header-anchor">Interaction and transformation</a></h2>
 <p>Let&#39;s say we want to also consider an interaction term of <code>lstat</code> and <code>age</code> taken together. To do this, just create a new dataframe with an additional column corresponding to the interaction term:</p>
 <pre><code class="language-julia">X2 &#61; hcat&#40;X, X.LStat .* X.Age&#41;;</code></pre>
@@ -231,7 +231,7 @@ round&#40;rms&#40;ŷ, y&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class
 figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;X.LStat, y, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;&#41;
 plot&#40;Xnew.LStat, MLJ.predict&#40;mach, Xnew&#41;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-3/code/ISL-lab-3-lreg.svg' not found. //</span></p>
+<img src="/assets/isl/lab-3/code/output/ISL-lab-3-lreg.svg" alt="Polynomial regression">
 
 
 <div class="page-foot">

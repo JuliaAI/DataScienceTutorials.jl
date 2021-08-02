@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_5_-_cross_validation_and_the_bootstrap"><a href="#lab_5_-_cross_validation_and_the_bootstrap" class="header-anchor">Lab 5 - Cross validation and the bootstrap</a></h1>
-<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></li></ol></li><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></li><li><a href="#the_bootstrap">The Bootstrap</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></li></ol></li><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></li><li><a href="#the_bootstrap">The Bootstrap</a></li></ol></div>
 <h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
@@ -121,7 +121,7 @@ xlabel&#40;&quot;Horsepower&quot;, fontsize&#61;14&#41;
 xticks&#40;50:50:250, fontsize&#61;12&#41;
 yticks&#40;10:10:50, fontsize&#61;12&#41;
 ylabel&#40;&quot;MPG&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-5/code/ISL-lab-5-g1.svg' not found. //</span></p>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g1.svg" alt="MPG v Horsepower">
 <p>Let&#39;s get a baseline:</p>
 <pre><code class="language-julia">lm &#61; LR&#40;&#41;
 mlm &#61; machine&#40;lm, select&#40;X, :Horsepower&#41;, y&#41;
@@ -139,7 +139,7 @@ xlabel&#40;&quot;Horsepower&quot;, fontsize&#61;14&#41;
 xticks&#40;50:50:250, fontsize&#61;12&#41;
 yticks&#40;10:10:50, fontsize&#61;12&#41;
 ylabel&#40;&quot;MPG&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-5/code/ISL-lab-5-g2.svg' not found. //</span></p>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g2.svg" alt="1st order baseline">
 <p>We now want to build three polynomial models of degree 1, 2 and 3 respectively; we start by forming the corresponding feature matrix:</p>
 <pre><code class="language-julia">hp &#61; X.Horsepower
 Xhp &#61; DataFrame&#40;hp1&#61;hp, hp2&#61;hp.^2, hp3&#61;hp.^3&#41;;</code></pre>
@@ -156,10 +156,10 @@ fit&#33;&#40;lr2, rows&#61;train&#41;
 
 LinMod.feature_selector.features &#61; &#91;:hp1, :hp2, :hp3&#93; # poly of degree 3
 lr3 &#61; machine&#40;LinMod, Xhp, y&#41;
-fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline419,…} @012 trained 1 time; caches data
+fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline324,…} @733 trained 1 time; caches data
   args: 
-    1:	Source @255 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @781 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @742 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @098 ⏎ `AbstractVector{Continuous}`
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="language-julia">get_mse&#40;lr&#41; &#61; rms&#40;MLJ.predict&#40;lr, rows&#61;test&#41;, y&#91;test&#93;&#41;^2
@@ -190,7 +190,7 @@ xlabel&#40;&quot;Horsepower&quot;, fontsize&#61;14&#41;
 xticks&#40;50:50:250, fontsize&#61;12&#41;
 yticks&#40;10:10:50, fontsize&#61;12&#41;
 ylabel&#40;&quot;MPG&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-5/code/ISL-lab-5-g3.svg' not found. //</span></p>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g3.svg" alt="1st, 2nd and 3d order fit">
 <h2 id="k-folds_cross_validation"><a href="#k-folds_cross_validation" class="header-anchor">K-Folds Cross Validation</a></h2>
 <p>Let&#39;s crossvalidate over the degree of the  polynomial.</p>
 <p><strong>Note</strong>: there&#39;s a  bit of gymnastics here because MLJ doesn&#39;t directly support a polynomial regression; see our tutorial on <a href="/getting-started/model-tuning/">tuning models</a> for a gentler introduction to model tuning. The gist of the following code is to create a dataframe where each column is a power of the <code>Horsepower</code> feature from 1 to 10 and we build a series of regression models using incrementally more of those features &#40;higher degree&#41;:</p>
@@ -200,9 +200,9 @@ cases &#61; &#91;&#91;Symbol&#40;&quot;x&#36;j&quot;&#41; for j in 1:i&#93; for 
 r &#61; range&#40;LinMod, :&#40;feature_selector.features&#41;, values&#61;cases&#41;
 
 tm &#61; TunedModel&#40;model&#61;LinMod, ranges&#61;r, resampling&#61;CV&#40;nfolds&#61;10&#41;, measure&#61;rms&#41;</code></pre><pre><code class="plaintext code-output">DeterministicTunedModel(
-    model = Pipeline419(
-            feature_selector = FeatureSelector @865,
-            linear_regressor = LinearRegressor @497),
+    model = Pipeline324(
+            feature_selector = FeatureSelector @011,
+            linear_regressor = LinearRegressor @608),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -225,7 +225,7 @@ tm &#61; TunedModel&#40;model&#61;LinMod, ranges&#61;r, resampling&#61;CV&#40;nf
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @302</code></pre>
+    cache = true) @131</code></pre>
 <p>Now we&#39;re left with fitting the tuned model</p>
 <pre><code class="language-julia">mtm &#61; machine&#40;tm, Xhp, y&#41;
 fit&#33;&#40;mtm&#41;
@@ -234,8 +234,8 @@ rep &#61; report&#40;mtm&#41;
 res &#61; rep.plotting
 
 @show round.&#40;res.measurements.^2, digits&#61;2&#41;
-@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [21.34, 25.66, 88.61, 27.44, 223.98, 21.35, 21.24, 20.91, 20.96, 20.91]
-argmin(res.measurements) = 8
+@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [27.44, 21.34, 21.35, 21.24, 20.91, 88.61, 223.98, 20.91, 25.66, 20.96]
+argmin(res.measurements) = 5
 </code></pre>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>
 <p>In ISL they use a different seed so the results are a bit different but comparable.</p>
@@ -250,7 +250,7 @@ xlabel&#40;&quot;Horsepower&quot;, fontsize&#61;14&#41;
 xticks&#40;50:50:250, fontsize&#61;12&#41;
 yticks&#40;10:10:50, fontsize&#61;12&#41;
 ylabel&#40;&quot;MPG&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-5/code/ISL-lab-5-g4.svg' not found. //</span></p>
+<img src="/assets/isl/lab-5/code/output/ISL-lab-5-g4.svg" alt="5th order fit">
 <h2 id="the_bootstrap"><a href="#the_bootstrap" class="header-anchor">The Bootstrap</a></h2>
 <p><em>Bootstrapping is not currently supported in MLJ.</em></p>
 

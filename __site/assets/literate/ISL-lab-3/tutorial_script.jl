@@ -5,7 +5,7 @@ Pkg.activate("_literate/ISL-lab-3/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using MLJ
 MLJ.color_off() # hide
