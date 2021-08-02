@@ -1,9 +1,10 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-6b/Project.toml")
 Pkg.instantiate()
-macro OUTPUT()
-    return "/tmp/"
+if !isdefined(Main, :Franklin)
+    macro OUTPUT()
+        return "/tmp/"
+    end
 end
 
 # In this tutorial, we are exploring the application of Ridge and Lasso

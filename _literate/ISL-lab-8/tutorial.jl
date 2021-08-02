@@ -1,9 +1,10 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-8/Project.toml")
 Pkg.instantiate()
-macro OUTPUT()
-    return "/tmp/"
+if !isdefined(Main, :Franklin)
+    macro OUTPUT()
+        return "/tmp/"
+    end
 end
 
 

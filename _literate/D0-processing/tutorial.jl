@@ -1,10 +1,8 @@
 using Pkg # hideall
 Pkg.activate("_literate/D0-processing/Project.toml")
 Pkg.instantiate()
-if !isdefined(Main, :Franklin)
-    macro OUTPUT()
-        return "/tmp/"
-    end
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
 end
 
 # ## More data processing

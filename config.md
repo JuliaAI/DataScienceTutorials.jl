@@ -11,7 +11,8 @@ mintoclevel = 2
 maxtoclevel = 3
 showall = true
 
-ignore = ["end-to-end/", "getting-started/", "isl/"]
+# ignore = ["end-to-end/", "getting-started/", "isl/"]
+ignore = ["end-to-end/", "getting-started/"]
 +++
 
 <!--

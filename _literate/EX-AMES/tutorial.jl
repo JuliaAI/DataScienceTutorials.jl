@@ -1,5 +1,4 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/EX-AMES/Project.toml")
 Pkg.instantiate()
 

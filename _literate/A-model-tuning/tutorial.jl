@@ -1,9 +1,8 @@
-# hideall
-using Pkg
+using Pkg# hideall
 Pkg.activate("_literate/A-model-tuning/Project.toml")
 Pkg.instantiate()
 macro OUTPUT()
-    return "/tmp/"
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
 end
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl

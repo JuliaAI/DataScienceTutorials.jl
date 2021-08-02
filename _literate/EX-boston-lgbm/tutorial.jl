@@ -1,11 +1,9 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/EX-boston-lgbm/Project.toml")
 Pkg.instantiate()
 macro OUTPUT()
-    return "/tmp/"
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
 end
-
 # **Main author**: Yaqub Alwan (IQVIA).
 #
 # ## Getting started

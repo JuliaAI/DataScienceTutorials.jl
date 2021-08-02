@@ -1,11 +1,9 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/EX-GLM/Project.toml")
 Pkg.instantiate()
 macro OUTPUT()
-    return "/tmp/"
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
 end
-
 # **Main author**: [Clarman Cruz](https://github.com/drcxcruz).
 #
 # This juypter lab showcases MLJ in particular using the popular [GLM](https://github.com/JuliaStats/GLM.jl) Julia package. We are using two datasets.  One dataset was created manually for testing purposes.  The other data set is the CollegeDistance dataset from the [AER](https://cran.r-project.org/web/packages/AER/index.html) package in R.

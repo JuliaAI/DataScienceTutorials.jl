@@ -1,9 +1,8 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/A-stacking/Project.toml")
 Pkg.instantiate()
 macro OUTPUT()
-    return "/tmp/"
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
 end
 
 # In stacking one blends the predictions of different regressors or

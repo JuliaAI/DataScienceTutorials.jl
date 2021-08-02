@@ -1,5 +1,4 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/A-fit-predict/Project.toml")
 Pkg.instantiate()
 

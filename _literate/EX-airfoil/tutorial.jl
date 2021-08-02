@@ -1,9 +1,8 @@
-# hideall
-using Pkg
+using Pkg# hideall
 Pkg.activate("_literate/EX-airfoil/Project.toml")
 Pkg.instantiate()
 macro OUTPUT()
-    return "/tmp/"
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
 end
 
 # **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).

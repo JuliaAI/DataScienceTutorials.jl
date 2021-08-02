@@ -1,9 +1,10 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-5/Project.toml")
 Pkg.instantiate()
-macro OUTPUT()
-    return "/tmp/"
+if !isdefined(Main, :Franklin)
+    macro OUTPUT()
+        return "/tmp/"
+    end
 end
 
 
@@ -74,7 +75,7 @@ Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 # Now we  can write a simple pipeline where the first step selects the features we want (and with it the degree of the polynomial) and the second is the linear regressor:
 
 LinMod = @pipeline(FeatureSelector(features=[:hp1]),
-                   LinearRegressor());
+                   LR());
 
 # Then we can  instantiate and fit 3 models where we specify the features each time:
 

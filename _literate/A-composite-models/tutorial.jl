@@ -1,7 +1,9 @@
-# hideall
-using Pkg
+using Pkg # hideall
 Pkg.activate("_literate/A-composite-models/Project.toml")
 Pkg.instantiate()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
+end
 
 # ## Generating dummy data
 # Let's start by generating some dummy data with both numerical values and categorical values:
