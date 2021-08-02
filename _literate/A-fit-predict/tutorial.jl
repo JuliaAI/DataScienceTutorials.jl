@@ -1,6 +1,6 @@
 # hideall
 using Pkg
-Pkg.activate(@__DIR__)
+Pkg.activate("_literate/A-fit-predict/Project.toml")
 Pkg.instantiate()
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl

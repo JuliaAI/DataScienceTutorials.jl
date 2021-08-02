@@ -1,1 +1,0 @@
-AbstractVector{Continuous} (alias for AbstractArray{Continuous, 1})

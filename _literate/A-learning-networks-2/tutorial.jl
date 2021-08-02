@@ -1,6 +1,6 @@
 # hideall
 using Pkg
-Pkg.activate(@__DIR__)
+Pkg.activate("_literate/A-learning-networks-2/Project.toml")
 Pkg.instantiate()
 
 

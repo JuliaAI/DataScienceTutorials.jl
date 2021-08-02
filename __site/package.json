@@ -1,7 +1,0 @@
-{
-  "requires": true,
-  "lockfileVersion": 1,
-  "dependencies": {
-    "highlight.js": "^10.1.1"
-  }
-}

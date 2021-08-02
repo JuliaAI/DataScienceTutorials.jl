@@ -1,6 +1,6 @@
 # hideall
 using Pkg
-Pkg.activate(@__DIR__)
+Pkg.activate("_literate/EX-horse/Project.toml")
 Pkg.instantiate()
 
 # ## Initial data processing

@@ -1,6 +1,5 @@
-# hideall
-using Pkg
-Pkg.activate(@__DIR__)
+using Pkg  # hideall
+Pkg.activate("_literate/D0-loading/Project.toml")
 Pkg.instantiate()
 
 

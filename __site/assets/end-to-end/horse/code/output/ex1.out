@@ -1,1 +1,0 @@
-ArgumentError: provide a valid sink argument, like `using DataFrames; CSV.read(source, DataFrame)`

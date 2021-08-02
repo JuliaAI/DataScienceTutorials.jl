@@ -1,6 +1,5 @@
-# hideall
-using Pkg
-Pkg.activate(@__DIR__)
+using Pkg  # hideall
+Pkg.activate("_literate/D0-scitype/Project.toml")
 Pkg.instantiate()
 
 # ## Machine type vs Scientific Type

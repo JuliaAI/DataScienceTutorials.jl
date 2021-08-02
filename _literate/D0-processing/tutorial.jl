@@ -1,9 +1,10 @@
-# hideall
-using Pkg
-Pkg.activate(@__DIR__)
+using Pkg # hideall
+Pkg.activate("_literate/D0-processing/Project.toml")
 Pkg.instantiate()
-macro OUTPUT()
-    return "/tmp/"
+if !isdefined(Main, :Franklin)
+    macro OUTPUT()
+        return "/tmp/"
+    end
 end
 
 # ## More data processing

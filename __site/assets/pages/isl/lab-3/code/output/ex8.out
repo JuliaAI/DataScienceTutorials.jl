@@ -1,2 +1,0 @@
-round.(fp.coefs, sigdigits=3) = [-0.95]
-round(fp.intercept, sigdigits=3) = 34.6

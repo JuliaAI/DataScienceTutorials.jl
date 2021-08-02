@@ -1,1 +1,0 @@
-MersenneTwister(11)

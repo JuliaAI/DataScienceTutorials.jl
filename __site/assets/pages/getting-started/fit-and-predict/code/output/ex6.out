@@ -1,4 +1,0 @@
-(tree_or_leaf = Decision Tree
-Leaves: 8
-Depth:  4,
- encoding = Dict("virginica" => 0x03, "setosa" => 0x01, "versicolor" => 0x02))

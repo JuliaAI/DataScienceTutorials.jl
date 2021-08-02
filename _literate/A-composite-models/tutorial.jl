@@ -1,6 +1,6 @@
 # hideall
 using Pkg
-Pkg.activate(@__DIR__)
+Pkg.activate("_literate/A-composite-models/Project.toml")
 Pkg.instantiate()
 
 # ## Generating dummy data
