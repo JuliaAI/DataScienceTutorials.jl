@@ -1,0 +1,1 @@
+Machine{DeterministicTunedModel{Grid,…},…} @335 has not been trained. Call `fit!` on the machine, or, if you meant to create a learning network `Node`, use the syntax `node(report, mach::Machine)`. 

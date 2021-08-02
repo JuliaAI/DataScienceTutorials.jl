@@ -1,0 +1,2 @@
+Dict(CategoricalArrays.CategoricalValue{String, UInt32} "B" => 65,
+     CategoricalArrays.CategoricalValue{String, UInt32} "O" => 75)

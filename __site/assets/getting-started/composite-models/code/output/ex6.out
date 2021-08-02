@@ -1,0 +1,34 @@
+(measure = [RootMeanSquaredError @221],
+ measurement = [11.5],
+ per_fold = [[11.5]],
+ per_observation = [missing],
+ fitted_params_per_fold =
+     [(target = (mean_and_std = (177.5, 12.233832869001711),),
+       knn_regressor =
+           (tree =
+                NearestNeighbors.KDTree{StaticArrays.SVector{2, Float64}, Distances.Euclidean, Float64}
+  Number of points: 4
+  Dimensions: 2
+  Metric: Distances.Euclidean(0.0)
+  Reordered: true,),
+       one_hot_encoder = (fitresult = OneHotEncoderResult @587,),
+       machines = [Machine{OneHotEncoder,…} @529,
+                   Machine{KNNRegressor,…} @668,
+                   Machine{UnivariateStandardizer,…} @285],
+       fitted_params_given_machine =
+           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @529 => (fitresult = OneHotEncoderResult @587,), Machine{KNNRegressor,…} @668 => (tree = NearestNeighbors.KDTree{StaticArrays.SVector{2, Float64}, Distances.Euclidean, Float64}
+  Number of points: 4
+  Dimensions: 2
+  Metric: Distances.Euclidean(0.0)
+  Reordered: true,), Machine{UnivariateStandardizer,…} @285 => (mean_and_std = (177.5, 12.233832869001711),)))],
+ report_per_fold =
+     [(target = (),
+       knn_regressor = (),
+       one_hot_encoder = (features_to_be_encoded = [:gender],
+                          new_features = [:age, :gender__f]),
+       machines = [Machine{OneHotEncoder,…} @529,
+                   Machine{KNNRegressor,…} @668,
+                   Machine{UnivariateStandardizer,…} @285],
+       report_given_machine =
+           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @529 => (features_to_be_encoded = [:gender], new_features = [:age, :gender__f]), Machine{KNNRegressor,…} @668 => NamedTuple(), Machine{UnivariateStandardizer,…} @285 => NamedTuple()))],
+ train_test_rows = [([1, 2, 3, 4], [5])])

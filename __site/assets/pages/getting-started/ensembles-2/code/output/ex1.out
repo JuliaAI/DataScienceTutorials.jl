@@ -1,0 +1,11 @@
+(n, p) = (506, 12)
+Summary Stats:
+Length:         506
+Missing Count:  0
+Mean:           22.532806
+Minimum:        5.000000
+1st Quartile:   17.025000
+Median:         21.200000
+3rd Quartile:   25.000000
+Maximum:        50.000000
+Type:           Float64

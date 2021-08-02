@@ -1,0 +1,6 @@
+MethodError: no method matching build(::Main.FD_SANDBOX_1443500922528775838.MyNetworkBuilder, ::Random._GLOBAL_RNG, ::Int64, ::Int64)
+Closest candidates are:
+  build(!Matched::MLJFlux.Linear, ::Any, ::Integer, ::Integer) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:30
+  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
+  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
+  ...

@@ -1,0 +1,1 @@
+MLJScikitLearnInterface.BayesianQDA

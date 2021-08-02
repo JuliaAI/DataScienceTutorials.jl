@@ -1,0 +1,2 @@
+best_ensemble.atom.K = 3
+best_ensemble.bagging_fraction = 1.0

@@ -1,0 +1,7 @@
+┌─────────────┬────────────┬─────────────┬────────────┐
+│ SepalLength │ SepalWidth │ PetalLength │ PetalWidth │
+│ Float64     │ Float64    │ Float64     │ Float64    │
+│ Continuous  │ Continuous │ Continuous  │ Continuous │
+├─────────────┼────────────┼─────────────┼────────────┤
+│ 5.1         │ 3.5        │ 1.4         │ 0.2        │
+└─────────────┴────────────┴─────────────┴────────────┘

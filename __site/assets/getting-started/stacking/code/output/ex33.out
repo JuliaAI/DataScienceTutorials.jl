@@ -1,0 +1,4 @@
+MethodError: no method matching (::MLJBase.RootMeanSquaredError)(::Matrix{Float64}, ::Vector{Float64})
+Closest candidates are:
+  (::MLJBase.RootMeanSquaredError)(!Matched::AbstractVector{<:Real}, ::AbstractVector{<:Real}) at /Users/tlienart/.julia/packages/MLJBase/De8Dv/src/measures/continuous.jl:78
+  (::MLJBase.RootMeanSquaredError)(!Matched::AbstractVector{<:Real}, ::AbstractVector{<:Real}, !Matched::AbstractVector{<:Real}) at /Users/tlienart/.julia/packages/MLJBase/De8Dv/src/measures/continuous.jl:88

@@ -1,0 +1,6 @@
+fp(cm) = 458
+accuracy(ŷ, y) |> r3 = 0.521
+accuracy(cm) |> r3 = 0.521
+precision(ŷ, y) |> r3 = 0.525
+recall(ŷ, y) |> r3 = 0.782
+f1score(ŷ, y) |> r3 = 0.629

@@ -1,6 +1,6 @@
 using Pkg  # hideall
 Pkg.activate("_literate/D0-scitype/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 
 # ## Machine type vs Scientific Type
 #
@@ -51,7 +51,7 @@ Pkg.instantiate()
 # The `schema` function
 
 using RDatasets
-using MLJScientificTypes
+using ScientificTypes
 
 boston = dataset("MASS", "Boston")
 sch = schema(boston)

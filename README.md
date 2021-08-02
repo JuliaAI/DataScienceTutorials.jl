@@ -1,5 +1,19 @@
 # DataScienceTutorials.jl
 
+## Ongoing Revamp
+
+* [x] ISL
+* [x] Data
+* [ ] Getting Started
+  * [ ] stacking (EvoTrees / Cuda error)
+  * [ ] fit and predict (level not defined) --> need help
+  * [ ] model tuning error fitting (level not defined)
+  * [ ] learning networks (dataframe not defined)
+  * [ ] ensembles (*) -> heatmap not found
+
+---
+
+
 Latest CI build: [![Tutorials status](https://github.com/alan-turing-institute/DataScienceTutorials.jl/workflows/CI/badge.svg)](https://github.com/alan-turing-institute/DataScienceTutorials.jl/actions) with
 
 ```
@@ -23,7 +37,7 @@ To do so, save both files in an appropriate folder, start Julia, `cd` to the fol
 ```julia
 using Pkg
 Pkg.activate(".")
-Pkg.instantiate()
+Pkg.update()
 ```
 
 Each tutorial has a link at the top for a notebook or the raw script which you can download by right-clicking on the link and selecting "*Save file as...*".

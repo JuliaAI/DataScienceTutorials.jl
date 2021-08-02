@@ -13,7 +13,7 @@ In order to reproduce the environment that was used to generate these tutorials,
 3. Download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml} in this folder;
 4. In that folder, do
 ```julia-repl
-julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
+julia> using Pkg; Pkg.activate("."); Pkg.update();
 ```
 
 ## Elementary data manipulations

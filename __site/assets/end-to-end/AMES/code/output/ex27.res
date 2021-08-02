@@ -1,0 +1,26 @@
+DeterministicTunedModel(
+    model = KNNRidgeBlend(
+            knn_model = KNNRegressor @061,
+            ridge_model = RidgeRegressor @659,
+            knn_weight = 0.3),
+    tuning = Grid(
+            goal = nothing,
+            resolution = 3,
+            shuffle = true,
+            rng = Random._GLOBAL_RNG()),
+    resampling = CV(
+            nfolds = 6,
+            shuffle = false,
+            rng = Random._GLOBAL_RNG()),
+    measure = RootMeanSquaredLogError(),
+    weights = nothing,
+    operation = MLJModelInterface.predict,
+    range = MLJBase.NumericRange{T, MLJBase.Bounded, Symbol} where T[NumericRange{Int64,…} @726, NumericRange{Float64,…} @211, NumericRange{Float64,…} @559],
+    selection_heuristic = MLJTuning.NaiveSelection(nothing),
+    train_best = true,
+    repeats = 1,
+    n = nothing,
+    acceleration = ComputationalResources.CPU1{Nothing}(nothing),
+    acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
+    check_measure = true,
+    cache = true) @201

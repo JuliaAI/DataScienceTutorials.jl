@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/D0-categorical/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 
 # This tutorial follows loosely [the docs](https://juliadata.github.io/CategoricalArrays.jl/latest/using.html).
 #

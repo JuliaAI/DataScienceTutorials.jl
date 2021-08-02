@@ -1,0 +1,1 @@
+Node @ 6…17 = predict(1…16, transform(6…50, 1…00))

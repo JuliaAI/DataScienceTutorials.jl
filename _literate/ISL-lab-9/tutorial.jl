@@ -1,10 +1,8 @@
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-9/Project.toml")
-Pkg.instantiate()
-if !isdefined(Main, :Franklin)
-    macro OUTPUT()
-        return "/tmp/"
-    end
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end
 
 # ## Getting started

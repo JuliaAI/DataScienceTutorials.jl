@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Further data processing</title>  
+  <!-- LUNR -->
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="further_data_processing"><a href="#further_data_processing" class="header-anchor">Further data processing</a></h1>
+<div class="franklin-toc"><ol><li><a href="#more_data_processing">More data processing</a></li></ol></div>
+<h2 id="more_data_processing"><a href="#more_data_processing" class="header-anchor">More data processing</a></h2>
+<p>This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia. The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc Hence plenty of material to work with&#33;</p>
+<p>More tutorials on the manipulation of DataFrames can be found <a href="https://github.com/bkamins/Julia-DataFrames-Tutorial">here</a> And some more information can be found on <a href="https://en.wikibooks.org/wiki/Introducing_Julia/DataFrames">this</a> wikipage.</p>
+<pre><code class="language-julia">import MLJ: schema, std, mean, median, coerce, coerce&#33;, scitype
+using DataFrames
+using UrlDownload
+using PyPlot</code></pre>
+<p>Import data</p>
+<pre><code class="language-julia">raw_data &#61; urldownload&#40;&quot;https://github.com/tlienart/DataScienceTutorialsData.jl/blob/master/data/wri_global_power_plant_db_be_022020.csv?raw&#61;true&quot;&#41;
+data &#61; DataFrame&#40;raw_data&#41;;</code></pre>
+<p>This dataset contains information on power generation plants for a number of countries around the world. The level of disaggregation is the power plant. For each plant, there is information about its name, localisation, capacity, and many other features. The schema function enables us to get a quick overview of the variables it contains, including their machine and scentific types.</p>
+<pre><code class="language-julia">schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌──────────────────────────┬─────────────────────────┬────────────────────────────┐
+│ _.names                  │ _.types                 │ _.scitypes                 │
+├──────────────────────────┼─────────────────────────┼────────────────────────────┤
+│ country                  │ String                  │ Textual                    │
+│ country_long             │ String                  │ Textual                    │
+│ name                     │ String                  │ Textual                    │
+│ gppd_idnr                │ String                  │ Textual                    │
+│ capacity_mw              │ Float64                 │ Continuous                 │
+│ latitude                 │ Float64                 │ Continuous                 │
+│ longitude                │ Float64                 │ Continuous                 │
+│ primary_fuel             │ String                  │ Textual                    │
+│ other_fuel1              │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ other_fuel2              │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ other_fuel3              │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ commissioning_year       │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ owner                    │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ source                   │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ url                      │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ geolocation_source       │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ wepp_id                  │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ year_of_capacity_data    │ Union{Missing, Int64}   │ Union{Missing, Count}      │
+│ generation_gwh_2013      │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ generation_gwh_2014      │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ generation_gwh_2015      │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ generation_gwh_2016      │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ generation_gwh_2017      │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ generation_data_source   │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ estimated_generation_gwh │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+└──────────────────────────┴─────────────────────────┴────────────────────────────┘
+_.nrows = 33643
+</code></pre>
+<p>We see that a small number of features have values for all plants &#40;i.e. for each row&#41; present in the dataset. However, &#40;i&#41; several features have missing values &#40;Union&#123;Missing, _.type&#125;&#41; and &#40;ii&#41; we are not interested in working with all of these features. In particular, we&#39;re not intersted in the source of the information present in the dataset nor are we interested in the generation data. Hence we drop all columns which contain information&#39;s source. We define a function <code>is_active&#40;&#41;</code> that will return a <code>TRUE</code> boolean value if the column name does NOT &#40;<code>&#33;</code>&#41; contain either of the strings &quot;source&quot; or &quot;generation&quot;. Note the conversion of column names from <code>:Symbol</code> to <code>:string</code> since the <code>occursing</code> function only accepts strings as arguments.</p>
+<pre><code class="language-julia">is_active&#40;col&#41; &#61; &#33;occursin&#40;r&quot;source|generation&quot;, string&#40;col&#41;&#41;
+active_cols &#61; &#91;col for col in names&#40;data&#41; if is_active&#40;col&#41;&#93;
+select&#33;&#40;data, active_cols&#41;;</code></pre>
+<p>We also drop a number of other unwanted columns and take a look at our &quot;new&quot; dataframe.</p>
+<pre><code class="language-julia">select&#33;&#40;data, Not&#40;&#91;:wepp_id, :url, :owner&#93;&#41;&#41;
+schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────────────┬─────────────────────────┬────────────────────────────┐
+│ _.names               │ _.types                 │ _.scitypes                 │
+├───────────────────────┼─────────────────────────┼────────────────────────────┤
+│ country               │ String                  │ Textual                    │
+│ country_long          │ String                  │ Textual                    │
+│ name                  │ String                  │ Textual                    │
+│ gppd_idnr             │ String                  │ Textual                    │
+│ capacity_mw           │ Float64                 │ Continuous                 │
+│ latitude              │ Float64                 │ Continuous                 │
+│ longitude             │ Float64                 │ Continuous                 │
+│ primary_fuel          │ String                  │ Textual                    │
+│ other_fuel1           │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ other_fuel2           │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ other_fuel3           │ Union{Missing, String}  │ Union{Missing, Textual}    │
+│ commissioning_year    │ Union{Missing, Float64} │ Union{Missing, Continuous} │
+│ year_of_capacity_data │ Union{Missing, Int64}   │ Union{Missing, Count}      │
+└───────────────────────┴─────────────────────────┴────────────────────────────┘
+_.nrows = 33643
+</code></pre>
+<p>The remaining variables have two different scientific types: Continuous, Textual Of which we can get an overview.</p>
+<pre><code class="language-julia">describe&#40;data&#41;
+
+# The describe&#40;&#41; function shows that there are several features with missing values.</code></pre><pre><code class="plaintext code-output">13×7 DataFrame
+ Row │ variable               mean     min          median   max                nmissing  eltype
+     │ Symbol                 Union…   Any          Union…   Any                Int64     Type
+─────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ country                         AFG                   ZWE                       0  String
+   2 │ country_long                    Afghanistan           Zimbabwe                  0  String
+   3 │ name                            'Muela                \u200bVärtaverket         0  String
+   4 │ gppd_idnr                       ARG0000001            WRI1075863                0  String
+   5 │ capacity_mw            168.993  1.0          18.3     22500.0                   0  Float64
+   6 │ latitude               32.5014  -77.847      39.5835  71.292                    0  Float64
+   7 │ longitude              -4.1955  -179.978     -1.2744  179.389                   0  Float64
+   8 │ primary_fuel                    Biomass               Wind                      0  String
+   9 │ other_fuel1                     Biomass               Wind                  31680  Union{Missing, String}
+  10 │ other_fuel2                     Biomass               Wind                  33340  Union{Missing, String}
+  11 │ other_fuel3                     Biomass               Wind                  33539  Union{Missing, String}
+  12 │ commissioning_year     1995.49  1896.0       2005.0   2018.0                17340  Union{Missing, Float64}
+  13 │ year_of_capacity_data  2016.86  2000         2017.0   2018                  19900  Union{Missing, Int64}</code></pre>
+<p><em>Note:</em> the <code>describe&#40;&#41;</code> function is from the <code>DataFrames</code> package &#40;and won&#39;t work with other, non DataFrames, tables&#41; whereas the <code>schema&#40;&#41;</code> is from the MLJ package.</p>
+<p><hr /> Let&#39;s play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions &#40;country and primary_fuel&#41;</p>
+<pre><code class="language-julia">capacity &#61; select&#40;data, &#91;:country, :primary_fuel, :capacity_mw&#93;&#41;;
+first&#40;capacity, 5&#41;</code></pre><pre><code class="plaintext code-output">5×3 DataFrame
+ Row │ country  primary_fuel  capacity_mw
+     │ String   String        Float64
+─────┼────────────────────────────────────
+   1 │ AFG      Hydro                33.0
+   2 │ AFG      Solar                10.0
+   3 │ AFG      Solar                10.0
+   4 │ AFG      Hydro                66.0
+   5 │ AFG      Hydro               100.0</code></pre>
+<p>This dataframe contains several subgroups &#40;country and technology type&#41; and it would be interesting to get data aggregates by subgroup. To obtain a <code>view</code> of the DataFrame by subgroup, we can use the <code>groupby</code> function. &#40;See the <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/#groupby">DataFrame tutorial</a> for an introduction to the use of <code>groupby</code>&#41;</p>
+<pre><code class="language-julia">cap_gr &#61; groupby&#40;capacity, &#91;:country, :primary_fuel&#93;&#41;;</code></pre>
+<p>If we want to aggregate at the country-fuel-type level and calculate summary statistics at this level, we can use the <code>combine</code> function on the GroupedDataFrame that we just created. This function takes the GroupedDataFrame, the symbol of the column on which to apply the measure of choice as arguments.</p>
+<pre><code class="language-julia">cap_mean &#61; combine&#40;cap_gr, :capacity_mw &#61;&gt; mean&#41;
+cap_sum &#61; combine&#40;cap_gr, :capacity_mw &#61;&gt; sum&#41;
+first&#40;cap_sum, 3&#41;</code></pre><pre><code class="plaintext code-output">3×3 DataFrame
+ Row │ country  primary_fuel  capacity_mw_sum
+     │ String   String        Float64
+─────┼────────────────────────────────────────
+   1 │ AFG      Hydro                  238.55
+   2 │ AFG      Solar                   20.0
+   3 │ AFG      Gas                     42.0</code></pre>
+<p>Now let&#39;s plot some of this aggregate data for a selection of countries, by country and technology type</p>
+<pre><code class="language-julia">ctry_selec &#61; r&quot;BEL|FRA|DEU&quot;
+tech_selec &#61; r&quot;Solar&quot;
+
+cap_sum_plot &#61; cap_sum&#91;occursin.&#40;ctry_selec, cap_sum.country&#41; .&amp; occursin.&#40;tech_selec, cap_sum.primary_fuel&#41;, :&#93;</code></pre><pre><code class="plaintext code-output">3×3 DataFrame
+ Row │ country  primary_fuel  capacity_mw_sum
+     │ String   String        Float64
+─────┼────────────────────────────────────────
+   1 │ BEL      Solar                  116.2
+   2 │ FRA      Solar                 4910.42
+   3 │ DEU      Solar                 6770.56</code></pre>
+<p>Note the <code>.</code> for element-wise comparison Before plotting, we can also sort values by decreasing order using <code>sort&#33;&#40;&#41;</code>.</p>
+<pre><code class="language-julia">sort&#33;&#40;cap_sum_plot, :capacity_mw_sum, rev&#61;true&#41;
+
+figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+
+plt.bar&#40;cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width&#61;0.35&#41;
+plt.xticks&#40;rotation&#61;90&#41;</code></pre>
+<img src="/assets/data/processing/code/output/D0-processing-g1.svg" alt="processing1">
+<p><hr /> Now that we have the total capacity by country and technology type, let&#39;s use it to calculate the share of each technology in total capacity. To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.</p>
+<pre><code class="language-julia">cap_sum_ctry_gd &#61; groupby&#40;capacity, &#91;:country&#93;&#41;;
+cap_sum_ctry &#61; combine&#40;cap_sum_ctry_gd, :capacity_mw &#61;&gt; sum&#41;;</code></pre>
+<p>The we join this dataframe with the disaggregated one; which requires that we convert the two GroupedDataFrame into DataFrames.</p>
+<pre><code class="language-julia">cap_sum &#61; DataFrame&#40;cap_sum&#41;;
+cap_sum_ctry &#61; DataFrame&#40;cap_sum_ctry&#41;;
+cap_share &#61; leftjoin&#40;cap_sum, cap_sum_ctry, on &#61; :country, makeunique &#61; true&#41;
+cap_share.capacity_mw_share &#61; cap_share.capacity_mw_sum ./ cap_share.capacity_mw_sum_1;</code></pre>
+<p>Let&#39;s visualise our dataframe again, which now includes the <code>capacity_mw_share</code> column.</p>
+<p><hr /> Now let&#39;s analyse features which exhibit some missing values. Suppose we want to calculate the age of each plant &#40;rounded to full years&#41;. We face two issues. First, the commissioning_year is not reported for all plants. We need to gauge the representativity of the plants for which it is available with regard to the full dataset. One way to count the missing values is</p>
+<pre><code class="language-julia">nMissings &#61; length&#40;findall&#40;x -&gt; ismissing&#40;x&#41;, data.commissioning_year&#41;&#41;</code></pre><pre><code class="plaintext code-output">17340</code></pre>
+<p>This represents about half of our observations</p>
+<pre><code class="language-julia">nMissings_share &#61; nMissings/size&#40;data&#41;&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.515411824153613</code></pre>
+<p>Second, the commissioning year is not reported as an integer. Fractions of years are reported too. As a result, the machine type of <code>data.commissioning_year</code>is Float64.</p>
+<pre><code class="language-julia">typeof&#40;data.commissioning_year&#41;</code></pre><pre><code class="plaintext code-output">Vector{Union{Missing, Float64}} (alias for Array{Union{Missing, Float64}, 1})</code></pre>
+<p>Before calculating the average age, let&#39;s drop the missing values.</p>
+<pre><code class="language-julia">data_nmiss &#61; dropmissing&#40;data, :commissioning_year&#41;;</code></pre>
+<p>And round the year to the closest integer. We can do this using the <code>round</code> function and a mapping function on the relevant DataFrame column.</p>
+<pre><code class="language-julia">map&#33;&#40;x -&gt; round&#40;x, digits&#61;0&#41;, data_nmiss.commissioning_year, data_nmiss.commissioning_year&#41;;
+
+# We can now calculate plant age for each plant &#40;worth remembering that the dataset only contains active plants&#41;
+
+current_year &#61; fill&#33;&#40;Array&#123;Float64&#125;&#40;undef, size&#40;data_nmiss&#41;&#91;1&#93;&#41;, 2020&#41;;
+data_nmiss&#91;:, :plant_age&#93; &#61; current_year - data_nmiss&#91;:, :commissioning_year&#93;;</code></pre>
+<p>Since the commissioning year is missing for about half the plants in the dataset &#40;17340, see description of data above&#41; and that missing values propagate, the plant age will only be available for 33643-17340 plants. Let&#39;s see what the mean and median plant ages are across the plants for which we have the data</p>
+<pre><code class="language-julia">mean_age &#61; mean&#40;skipmissing&#40;data_nmiss.plant_age&#41;&#41;
+median_age &#61; median&#40;skipmissing&#40;data_nmiss.plant_age&#41;&#41;</code></pre><pre><code class="plaintext code-output">15.0</code></pre>
+<p>And bring this into a frequency plot of the plant age observations</p>
+<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+
+plt.hist&#40;data_nmiss.plant_age, color&#61;&quot;blue&quot;, edgecolor&#61;&quot;white&quot;, bins&#61;100,
+      density&#61;true, alpha&#61;0.5&#41;
+plt.axvline&#40;mean_age, label &#61; &quot;Mean&quot;, color &#61; &quot;red&quot;&#41;
+plt.axvline&#40;median_age, label &#61; &quot;Median&quot;&#41;
+
+plt.legend&#40;&#41;
+
+plt.xlim&#40;0,&#41;</code></pre>
+<img src="/assets/data/processing/code/output/D0-processing-g2.svg" alt="processing2">
+<p>We can also calculate and plot average plant age by country and technology Make sure all columns passed, other than the aggregation dimensions, are of type <code>Float</code> or <code>Int</code>, otherwise the function execution will fail.</p>
+<pre><code class="language-julia">age &#61; select&#40;data_nmiss, &#91;:country, :primary_fuel, :plant_age&#93;&#41;
+age_mean &#61; combine&#40;groupby&#40;age, &#91;:country, :primary_fuel&#93;&#41;, :plant_age &#61;&gt; mean&#41;
+
+coal_means &#61; age_mean&#91;occursin.&#40;ctry_selec, age_mean.country&#41; .&amp; occursin.&#40;r&quot;Coal&quot;, age_mean.primary_fuel&#41;, :&#93;
+gas_means &#61; age_mean&#91;occursin.&#40;ctry_selec, age_mean.country&#41; .&amp; occursin.&#40;r&quot;Gas&quot;, age_mean.primary_fuel&#41;, :&#93;
+
+width &#61; 0.35  # the width of the bars
+
+fig, &#40;ax1, ax2&#41; &#61; plt.subplots&#40;1,2&#41;
+
+fig.suptitle&#40;&quot;Mean plant age by country and technology&quot;&#41;
+
+ax1.bar&#40;coal_means.country, coal_means.plant_age_mean, width, label&#61;&quot;Coal&quot;&#41;
+ax2.bar&#40;gas_means.country, gas_means.plant_age_mean, width, label&#61;&quot;Gas&quot;&#41;
+
+ax1.set_ylabel&#40;&quot;Age&quot;&#41;
+
+ax1.set_title&#40;&quot;Coal&quot;&#41;
+ax2.set_title&#40;&quot;Gas&quot;&#41;</code></pre>
+<img src="/assets/data/processing/code/output/D0-processing-g3.svg" alt="processing3">
+
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

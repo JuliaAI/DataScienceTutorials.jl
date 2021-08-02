@@ -1,6 +1,6 @@
 using Pkg  # hideall
 Pkg.activate("_literate/D0-loading/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 
 
 # In this short tutorial we discuss two ways to easily load data in Julia:

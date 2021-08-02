@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-fit-predict/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl

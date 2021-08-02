@@ -1,8 +1,8 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-powergen/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.@OUTPUT() : "/tmp/"
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end
 
 # **Main author**: [Geoffroy Dolphin](https://github.com/gd1989)

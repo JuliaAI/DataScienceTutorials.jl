@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/D0-dataframe/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 
 # This tutorial is loosely adapted from [this pandas tutorial](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html) as well as the [DataFrames.jl documentation](http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/).
 # It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.

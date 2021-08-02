@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-horse/Project.toml")
-Pkg.instantiate()
+Pkg.update()
 
 # ## Initial data processing
 #
