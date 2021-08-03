@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="house_king_county"><a href="#house_king_county" class="header-anchor">House King County</a></h1>
-<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li><li><a href="#basic_data_visualisation">Basic data visualisation</a></li></ol></li><li><a href="#fitting_a_first_model">Fitting a first model</a><ol><li><a href="#random_forest_model">Random forest model</a></li><li><a href="#gbm">GBM</a></li></ol></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li><li><a href="#basic_data_visualisation">Basic data visualisation</a></li></ol></li><li><a href="#fitting_a_first_model">Fitting a first model</a><ol><li><a href="#random_forest_model">Random forest model</a></li><li><a href="#gbm">GBM</a></li></ol></li></ol></div>
 <h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
 <p>This tutorial is adapted from <a href="https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/">the corresponding MLR3 tutorial</a>.</p>
 <h3 id="loading_and_preparing_the_data"><a href="#loading_and_preparing_the_data" class="header-anchor">Loading and  preparing the data</a></h3>
@@ -245,7 +245,7 @@ plt.hist&#40;df.price, color &#61; &quot;blue&quot;, edgecolor &#61; &quot;white
          density&#61;true, alpha&#61;0.5&#41;
 plt.xlabel&#40;&quot;Price&quot;, fontsize&#61;14&#41;
 plt.ylabel&#40;&quot;Frequency&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/HouseKingCounty/code/hist_price.svg' not found. //</span></p>
+<img src="/assets/end-to-end/HouseKingCounty/code/output/hist_price.svg" alt="Histogram of the prices">
 <p>Let&#39;s see if there&#39;s a difference between renovated and unrenovated flats:</p>
 <pre><code class="language-julia">plt.figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plt.hist&#40;df.price&#91;df.isrenovated .&#61;&#61; true&#93;, color&#61;&quot;blue&quot;, density&#61;true,
@@ -255,19 +255,19 @@ plt.hist&#40;df.price&#91;df.isrenovated .&#61;&#61; false&#93;, color&#61;&quot
 plt.xlabel&#40;&quot;Price&quot;, fontsize&#61;14&#41;
 plt.ylabel&#40;&quot;Frequency&quot;, fontsize&#61;14&#41;
 plt.legend&#40;fontsize&#61;12&#41;</code></pre>
-<p><p><span style="color:red;">// Image matching '/assets/end-to-end/HouseKingCounty/code/hist_price2.svg' not found. //</span></p> We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.</p>
+<p><img src="/assets/end-to-end/HouseKingCounty/code/output/hist_price2.svg" alt="Histogram of the prices depending on renovation"> We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.</p>
 <p>Likewise, this could be done to verify that <code>condition</code>, <code>waterfront</code> etc are important features.</p>
 <h2 id="fitting_a_first_model"><a href="#fitting_a_first_model" class="header-anchor">Fitting a first model</a></h2>
 <pre><code class="language-julia">DTR &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
 
 y, X &#61; unpack&#40;df, &#61;&#61;&#40;:price&#41;, col -&gt; true&#41;
-train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;
+train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;
 tree &#61; machine&#40;DTR&#40;&#41;, X, y&#41;
 
 fit&#33;&#40;tree, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.8025221380414</code></pre>
+<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.86859791017693</code></pre>
 <p>Let&#39;s try to do better.</p>
 <h3 id="random_forest_model"><a href="#random_forest_model" class="header-anchor">Random forest model</a></h3>
 <p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -280,14 +280,14 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">137.8458055068217</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">136.55579790414117</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
                measure&#61;rms, verbosity&#61;0&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬────────────────────────────────────────────┐
 │ _.measure                 │ _.measurement │ _.per_fold                                 │
 ├───────────────────────────┼───────────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError @221 │ 135.0         │ [139.0, 121.0, 125.0, 143.0, 134.0, 146.0] │
+│ RootMeanSquaredError @012 │ 134.0         │ [123.0, 138.0, 138.0, 140.0, 133.0, 133.0] │
 └───────────────────────────┴───────────────┴────────────────────────────────────────────┘
 _.per_observation = [missing]
 _.fitted_params_per_fold = [ … ]
@@ -316,9 +316,7 @@ r2 &#61; range&#40;xgb, :num_round, lower&#61;1, upper&#61;25&#41;;</code></pre>
 mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">145.8097421015522</code></pre>
-<p>Tuning helps a fair bit&#33;</p>
-
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre>
 
 <div class="page-foot">
   <div class="copyright">

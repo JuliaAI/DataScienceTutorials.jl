@@ -1,1 +1,1 @@
-Random.TaskLocalRNG()
+MersenneTwister(11)

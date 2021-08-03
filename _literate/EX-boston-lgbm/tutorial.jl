@@ -3,7 +3,8 @@ Pkg.activate("_literate/EX-boston-lgbm/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
+
 # **Main author**: Yaqub Alwan (IQVIA).
 #
 # ## Getting started
@@ -37,7 +38,7 @@ first(features, 3) |> pretty
 DataFrames.describe(features)
 
 # Do the usual train/test partitioning. This is important so we can estimate generalisation.
-train, test = partition(eachindex(targets), 0.70, shuffle=true,
+train, test = partition(collect(eachindex(targets)), 0.70, shuffle=true,
                         rng=StableRNG(52))
 
 # Let us investigation some of the commonly tweaked LightGBM parameters. We start with looking at a learning curve for number of boostings.

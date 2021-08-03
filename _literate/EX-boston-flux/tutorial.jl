@@ -3,7 +3,7 @@ Pkg.activate("_literate/EX-boston-flux/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # **Main author**: Ayush Shridhar (ayush-1506).
 #
@@ -32,7 +32,7 @@ first(features, 3) |> MLJ.pretty
 
 # Next obvious steps: partitioning into train and test set
 
-train, test = MLJ.partition(MLJ.eachindex(targets), 0.70, rng=52)
+train, test = partition(collect(eachindex(targets)), 0.70, rng=52)
 
 # Let us try to implement an Neural Network regressor using
 # Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl

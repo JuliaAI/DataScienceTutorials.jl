@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-airfoil/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using MLJ
 using PrettyPrinting
@@ -34,7 +34,7 @@ y, X = unpack(df, ==(:Scaled_Sound), col -> true);
 
 X = MLJ.transform(fit!(machine(Standardizer(), X)), X);
 
-train, test = partition(eachindex(y), 0.7, shuffle=true, rng=StableRNG(612));
+train, test = partition(collect(eachindex(y)), 0.7, shuffle=true, rng=StableRNG(612));
 
 for model in models(matching(X, y))
        print("Model Name: " , model.name , " , Package: " , model.package_name , "\n")

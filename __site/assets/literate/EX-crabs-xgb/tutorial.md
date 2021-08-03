@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-crabs-xgb/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 ```
 
 This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
@@ -51,7 +51,7 @@ y = y[perm];
 It's not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.
 
 ```julia:ex5
-train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
+train, test = partition(collect(eachindex(y)), 0.70, shuffle=true, rng=52)
 XGBC = @load XGBoostClassifier
 xgb_model = XGBC()
 ```

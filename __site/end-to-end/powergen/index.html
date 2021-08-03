@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="power_generation"><a href="#power_generation" class="header-anchor">Power Generation</a></h1>
-<div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></li></ol></li><li><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></li><li><a href="#models">Models</a><ol><li><a href="#model_evaluation">Model evaluation</a></li></ol></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></li></ol></li><li><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></li><li><a href="#models">Models</a><ol><li><a href="#model_evaluation">Model evaluation</a></li></ol></li></ol></div>
 <p><strong>Main author</strong>: <a href="https://github.com/gd1989">Geoffroy Dolphin</a></p>
 <h2 id="initial_data_processing"><a href="#initial_data_processing" class="header-anchor">Initial data processing</a></h2>
 <p>In this tutorial we are fitting solar and wind power generation output for Germany using weather data. We focus on the use of a simple linear estimator. Let&#39;s load the required packages to get started.</p>
@@ -257,14 +257,14 @@ xlabel&#40;&quot;Solar power generation &#40;MWh&#41;&quot;, fontsize&#61;14&#41
 ylabel&#40;&quot;Frequency&quot;, fontsize&#61;14&#41;
 xticks&#40;fontsize&#61;12&#41;
 yticks&#40;&#91;0, 1e-3, 2e-3&#93;, fontsize&#61;12&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/hist_solar.svg' not found. //</span></p>
+<img src="/assets/end-to-end/powergen/code/output/hist_solar.svg" alt="Histogram of the solar power generated">
 <p>As one might expect, the sun doesn&#39;t always shine &#40;and certainly not at night&#41;, hence there is a very high proportion of observations whose value is equal or close to 0. The distribution of wind power generation looks markedly different</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8, 6&#41;&#41;
 hist&#40;data.Wind_gen, color&#61;&quot;blue&quot;, edgecolor &#61; &quot;white&quot;, bins&#61;50,
      density&#61;true, alpha&#61;0.5&#41;
 xlabel&#40;&quot;Wind power generation &#40;MWh&#41;&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Frequency&quot;, fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/hist_wind.svg' not found. //</span></p>
+<img src="/assets/end-to-end/powergen/code/output/hist_wind.svg" alt="Histogram of the wind power generated">
 <p>Finally, before fitting the estimator, we might want to gauge what to expect from them by looking at scatter plots. Let&#39;s look at solar power first.</p>
 <pre><code class="language-julia">fig &#61; figure&#40;figsize&#61;&#40;15, 15&#41;&#41;
 
@@ -287,7 +287,7 @@ subplot&#40;224&#41;
 scatter&#40;data.Solar_gen, data.Temperature&#41;
 xlabel&#40;&quot;Solar power &#40;kW&#41;&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Temperature &#40;C&#41;&quot;, fontsize&#61;14&#41;</code></pre>
-<div class="img-wide"><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/solar_scatter.png' not found. //</span></div>
+<div class="img-wide"><img src="/assets/end-to-end/powergen/code/output/solar_scatter.png" alt="Solar power scatter plots"></div>
 <p>Then at wind generation</p>
 <pre><code class="language-julia">fig &#61; figure&#40;figsize&#61;&#40;15, 15&#41;&#41;
 
@@ -310,14 +310,14 @@ subplot&#40;224&#41;
 scatter&#40;data.Wind_gen, data.Temperature&#41;
 xlabel&#40;&quot;Wind power &#40;kW&#41;&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Temperature &#40;C&#41;&quot;, fontsize&#61;14&#41;</code></pre>
-<div class="img-wide"><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/wind_scatter.png' not found. //</span></div>
+<div class="img-wide"><img src="/assets/end-to-end/powergen/code/output/wind_scatter.png" alt="Wind power scatter plots"></div>
 <p>As expected, solar power generation shows a strong relationship to solar irradiance while wind power generation denotes a strong relationship to wind speed.</p>
 <h2 id="models"><a href="#models" class="header-anchor">Models</a></h2>
 <p>Let&#39;s fit a linear regression to our data. We focus on fitting the wind power generation but the same procedure could be applied for the solar power generation &#40;a good exercise&#33;&#41;.</p>
 <pre><code class="language-julia">y_wind &#61; data.Wind_gen
 X &#61; data&#91;:, &#91;:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif&#93;&#93;;</code></pre>
 <p>Next, we partition the data in training and test set; we choose the usual 70-30 split:</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y_wind&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;;</code></pre>
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y_wind&#41;&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;;</code></pre>
 <p>then we instantiate a model and fit it:</p>
 <pre><code class="language-julia">linReg &#61; LinearRegressor&#40;&#41;
 m_linReg &#61; machine&#40;linReg, X, y_wind&#41;
@@ -335,7 +335,7 @@ xticks&#40;&#91;&#93;&#41;
 yticks&#40;fontsize&#61;12&#41;
 xlim&#40;0, 100&#41;
 legend&#40;fontsize&#61;14&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/obs_v_pred.svg' not found. //</span></p>
+<img src="/assets/end-to-end/powergen/code/output/obs_v_pred.svg" alt="Observed vs Predicted">
 <p>Let&#39;s look at the RMSE on the training and test sets.</p>
 <pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, MLJ.predict&#40;m_linReg, rows&#61;train&#41;&#41;</code></pre><pre><code class="plaintext code-output">2934.5999638857506</code></pre>
 <p>on the test set...</p>
@@ -346,12 +346,12 @@ legend&#40;fontsize&#61;14&#41;</code></pre>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;12, 6&#41;&#41;
 stem&#40;res&#41;
 xlim&#40;0, length&#40;res&#41;&#41;</code></pre>
-<div class="img-wide"><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/residuals.png' not found. //</span></div>
+<div class="img-wide"><img src="/assets/end-to-end/powergen/code/output/residuals.png" alt="Residuals"></div>
 <p>Nothing really stands out, the distribution also looks ok:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8, 6&#41;&#41;
 hist&#40;res, color&#61;&quot;blue&quot;, edgecolor&#61;&quot;white&quot;, bins&#61;50,
      density&#61;true, alpha&#61;0.5&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/hist_residuals.svg' not found. //</span></p>
+<img src="/assets/end-to-end/powergen/code/output/hist_residuals.svg" alt="Histogram of the residuals">
 <p>We leave it at that for now, I hope you found this tutorial interesting.</p>
 
 <div class="page-foot">

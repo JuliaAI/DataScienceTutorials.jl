@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="boston_with_flux"><a href="#boston_with_flux" class="header-anchor">Boston with Flux</a></h1>
-<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li><li><a href="#tuning">Tuning</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li><li><a href="#tuning">Tuning</a></li></ol></div>
 <p><strong>Main author</strong>: Ayush Shridhar &#40;ayush-1506&#41;.</p>
 <h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
 <pre><code class="language-julia">import MLJFlux
@@ -110,7 +110,7 @@ import Flux
 using Random
 using PyPlot
 
-Random.seed&#33;&#40;11&#41;</code></pre><pre><code class="plaintext code-output">Random.TaskLocalRNG()</code></pre>
+Random.seed&#33;&#40;11&#41;</code></pre><pre><code class="plaintext code-output">MersenneTwister(11)</code></pre>
 <p>Loading the Boston dataset. Our aim will be to implement a neural network regressor to predict the price of a house, given a number of features.</p>
 <pre><code class="language-julia">features, targets &#61; MLJ.@load_boston
 features &#61; DataFrame&#40;features&#41;
@@ -129,7 +129,8 @@ targets[1:3] = [24.0, 21.6, 34.7]
 └────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┴────────────┘
 </code></pre>
 <p>Next obvious steps: partitioning into train and test set</p>
-<pre><code class="language-julia">train, test &#61; MLJ.partition&#40;MLJ.eachindex&#40;targets&#41;, 0.70, rng&#61;52&#41;</code></pre><pre><code class="plaintext code-output">([358, 422, 334, 476, 1, 441, 12, 115, 240, 104, 208, 158, 46, 504, 462, 101, 157, 92, 287, 360, 385, 330, 475, 465, 117, 300, 246, 230, 105, 38, 436, 481, 424, 44, 73, 296, 61, 244, 371, 14, 195, 444, 489, 235, 143, 428, 172, 66, 318, 323, 232, 74, 338, 77, 57, 23, 357, 437, 401, 127, 397, 356, 404, 136, 260, 4, 327, 121, 432, 445, 43, 19, 304, 468, 141, 47, 280, 85, 342, 440, 51, 169, 67, 168, 231, 361, 126, 54, 396, 190, 270, 164, 409, 176, 383, 352, 184, 322, 156, 416, 398, 197, 329, 220, 377, 60, 71, 494, 266, 491, 479, 130, 369, 109, 53, 214, 179, 380, 39, 119, 233, 316, 469, 213, 114, 457, 211, 152, 408, 324, 155, 319, 171, 276, 50, 102, 482, 82, 139, 420, 15, 206, 151, 486, 410, 209, 203, 364, 473, 10, 34, 282, 120, 285, 227, 68, 317, 98, 7, 459, 100, 133, 478, 439, 186, 97, 177, 159, 18, 228, 466, 362, 320, 99, 267, 212, 484, 40, 153, 279, 337, 339, 281, 249, 359, 349, 302, 224, 25, 325, 488, 69, 76, 265, 429, 268, 91, 255, 333, 123, 111, 415, 321, 33, 226, 256, 106, 129, 183, 307, 165, 95, 471, 196, 435, 229, 70, 348, 273, 137, 373, 26, 90, 506, 28, 303, 161, 449, 311, 447, 204, 414, 116, 378, 326, 480, 63, 382, 312, 306, 501, 8, 41, 247, 288, 393, 163, 388, 328, 310, 6, 474, 89, 375, 167, 16, 505, 201, 79, 443, 346, 49, 202, 347, 110, 374, 35, 405, 425, 309, 258, 187, 341, 86, 216, 24, 343, 138, 94, 248, 314, 455, 308, 88, 294, 419, 78, 81, 293, 215, 406, 427, 407, 417, 376, 194, 490, 344, 118, 27, 472, 103, 182, 42, 198, 36, 386, 236, 87, 200, 289, 52, 413, 456, 336, 400, 144, 83, 389, 237, 502, 412, 181, 162, 134, 191, 430, 219, 9, 331, 292, 173, 438, 243, 446, 125, 188, 252, 262, 58, 205, 175, 477, 301, 250, 497, 345, 132, 291, 277, 257, 379, 218, 166], [225, 189, 245, 418, 295, 135, 463, 487, 37, 207, 332, 434, 210, 283, 391, 21, 297, 59, 17, 238, 193, 387, 241, 275, 448, 217, 62, 458, 298, 452, 146, 150, 22, 470, 45, 503, 11, 426, 363, 467, 128, 498, 32, 154, 461, 56, 423, 160, 402, 251, 3, 131, 199, 464, 495, 353, 254, 64, 234, 96, 263, 284, 442, 372, 399, 313, 365, 500, 80, 454, 122, 5, 367, 113, 20, 223, 315, 29, 384, 72, 272, 499, 421, 394, 286, 174, 261, 453, 450, 112, 366, 269, 274, 93, 13, 185, 492, 148, 354, 278, 2, 305, 259, 239, 124, 335, 392, 75, 142, 108, 170, 140, 149, 350, 180, 460, 192, 340, 290, 451, 264, 431, 395, 485, 351, 381, 271, 145, 178, 55, 496, 411, 493, 370, 390, 107, 403, 65, 31, 222, 221, 299, 355, 483, 30, 433, 84, 242, 368, 147, 48, 253])</code></pre>
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;targets&#41;&#41;, 0.70, rng&#61;52&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: partition not defined
+</code></pre>
 <p>Let us try to implement an Neural Network regressor using Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl deep learning framework. The package provides four essential models: <code>NeuralNetworkRegressor, MultitargetNeuralNetworkRegressor,
 NeuralNetworkClassifier</code> and <code>ImageClassifier</code>.</p>
 <p>At the heart of these models is a neural network. This is specified using the <code>builder</code> parameter. Creating a builder object consists of two steps: Step 1: Creating a new struct inherited from <code>MLJFlux.Builder</code>. <code>MLJFlux.Builder</code> is an abstract structure used for the purpose of dispatching. Suppose we define a new struct called <code>MyNetworkBuilder</code>. This can contain any attribute required to build the model later. &#40;Step 2&#41;. Let&#39;s use Dense Neural Network with 2 hidden layers.</p>
@@ -145,7 +146,7 @@ end</code></pre>
     return Flux.Chain&#40;layer1, layer2, layer3&#41;
 end</code></pre>
 <p>With all definitions ready, let us create an object of this:</p>
-<pre><code class="language-julia">myregressor &#61; MyNetworkBuilder&#40;20, 10&#41;</code></pre><pre><code class="plaintext code-output">MyNetworkBuilder @756
+<pre><code class="language-julia">myregressor &#61; MyNetworkBuilder&#40;20, 10&#41;</code></pre><pre><code class="plaintext code-output">MyNetworkBuilder @079
 </code></pre>
 <p>Since the boston dataset is a regression problem, we&#39;ll be using <code>NeuralNetworkRegressor</code> here. One thing to remember is that a <code>NeuralNetworkRegressor</code> object works seamlessly like any other MLJ model: you can wrap it in an  MLJ <code>machine</code> and do anything you&#39;d do otherwise.</p>
 <p>Let&#39;s start by defining our NeuralNetworkRegressor object, that takes <code>myregressor</code> as it&#39;s parameter.</p>
@@ -161,46 +162,31 @@ end</code></pre>
     alpha = 0.0,
     rng = Random._GLOBAL_RNG(),
     optimiser_changes_trigger_retraining = false,
-    acceleration = ComputationalResources.CPU1{Nothing}(nothing)) @419</code></pre>
+    acceleration = ComputationalResources.CPU1{Nothing}(nothing)) @872</code></pre>
 <p>Other parameters that NeuralNetworkRegressor takes can be found here: https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters</p>
 <p><code>nnregressor</code> now acts like any other MLJ model. Let&#39;s try wrapping it in a MLJ machine and calling <code>fit&#33;, predict</code>.</p>
-<pre><code class="language-julia">mach &#61; MLJ.machine&#40;nnregressor, features, targets&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @355 trained 0 times; caches data
+<pre><code class="language-julia">mach &#61; MLJ.machine&#40;nnregressor, features, targets&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @460 trained 0 times; caches data
   args: 
-    1:	Source @645 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @642 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @487 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @284 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>Let&#39;s fit this on the train set</p>
-<pre><code class="language-julia">MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching build(::Main.FD_SANDBOX_1443500922528775838.MyNetworkBuilder, ::Random._GLOBAL_RNG, ::Int64, ::Int64)
-Closest candidates are:
-  build(!Matched::MLJFlux.Linear, ::Any, ::Integer, ::Integer) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:30
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  ...
+<pre><code class="language-julia">MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: train not defined
 </code></pre>
 <p>As we can see, the training loss decreases at each epoch, showing the the neural network is gradually learning form the training set.</p>
 <pre><code class="language-julia">preds &#61; MLJ.predict&#40;mach, features&#91;test, :&#93;&#41;
 
-print&#40;preds&#91;1:5&#93;&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @355 has not been trained.
+print&#40;preds&#91;1:5&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: test not defined
 </code></pre>
 <p>Now let&#39;s retrain our model. One thing to remember is that retrainig may OR may not re-initialize our neural network model parameters. For example, changing the number of epochs to 15 will not causes the model to train to 15 epcohs, but just 5 additional epochs.</p>
 <pre><code class="language-julia">nnregressor.epochs &#61; 15
 
-MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching build(::Main.FD_SANDBOX_1443500922528775838.MyNetworkBuilder, ::Random._GLOBAL_RNG, ::Int64, ::Int64)
-Closest candidates are:
-  build(!Matched::MLJFlux.Linear, ::Any, ::Integer, ::Integer) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:30
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  ...
+MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: train not defined
 </code></pre>
 <p>You can always specify that you want to retrain the model from scratch using the force&#61;true parameter. &#40;Look at documentation for <code>fit&#33;</code> for more&#41;.</p>
 <p>However, changing parameters such as batch_size will necessarily cause re-training from scratch.</p>
 <pre><code class="language-julia">nnregressor.batch_size &#61; 2
-MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching build(::Main.FD_SANDBOX_1443500922528775838.MyNetworkBuilder, ::Random._GLOBAL_RNG, ::Int64, ::Int64)
-Closest candidates are:
-  build(!Matched::MLJFlux.Linear, ::Any, ::Integer, ::Integer) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:30
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  ...
+MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: train not defined
 </code></pre>
 <p>Another bit to remember here is that changing the optimiser doesn&#39;t cause retaining by default. However, the <code>optimiser_changes_trigger_retraining</code> in NeuralNetworkRegressor can be toggled to accomodate this. This allows one to modify the learning rate, for example, after an initial burn-in period.</p>
 <pre><code class="language-julia"># Inspecting out-of-sample loss as a function of epochs
@@ -221,8 +207,8 @@ xlabel&#40;curve.parameter_name&#41;
 ylabel&#40;&quot;l2&quot;&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching build(::Main.FD_SANDBOX_1443500922528775838.MyNetworkBuilder, ::Random._GLOBAL_RNG, ::Int64, ::Int64)
 Closest candidates are:
   build(!Matched::MLJFlux.Linear, ::Any, ::Integer, ::Integer) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:30
+  build(!Matched::MLJFlux.Short, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:54
   build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
   ...
 </code></pre>
 <p><span style="color:red;">// Image matching '/assets/end-to-end/boston-flux/code/EX-boston-flux-g1.svg' not found. //</span></p>
@@ -232,7 +218,7 @@ Closest candidates are:
 
 tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, measure&#61;MLJ.l2&#41;</code></pre><pre><code class="plaintext code-output">DeterministicTunedModel(
     model = NeuralNetworkRegressor(
-            builder = MyNetworkBuilder @756,
+            builder = MyNetworkBuilder @079,
             optimiser = Flux.Optimise.ADAM(0.001, (0.9, 0.999), IdDict{Any, Any}()),
             loss = Flux.Losses.mse,
             epochs = 15,
@@ -255,7 +241,7 @@ tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, me
             p = 2),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @679],
+    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @083],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
@@ -263,19 +249,19 @@ tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, me
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @098</code></pre>
+    cache = true) @033</code></pre>
 <p>For more on tuning, refer to the model-tuning tutorial.</p>
 <pre><code class="language-julia">m &#61; MLJ.machine&#40;tm, features, targets&#41;
 
 MLJ.fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching build(::Main.FD_SANDBOX_1443500922528775838.MyNetworkBuilder, ::Random._GLOBAL_RNG, ::Int64, ::Int64)
 Closest candidates are:
   build(!Matched::MLJFlux.Linear, ::Any, ::Integer, ::Integer) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:30
+  build(!Matched::MLJFlux.Short, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:54
   build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
-  build(!Matched::MLJFlux.GenericBuilder, ::Any, ::Any, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJFlux/ISEPm/src/builders.jl:99
   ...
 </code></pre>
 <p>This evaluated the model at each value of our range. The best value is:</p>
-<pre><code class="language-julia">MLJ.fitted_params&#40;m&#41;.best_model.batch_size</code></pre><pre><code class="plaintext code-output">Machine{DeterministicTunedModel{Grid,…},…} @114 has not been trained. Call `fit!` on the machine, or, if you meant to create a learning network `Node`, use the syntax `node(fitted_params, mach::Machine)`. 
+<pre><code class="language-julia">MLJ.fitted_params&#40;m&#41;.best_model.batch_size</code></pre><pre><code class="plaintext code-output">Machine{DeterministicTunedModel{Grid,…},…} @101 has not been trained. Call `fit!` on the machine, or, if you meant to create a learning network `Node`, use the syntax `node(fitted_params, mach::Machine)`. 
 </code></pre>
 
 <div class="page-foot">

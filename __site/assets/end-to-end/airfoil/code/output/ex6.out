@@ -1,1 +1,0 @@
-ArgumentError: Function `partition` only supports AbstractVector, AbstractMatrix or containers implementing the Tables interface.

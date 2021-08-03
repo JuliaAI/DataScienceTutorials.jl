@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-airfoil/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 ```
 
 **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
@@ -58,7 +58,7 @@ X = MLJ.transform(fit!(machine(Standardizer(), X)), X);
 Partition into train and test set
 
 ```julia:ex6
-train, test = partition(eachindex(y), 0.7, shuffle=true, rng=StableRNG(612));
+train, test = partition(collect(eachindex(y)), 0.7, shuffle=true, rng=StableRNG(612));
 ```
 
 Let's first see which models are compatible with the scientific type and machine type of our data

@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="crabs_with_xgboost"><a href="#crabs_with_xgboost" class="header-anchor">Crabs with XGBoost</a></h1>
-<div class="franklin-toc"><ol><li><a href="#first_steps">First steps</a></li><li><a href="#xgboost_machine">XGBoost machine</a><ol><li><a href="#more_tuning_1">More tuning &#40;1&#41;</a></li><li><a href="#more_tuning_2">More tuning &#40;2&#41;</a></li><li><a href="#more_tuning_3">More tuning &#40;3&#41;</a></li></ol></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#first_steps">First steps</a></li><li><a href="#xgboost_machine">XGBoost machine</a><ol><li><a href="#more_tuning_1">More tuning &#40;1&#41;</a></li><li><a href="#more_tuning_2">More tuning &#40;2&#41;</a></li><li><a href="#more_tuning_3">More tuning &#40;3&#41;</a></li></ol></li></ol></div>
 <p>This example is inspired from <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">this post</a> showing how to use XGBoost.</p>
 <h2 id="first_steps"><a href="#first_steps" class="header-anchor">First steps</a></h2>
 <p>Again, the crabs dataset is so common that there is a  simple load function for it:</p>
@@ -136,7 +136,7 @@ perm &#61; randperm&#40;length&#40;y&#41;&#41;
 X &#61; X&#91;perm,:&#93;
 y &#61; y&#91;perm&#93;;</code></pre>
 <p>It&#39;s not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.70, shuffle&#61;true, rng&#61;52&#41;
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.70, shuffle&#61;true, rng&#61;52&#41;
 XGBC &#61; @load XGBoostClassifier
 xgb_model &#61; XGBC&#40;&#41;</code></pre><pre><code class="plaintext code-output">import MLJXGBoostInterface ✔
 XGBoostClassifier(
@@ -174,18 +174,18 @@ XGBoostClassifier(
     objective = "automatic",
     base_score = 0.5,
     eval_metric = "mlogloss",
-    seed = 0) @490</code></pre>
+    seed = 0) @918</code></pre>
 <p>Let&#39;s check whether the training and  is balanced, <code>StatsBase.countmap</code> is useful for that:</p>
-<pre><code class="language-julia">countmap&#40;y&#91;train&#93;&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">Dict(CategoricalArrays.CategoricalValue{String, UInt32} "B" => 65,
-     CategoricalArrays.CategoricalValue{String, UInt32} "O" => 75)</code></pre>
+<pre><code class="language-julia">countmap&#40;y&#91;train&#93;&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">Dict(CategoricalArrays.CategoricalValue{String, UInt32} "B" => 70,
+     CategoricalArrays.CategoricalValue{String, UInt32} "O" => 70)</code></pre>
 <p>which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.</p>
 <h2 id="xgboost_machine"><a href="#xgboost_machine" class="header-anchor">XGBoost machine</a></h2>
 <p>Wrap a machine around an XGBoost model &#40;XGB&#41; and the data:</p>
 <pre><code class="language-julia">xgb  &#61; XGBC&#40;&#41;
-xgbm &#61; machine&#40;xgb, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{XGBoostClassifier,…} @287 trained 0 times; caches data
+xgbm &#61; machine&#40;xgb, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{XGBoostClassifier,…} @927 trained 0 times; caches data
   args: 
-    1:	Source @782 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @869 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
+    1:	Source @673 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @817 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="language-julia">r &#61; range&#40;xgb, :num_round, lower&#61;50, upper&#61;500&#41;
@@ -216,10 +216,10 @@ tm &#61; TunedModel&#40;model&#61;xgb, tuning&#61;Grid&#40;resolution&#61;8&#41;
                 resampling&#61;CV&#40;rng&#61;11&#41;, ranges&#61;&#91;r1,r2&#93;,
                 measure&#61;cross_entropy&#41;
 mtm &#61; machine&#40;tm, X, y&#41;
-fit&#33;&#40;mtm, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @032 trained 1 time; caches data
+fit&#33;&#40;mtm, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @166 trained 1 time; caches data
   args: 
-    1:	Source @372 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @355 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
+    1:	Source @684 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @815 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
 </code></pre>
 <p>Great, as always we can investigate the tuning by using <code>report</code> and can, for instance, plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r &#61; report&#40;mtm&#41;
@@ -236,12 +236,12 @@ xlabel&#40;&quot;Maximum tree depth&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Minimum child weight&quot;, fontsize&#61;14&#41;
 xticks&#40;3:2:10, fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/crabs-xgb/code/EX-crabs-xgb-heatmap.svg' not found. //</span></p>
+<img src="/assets/end-to-end/crabs-xgb/code/output/EX-crabs-xgb-heatmap.svg" alt="Hyperparameter heatmap">
 <p>Let&#39;s extract the optimal model and inspect its parameters:</p>
 <pre><code class="language-julia">xgb &#61; fitted_params&#40;mtm&#41;.best_model
 @show xgb.max_depth
-@show xgb.min_child_weight</code></pre><pre><code class="plaintext code-output">xgb.max_depth = 6
-xgb.min_child_weight = 1.4285714285714286
+@show xgb.min_child_weight</code></pre><pre><code class="plaintext code-output">xgb.max_depth = 5
+xgb.min_child_weight = 2.142857142857143
 </code></pre>
 <h3 id="more_tuning_2"><a href="#more_tuning_2" class="header-anchor">More tuning &#40;2&#41;</a></h3>
 <p>Let&#39;s examine the effect of <code>gamma</code>:</p>
@@ -251,8 +251,8 @@ curve &#61; learning_curve&#33;&#40;xgbm, range&#61;r, resolution&#61;30,
                         measure&#61;cross_entropy&#41;;</code></pre>
 <p>it looks like the <code>gamma</code> parameter substantially affects model performance:</p>
 <pre><code class="language-julia">@show round&#40;minimum&#40;curve.measurements&#41;, sigdigits&#61;3&#41;
-@show round&#40;maximum&#40;curve.measurements&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">round(minimum(curve.measurements), sigdigits = 3) = 0.373
-round(maximum(curve.measurements), sigdigits = 3) = 0.489
+@show round&#40;maximum&#40;curve.measurements&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">round(minimum(curve.measurements), sigdigits = 3) = 0.2
+round(maximum(curve.measurements), sigdigits = 3) = 0.464
 </code></pre>
 <h3 id="more_tuning_3"><a href="#more_tuning_3" class="header-anchor">More tuning &#40;3&#41;</a></h3>
 <p>Let&#39;s examine the effect of <code>subsample</code> and <code>colsample_bytree</code>:</p>
@@ -262,10 +262,10 @@ tm &#61; TunedModel&#40;model&#61;xgb, tuning&#61;Grid&#40;resolution&#61;8&#41;
                 resampling&#61;CV&#40;rng&#61;234&#41;, ranges&#61;&#91;r1,r2&#93;,
                 measure&#61;cross_entropy&#41;
 mtm &#61; machine&#40;tm, X, y&#41;
-fit&#33;&#40;mtm, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @362 trained 1 time; caches data
+fit&#33;&#40;mtm, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @224 trained 1 time; caches data
   args: 
-    1:	Source @638 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @178 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
+    1:	Source @025 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @157 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
 </code></pre>
 <p>and the usual procedure to visualise it:</p>
 <pre><code class="language-julia">r &#61; report&#40;mtm&#41;
@@ -282,12 +282,12 @@ xlabel&#40;&quot;Sub sample&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Col sample by tree&quot;, fontsize&#61;14&#41;
 xticks&#40;fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/crabs-xgb/code/EX-crabs-xgb-heatmap2.svg' not found. //</span></p>
+<img src="/assets/end-to-end/crabs-xgb/code/output/EX-crabs-xgb-heatmap2.svg" alt="Hyperparameter heatmap">
 <p>Let&#39;s retrieve the best models:</p>
 <pre><code class="language-julia">xgb &#61; fitted_params&#40;mtm&#41;.best_model
 @show xgb.subsample
-@show xgb.colsample_bytree</code></pre><pre><code class="plaintext code-output">xgb.subsample = 0.7142857142857143
-xgb.colsample_bytree = 0.7142857142857143
+@show xgb.colsample_bytree</code></pre><pre><code class="plaintext code-output">xgb.subsample = 0.6571428571428571
+xgb.colsample_bytree = 0.9428571428571428
 </code></pre>
 <p>We could continue with more fine tuning but given how small the dataset is, it doesn&#39;t make much sense. How does it fare on the test set?</p>
 <pre><code class="language-julia">ŷ &#61; predict_mode&#40;mtm, rows&#61;test&#41;

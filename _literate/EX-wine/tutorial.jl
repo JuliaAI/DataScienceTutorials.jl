@@ -3,7 +3,7 @@ Pkg.activate("_literate/EX-wine/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # ## Initial data processing
 #
@@ -98,7 +98,7 @@ MnPipe = @pipeline(Standardizer(), MNC());
 
 # We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
 
-train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+train, test = partition(collect(eachindex(yc)), 0.8, shuffle=true, rng=111)
 Xtrain = selectrows(Xc, train)
 Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)

@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-powergen/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using MLJ
 using UrlDownload
@@ -140,7 +140,7 @@ savefig(joinpath(@OUTPUT, "wind_scatter.png"), bbox_inches="tight") # hide
 y_wind = data.Wind_gen
 X = data[:, [:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif]];
 
-train, test = partition(eachindex(y_wind), 0.7, shuffle=true, rng=5);
+train, test = partition(collect(eachindex(y_wind)), 0.7, shuffle=true, rng=5);
 
 linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)

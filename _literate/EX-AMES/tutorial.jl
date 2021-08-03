@@ -37,7 +37,7 @@ cmach = machine(creg, X, y)
 
 # You can now train the machine specifying the data it should be trained on (if unspecified, all the data will be used);
 
-train, test = partition(eachindex(y), 0.70, shuffle=true); # 70:30 split
+train, test = partition(collect(eachindex(y)), 0.70, shuffle=true); # 70:30 split
 fit!(cmach, rows=train)
 ŷ = predict(cmach, rows=test)
 ŷ[1:3] |> pprint

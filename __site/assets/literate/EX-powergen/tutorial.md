@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-powergen/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 ```
 
 **Main author**: [Geoffroy Dolphin](https://github.com/gd1989)
@@ -254,7 +254,7 @@ X = data[:, [:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif]];
 Next, we partition the data in training and test set; we choose the usual 70-30 split:
 
 ```julia:ex19
-train, test = partition(eachindex(y_wind), 0.7, shuffle=true, rng=5);
+train, test = partition(collect(eachindex(y_wind)), 0.7, shuffle=true, rng=5);
 ```
 
 then we instantiate a model and fit it:

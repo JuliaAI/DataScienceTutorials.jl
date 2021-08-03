@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-boston-flux/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 import MLJFlux
 import MLJ
@@ -24,7 +24,7 @@ features = DataFrame(features)
 @show targets[1:3]
 first(features, 3) |> MLJ.pretty
 
-train, test = MLJ.partition(MLJ.eachindex(targets), 0.70, rng=52)
+train, test = partition(collect(eachindex(targets)), 0.70, rng=52)
 
 mutable struct MyNetworkBuilder <: MLJFlux.Builder
     n1::Int #Number of cells in the first hidden layer

@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-crabs-xgb/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using MLJ
 using StatsBase
@@ -31,7 +31,7 @@ perm = randperm(length(y))
 X = X[perm,:]
 y = y[perm];
 
-train, test = partition(eachindex(y), 0.70, shuffle=true, rng=52)
+train, test = partition(collect(eachindex(y)), 0.70, shuffle=true, rng=52)
 XGBC = @load XGBoostClassifier
 xgb_model = XGBC()
 

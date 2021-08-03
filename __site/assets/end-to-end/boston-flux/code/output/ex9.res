@@ -1,4 +1,4 @@
-Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @355 trained 0 times; caches data
+Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @460 trained 0 times; caches data
   args: 
-    1:	Source @645 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @642 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @487 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @284 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`

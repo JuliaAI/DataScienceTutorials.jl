@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-boston-lgbm/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using MLJ
 using PrettyPrinting
@@ -25,7 +25,7 @@ first(features, 3) |> pretty
 
 DataFrames.describe(features)
 
-train, test = partition(eachindex(targets), 0.70, shuffle=true,
+train, test = partition(collect(eachindex(targets)), 0.70, shuffle=true,
                         rng=StableRNG(52))
 
 lgb = LGBMRegressor() #initialised a model with default params

@@ -1,2 +1,2 @@
 ConstantRegressor(
-    distribution_type = Distributions.Normal) @217
+    distribution_type = Distributions.Normal) @242

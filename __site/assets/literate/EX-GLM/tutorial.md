@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-GLM/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 ```
 
 **Main author**: [Clarman Cruz](https://github.com/drcxcruz).

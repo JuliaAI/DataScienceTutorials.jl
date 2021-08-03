@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="airfoil"><a href="#airfoil" class="header-anchor">Airfoil</a></h1>
-<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li></ol></li><li><a href="#decisiontreeregressor">DecisionTreeRegressor</a></li><li><a href="#randomforestregressor">RandomForestRegressor</a></li><li><a href="#tuning">Tuning</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li></ol></li><li><a href="#decisiontreeregressor">DecisionTreeRegressor</a></li><li><a href="#randomforestregressor">RandomForestRegressor</a></li><li><a href="#tuning">Tuning</a></li></ol></div>
 <p><strong>Main author</strong>: <a href="https://github.com/ashryaagr">Ashrya Agrawal</a>.</p>
 <h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
 <p>Here we use the <a href="http://archive.ics.uci.edu/ml/datasets/Airfoil&#43;Self-Noise">UCI &quot;Airfoil Self-Noise&quot; dataset</a></p>
@@ -151,8 +151,7 @@ _.nrows = 1503
 <p>Now we Standardize the features using the transformer Standardizer&#40;&#41;</p>
 <pre><code class="language-julia">X &#61; MLJ.transform&#40;fit&#33;&#40;machine&#40;Standardizer&#40;&#41;, X&#41;&#41;, X&#41;;</code></pre>
 <p>Partition into train and test set</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.7, shuffle&#61;true, rng&#61;StableRNG&#40;612&#41;&#41;;</code></pre><pre><code class="plaintext code-output">ArgumentError: Function `partition` only supports AbstractVector, AbstractMatrix or containers implementing the Tables interface.
-</code></pre>
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.7, shuffle&#61;true, rng&#61;StableRNG&#40;612&#41;&#41;;</code></pre>
 <p>Let&#39;s first see which models are compatible with the scientific type and machine type of our data</p>
 <pre><code class="language-julia">for model in models&#40;matching&#40;X, y&#41;&#41;
        print&#40;&quot;Model Name: &quot; , model.name , &quot; , Package: &quot; , model.package_name , &quot;\n&quot;&#41;
@@ -237,11 +236,9 @@ dcrm &#61; machine&#40;DecisionTreeRegressor&#40;&#41;, X, y&#41;
 
 fit&#33;&#40;dcrm, rows&#61;train&#41;
 pred_dcrm &#61; predict&#40;dcrm, rows&#61;test&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
-UndefVarError: train not defined
 </code></pre>
 <p>Now you can call a loss function to assess the performance on test set.</p>
-<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: test not defined
-</code></pre>
+<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.9177827819417073</code></pre>
 <h2 id="randomforestregressor"><a href="#randomforestregressor" class="header-anchor">RandomForestRegressor</a></h2>
 <p>Now let&#39;s try out RandomForestRegressor:</p>
 <pre><code class="language-julia">RandomForestRegressor &#61; @load RandomForestRegressor pkg&#61;DecisionTree
@@ -250,12 +247,10 @@ rfr &#61; RandomForestRegressor&#40;&#41;
 rfr_m &#61; machine&#40;rfr, X, y&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>train on the rows corresponding to train</p>
-<pre><code class="language-julia">fit&#33;&#40;rfr_m, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">UndefVarError: train not defined
-</code></pre>
+<pre><code class="language-julia">fit&#33;&#40;rfr_m, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr &#61; predict&#40;rfr_m, rows&#61;test&#41;;
-rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: test not defined
-</code></pre>
+rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.5512333886080603</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <h2 id="tuning"><a href="#tuning" class="header-anchor">Tuning</a></h2>
@@ -273,16 +268,22 @@ tm &#61; TunedModel&#40;model&#61;rfr, tuning&#61;tuning,
 
 rfr_tm &#61; machine&#40;tm, X, y&#41;;</code></pre>
 <p>train on the rows corresponding to train</p>
-<pre><code class="language-julia">fit&#33;&#40;rfr_tm, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">UndefVarError: train not defined
-</code></pre>
+<pre><code class="language-julia">fit&#33;&#40;rfr_tm, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm &#61; predict&#40;rfr_tm, rows&#61;test&#41;;
-rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: test not defined
-</code></pre>
+rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2336674099274427</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
-<pre><code class="language-julia">fitted_params&#40;rfr_tm&#41;.best_model</code></pre><pre><code class="plaintext code-output">Machine{DeterministicTunedModel{Grid,…},…} @335 has not been trained. Call `fit!` on the machine, or, if you meant to create a learning network `Node`, use the syntax `node(fitted_params, mach::Machine)`. 
-</code></pre>
+<pre><code class="language-julia">fitted_params&#40;rfr_tm&#41;.best_model</code></pre><pre><code class="plaintext code-output">RandomForestRegressor(
+    max_depth = -1,
+    min_samples_leaf = 1,
+    min_samples_split = 2,
+    min_purity_increase = 0.0,
+    n_subfeatures = -1,
+    n_trees = 15,
+    sampling_fraction = 0.8,
+    pdf_smoothing = 0.0,
+    rng = Random._GLOBAL_RNG()) @397</code></pre>
 <p>Now we can investigate the tuning by using report. Let&#39;s plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r &#61; report&#40;rfr_tm&#41;
 res &#61; r.plotting
@@ -296,9 +297,8 @@ tricontourf&#40;md, mcw, res.measurements&#41;
 xlabel&#40;&quot;Number of trees&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Sampling fraction&quot;, fontsize&#61;14&#41;
 xticks&#40;9:1:15, fontsize&#61;12&#41;
-yticks&#40;fontsize&#61;12&#41;</code></pre><pre><code class="plaintext code-output">Machine{DeterministicTunedModel{Grid,…},…} @335 has not been trained. Call `fit!` on the machine, or, if you meant to create a learning network `Node`, use the syntax `node(report, mach::Machine)`. 
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/airfoil/code/airfoil_heatmap.svg' not found. //</span></p>
+yticks&#40;fontsize&#61;12&#41;</code></pre>
+<img src="/assets/end-to-end/airfoil/code/output/airfoil_heatmap.svg" alt="Hyperparameter heatmap">
 
 
 <div class="page-foot">

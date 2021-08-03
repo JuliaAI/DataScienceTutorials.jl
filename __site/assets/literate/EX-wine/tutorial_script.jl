@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-wine/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using HTTP
 using MLJ
@@ -46,7 +46,7 @@ MNC = @load MultinomialClassifier pkg=MLJLinearModels;
 KnnPipe = @pipeline(Standardizer(), KNNC())
 MnPipe = @pipeline(Standardizer(), MNC());
 
-train, test = partition(eachindex(yc), 0.8, shuffle=true, rng=111)
+train, test = partition(collect(eachindex(yc)), 0.8, shuffle=true, rng=111)
 Xtrain = selectrows(Xc, train)
 Xtest = selectrows(Xc, test)
 ytrain = selectrows(yc, train)

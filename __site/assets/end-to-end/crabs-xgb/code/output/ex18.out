@@ -1,2 +1,2 @@
-xgb.subsample = 0.7142857142857143
-xgb.colsample_bytree = 0.7142857142857143
+xgb.subsample = 0.6571428571428571
+xgb.colsample_bytree = 0.9428571428571428

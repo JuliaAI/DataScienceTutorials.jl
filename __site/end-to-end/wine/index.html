@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="wine"><a href="#wine" class="header-anchor">Wine</a></h1>
-<div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#getting_the_data">Getting the data</a></li><li><a href="#setting_the_scientific_type">Setting the scientific type</a></li></ol></li><li><a href="#getting_a_baseline">Getting a baseline</a></li><li><a href="#visualising_the_classes">Visualising the classes</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#getting_the_data">Getting the data</a></li><li><a href="#setting_the_scientific_type">Setting the scientific type</a></li></ol></li><li><a href="#getting_a_baseline">Getting a baseline</a></li><li><a href="#visualising_the_classes">Visualising the classes</a></li></ol></div>
 <h2 id="initial_data_processing"><a href="#initial_data_processing" class="header-anchor">Initial data processing</a></h2>
 <p>In this example, we consider the <a href="http://archive.ics.uci.edu/ml/datasets/wine">UCI &quot;wine&quot; dataset</a></p>
 <blockquote>
@@ -143,7 +143,7 @@ describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">14×7 
 <pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Class&#41;, colname-&gt;true&#41;;</code></pre>
 <h3 id="setting_the_scientific_type"><a href="#setting_the_scientific_type" class="header-anchor">Setting the scientific type</a></h3>
 <p>Let&#39;s explore the scientific type attributed by default to the target and the features</p>
-<pre><code class="language-julia">scitype&#40;y&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})</code></pre>
+<pre><code class="language-julia">scitype&#40;y&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{ScientificTypesBase.Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})</code></pre>
 <p>this should be changed as it should be considered as an ordered factor. The difference is as follows:</p>
 <ul>
 <li><p>a <code>Count</code> corresponds to an integer between 0 and infinity</p>
@@ -219,17 +219,17 @@ MnPipe &#61; @pipeline&#40;Standardizer&#40;&#41;, MNC&#40;&#41;&#41;;</code></p
 import MLJLinearModels ✔
 </code></pre>
 <p>We can now fit this on a train split of the data setting aside 20&#37; of the data for eventual testing.</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;yc&#41;, 0.8, shuffle&#61;true, rng&#61;111&#41;
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;yc&#41;&#41;, 0.8, shuffle&#61;true, rng&#61;111&#41;
 Xtrain &#61; selectrows&#40;Xc, train&#41;
 Xtest &#61; selectrows&#40;Xc, test&#41;
 ytrain &#61; selectrows&#40;yc, train&#41;
 ytest &#61; selectrows&#40;yc, test&#41;;</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
 <pre><code class="language-julia">knn &#61; machine&#40;KnnPipe, Xtrain, ytrain&#41;
-multi &#61; machine&#40;MnPipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline322,…} @069 trained 0 times; caches data
+multi &#61; machine&#40;MnPipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline282,…} @124 trained 0 times; caches data
   args: 
-    1:	Source @695 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @115 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{3}}`
+    1:	Source @039 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @707 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{3}}`
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="language-julia">opts &#61; &#40;resampling&#61;Holdout&#40;fraction_train&#61;0.9&#41;, measure&#61;cross_entropy&#41;
@@ -277,7 +277,7 @@ ylabel&#40;&quot;PCA dimension 2&quot;, fontsize&#61;14&#41;
 legend&#40;&#91;&quot;Class 1&quot;, &quot;Class 2&quot;, &quot;Class 3&quot;&#93;, fontsize&#61;12&#41;
 xticks&#40;fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/wine/code/EX-wine-pca.svg' not found. //</span></p>
+<img src="/assets/end-to-end/wine/code/output/EX-wine-pca.svg" alt="PCA">
 <p>On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers. At this point it&#39;s a bit pointless to dig much deaper into parameter tuning etc.</p>
 <p>As a last step, we can report performances of the models on the test set which we set aside earlier:</p>
 <pre><code class="language-julia">perf_k &#61; misclassification_rate&#40;predict_mode&#40;knn, Xtest&#41;, ytest&#41;

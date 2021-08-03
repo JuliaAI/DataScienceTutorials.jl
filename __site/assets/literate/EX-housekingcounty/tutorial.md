@@ -5,7 +5,7 @@ Pkg.activate("_literate/EX-housekingcounty/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 ```
 
 ## Getting started
@@ -125,7 +125,7 @@ Likewise, this could be done to verify that `condition`, `waterfront` etc are im
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
 y, X = unpack(df, ==(:price), col -> true)
-train, test = partition(eachindex(y), 0.7, shuffle=true, rng=5)
+train, test = partition(collect(eachindex(y)), 0.7, shuffle=true, rng=5)
 tree = machine(DTR(), X, y)
 
 fit!(tree, rows=train);
@@ -208,11 +208,7 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 rms(y[test], MLJ.predict(mtm, rows=test))
-```
 
-Tuning helps a fair bit!
-
-```julia:ex23
 PyPlot.close_figs() # hide
 ```
 
