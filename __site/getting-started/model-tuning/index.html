@@ -125,7 +125,8 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
             post_prune = false,
             merge_purity_threshold = 1.0,
             pdf_smoothing = 0.0,
-            display_depth = 5),
+            display_depth = 5,
+            rng = Random._GLOBAL_RNG()),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -139,7 +140,7 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
             tol = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @849],
+    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @196],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
@@ -147,7 +148,7 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @113</code></pre>
+    cache = true) @146</code></pre>
 <p>Note that &quot;wrapping a model in a tuning strategy&quot; as above means creating a new &quot;self-tuning&quot; version of the model, <code>tuned_model &#61; TunedModel&#40;model&#61;...&#41;</code>, in which further key-word arguments specify:</p>
 <ol>
 <li><p>the algorithm &#40;a.k.a., tuning strategy&#41; for searching the hyper-parameter space of the model &#40;e.g., <code>tuning &#61; Random&#40;rng&#61;123&#41;</code> or <code>tuning &#61; Grid&#40;goal&#61;100&#41;</code>&#41;.</p>
@@ -163,10 +164,10 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
 <h3 id="fitting_and_inspecting_a_tuned_model"><a href="#fitting_and_inspecting_a_tuned_model" class="header-anchor">Fitting and inspecting a tuned model</a></h3>
 <p>To fit a tuned model, you can use the usual syntax:</p>
 <pre><code class="language-julia">m &#61; machine&#40;tm, X, y&#41;
-fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @297 trained 1 time; caches data
+fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @013 trained 1 time; caches data
   args: 
-    1:	Source @533 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @407 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
+    1:	Source @682 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @567 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="language-julia">fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">1</code></pre>
@@ -178,7 +179,7 @@ fit&#33;&#40;m&#41;
 fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">2</code></pre>
 <p>Let&#39;s check the misclassification rate for the best model:</p>
 <pre><code class="language-julia">r &#61; report&#40;m&#41;
-r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.2</code></pre>
+r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.1111111111111111</code></pre>
 <p>Anyone wants plots? of course:</p>
 <pre><code class="language-julia">using PyPlot
 figure&#40;figsize&#61;&#40;8,6&#41;&#41;
@@ -190,7 +191,7 @@ yticks&#40;fontsize&#61;12&#41;
 xlabel&#40;&quot;Maximum depth&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Misclassification rate&quot;, fontsize&#61;14&#41;
 ylim&#40;&#91;0, 1&#93;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/getting-started/model-tuning/code/A-model-tuning-hpt' not found. //</span></p>
+<img src="/assets/getting-started/model-tuning/code/output/A-model-tuning-hpt.svg" alt="hyperparameter heatmap">
 <h2 id="tuning_nested_hyperparameters"><a href="#tuning_nested_hyperparameters" class="header-anchor">Tuning nested hyperparameters</a></h2>
 <p>Let&#39;s generate simple dummy regression data</p>
 <pre><code class="language-julia">X &#61; &#40;x1&#61;rand&#40;100&#41;, x2&#61;rand&#40;100&#41;, x3&#61;rand&#40;100&#41;&#41;
@@ -206,13 +207,14 @@ DeterministicEnsembleModel(
             min_purity_increase = 0.0,
             n_subfeatures = 0,
             post_prune = false,
-            merge_purity_threshold = 1.0),
+            merge_purity_threshold = 1.0,
+            rng = Random._GLOBAL_RNG()),
     atomic_weights = Float64[],
     bagging_fraction = 0.8,
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @048</code></pre>
+    out_of_bag_measure = Any[]) @206</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
 <pre><code class="language-julia">params&#40;forest&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(atom = (max_depth = -1,
          min_samples_leaf = 5,
@@ -220,7 +222,8 @@ DeterministicEnsembleModel(
          min_purity_increase = 0.0,
          n_subfeatures = 0,
          post_prune = false,
-         merge_purity_threshold = 1.0),
+         merge_purity_threshold = 1.0,
+         rng = Random._GLOBAL_RNG()),
  atomic_weights = [],
  bagging_fraction = 0.8,
  rng = Random._GLOBAL_RNG(),
@@ -237,7 +240,7 @@ m &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;m&#41;;</code></pre>
 <p>A useful function to inspect a model after fitting it is the <code>report</code> function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:</p>
 <pre><code class="language-julia">r &#61; report&#40;m&#41;
-r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.1766982138025895</code></pre>
+r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.15613809228685052</code></pre>
 <p>Let&#39;s visualise this</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 
@@ -251,7 +254,7 @@ xlabel&#40;&quot;Number of sub-features&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;Bagging fraction&quot;, fontsize&#61;14&#41;
 xticks&#40;&#91;1, 2, 3&#93;, fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/getting-started/model-tuning/code/A-model-tuning-hm.svg' not found. //</span></p>
+<img src="/assets/getting-started/model-tuning/code/output/A-model-tuning-hm.svg" alt="Hyperparameter heatmap">
 
 
 <div class="page-foot">

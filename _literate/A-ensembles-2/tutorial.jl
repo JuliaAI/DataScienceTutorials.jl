@@ -3,7 +3,7 @@ Pkg.activate("_literate/A-ensembles-2/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # ## Prelims
 #
@@ -34,7 +34,7 @@ DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
 tree = machine(DecisionTreeRegressor(), X, y)
 e = evaluate!(tree, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint # use PrettyPrinting
+e
 
 # Note that multiple measures can be reported simultaneously.
 
@@ -94,7 +94,7 @@ tuned_forest = TunedModel(model=forest,
 m = machine(tuned_forest, X, y)
 e = evaluate!(m, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
-e |> pprint
+e
 
 # ### Reporting
 # Again, you could show a 2D heatmap of the hyperparameters

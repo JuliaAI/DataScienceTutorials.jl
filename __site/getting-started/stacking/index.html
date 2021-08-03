@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="stacking"><a href="#stacking" class="header-anchor">Stacking</a></h1>
-<div class="franklin-toc"><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></li></ol></li><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a></li><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></li><li><a href="#define_the_training_nodes">Define the training nodes</a></li><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></li></ol></li><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></li><li><a href="#applying_mytwomodelstack_to_some_data">Applying <code>MyTwoModelStack</code> to some data</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></li></ol></li><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a></li><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></li><li><a href="#define_the_training_nodes">Define the training nodes</a></li><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></li></ol></li><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></li><li><a href="#applying_mytwomodelstack_to_some_data">Applying <code>MyTwoModelStack</code> to some data</a></li></ol></div>
 <p>In stacking one blends the predictions of different regressors or classifiers to gain, in some cases, better performance than naive averaging or majority vote.</p>
 <p>Here we illustrate how to build a two-model stack as an MLJ learning network, which we export as a new stand-alone composite model type <code>MyTwoStack</code>. This will make the stack that we build completely re-usable &#40;new data, new models&#41;. This means we can apply meta-algorithms, such as performance evaluation and tuning, to the stack, exactly as we would for any other model.</p>
 <p>Our main purpose here is to demonstrate the flexibility of MLJ&#39;s composite model interface. Eventually, MLJ will provide built-in composite types or macros to achieve the same results in a few lines, which will suffice for routine stacking tasks.</p>
@@ -134,7 +134,7 @@ SVMRegressor(
     epsilon = 0.1,
     shrinking = true,
     cache_size = 200,
-    max_iter = -1) @652</code></pre>
+    max_iter = -1) @165</code></pre>
 <h3 id="warm-up_exercise_define_a_model_type_to_average_predictions"><a href="#warm-up_exercise_define_a_model_type_to_average_predictions" class="header-anchor">Warm-up exercise: Define a model type to average predictions</a></h3>
 <p>Let&#39;s define a composite model type <code>MyAverageTwo</code> that averages the predictions of two deterministic regressors. Here&#39;s the learning network:</p>
 <pre><code class="language-julia">X &#61; source&#40;&#41;
@@ -149,25 +149,25 @@ y1 &#61; predict&#40;m1, X&#41;
 m2 &#61; machine&#40;model2, X, y&#41;
 y2 &#61; predict&#40;m2, X&#41;
 
-yhat &#61; 0.5*y1 &#43; 0.5*y2</code></pre><pre><code class="plaintext code-output">Node{Nothing} @937
+yhat &#61; 0.5*y1 &#43; 0.5*y2</code></pre><pre><code class="plaintext code-output">Node{Nothing} @871
   args:
-    1:	Node{Nothing} @786
-    2:	Node{Nothing} @781
+    1:	Node{Nothing} @342
+    2:	Node{Nothing} @683
   formula:
     +(
-        #141(
+        #129(
             predict(
-                Machine{LinearRegressor,…} @774, 
-                Source @351)),
-        #141(
+                Machine{LinearRegressor,…} @028, 
+                Source @396)),
+        #129(
             predict(
-                Machine{KNNRegressor,…} @207, 
-                Source @351)))</code></pre>
+                Machine{KNNRegressor,…} @165, 
+                Source @396)))</code></pre>
 <p>In preparation for export, we wrap the learning network in a learning network machine, which specifies what the source nodes are, and which node is for prediction. As our exported model will make point-predictions &#40;as opposed to probabilistic ones&#41;, we use a <code>Deterministic</code> <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/performance_measures/">&quot;surrogate&quot; model</a>:</p>
-<pre><code class="language-julia">mach &#61; machine&#40;Deterministic&#40;&#41;, X, y; predict&#61;yhat&#41;</code></pre><pre><code class="plaintext code-output">Machine{DeterministicSurrogate,…} @361 trained 0 times; does not cache data
+<pre><code class="language-julia">mach &#61; machine&#40;Deterministic&#40;&#41;, X, y; predict&#61;yhat&#41;</code></pre><pre><code class="plaintext code-output">Machine{DeterministicSurrogate,…} @039 trained 0 times; does not cache data
   args: 
-    1:	Source @351 ⏎ `Nothing`
-    2:	Source @839 ⏎ `Nothing`
+    1:	Source @396 ⏎ `Nothing`
+    2:	Source @884 ⏎ `Nothing`
 </code></pre>
 <p>Note that we cannot actually fit this machine because we chose not to wrap our source nodes <code>X</code> and <code>y</code> in data.</p>
 <p>Here&#39;s the macro call that &quot;exports&quot; the learning network as a new composite model <code>MyAverageTwo</code>:</p>
@@ -189,7 +189,7 @@ end</code></pre>
             metric = Distances.Euclidean(0.0),
             leafsize = 10,
             reorder = true,
-            weights = NearestNeighborModels.Uniform())) @134</code></pre>
+            weights = NearestNeighborModels.Uniform())) @703</code></pre>
 <p>Evaluating this average model on the Boston data set, and comparing with the base model predictions:</p>
 <pre><code class="language-julia">function print_performance&#40;model, data...&#41;
     e &#61; evaluate&#40;model, data...;
@@ -205,9 +205,9 @@ X, y &#61; @load_boston
 
 print_performance&#40;linear, X, y&#41;
 print_performance&#40;knn, X, y&#41;
-print_performance&#40;average_two, X, y&#41;</code></pre><pre><code class="plaintext code-output">LinearRegressor @405 = 4.8635 ± 0.34864
-KNNRegressor @973 = 6.2243 ± 0.44292
-MyAverageTwo @134 = 4.8523 ± 0.36264
+print_performance&#40;average_two, X, y&#41;</code></pre><pre><code class="plaintext code-output">LinearRegressor @989 = 4.8635 ± 0.34864
+KNNRegressor @726 = 6.2243 ± 0.44292
+MyAverageTwo @703 = 4.8523 ± 0.36264
 </code></pre>
 <h2 id="stacking_proper"><a href="#stacking_proper" class="header-anchor">Stacking proper</a></h2>
 <h3 id="helper_functions"><a href="#helper_functions" class="header-anchor">Helper functions:</a></h3>
@@ -239,7 +239,7 @@ step&#40;xsort, ysort, label&#61;&quot;truth&quot;, where&#61;&quot;mid&quot;&#4
 plot&#40;x, yraw, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;, label&#61;&quot;data&quot;&#41;
 xlim&#40;-4.5, 4.5&#41;
 legend&#40;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s1.svg' not found. //</span></p>
+<img src="/assets/getting-started/stacking/code/output/s1.svg" alt="">
 <p>Some models to stack &#40;which we can change later&#41;:</p>
 <pre><code class="language-julia">model1 &#61; linear
 model2 &#61; knn</code></pre><pre><code class="plaintext code-output">KNNRegressor(
@@ -248,22 +248,22 @@ model2 &#61; knn</code></pre><pre><code class="plaintext code-output">KNNRegress
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = NearestNeighborModels.Uniform()) @973</code></pre>
+    weights = NearestNeighborModels.Uniform()) @726</code></pre>
 <p>The adjudicating model:</p>
 <pre><code class="language-julia">judge &#61; linear</code></pre><pre><code class="plaintext code-output">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @405</code></pre>
+    solver = nothing) @989</code></pre>
 <h3 id="define_the_training_nodes"><a href="#define_the_training_nodes" class="header-anchor">Define the training nodes</a></h3>
 <p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above in source nodes:</p>
 <pre><code class="language-julia">X &#61; source&#40;Xraw&#41;
-y &#61; source&#40;yraw&#41;</code></pre><pre><code class="plaintext code-output">Source @417 ⏎ `AbstractVector{ScientificTypesBase.Count}`</code></pre>
+y &#61; source&#40;yraw&#41;</code></pre><pre><code class="plaintext code-output">Source @361 ⏎ `AbstractVector{ScientificTypesBase.Count}`</code></pre>
 <p>Our first internal node will represent the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions. We would like to define <code>f &#61; folds&#40;X, 3&#41;</code> but this will not work because <code>X</code> is not a table, just a node representing a table. We could fix this by using the @node macro:</p>
-<pre><code class="language-julia">f &#61; @node folds&#40;X, 3&#41;</code></pre><pre><code class="plaintext code-output">Node{Nothing} @949
+<pre><code class="language-julia">f &#61; @node folds&#40;X, 3&#41;</code></pre><pre><code class="plaintext code-output">Node{Nothing} @165
   args:
-    1:	Source @255
+    1:	Source @251
   formula:
-    #10(
-        Source @255)</code></pre>
+    #120(
+        Source @251)</code></pre>
 <p>Now <code>f</code> is itself a node, and so callable:</p>
 <pre><code class="language-julia">f&#40;&#41;</code></pre><pre><code class="plaintext code-output">([1, 2, 3], [4, 5, 6], [7, 8, 9])</code></pre>
 <p>However, we can also just overload <code>folds</code> to work on nodes, using the <code>node</code><em>function</em>:</p>
@@ -278,10 +278,10 @@ MLJ.corestrict&#40;X::AbstractNode, f::AbstractNode, i&#41; &#61;
 <p>We are now ready to define machines for training <code>model1</code> on each fold-complement:</p>
 <pre><code class="language-julia">m11 &#61; machine&#40;model1, corestrict&#40;X, f, 1&#41;, corestrict&#40;y, f, 1&#41;&#41;
 m12 &#61; machine&#40;model1, corestrict&#40;X, f, 2&#41;, corestrict&#40;y, f, 2&#41;&#41;
-m13 &#61; machine&#40;model1, corestrict&#40;X, f, 3&#41;, corestrict&#40;y, f, 3&#41;&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @540 trained 0 times; caches data
+m13 &#61; machine&#40;model1, corestrict&#40;X, f, 3&#41;, corestrict&#40;y, f, 3&#41;&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @183 trained 0 times; caches data
   args: 
-    1:	Node{Nothing} @989
-    2:	Node{Nothing} @246
+    1:	Node{Nothing} @598
+    2:	Node{Nothing} @770
 </code></pre>
 <p>Define each out-of-sample prediction of <code>model1</code>:</p>
 <pre><code class="language-julia">y11 &#61; predict&#40;m11, restrict&#40;X, f, 1&#41;&#41;;
@@ -297,7 +297,7 @@ figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 step&#40;xsort, ysort, label&#61;&quot;truth&quot;, where&#61;&quot;mid&quot;&#41;
 plot&#40;x, y1_oos&#40;&#41;, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;, label&#61;&quot;linear oos&quot;&#41;
 legend&#40;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s2.svg' not found. //</span></p>
+<img src="/assets/getting-started/stacking/code/output/s2.svg" alt="">
 <p>We now repeat the procedure for the other model:</p>
 <pre><code class="language-julia">m21 &#61; machine&#40;model2, corestrict&#40;X, f, 1&#41;, corestrict&#40;y, f, 1&#41;&#41;
 m22 &#61; machine&#40;model2, corestrict&#40;X, f, 2&#41;, corestrict&#40;y, f, 2&#41;&#41;
@@ -313,40 +313,40 @@ figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 step&#40;xsort, ysort, label&#61;&quot;truth&quot;, where&#61;&quot;mid&quot;&#41;
 plot&#40;x, y2_oos&#40;&#41;, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;, label&#61;&quot;knn oos&quot;&#41;
 legend&#40;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s3.svg' not found. //</span></p>
+<img src="/assets/getting-started/stacking/code/output/s3.svg" alt="">
 <p>Now that we have the out-of-sample base learner predictions, we are ready to merge them into the adjudicator&#39;s input table and construct the machine for training the adjudicator:</p>
 <pre><code class="language-julia">X_oos &#61; MLJ.table&#40;hcat&#40;y1_oos, y2_oos&#41;&#41;
-m_judge &#61; machine&#40;judge, X_oos, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @778 trained 0 times; caches data
+m_judge &#61; machine&#40;judge, X_oos, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @239 trained 0 times; caches data
   args: 
-    1:	Node{Nothing} @593
-    2:	Source @417 ⏎ `AbstractVector{ScientificTypesBase.Count}`
+    1:	Node{Nothing} @141
+    2:	Source @361 ⏎ `AbstractVector{ScientificTypesBase.Count}`
 </code></pre>
 <p>Are we done with constructing machines? Well, not quite. Recall that when we use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions of the base learners &#40;rather than out-of-sample predictions&#41;. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p>
 <pre><code class="language-julia">m1 &#61; machine&#40;model1, X, y&#41;
-m2 &#61; machine&#40;model2, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} @479 trained 0 times; caches data
+m2 &#61; machine&#40;model2, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} @335 trained 0 times; caches data
   args: 
-    1:	Source @255 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @417 ⏎ `AbstractVector{ScientificTypesBase.Count}`
+    1:	Source @251 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @361 ⏎ `AbstractVector{ScientificTypesBase.Count}`
 </code></pre>
 <h3 id="define_nodes_still_needed_for_prediction"><a href="#define_nodes_still_needed_for_prediction" class="header-anchor">Define nodes still needed for prediction</a></h3>
 <p>To obtain the final prediction, <code>yhat</code>, we get the base learner predictions, based on training with all data, and feed them to the adjudicator:</p>
 <pre><code class="language-julia">y1 &#61; predict&#40;m1, X&#41;;
 y2 &#61; predict&#40;m2, X&#41;;
 X_judge &#61; MLJ.table&#40;hcat&#40;y1, y2&#41;&#41;
-yhat &#61; predict&#40;m_judge, X_judge&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{LinearRegressor,…}} @492
+yhat &#61; predict&#40;m_judge, X_judge&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{LinearRegressor,…}} @833
   args:
-    1:	Node{Nothing} @938
+    1:	Node{Nothing} @971
   formula:
     predict(
-        Machine{LinearRegressor,…} @778, 
+        Machine{LinearRegressor,…} @239, 
         table(
             hcat(
                 predict(
-                    Machine{LinearRegressor,…} @850, 
-                    Source @255),
+                    Machine{LinearRegressor,…} @522, 
+                    Source @251),
                 predict(
-                    Machine{KNNRegressor,…} @479, 
-                    Source @255))))</code></pre>
+                    Machine{KNNRegressor,…} @335, 
+                    Source @251))))</code></pre>
 <p>Let&#39;s check the final prediction node can be fit and called:</p>
 <pre><code class="language-julia">fit&#33;&#40;yhat, verbosity&#61;0&#41;
 
@@ -354,7 +354,7 @@ figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 step&#40;xsort, ysort, label&#61;&quot;truth&quot;, where&#61;&quot;mid&quot;&#41;
 plot&#40;x, yhat&#40;&#41;, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;, label&#61;&quot;yhat&quot;&#41;
 legend&#40;&#41;</code></pre>
-<p><span style="color:red;">// Image matching '/assets/getting-started/stacking/code/s4' not found. //</span></p>
+<img src="/assets/getting-started/stacking/code/output/s4.svg" alt="">
 <p>Although of little statistical significance here, we note that stacking gives a lower <em>training</em> error than naive averaging:</p>
 <pre><code class="language-julia">e1 &#61; rms&#40;y1&#40;&#41;, y&#40;&#41;&#41;
 e2 &#61; rms&#40;y2&#40;&#41;, y&#40;&#41;&#41;
@@ -388,7 +388,7 @@ my_two_model_stack &#61; MyTwoModelStack&#40;&#41;</code></pre><pre><code class=
             weights = NearestNeighborModels.Uniform()),
     judge = LinearRegressor(
             fit_intercept = true,
-            solver = nothing)) @155</code></pre>
+            solver = nothing)) @080</code></pre>
 <p>And this completes the definition of our re-usable stacking model type.</p>
 <h2 id="applying_mytwomodelstack_to_some_data"><a href="#applying_mytwomodelstack_to_some_data" class="header-anchor">Applying <code>MyTwoModelStack</code> to some data</a></h2>
 <p>Without undertaking any hyperparameter optimization, we evaluate the performance of a tree boosting algorithm and a support vector machine on a synthetic data set. As adjudicator, we&#39;ll use a random forest.</p>
@@ -409,8 +409,8 @@ for model in all_models
     print_performance&#40;model, X, y&#41;
 end</code></pre><pre><code class="plaintext code-output">MethodError: no method matching (::MLJBase.RootMeanSquaredError)(::Matrix{Float64}, ::Vector{Float64})
 Closest candidates are:
-  (::MLJBase.RootMeanSquaredError)(!Matched::AbstractVector{<:Real}, ::AbstractVector{<:Real}) at /Users/tlienart/.julia/packages/MLJBase/De8Dv/src/measures/continuous.jl:78
-  (::MLJBase.RootMeanSquaredError)(!Matched::AbstractVector{<:Real}, ::AbstractVector{<:Real}, !Matched::AbstractVector{<:Real}) at /Users/tlienart/.julia/packages/MLJBase/De8Dv/src/measures/continuous.jl:88
+  (::MLJBase.RootMeanSquaredError)(!Matched::AbstractVector{var"#s1028"} where var"#s1028"<:Real, ::AbstractVector{var"#s1027"} where var"#s1027"<:Real) at /Users/tlienart/.julia/packages/MLJBase/De8Dv/src/measures/continuous.jl:78
+  (::MLJBase.RootMeanSquaredError)(!Matched::AbstractVector{var"#s1028"} where var"#s1028"<:Real, ::AbstractVector{var"#s1027"} where var"#s1027"<:Real, !Matched::AbstractVector{var"#s1026"} where var"#s1026"<:Real) at /Users/tlienart/.julia/packages/MLJBase/De8Dv/src/measures/continuous.jl:88
 </code></pre>
 <h4 id="tuning_a_stack"><a href="#tuning_a_stack" class="header-anchor">Tuning a stack</a></h4>
 <p>A standard abuse of good data hygiene is to optimize stack component models <em>separately</em> and then tune the adjudicating model hyperparameters &#40;using the same resampling of the data&#41; with the base learners fixed. Although more computationally expensive, better generalization might be expected by applying tuning to the stack as a whole, either simultaneously, or in in cheaper sequential steps. Since our stack is a stand-alone model, this is readily implemented.</p>
@@ -426,7 +426,7 @@ mach &#61; fit&#33;&#40;machine&#40;tuned_stack,  X, y&#41;, verbosity&#61;0&#41
 best_stack &#61; fitted_params&#40;mach&#41;.best_model
 best_stack.regressor2.C</code></pre><pre><code class="plaintext code-output">0.4641588833612781</code></pre>
 <p>Let&#39;s evaluate the best stack using the same data resampling used to the evaluate the various untuned models earlier &#40;now we are neglecting data hygiene&#33;&#41;:</p>
-<pre><code class="language-julia">print_performance&#40;best_stack, X, y&#41;</code></pre><pre><code class="plaintext code-output">MyTwoModelStack @222 = 0.9155 ± 0.06534
+<pre><code class="language-julia">print_performance&#40;best_stack, X, y&#41;</code></pre><pre><code class="plaintext code-output">MyTwoModelStack @673 = 0.92175 ± 0.06908
 </code></pre>
 
 <div class="page-foot">

@@ -1,9 +1,9 @@
 using Pkg # hideall
-Pkg.activate("_literate/A-composite-models/Project.toml")
+Pkg.activate("_literate/A-composing-models/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # ## Generating dummy data
 # Let's start by generating some dummy data with both numerical values and categorical values:

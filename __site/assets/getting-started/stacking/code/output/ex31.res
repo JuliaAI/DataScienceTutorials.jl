@@ -11,4 +11,4 @@ MyTwoModelStack(
             weights = NearestNeighborModels.Uniform()),
     judge = LinearRegressor(
             fit_intercept = true,
-            solver = nothing)) @155
+            solver = nothing)) @080

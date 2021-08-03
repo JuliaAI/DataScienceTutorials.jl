@@ -16,8 +16,8 @@ ignore = ["data/", "getting-started/", "isl/", "end-to-end/"]
 
 # current = "data/"
 # current = "isl/"
-current = "end-to-end/"
-
+# current = "end-to-end/"
+current = "getting-started/"
 
 ignore = [d for d in ignore if d != current]
 +++

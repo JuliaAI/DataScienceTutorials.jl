@@ -3,7 +3,7 @@ Pkg.activate("_literate/A-ensembles/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # ## Preliminary steps
 #
@@ -40,7 +40,7 @@ rms(ŷ, y[test])
 # The few steps above are equivalent to just calling `evaluate!`:
 
 evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
-          measure=rms) |> pprint
+          measure=rms)
 
 # ## Homogenous ensembles
 #
@@ -57,7 +57,7 @@ ensemble_model = EnsembleModel(atom=knn_model, n=20);
 
 ensemble = machine(ensemble_model, X, y)
 estimates = evaluate!(ensemble, resampling=CV())
-estimates |> pprint
+estimates
 
 # here the implicit measure is the `rms` (default for regressions). The `measurement` is the mean taken over the folds:
 

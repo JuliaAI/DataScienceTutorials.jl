@@ -4,4 +4,4 @@ Pkg.activate("_literate/A-composite-models/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;

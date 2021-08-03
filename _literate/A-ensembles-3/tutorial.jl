@@ -3,7 +3,7 @@ Pkg.activate("_literate/A-ensembles-3/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # # Simple example of a homogeneous ensemble using learning networks
 

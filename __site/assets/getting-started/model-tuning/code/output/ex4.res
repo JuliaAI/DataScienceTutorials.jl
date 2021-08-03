@@ -8,7 +8,8 @@ ProbabilisticTunedModel(
             post_prune = false,
             merge_purity_threshold = 1.0,
             pdf_smoothing = 0.0,
-            display_depth = 5),
+            display_depth = 5,
+            rng = Random._GLOBAL_RNG()),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -22,7 +23,7 @@ ProbabilisticTunedModel(
             tol = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @849],
+    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @196],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
@@ -30,4 +31,4 @@ ProbabilisticTunedModel(
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @113
+    cache = true) @146

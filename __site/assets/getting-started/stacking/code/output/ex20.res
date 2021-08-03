@@ -1,4 +1,4 @@
-Machine{LinearRegressor,…} @540 trained 0 times; caches data
+Machine{LinearRegressor,…} @183 trained 0 times; caches data
   args: 
-    1:	Node{Nothing} @989
-    2:	Node{Nothing} @246
+    1:	Node{Nothing} @598
+    2:	Node{Nothing} @770

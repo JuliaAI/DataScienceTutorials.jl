@@ -3,7 +3,7 @@ Pkg.activate("_literate/A-stacking/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 # In stacking one blends the predictions of different regressors or
 # classifiers to gain, in some cases, better performance than naive

@@ -6,4 +6,5 @@ OneHundredModels(
             min_purity_increase = 0.0,
             n_subfeatures = 0,
             post_prune = false,
-            merge_purity_threshold = 1.0)) @649
+            merge_purity_threshold = 1.0,
+            rng = Random._GLOBAL_RNG())) @210

@@ -4,4 +4,4 @@ KNNRegressor(
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = NearestNeighborModels.Uniform()) @973
+    weights = NearestNeighborModels.Uniform()) @726

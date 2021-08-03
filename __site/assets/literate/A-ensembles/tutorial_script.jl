@@ -5,7 +5,7 @@ Pkg.activate("_literate/A-ensembles/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
+end;
 
 using MLJ
 import DataFrames: DataFrame
@@ -30,13 +30,13 @@ ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
 evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
-          measure=rms) |> pprint
+          measure=rms)
 
 ensemble_model = EnsembleModel(atom=knn_model, n=20);
 
 ensemble = machine(ensemble_model, X, y)
 estimates = evaluate!(ensemble, resampling=CV())
-estimates |> pprint
+estimates
 
 @show estimates.measurement[1]
 @show mean(estimates.per_fold[1])

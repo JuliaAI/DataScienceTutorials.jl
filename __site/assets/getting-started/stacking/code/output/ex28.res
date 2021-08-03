@@ -1,14 +1,14 @@
-Node{Machine{LinearRegressor,…}} @492
+Node{Machine{LinearRegressor,…}} @833
   args:
-    1:	Node{Nothing} @938
+    1:	Node{Nothing} @971
   formula:
     predict(
-        Machine{LinearRegressor,…} @778, 
+        Machine{LinearRegressor,…} @239, 
         table(
             hcat(
                 predict(
-                    Machine{LinearRegressor,…} @850, 
-                    Source @255),
+                    Machine{LinearRegressor,…} @522, 
+                    Source @251),
                 predict(
-                    Machine{KNNRegressor,…} @479, 
-                    Source @255))))
+                    Machine{KNNRegressor,…} @335, 
+                    Source @251))))

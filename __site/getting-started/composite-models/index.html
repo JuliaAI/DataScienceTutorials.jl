@@ -99,7 +99,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="composing_models"><a href="#composing_models" class="header-anchor">Composing models</a></h1>
-<div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div>
 <h2 id="generating_dummy_data"><a href="#generating_dummy_data" class="header-anchor">Generating dummy data</a></h2>
 <p>Let&#39;s start by generating some dummy data with both numerical values and categorical values:</p>
 <pre><code class="language-julia">using MLJ
@@ -113,7 +113,7 @@ X &#61; &#40;age    &#61; &#91;23, 45, 34, 25, 67&#93;,
 height &#61; &#91;178, 194, 165, 173, 168&#93;;</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
 </code></pre>
 <p>Note that the scientific type of <code>age</code> is <code>Count</code> here:</p>
-<pre><code class="language-julia">scitype&#40;X.age&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})</code></pre>
+<pre><code class="language-julia">scitype&#40;X.age&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{ScientificTypesBase.Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})</code></pre>
 <p>We will want to coerce that to <code>Continuous</code> so that it can be given to a regressor that expects such values.</p>
 <h2 id="declaring_a_pipeline"><a href="#declaring_a_pipeline" class="header-anchor">Declaring a pipeline</a></h2>
 <p>A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data. Let&#39;s say that we want to apply the following steps:</p>
@@ -137,7 +137,7 @@ height &#61; &#91;178, 194, 165, 173, 168&#93;;</code></pre><pre><code class="pl
 pipe.one_hot_encoder.drop_last &#61; true;</code></pre>
 <p>Evaluation for a pipe can be done with the <code>evaluate&#33;</code> method; implicitly it will construct machines that will contain the fitted parameters etc:</p>
 <pre><code class="language-julia">evaluate&#40;pipe, X, height, resampling&#61;Holdout&#40;&#41;,
-         measure&#61;rms&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(measure = [RootMeanSquaredError @221],
+         measure&#61;rms&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(measure = [RootMeanSquaredError @012],
  measurement = [11.5],
  per_fold = [[11.5]],
  per_observation = [missing],
@@ -150,26 +150,26 @@ pipe.one_hot_encoder.drop_last &#61; true;</code></pre>
   Dimensions: 2
   Metric: Distances.Euclidean(0.0)
   Reordered: true,),
-       one_hot_encoder = (fitresult = OneHotEncoderResult @587,),
-       machines = [Machine{OneHotEncoder,…} @529,
-                   Machine{KNNRegressor,…} @668,
-                   Machine{UnivariateStandardizer,…} @285],
+       one_hot_encoder = (fitresult = OneHotEncoderResult @637,),
+       machines = [Machine{OneHotEncoder,…} @594,
+                   Machine{KNNRegressor,…} @930,
+                   Machine{UnivariateStandardizer,…} @129],
        fitted_params_given_machine =
-           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @529 => (fitresult = OneHotEncoderResult @587,), Machine{KNNRegressor,…} @668 => (tree = NearestNeighbors.KDTree{StaticArrays.SVector{2, Float64}, Distances.Euclidean, Float64}
+           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @594 => (fitresult = OneHotEncoderResult @637,), Machine{KNNRegressor,…} @930 => (tree = NearestNeighbors.KDTree{StaticArrays.SVector{2, Float64}, Distances.Euclidean, Float64}
   Number of points: 4
   Dimensions: 2
   Metric: Distances.Euclidean(0.0)
-  Reordered: true,), Machine{UnivariateStandardizer,…} @285 => (mean_and_std = (177.5, 12.233832869001711),)))],
+  Reordered: true,), Machine{UnivariateStandardizer,…} @129 => (mean_and_std = (177.5, 12.233832869001711),)))],
  report_per_fold =
      [(target = (),
        knn_regressor = (),
        one_hot_encoder = (features_to_be_encoded = [:gender],
                           new_features = [:age, :gender__f]),
-       machines = [Machine{OneHotEncoder,…} @529,
-                   Machine{KNNRegressor,…} @668,
-                   Machine{UnivariateStandardizer,…} @285],
+       machines = [Machine{OneHotEncoder,…} @594,
+                   Machine{KNNRegressor,…} @930,
+                   Machine{UnivariateStandardizer,…} @129],
        report_given_machine =
-           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @529 => (features_to_be_encoded = [:gender], new_features = [:age, :gender__f]), Machine{KNNRegressor,…} @668 => NamedTuple(), Machine{UnivariateStandardizer,…} @285 => NamedTuple()))],
+           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @594 => (features_to_be_encoded = [:gender], new_features = [:age, :gender__f]), Machine{KNNRegressor,…} @930 => NamedTuple(), Machine{UnivariateStandardizer,…} @129 => NamedTuple()))],
  train_test_rows = [([1, 2, 3, 4], [5])])</code></pre>
 
 <div class="page-foot">

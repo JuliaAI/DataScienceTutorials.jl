@@ -2,43 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/airfoil/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/HouseKingCounty/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles-3/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/AMES/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/wine/index.html</loc>
-    <lastmod>2021-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/index.html</loc>
-    <lastmod>2021-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/powergen/index.html</loc>
-    <lastmod>2021-08-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-<url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -56,19 +38,37 @@
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/composing-models/index.html</loc>
+    <lastmod>2021-08-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/glm/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/index.html</loc>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/index.html</loc>
+    <lastmod>2021-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles-2/index.html</loc>
+    <lastmod>2021-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/index.html</loc>
     <lastmod>2021-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

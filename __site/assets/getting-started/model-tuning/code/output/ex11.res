@@ -6,10 +6,11 @@ DeterministicEnsembleModel(
             min_purity_increase = 0.0,
             n_subfeatures = 0,
             post_prune = false,
-            merge_purity_threshold = 1.0),
+            merge_purity_threshold = 1.0,
+            rng = Random._GLOBAL_RNG()),
     atomic_weights = Float64[],
     bagging_fraction = 0.8,
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @048
+    out_of_bag_measure = Any[]) @206
