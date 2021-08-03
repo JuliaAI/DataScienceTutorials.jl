@@ -32,7 +32,7 @@ first(features, 3) |> MLJ.pretty
 
 # Next obvious steps: partitioning into train and test set
 
-train, test = partition(collect(eachindex(targets)), 0.70, rng=52)
+train, test = MLJ.partition(collect(eachindex(targets)), 0.70, rng=52)
 
 # Let us try to implement an Neural Network regressor using
 # Flux.jl. MLJFlux.jl provides an MLJ interface to the Flux.jl
