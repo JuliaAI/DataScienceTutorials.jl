@@ -128,6 +128,12 @@
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/breastcancer/index.html</loc>
+    <lastmod>2021-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/composing-models/index.html</loc>
     <lastmod>2021-08-03</lastmod>
     <changefreq>monthly</changefreq>
