@@ -60,7 +60,7 @@ println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
 println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])
-println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)
+println("\n Standard Error per Coefficient \n", r.linear_regressor.stderror[2:end])
 
 round(rms(yhatResponse, y[:,1]), sigdigits=4)
 
@@ -88,7 +88,7 @@ println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n residuals \n ", residuals[1:5])
-println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)
+println("\n Standard Error per Coefficient \n", r.linear_binary_classifier.stderror[2:end])
 
 yMode = [mode(ŷ[i]) for i in 1:length(ŷ)]
 y = coerce(y[:,1], OrderedFactor)

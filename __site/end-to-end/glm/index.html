@@ -223,10 +223,10 @@ LinearModel &#61; machine&#40;LinearRegressorPipe, X, yv&#41;
 fit&#33;&#40;LinearModel&#41;
 fp &#61; fitted_params&#40;LinearModel&#41;</code></pre><pre><code class="plaintext code-output">(linear_regressor = (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225],
                      intercept = 0.015893883995789806,),
- one_hot_encoder = (fitresult = OneHotEncoderResult @707,),
+ one_hot_encoder = (fitresult = [34mOneHotEncoderResult @802[39m,),
  standardizer = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)),
- machines = MLJBase.Machine[Machine{Standardizer,…} @029, Machine{OneHotEncoder,…} @068, Machine{LinearRegressor,…} @562],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{Standardizer,…} @029 => Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)), Machine{OneHotEncoder,…} @068 => (fitresult = OneHotEncoderResult @707,), Machine{LinearRegressor,…} @562 => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
+ machines = MLJBase.Machine[[34mMachine{Standardizer,…} @028[39m, [34mMachine{OneHotEncoder,…} @787[39m, [34mMachine{LinearRegressor,…} @970[39m],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}([34mMachine{Standardizer,…} @028[39m => Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)), [34mMachine{OneHotEncoder,…} @787[39m => (fitresult = [34mOneHotEncoderResult @802[39m,), [34mMachine{LinearRegressor,…} @970[39m => (coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225], intercept = 0.015893883995789806)),)</code></pre>
 <h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model" class="header-anchor">Reading the Output of Fitting the Linear Model</a></h2>
 <p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;LinearModel, X&#41;
@@ -240,7 +240,7 @@ println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n yhatResponse \n &quot;, yhatResponse&#91;1:5&#93;&#41;
 println&#40;&quot;\n Residuals \n &quot;, y&#91;1:5,1&#93; .- yhatResponse&#91;1:5&#93;&#41;
-println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.report_given_machine&#91;k&#93;.stderror&#41;</code></pre><pre><code class="plaintext code-output">
+println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_regressor.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">
  Coefficients:  [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225]
 
  y 
@@ -256,7 +256,7 @@ println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.report_given_mac
  [-0.3530925755640242, -1.8735342345397419, -0.01536771993664321, 1.547928499589051, 0.8697585429687495]
 
  Standard Error per Coefficient 
-[0.01587640310780568, 0.015862782503144917, 0.01515900587321476, 0.01515667698600387, 0.016546721612329368, 0.015148210698700702]
+[0.015862782503144917, 0.01515900587321476, 0.01515667698600387, 0.016546721612329368, 0.015148210698700702]
 </code></pre>
 <p>and get the accuracy</p>
 <pre><code class="language-julia">round&#40;rms&#40;yhatResponse, y&#91;:,1&#93;&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">0.9573</code></pre>
@@ -276,10 +276,10 @@ LogisticModel &#61; machine&#40;LinearBinaryClassifierPipe, X, yc&#41;
 fit&#33;&#40;LogisticModel&#41;
 fp &#61; fitted_params&#40;LogisticModel&#41;</code></pre><pre><code class="plaintext code-output">(linear_binary_classifier = (coef = [0.2025072937886874, 0.1307529391091289, 0.34495162493983494, 0.9977565847160846, -0.5022315102984596, -0.4785005626021653, -0.20440507809955, -0.06922751403500096, 0.05892864973017097, -0.08344749828203228, -0.002315143333859734, 0.4617765395578656, 0.38432629581007743],
                              intercept = -1.0766338905793649,),
- one_hot_encoder = (fitresult = OneHotEncoderResult @389,),
+ one_hot_encoder = (fitresult = [34mOneHotEncoderResult @416[39m,),
  standardizer = Dict(:wage => (9.500506478338009, 1.3430670761078416), :unemp => (7.597214581091511, 2.763580873344848), :tuition => (0.8146082493518824, 0.33950381985971717), :score => (50.88902933684601, 8.701909614072397)),
- machines = MLJBase.Machine[Machine{Standardizer,…} @270, Machine{OneHotEncoder,…} @518, Machine{LinearBinaryClassifier{LogitLink},…} @717],
- fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{Standardizer,…} @270 => Dict(:wage => (9.500506478338009, 1.3430670761078416), :unemp => (7.597214581091511, 2.763580873344848), :tuition => (0.8146082493518824, 0.33950381985971717), :score => (50.88902933684601, 8.701909614072397)), Machine{OneHotEncoder,…} @518 => (fitresult = OneHotEncoderResult @389,), Machine{LinearBinaryClassifier{LogitLink},…} @717 => (coef = [0.2025072937886874, 0.1307529391091289, 0.34495162493983494, 0.9977565847160846, -0.5022315102984596, -0.4785005626021653, -0.20440507809955, -0.06922751403500096, 0.05892864973017097, -0.08344749828203228, -0.002315143333859734, 0.4617765395578656, 0.38432629581007743], intercept = -1.0766338905793649)),)</code></pre>
+ machines = MLJBase.Machine[[34mMachine{Standardizer,…} @849[39m, [34mMachine{OneHotEncoder,…} @588[39m, [34mMachine{LinearBinaryClassifier{LogitLink},…} @081[39m],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}([34mMachine{Standardizer,…} @849[39m => Dict(:wage => (9.500506478338009, 1.3430670761078416), :unemp => (7.597214581091511, 2.763580873344848), :tuition => (0.8146082493518824, 0.33950381985971717), :score => (50.88902933684601, 8.701909614072397)), [34mMachine{OneHotEncoder,…} @588[39m => (fitresult = [34mOneHotEncoderResult @416[39m,), [34mMachine{LinearBinaryClassifier{LogitLink},…} @081[39m => (coef = [0.2025072937886874, 0.1307529391091289, 0.34495162493983494, 0.9977565847160846, -0.5022315102984596, -0.4785005626021653, -0.20440507809955, -0.06922751403500096, 0.05892864973017097, -0.08344749828203228, -0.002315143333859734, 0.4617765395578656, 0.38432629581007743], intercept = -1.0766338905793649)),)</code></pre>
 <h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model" class="header-anchor">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;LogisticModel, X&#41;
@@ -291,7 +291,7 @@ println&#40;&quot;\n Coefficients:  &quot;, fp.fitted_params_given_machine&#91;k
 println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n residuals \n &quot;, residuals&#91;1:5&#93;&#41;
-println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.report_given_machine&#91;k&#93;.stderror&#41;</code></pre><pre><code class="plaintext code-output">
+println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_classifier.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">
  Coefficients:  [0.2025072937886874, 0.1307529391091289, 0.34495162493983494, 0.9977565847160846, -0.5022315102984596, -0.4785005626021653, -0.20440507809955, -0.06922751403500096, 0.05892864973017097, -0.08344749828203228, -0.002315143333859734, 0.4617765395578656, 0.38432629581007743]
 
  y 
@@ -304,7 +304,7 @@ println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.report_given_mac
  [0.11944603346742211, 0.16182691493524637, 0.13445730373831222, 0.06370799769022917, 0.05604680411361729]
 
  Standard Error per Coefficient 
-[0.07542967234030676, 0.12260004202741961, 0.10934317995152518, 0.04661437250372939, 0.09609243724815354, 0.10743620672240187, 0.10642223545563925, 0.09190778860389331, 0.03922724536508866, 0.04118915117919154, 0.05115399636339276, 0.08454431256127863, 0.12281455657940027, 0.17884724866298302]
+[0.12260004202741961, 0.10934317995152518, 0.04661437250372939, 0.09609243724815354, 0.10743620672240187, 0.10642223545563925, 0.09190778860389331, 0.03922724536508866, 0.04118915117919154, 0.05115399636339276, 0.08454431256127863, 0.12281455657940027, 0.17884724866298302]
 </code></pre>
 <p>No logistic analysis is complete without the confusion matrix:</p>
 <pre><code class="language-julia">yMode &#61; &#91;mode&#40;ŷ&#91;i&#93;&#41; for i in 1:length&#40;ŷ&#41;&#93;

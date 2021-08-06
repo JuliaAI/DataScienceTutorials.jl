@@ -42,12 +42,15 @@ Find the corresponding script, fix it in a PR.
 * Activate that folder and add the packages that you'll need (MLJ, ...)
 * Write your tutorial following the blueprint
 
+**Note**: your tutorial **must** "just work" otherwise it will be ignored, in other words, we should be able to just copy the folder containing your `.jl` and `.toml` files, and run it without having to do anything special.
+
 Once all that's done, the remaining things to do are to create the HTML page and a link in the appropriate location. Let's assume you wanted to add an E2E tutorial "Dinosaurs" then in the previous step you'd have `EX-dinosaurs` and you would
 
 * create a file `dinosaurs.md` in `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{EX-dinosaurs}`
 * add links pointing to that tutorial
   * in `index.md` following the template
   * in `_layout/head.html` following the template
+
 
 ### Publishing updates
 

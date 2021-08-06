@@ -84,7 +84,7 @@ println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
 println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])
-println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)
+println("\n Standard Error per Coefficient \n", r.linear_regressor.stderror[2:end])
 
 # and get the accuracy
 
@@ -120,7 +120,7 @@ println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n residuals \n ", residuals[1:5])
-println("\n Standard Error per Coefficient \n", r.report_given_machine[k].stderror)
+println("\n Standard Error per Coefficient \n", r.linear_binary_classifier.stderror[2:end])
 
 # No logistic analysis is complete without the confusion matrix:
 
