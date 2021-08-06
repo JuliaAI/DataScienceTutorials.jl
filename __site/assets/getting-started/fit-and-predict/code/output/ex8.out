@@ -1,0 +1,1 @@
+ŷ[1] = UnivariateFinite{ScientificTypesBase.Multiclass{3}}(setosa=>1.0, versicolor=>0.0, virginica=>0.0)

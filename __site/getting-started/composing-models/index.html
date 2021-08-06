@@ -99,23 +99,21 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="composing_models"><a href="#composing_models" class="header-anchor">Composing models</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-composing-models.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-composing-models.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div><h2 id="generating_dummy_data"><a href="#generating_dummy_data" class="header-anchor">Generating dummy data</a></h2>
+<div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#declaring_a_pipeline">Declaring a pipeline</a></li></ol></div>
+<h2 id="generating_dummy_data"><a href="#generating_dummy_data" class="header-anchor">Generating dummy data</a></h2>
 <p>Let&#39;s start by generating some dummy data with both numerical values and categorical values:</p>
 <pre><code class="language-julia">using MLJ
 using PrettyPrinting
 
-@load KNNRegressor
+KNNRegressor &#61; @load KNNRegressor
 # input
 X &#61; &#40;age    &#61; &#91;23, 45, 34, 25, 67&#93;,
      gender &#61; categorical&#40;&#91;&#39;m&#39;, &#39;m&#39;, &#39;f&#39;, &#39;m&#39;, &#39;f&#39;&#93;&#41;&#41;
 # target
-height &#61; &#91;178, 194, 165, 173, 168&#93;;</code></pre><pre><code class="plaintext">import NearestNeighborModelsArgumentError: Package NearestNeighborModels not found in current path:
-- Run `import Pkg; Pkg.add("NearestNeighborModels")` to install the NearestNeighborModels package.
-
+height &#61; &#91;178, 194, 165, 173, 168&#93;;</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
 </code></pre>
 <p>Note that the scientific type of <code>age</code> is <code>Count</code> here:</p>
-<pre><code class="language-julia">scitype&#40;X.age&#41;</code></pre><pre><code class="plaintext">UndefVarError: X not defined
-</code></pre>
+<pre><code class="language-julia">scitype&#40;X.age&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{ScientificTypesBase.Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})</code></pre>
 <p>We will want to coerce that to <code>Continuous</code> so that it can be given to a regressor that expects such values.</p>
 <h2 id="declaring_a_pipeline"><a href="#declaring_a_pipeline" class="header-anchor">Declaring a pipeline</a></h2>
 <p>A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data. Let&#39;s say that we want to apply the following steps:</p>
@@ -128,25 +126,55 @@ height &#61; &#91;178, 194, 165, 173, 168&#93;;</code></pre><pre><code class="pl
 </li>
 </ol>
 <p>The <code>@pipeline</code> macro helps you define such a simple &#40;non-branching&#41; pipeline of steps to be applied in order:</p>
-<pre><code class="language-julia">pipe &#61; @pipeline&#40;X -&gt; coerce&#40;X, :age&#61;&gt;Continuous&#41;,
-                OneHotEncoder&#40;&#41;,
-                KNNRegressor&#40;K&#61;3&#41;,
-                target &#61; UnivariateStandardizer&#40;&#41;&#41;;</code></pre><pre><code class="plaintext">LoadError: UndefVarError: KNNRegressor not defined
-in expression starting at none:1
-</code></pre>
+<pre><code class="language-julia">pipe &#61; @pipeline&#40;
+    X -&gt; coerce&#40;X, :age&#61;&gt;Continuous&#41;,
+    OneHotEncoder&#40;&#41;,
+    KNNRegressor&#40;K&#61;3&#41;,
+    target &#61; UnivariateStandardizer&#40;&#41;&#41;;</code></pre>
 <p>Note the coercion of the <code>:age</code> variable to Continuous since <code>KNNRegressor</code> expects <code>Continuous</code> input. Note also the <code>target</code> keyword where you can specify a transformation of the target variable.</p>
 <p>Hyperparameters of this pipeline can be accessed &#40;and set&#41; using dot syntax:</p>
 <pre><code class="language-julia">pipe.knn_regressor.K &#61; 2
-pipe.one_hot_encoder.drop_last &#61; true;</code></pre><pre><code class="plaintext">UndefVarError: pipe not defined
-</code></pre>
+pipe.one_hot_encoder.drop_last &#61; true;</code></pre>
 <p>Evaluation for a pipe can be done with the <code>evaluate&#33;</code> method; implicitly it will construct machines that will contain the fitted parameters etc:</p>
 <pre><code class="language-julia">evaluate&#40;pipe, X, height, resampling&#61;Holdout&#40;&#41;,
-         measure&#61;rms&#41; |&gt; pprint</code></pre><pre><code class="plaintext">UndefVarError: pipe not defined
-</code></pre>
+         measure&#61;rms&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(measure = [RootMeanSquaredError @989],
+ measurement = [11.5],
+ per_fold = [[11.5]],
+ per_observation = [missing],
+ fitted_params_per_fold =
+     [(target = (mean_and_std = (177.5, 12.233832869001711),),
+       knn_regressor =
+           (tree =
+                NearestNeighbors.KDTree{StaticArrays.SVector{2, Float64}, Distances.Euclidean, Float64}
+  Number of points: 4
+  Dimensions: 2
+  Metric: Distances.Euclidean(0.0)
+  Reordered: true,),
+       one_hot_encoder = (fitresult = OneHotEncoderResult @183,),
+       machines = [Machine{OneHotEncoder,…} @549,
+                   Machine{KNNRegressor,…} @399,
+                   Machine{UnivariateStandardizer,…} @209],
+       fitted_params_given_machine =
+           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @549 => (fitresult = OneHotEncoderResult @183,), Machine{KNNRegressor,…} @399 => (tree = NearestNeighbors.KDTree{StaticArrays.SVector{2, Float64}, Distances.Euclidean, Float64}
+  Number of points: 4
+  Dimensions: 2
+  Metric: Distances.Euclidean(0.0)
+  Reordered: true,), Machine{UnivariateStandardizer,…} @209 => (mean_and_std = (177.5, 12.233832869001711),)))],
+ report_per_fold =
+     [(target = (),
+       knn_regressor = (),
+       one_hot_encoder = (features_to_be_encoded = [:gender],
+                          new_features = [:age, :gender__f]),
+       machines = [Machine{OneHotEncoder,…} @549,
+                   Machine{KNNRegressor,…} @399,
+                   Machine{UnivariateStandardizer,…} @209],
+       report_given_machine =
+           OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{OneHotEncoder,…} @549 => (features_to_be_encoded = [:gender], new_features = [:age, :gender__f]), Machine{KNNRegressor,…} @399 => NamedTuple(), Machine{UnivariateStandardizer,…} @209 => NamedTuple()))],
+ train_test_rows = [([1, 2, 3, 4], [5])])</code></pre>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 03, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

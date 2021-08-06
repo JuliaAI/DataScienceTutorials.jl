@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-combine(gdf, names(iris, Not(:Species)) .=> std)
+gdf = groupby(iris, :Species)
+combine(gdf, :PetalLength => mean => :MPL, :PetalLength => std => :SPL)

@@ -1,7 +1,6 @@
-3×2 DataFrame
- Row │ Species     PetalLength_mean
-     │ Cat…        Float64
-─────┼──────────────────────────────
-   1 │ setosa                 1.462
-   2 │ versicolor             4.26
-   3 │ virginica              5.552
+2×2 DataFrame
+ Row │ a_foo  b_bar
+     │ Int64  Int64
+─────┼──────────────
+   1 │     1      5
+   2 │     2      6

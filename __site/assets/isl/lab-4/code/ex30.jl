@@ -1,8 +1,9 @@
 # This file was generated, do not modify it. # hide
-y, X = unpack(caravan, ==(:Purchase), col->true)
+figure(figsize=(8,6))
+cm = countmap(purchase)
+PyPlot.bar([1, 2], [cm["No"], cm["Yes"]])
+xticks([1, 2], ["No", "Yes"], fontsize=12)
+yticks(fontsize=12)
+ylabel("Number of occurences", fontsize=14)
 
-mstd = machine(Standardizer(), X)
-fit!(mstd)
-Xs = transform(mstd, X)
-
-var(Xs[:,1]) |> r3
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide

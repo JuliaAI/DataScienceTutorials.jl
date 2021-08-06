@@ -1,6 +1,6 @@
 # This file was generated, do not modify it. # hide
-@from_network mach begin
-    mutable struct CompositeModel
-        regressor=ridge_model
-    end
-end
+surrogate = Deterministic()
+mach = machine(surrogate, Xs, ys; predict=ŷ)
+
+fit!(mach)
+predict(mach, X[test[1:5], :])

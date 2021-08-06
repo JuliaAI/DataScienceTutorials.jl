@@ -29,7 +29,7 @@ ACTIVATE = """
     #
     # ```julia
     # cd("DataScienceTutorials") # cd to folder with the *.toml
-    # using Pkg; Pkg.activate("."); Pkg.instantiate()
+    # using Pkg; Pkg.activate("."); Pkg.update()
     # ```
 
     """

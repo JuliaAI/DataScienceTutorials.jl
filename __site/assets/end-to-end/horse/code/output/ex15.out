@@ -1,1 +1,2 @@
-UndefVarError: X not defined
+import MLJModels ✔
+import MLJLinearModels ✔

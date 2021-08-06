@@ -1,3 +1,4 @@
 # This file was generated, do not modify it. # hide
-train = 1:nrows(data_train)
-test = last(train) .+ (1:nrows(data_test));
+unwanted = [:lesion_1, :lesion_2, :lesion_3]
+data = vcat(data_train, data_test)
+select!(data, Not(unwanted));

@@ -1,6 +1,3 @@
 # This file was generated, do not modify it. # hide
-@load XGBoostClassifier
-dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
-fit!(dtc)
-ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+mcr = misclassification_rate(mode.(ŷ), ytrain)
+println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))

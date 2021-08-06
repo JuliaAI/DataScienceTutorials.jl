@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-ŷ = ẑ |> inverse_transform(z);
+ẑ = (W, z) |> Ridge(lambda=0.1);

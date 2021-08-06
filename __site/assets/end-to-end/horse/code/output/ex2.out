@@ -1,1 +1,2 @@
-UndefVarError: data_train not defined
+size(data_train) = (300, 28)
+size(data_test) = (68, 28)

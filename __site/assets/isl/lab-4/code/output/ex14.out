@@ -1,4 +1,0 @@
-MethodError: no method matching (::FalsePositive)(::Dict{CategoricalArrays.CategoricalValue{String, UInt8}, Int64})
-Closest candidates are:
-  (::FalsePositive)(::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/measures/finite.jl:649
-  (::FalsePositive)(!Matched::MLJBase.ConfusionMatrixObject{2}) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/measures/finite.jl:636

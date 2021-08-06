@@ -99,17 +99,18 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="ames"><a href="#ames" class="header-anchor">AMES</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-AMES.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-AMES-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-AMES.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#baby_steps">Baby steps</a></li><li><a href="#dummy_model">Dummy model</a></li><li><a href="#knn-ridge_blend">KNN-Ridge blend</a><ol><li><a href="#using_the_expanded_syntax">Using the expanded syntax</a></li><li><a href="#using_the_arrow_syntax">Using the &quot;arrow&quot; syntax</a></li><li><a href="#tuning_the_model">Tuning the model</a></li></ol></li></ol></div><h2 id="baby_steps"><a href="#baby_steps" class="header-anchor">Baby steps</a></h2>
+<div class="franklin-toc"><ol><li><a href="#baby_steps">Baby steps</a></li><li><a href="#dummy_model">Dummy model</a></li><li><a href="#knn-ridge_blend">KNN-Ridge blend</a><ol><li><a href="#using_the_expanded_syntax">Using the expanded syntax</a></li><li><a href="#using_the_arrow_syntax">Using the &quot;arrow&quot; syntax</a></li><li><a href="#tuning_the_model">Tuning the model</a></li></ol></li></ol></div>
+<h2 id="baby_steps"><a href="#baby_steps" class="header-anchor">Baby steps</a></h2>
 <p>Let&#39;s load a reduced version of the well-known Ames House Price data set &#40;containing six of the more important categorical features and six of the more important numerical features&#41;. As &quot;iris&quot; the dataset is so common that you can load it directly with <code>@load_ames</code> and the reduced version via <code>@load_reduced_ames</code></p>
 <pre><code class="language-julia">using MLJ
 using  PrettyPrinting
-import DataFrames
+import DataFrames: DataFrame
 import Statistics
 
 X, y &#61; @load_reduced_ames
-X &#61; DataFrames.DataFrame&#40;X&#41;
+X &#61; DataFrame&#40;X&#41;
 @show size&#40;X&#41;
-first&#40;X, 3&#41; |&gt; pretty</code></pre><pre><code class="plaintext">size(X) = (1456, 12)
+first&#40;X, 3&#41; |&gt; pretty</code></pre><pre><code class="plaintext code-output">size(X) = (1456, 12)
 ┌─────────────────────────────────┬────────────┬──────────────────────────────────┬────────────┬─────────────┬────────────┬────────────┬────────────┬──────────────────────────────────┬────────────┬──────────────┬───────────┐
 │ OverallQual                     │ GrLivArea  │ Neighborhood                     │ x1stFlrSF  │ TotalBsmtSF │ BsmtFinSF1 │ LotArea    │ GarageCars │ MSSubClass                       │ GarageArea │ YearRemodAdd │ YearBuilt │
 │ CategoricalValue{Int64, UInt32} │ Float64    │ CategoricalValue{String, UInt32} │ Float64    │ Float64     │ Float64    │ Float64    │ Int64      │ CategoricalValue{String, UInt32} │ Float64    │ Int64        │ Int64     │
@@ -122,35 +123,35 @@ first&#40;X, 3&#41; |&gt; pretty</code></pre><pre><code class="plaintext">size(X
 </code></pre>
 <p>and the target is a continuous vector:</p>
 <pre><code class="language-julia">@show y&#91;1:3&#93;
-scitype&#40;y&#41;</code></pre><pre><code class="plaintext">y[1:3] = [138000.0, 369900.0, 180000.0]
-AbstractVector{Continuous} (alias for AbstractArray{Continuous, 1})</code></pre>
+scitype&#40;y&#41;</code></pre><pre><code class="plaintext code-output">y[1:3] = [138000.0, 369900.0, 180000.0]
+AbstractVector{ScientificTypesBase.Continuous} (alias for AbstractArray{ScientificTypesBase.Continuous, 1})</code></pre>
 <p>so this is a standard regression problem with a mix of categorical and continuous input.</p>
 <h2 id="dummy_model"><a href="#dummy_model" class="header-anchor">Dummy model</a></h2>
 <p>Remember that a model is just a container for hyperparameters; let&#39;s take a particularly simple one: the constant regression.</p>
-<pre><code class="language-julia">creg &#61; ConstantRegressor&#40;&#41;</code></pre><pre><code class="plaintext">ConstantRegressor(
-    distribution_type = Distributions.Normal) @846</code></pre>
+<pre><code class="language-julia">creg &#61; ConstantRegressor&#40;&#41;</code></pre><pre><code class="plaintext code-output">ConstantRegressor(
+    distribution_type = Distributions.Normal) @983</code></pre>
 <p>Wrapping the model in data creates a <em>machine</em> which will store training outcomes &#40;<em>fit-results</em>&#41;</p>
-<pre><code class="language-julia">cmach &#61; machine&#40;creg, X, y&#41;</code></pre><pre><code class="plaintext">Machine{ConstantRegressor,…} @126 trained 0 times; caches data
+<pre><code class="language-julia">cmach &#61; machine&#40;creg, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{ConstantRegressor,…} @063 trained 0 times; caches data
   args: 
-    1:	Source @791 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Count}, AbstractVector{Multiclass{15}}, AbstractVector{Multiclass{25}}, AbstractVector{OrderedFactor{10}}}}`
-    2:	Source @996 ⏎ `AbstractVector{Continuous}`
+    1:	Source @826 ⏎ `ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}, AbstractVector{ScientificTypesBase.Multiclass{15}}, AbstractVector{ScientificTypesBase.Multiclass{25}}, AbstractVector{ScientificTypesBase.OrderedFactor{10}}}}`
+    2:	Source @882 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>You can now train the machine specifying the data it should be trained on &#40;if unspecified, all the data will be used&#41;;</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.70, shuffle&#61;true&#41;; # 70:30 split
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.70, shuffle&#61;true&#41;; # 70:30 split
 fit&#33;&#40;cmach, rows&#61;train&#41;
 ŷ &#61; predict&#40;cmach, rows&#61;test&#41;
-ŷ&#91;1:3&#93; |&gt; pprint</code></pre><pre><code class="plaintext">[Distributions.Normal{Float64}(μ=179899.04612365062, σ=77268.6605510864),
- Distributions.Normal{Float64}(μ=179899.04612365062, σ=77268.6605510864),
- Distributions.Normal{Float64}(μ=179899.04612365062, σ=77268.6605510864)]</code></pre>
+ŷ&#91;1:3&#93; |&gt; pprint</code></pre><pre><code class="plaintext code-output">[Distributions.Normal{Float64}(μ=179471.0824337586, σ=76566.72485105493),
+ Distributions.Normal{Float64}(μ=179471.0824337586, σ=76566.72485105493),
+ Distributions.Normal{Float64}(μ=179471.0824337586, σ=76566.72485105493)]</code></pre>
 <p>Observe that the output is probabilistic, each element is a univariate normal distribution &#40;with the same mean and variance as it&#39;s a constant model&#41;.</p>
 <p>You can recover deterministic output by either computing the mean of predictions or using <code>predict_mean</code> directly &#40;the <code>mean</code> function can  bve applied to any distribution from <a href="https://github.com/JuliaStats/Distributions.jl"><code>Distributions.jl</code></a>&#41;:</p>
 <pre><code class="language-julia">ŷ &#61; predict_mean&#40;cmach, rows&#61;test&#41;
-ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext">3-element Vector{Float64}:
- 179899.04612365062
- 179899.04612365062
- 179899.04612365062</code></pre>
+ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element Vector{Float64}:
+ 179471.0824337586
+ 179471.0824337586
+ 179471.0824337586</code></pre>
 <p>You can then call one of the loss functions to assess the quality of the model by comparing the performances on the test set:</p>
-<pre><code class="language-julia">rmsl&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext">0.40111277408630286</code></pre>
+<pre><code class="language-julia">rmsl&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.3955214919931375</code></pre>
 <h2 id="knn-ridge_blend"><a href="#knn-ridge_blend" class="header-anchor">KNN-Ridge blend</a></h2>
 <p>Let&#39;s try something a bit fancier than a constant regressor.</p>
 <ul>
@@ -166,16 +167,14 @@ ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext">3-element Vector{Float
 </li>
 </ul>
 <p>You will first define a fixed model where all hyperparameters are specified or set to default. Then you will see how to create a model around a learning network that can be tuned.</p>
-<pre><code class="language-julia">@load RidgeRegressor pkg&#61;&quot;MultivariateStats&quot;
-@load KNNRegressor</code></pre><pre><code class="plaintext">import MLJMultivariateStatsInterface ✔
-import NearestNeighborModelsArgumentError: Package NearestNeighborModels not found in current path:
-- Run `import Pkg; Pkg.add("NearestNeighborModels")` to install the NearestNeighborModels package.
-
-</code></pre>
+<pre><code class="language-julia">RidgeRegressor &#61; @load RidgeRegressor pkg&#61;&quot;MultivariateStats&quot;
+KNNRegressor &#61; @load KNNRegressor</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔
+import NearestNeighborModels ✔
+NearestNeighborModels.KNNRegressor</code></pre>
 <h3 id="using_the_expanded_syntax"><a href="#using_the_expanded_syntax" class="header-anchor">Using the expanded syntax</a></h3>
 <p>Let&#39;s start by defining the source nodes:</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext">Source @044 ⏎ `AbstractVector{Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @225 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>On the &quot;first layer&quot;, there&#39;s one hot encoder and a log transform, these will respectively lead to node <code>W</code> and node <code>z</code>:</p>
 <pre><code class="language-julia">hot &#61; machine&#40;OneHotEncoder&#40;&#41;, Xs&#41;
 
@@ -186,24 +185,23 @@ z &#61; log&#40;ys&#41;;</code></pre>
 ridge &#61; machine&#40;RidgeRegressor&#40;lambda&#61;2.5&#41;, W, z&#41;
 
 ẑ₁ &#61; predict&#40;ridge, W&#41;
-ẑ₂ &#61; predict&#40;knn, W&#41;</code></pre><pre><code class="plaintext">UndefVarError: KNNRegressor not defined
-</code></pre>
+ẑ₂ &#61; predict&#40;knn, W&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{KNNRegressor,…}} @938
+  args:
+    1:	Node{Machine{OneHotEncoder,…}} @696
+  formula:
+    predict(
+        Machine{KNNRegressor,…} @549, 
+        transform(
+            Machine{OneHotEncoder,…} @465, 
+            Source @623))</code></pre>
 <p>On the &quot;third layer&quot;, there&#39;s a weighted combination of the two regression models:</p>
-<pre><code class="language-julia">ẑ &#61; 0.3ẑ₁ &#43; 0.7ẑ₂;</code></pre><pre><code class="plaintext">UndefVarError: ẑ₁ not defined
-</code></pre>
+<pre><code class="language-julia">ẑ &#61; 0.3ẑ₁ &#43; 0.7ẑ₂;</code></pre>
 <p>And finally we need to invert the initial transformation of the target &#40;which was a log&#41;:</p>
-<pre><code class="language-julia">ŷ &#61; exp&#40;ẑ&#41;;</code></pre><pre><code class="plaintext">UndefVarError: ẑ not defined
-</code></pre>
+<pre><code class="language-julia">ŷ &#61; exp&#40;ẑ&#41;;</code></pre>
 <p>You&#39;ve now defined a full learning network which you can fit and use for prediction:</p>
 <pre><code class="language-julia">fit&#33;&#40;ŷ, rows&#61;train&#41;
 ypreds &#61; ŷ&#40;rows&#61;test&#41;
-rmsl&#40;y&#91;test&#93;, ypreds&#41;</code></pre><pre><code class="plaintext">MethodError: no method matching fit!(::Vector{Float64}; rows=[765, 879, 930, 1343, 284, 960, 627, 1108, 1184, 1103  …  463, 227, 1370, 367, 548, 810, 806, 1240, 324, 952])
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at /Users/tlienart/.julia/packages/StatsBase/Lc3YW/src/statmodels.jl:164 got unsupported keyword argument "rows"
-  fit!(!Matched::Machine{var"#s815", C} where {var"#s815"<:Surrogate, C}; kwargs...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/machines.jl:143
-  fit!(!Matched::MLJBase.Source; args...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/nodes.jl:207
-  ...
-</code></pre>
+rmsl&#40;y&#91;test&#93;, ypreds&#41;</code></pre><pre><code class="plaintext code-output">0.17310013093985704</code></pre>
 <h3 id="using_the_arrow_syntax"><a href="#using_the_arrow_syntax" class="header-anchor">Using the &quot;arrow&quot; syntax</a></h3>
 <p>If you&#39;re using Julia 1.3, you can use the following syntax to do the same thing.</p>
 <p><em>First layer</em>: one hot encoding and log transform:</p>
@@ -211,31 +209,21 @@ Closest candidates are:
 z &#61; ys |&gt; log;</code></pre>
 <p><em>Second layer</em>: KNN Regression and Ridge regression</p>
 <pre><code class="language-julia">ẑ₁ &#61; &#40;W, z&#41; |&gt; KNNRegressor&#40;K&#61;5&#41;
-ẑ₂ &#61; &#40;W, z&#41; |&gt; RidgeRegressor&#40;lambda&#61;2.5&#41;;</code></pre><pre><code class="plaintext">UndefVarError: KNNRegressor not defined
-</code></pre>
+ẑ₂ &#61; &#40;W, z&#41; |&gt; RidgeRegressor&#40;lambda&#61;2.5&#41;;</code></pre>
 <p><em>Third layer</em>: weighted sum of the two models:</p>
-<pre><code class="language-julia">ẑ &#61; 0.3ẑ₁ &#43; 0.7ẑ₂;</code></pre><pre><code class="plaintext">UndefVarError: ẑ₁ not defined
-</code></pre>
+<pre><code class="language-julia">ẑ &#61; 0.3ẑ₁ &#43; 0.7ẑ₂;</code></pre>
 <p>then the inverse transform</p>
-<pre><code class="language-julia">ŷ &#61; exp&#40;ẑ&#41;;</code></pre><pre><code class="plaintext">UndefVarError: ẑ not defined
-</code></pre>
+<pre><code class="language-julia">ŷ &#61; exp&#40;ẑ&#41;;</code></pre>
 <p>You can then fit and evaluate the model as usual:</p>
 <pre><code class="language-julia">fit&#33;&#40;ŷ, rows&#61;train&#41;
-rmsl&#40;y&#91;test&#93;, ŷ&#40;rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext">MethodError: no method matching fit!(::Vector{Float64}; rows=[765, 879, 930, 1343, 284, 960, 627, 1108, 1184, 1103  …  463, 227, 1370, 367, 548, 810, 806, 1240, 324, 952])
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at /Users/tlienart/.julia/packages/StatsBase/Lc3YW/src/statmodels.jl:164 got unsupported keyword argument "rows"
-  fit!(!Matched::Machine{var"#s815", C} where {var"#s815"<:Surrogate, C}; kwargs...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/machines.jl:143
-  fit!(!Matched::MLJBase.Source; args...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/nodes.jl:207
-  ...
-</code></pre>
+rmsl&#40;y&#91;test&#93;, ŷ&#40;rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">0.13470278081649023</code></pre>
 <h3 id="tuning_the_model"><a href="#tuning_the_model" class="header-anchor">Tuning the model</a></h3>
 <p>So far the hyperparameters were explicitly given but it makes more sense to learn them. For this, we define a model around the learning network which can then be trained and tuned as any model:</p>
 <pre><code class="language-julia">mutable struct KNNRidgeBlend &lt;: DeterministicNetwork
     knn_model::KNNRegressor
     ridge_model::RidgeRegressor
     knn_weight::Float64
-end</code></pre><pre><code class="plaintext">UndefVarError: KNNRegressor not defined
-</code></pre>
+end</code></pre>
 <p>We must specify how such a model should be fit, which is effectively just the learning network we had defined before except that now the parameters are contained in the struct:</p>
 <pre><code class="language-julia">function MLJ.fit&#40;model::KNNRidgeBlend, verbosity::Int, X, y&#41;
     Xs &#61; source&#40;X&#41;
@@ -252,8 +240,7 @@ end</code></pre><pre><code class="plaintext">UndefVarError: KNNRegressor not def
     ŷ &#61; exp&#40;ẑ&#41;
 
     mach &#61; machine&#40;Deterministic&#40;&#41;, Xs, ys; predict&#61;ŷ&#41;
-    fit&#33;&#40;mach, verbosity&#61;verbosity - 1&#41;
-    return mach&#40;&#41;
+    return&#33;&#40;mach, model, verbosity&#41;
 end</code></pre>
 <p><strong>Note</strong>: you really  want to set <code>verbosity&#61;0</code> here otherwise in the tuning you will get a lot of verbose output&#33;</p>
 <p>You can now instantiate and fit such a model:</p>
@@ -262,49 +249,82 @@ mach &#61; machine&#40;krb, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 
 preds &#61; predict&#40;mach, rows&#61;test&#41;
-rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext">UndefVarError: KNNRegressor not defined
-</code></pre>
+rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext code-output">0.13470278081649023</code></pre>
 <p>But more interestingly, the hyperparameters of the model can be tuned.</p>
 <p>Before we get started, it&#39;s important to note that the hyperparameters of the model have different levels of <em>nesting</em>. This becomes explicit when trying to access elements:</p>
 <pre><code class="language-julia">@show krb.knn_weight
 @show krb.knn_model.K
-@show krb.ridge_model.lambda</code></pre><pre><code class="plaintext">UndefVarError: krb not defined
+@show krb.ridge_model.lambda</code></pre><pre><code class="plaintext code-output">krb.knn_weight = 0.3
+krb.knn_model.K = 5
+krb.ridge_model.lambda = 2.5
 </code></pre>
 <p>You can also see all the hyperparameters using the <code>params</code> function:</p>
-<pre><code class="language-julia">params&#40;krb&#41; |&gt; pprint</code></pre><pre><code class="plaintext">UndefVarError: krb not defined
-</code></pre>
+<pre><code class="language-julia">params&#40;krb&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(knn_model = (K = 5,
+              algorithm = :kdtree,
+              metric = Distances.Euclidean(0.0),
+              leafsize = 10,
+              reorder = true,
+              weights = NearestNeighborModels.Uniform()),
+ ridge_model = (lambda = 2.5, bias = true),
+ knn_weight = 0.3)</code></pre>
 <p>The range of values to do your hyperparameter tuning over should follow the nesting structure reflected by <code>params</code>:</p>
 <pre><code class="language-julia">k_range &#61; range&#40;krb, :&#40;knn_model.K&#41;, lower&#61;2, upper&#61;100, scale&#61;:log10&#41;
 l_range &#61; range&#40;krb, :&#40;ridge_model.lambda&#41;, lower&#61;1e-4, upper&#61;10, scale&#61;:log10&#41;
 w_range &#61; range&#40;krb, :&#40;knn_weight&#41;, lower&#61;0.1, upper&#61;0.9&#41;
 
-ranges &#61; &#91;k_range, l_range, w_range&#93;</code></pre><pre><code class="plaintext">UndefVarError: krb not defined
-</code></pre>
+ranges &#61; &#91;k_range, l_range, w_range&#93;</code></pre><pre><code class="plaintext code-output">3-element Vector{MLJBase.NumericRange{T, MLJBase.Bounded, Symbol} where T}:
+ typename(MLJBase.NumericRange)(Int64, :(knn_model.K), ... )
+ typename(MLJBase.NumericRange)(Float64, :(ridge_model.lambda), ... )
+ typename(MLJBase.NumericRange)(Float64, :knn_weight, ... )</code></pre>
 <p>Now there remains to define how the tuning should be done, let&#39;s just specify a very coarse grid tuning with cross validation and instantiate a tuned model:</p>
 <pre><code class="language-julia">tuning &#61; Grid&#40;resolution&#61;3&#41;
 resampling &#61; CV&#40;nfolds&#61;6&#41;
 
 tm &#61; TunedModel&#40;model&#61;krb, tuning&#61;tuning, resampling&#61;resampling,
-                ranges&#61;ranges, measure&#61;rmsl&#41;</code></pre><pre><code class="plaintext">UndefVarError: krb not defined
-</code></pre>
+                ranges&#61;ranges, measure&#61;rmsl&#41;</code></pre><pre><code class="plaintext code-output">DeterministicTunedModel(
+    model = KNNRidgeBlend(
+            knn_model = KNNRegressor @288,
+            ridge_model = RidgeRegressor @003,
+            knn_weight = 0.3),
+    tuning = Grid(
+            goal = nothing,
+            resolution = 3,
+            shuffle = true,
+            rng = Random._GLOBAL_RNG()),
+    resampling = CV(
+            nfolds = 6,
+            shuffle = false,
+            rng = Random._GLOBAL_RNG()),
+    measure = RootMeanSquaredLogError(),
+    weights = nothing,
+    operation = MLJModelInterface.predict,
+    range = MLJBase.NumericRange{T, MLJBase.Bounded, Symbol} where T[NumericRange{Int64,…} @328, NumericRange{Float64,…} @811, NumericRange{Float64,…} @681],
+    selection_heuristic = MLJTuning.NaiveSelection(nothing),
+    train_best = true,
+    repeats = 1,
+    n = nothing,
+    acceleration = ComputationalResources.CPU1{Nothing}(nothing),
+    acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
+    check_measure = true,
+    cache = true) @505</code></pre>
 <p>which we can now finally fit...</p>
 <pre><code class="language-julia">mtm &#61; machine&#40;tm, X, y&#41;
-fit&#33;&#40;mtm, rows&#61;train&#41;;</code></pre><pre><code class="plaintext">UndefVarError: tm not defined
-</code></pre>
+fit&#33;&#40;mtm, rows&#61;train&#41;;</code></pre>
 <p>To retrieve the best model, you can use:</p>
 <pre><code class="language-julia">krb_best &#61; fitted_params&#40;mtm&#41;.best_model
 @show krb_best.knn_model.K
 @show krb_best.ridge_model.lambda
-@show krb_best.knn_weight</code></pre><pre><code class="plaintext">UndefVarError: mtm not defined
+@show krb_best.knn_weight</code></pre><pre><code class="plaintext code-output">krb_best.knn_model.K = 2
+krb_best.ridge_model.lambda = 0.03162277660168379
+krb_best.knn_weight = 0.1
 </code></pre>
 <p>you can also use <code>mtm</code> to make predictions &#40;which will be done using the best model&#41;</p>
 <pre><code class="language-julia">preds &#61; predict&#40;mtm, rows&#61;test&#41;
-rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext">UndefVarError: mtm not defined
-</code></pre>
+rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext code-output">0.12759818135424894</code></pre>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

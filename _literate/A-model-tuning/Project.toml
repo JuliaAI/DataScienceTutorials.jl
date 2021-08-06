@@ -1,0 +1,5 @@
+[deps]
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJDecisionTreeInterface = "c6f25543-311c-4c74-83dc-3ea6d1015661"
+PrettyPrinting = "54e16d92-306c-5ea0-a30b-337be88ac337"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"

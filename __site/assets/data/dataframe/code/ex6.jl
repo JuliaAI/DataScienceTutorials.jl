@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-boston[3, 5]
+boston.Crim[1:5]

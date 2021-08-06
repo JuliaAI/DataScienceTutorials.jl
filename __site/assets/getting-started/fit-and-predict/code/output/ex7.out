@@ -1,0 +1,10 @@
+(tree = Decision Tree
+Leaves: 5
+Depth:  4,
+ encoding =
+     Dict(CategoricalArrays.CategoricalValue{String, UInt32} "virginica" =>
+              0x00000003,
+          CategoricalArrays.CategoricalValue{String, UInt32} "setosa" =>
+              0x00000001,
+          CategoricalArrays.CategoricalValue{String, UInt32} "versicolor" =>
+              0x00000002))

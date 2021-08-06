@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-cap_gr = groupby(capacity, [:country, :primary_fuel]);
+capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
+first(capacity, 5)

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Lab 6b - Ridge and Lasso regression</title>  
+  <!-- LUNR -->
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="lab_6b_-_ridge_and_lasso_regression"><a href="#lab_6b_-_ridge_and_lasso_regression" class="header-anchor">Lab 6b - Ridge and Lasso regression</a></h1>
+<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#data_preparation">Data preparation</a></li></ol></li><li><a href="#ridge_pipeline">Ridge pipeline</a><ol><li><a href="#baseline">Baseline</a></li><li><a href="#basic_ridge">Basic Ridge</a></li><li><a href="#cross_validating">Cross validating</a></li></ol></li><li><a href="#lasso_pipeline">Lasso pipeline</a></li><li><a href="#elastic_net_pipeline">Elastic net pipeline</a></li></ol></div>
+<p>regression to the Hitters R dataset.</p>
+<h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
+<pre><code class="language-julia">using MLJ
+import RDatasets: dataset
+using PrettyPrinting
+import Distributions
+const D &#61; Distributions
+
+LinearRegressor &#61; @load LinearRegressor pkg&#61;MLJLinearModels
+RidgeRegressor &#61; @load RidgeRegressor pkg&#61;MLJLinearModels
+LassoRegressor &#61; @load LassoRegressor pkg&#61;MLJLinearModels</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
+import MLJLinearModels ✔
+import MLJLinearModels ✔
+MLJLinearModels.LassoRegressor</code></pre>
+<p>We load the dataset using the <code>dataset</code> function, which takes the Package and dataset names as arguments.</p>
+<pre><code class="language-julia">hitters &#61; dataset&#40;&quot;ISLR&quot;, &quot;Hitters&quot;&#41;
+@show size&#40;hitters&#41;
+names&#40;hitters&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">size(hitters) = (322, 20)
+["AtBat",
+ "Hits",
+ "HmRun",
+ "Runs",
+ "RBI",
+ "Walks",
+ "Years",
+ "CAtBat",
+ "CHits",
+ "CHmRun",
+ "CRuns",
+ "CRBI",
+ "CWalks",
+ "League",
+ "Division",
+ "PutOuts",
+ "Assists",
+ "Errors",
+ "Salary",
+ "NewLeague"]</code></pre>
+<p>Let&#39;s unpack the dataset with the <code>unpack</code> function. In this case, the target is <code>Salary</code> &#40;<code>&#61;&#61;&#40;:Salary&#41;</code>&#41; and all other columns are features &#40;<code>col-&gt;true</code>&#41;.</p>
+<pre><code class="language-julia">y, X &#61; unpack&#40;hitters, &#61;&#61;&#40;:Salary&#41;, col-&gt;true&#41;;</code></pre>
+<p>The target has missing values which we will just ignore. We extract the row indices corresponding to non-missing values of the target. Note the use of the element-wise operator <code>.</code>.</p>
+<pre><code class="language-julia">no_miss &#61; .&#33;ismissing.&#40;y&#41;;</code></pre>
+<p>We collect the non missing values of the target in an Array.</p>
+<pre><code class="language-julia"># And keep only the corresponding features values.
+y &#61; collect&#40;skipmissing&#40;y&#41;&#41;
+X &#61; X&#91;no_miss, :&#93;
+
+# Let&#39;s now split our dataset into a train and test sets.
+train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;424&#41;;</code></pre>
+<p>Let&#39;s have a look at the target.</p>
+<pre><code class="language-julia">using PyPlot
+
+figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+plot&#40;y, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;&#41;
+
+xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
+xlabel&#40;&quot;Index&quot;, fontsize&#61;14&#41;, ylabel&#40;&quot;Salary&quot;, fontsize&#61;14&#41;</code></pre>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g1.svg" alt="Salary">
+<p>That looks quite skewed, let&#39;s have a look at a histogram:</p>
+<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+hist&#40;y, bins&#61;50, density&#61;true&#41;
+
+xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
+xlabel&#40;&quot;Salary&quot;, fontsize&#61;14&#41;; ylabel&#40;&quot;Density&quot;, fontsize&#61;14&#41;
+
+edfit &#61; D.fit_mle&#40;D.Exponential, y&#41;
+xx &#61; range&#40;minimum&#40;y&#41;, 2500, length&#61;100&#41;
+yy &#61; pdf.&#40;edfit, xx&#41;
+plot&#40;xx, yy, lw&#61;3, label&#61;&quot;Exponential distribution fit&quot;&#41;
+
+legend&#40;fontsize&#61;12&#41;</code></pre>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g2.svg" alt="Distribution of salary">
+<h3 id="data_preparation"><a href="#data_preparation" class="header-anchor">Data preparation</a></h3>
+<p>Most features are currently encoded as integers but we will consider them as continuous. To coerce <code>int</code> features to <code>Float</code>, we nest the <code>autotype</code> function in the <code>coerce</code> function. The <code>autotype</code> function returns a dictionary containing scientific types, which is then passed to the <code>coerce</code> function. For more details on the use of <code>autotype</code>, see the <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype">Scientific Types</a></p>
+<pre><code class="language-julia">Xc &#61; coerce&#40;X, autotype&#40;X, rules&#61;&#40;:discrete_to_continuous,&#41;&#41;&#41;
+scitype&#40;Xc&#41;</code></pre><pre><code class="plaintext code-output">ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}}}</code></pre>
+<p>There&#39;re a few features that are categorical which we&#39;ll one-hot-encode.</p>
+<h2 id="ridge_pipeline"><a href="#ridge_pipeline" class="header-anchor">Ridge pipeline</a></h2>
+<h3 id="baseline"><a href="#baseline" class="header-anchor">Baseline</a></h3>
+<p>Let&#39;s first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:</p>
+<pre><code class="language-julia">model &#61; @pipeline&#40;Standardizer&#40;&#41;,
+                     OneHotEncoder&#40;&#41;,
+                     LinearRegressor&#40;&#41;&#41;
+
+pipe  &#61; machine&#40;model, Xc, y&#41;
+fit&#33;&#40;pipe, rows&#61;train&#41;
+ŷ &#61; MLJ.predict&#40;pipe, rows&#61;test&#41;
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">123500.0</code></pre>
+<p>Let&#39;s get a feel for how we&#39;re doing</p>
+<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+
+res &#61; ŷ .- y&#91;test&#93;
+stem&#40;res&#41;
+
+xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
+xlabel&#40;&quot;Index&quot;, fontsize&#61;14&#41;; ylabel&#40;&quot;Residual &#40;ŷ - y&#41;&quot;, fontsize&#61;14&#41;
+
+ylim&#40;&#91;-1300, 1000&#93;&#41;</code></pre>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g3.svg" alt="Residuals">
+<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+hist&#40;res, bins&#61;30, density&#61;true, color&#61;&quot;green&quot;&#41;
+
+xx &#61; range&#40;-1100, 1100, length&#61;100&#41;
+ndfit &#61; D.fit_mle&#40;D.Normal, res&#41;
+lfit  &#61; D.fit_mle&#40;D.Laplace, res&#41;
+
+plot&#40;xx, pdf.&#40;ndfit, xx&#41;, lw&#61;3, color&#61;&quot;orange&quot;, label&#61;&quot;Normal fit&quot;&#41;
+plot&#40;xx, pdf.&#40;lfit, xx&#41;, lw&#61;3, color&#61;&quot;magenta&quot;, label&#61;&quot;Laplace fit&quot;&#41;
+
+legend&#40;fontsize&#61;12&#41;
+
+xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
+xlabel&#40;&quot;Residual &#40;ŷ - y&#41;&quot;, fontsize&#61;14&#41;; ylabel&#40;&quot;Density&quot;, fontsize&#61;14&#41;
+xlim&#40;&#91;-1100, 1100&#93;&#41;</code></pre>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g4.svg" alt="Distribution of residuals">
+<h3 id="basic_ridge"><a href="#basic_ridge" class="header-anchor">Basic Ridge</a></h3>
+<p>Let&#39;s now swap the linear regressor for a Ridge one without specifying the penalty &#40;<code>1</code> by default&#41;: We modify the supervised model in the pipeline directly.</p>
+<pre><code class="language-julia">pipe.model.linear_regressor &#61; RidgeRegressor&#40;&#41;
+fit&#33;&#40;pipe, rows&#61;train&#41;
+ŷ &#61; MLJ.predict&#40;pipe, rows&#61;test&#41;
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">109600.0</code></pre>
+<p>Ok that&#39;s a bit better but surely we can do better with an appropriate selection of the hyperparameter.</p>
+<h3 id="cross_validating"><a href="#cross_validating" class="header-anchor">Cross validating</a></h3>
+<p>What penalty should you use? Let&#39;s do a simple CV to try to find out:</p>
+<pre><code class="language-julia">r  &#61; range&#40;model, :&#40;linear_regressor.lambda&#41;, lower&#61;1e-2, upper&#61;100_000, scale&#61;:log10&#41;
+tm &#61; TunedModel&#40;model&#61;model, ranges&#61;r, tuning&#61;Grid&#40;resolution&#61;50&#41;,
+                resampling&#61;CV&#40;nfolds&#61;3, rng&#61;4141&#41;, measure&#61;rms&#41;
+mtm &#61; machine&#40;tm, Xc, y&#41;
+fit&#33;&#40;mtm, rows&#61;train&#41;
+
+best_mdl &#61; fitted_params&#40;mtm&#41;.best_model
+round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">26.83</code></pre>
+<p>right, and  with that we get:</p>
+<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">94130.0</code></pre>
+<p>Let&#39;s see:</p>
+<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+
+res &#61; ŷ .- y&#91;test&#93;
+stem&#40;res&#41;
+
+xticks&#40;fontsize&#61;12&#41;; yticks&#40;fontsize&#61;12&#41;
+xlabel&#40;&quot;Index&quot;, fontsize&#61;14&#41;;
+ylabel&#40;&quot;Residual &#40;ŷ - y&#41;&quot;, fontsize&#61;14&#41;
+xlim&#40;1, length&#40;res&#41;&#41;
+
+ylim&#40;&#91;-1300, 1000&#93;&#41;</code></pre>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g5.svg" alt="Ridge residuals">
+<p>You can compare that with the residuals obtained earlier.</p>
+<h2 id="lasso_pipeline"><a href="#lasso_pipeline" class="header-anchor">Lasso pipeline</a></h2>
+<p>Let&#39;s do the same as above but using a Lasso model and adjusting the range a bit:</p>
+<pre><code class="language-julia">mtm.model.model.linear_regressor &#61; LassoRegressor&#40;&#41;
+mtm.model.range &#61; range&#40;model, :&#40;linear_regressor.lambda&#41;, lower&#61;500, upper&#61;100_000, scale&#61;:log10&#41;
+fit&#33;&#40;mtm, rows&#61;train&#41;
+
+best_mdl &#61; fitted_params&#40;mtm&#41;.best_model
+round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">500.0</code></pre>
+<p>Ok and let&#39;s see how that does:</p>
+<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">98740.0</code></pre>
+<p>Pretty good&#33; and the parameters are reasonably sparse as expected:</p>
+<pre><code class="language-julia">coefs, intercept &#61; fitted_params&#40;mtm.fitresult&#41;.linear_regressor
+@show coefs
+@show intercept</code></pre><pre><code class="plaintext code-output">coefs = [:AtBat => -223.47299900072048, :Hits => 88.15051203823893, :HmRun => 0.0, :Runs => 179.00966853199657, :RBI => -29.390474497284877, :Walks => 95.01967139945249, :Years => -52.46067107036041, :CAtBat => 0.0, :CHits => 234.206384351214, :CHmRun => -30.325274901672948, :CRuns => 0.0, :CRBI => 209.59788250881334, :CWalks => -174.70781916549126, :League__A => -16.943202611202185, :League__N => 21.003667321464004, :Division__E => 70.20464829200642, :Division__W => -58.72272166046038, :PutOuts => 68.12266435844134, :Assists => 34.845065097082376, :Errors => -23.063832947776216, :NewLeague__A => 0.0, :NewLeague__N => -0.0]
+intercept = 539.2239936038059
+</code></pre>
+<p>with around 50&#37; sparsity:</p>
+<pre><code class="language-julia">coef_vals &#61; &#91;c&#91;2&#93; for c in coefs&#93;
+sum&#40;coef_vals .≈ 0&#41; / length&#40;coefs&#41;</code></pre><pre><code class="plaintext code-output">0.22727272727272727</code></pre>
+<p>Let&#39;s visualise this:</p>
+<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+stem&#40;coef_vals&#41;
+
+# name of the features including one-hot-encoded ones
+all_names &#61; &#91;:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
+             :CAtBat, :CHits, :CHmRun, :CRuns, :CRBI, :CWalks,
+             :League__A, :League__N, :Div_E, :Div_W,
+             :PutOuts, :Assists, :Errors, :NewLeague_A, :NewLeague_N&#93;
+
+idxshow &#61; collect&#40;1:length&#40;coef_vals&#41;&#41;&#91;abs.&#40;coef_vals&#41; .&gt; 10&#93;
+xticks&#40;idxshow .- 1, all_names&#91;idxshow&#93;, rotation&#61;45, fontsize&#61;12&#41;
+yticks&#40;fontsize&#61;12&#41;
+ylabel&#40;&quot;Amplitude&quot;, fontsize&#61;14&#41;</code></pre>
+<img src="/assets/isl/lab-6b/code/output/ISL-lab-6-g6.svg" alt="Lasso coefficients">
+<h2 id="elastic_net_pipeline"><a href="#elastic_net_pipeline" class="header-anchor">Elastic net pipeline</a></h2>
+<pre><code class="language-julia">ElasticNetRegressor &#61; @load ElasticNetRegressor pkg&#61;MLJLinearModels
+
+mtm.model.model.linear_regressor &#61; ElasticNetRegressor&#40;&#41;
+mtm.model.range &#61; &#91;range&#40;model, :&#40;linear_regressor.lambda&#41;, lower&#61;0.1, upper&#61;100, scale&#61;:log10&#41;,
+                    range&#40;model, :&#40;linear_regressor.gamma&#41;,  lower&#61;500, upper&#61;10_000, scale&#61;:log10&#41;&#93;
+mtm.model.tuning &#61; Grid&#40;resolution&#61;10&#41;
+fit&#33;&#40;mtm, rows&#61;train&#41;
+
+best_mdl &#61; fitted_params&#40;mtm&#41;.best_model
+@show round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;
+@show round&#40;best_mdl.linear_regressor.gamma, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
+round(best_mdl.linear_regressor.lambda, sigdigits = 4) = 100.0
+round(best_mdl.linear_regressor.gamma, sigdigits = 4) = 2641.0
+</code></pre>
+<p>And it&#39;s not too bad in terms of accuracy either</p>
+<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">104600.0</code></pre>
+<p>But the simple ridge regression seems to work best here.</p>
+
+
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

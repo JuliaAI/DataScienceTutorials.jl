@@ -1,8 +1,7 @@
 # This file was generated, do not modify it. # hide
-@load LDA pkg=MultivariateStats
-using Distances
+BayesianLDA = @load BayesianLDA pkg=MultivariateStats
 
-clf = machine(LDA(dist=CosineDist()), X3, y)
+clf = machine(BayesianLDA(), X3, y)
 fit!(clf, rows=train)
 ŷ = predict_mode(clf, rows=test)
 

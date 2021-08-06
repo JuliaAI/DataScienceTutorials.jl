@@ -1,1 +1,1 @@
-nothing
+MLJLinearModels.MultinomialClassifier

@@ -1,3 +1,7 @@
 # This file was generated, do not modify it. # hide
-mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
-println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
+SimplePipe = @pipeline(OneHotEncoder(),
+                       MultinomialClassifier(), prediction_type=:probabilistic)
+mach = machine(SimplePipe, Xtrain, ytrain)
+res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
+                measure=cross_entropy)
+round(res.measurement[1], sigdigits=3)

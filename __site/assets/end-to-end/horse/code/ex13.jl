@@ -1,8 +1,4 @@
 # This file was generated, do not modify it. # hide
-@load FillImputer
-filler = machine(FillImputer(), datac)
-fit!(filler)
-datac = transform(filler, datac)
-
-y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous));
+unwanted = [:peripheral_pulse, :nasogastric_tube, :nasogastric_reflux,
+        :nasogastric_reflux_ph, :feces, :abdomen, :abdomcentesis_appearance, :abdomcentesis_total_protein]
+select!(datac, Not(unwanted));

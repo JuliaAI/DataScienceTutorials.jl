@@ -1,6 +1,7 @@
 # This file was generated, do not modify it. # hide
-import MLJ: schema, std, mean, median, coerce, coerce!, scitype
-using DataFrames
-using UrlDownload
-using PyPlot
-ioff() # hide
+using Pkg # hideall
+Pkg.activate("_literate/D0-processing/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;

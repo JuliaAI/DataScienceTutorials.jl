@@ -99,21 +99,22 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="learning_networks_2"><a href="#learning_networks_2" class="header-anchor">Learning networks 2</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/A-learning-networks-2.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/A-learning-networks-2.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></li><li><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></li></ol></div><h2 id="preliminary_steps"><a href="#preliminary_steps" class="header-anchor">Preliminary steps</a></h2>
+<div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#using_the_from_network_macro">Using the <code>@from_network</code> macro</a></li><li><a href="#defining_a_model_from_scratch">Defining a model from scratch</a></li></ol></div>
+<h2 id="preliminary_steps"><a href="#preliminary_steps" class="header-anchor">Preliminary steps</a></h2>
 <p>Let&#39;s start as with the previous tutorial:</p>
 <pre><code class="language-julia">using MLJ
 using StableRNGs
-import DataFrames
-@load RidgeRegressor pkg&#61;MultivariateStats
+import DataFrames: DataFrame
+Ridge &#61; @load RidgeRegressor pkg&#61;MultivariateStats
 
 rng &#61; StableRNG&#40;6616&#41; # for reproducibility
 x1 &#61; rand&#40;rng, 300&#41;
 x2 &#61; rand&#40;rng, 300&#41;
 x3 &#61; rand&#40;rng, 300&#41;
 y &#61; exp.&#40;x1 - x2 -2x3 &#43; 0.1*rand&#40;rng, 300&#41;&#41;
-X &#61; DataFrames.DataFrame&#40;x1&#61;x1, x2&#61;x2, x3&#61;x3&#41;
+X &#61; DataFrame&#40;x1&#61;x1, x2&#61;x2, x3&#61;x3&#41;
 
-test, train &#61; partition&#40;eachindex&#40;y&#41;, 0.8&#41;;</code></pre><pre><code class="plaintext">import MLJMultivariateStatsInterface ✔
+test, train &#61; partition&#40;eachindex&#40;y&#41;, 0.8&#41;;</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔
 </code></pre>
 <p>In this tutorial we will show how to generate a model from a network; there are two approaches:</p>
 <ul>
@@ -128,59 +129,76 @@ test, train &#61; partition&#40;eachindex&#40;y&#41;, 0.8&#41;;</code></pre><pre
 <p>Let&#39;s define a simple network</p>
 <p><em>Input layer</em></p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext">Source @656 ⏎ `AbstractVector{Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @272 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p><em>First layer</em></p>
 <pre><code class="language-julia">std_model &#61; Standardizer&#40;&#41;
 stand &#61; machine&#40;std_model, Xs&#41;
-W &#61; MLJ.transform&#40;stand, Xs&#41;
+W &#61; transform&#40;stand, Xs&#41;
 
 box_model &#61; UnivariateBoxCoxTransformer&#40;&#41;
 box_mach &#61; machine&#40;box_model, ys&#41;
-z &#61; MLJ.transform&#40;box_mach, ys&#41;</code></pre><pre><code class="plaintext">Node{Machine{UnivariateBoxCoxTransformer,…}} @755
+z &#61; transform&#40;box_mach, ys&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @840
   args:
-    1:	Source @656
+    1:	Source @272
   formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer,…} @748, 
-        Source @656)</code></pre>
+        Machine{UnivariateBoxCoxTransformer,…} @082, 
+        Source @272)</code></pre>
 <p><em>Second layer</em></p>
-<pre><code class="language-julia">ridge_model &#61; RidgeRegressor&#40;lambda&#61;0.1&#41;
+<pre><code class="language-julia">ridge_model &#61; Ridge&#40;lambda&#61;0.1&#41;
 ridge &#61; machine&#40;ridge_model, W, z&#41;
-ẑ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext">UndefVarError: RidgeRegressor not defined
-</code></pre>
+ẑ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{RidgeRegressor,…}} @195
+  args:
+    1:	Node{Machine{Standardizer,…}} @520
+  formula:
+    predict(
+        Machine{RidgeRegressor,…} @438, 
+        transform(
+            Machine{Standardizer,…} @181, 
+            Source @174))</code></pre>
 <p><em>Output</em></p>
-<pre><code class="language-julia">ŷ &#61; inverse_transform&#40;box_mach, ẑ&#41;</code></pre><pre><code class="plaintext">UndefVarError: ẑ not defined
-</code></pre>
+<pre><code class="language-julia">ŷ &#61; inverse_transform&#40;box_mach, ẑ&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @087
+  args:
+    1:	Node{Machine{RidgeRegressor,…}} @195
+  formula:
+    inverse_transform(
+        Machine{UnivariateBoxCoxTransformer,…} @082, 
+        predict(
+            Machine{RidgeRegressor,…} @438, 
+            transform(
+                Machine{Standardizer,…} @181, 
+                Source @174)))</code></pre>
 <p>No fitting has been done thus far, we have just defined a sequence of operations.</p>
 <p>As we show next, a learning network needs to be exported to create a new stand-alone model type. Instances of that type can be bound with data in a machine, which can then be evaluated, for example. Somewhat paradoxically, one can wrap a learning network in a certain kind of machine, called a learning network machine, before exporting it, and in fact, the export process actually requires us to do so. Since a composite model type does not yet exist, one constructs the machine using a &quot;surrogate&quot; model, whose name indicates the ultimate model supertype &#40;Deterministic, Probabilistic, Unsupervised or Static&#41;. This surrogate model has no fields.</p>
 <pre><code class="language-julia">surrogate &#61; Deterministic&#40;&#41;
 mach &#61; machine&#40;surrogate, Xs, ys; predict&#61;ŷ&#41;
 
 fit&#33;&#40;mach&#41;
-predict&#40;mach, X&#91;test&#91;1:5&#93;, :&#93;&#41;</code></pre><pre><code class="plaintext">UndefVarError: ŷ not defined
-</code></pre>
+predict&#40;mach, X&#91;test&#91;1:5&#93;, :&#93;&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
+ 0.22207406272038532
+ 0.1145988140862213
+ 0.5637023411242004
+ 0.6208523052884072
+ 0.36914116568152006</code></pre>
 <p>To form a model out of that network is easy using the <code>@from_network</code> macro.</p>
 <p>Having defined a learning network machine, mach, as above, the following code defines a new model subtype WrappedRegressor &lt;: Supervised with a single field regressor</p>
 <pre><code class="language-julia">@from_network mach begin
     mutable struct CompositeModel
         regressor&#61;ridge_model
     end
-end</code></pre><pre><code class="plaintext">LoadError: UndefVarError: mach not defined
-in expression starting at none:1
-</code></pre>
+end</code></pre>
 <p>The macro defines a constructor CompositeModel and attributes a name to the different models; the ordering / connection between the nodes is inferred from <code>ŷ</code> via the <code>&lt;&#61; ŷ</code>.</p>
 <p><strong>Note</strong>: had the model been probabilistic &#40;e.g. <code>RidgeClassifier</code>&#41; you would have needed to add <code>is_probabilistic&#61;true</code> at the end.</p>
 <pre><code class="language-julia">cm &#61; machine&#40;CompositeModel&#40;&#41;, X, y&#41;
 res &#61; evaluate&#33;&#40;cm, resampling&#61;Holdout&#40;fraction_train&#61;0.8, rng&#61;51&#41;,
                 measure&#61;rms&#41;
-round&#40;res.measurement&#91;1&#93;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext">UndefVarError: CompositeModel not defined
-</code></pre>
+round&#40;res.measurement&#91;1&#93;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">0.0136</code></pre>
 <h2 id="defining_a_model_from_scratch"><a href="#defining_a_model_from_scratch" class="header-anchor">Defining a model from scratch</a></h2>
 <p>An alternative to the <code>@from_network</code>, is to fully define a new model with its <code>fit</code> method:</p>
 <pre><code class="language-julia">mutable struct CompositeModel2 &lt;: DeterministicNetwork
     std_model::Standardizer
     box_model::UnivariateBoxCoxTransformer
-    ridge_model::RidgeRegressor
+    ridge_model::Ridge
 end
 
 function MLJ.fit&#40;m::CompositeModel2, verbosity::Int, X, y&#41;
@@ -192,21 +210,19 @@ function MLJ.fit&#40;m::CompositeModel2, verbosity::Int, X, y&#41;
     ẑ &#61; predict&#40;machine&#40;m.ridge_model, W, z&#41;, W&#41;
     ŷ &#61; inverse_transform&#40;box, ẑ&#41;
     mach &#61; machine&#40;Deterministic&#40;&#41;, Xs, ys; predict&#61;ŷ&#41;
-    fit&#33;&#40;mach, verbosity&#61;verbosity - 1&#41;
-    return mach&#40;&#41;
+    return&#33;&#40;mach, m, verbosity - 1&#41;
 end
 
 mdl &#61; CompositeModel2&#40;Standardizer&#40;&#41;, UnivariateBoxCoxTransformer&#40;&#41;,
-                      RidgeRegressor&#40;lambda&#61;0.1&#41;&#41;
+                      Ridge&#40;lambda&#61;0.1&#41;&#41;
 cm &#61; machine&#40;mdl, X, y&#41;
 res &#61; evaluate&#33;&#40;cm, resampling&#61;Holdout&#40;fraction_train&#61;0.8&#41;, measure&#61;rms&#41;
-round&#40;res.measurement&#91;1&#93;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext">UndefVarError: RidgeRegressor not defined
-</code></pre>
+round&#40;res.measurement&#91;1&#93;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">0.0212</code></pre>
 <p>Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.</p>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

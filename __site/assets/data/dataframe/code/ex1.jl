@@ -1,5 +1,4 @@
 # This file was generated, do not modify it. # hide
-using RDatasets
-using DataFrames
-
-boston = dataset("MASS", "Boston");
+using Pkg # hideall
+Pkg.activate("_literate/D0-dataframe/Project.toml")
+Pkg.update()

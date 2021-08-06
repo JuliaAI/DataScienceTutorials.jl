@@ -1,7 +1,6 @@
 # This file was generated, do not modify it.
 
-using RDatasets
-using DataFrames
+using RDatasets, DataFrames
 
 boston = dataset("MASS", "Boston");
 
@@ -59,21 +58,9 @@ gdf = groupby(iris, :Species);
 subdf_setosa = gdf[1]
 describe(subdf_setosa, :min, :mean, :max)
 
-df = DataFrame(a=1:3, b=4:6)
-combine(df, :a => sum, nrow)
+by(iris, :Species, :PetalLength => mean)
 
-foo(v) = v[1:2]
-combine(df, :a => maximum, :b => foo)
+by(iris, :Species, MPL = :PetalLength => mean, SPL = :PetalLength => std)
 
-bar(v) = v[end-1:end]
-combine(df, :a => foo, :b => bar)
-
-combine(groupby(iris, :Species), :PetalLength => mean)
-
-gdf = groupby(iris, :Species)
-combine(gdf, :PetalLength => mean => :MPL, :PetalLength => std => :SPL)
-
-combine(gdf, names(iris, Not(:Species)) .=> std)
-
-names(iris, Not(:Species))
+DataFrames.aggregate(iris, :Species, std)
 

@@ -1,1 +1,1 @@
-MLJScikitLearnInterface.BayesianQDA
+0.548

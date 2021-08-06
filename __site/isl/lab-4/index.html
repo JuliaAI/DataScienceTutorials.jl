@@ -99,7 +99,8 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_4_-_logistic_regression_lda_qda_knn"><a href="#lab_4_-_logistic_regression_lda_qda_knn" class="header-anchor">Lab 4 - Logistic Regression, LDA, QDA, KNN</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/ISL-lab-4.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-4-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/ISL-lab-4.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#stock_market_data">Stock market data</a><ol><li><a href="#logistic_regression">Logistic Regression</a></li><li><a href="#lda">LDA</a></li><li><a href="#qda">QDA</a></li><li><a href="#knn">KNN</a></li></ol></li><li><a href="#caravan_insurance_data">Caravan insurance data</a><ol><li><a href="#roc_and_auc">ROC and AUC</a></li></ol></li></ol></div><h2 id="stock_market_data"><a href="#stock_market_data" class="header-anchor">Stock market data</a></h2>
+<div class="franklin-toc"><ol><li><a href="#stock_market_data">Stock market data</a><ol><li><a href="#logistic_regression">Logistic Regression</a></li><li><a href="#lda">LDA</a></li><li><a href="#qda">QDA</a></li><li><a href="#knn">KNN</a></li></ol></li><li><a href="#caravan_insurance_data">Caravan insurance data</a><ol><li><a href="#roc_and_auc">ROC and AUC</a></li></ol></li></ol></div>
+<h2 id="stock_market_data"><a href="#stock_market_data" class="header-anchor">Stock market data</a></h2>
 <p>Let&#39;s load the usual packages and the data</p>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
@@ -109,14 +110,14 @@ using PrettyPrinting
 
 smarket &#61; dataset&#40;&quot;ISLR&quot;, &quot;Smarket&quot;&#41;
 @show size&#40;smarket&#41;
-@show names&#40;smarket&#41;</code></pre><pre><code class="plaintext">size(smarket) = (1250, 9)
+@show names&#40;smarket&#41;</code></pre><pre><code class="plaintext code-output">size(smarket) = (1250, 9)
 names(smarket) = ["Year", "Lag1", "Lag2", "Lag3", "Lag4", "Lag5", "Volume", "Today", "Direction"]
 </code></pre>
 <p>Since we often  want  to only show a few significant digits for the metrics etc, let&#39;s introduce a very simple function  that does that:</p>
-<pre><code class="language-julia">r3 &#61; x -&gt; round&#40;x, sigdigits&#61;3&#41;
-r3&#40;pi&#41;</code></pre><pre><code class="plaintext">3.14</code></pre>
+<pre><code class="language-julia">r3&#40;x&#41; &#61; round&#40;x, sigdigits&#61;3&#41;
+r3&#40;pi&#41;</code></pre><pre><code class="plaintext code-output">3.14</code></pre>
 <p>Let&#39;s get a description too</p>
-<pre><code class="language-julia">describe&#40;smarket, :mean, :std, :eltype&#41;</code></pre><pre><code class="plaintext">9×4 DataFrame
+<pre><code class="language-julia">describe&#40;smarket, :mean, :std, :eltype&#41;</code></pre><pre><code class="plaintext code-output">9×4 DataFrame
  Row │ variable   mean       std       eltype
      │ Symbol     Union…     Union…    DataType
 ─────┼─────────────────────────────────────────────────────────────────
@@ -134,7 +135,7 @@ r3&#40;pi&#41;</code></pre><pre><code class="plaintext">3.14</code></pre>
 X &#61; select&#40;smarket, Not&#40;:Direction&#41;&#41;;</code></pre>
 <p>We can compute all the pairwise correlations; we use <code>Matrix</code> so that the dataframe entries are considered as one matrix of numbers with the same type &#40;otherwise <code>cor</code> won&#39;t work&#41;:</p>
 <pre><code class="language-julia">cm &#61; X |&gt; Matrix |&gt; cor
-round.&#40;cm, sigdigits&#61;1&#41;</code></pre><pre><code class="plaintext">8×8 Matrix{Float64}:
+round.&#40;cm, sigdigits&#61;1&#41;</code></pre><pre><code class="plaintext code-output">8×8 Matrix{Float64}:
  1.0    0.03    0.03    0.03    0.04    0.03    0.5    0.03
  0.03   1.0    -0.03   -0.01   -0.003  -0.006   0.04  -0.03
  0.03  -0.03    1.0    -0.03   -0.01   -0.004  -0.04  -0.01
@@ -155,49 +156,50 @@ yticks&#40;fontsize&#61;12&#41;</code></pre>
 <h3 id="logistic_regression"><a href="#logistic_regression" class="header-anchor">Logistic Regression</a></h3>
 <p>We will now try to train models; the target <code>:Direction</code> has two classes: <code>Up</code> and <code>Down</code>; it needs to be interpreted as a categorical object, and we will mark it as a <em>ordered factor</em> to specify that &#39;Up&#39; is positive and &#39;Down&#39; negative &#40;for the confusion matrix later&#41;:</p>
 <pre><code class="language-julia">y &#61; coerce&#40;y, OrderedFactor&#41;
-classes&#40;y&#91;1&#93;&#41;</code></pre><pre><code class="plaintext">2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
+classes&#40;y&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
  "Down"
  "Up"</code></pre>
 <p>Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since <code>D</code>  comes before <code>U</code>.</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 cm &#61; countmap&#40;y&#41;
-bar&#40;&#91;1, 2&#93;, &#91;cm&#91;&quot;Down&quot;&#93;, cm&#91;&quot;Up&quot;&#93;&#93;&#41;
+PyPlot.bar&#40;&#91;1, 2&#93;, &#91;cm&#91;&quot;Down&quot;&#93;, cm&#91;&quot;Up&quot;&#93;&#93;&#41;
 xticks&#40;&#91;1, 2&#93;, &#91;&quot;Down&quot;, &quot;Up&quot;&#93;, fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;
 ylabel&#40;&quot;Number of occurences&quot;, fontsize&#61;14&#41;</code></pre>
 <img src="/assets/isl/lab-4/code/output/ISL-lab-4-bal.svg" alt="">
 <p>Seems pretty balanced.</p>
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
-<pre><code class="language-julia">@load LogisticClassifier pkg&#61;MLJLinearModels
+<pre><code class="language-julia">LogisticClassifier &#61; @load LogisticClassifier pkg&#61;MLJLinearModels
 X2 &#61; select&#40;X, Not&#40;&#91;:Year, :Today&#93;&#41;&#41;
-clf &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><pre><code class="plaintext">import MLJLinearModels ✔
-UndefVarError: LogisticClassifier not defined
+clf &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
+Machine{LogisticClassifier,…} @303 trained 0 times; caches data
+  args: 
+    1:	Source @793 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @534 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit&#33;&#40;clf&#41;
 ŷ &#61; MLJ.predict&#40;clf, X2&#41;
-ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext">MethodError: no method matching fit!(::typeof(clf))
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at /Users/tlienart/.julia/packages/StatsBase/Lc3YW/src/statmodels.jl:164
-  fit!(!Matched::Machine{var"#s815", C} where {var"#s815"<:Surrogate, C}; kwargs...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/machines.jl:143
-  fit!(!Matched::MLJBase.Source; args...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/nodes.jl:207
-  ...
-</code></pre>
+ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element MLJBase.UnivariateFiniteVector{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}:
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.493, Up=>0.507)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.518, Up=>0.482)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.519, Up=>0.481)</code></pre>
 <p>Note that here the <code>ŷ</code> are <em>scores</em>. We can recover the average cross-entropy loss:</p>
-<pre><code class="language-julia">cross_entropy&#40;ŷ, y&#41; |&gt; mean |&gt; r3</code></pre><pre><code class="plaintext">UndefVarError: ŷ not defined
-</code></pre>
+<pre><code class="language-julia">cross_entropy&#40;ŷ, y&#41; |&gt; mean |&gt; r3</code></pre><pre><code class="plaintext code-output">0.691</code></pre>
 <p>in order to recover the class, we could use the mode and compare the misclassification rate:</p>
 <pre><code class="language-julia">ŷ &#61; predict_mode&#40;clf, X2&#41;
-misclassification_rate&#40;ŷ, y&#41; |&gt; r3</code></pre><pre><code class="plaintext">MethodError: no method matching predict_mode(::typeof(clf), ::DataFrames.DataFrame)
-Closest candidates are:
-  predict_mode(::Any, ::Any, !Matched::Any, !Matched::Val{var"#s101"} where var"#s101"<:Union{AbstractArray{Continuous, N} where N, Table{var"#s46"} where var"#s46"<:(AbstractVector{var"#s9"} where var"#s9"<:Continuous)}) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/interface/model_api.jl:12
-  predict_mode(::Any, ::Any, !Matched::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/interface/model_api.jl:10
-  predict_mode(!Matched::Union{ProbabilisticSurrogate, ProbabilisticComposite}, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/operations.jl:124
-  ...
-</code></pre>
+misclassification_rate&#40;ŷ, y&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.479</code></pre>
 <p>Well that&#39;s not fantastic...</p>
 <p>Let&#39;s visualise how we&#39;re doing building a confusion matrix, first is predicted, second is truth:</p>
-<pre><code class="language-julia">cm &#61; confusion_matrix&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext">UndefVarError: ŷ not defined
+<pre><code class="language-julia">cm &#61; confusion_matrix&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">              ┌───────────────────────────┐
+              │       Ground Truth        │
+┌─────────────┼─────────────┬─────────────┤
+│  Predicted  │    Down     │     Up      │
+├─────────────┼─────────────┼─────────────┤
+│    Down     │     144     │     141     │
+├─────────────┼─────────────┼─────────────┤
+│     Up      │     458     │     507     │
+└─────────────┴─────────────┴─────────────┘
 </code></pre>
 <p>We can then compute the accuracy or precision, etc. easily for instance:</p>
 <pre><code class="language-julia">@show false_positive&#40;cm&#41;
@@ -205,10 +207,12 @@ Closest candidates are:
 @show accuracy&#40;cm&#41;    |&gt; r3  # same thing
 @show precision&#40;ŷ, y&#41; |&gt; r3
 @show recall&#40;ŷ, y&#41;    |&gt; r3
-@show f1score&#40;ŷ, y&#41;   |&gt; r3</code></pre><pre><code class="plaintext">MethodError: no method matching (::FalsePositive)(::Dict{CategoricalArrays.CategoricalValue{String, UInt8}, Int64})
-Closest candidates are:
-  (::FalsePositive)(::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/measures/finite.jl:649
-  (::FalsePositive)(!Matched::MLJBase.ConfusionMatrixObject{2}) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/measures/finite.jl:636
+@show f1score&#40;ŷ, y&#41;   |&gt; r3</code></pre><pre><code class="plaintext code-output">false_positive(cm) = 458
+accuracy(ŷ, y) |> r3 = 0.521
+accuracy(cm) |> r3 = 0.521
+precision(ŷ, y) |> r3 = 0.525
+recall(ŷ, y) |> r3 = 0.782
+f1score(ŷ, y) |> r3 = 0.629
 </code></pre>
 <p>Let&#39;s now train on the data before 2005 and use it to predict on the rest. Let&#39;s find the row indices for which the condition holds</p>
 <pre><code class="language-julia">train &#61; 1:findlast&#40;X.Year .&lt; 2005&#41;
@@ -216,153 +220,88 @@ test &#61; last&#40;train&#41;&#43;1:length&#40;y&#41;;</code></pre>
 <p>We can now just re-fit the machine that we&#39;ve already defined just on those rows and predict on the test:</p>
 <pre><code class="language-julia">fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">MethodError: no method matching fit!(::typeof(clf); rows=1:998)
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at /Users/tlienart/.julia/packages/StatsBase/Lc3YW/src/statmodels.jl:164 got unsupported keyword argument "rows"
-  fit!(!Matched::Machine{var"#s815", C} where {var"#s815"<:Surrogate, C}; kwargs...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/machines.jl:143
-  fit!(!Matched::MLJBase.Source; args...) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/learning_networks/nodes.jl:207
-  ...
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.484</code></pre>
 <p>Well, that&#39;s not very good... Let&#39;s retrain a machine using only <code>:Lag1</code> and <code>:Lag2</code>:</p>
 <pre><code class="language-julia">X3 &#61; select&#40;X2, &#91;:Lag1, :Lag2&#93;&#41;
 clf &#61; machine&#40;LogisticClassifier&#40;&#41;, X3, y&#41;
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">UndefVarError: LogisticClassifier not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.56</code></pre>
 <p>Interesting... it has higher accuracy than the model with more features&#33; This could be investigated further by increasing the regularisation parameter but we&#39;ll leave that aside for now.</p>
 <p>We can use a trained machine to predict on new data:</p>
 <pre><code class="language-julia">Xnew &#61; &#40;Lag1 &#61; &#91;1.2, 1.5&#93;, Lag2 &#61; &#91;1.1, -0.8&#93;&#41;
 ŷ &#61; MLJ.predict&#40;clf, Xnew&#41;
-ŷ |&gt; pprint</code></pre><pre><code class="plaintext">MethodError: no method matching predict(::typeof(clf), ::NamedTuple{(:Lag1, :Lag2), Tuple{Vector{Float64}, Vector{Float64}}})
-Closest candidates are:
-  predict(!Matched::Union{Composite, Surrogate}, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/operations.jl:114
-  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJTuning/9sSuR/src/tuned_models.jl:625
-  predict(!Matched::Union{MLJ.DeterministicEnsembleModel{Atom}, MLJ.ProbabilisticEnsembleModel{Atom}} where Atom, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJ/xgrEQ/src/ensembles.jl:557
-  ...
-</code></pre>
+ŷ |&gt; pprint</code></pre><pre><code class="plaintext code-output">MLJBase.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.504, Up=>0.496)]</code></pre>
 <p><strong>Note</strong>: when specifying data, we used a simple <code>NamedTuple</code>; we could also have defined a dataframe or any other compatible tabular container. Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used <code>predict_mode</code> or indeed</p>
-<pre><code class="language-julia">mode.&#40;ŷ&#41;</code></pre><pre><code class="plaintext">UndefVarError: ŷ not defined
-</code></pre>
+<pre><code class="language-julia">mode.&#40;ŷ&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
+ "Down"
+ "Down"</code></pre>
 <h3 id="lda"><a href="#lda" class="header-anchor">LDA</a></h3>
 <p>Let&#39;s do a similar thing but with a LDA model this time:</p>
-<pre><code class="language-julia">@load BayesianLDA pkg&#61;MultivariateStats
+<pre><code class="language-julia">BayesianLDA &#61; @load BayesianLDA pkg&#61;MultivariateStats
 
 clf &#61; machine&#40;BayesianLDA&#40;&#41;, X3, y&#41;
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">import MLJMultivariateStatsInterface ✔
-UndefVarError: BayesianLDA not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔
+0.56</code></pre>
 <p>Note: <code>BayesianLDA</code> is LDA using a multivariate normal model for each class with a default prior inferred from the proportions for each class in the training data. You can also use the bare <code>LDA</code> model which does not make these assumptions and allows using a different metric in the transformed space, see the docs for details.</p>
-<pre><code class="language-julia">@load LDA pkg&#61;MultivariateStats
+<pre><code class="language-julia">LDA &#61; @load LDA pkg&#61;MultivariateStats
 using Distances
 
 clf &#61; machine&#40;LDA&#40;dist&#61;CosineDist&#40;&#41;&#41;, X3, y&#41;
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">import MLJMultivariateStatsInterface ✔
-UndefVarError: LDA not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔
+0.548</code></pre>
 <h3 id="qda"><a href="#qda" class="header-anchor">QDA</a></h3>
 <p>Bayesian QDA is available via ScikitLearn:</p>
-<pre><code class="language-julia">@load BayesianQDA pkg&#61;ScikitLearn</code></pre><pre><code class="plaintext">Collecting package metadata (current_repodata.json): ...working... done
-Solving environment: ...working... done
-
-## Package Plan ##
-
-  environment location: /Users/tlienart/.julia/conda/3
-
-  added / updated specs:
-    - scikit-learn
-
-
-The following packages will be downloaded:
-
-    package                    |            build
-    ---------------------------|-----------------
-    ca-certificates-2021.4.13  |       hecd8cb5_1         114 KB
-    conda-4.10.1               |   py37hecd8cb5_1         2.9 MB
-    joblib-1.0.1               |     pyhd3eb1b0_0         208 KB
-    scikit-learn-0.24.1        |   py37hb2f4e1b_0         4.8 MB
-    scipy-1.6.2                |   py37h4420a3a_0        14.4 MB
-    threadpoolctl-2.1.0        |     pyh5ca1d4c_0          17 KB
-    ------------------------------------------------------------
-                                           Total:        22.4 MB
-
-The following NEW packages will be INSTALLED:
-
-  joblib             pkgs/main/noarch::joblib-1.0.1-pyhd3eb1b0_0
-  scikit-learn       pkgs/main/osx-64::scikit-learn-0.24.1-py37hb2f4e1b_0
-  scipy              pkgs/main/osx-64::scipy-1.6.2-py37h4420a3a_0
-  threadpoolctl      pkgs/main/noarch::threadpoolctl-2.1.0-pyh5ca1d4c_0
-
-The following packages will be UPDATED:
-
-  ca-certificates                      2021.1.19-hecd8cb5_1 --> 2021.4.13-hecd8cb5_1
-  conda                               4.10.0-py37hecd8cb5_0 --> 4.10.1-py37hecd8cb5_1
-
-
-
-Downloading and Extracting Packages
-scipy-1.6.2          | 14.4 MB   |            |   0% scipy-1.6.2          | 14.4 MB   |            |   0% scipy-1.6.2          | 14.4 MB   |            |   1% scipy-1.6.2          | 14.4 MB   | 1          |   2% scipy-1.6.2          | 14.4 MB   | 4          |   4% scipy-1.6.2          | 14.4 MB   | 7          |   7% scipy-1.6.2          | 14.4 MB   | 9          |   9% scipy-1.6.2          | 14.4 MB   | #1         |  12% scipy-1.6.2          | 14.4 MB   | #8         |  19% scipy-1.6.2          | 14.4 MB   | ###3       |  33% scipy-1.6.2          | 14.4 MB   | ###9       |  39% scipy-1.6.2          | 14.4 MB   | ####4      |  45% scipy-1.6.2          | 14.4 MB   | ####9      |  50% scipy-1.6.2          | 14.4 MB   | #####4     |  55% scipy-1.6.2          | 14.4 MB   | #####9     |  59% scipy-1.6.2          | 14.4 MB   | ######7    |  67% scipy-1.6.2          | 14.4 MB   | #######2   |  72% scipy-1.6.2          | 14.4 MB   | ########3  |  83% scipy-1.6.2          | 14.4 MB   | ########9  |  90% scipy-1.6.2          | 14.4 MB   | ########## | 100% scipy-1.6.2          | 14.4 MB   | ########## | 100% 
-scikit-learn-0.24.1  | 4.8 MB    |            |   0% scikit-learn-0.24.1  | 4.8 MB    |            |   0% scikit-learn-0.24.1  | 4.8 MB    | 9          |  10% scikit-learn-0.24.1  | 4.8 MB    | #6         |  17% scikit-learn-0.24.1  | 4.8 MB    | #####8     |  59% scikit-learn-0.24.1  | 4.8 MB    | ######6    |  67% scikit-learn-0.24.1  | 4.8 MB    | #######6   |  77% scikit-learn-0.24.1  | 4.8 MB    | ########## | 100% scikit-learn-0.24.1  | 4.8 MB    | ########## | 100% 
-ca-certificates-2021 | 114 KB    |            |   0% ca-certificates-2021 | 114 KB    | ########## | 100% ca-certificates-2021 | 114 KB    | ########## | 100% 
-conda-4.10.1         | 2.9 MB    |            |   0% conda-4.10.1         | 2.9 MB    | 4          |   4% conda-4.10.1         | 2.9 MB    | #          |  11% conda-4.10.1         | 2.9 MB    | ####8      |  48% conda-4.10.1         | 2.9 MB    | #######2   |  73% conda-4.10.1         | 2.9 MB    | #########  |  90% conda-4.10.1         | 2.9 MB    | ########## | 100% 
-threadpoolctl-2.1.0  | 17 KB     |            |   0% threadpoolctl-2.1.0  | 17 KB     | #########4 |  95% threadpoolctl-2.1.0  | 17 KB     | ########## | 100% 
-joblib-1.0.1         | 208 KB    |            |   0% joblib-1.0.1         | 208 KB    | ####6      |  46% joblib-1.0.1         | 208 KB    | ########## | 100% joblib-1.0.1         | 208 KB    | ########## | 100% 
-Preparing transaction: ...working... done
-Verifying transaction: ...working... done
-Executing transaction: ...working... done
-import MLJScikitLearnInterface ✔
+<pre><code class="language-julia">BayesianQDA &#61; @load BayesianQDA pkg&#61;ScikitLearn</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
 MLJScikitLearnInterface.BayesianQDA</code></pre>
 <p>Using it is done in much the same way as before:</p>
 <pre><code class="language-julia">clf &#61; machine&#40;BayesianQDA&#40;&#41;, X3, y&#41;
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">UndefVarError: BayesianQDA not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.599</code></pre>
 <h3 id="knn"><a href="#knn" class="header-anchor">KNN</a></h3>
 <p>We can use K-Nearest Neighbors models via the <a href="https://github.com/KristofferC/NearestNeighbors.jl"><code>NearestNeighbors</code></a> package:</p>
-<pre><code class="language-julia">@load KNNClassifier pkg&#61;NearestNeighbors
+<pre><code class="language-julia">KNNClassifier &#61; @load KNNClassifier
 
 knnc &#61; KNNClassifier&#40;K&#61;1&#41;
 clf &#61; machine&#40;knnc, X3, y&#41;
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">ArgumentError: The package "NearestNeighbors" does not appear to provide the model "KNNClassifier". 
-Use models() to list all models. 
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
+0.5</code></pre>
 <p>Pretty bad... let&#39;s try with three neighbors</p>
 <pre><code class="language-julia">knnc.K &#61; 3
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">UndefVarError: knnc not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.532</code></pre>
 <p>A bit better but not hugely so.</p>
 <h2 id="caravan_insurance_data"><a href="#caravan_insurance_data" class="header-anchor">Caravan insurance data</a></h2>
 <p>The caravan dataset is part of ISLR as well:</p>
 <pre><code class="language-julia">caravan  &#61; dataset&#40;&quot;ISLR&quot;, &quot;Caravan&quot;&#41;
-size&#40;caravan&#41;</code></pre><pre><code class="plaintext">(5822, 86)</code></pre>
+size&#40;caravan&#41;</code></pre><pre><code class="plaintext code-output">(5822, 86)</code></pre>
 <p>The target variable is <code>Purchase</code>, effectively  a categorical</p>
 <pre><code class="language-julia">purchase &#61; caravan.Purchase
-vals     &#61; unique&#40;purchase&#41;</code></pre><pre><code class="plaintext">2-element Vector{String}:
+vals     &#61; unique&#40;purchase&#41;</code></pre><pre><code class="plaintext code-output">2-element Vector{String}:
  "No"
  "Yes"</code></pre>
 <p>Let&#39;s see how many of each we have</p>
 <pre><code class="language-julia">nl1 &#61; sum&#40;purchase .&#61;&#61; vals&#91;1&#93;&#41;
 nl2 &#61; sum&#40;purchase .&#61;&#61; vals&#91;2&#93;&#41;
 println&#40;&quot;#&#36;&#40;vals&#91;1&#93;&#41; &quot;, nl1&#41;
-println&#40;&quot;#&#36;&#40;vals&#91;2&#93;&#41; &quot;, nl2&#41;</code></pre><pre><code class="plaintext">#No 5474
+println&#40;&quot;#&#36;&#40;vals&#91;2&#93;&#41; &quot;, nl2&#41;</code></pre><pre><code class="plaintext code-output">#No 5474
 #Yes 348
 </code></pre>
 <p>we can also visualise this as was done before:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 cm &#61; countmap&#40;purchase&#41;
-bar&#40;&#91;1, 2&#93;, &#91;cm&#91;&quot;No&quot;&#93;, cm&#91;&quot;Yes&quot;&#93;&#93;&#41;
+PyPlot.bar&#40;&#91;1, 2&#93;, &#91;cm&#91;&quot;No&quot;&#93;, cm&#91;&quot;Yes&quot;&#93;&#93;&#41;
 xticks&#40;&#91;1, 2&#93;, &#91;&quot;No&quot;, &quot;Yes&quot;&#93;, fontsize&#61;12&#41;
 yticks&#40;fontsize&#61;12&#41;
 ylabel&#40;&quot;Number of occurences&quot;, fontsize&#61;14&#41;</code></pre>
@@ -373,9 +312,9 @@ ylabel&#40;&quot;Number of occurences&quot;, fontsize&#61;14&#41;</code></pre>
 
 mstd &#61; machine&#40;Standardizer&#40;&#41;, X&#41;
 fit&#33;&#40;mstd&#41;
-Xs &#61; transform&#40;mstd, X&#41;
+Xs &#61; MLJ.transform&#40;mstd, X&#41;
 
-var&#40;Xs&#91;:,1&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">1.0</code></pre>
+var&#40;Xs&#91;:,1&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">1.0</code></pre>
 <p><strong>Note</strong>: in MLJ, it is recommended to work with pipelines / networks when possible and not do &quot;step-by-step&quot; transformation and fitting of the data as this is more error prone. We do it here to stick to the ISL tutorial.</p>
 <p>We split the data in the first 1000 rows for testing and the rest for training:</p>
 <pre><code class="language-julia">test &#61; 1:1000
@@ -385,28 +324,20 @@ train &#61; last&#40;test&#41;&#43;1:nrows&#40;Xs&#41;;</code></pre>
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">UndefVarError: KNNClassifier not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.925</code></pre>
 <p>that looks good but recall the problem is very unbalanced</p>
-<pre><code class="language-julia">mean&#40;y&#91;test&#93; .&#33;&#61; &quot;No&quot;&#41; |&gt; r3</code></pre><pre><code class="plaintext">0.059</code></pre>
+<pre><code class="language-julia">mean&#40;y&#91;test&#93; .&#33;&#61; &quot;No&quot;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.059</code></pre>
 <p>Let&#39;s fit a logistic classifier to this problem</p>
 <pre><code class="language-julia">clf &#61; machine&#40;LogisticClassifier&#40;&#41;, Xs, y&#41;
 fit&#33;&#40;clf, rows&#61;train&#41;
 ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext">UndefVarError: LogisticClassifier not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.934</code></pre>
 <h3 id="roc_and_auc"><a href="#roc_and_auc" class="header-anchor">ROC and AUC</a></h3>
 <p>Since we have a probabilistic classifier, we can also check metrics that take <em>scores</em> into account such as the area under the ROC curve &#40;AUC&#41;:</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;clf, rows&#61;test&#41;
 
-auc&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext">MethodError: no method matching predict(::typeof(clf); rows=1:1000)
-Closest candidates are:
-  predict(!Matched::Union{DeterministicComposite, IntervalComposite, JointProbabilisticComposite, ProbabilisticComposite}, !Matched::Node, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/composition/models/methods.jl:125 got unsupported keyword argument "rows"
-  predict(!Matched::Union{Composite, Surrogate}, !Matched::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/operations.jl:114 got unsupported keyword argument "rows"
-  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, !Matched::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJTuning/9sSuR/src/tuned_models.jl:625 got unsupported keyword argument "rows"
-  ...
-</code></pre>
+auc&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.7434211711306039</code></pre>
 <p>We can also display the curve itself</p>
 <pre><code class="language-julia">fprs, tprs, thresholds &#61; roc&#40;ŷ, y&#91;test&#93;&#41;
 
@@ -416,14 +347,13 @@ plot&#40;fprs, tprs&#41;
 xlabel&#40;&quot;False Positive Rate&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;True Positive Rate&quot;, fontsize&#61;14&#41;
 xticks&#40;fontsize&#61;12&#41;
-yticks&#40;fontsize&#61;12&#41;</code></pre><pre><code class="plaintext">UndefVarError: ŷ not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-4/code/ISL-lab-4-roc.svg' not found. //</span></p>
+yticks&#40;fontsize&#61;12&#41;</code></pre>
+<img src="/assets/isl/lab-4/code/output/ISL-lab-4-roc.svg" alt="ROC">
 
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

@@ -1,2 +1,5 @@
 # This file was generated, do not modify it. # hide
-typeof(boston)
+using RDatasets
+using DataFrames
+
+boston = dataset("MASS", "Boston");

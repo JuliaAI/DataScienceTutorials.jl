@@ -4,11 +4,8 @@
 Let's load the usual packages and the data
 
 ```julia:ex1
-using MLJ
-import RDatasets: dataset
-import DataFrames: DataFrame, describe, select, Not
-import StatsBase: countmap, cor, var
-MLJ.color_off() # hide
+using MLJ, RDatasets, ScientificTypes,
+      DataFrames, Statistics, StatsBase
 using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
@@ -47,7 +44,6 @@ Let's see what the `:Volume` feature looks like:
 
 ```julia:ex6
 using PyPlot
-ioff() # hide
 figure(figsize=(8,6))
 plot(X.Volume)
 xlabel("Tick number", fontsize=14)
@@ -55,10 +51,10 @@ ylabel("Volume", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
+savefig("assets/literate/ISL-lab-4-volume.svg") # hide
 ```
 
-\figalt{volume}{ISL-lab-4-volume.svg}
+![volume](/assets/literate/ISL-lab-4-volume.svg)
 
 ### Logistic Regression
 
@@ -79,10 +75,10 @@ xticks([1, 2], ["Down", "Up"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
+savefig("assets/literate/ISL-lab-4-bal.svg") # hide
 ```
 
-\fig{ISL-lab-4-bal.svg}
+![volume](/assets/literate/ISL-lab-4-bal.svg)
 
 Seems pretty balanced.
 
@@ -98,7 +94,7 @@ Let's fit it to the data and try to reproduce the output:
 
 ```julia:ex10
 fit!(clf)
-ŷ = MLJ.predict(clf, X2)
+ŷ = predict(clf, X2)
 ŷ[1:3]
 ```
 
@@ -128,7 +124,7 @@ cm = confusion_matrix(ŷ, y)
 We can then compute the accuracy or precision, etc. easily for instance:
 
 ```julia:ex14
-@show false_positive(cm)
+@show fp(cm)                 # false positives
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
 @show precision(ŷ, y) |> r3
@@ -169,7 +165,7 @@ We can use a trained machine to predict on new data:
 
 ```julia:ex18
 Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
-ŷ = MLJ.predict(clf, Xnew)
+ŷ = predict(clf, Xnew)
 ŷ |> pprint
 ```
 
@@ -286,10 +282,10 @@ xticks([1, 2], ["No", "Yes"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
+savefig("assets/literate/ISL-lab-4-bal2.svg") # hide
 ```
 
-\fig{ISL-lab-4-bal2.svg}
+![volume](/assets/literate/ISL-lab-4-bal2.svg)
 
 that's quite unbalanced.
 
@@ -298,9 +294,9 @@ Apart from the target, all other variables are numbers; we can standardize the d
 ```julia:ex30
 y, X = unpack(caravan, ==(:Purchase), col->true)
 
-mstd = machine(Standardizer(), X)
-fit!(mstd)
-Xs = transform(mstd, X)
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
 
 var(Xs[:,1]) |> r3
 ```
@@ -345,7 +341,7 @@ accuracy(ŷ, y[test]) |> r3
 Since we have a probabilistic classifier, we can also check metrics that take _scores_ into account such as the area under the ROC curve (AUC):
 
 ```julia:ex35
-ŷ = MLJ.predict(clf, rows=test)
+ŷ = predict(clf, rows=test)
 
 auc(ŷ, y[test])
 ```
@@ -363,12 +359,8 @@ ylabel("True Positive Rate", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
+savefig("assets/literate/ISL-lab-4-roc.svg") # hide
 ```
 
-\figalt{ROC}{ISL-lab-4-roc.svg}
-
-```julia:ex37
-PyPlot.close_figs() # hide
-```
+![ROC](/assets/literate/ISL-lab-4-roc.svg)
 

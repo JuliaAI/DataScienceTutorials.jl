@@ -5,14 +5,10 @@ Let's load a reduced version of the well-known Ames House Price data set (contai
 As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduced version via `@load_reduced_ames`
 
 ```julia:ex1
-using MLJ
-using  PrettyPrinting
-import DataFrames
-import Statistics
-MLJ.color_off() # hide
+using MLJ, PrettyPrinting, DataFrames, Statistics
 
 X, y = @load_reduced_ames
-X = DataFrames.DataFrame(X)
+X = DataFrame(X)
 @show size(X)
 first(X, 3) |> pretty
 ```
@@ -87,7 +83,7 @@ Let's start by defining the source nodes:
 
 ```julia:ex9
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 ```
 
 On the "first layer", there's one hot encoder and a log transform, these will respectively lead to node `W` and node `z`:
@@ -184,7 +180,7 @@ We must specify how such a model should be fit, which is effectively just the le
 ```julia:ex21
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
@@ -195,10 +191,8 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     # and finally
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
-
-    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    fit!(ŷ, verbosity=0)
+    return fitresults(ŷ)
 end
 ```
 

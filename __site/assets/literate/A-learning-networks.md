@@ -4,19 +4,15 @@
 Let's generate a `DataFrame` with some dummy regression data, let's also load the good old ridge regressor.
 
 ```julia:ex1
-using MLJ, StableRNGs
-import DataFrames
-MLJ.color_off() # hide
+using MLJ, DataFrames, Random
 @load RidgeRegressor pkg=MultivariateStats
 
-rng = StableRNG(551234) # for reproducibility
-
-x1 = rand(rng, 300)
-x2 = rand(rng, 300)
-x3 = rand(rng, 300)
-y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
-
-X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
+Random.seed!(5) # for reproducibility
+x1 = rand(300)
+x2 = rand(300)
+x3 = rand(300)
+y = exp.(x1 - x2 -2x3 + 0.1*rand(300))
+X = DataFrame(x1=x1, x2=x2, x3=x3)
 first(X, 3) |> pretty
 ```
 
@@ -46,7 +42,7 @@ To define the source nodes, use the `source` function, you should specify whethe
 
 ```julia:ex3
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 ```
 
 To define an "trained-operation" node, you must simply create a machine wrapping a model and another node (the data) and indicate which operation should be performed (e.g. `transform`):

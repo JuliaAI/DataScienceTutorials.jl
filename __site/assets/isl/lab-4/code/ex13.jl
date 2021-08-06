@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-cm = confusion_matrix(ŷ, y)
+ŷ = predict_mode(clf, X2)
+misclassification_rate(ŷ, y) |> r3

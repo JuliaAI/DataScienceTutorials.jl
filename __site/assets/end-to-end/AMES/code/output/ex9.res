@@ -1,1 +1,1 @@
-Source @044 ⏎ `AbstractVector{Continuous}`
+NearestNeighborModels.KNNRegressor

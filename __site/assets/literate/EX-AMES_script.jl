@@ -1,13 +1,9 @@
 # This file was generated, do not modify it.
 
-using MLJ
-using  PrettyPrinting
-import DataFrames
-import Statistics
-MLJ.color_off() # hide
+using MLJ, PrettyPrinting, DataFrames, Statistics
 
 X, y = @load_reduced_ames
-X = DataFrames.DataFrame(X)
+X = DataFrame(X)
 @show size(X)
 first(X, 3) |> pretty
 
@@ -32,7 +28,7 @@ rmsl(ŷ, y[test])
 @load KNNRegressor
 
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 
 hot = machine(OneHotEncoder(), Xs)
 
@@ -74,7 +70,7 @@ end
 
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y)
+    ys = source(y, kind=:target)
     hot = machine(OneHotEncoder(), Xs)
     W = transform(hot, Xs)
     z = log(ys)
@@ -85,10 +81,8 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     # and finally
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
-
-    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    fit!(ŷ, verbosity=0)
+    return fitresults(ŷ)
 end
 
 krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)
