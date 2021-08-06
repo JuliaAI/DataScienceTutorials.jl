@@ -1,5 +1,12 @@
+using Pkg # hideall
+Pkg.activate("_literate/EX-breastcancer/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 # ## Introduction
-# This tutorial covers the concepts of iterative model selection on the popular ["Breast Cancer Wisconsin (Diagnostic) Data Set"](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)) 
+# This tutorial covers the concepts of iterative model selection on the popular ["Breast Cancer Wisconsin (Diagnostic) Data Set"](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic))
 # from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.
 
 # ## Loading the relevant packages
@@ -10,9 +17,9 @@ using PrettyPrinting
 using PyPlot
 using MLJ
 ioff() # hide
-MLJ.color_off() # hide
+MLJ.color_off(); # hide
 
-# Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results 
+# Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results
 RANDOM_SEED = 42;
 
 # ## Downloading and loading the data
@@ -23,42 +30,44 @@ data = urldownload(url, true, format = :CSV, header = feature_names);
 
 # ## Exploring the obtained data
 # ### Inspecting the class variable
-hist(data.Class);
-plt.savefig(joinpath(@OUTPUT, "Target_class.svg")) # hide
-# \figalt{Distribution of target classes}{Target_class.svg}
-xlabel("Classes");
-ylabel("Number of samples");
+figure(figsize=(8, 6))
+hist(data.Class)
+xlabel("Classes")
+ylabel("Number of samples")
+plt.savefig(joinpath(@OUTPUT, "Target_class.svg")); # hide
 
-# ### Inspecting the feature set 
-df = DataFrame(data)[:,2:end];
+# \figalt{Distribution of target classes}{Target_class.svg}
+
+# ### Inspecting the feature set
+df = DataFrame(data)[:, 2:end];
 
 # Printing the 1st 10 rows so as to get a visual idea about the type of data we're dealing with
-pprint(first(df,10));
+pprint(first(df,10))
 
 # For checking the statistical attributes of each inividual feature, we can use the __decsribe()__ method
-pprint(describe(df));
+pprint(describe(df))
 # As we can see the feature set consists of varying features that have different ranges and quantiles. This can cause trouble for the optimization techniques and might cause convergence
 # issues. We can use a feature scaling technique like __Standardizer()__ to handle this.
 
 # But first, let's handle the [scientific types](https://alan-turing-institute.github.io/ScientificTypes.jl/dev/) of all the features. We can use the schema() method from MLJ.jl package to do this
-pprint(schema(df));
+pprint(schema(df))
 
 # As the target variable is 'Textual' in nature, we'll have to change it to a more appropriate scientific type. Using the __coerce()__ method, let's change it to an OrderedFactor.
 coerce!(df, :Class => OrderedFactor{2});
 
 # ## Unpacking the values
 # Now that our data is fully processed, we can separate the target variable 'y' from the feature set 'X' using the __unpack()__ method.
-y,X = unpack(df, ==(:Class),name->true, rng = RANDOM_SEED);
+y, X = unpack(df, ==(:Class),name->true, rng = RANDOM_SEED);
 
 # ## Standardizing the "feature set"
-# Now that our feature set is separated from the target variable, we can use the __Standardizer()__ worklow to obtain to standadrize our feature set 'X'. 
-transformer_instance = Standardizer();
-transformer_model = machine(transformer_instance, X);
-fit!(transformer_model);
+# Now that our feature set is separated from the target variable, we can use the __Standardizer()__ worklow to obtain to standadrize our feature set 'X'.
+transformer_instance = Standardizer()
+transformer_model = machine(transformer_instance, X)
+fit!(transformer_model)
 X = MLJ.transform(transformer_model, X);
 
 # ## Train-test split
-# After feature scaling, our data is ready to put into a Machine Learning model for classification! Using 80% of data for training, we can perform a train-test split using the __partition()__ method. 
+# After feature scaling, our data is ready to put into a Machine Learning model for classification! Using 80% of data for training, we can perform a train-test split using the __partition()__ method.
 train, test = partition(eachindex(y), 0.8, shuffle=true, rng=RANDOM_SEED);
 
 # ## Model compatibility
@@ -81,19 +90,20 @@ loss_ce=[];
 loss_f1=[];
 
 # ### Collecting data for analysis
+figure(figsize=(8, 6))
 for m in models(matching(X, y))
     if m.prediction_type==Symbol("probabilistic") && m.package_name=="ScikitLearn" && m.name!="LogisticCVClassifier"
         #Excluding LogisticCVClassfiier as we can infer similar baseline results from the LogisticClassifier
-        
+
         #Capturing the model and loading it using the @load utility
         model_name=m.name
         package_name=m.package_name
         eval(:(clf = @load $model_name pkg=$package_name verbosity=1))
-        
+
         #Fitting the captured model onto the training set
-        clf_machine = machine(clf(), X, y);
-        fit!(clf_machine, rows=train);
-        
+        clf_machine = machine(clf(), X, y)
+        fit!(clf_machine, rows=train)
+
         #Getting the predictions onto the test set
         y_pred = MLJ.predict(clf_machine, rows=test);
 
@@ -103,10 +113,10 @@ for m in models(matching(X, y))
 
         #Obtaining different evaluation metrics
         ce_loss = mean(cross_entropy(y_pred,y[test]))
-        acc = accuracy(mode.(y_pred), y[test]) 
+        acc = accuracy(mode.(y_pred), y[test])
         f1_score = f1score(mode.(y_pred), y[test])
-        
-        #Adding the different obtained values of the evaluation metrics to the respective vectors 
+
+        #Adding the different obtained values of the evaluation metrics to the respective vectors
         push!(model_names, m.name)
         append!(loss_acc, acc)
         append!(loss_ce, ce_loss)
@@ -115,10 +125,10 @@ for m in models(matching(X, y))
 end
 
 #Adding labels and legend to the ROC-AUC curve
-xlabel("False Positive Rate");
-ylabel("True Positive Rate");
-legend(loc="best", fontsize="xx-small");
-title("ROC curve");
+xlabel("False Positive Rate")
+ylabel("True Positive Rate")
+legend(loc="best", fontsize="xx-small")
+title("ROC curve")
 plt.savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 
@@ -128,8 +138,8 @@ model_info=DataFrame(ModelName=model_names,Accuracy=loss_acc,CrossEntropyLoss=lo
 # Now, let's sort the data on basis of the Cross-entropy loss
 pprint(sort!(model_info,[:CrossEntropyLoss]));
 
-# It seems like a simple LogisticClassifier works really well with this dataset! 
+# It seems like a simple LogisticClassifier works really well with this dataset!
 
 # # Conclusion
-# This article covered iterative feature selection on the Breast cancer classification dataset. In this tutorial, we only analyzed the __ScikitLearn__ 
+# This article covered iterative feature selection on the Breast cancer classification dataset. In this tutorial, we only analyzed the __ScikitLearn__
 # models so as to keep the flow of the content precise, but the same workflow can be applied to any compatible model in the __MLJ__ family.

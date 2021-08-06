@@ -1,0 +1,7 @@
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJScikitLearnInterface = "5ae90465-5518-4432-b9d2-8a1def2f0cab"
+PrettyPrinting = "54e16d92-306c-5ea0-a30b-337be88ac337"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+UrlDownload = "856ac37a-3032-4c1c-9122-f86d88358c8b"
