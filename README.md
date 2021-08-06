@@ -1,36 +1,12 @@
 # DataScienceTutorials.jl
 
-## Ongoing Revamp
-
-* [x] ISL
-* [x] Data
-* [ ] Getting Started
-  * [ ] stacking (EvoTrees / Cuda error)
-  * [ ] fit and predict (level not defined) --> need help
-  * [ ] model tuning error fitting (level not defined)
-  * [ ] learning networks (dataframe not defined)
-  * [ ] ensembles (*) -> heatmap not found
-
----
-
-
-Latest CI build: [![Tutorials status](https://github.com/alan-turing-institute/DataScienceTutorials.jl/workflows/CI/badge.svg)](https://github.com/alan-turing-institute/DataScienceTutorials.jl/actions) with
-
-```
-[336ed68f] CSV v0.6.2
-[a93c6f00] DataFrames v0.21.2
-[add582a8] MLJ v0.11.4
-[a7f614a8] MLJBase v0.13.10
-[d491faf4] MLJModels v0.10.0
-```
-
 This repository contains the source code for a [set of tutorials](https://alan-turing-institute.github.io/DataScienceTutorials.jl/) introducing the use of Julia and Julia packages such as MLJ (but not only) to do "data science" in Julia.
 
 ## For readers
 
 You can read the tutorials [online](https://alan-turing-institute.github.io/DataScienceTutorials.jl/).
 
-If you want to experiment on the side and make sure you have an identical environment to the one used to generate those tutorials, please **activate** and **instantiate** the environment using [this Project.toml](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml) file and [this Manifest.toml](https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml) file.
+You can find a runnable script for each tutorial [here](https://github.com/alan-turing-institute/DataScienceTutorials.jl/tree/master/_literate), each folder contains a `Project.toml` and a `Manifest.toml` you can use to re-create the exact environment that was used to run the tutorial.
 
 To do so, save both files in an appropriate folder, start Julia, `cd` to the folder and
 
@@ -40,59 +16,62 @@ Pkg.activate(".")
 Pkg.update()
 ```
 
-Each tutorial has a link at the top for a notebook or the raw script which you can download by right-clicking on the link and selecting "*Save file as...*".
-
 **Note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/DataScienceTutorials.jl/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
-
----
 
 ## For developers
 
 The rest of these instructions assume that you've cloned the package and have `cd` to it.
 
-### Important first steps
+### Structure
 
-Start by running this line in your REPL (_always_):
+All tutorials correspond to a Literate script that's in `_literate/`.
 
-```julia-repl
-julia> include("start.jl")
+### Fixing an existing tutorial
+
+Find the corresponding script, fix it in a PR.
+
+### Add a new tutorial
+
+* Duplicate the folder `EX-wine`.
+* Change its name:
+  * `EX-somename` for an "end-to-end" tutorial `somename`
+  * `A-somename` for a "getting started" tutorial `somename`
+  * `D0-somename` for a "data" tutorial `somename`
+  * `ISL-lab-x` for an "Introduction to Statistical Learning" tutorial
+* Remove `Manifest.toml` and `Project.toml`
+* Activate that folder and add the packages that you'll need (MLJ, ...)
+* Write your tutorial following the blueprint
+
+Once all that's done, the remaining things to do are to create the HTML page and a link in the appropriate location. Let's assume you wanted to add an E2E tutorial "Dinosaurs" then in the previous step you'd have `EX-dinosaurs` and you would
+
+* create a file `dinosaurs.md` in `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{EX-dinosaurs}`
+* add links pointing to that tutorial
+  * in `index.md` following the template
+  * in `_layout/head.html` following the template
+
+### Publishing updates
+
+**Assumptions**:
+
+* you have a PR with changes, someone has reviewed them and they got merged into the main branch
+
+**Once the changes are in the main branch**:
+
+* run `serve(single=true)` to ensure the changes have generated the relevant html page(s)
+* run `include("deploy.jl")` to re-generate the LUNR index and push the changes to GitHub.
+
+The second step requires you have `lunr` and `cheerio` installed, if not:
+
+```
+using NodeJS
+run(`sudo $(npm_cmd()) i lunr cheerio`)
 ```
 
-When it's time to push updates, **only** use `include("deploy.jl")` (assuming you have admin rights) as this also re-generates notebooks and scripts and pushes everything at the right place (see [this point](#push-updates)).
+This should take ≤ 15 seconds to complete.
 
-**Note**: keep your tutorials short! if there's a tuning step at some point, do it on a high resolution search locally and only show a rough search in the right area in the tutorial otherwise running tutorials can take a long time.
+---
 
-### Modifying literate scripts
-
-1. add packages if you need additional ones (`] add ...`), make sure to update explicit compat requirements in the `Project.toml` file
-1. add/modify tutorials in the `_literate/` folder
-1. to help display things neatly on the webpage (no horizontal overflow), prefer `pprint` from `PrettyPrinting.jl` to display things like `NamedTuple`
-1. add `;` at the end of final lines of code blocks if you want to suppress output
-
-### Adding a page
-
-Say you've added a new script `A-my-tutorial.jl`, follow these steps to add a corresponding page on the website:
-
-1. copy one of the markdown file available in `getting-started` and paste it somewhere appropriate e.g.: `getting-started/my-tutorial.md`
-2. modify the title on that page, `# My tutorial`
-3. modify the `\tutorial` command to `\tutorial{A-my-tutorial}` (no extensions)
-
-By now you have at `getting-started/my-tutorial.md`
-
-```markdown
-@def hascode = true
-@def showall = true
-
-# My tutorial
-
-\tutorial{A-my-tutorial}
-```
-
-The last thing to do is to add a link to the page in `_layout/head.html` so that it can be navigated to, copy paste the appropriate list item modifying the names so for instance:
-
-```html
-<li class="pure-menu-item {{ispage /getting-started/my-tutorial/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/my-tutorial/index.html" class="pure-menu-link">⊳ My tutorial</a></li>
-```
+# Old instructions (still valid)
 
 ### Visualise modifications locally
 
@@ -159,27 +138,3 @@ serve()
 ```
 
 the first command will remove all stale generated HTML which may conflict with older ones.
-
-### Push updates
-
-*Requirements*:
-
-* admin access to the repo
-* `] add Literate Franklin NodeJS`
-* install `highlight.js` and `gh-pages` from within Julia: ``run(`sudo $(npm_cmd()) i highlight.js gh-pages`)``
-
-Assuming you have all that, just run
-
-```julia
-include("deploy.jl")
-```
-
-This should take ≤ 15 seconds to complete.
-
-If you don't have some of the requirements, or if something failed, just open a PR.
-
-### Continuous Integration
-
-To help maintain tutorials, most of them are tested on Travis.
-However tutorials that include plotting should **not** be included.
-Please adjust the file `test/runtests.jl` accordingly following the example.
