@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-using StatsBase
-describe(boston, :min, :max, :mean, :median, :std)
+select!(b1, Not(:Crim))
+first(b1, 2)

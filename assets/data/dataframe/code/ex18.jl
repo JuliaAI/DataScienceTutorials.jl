@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-std(mao.Age)
+mao = dataset("gap", "mao")
+describe(mao, :nmissing)

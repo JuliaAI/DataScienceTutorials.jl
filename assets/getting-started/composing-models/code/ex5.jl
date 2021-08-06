@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-evaluate(pipe, X, height, resampling=Holdout(),
-         measure=rms) |> pprint
+pipe.knn_regressor.K = 2
+pipe.one_hot_encoder.drop_last = true;

@@ -1,2 +1,1 @@
-ConstantRegressor(
-    distribution_type = Distributions.Normal) @846
+AbstractVector{ScientificTypesBase.Continuous} (alias for AbstractArray{ScientificTypesBase.Continuous, 1})

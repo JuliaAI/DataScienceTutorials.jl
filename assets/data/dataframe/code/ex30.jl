@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-names(iris, Not(:Species))
+combine(gdf, names(iris, Not(:Species)) .=> std)

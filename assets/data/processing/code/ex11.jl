@@ -1,9 +1,5 @@
 # This file was generated, do not modify it. # hide
-sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
+ctry_selec = r"BEL|FRA|DEU"
+tech_selec = r"Solar"
 
-figure(figsize=(8,6))
-
-plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
-plt.xticks(rotation=90)
-
-savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
+cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_selec, cap_sum.primary_fuel), :]

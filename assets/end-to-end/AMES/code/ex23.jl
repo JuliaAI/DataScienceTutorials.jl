@@ -1,4 +1,7 @@
 # This file was generated, do not modify it. # hide
-@show krb.knn_weight
-@show krb.knn_model.K
-@show krb.ridge_model.lambda
+krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)
+mach = machine(krb, X, y)
+fit!(mach, rows=train)
+
+preds = predict(mach, rows=test)
+rmsl(y[test], preds)

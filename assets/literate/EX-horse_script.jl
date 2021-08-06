@@ -1,12 +1,9 @@
 # This file was generated, do not modify it.
 
-using MLJ
-MLJ.color_off() # hide
-using HTTP
-using CSV
-import DataFrames: DataFrame, select!, Not
-req1 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
-req2 = HTTP.get("http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
+using MLJ, StatsBase, ScientificTypes
+using HTTP, CSV, DataFrames
+req1 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data")
+req2 = HTTP.get("https://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test")
 header = ["surgery", "age", "hospital_number",
     "rectal_temperature", "pulse",
     "respiratory_rate", "temperature_extremities",
@@ -69,7 +66,6 @@ fit!(filler)
 datac = transform(filler, datac)
 
 y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous));
 
 @load OneHotEncoder
 @load MultinomialClassifier pkg="MLJLinearModels"
@@ -77,34 +73,35 @@ X = coerce(X, autotype(X, :discrete_to_continuous));
 Xtrain = X[train,:]
 ytrain = y[train];
 
-SimplePipe = @pipeline(OneHotEncoder(),
-                       MultinomialClassifier(), prediction_type=:probabilistic)
-mach = machine(SimplePipe, Xtrain, ytrain)
+@pipeline SimplePipe(hot = OneHotEncoder(),
+                     clf = MultinomialClassifier()) is_probabilistic=true
+mach = machine(SimplePipe(), Xtrain, ytrain)
 res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
                 measure=cross_entropy)
 round(res.measurement[1], sigdigits=3)
 
-mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
+ŷ = predict_mode(mach, Xtrain)
+mcr = misclassification_rate(ŷ, ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
-model = SimplePipe
-lambdas = range(model, :(multinomial_classifier.lambda), lower=1e-3, upper=100, scale=:log10)
-tm = TunedModel(model=SimplePipe, ranges=lambdas, measure=cross_entropy)
+model = SimplePipe()
+lambdas = range(model, :(clf.lambda), lower=1e-3, upper=100, scale=:log10)
+tm = TunedModel(model=SimplePipe(), ranges=lambdas, measure=cross_entropy)
 mtm = machine(tm, Xtrain, ytrain)
 fit!(mtm)
 best_pipe = fitted_params(mtm).best_model
 
-ŷ = predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(mtm, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 
-mcr = misclassification_rate(mode.(ŷ), ytrain)
+mcr = misclassification_rate(mode.(ŷ), ytrain)
 println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 @load XGBoostClassifier
 dtc = machine(XGBoostClassifier(), Xtrain, ytrain)
 fit!(dtc)
-ŷ = predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+ŷ = predict(dtc, Xtrain)
+cross_entropy(ŷ, ytrain) |> mean
 
-misclassification_rate(mode.(ŷ), ytrain)
+misclassification_rate(mode.(ŷ), ytrain)
 

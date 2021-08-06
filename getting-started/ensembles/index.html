@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Ensemble models</title>  
+  <!-- LUNR -->
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="ensemble_models"><a href="#ensemble_models" class="header-anchor">Ensemble models</a></h1>
+<div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#homogenous_ensembles">Homogenous ensembles</a><ol><li><a href="#training_and_testing_an_ensemble">Training and testing an ensemble</a></li><li><a href="#systematic_tuning">Systematic tuning</a></li><li><a href="#reporting_results">Reporting results</a></li></ol></li></ol></div>
+<h2 id="preliminary_steps"><a href="#preliminary_steps" class="header-anchor">Preliminary steps</a></h2>
+<p>Let&#39;s start by loading the relevant packages and generating some dummy data.</p>
+<pre><code class="language-julia">using MLJ
+import DataFrames: DataFrame
+using PrettyPrinting
+using StableRNGs
+
+rng &#61; StableRNG&#40;512&#41;
+Xraw &#61; rand&#40;rng, 300, 3&#41;
+y &#61; exp.&#40;Xraw&#91;:,1&#93; - Xraw&#91;:,2&#93; - 2Xraw&#91;:,3&#93; &#43; 0.1*rand&#40;rng, 300&#41;&#41;
+X &#61; DataFrame&#40;Xraw, :auto&#41;
+
+train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.7&#41;;</code></pre>
+<p>Let&#39;s also load a simple model:</p>
+<pre><code class="language-julia">KNNRegressor &#61; @load KNNRegressor
+knn_model &#61; KNNRegressor&#40;K&#61;10&#41;</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
+KNNRegressor(
+    K = 10,
+    algorithm = :kdtree,
+    metric = Distances.Euclidean(0.0),
+    leafsize = 10,
+    reorder = true,
+    weights = NearestNeighborModels.Uniform()) @824</code></pre>
+<p>As before, let&#39;s instantiate a machine that wraps the model and data:</p>
+<pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} @296 trained 0 times; caches data
+  args: 
+    1:	Source @961 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @653 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+</code></pre>
+<p>and fit it</p>
+<pre><code class="language-julia">fit&#33;&#40;knn, rows&#61;train&#41;
+ŷ &#61; predict&#40;knn, X&#91;test, :&#93;&#41; # or use rows&#61;test
+rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.06389980172436367</code></pre>
+<p>The few steps above are equivalent to just calling <code>evaluate&#33;</code>:</p>
+<pre><code class="language-julia">evaluate&#33;&#40;knn, resampling&#61;Holdout&#40;fraction_train&#61;0.7, rng&#61;StableRNG&#40;666&#41;&#41;,
+          measure&#61;rms&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬────────────┐
+│ _.measure                 │ _.measurement │ _.per_fold │
+├───────────────────────────┼───────────────┼────────────┤
+│ RootMeanSquaredError @989 │ 0.124         │ [0.124]    │
+└───────────────────────────┴───────────────┴────────────┘
+_.per_observation = [missing]
+_.fitted_params_per_fold = [ … ]
+_.report_per_fold = [ … ]
+_.train_test_rows = [ … ]
+</code></pre>
+<h2 id="homogenous_ensembles"><a href="#homogenous_ensembles" class="header-anchor">Homogenous ensembles</a></h2>
+<p>MLJ offers basic support for ensembling such as <a href="https://en.wikipedia.org/wiki/Bootstrap_aggregating"><em>bagging</em></a>. Defining such an ensemble of simple &quot;atomic&quot; models is done via the <code>EnsembleModel</code> constructor:</p>
+<pre><code class="language-julia">ensemble_model &#61; EnsembleModel&#40;atom&#61;knn_model, n&#61;20&#41;;</code></pre>
+<p>where the <code>n&#61;20</code> indicates how many models are present in the ensemble.</p>
+<h3 id="training_and_testing_an_ensemble"><a href="#training_and_testing_an_ensemble" class="header-anchor">Training and testing an ensemble</a></h3>
+<p>Now that we&#39;ve instantiated an ensemble, it can be trained and tested the same as any other model:</p>
+<pre><code class="language-julia">ensemble &#61; machine&#40;ensemble_model, X, y&#41;
+estimates &#61; evaluate&#33;&#40;ensemble, resampling&#61;CV&#40;&#41;&#41;
+estimates</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬───────────────────────────────────────────────┐
+│ _.measure                 │ _.measurement │ _.per_fold                                    │
+├───────────────────────────┼───────────────┼───────────────────────────────────────────────┤
+│ RootMeanSquaredError @989 │ 0.0861        │ [0.0909, 0.112, 0.0805, 0.089, 0.0673, 0.069] │
+└───────────────────────────┴───────────────┴───────────────────────────────────────────────┘
+_.per_observation = [missing]
+_.fitted_params_per_fold = [ … ]
+_.report_per_fold = [ … ]
+_.train_test_rows = [ … ]
+</code></pre>
+<p>here the implicit measure is the <code>rms</code> &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
+<pre><code class="language-julia">@show estimates.measurement&#91;1&#93;
+@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.08609870565688287
+mean(estimates.per_fold[1]) = 0.08477245634362869
+</code></pre>
+<p>Note that multiple measurements can be specified jointly. Here only on measurement is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both  the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
+<h3 id="systematic_tuning"><a href="#systematic_tuning" class="header-anchor">Systematic tuning</a></h3>
+<p>Let&#39;s simultaneously tune the ensemble&#39;s <code>bagging_fraction</code> and the K-Nearest neighbour hyperparameter <code>K</code>. Since one of our models is  a field of the  other, we have nested hyperparameters:</p>
+<pre><code class="language-julia">params&#40;ensemble_model&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(atom = (K = 10,
+         algorithm = :kdtree,
+         metric = Distances.Euclidean(0.0),
+         leafsize = 10,
+         reorder = true,
+         weights = NearestNeighborModels.Uniform()),
+ atomic_weights = [],
+ bagging_fraction = 0.8,
+ rng = Random._GLOBAL_RNG(),
+ n = 20,
+ acceleration = ComputationalResources.CPU1{Nothing}(nothing),
+ out_of_bag_measure = [])</code></pre>
+<p>To define a tuning grid, we construct ranges for the two parameters and collate these ranges:</p>
+<pre><code class="language-julia">B_range &#61; range&#40;ensemble_model, :bagging_fraction,
+                lower&#61;0.5, upper&#61;1.0&#41;
+K_range &#61; range&#40;ensemble_model, :&#40;atom.K&#41;,
+                lower&#61;1, upper&#61;20&#41;;</code></pre>
+<p>the scale for a tuning grid is linear by default but can be specified to <code>:log10</code> for logarithmic ranges. Now we have to define a <code>TunedModel</code> and fit it:</p>
+<pre><code class="language-julia">tm &#61; TunedModel&#40;model&#61;ensemble_model,
+                tuning&#61;Grid&#40;resolution&#61;10&#41;, # 10x10 grid
+                resampling&#61;Holdout&#40;fraction_train&#61;0.8, rng&#61;StableRNG&#40;42&#41;&#41;,
+                ranges&#61;&#91;B_range, K_range&#93;&#41;
+
+tuned_ensemble &#61; machine&#40;tm, X, y&#41;
+fit&#33;&#40;tuned_ensemble, rows&#61;train&#41;;</code></pre>
+<p>Note the <code>rng&#61;42</code> seeds the random number generator for reproducibility of this example.</p>
+<h3 id="reporting_results"><a href="#reporting_results" class="header-anchor">Reporting results</a></h3>
+<p>The best model can be accessed like so:</p>
+<pre><code class="language-julia">best_ensemble &#61; fitted_params&#40;tuned_ensemble&#41;.best_model
+@show best_ensemble.atom.K
+@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.atom.K = 3
+best_ensemble.bagging_fraction = 0.6111111111111112
+</code></pre>
+<p>The <code>report</code> method gives more detailed information on the tuning process:</p>
+<pre><code class="language-julia">r &#61; report&#40;tuned_ensemble&#41;;</code></pre>
+<p>For instance, <code>r.measurements</code> are the measurements for all pairs of hyperparameters which you could visualise nicely:</p>
+<pre><code class="language-julia">using PyPlot
+
+figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+
+res &#61; r.plotting
+vals_b &#61; res.parameter_values&#91;:, 1&#93;
+vals_k &#61; res.parameter_values&#91;:, 2&#93;
+
+tricontourf&#40;vals_b, vals_k, res.measurements&#41;
+xticks&#40;0.5:0.1:1, fontsize&#61;12&#41;
+xlabel&#40;&quot;Bagging fraction&quot;, fontsize&#61;14&#41;
+yticks&#40;&#91;1, 5, 10, 15, 20&#93;, fontsize&#61;12&#41;
+ylabel&#40;&quot;Number of neighbors - K&quot;, fontsize&#61;14&#41;</code></pre>
+<img src="/assets/getting-started/ensembles/code/output/A-ensembles-heatmap.svg" alt="Hyperparameter heatmap">
+<p>Finally you can always just evaluate the model by reporting <code>rms</code> on the test set:</p>
+<pre><code class="language-julia">ŷ &#61; predict&#40;tuned_ensemble, rows&#61;test&#41;
+rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre>
+
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

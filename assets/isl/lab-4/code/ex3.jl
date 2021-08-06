@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-describe(smarket, :mean, :std, :eltype)
+r3(x) = round(x, sigdigits=3)
+r3(pi)

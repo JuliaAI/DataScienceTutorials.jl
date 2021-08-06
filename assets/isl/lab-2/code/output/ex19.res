@@ -1,0 +1,10 @@
+9-element Vector{String}:
+ "MPG"
+ "Cylinders"
+ "Displacement"
+ "Horsepower"
+ "Weight"
+ "Acceleration"
+ "Year"
+ "Origin"
+ "Name"

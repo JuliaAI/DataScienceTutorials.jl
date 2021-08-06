@@ -1,4 +1,6 @@
 # This file was generated, do not modify it. # hide
-ŷ = MLJ.predict(clf, rows=test)
+clf = machine(LogisticClassifier(), Xs, y)
+fit!(clf, rows=train)
+ŷ = predict_mode(clf, rows=test)
 
-auc(ŷ, y[test])
+accuracy(ŷ, y[test]) |> r3

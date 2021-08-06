@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-schema(data)
+describe(data, :mean, :median, :nmissing)

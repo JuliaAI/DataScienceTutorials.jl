@@ -1,51 +1,39 @@
 # This file was generated, do not modify it.
 
-using MLJ
-using StableRNGs
-import DataFrames
-MLJ.color_off() # hide
+using MLJ, DataFrames, Random
 @load RidgeRegressor pkg=MultivariateStats
 
-rng = StableRNG(6616) # for reproducibility
-x1 = rand(rng, 300)
-x2 = rand(rng, 300)
-x3 = rand(rng, 300)
-y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
-X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
+Random.seed!(5) # for reproducibility
+x1 = rand(300)
+x2 = rand(300)
+x3 = rand(300)
+y = exp.(x1 - x2 -2x3 + 0.1*rand(300))
+X = DataFrame(x1=x1, x2=x2, x3=x3)
 
 test, train = partition(eachindex(y), 0.8);
 
 Xs = source(X)
-ys = source(y)
+ys = source(y, kind=:target)
 
 std_model = Standardizer()
 stand = machine(std_model, Xs)
-W = MLJ.transform(stand, Xs)
+W = transform(stand, Xs)
 
 box_model = UnivariateBoxCoxTransformer()
-box_mach = machine(box_model, ys)
-z = MLJ.transform(box_mach, ys)
+box = machine(box_model, ys)
+z = transform(box, ys)
 
 ridge_model = RidgeRegressor(lambda=0.1)
 ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
-ŷ = inverse_transform(box_mach, ẑ)
+ŷ = inverse_transform(box, ẑ)
 
-surrogate = Deterministic()
-mach = machine(surrogate, Xs, ys; predict=ŷ)
-
-fit!(mach)
-predict(mach, X[test[1:5], :])
-
-@from_network mach begin
-    mutable struct CompositeModel
-        regressor=ridge_model
-    end
-end
+@from_network CompositeModel(std=std_model, box=box_model,
+                             ridge=ridge_model) <= ŷ;
 
 cm = machine(CompositeModel(), X, y)
-res = evaluate!(cm, resampling=Holdout(fraction_train=0.8, rng=51),
+res = evaluate!(cm, resampling=Holdout(fraction_train=0.8),
                 measure=rms)
 round(res.measurement[1], sigdigits=3)
 
@@ -57,15 +45,14 @@ end
 
 function MLJ.fit(m::CompositeModel2, verbosity::Int, X, y)
     Xs = source(X)
-    ys = source(y)
-    W = MLJ.transform(machine(m.std_model, Xs), Xs)
+    ys = source(y, kind=:target)
+    W = transform(machine(m.std_model, Xs), Xs)
     box = machine(m.box_model, ys)
-    z = MLJ.transform(box, ys)
+    z = transform(box, ys)
     ẑ = predict(machine(m.ridge_model, W, z), W)
     ŷ = inverse_transform(box, ẑ)
-    mach = machine(Deterministic(), Xs, ys; predict=ŷ)
-    fit!(mach, verbosity=verbosity - 1)
-    return mach()
+    fit!(ŷ, verbosity=0)
+    return fitresults(ŷ)
 end
 
 mdl = CompositeModel2(Standardizer(), UnivariateBoxCoxTransformer(),

@@ -1,6 +1,6 @@
 2×2 DataFrame
- Row │ a_foo  b_bar
-     │ Int64  Int64
-─────┼──────────────
-   1 │     1      5
-   2 │     2      6
+ Row │ a_maximum  b_foo
+     │ Int64      Int64
+─────┼──────────────────
+   1 │         3      4
+   2 │         3      5

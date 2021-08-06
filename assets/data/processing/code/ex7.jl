@@ -1,3 +1,4 @@
 # This file was generated, do not modify it. # hide
-capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
-first(capacity, 5)
+describe(data)
+
+# The describe() function shows that there are several features with missing values.

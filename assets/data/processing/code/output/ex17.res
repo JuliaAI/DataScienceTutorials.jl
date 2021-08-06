@@ -1,1 +1,1 @@
-nothing
+Vector{Union{Missing, Float64}} (alias for Array{Union{Missing, Float64}, 1})

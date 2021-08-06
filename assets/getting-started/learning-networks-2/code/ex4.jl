@@ -1,4 +1,8 @@
 # This file was generated, do not modify it. # hide
-ridge_model = RidgeRegressor(lambda=0.1)
-ridge = machine(ridge_model, W, z)
-ẑ = predict(ridge, W)
+std_model = Standardizer()
+stand = machine(std_model, Xs)
+W = transform(stand, Xs)
+
+box_model = UnivariateBoxCoxTransformer()
+box_mach = machine(box_model, ys)
+z = transform(box_mach, ys)

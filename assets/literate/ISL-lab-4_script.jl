@@ -1,10 +1,7 @@
 # This file was generated, do not modify it.
 
-using MLJ
-import RDatasets: dataset
-import DataFrames: DataFrame, describe, select, Not
-import StatsBase: countmap, cor, var
-MLJ.color_off() # hide
+using MLJ, RDatasets, ScientificTypes,
+      DataFrames, Statistics, StatsBase
 using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
@@ -23,7 +20,6 @@ cm = X |> Matrix |> cor
 round.(cm, sigdigits=1)
 
 using PyPlot
-ioff() # hide
 figure(figsize=(8,6))
 plot(X.Volume)
 xlabel("Tick number", fontsize=14)
@@ -31,7 +27,7 @@ ylabel("Volume", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
+savefig("assets/literate/ISL-lab-4-volume.svg") # hide
 
 y = coerce(y, OrderedFactor)
 classes(y[1])
@@ -43,14 +39,14 @@ xticks([1, 2], ["Down", "Up"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
+savefig("assets/literate/ISL-lab-4-bal.svg") # hide
 
 @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
 clf = machine(LogisticClassifier(), X2, y)
 
 fit!(clf)
-ŷ = MLJ.predict(clf, X2)
+ŷ = predict(clf, X2)
 ŷ[1:3]
 
 cross_entropy(ŷ, y) |> mean |> r3
@@ -60,7 +56,7 @@ misclassification_rate(ŷ, y) |> r3
 
 cm = confusion_matrix(ŷ, y)
 
-@show false_positive(cm)
+@show fp(cm)                 # false positives
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
 @show precision(ŷ, y) |> r3
@@ -81,7 +77,7 @@ ŷ = predict_mode(clf, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
 Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
-ŷ = MLJ.predict(clf, Xnew)
+ŷ = predict(clf, Xnew)
 ŷ |> pprint
 
 mode.(ŷ)
@@ -142,13 +138,13 @@ xticks([1, 2], ["No", "Yes"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
+savefig("assets/literate/ISL-lab-4-bal2.svg") # hide
 
 y, X = unpack(caravan, ==(:Purchase), col->true)
 
-mstd = machine(Standardizer(), X)
-fit!(mstd)
-Xs = transform(mstd, X)
+std = machine(Standardizer(), X)
+fit!(std)
+Xs = transform(std, X)
 
 var(Xs[:,1]) |> r3
 
@@ -169,7 +165,7 @@ ŷ = predict_mode(clf, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
-ŷ = MLJ.predict(clf, rows=test)
+ŷ = predict(clf, rows=test)
 
 auc(ŷ, y[test])
 
@@ -183,7 +179,5 @@ ylabel("True Positive Rate", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
-
-PyPlot.close_figs() # hide
+savefig("assets/literate/ISL-lab-4-roc.svg") # hide
 

@@ -1,2 +1,6 @@
 # This file was generated, do not modify it. # hide
-ẑ = 0.3ẑ₁ + 0.7ẑ₂;
+knn   = machine(KNNRegressor(K=5), W, z)
+ridge = machine(RidgeRegressor(lambda=2.5), W, z)
+
+ẑ₁ = predict(ridge, W)
+ẑ₂ = predict(knn, W)

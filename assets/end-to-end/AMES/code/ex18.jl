@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-ŷ = exp(ẑ);
+ẑ = 0.3ẑ₁ + 0.7ẑ₂;

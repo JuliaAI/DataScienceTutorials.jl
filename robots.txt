@@ -1,0 +1,4 @@
+Sitemap: https://alan-turing-institute.github.io/DataScienceTutorials.jl/sitemap.xml
+
+User-agent: *
+Disallow:

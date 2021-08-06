@@ -99,7 +99,8 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="power_generation"><a href="#power_generation" class="header-anchor">Power Generation</a></h1>
-<em>Download the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/EX-powergen.ipynb" target="_blank"><em>notebook</em></a>, <em>the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-powergen-raw.jl" target="_blank"><em>raw script</em></a>, <em>or the</em> <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/EX-powergen.jl" target="_blank"><em>annotated script</em></a><em>for this tutorial &#40;right-click on the link and save&#41;.</em> <div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></li></ol></li><li><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></li><li><a href="#models">Models</a><ol><li><a href="#model_evaluation">Model evaluation</a></li></ol></li></ol></div><p><strong>Main author</strong>: <a href="https://github.com/gd1989">Geoffroy Dolphin</a></p>
+<div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></li></ol></li><li><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></li><li><a href="#models">Models</a><ol><li><a href="#model_evaluation">Model evaluation</a></li></ol></li></ol></div>
+<p><strong>Main author</strong>: <a href="https://github.com/gd1989">Geoffroy Dolphin</a></p>
 <h2 id="initial_data_processing"><a href="#initial_data_processing" class="header-anchor">Initial data processing</a></h2>
 <p>In this tutorial we are fitting solar and wind power generation output for Germany using weather data. We focus on the use of a simple linear estimator. Let&#39;s load the required packages to get started.</p>
 <pre><code class="language-julia">using MLJ
@@ -108,7 +109,7 @@ using PyPlot
 import DataFrames: DataFrame, describe, names, select&#33;
 using Statistics
 
-@load LinearRegressor pkg&#61;MLJLinearModels</code></pre><pre><code class="plaintext">import MLJLinearModels ✔
+LinearRegressor &#61; @load LinearRegressor pkg&#61;MLJLinearModels</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
 MLJLinearModels.LinearRegressor</code></pre>
 <p>The power generation and weather data come from two separate datasets. We downloaded both datasets from <a href="https://open-power-system-data.org/">Open Power networks</a>. The power generation data is available <a href="https://data.open-power-system-data.org/time_series/">here</a> and the weather data is available <a href="https://data.open-power-system-data.org/weather_data/">here</a>. Note that the first row in both datasets contains headers; hence we don&#39;t need to provide any.</p>
 <pre><code class="language-julia">data_repo &#61; &quot;https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data&quot;
@@ -119,7 +120,7 @@ url_weather &#61; data_repo * &quot;/power_syst/DE_weather_data.csv&quot;
 power   &#61; DataFrame&#40;urldownload&#40;url_power&#41;&#41;
 weather &#61; DataFrame&#40;urldownload&#40;url_weather&#41;&#41;;</code></pre>
 <p>We&#39;ve loaded both datasets but only have a rough idea of what&#39;s in each of them. Let&#39;s get a quick overview of the power dataset:</p>
-<pre><code class="language-julia">describe&#40;power, :mean, :nmissing&#41;</code></pre><pre><code class="plaintext">18×3 DataFrame
+<pre><code class="language-julia">describe&#40;power, :mean, :nmissing&#41;</code></pre><pre><code class="plaintext code-output">18×3 DataFrame
  Row │ variable                           mean       nmissing
      │ Symbol                             Union…     Int64
 ─────┼────────────────────────────────────────────────────────
@@ -142,7 +143,7 @@ weather &#61; DataFrame&#40;urldownload&#40;url_weather&#41;&#41;;</code></pre>
   17 │ DE_wind_onshore_generation_actual  8277.05           0
   18 │ DE_wind_onshore_profile            0.199535          0</code></pre>
 <p>and the weather dataset &#40;we only show the first 20 rows as there&#39;s 150 features&#41;:</p>
-<pre><code class="language-julia">first&#40;describe&#40;weather, :mean, :nmissing&#41;, 20&#41;</code></pre><pre><code class="plaintext">20×3 DataFrame
+<pre><code class="language-julia">first&#40;describe&#40;weather, :mean, :nmissing&#41;, 20&#41;</code></pre><pre><code class="plaintext code-output">20×3 DataFrame
  Row │ variable                           mean     nmissing
      │ Symbol                             Union…   Int64
 ─────┼──────────────────────────────────────────────────────
@@ -185,9 +186,9 @@ raddif &#61; weather&#91;:, filter_by_name&#40;&quot;radiation_diffuse&quot;, co
 <pre><code class="language-julia">dfs &#61; &#91;wind, temp, raddir, raddif&#93;
 col_mean &#61; &#91;:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean&#93;;</code></pre>
 <p>the zip function associates elements of two objects in the same position with one another:</p>
-<pre><code class="language-julia">nrows &#61; size&#40;first&#40;dfs&#41;, 1&#41;
+<pre><code class="language-julia">n_rows &#61; size&#40;first&#40;dfs&#41;, 1&#41;
 for &#40;df, name&#41; in zip&#40;dfs, col_mean&#41;
-    df&#91;&#33;, name&#93; &#61; zeros&#40;nrows&#41;
+    df&#91;&#33;, name&#93; &#61; zeros&#40;n_rows&#41;
     for &#40;i, row&#41; in enumerate&#40;eachrow&#40;df&#41;&#41;
       df&#91;i, name&#93; &#61; mean&#40;row&#41;
     end
@@ -202,7 +203,7 @@ end;</code></pre>
     Radiation_dir &#61; raddir.raddir_mean,
     Radiation_dif &#61; raddif.raddif_mean&#41;;</code></pre>
 <p>...and have a look at their summary statistics</p>
-<pre><code class="language-julia">describe&#40;data, :mean, :median, :nmissing&#41;</code></pre><pre><code class="plaintext">7×4 DataFrame
+<pre><code class="language-julia">describe&#40;data, :mean, :median, :nmissing&#41;</code></pre><pre><code class="plaintext code-output">7×4 DataFrame
  Row │ variable       mean     median   nmissing
      │ Symbol         Union…   Union…   Int64
 ─────┼───────────────────────────────────────────
@@ -216,7 +217,7 @@ end;</code></pre>
 <p>Note that the <code>describe&#40;&#41;</code> function provides you with information about missing values for each of the columns. Fortunately, there are none.</p>
 <h3 id="adjusting_the_scientific_types"><a href="#adjusting_the_scientific_types" class="header-anchor">Adjusting the scientific types</a></h3>
 <p>Let&#39;s check the default scientific type that&#39;s currently associated with the data features:</p>
-<pre><code class="language-julia">schema&#40;data&#41;</code></pre><pre><code class="plaintext">┌───────────────┬─────────┬────────────┐
+<pre><code class="language-julia">schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────┬────────────┐
 │ _.names       │ _.types │ _.scitypes │
 ├───────────────┼─────────┼────────────┤
 │ Timestamp     │ String  │ Textual    │
@@ -233,7 +234,7 @@ _.nrows = 10247
 <pre><code class="language-julia">coerce&#33;&#40;data, :Wind_gen &#61;&gt; Continuous&#41;
 coerce&#33;&#40;data, :Solar_gen &#61;&gt; Continuous&#41;
 
-schema&#40;data&#41;</code></pre><pre><code class="plaintext">┌───────────────┬─────────┬────────────┐
+schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────┬────────────┐
 │ _.names       │ _.types │ _.scitypes │
 ├───────────────┼─────────┼────────────┤
 │ Timestamp     │ String  │ Textual    │
@@ -316,16 +317,14 @@ ylabel&#40;&quot;Temperature &#40;C&#41;&quot;, fontsize&#61;14&#41;</code></pre
 <pre><code class="language-julia">y_wind &#61; data.Wind_gen
 X &#61; data&#91;:, &#91;:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif&#93;&#93;;</code></pre>
 <p>Next, we partition the data in training and test set; we choose the usual 70-30 split:</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y_wind&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;;</code></pre>
+<pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y_wind&#41;&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;;</code></pre>
 <p>then we instantiate a model and fit it:</p>
 <pre><code class="language-julia">linReg &#61; LinearRegressor&#40;&#41;
 m_linReg &#61; machine&#40;linReg, X, y_wind&#41;
-fit&#33;&#40;m_linReg, rows&#61;train&#41;;</code></pre><pre><code class="plaintext">UndefVarError: LinearRegressor not defined
-</code></pre>
+fit&#33;&#40;m_linReg, rows&#61;train&#41;;</code></pre>
 <h3 id="model_evaluation"><a href="#model_evaluation" class="header-anchor">Model evaluation</a></h3>
 <p>We&#39;ve now fitted the model for wind power generation &#40;<code>Wind_gen</code>&#41;. Let&#39;s use it to predict values over the test set and investigate the performance:</p>
-<pre><code class="language-julia">y_hat &#61; predict&#40;m_linReg, rows&#61;test&#41;;</code></pre><pre><code class="plaintext">UndefVarError: m_linReg not defined
-</code></pre>
+<pre><code class="language-julia">y_hat &#61; MLJ.predict&#40;m_linReg, rows&#61;test&#41;;</code></pre>
 <p>We can start by visualising the observed and predicted valzes of wind power generation.</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8, 6&#41;&#41;
 plot&#40;y_hat, color&#61;&quot;blue&quot;, label&#61;&quot;Predicted&quot;&#41;
@@ -335,35 +334,29 @@ ylabel&#40;&quot;Power generation&quot;, fontsize&#61;14&#41;
 xticks&#40;&#91;&#93;&#41;
 yticks&#40;fontsize&#61;12&#41;
 xlim&#40;0, 100&#41;
-legend&#40;fontsize&#61;14&#41;</code></pre><pre><code class="plaintext">UndefVarError: y_hat not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/obs_v_pred.svg' not found. //</span></p>
+legend&#40;fontsize&#61;14&#41;</code></pre>
+<img src="/assets/end-to-end/powergen/code/output/obs_v_pred.svg" alt="Observed vs Predicted">
 <p>Let&#39;s look at the RMSE on the training and test sets.</p>
-<pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, predict&#40;m_linReg, rows&#61;train&#41;&#41;</code></pre><pre><code class="plaintext">UndefVarError: m_linReg not defined
-</code></pre>
+<pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, MLJ.predict&#40;m_linReg, rows&#61;train&#41;&#41;</code></pre><pre><code class="plaintext code-output">2934.5999638857506</code></pre>
 <p>on the test set...</p>
-<pre><code class="language-julia">rms&#40;y_wind&#91;test&#93;, y_hat&#41;</code></pre><pre><code class="plaintext">UndefVarError: y_hat not defined
-</code></pre>
+<pre><code class="language-julia">rms&#40;y_wind&#91;test&#93;, y_hat&#41;</code></pre><pre><code class="plaintext code-output">2872.517439095296</code></pre>
 <p>Finally, let&#39;s plot the residuals to see if there is any obvious remaining structure in them.</p>
-<pre><code class="language-julia">res &#61; y_hat .- y_wind&#91;test&#93;;</code></pre><pre><code class="plaintext">UndefVarError: y_hat not defined
-</code></pre>
+<pre><code class="language-julia">res &#61; y_hat .- y_wind&#91;test&#93;;</code></pre>
 <p>Let&#39;s look at the stem plot of the residuals to check if there&#39;s any structure we might not have picked up:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;12, 6&#41;&#41;
 stem&#40;res&#41;
-xlim&#40;0, length&#40;res&#41;&#41;</code></pre><pre><code class="plaintext">UndefVarError: res not defined
-</code></pre>
-<div class="img-wide"><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/residuals.png' not found. //</span></div>
+xlim&#40;0, length&#40;res&#41;&#41;</code></pre>
+<div class="img-wide"><img src="/assets/end-to-end/powergen/code/output/residuals.png" alt="Residuals"></div>
 <p>Nothing really stands out, the distribution also looks ok:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8, 6&#41;&#41;
 hist&#40;res, color&#61;&quot;blue&quot;, edgecolor&#61;&quot;white&quot;, bins&#61;50,
-     density&#61;true, alpha&#61;0.5&#41;</code></pre><pre><code class="plaintext">UndefVarError: res not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/powergen/code/hist_residuals.svg' not found. //</span></p>
+     density&#61;true, alpha&#61;0.5&#41;</code></pre>
+<img src="/assets/end-to-end/powergen/code/output/hist_residuals.svg" alt="Histogram of the residuals">
 <p>We leave it at that for now, I hope you found this tutorial interesting.</p>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 22, 2020. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

@@ -1,3 +1,11 @@
 # This file was generated, do not modify it. # hide
-r3 = x -> round(x, sigdigits=3)
-r3(pi)
+using MLJ
+import RDatasets: dataset
+import DataFrames: DataFrame, describe, select, Not
+import StatsBase: countmap, cor, var
+MLJ.color_off() # hide
+using PrettyPrinting
+
+smarket = dataset("ISLR", "Smarket")
+@show size(smarket)
+@show names(smarket)

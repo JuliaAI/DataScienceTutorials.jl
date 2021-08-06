@@ -1,6 +1,0 @@
-MethodError: no method matching predict(::typeof(clf), ::NamedTuple{(:Lag1, :Lag2), Tuple{Vector{Float64}, Vector{Float64}}})
-Closest candidates are:
-  predict(!Matched::Union{Composite, Surrogate}, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJBase/pCCd7/src/operations.jl:114
-  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJTuning/9sSuR/src/tuned_models.jl:625
-  predict(!Matched::Union{MLJ.DeterministicEnsembleModel{Atom}, MLJ.ProbabilisticEnsembleModel{Atom}} where Atom, ::Any, !Matched::Any) at /Users/tlienart/.julia/packages/MLJ/xgrEQ/src/ensembles.jl:557
-  ...

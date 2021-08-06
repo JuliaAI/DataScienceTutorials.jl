@@ -1,0 +1,2 @@
+ȳ[1] = CategoricalArrays.CategoricalValue{String, UInt32} "setosa"
+mode(ŷ[1]) = CategoricalArrays.CategoricalValue{String, UInt32} "setosa"

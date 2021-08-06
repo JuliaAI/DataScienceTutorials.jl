@@ -1,0 +1,7 @@
+Model Name: ConstantRegressor , Package: MLJModels
+Model Name: DecisionTreeRegressor , Package: BetaML
+Model Name: DecisionTreeRegressor , Package: DecisionTree
+Model Name: DeterministicConstantRegressor , Package: MLJModels
+Model Name: RandomForestRegressor , Package: BetaML
+Model Name: RandomForestRegressor , Package: DecisionTree
+Model Name: RandomForestRegressor , Package: ScikitLearn
