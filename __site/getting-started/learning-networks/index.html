@@ -136,16 +136,16 @@ first&#40;X, 3&#41; |&gt; pretty</code></pre><pre><code class="plaintext code-ou
 <h3 id="sources_and_nodes"><a href="#sources_and_nodes" class="header-anchor">Sources and nodes</a></h3>
 <p>In MLJ a learning network starts at <strong>source</strong> nodes and flows through nodes &#40;<code>X</code> and <code>y</code>&#41; defining operations/transformations &#40;<code>W</code>, <code>z</code>, <code>ẑ</code>, <code>ŷ</code>&#41;. To define the source nodes, use the <code>source</code> function, you should specify whether it&#39;s a target:</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @356 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @012 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>To define an &quot;trained-operation&quot; node, you must simply create a machine wrapping a model and another node &#40;the data&#41; and indicate which operation should be performed &#40;e.g. <code>transform</code>&#41;:</p>
 <pre><code class="language-julia">stand &#61; machine&#40;Standardizer&#40;&#41;, Xs&#41;
-W &#61; transform&#40;stand, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{Standardizer,…}} @791
+W &#61; transform&#40;stand, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{Standardizer,…}} @890
   args:
-    1:	Source @715
+    1:	Source @370
   formula:
     transform(
-        Machine{Standardizer,…} @439, 
-        Source @715)</code></pre>
+        Machine{Standardizer,…} @730, 
+        Source @370)</code></pre>
 <p>You can <code>fit&#33;</code> a trained-operation node at any point, MLJ will fit whatever it needs that is upstream of that node. In this case, there is just a source node upstream of <code>W</code> so fitting <code>W</code> will just fit the standardizer:</p>
 <pre><code class="language-julia">fit&#33;&#40;W, rows&#61;train&#41;;</code></pre>
 <p>If you want to get the transformed data, you can then call the node speciying on which part of the data the operation should be performed:</p>
@@ -166,17 +166,17 @@ ridge_model &#61; Ridge&#40;lambda&#61;0.1&#41;
 ridge &#61; machine&#40;ridge_model, W, z&#41;
 ẑ &#61; predict&#40;ridge, W&#41;
 
-ŷ &#61; inverse_transform&#40;box, ẑ&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @748
+ŷ &#61; inverse_transform&#40;box, ẑ&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @830
   args:
-    1:	Node{Machine{RidgeRegressor,…}} @045
+    1:	Node{Machine{RidgeRegressor,…}} @246
   formula:
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer,…} @596, 
+        Machine{UnivariateBoxCoxTransformer,…} @860, 
         predict(
-            Machine{RidgeRegressor,…} @355, 
+            Machine{RidgeRegressor,…} @646, 
             transform(
-                Machine{Standardizer,…} @439, 
-                Source @715)))</code></pre>
+                Machine{Standardizer,…} @730, 
+                Source @370)))</code></pre>
 <p>Note that we have not yet done any training, but if we now call <code>fit&#33;</code> on <code>ŷ</code>, it will fit all nodes upstream of <code>ŷ</code> that need to be re-trained:</p>
 <pre><code class="language-julia">fit&#33;&#40;ŷ, rows&#61;train&#41;;</code></pre>
 <p>Now that <code>ŷ</code> has been fitted, you can apply the full graph on test data &#40;or any compatible data&#41;. For instance, let&#39;s get the <code>rms</code> between the ground truth and the predicted values:</p>
@@ -192,13 +192,13 @@ rms&#40;y&#91;test&#93;, ŷ&#40;rows&#61;test&#41;&#41;</code></pre><pre><code 
 <p>The syntax to define nodes etc. is a bit verbose. MLJ supports a shorter syntax which abstracts away some of the steps. We will refer to it as the &quot;arrow&quot; syntax as it makes use of the <code>|&gt;</code> operator which can be interpreted as &quot;data flow&quot;.</p>
 <p>Let&#39;s start with <code>W</code> and <code>z</code> &#40;the &quot;first layer&quot;&#41;:</p>
 <pre><code class="language-julia">W &#61; X |&gt; Standardizer&#40;&#41;
-z &#61; y |&gt; UnivariateBoxCoxTransformer&#40;&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @912
+z &#61; y |&gt; UnivariateBoxCoxTransformer&#40;&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @251
   args:
-    1:	Source @158
+    1:	Source @540
   formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer,…} @715, 
-        Source @158)</code></pre>
+        Machine{UnivariateBoxCoxTransformer,…} @822, 
+        Source @540)</code></pre>
 <p>Note that we feed <code>X</code> and <code>y</code> directly into models. In the background, MLJ will create source nodes and assumes that the operation is a <code>transform</code> given the models are unsupervised.</p>
 <p>For a node that corresponds to a supervised model, you can feed a tuple where the first element corresponds to the input &#40;here <code>W</code>&#41; and the second corresponds to the target &#40;here <code>z</code>&#41;, MLJ will assume the operation is a <code>predict</code>:</p>
 <pre><code class="language-julia">ẑ &#61; &#40;W, z&#41; |&gt; Ridge&#40;lambda&#61;0.1&#41;;</code></pre>

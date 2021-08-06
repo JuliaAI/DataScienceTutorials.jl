@@ -1,4 +1,4 @@
-Pipeline345(
+Pipeline372(
     one_hot_encoder = OneHotEncoder(
             features = Symbol[],
             drop_last = false,
@@ -10,4 +10,4 @@ Pipeline345(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @724
+            solver = nothing)) @803

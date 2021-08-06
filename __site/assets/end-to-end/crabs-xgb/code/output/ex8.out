@@ -1,6 +1,0 @@
-MethodError: no method matching value(::LossFunctions.L1HingeLoss, ::MLJBase.UnivariateFinite{ScientificTypesBase.Multiclass{2}, String, UInt32, Float32}, ::CategoricalArrays.CategoricalValue{String, UInt32})
-Closest candidates are:
-  value(!Matched::LossFunctions.MisclassLoss, ::Any, ::Any) at /Users/tlienart/.julia/packages/LossFunctions/CKYIO/src/supervised/other.jl:23
-  value(::LearnBase.SupervisedLoss, !Matched::AbstractArray, !Matched::AbstractArray) at /Users/tlienart/.julia/packages/LossFunctions/CKYIO/src/supervised.jl:39
-  value(::LearnBase.SupervisedLoss, !Matched::AbstractArray{Q, N}, !Matched::AbstractArray{T, N}, !Matched::LearnBase.AggMode.WeightedMean, !Matched::LearnBase.ObsDim.Constant{O}) where {Q, T, N, O} at /Users/tlienart/.julia/packages/LossFunctions/CKYIO/src/supervised.jl:171
-  ...

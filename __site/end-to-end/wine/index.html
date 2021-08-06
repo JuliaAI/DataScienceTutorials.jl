@@ -226,10 +226,10 @@ ytrain &#61; selectrows&#40;yc, train&#41;
 ytest &#61; selectrows&#40;yc, test&#41;;</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
 <pre><code class="language-julia">knn &#61; machine&#40;KnnPipe, Xtrain, ytrain&#41;
-multi &#61; machine&#40;MnPipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline282,…} @124 trained 0 times; caches data
+multi &#61; machine&#40;MnPipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline298,…} @404 trained 0 times; caches data
   args: 
-    1:	Source @039 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @707 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{3}}`
+    1:	Source @043 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @972 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{3}}`
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="language-julia">opts &#61; &#40;resampling&#61;Holdout&#40;fraction_train&#61;0.9&#41;, measure&#61;cross_entropy&#41;

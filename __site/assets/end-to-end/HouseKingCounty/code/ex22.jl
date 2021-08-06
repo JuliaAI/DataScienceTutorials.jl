@@ -6,5 +6,3 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 rms(y[test], MLJ.predict(mtm, rows=test))
-
-PyPlot.close_figs() # hide

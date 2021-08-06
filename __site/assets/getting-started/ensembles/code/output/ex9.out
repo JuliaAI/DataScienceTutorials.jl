@@ -1,2 +1,2 @@
-estimates.measurement[1] = 0.08569009936282307
-mean(estimates.per_fold[1]) = 0.08412308869381326
+estimates.measurement[1] = 0.08609870565688287
+mean(estimates.per_fold[1]) = 0.08477245634362869

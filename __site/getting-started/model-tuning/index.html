@@ -140,7 +140,7 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
             tol = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @196],
+    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @007],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
@@ -148,7 +148,7 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @146</code></pre>
+    cache = true) @826</code></pre>
 <p>Note that &quot;wrapping a model in a tuning strategy&quot; as above means creating a new &quot;self-tuning&quot; version of the model, <code>tuned_model &#61; TunedModel&#40;model&#61;...&#41;</code>, in which further key-word arguments specify:</p>
 <ol>
 <li><p>the algorithm &#40;a.k.a., tuning strategy&#41; for searching the hyper-parameter space of the model &#40;e.g., <code>tuning &#61; Random&#40;rng&#61;123&#41;</code> or <code>tuning &#61; Grid&#40;goal&#61;100&#41;</code>&#41;.</p>
@@ -164,10 +164,10 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
 <h3 id="fitting_and_inspecting_a_tuned_model"><a href="#fitting_and_inspecting_a_tuned_model" class="header-anchor">Fitting and inspecting a tuned model</a></h3>
 <p>To fit a tuned model, you can use the usual syntax:</p>
 <pre><code class="language-julia">m &#61; machine&#40;tm, X, y&#41;
-fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @013 trained 1 time; caches data
+fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} @084 trained 1 time; caches data
   args: 
-    1:	Source @682 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @567 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
+    1:	Source @086 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @026 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="language-julia">fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">1</code></pre>
@@ -214,7 +214,7 @@ DeterministicEnsembleModel(
     rng = Random._GLOBAL_RNG(),
     n = 100,
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[]) @206</code></pre>
+    out_of_bag_measure = Any[]) @971</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
 <pre><code class="language-julia">params&#40;forest&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(atom = (max_depth = -1,
          min_samples_leaf = 5,
@@ -240,7 +240,7 @@ m &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;m&#41;;</code></pre>
 <p>A useful function to inspect a model after fitting it is the <code>report</code> function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:</p>
 <pre><code class="language-julia">r &#61; report&#40;m&#41;
-r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.15613809228685052</code></pre>
+r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.1731552317323135</code></pre>
 <p>Let&#39;s visualise this</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 

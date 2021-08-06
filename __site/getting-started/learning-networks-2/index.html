@@ -129,7 +129,7 @@ test, train &#61; partition&#40;eachindex&#40;y&#41;, 0.8&#41;;</code></pre><pre
 <p>Let&#39;s define a simple network</p>
 <p><em>Input layer</em></p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @187 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @272 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p><em>First layer</em></p>
 <pre><code class="language-julia">std_model &#61; Standardizer&#40;&#41;
 stand &#61; machine&#40;std_model, Xs&#41;
@@ -137,37 +137,37 @@ W &#61; transform&#40;stand, Xs&#41;
 
 box_model &#61; UnivariateBoxCoxTransformer&#40;&#41;
 box_mach &#61; machine&#40;box_model, ys&#41;
-z &#61; transform&#40;box_mach, ys&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @985
+z &#61; transform&#40;box_mach, ys&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @840
   args:
-    1:	Source @187
+    1:	Source @272
   formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer,…} @297, 
-        Source @187)</code></pre>
+        Machine{UnivariateBoxCoxTransformer,…} @082, 
+        Source @272)</code></pre>
 <p><em>Second layer</em></p>
 <pre><code class="language-julia">ridge_model &#61; Ridge&#40;lambda&#61;0.1&#41;
 ridge &#61; machine&#40;ridge_model, W, z&#41;
-ẑ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{RidgeRegressor,…}} @667
+ẑ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{RidgeRegressor,…}} @195
   args:
-    1:	Node{Machine{Standardizer,…}} @635
+    1:	Node{Machine{Standardizer,…}} @520
   formula:
     predict(
-        Machine{RidgeRegressor,…} @477, 
+        Machine{RidgeRegressor,…} @438, 
         transform(
-            Machine{Standardizer,…} @795, 
-            Source @699))</code></pre>
+            Machine{Standardizer,…} @181, 
+            Source @174))</code></pre>
 <p><em>Output</em></p>
-<pre><code class="language-julia">ŷ &#61; inverse_transform&#40;box_mach, ẑ&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @413
+<pre><code class="language-julia">ŷ &#61; inverse_transform&#40;box_mach, ẑ&#41;</code></pre><pre><code class="plaintext code-output">Node{Machine{UnivariateBoxCoxTransformer,…}} @087
   args:
-    1:	Node{Machine{RidgeRegressor,…}} @667
+    1:	Node{Machine{RidgeRegressor,…}} @195
   formula:
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer,…} @297, 
+        Machine{UnivariateBoxCoxTransformer,…} @082, 
         predict(
-            Machine{RidgeRegressor,…} @477, 
+            Machine{RidgeRegressor,…} @438, 
             transform(
-                Machine{Standardizer,…} @795, 
-                Source @699)))</code></pre>
+                Machine{Standardizer,…} @181, 
+                Source @174)))</code></pre>
 <p>No fitting has been done thus far, we have just defined a sequence of operations.</p>
 <p>As we show next, a learning network needs to be exported to create a new stand-alone model type. Instances of that type can be bound with data in a machine, which can then be evaluated, for example. Somewhat paradoxically, one can wrap a learning network in a certain kind of machine, called a learning network machine, before exporting it, and in fact, the export process actually requires us to do so. Since a composite model type does not yet exist, one constructs the machine using a &quot;surrogate&quot; model, whose name indicates the ultimate model supertype &#40;Deterministic, Probabilistic, Unsupervised or Static&#41;. This surrogate model has no fields.</p>
 <pre><code class="language-julia">surrogate &#61; Deterministic&#40;&#41;

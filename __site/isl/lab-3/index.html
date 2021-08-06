@@ -148,14 +148,14 @@ X &#61; select&#40;data, Not&#40;:MedV&#41;&#41;;</code></pre>
 <p>Let&#39;s declare a simple multivariate linear regression model:</p>
 <pre><code class="language-julia">mdl &#61; LinearRegressor&#40;&#41;</code></pre><pre><code class="plaintext code-output">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @262</code></pre>
+    solver = nothing) @957</code></pre>
 <p>First let&#39;s do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a <em>machine</em> which, in MLJ, is the composition of a model and data to apply the model on:</p>
 <pre><code class="language-julia">X_uni &#61; select&#40;X, :LStat&#41; # only a single feature
 mach_uni &#61; machine&#40;mdl, X_uni, y&#41;
-fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @196 trained 1 time; caches data
+fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @192 trained 1 time; caches data
   args: 
-    1:	Source @293 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @836 ⏎ `AbstractVector{Continuous}`
+    1:	Source @448 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @793 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp &#61; fitted_params&#40;mach_uni&#41;

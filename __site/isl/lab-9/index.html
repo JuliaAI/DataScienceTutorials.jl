@@ -151,7 +151,7 @@ fit&#33;&#40;svc&#41;;</code></pre><pre><code class="plaintext code-output">impo
 </code></pre>
 <p>As usual we can check how it performs</p>
 <pre><code class="language-julia">ypred &#61; MLJ.predict&#40;svc, X&#41;
-misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext code-output">0.2</code></pre>
+misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext code-output">0.15</code></pre>
 <p>Not bad.</p>
 <h3 id="basic_tuning"><a href="#basic_tuning" class="header-anchor">Basic tuning</a></h3>
 <p>As usual we could tune the model, for instance the penalty encoding the tradeoff between margin width and misclassification:</p>
@@ -163,7 +163,7 @@ mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm&#41;
 
 ypred &#61; MLJ.predict&#40;mtm, X&#41;
-misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext code-output">0.25</code></pre>
+misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext code-output">0.1</code></pre>
 <p>You could also change the kernel etc.</p>
 
 

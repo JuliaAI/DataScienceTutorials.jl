@@ -156,7 +156,7 @@ yticks&#40;fontsize&#61;12&#41;</code></pre>
 <h3 id="logistic_regression"><a href="#logistic_regression" class="header-anchor">Logistic Regression</a></h3>
 <p>We will now try to train models; the target <code>:Direction</code> has two classes: <code>Up</code> and <code>Down</code>; it needs to be interpreted as a categorical object, and we will mark it as a <em>ordered factor</em> to specify that &#39;Up&#39; is positive and &#39;Down&#39; negative &#40;for the confusion matrix later&#41;:</p>
 <pre><code class="language-julia">y &#61; coerce&#40;y, OrderedFactor&#41;
-classes&#40;y&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArray{String,1,UInt8}:
+classes&#40;y&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
  "Down"
  "Up"</code></pre>
 <p>Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since <code>D</code>  comes before <code>U</code>.</p>
@@ -172,18 +172,18 @@ ylabel&#40;&quot;Number of occurences&quot;, fontsize&#61;14&#41;</code></pre>
 <pre><code class="language-julia">LogisticClassifier &#61; @load LogisticClassifier pkg&#61;MLJLinearModels
 X2 &#61; select&#40;X, Not&#40;&#91;:Year, :Today&#93;&#41;&#41;
 clf &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
-Machine{LogisticClassifier,…} @915 trained 0 times; caches data
+Machine{LogisticClassifier,…} @303 trained 0 times; caches data
   args: 
-    1:	Source @412 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @875 ⏎ `AbstractVector{OrderedFactor{2}}`
+    1:	Source @793 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @534 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit&#33;&#40;clf&#41;
 ŷ &#61; MLJ.predict&#40;clf, X2&#41;
-ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element MLJBase.UnivariateFiniteVector{OrderedFactor{2}, String, UInt8, Float64}:
- UnivariateFinite{OrderedFactor{2}}(Down=>0.493, Up=>0.507)
- UnivariateFinite{OrderedFactor{2}}(Down=>0.518, Up=>0.482)
- UnivariateFinite{OrderedFactor{2}}(Down=>0.519, Up=>0.481)</code></pre>
+ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element MLJBase.UnivariateFiniteVector{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}:
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.493, Up=>0.507)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.518, Up=>0.482)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.519, Up=>0.481)</code></pre>
 <p>Note that here the <code>ŷ</code> are <em>scores</em>. We can recover the average cross-entropy loss:</p>
 <pre><code class="language-julia">cross_entropy&#40;ŷ, y&#41; |&gt; mean |&gt; r3</code></pre><pre><code class="plaintext code-output">0.691</code></pre>
 <p>in order to recover the class, we could use the mode and compare the misclassification rate:</p>
@@ -231,9 +231,9 @@ accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="pl
 <p>We can use a trained machine to predict on new data:</p>
 <pre><code class="language-julia">Xnew &#61; &#40;Lag1 &#61; &#91;1.2, 1.5&#93;, Lag2 &#61; &#91;1.1, -0.8&#93;&#41;
 ŷ &#61; MLJ.predict&#40;clf, Xnew&#41;
-ŷ |&gt; pprint</code></pre><pre><code class="plaintext code-output">MLJBase.UnivariateFinite{OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{OrderedFactor{2}}(Down=>0.504, Up=>0.496)]</code></pre>
+ŷ |&gt; pprint</code></pre><pre><code class="plaintext code-output">MLJBase.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.504, Up=>0.496)]</code></pre>
 <p><strong>Note</strong>: when specifying data, we used a simple <code>NamedTuple</code>; we could also have defined a dataframe or any other compatible tabular container. Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used <code>predict_mode</code> or indeed</p>
-<pre><code class="language-julia">mode.&#40;ŷ&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArray{String,1,UInt8}:
+<pre><code class="language-julia">mode.&#40;ŷ&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
  "Down"
  "Down"</code></pre>
 <h3 id="lda"><a href="#lda" class="header-anchor">LDA</a></h3>

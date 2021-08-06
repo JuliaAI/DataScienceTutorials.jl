@@ -1,7 +1,7 @@
 DeterministicTunedModel(
-    model = Pipeline324(
-            feature_selector = FeatureSelector @011,
-            linear_regressor = LinearRegressor @608),
+    model = Pipeline323(
+            feature_selector = FeatureSelector @622,
+            linear_regressor = LinearRegressor @638),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -24,4 +24,4 @@ DeterministicTunedModel(
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @131
+    cache = true) @313

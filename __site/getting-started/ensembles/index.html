@@ -122,12 +122,12 @@ KNNRegressor(
     metric = Distances.Euclidean(0.0),
     leafsize = 10,
     reorder = true,
-    weights = NearestNeighborModels.Uniform()) @388</code></pre>
+    weights = NearestNeighborModels.Uniform()) @824</code></pre>
 <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p>
-<pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} @062 trained 0 times; caches data
+<pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} @296 trained 0 times; caches data
   args: 
-    1:	Source @915 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @388 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @961 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @653 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>and fit it</p>
 <pre><code class="language-julia">fit&#33;&#40;knn, rows&#61;train&#41;
@@ -138,7 +138,7 @@ rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-o
           measure&#61;rms&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬────────────┐
 │ _.measure                 │ _.measurement │ _.per_fold │
 ├───────────────────────────┼───────────────┼────────────┤
-│ RootMeanSquaredError @012 │ 0.124         │ [0.124]    │
+│ RootMeanSquaredError @989 │ 0.124         │ [0.124]    │
 └───────────────────────────┴───────────────┴────────────┘
 _.per_observation = [missing]
 _.fitted_params_per_fold = [ … ]
@@ -153,11 +153,11 @@ _.train_test_rows = [ … ]
 <p>Now that we&#39;ve instantiated an ensemble, it can be trained and tested the same as any other model:</p>
 <pre><code class="language-julia">ensemble &#61; machine&#40;ensemble_model, X, y&#41;
 estimates &#61; evaluate&#33;&#40;ensemble, resampling&#61;CV&#40;&#41;&#41;
-estimates</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬─────────────────────────────────────────────────┐
-│ _.measure                 │ _.measurement │ _.per_fold                                      │
-├───────────────────────────┼───────────────┼─────────────────────────────────────────────────┤
-│ RootMeanSquaredError @012 │ 0.0857        │ [0.0915, 0.113, 0.0773, 0.0893, 0.0649, 0.0684] │
-└───────────────────────────┴───────────────┴─────────────────────────────────────────────────┘
+estimates</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬───────────────────────────────────────────────┐
+│ _.measure                 │ _.measurement │ _.per_fold                                    │
+├───────────────────────────┼───────────────┼───────────────────────────────────────────────┤
+│ RootMeanSquaredError @989 │ 0.0861        │ [0.0909, 0.112, 0.0805, 0.089, 0.0673, 0.069] │
+└───────────────────────────┴───────────────┴───────────────────────────────────────────────┘
 _.per_observation = [missing]
 _.fitted_params_per_fold = [ … ]
 _.report_per_fold = [ … ]
@@ -165,8 +165,8 @@ _.train_test_rows = [ … ]
 </code></pre>
 <p>here the implicit measure is the <code>rms</code> &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
 <pre><code class="language-julia">@show estimates.measurement&#91;1&#93;
-@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.08569009936282307
-mean(estimates.per_fold[1]) = 0.08412308869381326
+@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.08609870565688287
+mean(estimates.per_fold[1]) = 0.08477245634362869
 </code></pre>
 <p>Note that multiple measurements can be specified jointly. Here only on measurement is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both  the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
 <h3 id="systematic_tuning"><a href="#systematic_tuning" class="header-anchor">Systematic tuning</a></h3>
@@ -201,8 +201,8 @@ fit&#33;&#40;tuned_ensemble, rows&#61;train&#41;;</code></pre>
 <p>The best model can be accessed like so:</p>
 <pre><code class="language-julia">best_ensemble &#61; fitted_params&#40;tuned_ensemble&#41;.best_model
 @show best_ensemble.atom.K
-@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.atom.K = 5
-best_ensemble.bagging_fraction = 0.7777777777777778
+@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.atom.K = 3
+best_ensemble.bagging_fraction = 0.6111111111111112
 </code></pre>
 <p>The <code>report</code> method gives more detailed information on the tuning process:</p>
 <pre><code class="language-julia">r &#61; report&#40;tuned_ensemble&#41;;</code></pre>

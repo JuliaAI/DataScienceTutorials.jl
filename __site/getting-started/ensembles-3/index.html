@@ -115,7 +115,7 @@ DecisionTreeRegressor &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
 atom &#61; DecisionTreeRegressor&#40;&#41;
 
 machines &#61; &#40;machine&#40;atom, Xs, ys&#41; for i in 1:100&#41;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
-Base.Generator{UnitRange{Int64}, var"#56#57"}(var"#56#57"(), 1:100)</code></pre>
+Base.Generator{UnitRange{Int64}, var"#1#2"}(var"#1#2"(), 1:100)</code></pre>
 <p>Overloading <code>mean</code> for nodes:</p>
 <pre><code class="language-julia">Statistics.mean&#40;v...&#41; &#61; mean&#40;v&#41;
 Statistics.mean&#40;v::AbstractVector&#123;&lt;:AbstractNode&#125;&#41; &#61; node&#40;mean, v...&#41;
@@ -140,7 +140,7 @@ one_hundred_models &#61; OneHundredModels&#40;&#41;</code></pre><pre><code class
             n_subfeatures = 0,
             post_prune = false,
             merge_purity_threshold = 1.0,
-            rng = Random._GLOBAL_RNG())) @210</code></pre>
+            rng = Random._GLOBAL_RNG())) @318</code></pre>
 <h2 id="application_to_data"><a href="#application_to_data" class="header-anchor">Application to data</a></h2>
 <pre><code class="language-julia">X, y &#61; @load_boston;</code></pre>
 <p>tune regularization parameter for a <em>single</em> tree:</p>

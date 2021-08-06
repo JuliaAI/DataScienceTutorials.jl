@@ -267,7 +267,7 @@ tree &#61; machine&#40;DTR&#40;&#41;, X, y&#41;
 fit&#33;&#40;tree, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.86859791017693</code></pre>
+<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.60608282203714</code></pre>
 <p>Let&#39;s try to do better.</p>
 <h3 id="random_forest_model"><a href="#random_forest_model" class="header-anchor">Random forest model</a></h3>
 <p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -280,14 +280,14 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">136.55579790414117</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">136.32674001136314</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
                measure&#61;rms, verbosity&#61;0&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬────────────────────────────────────────────┐
 │ _.measure                 │ _.measurement │ _.per_fold                                 │
 ├───────────────────────────┼───────────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError @012 │ 134.0         │ [123.0, 138.0, 138.0, 140.0, 133.0, 133.0] │
+│ RootMeanSquaredError @989 │ 132.0         │ [135.0, 129.0, 133.0, 125.0, 132.0, 139.0] │
 └───────────────────────────┴───────────────┴────────────────────────────────────────────┘
 _.per_observation = [missing]
 _.fitted_params_per_fold = [ … ]
@@ -316,7 +316,8 @@ r2 &#61; range&#40;xgb, :num_round, lower&#61;1, upper&#61;25&#41;;</code></pre>
 mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">145.8097421015522</code></pre>
+
 
 <div class="page-foot">
   <div class="copyright">

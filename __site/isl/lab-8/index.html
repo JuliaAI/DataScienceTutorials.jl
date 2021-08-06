@@ -140,7 +140,7 @@ misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext
 <pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;333&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 ypred &#61; predict_mode&#40;mach, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.275</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.28</code></pre>
 <p>Not really...</p>
 <h3 id="tuning_a_dtc"><a href="#tuning_a_dtc" class="header-anchor">Tuning a DTC</a></h3>
 <p>Let&#39;s try to do a bit of tuning</p>
@@ -154,7 +154,7 @@ mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
 ypred &#61; predict_mode&#40;mtm, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.295</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.29</code></pre>
 <p>We can inspect the parameters of the best model</p>
 <pre><code class="language-julia">fitted_params&#40;mtm&#41;.best_model.decision_tree_classifier</code></pre><pre><code class="plaintext code-output">DecisionTreeClassifier(
     max_depth = 5,
@@ -165,7 +165,8 @@ misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code cl
     post_prune = false,
     merge_purity_threshold = 1.0,
     pdf_smoothing = 0.0,
-    display_depth = 5) @589</code></pre>
+    display_depth = 5,
+    rng = Random._GLOBAL_RNG()) @459</code></pre>
 <h3 id="decision_tree_regressor"><a href="#decision_tree_regressor" class="header-anchor">Decision Tree Regressor</a></h3>
 <pre><code class="language-julia">DTR &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
 
@@ -176,7 +177,7 @@ y, X &#61; unpack&#40;boston, &#61;&#61;&#40;:MedV&#41;, col -&gt; true&#41;
 train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;551&#41;;
 
 scitype&#40;X&#41;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
-Table{Union{AbstractVector{Continuous}, AbstractVector{Count}}}</code></pre>
+ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}}}</code></pre>
 <p>Let&#39;s recode the Count as Continuous and then fit a DTR</p>
 <pre><code class="language-julia">X &#61; coerce&#40;X, autotype&#40;X, rules&#61;&#40;:discrete_to_continuous,&#41;&#41;&#41;
 
@@ -208,7 +209,7 @@ fit&#33;&#40;rf, rows&#61;train&#41;
 
 ypred &#61; MLJ.predict&#40;rf, rows&#61;test&#41;
 round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
-3.72</code></pre>
+3.73</code></pre>
 <h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine" class="header-anchor">Gradient Boosting Machine</a></h2>
 <pre><code class="language-julia">XGBR &#61; @load XGBoostRegressor
 

@@ -175,7 +175,7 @@ legend&#40;fontsize&#61;12&#41;</code></pre>
 <h3 id="data_preparation"><a href="#data_preparation" class="header-anchor">Data preparation</a></h3>
 <p>Most features are currently encoded as integers but we will consider them as continuous. To coerce <code>int</code> features to <code>Float</code>, we nest the <code>autotype</code> function in the <code>coerce</code> function. The <code>autotype</code> function returns a dictionary containing scientific types, which is then passed to the <code>coerce</code> function. For more details on the use of <code>autotype</code>, see the <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype">Scientific Types</a></p>
 <pre><code class="language-julia">Xc &#61; coerce&#40;X, autotype&#40;X, rules&#61;&#40;:discrete_to_continuous,&#41;&#41;&#41;
-scitype&#40;Xc&#41;</code></pre><pre><code class="plaintext code-output">Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}}}</code></pre>
+scitype&#40;Xc&#41;</code></pre><pre><code class="plaintext code-output">ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}}}</code></pre>
 <p>There&#39;re a few features that are categorical which we&#39;ll one-hot-encode.</p>
 <h2 id="ridge_pipeline"><a href="#ridge_pipeline" class="header-anchor">Ridge pipeline</a></h2>
 <h3 id="baseline"><a href="#baseline" class="header-anchor">Baseline</a></h3>

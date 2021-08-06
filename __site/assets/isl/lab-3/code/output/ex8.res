@@ -1,4 +1,4 @@
-Machine{LinearRegressor,…} @196 trained 1 time; caches data
+Machine{LinearRegressor,…} @192 trained 1 time; caches data
   args: 
-    1:	Source @293 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @836 ⏎ `AbstractVector{Continuous}`
+    1:	Source @448 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @793 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`

@@ -156,10 +156,10 @@ fit&#33;&#40;lr2, rows&#61;train&#41;
 
 LinMod.feature_selector.features &#61; &#91;:hp1, :hp2, :hp3&#93; # poly of degree 3
 lr3 &#61; machine&#40;LinMod, Xhp, y&#41;
-fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline324,…} @733 trained 1 time; caches data
+fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline323,…} @034 trained 1 time; caches data
   args: 
-    1:	Source @742 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @098 ⏎ `AbstractVector{Continuous}`
+    1:	Source @106 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @303 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="language-julia">get_mse&#40;lr&#41; &#61; rms&#40;MLJ.predict&#40;lr, rows&#61;test&#41;, y&#91;test&#93;&#41;^2
@@ -200,9 +200,9 @@ cases &#61; &#91;&#91;Symbol&#40;&quot;x&#36;j&quot;&#41; for j in 1:i&#93; for 
 r &#61; range&#40;LinMod, :&#40;feature_selector.features&#41;, values&#61;cases&#41;
 
 tm &#61; TunedModel&#40;model&#61;LinMod, ranges&#61;r, resampling&#61;CV&#40;nfolds&#61;10&#41;, measure&#61;rms&#41;</code></pre><pre><code class="plaintext code-output">DeterministicTunedModel(
-    model = Pipeline324(
-            feature_selector = FeatureSelector @011,
-            linear_regressor = LinearRegressor @608),
+    model = Pipeline323(
+            feature_selector = FeatureSelector @622,
+            linear_regressor = LinearRegressor @638),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -225,7 +225,7 @@ tm &#61; TunedModel&#40;model&#61;LinMod, ranges&#61;r, resampling&#61;CV&#40;nf
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @131</code></pre>
+    cache = true) @313</code></pre>
 <p>Now we&#39;re left with fitting the tuned model</p>
 <pre><code class="language-julia">mtm &#61; machine&#40;tm, Xhp, y&#41;
 fit&#33;&#40;mtm&#41;
@@ -234,8 +234,8 @@ rep &#61; report&#40;mtm&#41;
 res &#61; rep.plotting
 
 @show round.&#40;res.measurements.^2, digits&#61;2&#41;
-@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [27.44, 21.34, 21.35, 21.24, 20.91, 88.61, 223.98, 20.91, 25.66, 20.96]
-argmin(res.measurements) = 5
+@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [25.66, 21.35, 223.98, 88.61, 20.96, 20.91, 27.44, 20.91, 21.34, 21.24]
+argmin(res.measurements) = 8
 </code></pre>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>
 <p>In ISL they use a different seed so the results are a bit different but comparable.</p>

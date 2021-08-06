@@ -284,7 +284,7 @@ lambdas &#61; range&#40;model, :&#40;multinomial_classifier.lambda&#41;, lower&#
 tm &#61; TunedModel&#40;model&#61;SimplePipe, ranges&#61;lambdas, measure&#61;cross_entropy&#41;
 mtm &#61; machine&#40;tm, Xtrain, ytrain&#41;
 fit&#33;&#40;mtm&#41;
-best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code class="plaintext code-output">Pipeline345(
+best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code class="plaintext code-output">Pipeline372(
     one_hot_encoder = OneHotEncoder(
             features = Symbol[],
             drop_last = false,
@@ -296,7 +296,7 @@ best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code cla
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @724</code></pre>
+            solver = nothing)) @803</code></pre>
 <p>So it looks like it&#39;s useful to regularise a fair bit to get a lower cross entropy</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, Xtrain&#41;
 cross_entropy&#40;ŷ, ytrain&#41; |&gt; mean</code></pre><pre><code class="plaintext code-output">0.6129047487945484</code></pre>

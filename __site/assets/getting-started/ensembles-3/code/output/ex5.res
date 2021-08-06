@@ -7,4 +7,4 @@ OneHundredModels(
             n_subfeatures = 0,
             post_prune = false,
             merge_purity_threshold = 1.0,
-            rng = Random._GLOBAL_RNG())) @210
+            rng = Random._GLOBAL_RNG())) @318

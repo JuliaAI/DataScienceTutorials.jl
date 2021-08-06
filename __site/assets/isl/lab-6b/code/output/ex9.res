@@ -1,1 +1,1 @@
-Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}}}
+ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}}}

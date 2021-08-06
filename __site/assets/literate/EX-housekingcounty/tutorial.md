@@ -208,7 +208,9 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 rms(y[test], MLJ.predict(mtm, rows=test))
+```
 
+```julia:ex23
 PyPlot.close_figs() # hide
 ```
 
