@@ -1,6 +1,6 @@
 # this runs in your environment and assumes that all your scripts are up to date etc.
 # do not run this if you have not previously run `serve()` and checked everything was fine.
-
+using Pkg
 Pkg.activate()
 
 using Franklin, Pkg, Logging, Literate
