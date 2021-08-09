@@ -100,7 +100,13 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="lab_8_-_tree-based_models"><a href="#lab_8_-_tree-based_models" class="header-anchor">Lab 8 - Tree-based models</a></h1>
-<div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div>
+<em>Download the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8/tutorial.ipynb" target="_blank"><em>notebook</em></a>
+  , the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8/tutorial.jl" target="_blank"><em>annotated script</em></a>
+   or the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
+   for this tutorial &#40;right-click on the relevant link and save-as&#41;.</em> <div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div>
 <h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
 <pre><code class="language-julia">using MLJ
 import RDatasets: dataset
@@ -225,7 +231,7 @@ round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

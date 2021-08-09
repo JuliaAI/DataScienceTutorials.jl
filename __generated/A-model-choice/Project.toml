@@ -1,0 +1,6 @@
+[deps]
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJGLMInterface = "caf8df21-4939-456d-ac9c-5fefbfb04c0c"
+MLJScikitLearnInterface = "5ae90465-5518-4432-b9d2-8a1def2f0cab"
+NearestNeighbors = "b8a86587-4115-5ab1-83bc-aa920d37bbce"
+RDatasets = "ce6b1742-4840-55fa-b093-852dadbb1d8b"

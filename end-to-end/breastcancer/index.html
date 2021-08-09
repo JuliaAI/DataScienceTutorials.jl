@@ -100,7 +100,13 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="breast_cancer_wisconsindiagnostic"><a href="#breast_cancer_wisconsindiagnostic" class="header-anchor">Breast Cancer Wisconsin&#40;Diagnostic&#41;</a></h1>
-<div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#loading_the_relevant_packages">Loading the relevant packages</a></li><li><a href="#downloading_and_loading_the_data">Downloading and loading the data</a></li><li><a href="#exploring_the_obtained_data">Exploring the obtained data</a><ol><li><a href="#inspecting_the_class_variable">Inspecting the class variable</a></li><li><a href="#inspecting_the_feature_set">Inspecting the feature set</a></li></ol></li><li><a href="#unpacking_the_values">Unpacking the values</a></li><li><a href="#standardizing_the_feature_set">Standardizing the &quot;feature set&quot;</a></li><li><a href="#train-test_split">Train-test split</a></li><li><a href="#model_compatibility">Model compatibility</a></li><li><a href="#analyzing_the_performance_of_different_models">Analyzing the performance of different models</a><ol><li><a href="#creating_various_empty_vectors_for_our_analysis">Creating various empty vectors for our analysis</a></li><li><a href="#collecting_data_for_analysis">Collecting data for analysis</a></li><li><a href="#analyzing_models">Analyzing models</a></li></ol></li></ol></div>
+<em>Download the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer/tutorial.ipynb" target="_blank"><em>notebook</em></a>
+  , the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer/tutorial.jl" target="_blank"><em>annotated script</em></a>
+   or the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
+   for this tutorial &#40;right-click on the relevant link and save-as&#41;.</em> <div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#loading_the_relevant_packages">Loading the relevant packages</a></li><li><a href="#downloading_and_loading_the_data">Downloading and loading the data</a></li><li><a href="#exploring_the_obtained_data">Exploring the obtained data</a><ol><li><a href="#inspecting_the_class_variable">Inspecting the class variable</a></li><li><a href="#inspecting_the_feature_set">Inspecting the feature set</a></li></ol></li><li><a href="#unpacking_the_values">Unpacking the values</a></li><li><a href="#standardizing_the_feature_set">Standardizing the &quot;feature set&quot;</a></li><li><a href="#train-test_split">Train-test split</a></li><li><a href="#model_compatibility">Model compatibility</a></li><li><a href="#analyzing_the_performance_of_different_models">Analyzing the performance of different models</a><ol><li><a href="#creating_various_empty_vectors_for_our_analysis">Creating various empty vectors for our analysis</a></li><li><a href="#collecting_data_for_analysis">Collecting data for analysis</a></li><li><a href="#analyzing_models">Analyzing models</a></li></ol></li></ol></div>
 <h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2>
 <p>This tutorial covers the concepts of iterative model selection on the popular <a href="https://archive.ics.uci.edu/ml/datasets/Breast&#43;Cancer&#43;Wisconsin&#43;&#40;Diagnostic&#41;">&quot;Breast Cancer Wisconsin &#40;Diagnostic&#41; Data Set&quot;</a> from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.</p>
 <h2 id="loading_the_relevant_packages"><a href="#loading_the_relevant_packages" class="header-anchor">Loading the relevant packages</a></h2>
@@ -345,7 +351,7 @@ import MLJScikitLearnInterface ✔
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 06, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
