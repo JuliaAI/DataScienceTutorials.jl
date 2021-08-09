@@ -1,10 +1,10 @@
 # DataScienceTutorials.jl
 
-This repository contains the source code for a [set of tutorials](https://alan-turing-institute.github.io/DataScienceTutorials.jl/) introducing the use of Julia and Julia packages such as MLJ (but not only) to do "data science" in Julia.
+This repository contains the source code for a [set of tutorials](https://juliaai.github.io/DataScienceTutorials.jl/) introducing the use of Julia and Julia packages such as MLJ (but not only) to do "data science" in Julia.
 
 ## For readers
 
-You can read the tutorials [online](https://alan-turing-institute.github.io/DataScienceTutorials.jl/).
+You can read the tutorials [online](https://juliaai.github.io/DataScienceTutorials.jl/).
 
 You can find a runnable script for each tutorial [here](https://github.com/alan-turing-institute/DataScienceTutorials.jl/tree/master/_literate), each folder contains a `Project.toml` and a `Manifest.toml` you can use to re-create the exact environment that was used to run the tutorial.
 
