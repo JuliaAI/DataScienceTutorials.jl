@@ -100,7 +100,13 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="manipulating_a_dataframe"><a href="#manipulating_a_dataframe" class="header-anchor">Manipulating a DataFrame</a></h1>
-<div class="franklin-toc"><ol><li><a href="#basics">Basics</a><ol><li><a href="#accessing_data">Accessing data</a></li><li><a href="#describing_the_data">Describing the data</a></li><li><a href="#converting_the_data">Converting the data</a></li><li><a href="#adding_columns">Adding columns</a></li><li><a href="#missing_values">Missing values</a></li></ol></li><li><a href="#split-apply-combine">Split-Apply-Combine</a><ol><li><a href="#groupby"><code>groupby</code></a></li><li><a href="#combine"><code>combine</code></a></li><li><a href="#combine_with_groupby"><code>combine</code> with <code>groupby</code></a></li></ol></li></ol></div>
+<em>Download the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-dataframe/tutorial.ipynb" target="_blank"><em>notebook</em></a>
+  , the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-dataframe/tutorial.jl" target="_blank"><em>annotated script</em></a>
+   or the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-dataframe/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
+   for this tutorial &#40;right-click on the relevant link and save-as&#41;.</em> <div class="franklin-toc"><ol><li><a href="#basics">Basics</a><ol><li><a href="#accessing_data">Accessing data</a></li><li><a href="#describing_the_data">Describing the data</a></li><li><a href="#converting_the_data">Converting the data</a></li><li><a href="#adding_columns">Adding columns</a></li><li><a href="#missing_values">Missing values</a></li></ol></li><li><a href="#split-apply-combine">Split-Apply-Combine</a><ol><li><a href="#groupby"><code>groupby</code></a></li><li><a href="#combine"><code>combine</code></a></li><li><a href="#combine_with_groupby"><code>combine</code> with <code>groupby</code></a></li></ol></li></ol></div>
 <p>This tutorial is loosely adapted from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">this pandas tutorial</a> as well as the <a href="http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/">DataFrames.jl documentation</a>. It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.</p>
 <h2 id="basics"><a href="#basics" class="header-anchor">Basics</a></h2>
 <p>To start with, we will use the <code>Boston</code> dataset which is very simple.</p>
@@ -376,7 +382,7 @@ combine&#40;gdf, :PetalLength &#61;&gt; mean &#61;&gt; :MPL, :PetalLength &#61;&
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 02, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

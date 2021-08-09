@@ -26,18 +26,26 @@ ignore = [
 # ignore = [d for d in ignore if d != current]
 +++
 
-<!--
-Add here global latex commands to use throughout your
-pages. It can be math commands but does not need to be.
-For instance:
-* \newcommand{\phrase}{This is a long phrase to copy.}
--->
-\newcommand{\R}{\mathbb R}
-\newcommand{\scal}[1]{\langle #1 \rangle}
-
 <!-- \newcommand{\tutorial}[1]{*Download the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/!#1.ipynb" target="_blank"><em>notebook</em></a>~~~, *the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/!#1-raw.jl" target="_blank"><em>raw script</em></a>~~~, *or the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/!#1.jl" target="_blank"><em>annotated script</em></a>~~~ *for this tutorial (right-click on the link and save).* \toc\literate{/_literate/!#1.jl}}  -->
 
+\newcommand{\nblink}[1]{
+  ~~~
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/!#1/tutorial.ipynb" target="_blank"><em>notebook</em></a>
+  ~~~
+}
+\newcommand{\sclink}[1]{
+  ~~~
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/!#1/tutorial.jl" target="_blank"><em>annotated script</em></a>
+  ~~~
+}
+\newcommand{\rawlink}[1]{
+  ~~~
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/!#1/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
+  ~~~
+}
+
 \newcommand{\tutorial}[1]{
+  *Download the \nblink{!#1}, the \sclink{!#1} or the \rawlink{!#1} for this tutorial (right-click on the relevant link and save-as).*
   \toc\literate{/_literate/!#1/tutorial.jl}
 }
 
