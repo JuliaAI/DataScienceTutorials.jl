@@ -48,7 +48,7 @@ ignore = [
 
 
 \newcommand{\tutorial}[1]{
-  *Download the \nblink{!#1}, the \sclink{!#1} or the \rawlink{!#1} for this tutorial (right-click on the relevant link and save-as). These rely on [this Project.toml](\proj{!#1}) and [this Manifest.toml]{\mani{!#1}}.*
+  *Download the \nblink{!#1}, the \sclink{!#1} or the \rawlink{!#1} for this tutorial (right-click on the relevant link and save-as). These rely on [this Project.toml](\proj{!#1}) and [this Manifest.toml]({\mani{!#1}}).*
   \toc\literate{/_literate/!#1/tutorial.jl}
 }
 
