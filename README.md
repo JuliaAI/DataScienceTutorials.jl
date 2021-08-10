@@ -13,7 +13,7 @@ To do so, save both files in an appropriate folder, start Julia, `cd` to the fol
 ```julia
 using Pkg
 Pkg.activate(".")
-Pkg.update()
+Pkg.instantiate()
 ```
 
 **Note**: you are strongly encouraged to [open issues](https://github.com/juliaai/DataScienceTutorials.jl/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
