@@ -7,8 +7,6 @@ end;
 
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
 #
-# Environment file Manifest.toml generated/tested with Julia 1.7
-#
 # ## First steps
 #
 # Again, the crabs dataset is so common that there is a  simple load function for it:
