@@ -7,8 +7,6 @@ end;
 
 # **Main author**: Ayush Shridhar (ayush-1506).
 
-# Environment file Manifest.toml generated and tested on Julia 1.6
-#
 # ## Getting started
 
 import MLJFlux
