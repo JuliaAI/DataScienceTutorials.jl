@@ -28,7 +28,6 @@ using PyPlot
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
-using LossFunctions
 
 
 X, y = @load_crabs
@@ -70,8 +69,8 @@ xgbm = machine(xgb, X, y)
 # We will tune it varying the number of rounds used and generate a learning curve
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, range=r, resolution=50,
-                        measure=HingeLoss())
+curve = learning_curve(xgbm, range=r, resolution=50,
+                        measure=L1HingeLoss())
 
 # Let's have a look
 
@@ -185,10 +184,9 @@ xgb = fitted_params(mtm).best_model
 # We could continue with more fine tuning but given how small the dataset is, it doesn't make much sense.
 # How does it fare on the test set?
 
+
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
