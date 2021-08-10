@@ -1,24 +1,7 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8/Manifest.toml).
-# For instance, copy these files to a folder 'ISL-lab-8', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/ISL-lab-8/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
 import DataFrames: DataFrame, select, Not
-
 DTC = @load DecisionTreeClassifier pkg=DecisionTree
 
 carseats = dataset("ISLR", "Carseats")

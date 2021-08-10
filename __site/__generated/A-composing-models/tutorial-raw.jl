@@ -1,28 +1,11 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-composing-models/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-composing-models/Manifest.toml).
-# For instance, copy these files to a folder 'A-composing-models', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/A-composing-models/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 using PrettyPrinting
 
-
 KNNRegressor = @load KNNRegressor
-# input
+
 X = (age    = [23, 45, 34, 25, 67],
      gender = categorical(['m', 'm', 'f', 'm', 'f']))
-# target
+
 height = [178, 194, 165, 173, 168];
 
 scitype(X.age)

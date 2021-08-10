@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-boston-flux/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # **Main author**: Ayush Shridhar (ayush-1506).
 
 # ## Getting started
@@ -25,7 +18,6 @@ import Statistics
 import Flux
 using Random
 using PyPlot
-
 
 Random.seed!(11)
 
@@ -148,8 +140,6 @@ plt.plot(curve.parameter_values,
 yscale("log")
 xlabel(curve.parameter_name)
 ylabel("l2")
-
-
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 

@@ -1,23 +1,6 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-5/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-5/Manifest.toml).
-# For instance, copy these files to a folder 'ISL-lab-5', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/ISL-lab-5/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, select
-
 auto = dataset("ISLR", "Auto")
 y, X = unpack(auto, ==(:MPG), col->true)
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
@@ -26,7 +9,6 @@ LR = @load LinearRegressor pkg=MLJLinearModels
 
 using PyPlot
 
-
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")
 
@@ -34,8 +16,6 @@ xlabel("Horsepower", fontsize=14)
 xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
-
-
 
 lm = LR()
 mlm = machine(lm, select(X, :Horsepower), y)
@@ -53,8 +33,6 @@ xlabel("Horsepower", fontsize=14)
 xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
-
-
 
 hp = X.Horsepower
 Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
@@ -99,8 +77,6 @@ xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
 
-
-
 Xhp = DataFrame([hp.^i for i in 1:10], :auto)
 
 cases = [[Symbol("x$j") for j in 1:i] for i in 1:10]
@@ -128,10 +104,6 @@ xlabel("Horsepower", fontsize=14)
 xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
-
-
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

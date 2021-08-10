@@ -1,29 +1,11 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-airfoil/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-airfoil/Manifest.toml).
-# For instance, copy these files to a folder 'EX-airfoil', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/EX-airfoil/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 using PrettyPrinting
 import DataFrames
 import Statistics
 using CSV
 using PyPlot
-
 using HTTP
 using StableRNGs
-
 
 
 req = HTTP.get("https://raw.githubusercontent.com/rupakc/UCI-Data-Analysis/master/Airfoil%20Dataset/airfoil_self_noise.dat");
@@ -104,9 +86,6 @@ xlabel("Number of trees", fontsize=14)
 ylabel("Sampling fraction", fontsize=14)
 xticks(9:1:15, fontsize=12)
 yticks(fontsize=12)
-
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -1,24 +1,7 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-processing/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-processing/Manifest.toml).
-# For instance, copy these files to a folder 'D0-processing', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/D0-processing/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
 using PyPlot
-
 
 raw_data = urldownload("https://github.com/tlienart/DataScienceTutorialsData.jl/blob/master/data/wri_global_power_plant_db_be_022020.csv?raw=true")
 data = DataFrame(raw_data);
@@ -57,8 +40,6 @@ figure(figsize=(8,6))
 plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
 plt.xticks(rotation=90)
 
-
-
 cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
 
@@ -96,8 +77,6 @@ plt.legend()
 
 plt.xlim(0,)
 
-
-
 age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 
@@ -117,8 +96,6 @@ ax1.set_ylabel("Age")
 
 ax1.set_title("Coal")
 ax2.set_title("Gas")
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

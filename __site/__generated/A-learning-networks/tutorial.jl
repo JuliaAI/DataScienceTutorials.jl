@@ -7,17 +7,12 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/A-learning-networks/Project.toml")
-Pkg.update();
-
 # ## Preliminary steps
 #
 # Let's generate a `DataFrame` with some dummy regression data, let's also load the good old ridge regressor.
 
 using MLJ, StableRNGs
 import DataFrames
-
 Ridge = @load RidgeRegressor pkg=MultivariateStats
 
 rng = StableRNG(551234) # for reproducibility

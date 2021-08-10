@@ -1,24 +1,7 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-10/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-10/Manifest.toml).
-# For instance, copy these files to a folder 'ISL-lab-10', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/ISL-lab-10/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, select, Not, describe
 using Random
-
 
 data = dataset("datasets", "USArrests")
 names(data)
@@ -61,7 +44,6 @@ cs = cumsum(rpca.principalvars ./ rpca.tvar)
 
 using PyPlot
 
-
 figure(figsize=(8,6))
 
 PyPlot.bar(1:length(cs), cs)
@@ -69,8 +51,6 @@ plot(1:length(cs), cs, color="red", marker="o")
 
 xlabel("Number of PCA features", fontsize=14)
 ylabel("Ratio of explained variance", fontsize=14)
-
-
 
 Random.seed!(1515)
 
@@ -97,10 +77,6 @@ end
 xlabel("PCA-1", fontsize=13)
 ylabel("PCA-2", fontsize=13)
 legend(["Group 1", "Group 2", "Group 3"], fontsize=13)
-
-
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

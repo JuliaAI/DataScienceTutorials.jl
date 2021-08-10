@@ -7,10 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-horse/Project.toml")
-Pkg.update()
-
 # ## Initial data processing
 #
 # In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
@@ -22,7 +18,6 @@ Pkg.update()
 # The data is pre-split in training and testing and we will keep it as such
 
 using MLJ
-
 using HTTP
 using CSV
 import DataFrames: DataFrame, select!, Not

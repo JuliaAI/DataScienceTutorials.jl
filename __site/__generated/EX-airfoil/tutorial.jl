@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-airfoil/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
 #
 # ## Getting started
@@ -26,10 +19,8 @@ import DataFrames
 import Statistics
 using CSV
 using PyPlot
-
 using HTTP
 using StableRNGs
-
 
 
 req = HTTP.get("https://raw.githubusercontent.com/rupakc/UCI-Data-Analysis/master/Airfoil%20Dataset/airfoil_self_noise.dat");
@@ -160,10 +151,7 @@ ylabel("Sampling fraction", fontsize=14)
 xticks(9:1:15, fontsize=12)
 yticks(fontsize=12)
 
-
 # \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

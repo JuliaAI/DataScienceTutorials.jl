@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/D0-processing/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## More data processing
 #
 # This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
@@ -27,7 +20,6 @@ import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
 using PyPlot
-
 
 # Import data
 
@@ -101,8 +93,6 @@ figure(figsize=(8,6))
 plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
 plt.xticks(rotation=90)
 
-
-
 # \figalt{processing1}{D0-processing-g1.svg}
 
 # ---
@@ -172,8 +162,6 @@ plt.legend()
 
 plt.xlim(0,)
 
-
-
 # \figalt{processing2}{D0-processing-g2.svg}
 
 # We can also calculate and plot average plant age by country and technology
@@ -198,8 +186,6 @@ ax1.set_ylabel("Age")
 
 ax1.set_title("Coal")
 ax2.set_title("Gas")
-
-
 
 # \figalt{processing3}{D0-processing-g3.svg}
 

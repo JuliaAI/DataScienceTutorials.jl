@@ -7,19 +7,11 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/ISL-lab-5/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## Getting started
 
 using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, select
-
 auto = dataset("ISLR", "Auto")
 y, X = unpack(auto, ==(:MPG), col->true)
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
@@ -34,7 +26,6 @@ LR = @load LinearRegressor pkg=MLJLinearModels
 
 using PyPlot
 
-
 figure(figsize=(8,6))
 plot(X.Horsepower, y, ls="none", marker="o")
 
@@ -42,8 +33,6 @@ xlabel("Horsepower", fontsize=14)
 xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
-
-
 
 # \figalt{MPG v Horsepower}{ISL-lab-5-g1.svg}
 
@@ -67,8 +56,6 @@ xlabel("Horsepower", fontsize=14)
 xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
-
-
 
 # \figalt{1st order baseline}{ISL-lab-5-g2.svg}
 
@@ -125,8 +112,6 @@ xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
 
-
-
 # \figalt{1st, 2nd and 3d order fit}{ISL-lab-5-g3.svg}
 
 # ## K-Folds Cross Validation
@@ -170,15 +155,11 @@ xticks(50:50:250, fontsize=12)
 yticks(10:10:50, fontsize=12)
 ylabel("MPG", fontsize=14)
 
-
-
 # \figalt{5th order fit}{ISL-lab-5-g4.svg}
 
 # ## The Bootstrap
 #
 # _Bootstrapping is not currently supported in MLJ._
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
