@@ -7,6 +7,8 @@ end;
 
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
 #
+# Environment file Manifest.toml generated/tested with Julia 1.7
+#
 # ## First steps
 #
 # Again, the crabs dataset is so common that there is a  simple load function for it:
@@ -19,7 +21,6 @@ ioff() # hide
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
-using LossFunctions
 
 MLJ.color_off() # hide
 X, y = @load_crabs
@@ -61,8 +62,8 @@ xgbm = machine(xgb, X, y)
 # We will tune it varying the number of rounds used and generate a learning curve
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, range=r, resolution=50,
-                        measure=HingeLoss())
+curve = learning_curve(xgbm, range=r, resolution=50,
+                        measure=L1HingeLoss())
 
 # Let's have a look
 
