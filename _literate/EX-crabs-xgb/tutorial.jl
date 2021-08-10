@@ -175,7 +175,6 @@ xgb = fitted_params(mtm).best_model
 # We could continue with more fine tuning but given how small the dataset is, it doesn't make much sense.
 # How does it fare on the test set?
 
+PyPlot.close_figs() # hide
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
-
-PyPlot.close_figs() # hide

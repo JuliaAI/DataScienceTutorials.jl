@@ -22,7 +22,6 @@ using PyPlot
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
-using LossFunctions
 
 
 X, y = @load_crabs
@@ -48,8 +47,8 @@ xgb  = XGBC()
 xgbm = machine(xgb, X, y)
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve!(xgbm, range=r, resolution=50,
-                        measure=HingeLoss())
+curve = learning_curve(xgbm, range=r, resolution=50,
+                        measure=L1HingeLoss())
 
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
@@ -128,10 +127,9 @@ xgb = fitted_params(mtm).best_model
 @show xgb.subsample
 @show xgb.colsample_bytree
 
+
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -14,8 +14,8 @@ showall = true
 
 ignore = [
   "getting-started/stacking.md",
-  "end-to-end/crabs-xgb.md",
-  "end-to-end/boston-flux.md"
+#  "end-to-end/crabs-xgb.md",
+#  "end-to-end/boston-flux.md"
 ]
 
 # ignore = ["data/", "getting-started/", "isl/", "end-to-end/"]

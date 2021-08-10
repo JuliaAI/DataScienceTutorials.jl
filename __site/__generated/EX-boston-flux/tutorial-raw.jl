@@ -38,10 +38,11 @@ mutable struct MyNetworkBuilder <: MLJFlux.Builder
     n2::Int #Number of cells in the second hidden layer
 end
 
-function MLJFlux.build(model::MyNetworkBuilder, input_dims, output_dims)
-    layer1 = Flux.Dense(input_dims, model.n1)
-    layer2 = Flux.Dense(model.n1, model.n2)
-    layer3 = Flux.Dense(model.n2, output_dims)
+function MLJFlux.build(model::MyNetworkBuilder, rng, n_in, n_out)
+    init = Flux.glorot_uniform(rng)
+    layer1 = Flux.Dense(n_in, model.n1, init=init)
+    layer2 = Flux.Dense(model.n1, model.n2, init=init)
+    layer3 = Flux.Dense(model.n2, n_out, init=init)
     return Flux.Chain(layer1, layer2, layer3)
 end
 
