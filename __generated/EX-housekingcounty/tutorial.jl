@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-housekingcounty/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## Getting started
 #
 # This tutorial is adapted from [the corresponding MLR3 tutorial](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/).
@@ -26,9 +19,7 @@ import DataFrames: DataFrame, select!, Not, describe
 import Statistics
 using Dates
 using PyPlot
-
 using UrlDownload
-
 
 
 df = DataFrame(urldownload("https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/kc_housing.csv", true))
@@ -82,7 +73,6 @@ plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 
-
 # \figalt{Histogram of the prices}{hist_price.svg}
 
 # Let's see if there's a difference between renovated and unrenovated flats:
@@ -95,7 +85,6 @@ plt.hist(df.price[df.isrenovated .== false], color="red", density=true,
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 plt.legend(fontsize=12)
-
 
 # \figalt{Histogram of the prices depending on renovation}{hist_price2.svg}
 # We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.
@@ -173,8 +162,6 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 rms(y[test], MLJ.predict(mtm, rows=test))
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

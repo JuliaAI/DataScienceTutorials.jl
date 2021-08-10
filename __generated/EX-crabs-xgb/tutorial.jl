@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-crabs-xgb/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
 #
 # ## First steps
@@ -24,11 +17,9 @@ using MLJ
 using StatsBase
 using Random
 using PyPlot
-
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
-
 
 X, y = @load_crabs
 X = DataFrames.DataFrame(X)
@@ -80,8 +71,6 @@ xlabel("Number of rounds", fontsize=14)
 ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
 
-
-
 # \figalt{Cross entropy vs Num Round}{EX-crabs-xgb-curve1.svg}
 #
 # So, in short, using more rounds helps. Let's arbitrarily fix it to 200.
@@ -117,8 +106,6 @@ xlabel("Maximum tree depth", fontsize=14)
 ylabel("Minimum child weight", fontsize=14)
 xticks(3:2:10, fontsize=12)
 yticks(fontsize=12)
-
-
 
 # \figalt{Hyperparameter heatmap}{EX-crabs-xgb-heatmap.svg}
 #
@@ -171,8 +158,6 @@ ylabel("Col sample by tree", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-
-
 # \figalt{Hyperparameter heatmap}{EX-crabs-xgb-heatmap2.svg}
 #
 # Let's retrieve the best models:
@@ -183,7 +168,6 @@ xgb = fitted_params(mtm).best_model
 
 # We could continue with more fine tuning but given how small the dataset is, it doesn't make much sense.
 # How does it fare on the test set?
-
 
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)

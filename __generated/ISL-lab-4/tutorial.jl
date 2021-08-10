@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/ISL-lab-4/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## Stock market data
 #
 # Let's load the usual packages and the data
@@ -22,7 +15,6 @@ using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, describe, select, Not
 import StatsBase: countmap, cor, var
-
 using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
@@ -51,15 +43,12 @@ round.(cm, sigdigits=1)
 # Let's see what the `:Volume` feature looks like:
 
 using PyPlot
-
 figure(figsize=(8,6))
 plot(X.Volume)
 xlabel("Tick number", fontsize=14)
 ylabel("Volume", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
-
-
 
 # \figalt{volume}{ISL-lab-4-volume.svg}
 
@@ -78,8 +67,6 @@ PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
 xticks([1, 2], ["Down", "Up"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
-
-
 
 # \fig{ISL-lab-4-bal.svg}
 #
@@ -244,8 +231,6 @@ xticks([1, 2], ["No", "Yes"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
 
-
-
 # \fig{ISL-lab-4-bal2.svg}
 
 # that's quite unbalanced.
@@ -307,11 +292,7 @@ ylabel("True Positive Rate", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-
-
 # \figalt{ROC}{ISL-lab-4-roc.svg}
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

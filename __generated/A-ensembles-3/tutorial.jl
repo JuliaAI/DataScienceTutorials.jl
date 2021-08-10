@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/A-ensembles-3/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # # Simple example of a homogeneous ensemble using learning networks
 
 # In this simple example, no bagging is used, so every atomic model
@@ -28,7 +21,6 @@ end;
 
 using MLJ
 using PyPlot
-
 import Statistics
 
 # Defining the learning network (composite model spec):
@@ -83,8 +75,6 @@ curve = learning_curve!(mach,
 plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)
 
-
-
 # \fig{e1.svg}
 
 # tune regularization parameter for all trees in ensemble simultaneously:
@@ -105,11 +95,7 @@ curve = learning_curve!(mach,
 plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)
 
-
-
 # \fig{e2}
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

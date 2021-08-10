@@ -1,26 +1,8 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles-2/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles-2/Manifest.toml).
-# For instance, copy these files to a folder 'A-ensembles-2', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/A-ensembles-2/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 using PyPlot
 using PrettyPrinting
 using StableRNGs
 import DataFrames: DataFrame, describe
-
-
 
 X, y = @load_boston
 sch = schema(X)
@@ -51,8 +33,6 @@ ylabel("Root Mean Squared error", fontsize=16)
 xlabel("Number of trees", fontsize=16)
 xticks([10, 250, 500, 750, 1000], fontsize=14)
 yticks(fontsize=14)
-
-
 
 forest.n = 150;
 
@@ -86,12 +66,8 @@ xlabel("Number of sub-features", fontsize=14)
 yticks(0.4:0.2:1, fontsize=12)
 ylabel("Bagging fraction", fontsize=14)
 
-
-
 ŷ = predict(m, X)
 rms(ŷ, y)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -7,10 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/A-fit-predict/Project.toml")
-Pkg.update()
-
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl
@@ -25,7 +21,6 @@ using MLJ
 import Statistics
 using PrettyPrinting
 using StableRNGs
-
 
 X, y = @load_iris;
 

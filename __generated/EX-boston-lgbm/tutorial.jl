@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-boston-lgbm/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # **Main author**: Yaqub Alwan (IQVIA).
 #
 # ## Getting started
@@ -24,7 +17,6 @@ import DataFrames
 import Statistics
 using PyPlot
 using StableRNGs
-
 
 LGBMRegressor = @load LGBMRegressor
 
@@ -66,8 +58,6 @@ plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("RMSE", fontsize=14)
 
-
-
 # \fig{lgbm_hp1.svg}
 
 # It looks like that we don't need to go much past 100 boosts
@@ -88,8 +78,6 @@ plot(curve.parameter_values, curve.measurements)
 xscale("log")
 xlabel("Learning rate (log scale)", fontsize=14)
 ylabel("RMSE", fontsize=14)
-
-
 
 # \fig{lgbm_hp2.svg}
 
@@ -117,8 +105,6 @@ figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Min data in leaf", fontsize=14)
 ylabel("RMSE", fontsize=14)
-
-
 
 # \fig{lgbm_hp3.svg}
 
@@ -149,8 +135,6 @@ predictions = MLJ.predict(mtm, rows=test)
 rms_score = round(rms(predictions, targets[test, 1]), sigdigits=4)
 
 @show rms_score
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -1,23 +1,6 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-powergen/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-powergen/Manifest.toml).
-# For instance, copy these files to a folder 'EX-powergen', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/EX-powergen/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 using UrlDownload
 using PyPlot
-
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 
@@ -87,14 +70,11 @@ ylabel("Frequency", fontsize=14)
 xticks(fontsize=12)
 yticks([0, 1e-3, 2e-3], fontsize=12)
 
-
 figure(figsize=(8, 6))
 hist(data.Wind_gen, color="blue", edgecolor = "white", bins=50,
      density=true, alpha=0.5)
 xlabel("Wind power generation (MWh)", fontsize=14)
 ylabel("Frequency", fontsize=14)
-
-
 
 fig = figure(figsize=(15, 15))
 
@@ -118,8 +98,6 @@ scatter(data.Solar_gen, data.Temperature)
 xlabel("Solar power (kW)", fontsize=14)
 ylabel("Temperature (C)", fontsize=14)
 
-
-
 fig = figure(figsize=(15, 15))
 
 subplot(221)
@@ -142,8 +120,6 @@ scatter(data.Wind_gen, data.Temperature)
 xlabel("Wind power (kW)", fontsize=14)
 ylabel("Temperature (C)", fontsize=14)
 
-
-
 y_wind = data.Wind_gen
 X = data[:, [:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif]];
 
@@ -165,8 +141,6 @@ yticks(fontsize=12)
 xlim(0, 100)
 legend(fontsize=14)
 
-
-
 rms(y_wind[train], MLJ.predict(m_linReg, rows=train))
 
 rms(y_wind[test], y_hat)
@@ -177,13 +151,9 @@ figure(figsize=(12, 6))
 stem(res)
 xlim(0, length(res))
 
-
-
 figure(figsize=(8, 6))
 hist(res, color="blue", edgecolor="white", bins=50,
      density=true, alpha=0.5)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
