@@ -7,6 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/A-learning-networks-2/Project.toml")
+Pkg.update()
+
 # ## Preliminary steps
 #
 # Let's start as with the previous tutorial:
@@ -14,6 +18,7 @@
 using MLJ
 using StableRNGs
 import DataFrames: DataFrame
+
 Ridge = @load RidgeRegressor pkg=MultivariateStats
 
 rng = StableRNG(6616) # for reproducibility

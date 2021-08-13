@@ -7,6 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/A-model-choice/Project.toml")
+Pkg.update()
+
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [MLJModels.jl]: https://github.com/alan-turing-institute/MLJModels.jl
@@ -20,6 +24,7 @@
 
 using RDatasets
 using MLJ
+
 iris = dataset("datasets", "iris")
 
 first(iris, 3) |> pretty

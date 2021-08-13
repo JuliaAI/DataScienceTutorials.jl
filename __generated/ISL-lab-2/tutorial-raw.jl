@@ -1,3 +1,19 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-2/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-2/Manifest.toml).
+# For instance, copy these files to a folder 'ISL-lab-2', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/ISL-lab-2/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 x = [1, 3, 2, 5]
 @show x
 @show length(x)
@@ -58,8 +74,13 @@ mpg |> mean
 
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(mpg)
+
+
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

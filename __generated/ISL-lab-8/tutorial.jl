@@ -7,12 +7,20 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/ISL-lab-8/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 # ## Getting started
 
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
 import DataFrames: DataFrame, select, Not
+
 DTC = @load DecisionTreeClassifier pkg=DecisionTree
 
 carseats = dataset("ISLR", "Carseats")

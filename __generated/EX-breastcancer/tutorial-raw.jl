@@ -1,8 +1,26 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer/Manifest.toml).
+# For instance, copy these files to a folder 'EX-breastcancer', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/EX-breastcancer/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using UrlDownload
 using DataFrames
 using PrettyPrinting
 using PyPlot
 using MLJ
+
+
 
 RANDOM_SEED = 42;
 
@@ -14,6 +32,7 @@ figure(figsize=(8, 6))
 hist(data.Class)
 xlabel("Classes")
 ylabel("Number of samples")
+
 
 df = DataFrame(data)[:, 2:end];
 
@@ -82,6 +101,7 @@ xlabel("False Positive Rate")
 ylabel("True Positive Rate")
 legend(loc="best", fontsize="xx-small")
 title("ROC curve")
+
 
 model_info=DataFrame(ModelName=model_names,Accuracy=loss_acc,CrossEntropyLoss=loss_ce,F1Score=loss_f1);
 

@@ -7,6 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/EX-AMES/Project.toml")
+Pkg.update()
+
 # ## Baby steps
 #
 # Let's load a reduced version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
@@ -16,6 +20,7 @@ using MLJ
 using  PrettyPrinting
 import DataFrames: DataFrame
 import Statistics
+
 
 X, y = @load_reduced_ames
 X = DataFrame(X)
@@ -158,9 +163,7 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     knn_model = model.knn_model
     ridge = machine(ridge_model, W, z)
     knn = machine(knn_model, W, z)
-
     # and finally
-
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
 

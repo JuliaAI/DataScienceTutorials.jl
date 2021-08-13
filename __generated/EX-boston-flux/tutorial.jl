@@ -7,8 +7,15 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-# **Main author**: Ayush Shridhar (ayush-1506).
 
+Pkg.activate("_literate/EX-boston-flux/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
+# **Main author**: Ayush Shridhar (ayush-1506).
+#
 # ## Getting started
 
 import MLJFlux
@@ -18,6 +25,7 @@ import Statistics
 import Flux
 using Random
 using PyPlot
+
 
 Random.seed!(11)
 
@@ -53,23 +61,18 @@ mutable struct MyNetworkBuilder <: MLJFlux.Builder
     n2::Int #Number of cells in the second hidden layer
 end
 
-# Step 2: Building the neural network from this object.  Extend the
-# `MLJFlux.build` function. This takes in 4 arguments: The
-# `MyNetworkBuilder` instance, a random number generator or seed
-# `rng`, the input dimension (`n_in`) and output dimension (`n_out`).
+# Step 2: Building the neural network from this object.
+# Extend the `MLJFlux.build` function. This takes in 3 arguments: The object of
+# `MyNetworkBuilder`, input dimension (ip) and output dimension (op).
 
-function MLJFlux.build(model::MyNetworkBuilder, rng, n_in, n_out)
-    init = Flux.glorot_uniform(rng)
-    layer1 = Flux.Dense(n_in, model.n1, init=init)
-    layer2 = Flux.Dense(model.n1, model.n2, init=init)
-    layer3 = Flux.Dense(model.n2, n_out, init=init)
+function MLJFlux.build(model::MyNetworkBuilder, input_dims, output_dims)
+    layer1 = Flux.Dense(input_dims, model.n1)
+    layer2 = Flux.Dense(model.n1, model.n2)
+    layer3 = Flux.Dense(model.n2, output_dims)
     return Flux.Chain(layer1, layer2, layer3)
 end
 
-# Alternatively, there a macro shortcut to take care of both steps at
-# once. For details, do `?MLJFlux.@builder`.
-
-# All definitions ready, let us create an object of this:
+# With all definitions ready, let us create an object of this:
 
 myregressor = MyNetworkBuilder(20, 10)
 
@@ -140,6 +143,8 @@ plt.plot(curve.parameter_values,
 yscale("log")
 xlabel(curve.parameter_name)
 ylabel("l2")
+
+
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 

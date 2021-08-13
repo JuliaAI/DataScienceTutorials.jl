@@ -7,6 +7,10 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/D0-scitype/Project.toml")
+Pkg.update()
+
 # ## Machine type vs Scientific Type
 #
 # ### Why make a distinction?

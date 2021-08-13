@@ -1,5 +1,22 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-tuning/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-tuning/Manifest.toml).
+# For instance, copy these files to a folder 'A-model-tuning', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/A-model-tuning/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end
+
 using MLJ
 using PrettyPrinting
+
 X, y = @load_iris
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
 
@@ -23,6 +40,7 @@ r = report(m)
 r.best_history_entry.measurement[1]
 
 using PyPlot
+
 figure(figsize=(8,6))
 res = r.plotting # contains all you need for plotting
 plot(res.parameter_values, res.measurements, ls="none", marker="o")
@@ -32,6 +50,8 @@ yticks(fontsize=12)
 xlabel("Maximum depth", fontsize=14)
 ylabel("Misclassification rate", fontsize=14)
 ylim([0, 1])
+
+
 
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
 y = 2X.x1 - X.x2 + 0.05 * randn(100);
@@ -64,6 +84,10 @@ xlabel("Number of sub-features", fontsize=14)
 ylabel("Bagging fraction", fontsize=14)
 xticks([1, 2, 3], fontsize=12)
 yticks(fontsize=12)
+
+
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

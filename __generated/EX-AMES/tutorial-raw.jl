@@ -1,7 +1,21 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-AMES/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-AMES/Manifest.toml).
+# For instance, copy these files to a folder 'EX-AMES', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/EX-AMES/Project.toml")
+Pkg.update()
+
 using MLJ
 using  PrettyPrinting
 import DataFrames: DataFrame
 import Statistics
+
 
 X, y = @load_reduced_ames
 X = DataFrame(X)
@@ -79,7 +93,7 @@ function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     knn_model = model.knn_model
     ridge = machine(ridge_model, W, z)
     knn = machine(knn_model, W, z)
-
+    # and finally
     ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
     ŷ = exp(ẑ)
 

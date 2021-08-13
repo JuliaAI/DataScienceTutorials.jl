@@ -1,10 +1,29 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb/Manifest.toml).
+# For instance, copy these files to a folder 'EX-crabs-xgb', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/EX-crabs-xgb/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using MLJ
 using StatsBase
 using Random
 using PyPlot
+
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
+using LossFunctions
+
 
 X, y = @load_crabs
 X = DataFrames.DataFrame(X)
@@ -29,14 +48,16 @@ xgb  = XGBC()
 xgbm = machine(xgb, X, y)
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve(xgbm, range=r, resolution=50,
-                        measure=L1HingeLoss())
+curve = learning_curve!(xgbm, range=r, resolution=50,
+                        measure=HingeLoss())
 
 figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
+
+
 
 xgb.num_round = 200;
 
@@ -63,6 +84,8 @@ xlabel("Maximum tree depth", fontsize=14)
 ylabel("Minimum child weight", fontsize=14)
 xticks(3:2:10, fontsize=12)
 yticks(fontsize=12)
+
+
 
 xgb = fitted_params(mtm).best_model
 @show xgb.max_depth
@@ -99,12 +122,16 @@ ylabel("Col sample by tree", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
+
+
 xgb = fitted_params(mtm).best_model
 @show xgb.subsample
 @show xgb.colsample_bytree
 
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -7,6 +7,13 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/EX-crabs-xgb/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
 #
 # ## First steps
@@ -17,9 +24,12 @@ using MLJ
 using StatsBase
 using Random
 using PyPlot
+
 using CategoricalArrays
 using PrettyPrinting
 import DataFrames
+using LossFunctions
+
 
 X, y = @load_crabs
 X = DataFrames.DataFrame(X)
@@ -60,8 +70,8 @@ xgbm = machine(xgb, X, y)
 # We will tune it varying the number of rounds used and generate a learning curve
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve(xgbm, range=r, resolution=50,
-                        measure=L1HingeLoss())
+curve = learning_curve!(xgbm, range=r, resolution=50,
+                        measure=HingeLoss())
 
 # Let's have a look
 
@@ -70,6 +80,8 @@ plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("HingeLoss", fontsize=14)
 xticks([10, 100, 200, 500], fontsize=12)
+
+
 
 # \figalt{Cross entropy vs Num Round}{EX-crabs-xgb-curve1.svg}
 #
@@ -106,6 +118,8 @@ xlabel("Maximum tree depth", fontsize=14)
 ylabel("Minimum child weight", fontsize=14)
 xticks(3:2:10, fontsize=12)
 yticks(fontsize=12)
+
+
 
 # \figalt{Hyperparameter heatmap}{EX-crabs-xgb-heatmap.svg}
 #
@@ -158,6 +172,8 @@ ylabel("Col sample by tree", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
+
+
 # \figalt{Hyperparameter heatmap}{EX-crabs-xgb-heatmap2.svg}
 #
 # Let's retrieve the best models:
@@ -171,6 +187,8 @@ xgb = fitted_params(mtm).best_model
 
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -7,6 +7,13 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/ISL-lab-3/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 # ## Simple linear regression
 #
 # `MLJ` essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.
@@ -17,6 +24,7 @@
 # To load the model from a given package use `@load ModelName pkg=PackageName`
 
 using MLJ
+
 
 LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
 
@@ -65,10 +73,13 @@ fp = fitted_params(mach_uni)
 
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
 plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
+
+
 
 # \figalt{Univariate regression}{ISL-lab-3-lm1.svg}
 
@@ -96,12 +107,16 @@ figure(figsize=(8,6))
 res = ŷ .- y
 stem(res)
 
+
+
 # \figalt{Plot of the residuals}{ISL-lab-3-res.svg}
 
 # Maybe that a histogram is more appropriate here
 
 figure(figsize=(8,6))
 hist(res, density=true)
+
+
 
 # \figalt{Histogram of the residuals}{ISL-lab-3-res2.svg}
 
@@ -142,7 +157,11 @@ figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 plot(Xnew.LStat, MLJ.predict(mach, Xnew))
 
+
+
 # \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

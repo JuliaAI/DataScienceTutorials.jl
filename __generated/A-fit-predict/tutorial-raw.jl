@@ -1,7 +1,21 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-fit-predict/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-fit-predict/Manifest.toml).
+# For instance, copy these files to a folder 'A-fit-predict', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/A-fit-predict/Project.toml")
+Pkg.update()
+
 using MLJ
 import Statistics
 using PrettyPrinting
 using StableRNGs
+
 
 X, y = @load_iris;
 

@@ -1,7 +1,24 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-4/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-4/Manifest.toml).
+# For instance, copy these files to a folder 'ISL-lab-4', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/ISL-lab-4/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using MLJ
 import RDatasets: dataset
 import DataFrames: DataFrame, describe, select, Not
 import StatsBase: countmap, cor, var
+
 using PrettyPrinting
 
 smarket = dataset("ISLR", "Smarket")
@@ -20,12 +37,15 @@ cm = X |> Matrix |> cor
 round.(cm, sigdigits=1)
 
 using PyPlot
+
 figure(figsize=(8,6))
 plot(X.Volume)
 xlabel("Tick number", fontsize=14)
 ylabel("Volume", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
+
+
 
 y = coerce(y, OrderedFactor)
 classes(y[1])
@@ -36,6 +56,8 @@ PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
 xticks([1, 2], ["Down", "Up"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
+
+
 
 LogisticClassifier = @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
@@ -134,6 +156,8 @@ xticks([1, 2], ["No", "Yes"], fontsize=12)
 yticks(fontsize=12)
 ylabel("Number of occurences", fontsize=14)
 
+
+
 y, X = unpack(caravan, ==(:Purchase), col->true)
 
 mstd = machine(Standardizer(), X)
@@ -172,6 +196,10 @@ xlabel("False Positive Rate", fontsize=14)
 ylabel("True Positive Rate", fontsize=14)
 xticks(fontsize=12)
 yticks(fontsize=12)
+
+
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

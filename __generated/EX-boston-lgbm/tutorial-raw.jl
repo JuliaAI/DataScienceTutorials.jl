@@ -1,9 +1,26 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-boston-lgbm/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-boston-lgbm/Manifest.toml).
+# For instance, copy these files to a folder 'EX-boston-lgbm', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/EX-boston-lgbm/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using MLJ
 using PrettyPrinting
 import DataFrames
 import Statistics
 using PyPlot
 using StableRNGs
+
 
 LGBMRegressor = @load LGBMRegressor
 
@@ -31,6 +48,8 @@ plot(curve.parameter_values, curve.measurements)
 xlabel("Number of rounds", fontsize=14)
 ylabel("RMSE", fontsize=14)
 
+
+
 lgb = LGBMRegressor() #initialised a model with default params
 lgbm = machine(lgb, features[train, :], targets[train, 1])
 learning_range = range(lgb, :learning_rate, lower=1e-3, upper=1, scale=:log)
@@ -44,6 +63,8 @@ plot(curve.parameter_values, curve.measurements)
 xscale("log")
 xlabel("Learning rate (log scale)", fontsize=14)
 ylabel("RMSE", fontsize=14)
+
+
 
 lgb = LGBMRegressor() #initialised a model with default params
 lgbm = machine(lgb, features[train, :], targets[train, 1])
@@ -59,6 +80,8 @@ figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
 xlabel("Min data in leaf", fontsize=14)
 ylabel("RMSE", fontsize=14)
+
+
 
 r1 = range(lgb, :num_iterations, lower=50, upper=100)
 r2 = range(lgb, :min_data_in_leaf, lower=2, upper=10)
@@ -78,6 +101,8 @@ predictions = MLJ.predict(mtm, rows=test)
 rms_score = round(rms(predictions, targets[test, 1]), sigdigits=4)
 
 @show rms_score
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

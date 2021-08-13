@@ -1,10 +1,28 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-housekingcounty/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-housekingcounty/Manifest.toml).
+# For instance, copy these files to a folder 'EX-housekingcounty', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/EX-housekingcounty/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using MLJ
 using PrettyPrinting
 import DataFrames: DataFrame, select!, Not, describe
 import Statistics
 using Dates
 using PyPlot
+
 using UrlDownload
+
 
 
 df = DataFrame(urldownload("https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/kc_housing.csv", true))
@@ -38,6 +56,7 @@ plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 
+
 plt.figure(figsize=(8,6))
 plt.hist(df.price[df.isrenovated .== true], color="blue", density=true,
         edgecolor="white", bins=50, label="renovated", alpha=0.5)
@@ -46,6 +65,7 @@ plt.hist(df.price[df.isrenovated .== false], color="red", density=true,
 plt.xlabel("Price", fontsize=14)
 plt.ylabel("Frequency", fontsize=14)
 plt.legend(fontsize=12)
+
 
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
@@ -91,6 +111,8 @@ mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
 rms(y[test], MLJ.predict(mtm, rows=test))
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

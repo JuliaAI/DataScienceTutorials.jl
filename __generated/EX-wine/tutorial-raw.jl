@@ -1,8 +1,25 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-wine/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-wine/Manifest.toml).
+# For instance, copy these files to a folder 'EX-wine', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/EX-wine/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using HTTP
 using MLJ
 using PyPlot
 import DataFrames: DataFrame, describe
 using UrlDownload
+
 
 url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
 header = ["Class", "Alcool", "Malic acid", "Ash", "Alcalinity of ash",
@@ -57,6 +74,11 @@ mcr_m = misclassification_rate(predict_mode(multi, Xtrain), ytrain)
 println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 
+# @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))
+# pca = machine(PCAPipe(), Xtrain)
+# fit!(pca, Xtrain)
+# W = transform(pca, Xtrain)
+
 PCA = @load PCA
 
 pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
@@ -81,10 +103,14 @@ legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
+
+
 perf_k = misclassification_rate(predict_mode(knn, Xtest), ytest)
 perf_m = misclassification_rate(predict_mode(multi, Xtest), ytest)
 println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

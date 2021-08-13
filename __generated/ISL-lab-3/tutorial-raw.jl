@@ -1,4 +1,21 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-3/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-3/Manifest.toml).
+# For instance, copy these files to a folder 'ISL-lab-3', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/ISL-lab-3/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 using MLJ
+
 
 LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
 
@@ -26,10 +43,13 @@ fp = fitted_params(mach_uni)
 
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
 plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
+
+
 
 mach = machine(mdl, X, y)
 fit!(mach)
@@ -49,8 +69,12 @@ figure(figsize=(8,6))
 res = ŷ .- y
 stem(res)
 
+
+
 figure(figsize=(8,6))
 hist(res, density=true)
+
+
 
 X2 = hcat(X, X.LStat .* X.Age);
 
@@ -72,6 +96,10 @@ Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 figure(figsize=(8,6))
 plot(X.LStat, y, ls="none", marker="o")
 plot(Xnew.LStat, MLJ.predict(mach, Xnew))
+
+
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

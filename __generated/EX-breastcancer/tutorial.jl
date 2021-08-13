@@ -7,6 +7,13 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
+
+Pkg.activate("_literate/EX-breastcancer/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
 # ## Introduction
 # This tutorial covers the concepts of iterative model selection on the popular ["Breast Cancer Wisconsin (Diagnostic) Data Set"](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic))
 # from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.
@@ -19,6 +26,8 @@ using DataFrames
 using PrettyPrinting
 using PyPlot
 using MLJ
+
+
 
 # Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results
 
@@ -38,6 +47,7 @@ figure(figsize=(8, 6))
 hist(data.Class)
 xlabel("Classes")
 ylabel("Number of samples")
+
 
 # \figalt{Distribution of target classes}{Target_class.svg}
 
@@ -144,6 +154,7 @@ xlabel("False Positive Rate")
 ylabel("True Positive Rate")
 legend(loc="best", fontsize="xx-small")
 title("ROC curve")
+
 
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 

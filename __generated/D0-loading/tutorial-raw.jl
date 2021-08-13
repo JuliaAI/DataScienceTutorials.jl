@@ -1,9 +1,23 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-loading/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-loading/Manifest.toml).
+# For instance, copy these files to a folder 'D0-loading', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/D0-loading/Project.toml")
+Pkg.update()
+
 using RDatasets
 import DataFrames
 
 boston = dataset("MASS", "Boston");
 
 typeof(boston)
+
 
 c = """
 col1,col2,col3,col4,col5,col6,col7,col8
@@ -18,6 +32,7 @@ using CSV
 data = CSV.read(fpath, DataFrames.DataFrame)
 
 typeof(data)
+
 
 c = """
 3.26;0.829;1.676;0;1;1.453;3.770
@@ -51,6 +66,7 @@ header = ["CIC0", "SM1_Dz", "GATS1i",
           "NdsCH", "NdssC", "MLOGP", "LC50"]
 data = CSV.read(fpath, DataFrames.DataFrame, header=header)
 first(data, 3)
+
 
 c = """
 1,0,1,0,0,0,0,1,0,1,1,?,1,0,0,0,0,1,0,0,0,0,1,67,137,15,0,1,1,1.53,95,13.7,106.6,4.9,99,3.4,2.1,34,41,183,150,7.1,0.7,1,3.5,0.5,?,?,?,1

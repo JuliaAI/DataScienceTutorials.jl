@@ -1,6 +1,20 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-learning-networks-2/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-learning-networks-2/Manifest.toml).
+# For instance, copy these files to a folder 'A-learning-networks-2', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/A-learning-networks-2/Project.toml")
+Pkg.update()
+
 using MLJ
 using StableRNGs
 import DataFrames: DataFrame
+
 Ridge = @load RidgeRegressor pkg=MultivariateStats
 
 rng = StableRNG(6616) # for reproducibility

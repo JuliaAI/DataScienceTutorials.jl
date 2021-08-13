@@ -1,6 +1,25 @@
+# Before running this, please make sure to activate and instantiate the
+# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-6b/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-6b/Manifest.toml).
+# For instance, copy these files to a folder 'ISL-lab-6b', `cd` to it and
+#
+# ```julia
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
+# ```
+
+
+Pkg.activate("_literate/ISL-lab-6b/Project.toml")
+Pkg.update()
+macro OUTPUT()
+    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+end;
+
+# In this tutorial, we are exploring the application of Ridge and Lasso
+
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
+
 import Distributions
 const D = Distributions
 
@@ -25,11 +44,14 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
 using PyPlot
 
+
 figure(figsize=(8,6))
 plot(y, ls="none", marker="o")
 
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
+
+
 
 figure(figsize=(8,6))
 hist(y, bins=50, density=true)
@@ -43,6 +65,8 @@ yy = pdf.(edfit, xx)
 plot(xx, yy, lw=3, label="Exponential distribution fit")
 
 legend(fontsize=12)
+
+
 
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
@@ -66,6 +90,8 @@ xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
 
 ylim([-1300, 1000])
 
+
+
 figure(figsize=(8,6))
 hist(res, bins=30, density=true, color="green")
 
@@ -81,6 +107,8 @@ legend(fontsize=12)
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Residual (ŷ - y)", fontsize=14); ylabel("Density", fontsize=14)
 xlim([-1100, 1100])
+
+
 
 pipe.model.linear_regressor = RidgeRegressor()
 fit!(pipe, rows=train)
@@ -111,6 +139,8 @@ xlim(1, length(res))
 
 ylim([-1300, 1000])
 
+
+
 mtm.model.model.linear_regressor = LassoRegressor()
 mtm.model.range = range(model, :(linear_regressor.lambda), lower=500, upper=100_000, scale=:log10)
 fit!(mtm, rows=train)
@@ -131,6 +161,7 @@ sum(coef_vals .≈ 0) / length(coefs)
 figure(figsize=(8,6))
 stem(coef_vals)
 
+# name of the features including one-hot-encoded ones
 all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
              :CAtBat, :CHits, :CHmRun, :CRuns, :CRBI, :CWalks,
              :League__A, :League__N, :Div_E, :Div_W,
@@ -140,6 +171,8 @@ idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 10]
 xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
+
+
 
 ElasticNetRegressor = @load ElasticNetRegressor pkg=MLJLinearModels
 
@@ -155,6 +188,8 @@ best_mdl = fitted_params(mtm).best_model
 
 ŷ = MLJ.predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
+
+
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
