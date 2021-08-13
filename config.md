@@ -12,8 +12,11 @@ maxtoclevel = 3
 showall = true
 
 
+# When developping it's sometimes useful to ignore specific folders or pages
+# to speed things up; don't forget to "unignore" them afterwards.
+
 ignore = [
-  "getting-started/stacking.md",
+#  "getting-started/stacking.md",
 #  "end-to-end/crabs-xgb.md",
 #  "end-to-end/boston-flux.md"
 ]
@@ -25,8 +28,6 @@ ignore = [
 # current = "getting-started/"
 # ignore = [d for d in ignore if d != current]
 +++
-
-<!-- \newcommand{\tutorial}[1]{*Download the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/notebooks/!#1.ipynb" target="_blank"><em>notebook</em></a>~~~, *the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/!#1-raw.jl" target="_blank"><em>raw script</em></a>~~~, *or the* ~~~<a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/gh-pages/generated/scripts/!#1.jl" target="_blank"><em>annotated script</em></a>~~~ *for this tutorial (right-click on the link and save).* \toc\literate{/_literate/!#1.jl}}  -->
 
 \newcommand{\nblink}[1]{
   ~~~
