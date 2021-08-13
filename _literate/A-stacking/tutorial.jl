@@ -9,17 +9,18 @@ end;
 # classifiers to gain, in some cases, better performance than naive
 # averaging or majority vote.
 
-# Here we illustrate how to build a two-model stack as an MLJ learning
-# network, which we export as a new stand-alone composite model
-# type `MyTwoStack`. This will make the stack that we build completely
-# re-usable (new data, new models). This means we can apply
-# meta-algorithms, such as performance evaluation and tuning, to the
-# stack, exactly as we would for any other model.
+# For routine stacking tasks the MLJ user should use the `Stack` model
+# documented
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Model-Stacking). In
+# this tutorial we build a two-model stack as an MLJ learning network,
+# which we export as a new stand-alone composite model type
+# `MyTwoStack`. The objective of this tutorial is to: (i) Explain with
+# julia code how stacking works; and (ii) Give an advanced
+# demonstration of MLJ's composite model interface.
 
-# Our main purpose here is to demonstrate the flexibility of MLJ's
-# composite model interface. Eventually, MLJ will provide built-in
-# composite types or macros to achieve the same results in a few
-# lines, which will suffice for routine stacking tasks.
+# As we shall see, as a new stand-alone model type, we can apply the
+# usual meta-algorithms, such as performance evaluation and tuning, to
+# `MyTwoStack`.
 
 
 # ## Basic stacking using out-of-sample base learner predictions
