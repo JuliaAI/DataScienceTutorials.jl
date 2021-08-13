@@ -6,17 +6,17 @@ This repository contains the source code for a [set of tutorials](https://juliaa
 
 You can read the tutorials [online](https://juliaai.github.io/DataScienceTutorials.jl/).
 
-You can find a runnable script for each tutorial [here](https://github.com/alan-turing-institute/DataScienceTutorials.jl/tree/master/_literate), each folder contains a `Project.toml` and a `Manifest.toml` you can use to re-create the exact environment that was used to run the tutorial.
+You can find a runnable script for each tutorial at the top of each tutorial page along with a `Project.toml` and a `Manifest.toml` you can use to re-create the exact environment that was used to run the tutorial.
 
 To do so, save both files in an appropriate folder, start Julia, `cd` to the folder and
 
 ```julia
 using Pkg
 Pkg.activate(".")
-Pkg.update()
+Pkg.instantiate()
 ```
 
-**Note**: you are strongly encouraged to [open issues](https://github.com/alan-turing-institute/DataScienceTutorials.jl/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
+**Note**: you are strongly encouraged to [open issues](https://github.com/juliaai/DataScienceTutorials.jl/issues/new) on this repository indicating points that are unclear or could be better explained, help us have great tutorials!
 
 ## For developers
 

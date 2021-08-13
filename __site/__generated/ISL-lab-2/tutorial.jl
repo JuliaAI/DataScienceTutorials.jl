@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/ISL-lab-2/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## Basic commands
 #
 # This is a very brief and rough primer if you're new to Julia and wondering how to do simple things that are relevant for data analysis.
@@ -141,15 +134,10 @@ mpg |> mean
 
 using PyPlot
 
-
 figure(figsize=(8,6))
 plot(mpg)
 
-
-
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

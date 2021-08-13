@@ -1,22 +1,5 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles-3/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles-3/Manifest.toml).
-# For instance, copy these files to a folder 'A-ensembles-3', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/A-ensembles-3/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 using PyPlot
-
 import Statistics
 
 Xs = source()
@@ -61,8 +44,6 @@ curve = learning_curve!(mach,
 plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)
 
-
-
 r = range(one_hundred_models,
           :(atom.min_samples_split),
           lower=2,
@@ -78,10 +59,6 @@ curve = learning_curve!(mach,
 
 plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)
-
-
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

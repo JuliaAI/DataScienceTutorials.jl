@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/A-model-tuning/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end
-
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
@@ -28,7 +21,6 @@ end
 
 using MLJ
 using PrettyPrinting
-
 X, y = @load_iris
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
 
@@ -83,7 +75,6 @@ r.best_history_entry.measurement[1]
 # Anyone wants plots? of course:
 
 using PyPlot
-
 figure(figsize=(8,6))
 res = r.plotting # contains all you need for plotting
 plot(res.parameter_values, res.measurements, ls="none", marker="o")
@@ -93,8 +84,6 @@ yticks(fontsize=12)
 xlabel("Maximum depth", fontsize=14)
 ylabel("Misclassification rate", fontsize=14)
 ylim([0, 1])
-
-
 
 # \figalt{hyperparameter heatmap}{A-model-tuning-hpt}
 
@@ -145,11 +134,7 @@ ylabel("Bagging fraction", fontsize=14)
 xticks([1, 2, 3], fontsize=12)
 yticks(fontsize=12)
 
-
-
 # \figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

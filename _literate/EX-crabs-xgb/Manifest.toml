@@ -282,9 +282,9 @@ version = "0.16.7"
 
 [[MLJBase]]
 deps = ["CategoricalArrays", "ComputationalResources", "Dates", "DelimitedFiles", "Distributed", "Distributions", "InteractiveUtils", "InvertedIndices", "LinearAlgebra", "LossFunctions", "MLJModelInterface", "Missings", "OrderedCollections", "Parameters", "PrettyTables", "ProgressMeter", "Random", "ScientificTypes", "StatisticalTraits", "Statistics", "StatsBase", "Tables"]
-git-tree-sha1 = "ad7fdd566e2639c1a189e0d1b2ef43085091c2c7"
+git-tree-sha1 = "9e73b9a6783557f45792db20e34d71510fe43109"
 uuid = "a7f614a8-145f-11e9-1d2a-a57a1082229d"
-version = "0.18.15"
+version = "0.18.16"
 
 [[MLJEnsembles]]
 deps = ["CategoricalArrays", "ComputationalResources", "Distributed", "Distributions", "MLJBase", "MLJModelInterface", "ProgressMeter", "Random", "ScientificTypesBase", "StatsBase"]

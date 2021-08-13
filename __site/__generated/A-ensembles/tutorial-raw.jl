@@ -1,24 +1,7 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles/Manifest.toml).
-# For instance, copy these files to a folder 'A-ensembles', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/A-ensembles/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 import DataFrames: DataFrame
 using PrettyPrinting
 using StableRNGs
-
 
 rng = StableRNG(512)
 Xraw = rand(rng, 300, 3)
@@ -83,12 +66,8 @@ xlabel("Bagging fraction", fontsize=14)
 yticks([1, 5, 10, 15, 20], fontsize=12)
 ylabel("Number of neighbors - K", fontsize=14)
 
-
-
 ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

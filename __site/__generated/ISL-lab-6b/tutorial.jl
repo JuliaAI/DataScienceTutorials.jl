@@ -7,15 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/ISL-lab-6b/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
-# In this tutorial, we are exploring the application of Ridge and Lasso
-
 # regression to the Hitters R dataset.
 #
 # ## Getting started
@@ -23,7 +14,6 @@ end;
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
-
 import Distributions
 const D = Distributions
 
@@ -62,14 +52,11 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
 using PyPlot
 
-
 figure(figsize=(8,6))
 plot(y, ls="none", marker="o")
 
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
-
-
 
 # \figalt{Salary}{ISL-lab-6-g1.svg}
 
@@ -87,8 +74,6 @@ yy = pdf.(edfit, xx)
 plot(xx, yy, lw=3, label="Exponential distribution fit")
 
 legend(fontsize=12)
-
-
 
 # \figalt{Distribution of salary}{ISL-lab-6-g2.svg}
 #
@@ -130,8 +115,6 @@ xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
 
 ylim([-1300, 1000])
 
-
-
 # \figalt{Residuals}{ISL-lab-6-g3.svg}
 
 figure(figsize=(8,6))
@@ -149,8 +132,6 @@ legend(fontsize=12)
 xticks(fontsize=12); yticks(fontsize=12)
 xlabel("Residual (ŷ - y)", fontsize=14); ylabel("Density", fontsize=14)
 xlim([-1100, 1100])
-
-
 
 # \figalt{Distribution of residuals}{ISL-lab-6-g4.svg}
 
@@ -198,8 +179,6 @@ xlim(1, length(res))
 
 ylim([-1300, 1000])
 
-
-
 # \figalt{Ridge residuals}{ISL-lab-6-g5.svg}
 #
 # You can compare that with the residuals obtained earlier.
@@ -237,6 +216,7 @@ figure(figsize=(8,6))
 stem(coef_vals)
 
 # name of the features including one-hot-encoded ones
+
 all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
              :CAtBat, :CHits, :CHmRun, :CRuns, :CRBI, :CWalks,
              :League__A, :League__N, :Div_E, :Div_W,
@@ -246,8 +226,6 @@ idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 10]
 xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
 yticks(fontsize=12)
 ylabel("Amplitude", fontsize=14)
-
-
 
 # \figalt{Lasso coefficients}{ISL-lab-6-g6.svg}
 
@@ -271,8 +249,6 @@ ŷ = MLJ.predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # But the simple ridge regression seems to work best here.
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -1,18 +1,4 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/Manifest.toml).
-# For instance, copy these files to a folder 'EX-horse', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/EX-horse/Project.toml")
-Pkg.update()
-
 using MLJ
-
 using HTTP
 using CSV
 import DataFrames: DataFrame, select!, Not

@@ -7,14 +7,18 @@ On each tutorial page, you will find a link to download the raw script and the n
 
 Feedback and PRs are always welcome to help make these tutorials better, from the presentation to the content.
 
-In order to reproduce the environment that was used to generate these tutorials, please follow these steps:
+In order to reproduce the environment that was used to generate each tutorials, please follow these steps:
 1. Go to the directory of your choice: `cd("/Users/[JohnDoe]/")`
 2. Create a folder named, e.g., "MLJ\_tutorials": `mkdir("MLJ_tutorials")`
-3. Download this \refblank{`Project.toml`}{https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml} and this \refblank{`Manifest.toml`}{https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml} in this folder;
-4. In that folder, do
+3. Download the tutorial `Project.toml` (available at the top of the tutorial) as well as the `Manifest.toml` in this folder;
+4. In the folder, do
+
 ```julia-repl
-julia> using Pkg; Pkg.activate("."); Pkg.update();
+julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
 ```
+
+The tutorials are run with the [latest stable release](https://julialang.org/downloads/#current_stable_release) of Julia, if you use a nightly version or an old version, you might encounter issues.
+In such cases, please open a PR so we can investigate.
 
 ## Elementary data manipulations
 
@@ -78,8 +82,10 @@ The examples can be followed in any order, the tags can guide you as to which tu
 * [Wine](/end-to-end/wine/), *simple*, *classification*, *standardizer*, *PCA*, *knn*, *multinomial*, *pipeline*
 * [Crabs XGB](/end-to-end/crabs-xgb/), *simple*, *classification*, *xg-boost*, *tuning*
 * [Horse](/end-to-end/horse/), *simple*, *classification*, *scientific type* and *autotype*, *missing values*, *imputation*, *one-hot*, *tuning*
-* [King County Houses](/end-to-end/HouseKingCounty/), *simple*, *regression*, *scientific type*, *tuning*, *xg-boost*.
+* [King County Houses](/end-to-end/HouseKingCounty/), *simple*, *regression*, *scientific type*, *tuning*, *xg-boost*
 * [Airfoil](/end-to-end/airfoil/), *simple*, *regression*, *random forest*
 * [Boston LGBM](/end-to-end/boston-lgbm/), *intermediate*, *regression*, *LightGBM*
-* [Using GLM.jl](/end-to-end/glm/), *simple*, *regression*.
-* [Power Generation](/end-to-end/powergen/), *simple*, *feature pre-processing*, *regression*, *temporal data*.
+* [Boston Flux](/end-to-end/boston-flux/), *intermediate*, *regression*, *Flux*, *Neural Network*
+* [Using GLM.jl](/end-to-end/glm/), *simple*, *regression*
+* [Power Generation](/end-to-end/powergen/), *simple*, *feature pre-processing*, *regression*, *temporal data*
+* [Breast cancer](/end-to-end/breastcancer/), *simple*, *model comparisons*, *binary classification*
