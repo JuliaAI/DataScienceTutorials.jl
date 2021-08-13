@@ -52,7 +52,6 @@ col1,col2,col3,col4,col5,col6,col7,col8
 ```
 
 ```julia:ex4
-# hideall
 c = """
 col1,col2,col3,col4,col5,col6,col7,col8
 ,1,1.0,1,one,2019-01-01,2019-01-01T00:00:00,true
@@ -92,7 +91,6 @@ For more details see `?CSV.File`.
 Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00504/), the content of which we saved in a file at path `fpath`.
 
 ```julia:ex7
-# hideall
 c = """
 3.26;0.829;1.676;0;1;1.453;3.770
 2.189;0.58;0.863;0;0;1.348;3.115
@@ -136,7 +134,6 @@ first(data, 3)
 Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00423/), the content of which we saved at `fpath`.
 
 ```julia:ex9
-# hideall
 c = """
 1,0,1,0,0,0,0,1,0,1,1,?,1,0,0,0,0,1,0,0,0,0,1,67,137,15,0,1,1,1.53,95,13.7,106.6,4.9,99,3.4,2.1,34,41,183,150,7.1,0.7,1,3.5,0.5,?,?,?,1
 0,?,0,0,0,0,1,1,?,?,1,0,0,1,0,0,0,1,0,0,0,0,1,62,0,?,0,1,1,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,1.8,?,?,?,?,1

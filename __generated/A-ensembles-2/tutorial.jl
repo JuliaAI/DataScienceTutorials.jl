@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/A-ensembles-2/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## Prelims
 #
 # This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
@@ -23,8 +16,6 @@ using PyPlot
 using PrettyPrinting
 using StableRNGs
 import DataFrames: DataFrame, describe
-
-
 
 X, y = @load_boston
 sch = schema(X)
@@ -71,8 +62,6 @@ ylabel("Root Mean Squared error", fontsize=16)
 xlabel("Number of trees", fontsize=16)
 xticks([10, 250, 500, 750, 1000], fontsize=14)
 yticks(fontsize=14)
-
-
 
 # \figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
 #
@@ -122,8 +111,6 @@ xlabel("Number of sub-features", fontsize=14)
 yticks(0.4:0.2:1, fontsize=12)
 ylabel("Bagging fraction", fontsize=14)
 
-
-
 # \fig{A-ensembles-2-heatmap.svg}
 #
 # Even though we've only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around `0.75` work well.
@@ -133,8 +120,6 @@ ylabel("Bagging fraction", fontsize=14)
 
 ŷ = predict(m, X)
 rms(ŷ, y)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

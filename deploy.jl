@@ -32,6 +32,49 @@ ACTIVATE(dir) = """
 
     """
 
+ function pre_process_script(io, s)
+    chunks = Literate.parse(s)
+
+    remove = Int[]
+    rx  = r".*?#\s*?(?i)hideall.*?"
+    rx2 = r".*?#\s*?(?i)hide.*?" # note: superset, doesn't matter
+
+    for (i, c) in enumerate(chunks)
+       c isa Literate.CodeChunk || continue
+       remove_lines = Int[]
+       hideall = false
+       for (j, l) in enumerate(c.lines)
+          if match(rx, l) !== nothing
+             push!(remove, i)
+             hideall = true
+             break
+          end
+          if match(rx2, l) !== nothing
+             push!(remove_lines, j)
+          end
+       end
+       !hideall && deleteat!(c.lines, remove_lines)
+    end
+    deleteat!(chunks, remove)
+
+    for c in chunks
+       if c isa Literate.CodeChunk
+          for l in c.lines
+             println(io, l)
+          end
+       else
+          for l in c.lines
+             println(io, "# ", l.second)
+          end
+       end
+       println(io, "")
+    end
+    return
+ end
+
+
+
+
 for dir in readdir("_literate")
    startswith(dir, "DRAFT") && continue
 
@@ -45,23 +88,24 @@ for dir in readdir("_literate")
    cp(project,  path/"Project.toml",  force=true)
    cp(manifest, path/"Manifest.toml", force=true)
 
-   preproc(s)     = ACTIVATE(dir) * s
-   postproc(s)    = replace(s, r"(^|\n).*?#(\s)*?(?i)hide(?:all)?"=>s"\1")
-   postproc_nb(s) = replace(s, r",?\n.*?\".*?#\s*?(?i)hide(?:all)?.*?\""=>"")
+   preproc(s) = ACTIVATE(dir) * s
+
+   temp_script = tempname()
+   open(temp_script, "w") do ts
+      s = preproc(read(script, String))
+      pre_process_script(ts, s)
+   end
 
    # Notebook
-   Literate.notebook(script, path, preprocess=preproc,
+   Literate.notebook(temp_script, path, name="tutorial",
                      execute=false, documenter=false)
-   nbp = path/"tutorial.ipynb"
-   write(nbp, postproc_nb(read(nbp, String)))
 
    # Annotated script
-   Literate.script(script, path, postprocess=preproc ∘ postproc,
+   Literate.script(temp_script, path, name="tutorial",
                    keep_comments=true, documenter=false)
 
    # Stripped script
-   Literate.script(script, path, name="tutorial-raw",
-                    postprocess=preproc ∘ postproc,
+   Literate.script(temp_script, path, name="tutorial-raw",
                     keep_comments=false, documenter=false)
 end
 
@@ -74,3 +118,7 @@ end
 commit = (@isdefined commit) ? commit : "fd-update"
 
 publish(message=commit, final=lunr, minify=false, prerender=false)
+
+
+
+# Filter code for hide / hideall

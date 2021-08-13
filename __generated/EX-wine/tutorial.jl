@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-wine/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # ## Initial data processing
 #
 # In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)
@@ -29,7 +22,6 @@ using MLJ
 using PyPlot
 import DataFrames: DataFrame, describe
 using UrlDownload
-
 
 url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
 header = ["Class", "Alcool", "Malic acid", "Ash", "Alcalinity of ash",
@@ -174,8 +166,6 @@ legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
 xticks(fontsize=12)
 yticks(fontsize=12)
 
-
-
 # \figalt{PCA}{EX-wine-pca.svg}
 #
 # On that figure it now becomes quite clear why we managed to achieve such high scores with very simple classifiers.
@@ -189,8 +179,6 @@ println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
 # Pretty good for so little work!
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

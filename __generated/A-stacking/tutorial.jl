@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/A-stacking/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # In stacking one blends the predictions of different regressors or
 # classifiers to gain, in some cases, better performance than naive
 # averaging or majority vote.
@@ -71,8 +64,6 @@ end;
 
 using MLJ
 using PyPlot
-
-
 using StableRNGs
 
 # Some models we will use:
@@ -188,8 +179,6 @@ plot(x, yraw, ls="none", marker="o", label="data")
 xlim(-4.5, 4.5)
 legend()
 
-
-
 # \fig{s1.svg}
 
 # Some models to stack (which we can change later):
@@ -269,8 +258,6 @@ step(xsort, ysort, label="truth", where="mid")
 plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
 legend()
 
-
-
 # \fig{s2.svg}
 
 # We now repeat the procedure for the other model:
@@ -291,8 +278,6 @@ figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
 legend()
-
-
 
 # \fig{s3.svg}
 
@@ -332,8 +317,6 @@ figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, yhat(), ls="none", marker="o", label="yhat")
 legend()
-
-
 
 # \fig{s4}
 
@@ -426,8 +409,6 @@ best_stack.regressor2.C
 # data hygiene!):
 
 print_performance(best_stack, X, y)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

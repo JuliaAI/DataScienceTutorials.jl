@@ -60,7 +60,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+      <!-- <li class="pure-menu-item {{ispage getting-started/stacking/index.html}}pure-menu-selected{{end}}"><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li> -->
     </ul>
 
     <!-- INTRO TO STATS LEARNING -->
@@ -106,18 +106,19 @@
 <div class="franklin-content"><h2 id="learning_by_doing"><a href="#learning_by_doing" class="header-anchor">Learning by doing</a></h2>
 <p>This website offers tutorials for <a href="https://github.com/alan-turing-institute/MLJ.jl">MLJ.jl</a> and related packages. On each tutorial page, you will find a link to download the raw script and the notebook corresponding to the page.</p>
 <p>Feedback and PRs are always welcome to help make these tutorials better, from the presentation to the content.</p>
-<p>In order to reproduce the environment that was used to generate these tutorials, please follow these steps:</p>
+<p>In order to reproduce the environment that was used to generate each tutorials, please follow these steps:</p>
 <ol>
 <li><p>Go to the directory of your choice: <code>cd&#40;&quot;/Users/&#91;JohnDoe&#93;/&quot;&#41;</code></p>
 </li>
 <li><p>Create a folder named, e.g., &quot;MLJ&#95;tutorials&quot;: <code>mkdir&#40;&quot;MLJ_tutorials&quot;&#41;</code></p>
 </li>
-<li><p>Download this <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Project.toml" target="_blank"><code>Project.toml</code></a> and this <a href="https://raw.githubusercontent.com/alan-turing-institute/DataScienceTutorials.jl/master/Manifest.toml" target="_blank"><code>Manifest.toml</code></a> in this folder;</p>
+<li><p>Download the tutorial <code>Project.toml</code> &#40;available at the top of the tutorial&#41; as well as the <code>Manifest.toml</code> in this folder;</p>
 </li>
-<li><p>In that folder, do</p>
+<li><p>In the folder, do</p>
 </li>
 </ol>
-<pre><code class="language-julia-repl">julia&gt; using Pkg; Pkg.activate&#40;&quot;.&quot;&#41;; Pkg.update&#40;&#41;;</code></pre>
+<pre><code class="language-julia-repl">julia&gt; using Pkg; Pkg.activate&#40;&quot;.&quot;&#41;; Pkg.instantiate&#40;&#41;;</code></pre>
+<p>The tutorials are run with the <a href="https://julialang.org/downloads/#current_stable_release">latest stable release</a> of Julia, if you use a nightly version or an old version, you might encounter issues. In such cases, please open a PR so we can investigate.</p>
 <h2 id="elementary_data_manipulations"><a href="#elementary_data_manipulations" class="header-anchor">Elementary data manipulations</a></h2>
 <p>If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on. In these we provide an introduction to some of the fundamental packages in the Julia data processing universe such as <a href="https://github.com/JuliaData/DataFrames.jl">DataFrames</a>, <a href="https://github.com/JuliaData/CSV.jl">CSV</a> and <a href="https://github.com/JuliaData/CategoricalArrays.jl">CategoricalArrays</a>.</p>
 <p></p>
@@ -190,20 +191,24 @@
 </li>
 <li><p><a href="/DataScienceTutorials.jl/end-to-end/horse/">Horse</a>, <em>simple</em>, <em>classification</em>, <em>scientific type</em> and <em>autotype</em>, <em>missing values</em>, <em>imputation</em>, <em>one-hot</em>, <em>tuning</em></p>
 </li>
-<li><p><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/">King County Houses</a>, <em>simple</em>, <em>regression</em>, <em>scientific type</em>, <em>tuning</em>, <em>xg-boost</em>.</p>
+<li><p><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/">King County Houses</a>, <em>simple</em>, <em>regression</em>, <em>scientific type</em>, <em>tuning</em>, <em>xg-boost</em></p>
 </li>
 <li><p><a href="/DataScienceTutorials.jl/end-to-end/airfoil/">Airfoil</a>, <em>simple</em>, <em>regression</em>, <em>random forest</em></p>
 </li>
 <li><p><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm/">Boston LGBM</a>, <em>intermediate</em>, <em>regression</em>, <em>LightGBM</em></p>
 </li>
-<li><p><a href="/DataScienceTutorials.jl/end-to-end/glm/">Using GLM.jl</a>, <em>simple</em>, <em>regression</em>.</p>
+<li><p><a href="/DataScienceTutorials.jl/end-to-end/boston-flux/">Boston Flux</a>, <em>intermediate</em>, <em>regression</em>, <em>Flux</em>, <em>Neural Network</em></p>
 </li>
-<li><p><a href="/DataScienceTutorials.jl/end-to-end/powergen/">Power Generation</a>, <em>simple</em>, <em>feature pre-processing</em>, <em>regression</em>, <em>temporal data</em>.</p>
+<li><p><a href="/DataScienceTutorials.jl/end-to-end/glm/">Using GLM.jl</a>, <em>simple</em>, <em>regression</em></p>
+</li>
+<li><p><a href="/DataScienceTutorials.jl/end-to-end/powergen/">Power Generation</a>, <em>simple</em>, <em>feature pre-processing</em>, <em>regression</em>, <em>temporal data</em></p>
+</li>
+<li><p><a href="/DataScienceTutorials.jl/end-to-end/breastcancer/">Breast cancer</a>, <em>simple</em>, <em>model comparisons</em>, <em>binary classification</em></p>
 </li>
 </ul>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 10, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

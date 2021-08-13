@@ -7,13 +7,6 @@
 # using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
-
-Pkg.activate("_literate/EX-powergen/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 # **Main author**: [Geoffroy Dolphin](https://github.com/gd1989)
 #
 # ## Initial data processing
@@ -23,7 +16,6 @@ end;
 using MLJ
 using UrlDownload
 using PyPlot
-
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 
@@ -140,7 +132,6 @@ ylabel("Frequency", fontsize=14)
 xticks(fontsize=12)
 yticks([0, 1e-3, 2e-3], fontsize=12)
 
-
 # \figalt{Histogram of the solar power generated}{hist_solar.svg}
 
 # As one might expect, the sun doesn't always shine (and certainly not at night), hence there is a very high proportion of observations whose value is equal or close to 0.
@@ -151,8 +142,6 @@ hist(data.Wind_gen, color="blue", edgecolor = "white", bins=50,
      density=true, alpha=0.5)
 xlabel("Wind power generation (MWh)", fontsize=14)
 ylabel("Frequency", fontsize=14)
-
-
 
 # \figalt{Histogram of the wind power generated}{hist_wind.svg}
 
@@ -181,8 +170,6 @@ scatter(data.Solar_gen, data.Temperature)
 xlabel("Solar power (kW)", fontsize=14)
 ylabel("Temperature (C)", fontsize=14)
 
-
-
 # @@img-wide \figalt{Solar power scatter plots}{solar_scatter.png} @@
 
 # Then at wind generation
@@ -208,8 +195,6 @@ subplot(224)
 scatter(data.Wind_gen, data.Temperature)
 xlabel("Wind power (kW)", fontsize=14)
 ylabel("Temperature (C)", fontsize=14)
-
-
 
 # @@img-wide \figalt{Wind power scatter plots}{wind_scatter.png} @@
 
@@ -252,8 +237,6 @@ yticks(fontsize=12)
 xlim(0, 100)
 legend(fontsize=14)
 
-
-
 # \figalt{Observed vs Predicted}{obs_v_pred.svg}
 
 # Let's look at the RMSE on the training and test sets.
@@ -274,8 +257,6 @@ figure(figsize=(12, 6))
 stem(res)
 xlim(0, length(res))
 
-
-
 # @@img-wide \figalt{Residuals}{residuals.png} @@
 
 # Nothing really stands out, the distribution also looks ok:
@@ -283,8 +264,6 @@ xlim(0, length(res))
 figure(figsize=(8, 6))
 hist(res, color="blue", edgecolor="white", bins=50,
      density=true, alpha=0.5)
-
-
 
 # \figalt{Histogram of the residuals}{hist_residuals.svg}
 

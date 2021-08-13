@@ -1,23 +1,5 @@
-# Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/Manifest.toml).
-# For instance, copy these files to a folder 'A-stacking', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
-
-
-Pkg.activate("_literate/A-stacking/Project.toml")
-Pkg.update()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 using MLJ
 using PyPlot
-
-
 using StableRNGs
 
 linear = (@load LinearRegressor pkg=MLJLinearModels)()
@@ -88,8 +70,6 @@ plot(x, yraw, ls="none", marker="o", label="data")
 xlim(-4.5, 4.5)
 legend()
 
-
-
 model1 = linear
 model2 = knn
 
@@ -128,8 +108,6 @@ step(xsort, ysort, label="truth", where="mid")
 plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
 legend()
 
-
-
 m21 = machine(model2, corestrict(X, f, 1), corestrict(y, f, 1))
 m22 = machine(model2, corestrict(X, f, 2), corestrict(y, f, 2))
 m23 = machine(model2, corestrict(X, f, 3), corestrict(y, f, 3))
@@ -144,8 +122,6 @@ figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
 legend()
-
-
 
 X_oos = MLJ.table(hcat(y1_oos, y2_oos))
 m_judge = machine(judge, X_oos, y)
@@ -164,8 +140,6 @@ figure(figsize=(8,6))
 step(xsort, ysort, label="truth", where="mid")
 plot(x, yhat(), ls="none", marker="o", label="yhat")
 legend()
-
-
 
 e1 = rms(y1(), y())
 e2 = rms(y2(), y())
@@ -211,8 +185,6 @@ best_stack = fitted_params(mach).best_model
 best_stack.regressor2.C
 
 print_performance(best_stack, X, y)
-
-
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
