@@ -1,5 +1,6 @@
 [deps]
 EvoTrees = "f6006082-12f8-11e9-0c9c-0d5d367ab1e5"
+LogExpFunctions = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
 MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
 MLJDecisionTreeInterface = "c6f25543-311c-4c74-83dc-3ea6d1015661"
 MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
