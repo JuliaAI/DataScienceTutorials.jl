@@ -46,10 +46,12 @@ ignore = [
 }
 \newcommand{\proj}[1]{https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/!#1/Project.toml}
 \newcommand{\mani}[1]{https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/!#1/Manifest.toml}
+\newcommand{\tgz}[1]{https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/!#1.tar.gz}
 
 
 \newcommand{\tutorial}[1]{
-  *Download the \nblink{!#1}, the \sclink{!#1} or the \rawlink{!#1} for this tutorial (right-click on the relevant link and save-as). These rely on [this Project.toml](\proj{!#1}) and [this Manifest.toml](\mani{!#1}).*
+  *Download the \nblink{!#1}, the \sclink{!#1} or the \rawlink{!#1} for this tutorial (right-click on the relevant link and save-as). These rely on [this Project.toml](\proj{!#1}) and [this Manifest.toml](\mani{!#1}).* \\
+  *You can also download the whole [project folder](\tgz{#1}).*
   \toc\literate{/_literate/!#1/tutorial.jl}
 }
 
