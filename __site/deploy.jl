@@ -108,7 +108,10 @@ for dir in readdir("_literate")
    Literate.script(temp_script, path, name="tutorial-raw",
                     keep_comments=false, documenter=false)
 
-   success(pipeline(`tar czf $(path).tar.gz $path`))
+   bk = pwd()
+   cd(genpath)
+   success(pipeline(`tar czf $dir.tar.gz $dir`))
+   cd(bk)
 end
 
 ##################################################################
