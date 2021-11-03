@@ -107,6 +107,11 @@ for dir in readdir("_literate")
    # Stripped script
    Literate.script(temp_script, path, name="tutorial-raw",
                     keep_comments=false, documenter=false)
+
+   bk = pwd()
+   cd(genpath)
+   success(pipeline(`tar czf $dir.tar.gz $dir`))
+   cd(bk)
 end
 
 ##################################################################
