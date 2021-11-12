@@ -28,7 +28,7 @@ In many other cases however, there may be ambiguities, we list a few examples be
 
 ### The Scientific Types
 
-The package [ScientificTypes.jl](https://github.com/alan-turing-institute/ScientificTypes.jl) defines a barebone type hierarchy which can be used to indicate how a particular feature should be interpreted; in particular:
+The package [ScientificTypes.jl](https://github.com/JuliaAI/ScientificTypes.jl) defines a barebone type hierarchy which can be used to indicate how a particular feature should be interpreted; in particular:
 
 ```plaintext
 Found
@@ -45,7 +45,7 @@ Found
 
 A *scientific type convention* is a specific implementation indicating how machine types can be related to scientific types. It may also provide helper functions to convert data to a given scitype.
 
-The convention used in MLJ is implemented in [MLJScientificTypes.jl](https://github.com/alan-turing-institute/MLJScientificTypes.jl).
+The convention used in MLJ is implemented in [ScientificTypes.jl](https://github.com/JuliaAI/ScientificTypes.jl).
 This is what we will use throughout; you never need to use ScientificTypes.jl
 unless you intend to implement your own scientific type convention.
 
@@ -168,5 +168,5 @@ boston3 = coerce(boston, autotype(boston, :few_to_finite))
 schema(boston3)
 ```
 
-You can also specify multiple rules, see [the docs](https://alan-turing-institute.github.io/MLJScientificTypes.jl/stable/#Automatic-type-conversion-for-tabular-data-1) for more information.
+You can also specify multiple rules, see [the docs](https://juliaai.github.io/ScientificTypes.jl/dev/#Automatic-type-conversion) for more information.
 
