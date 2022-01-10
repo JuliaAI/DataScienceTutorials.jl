@@ -1,0 +1,6 @@
+MethodError: no method matching *(::Float64, ::MLJBase.DeterministicPipeline{NamedTuple{(:f, :knn_regressor), Tuple{Any, MLJModelInterface.Deterministic}}, MLJModelInterface.predict})
+Closest candidates are:
+  *(::Any, ::Any, !Matched::Any, !Matched::Any...) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/base/operators.jl:655
+  *(::Union{Float16, Float32, Float64}, !Matched::BigFloat) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/base/mpfr.jl:406
+  *(::Union{Real, Complex}, !Matched::Union{LinearAlgebra.Adjoint{var"#s859", var"#s8591"}, LinearAlgebra.Transpose{var"#s859", var"#s8591"}} where {var"#s859"<:Union{Real, Complex}, var"#s8591"<:(AbstractVector)}, !Matched::AbstractMatrix{<:Union{Real, Complex}}, !Matched::AbstractMatrix{<:Union{Real, Complex}}) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/LinearAlgebra/src/matmul.jl:1172
+  ...

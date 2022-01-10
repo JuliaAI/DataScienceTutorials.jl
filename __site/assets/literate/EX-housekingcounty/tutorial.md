@@ -124,7 +124,7 @@ Likewise, this could be done to verify that `condition`, `waterfront` etc are im
 ```julia:ex13
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
-y, X = unpack(df, ==(:price), col -> true)
+y, X = unpack(df, ==(:price))
 train, test = partition(collect(eachindex(y)), 0.7, shuffle=true, rng=5)
 tree = machine(DTR(), X, y)
 

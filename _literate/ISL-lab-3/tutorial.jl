@@ -134,7 +134,7 @@ round(rms(ŷ, y), sigdigits=4)
 #
 # Let's get back to the lab where they consider regressing the target variable on `lstat` and `lstat^2`; again, it's essentially a case of defining the right DataFrame:
 
-X3 = hcat(X.LStat, X.LStat.^2)
+X3 = hcat(X.LStat, X.LStat.^2) |> MLJ.table
 mach = machine(mdl, X3, y)
 fit!(mach)
 ŷ = MLJ.predict(mach, X3)

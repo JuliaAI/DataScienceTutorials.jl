@@ -1,18 +1,17 @@
-┌──────────────────────────────┬─────────┬────────────┐
-│ _.names                      │ _.types │ _.scitypes │
-├──────────────────────────────┼─────────┼────────────┤
-│ Alcool                       │ Float64 │ Continuous │
-│ Malic acid                   │ Float64 │ Continuous │
-│ Ash                          │ Float64 │ Continuous │
-│ Alcalinity of ash            │ Float64 │ Continuous │
-│ Magnesium                    │ Int64   │ Count      │
-│ Total phenols                │ Float64 │ Continuous │
-│ Flavanoids                   │ Float64 │ Continuous │
-│ Nonflavanoid phenols         │ Float64 │ Continuous │
-│ Proanthcyanins               │ Float64 │ Continuous │
-│ Color intensity              │ Float64 │ Continuous │
-│ Hue                          │ Float64 │ Continuous │
-│ OD280/OD315 of diluted wines │ Float64 │ Continuous │
-│ Proline                      │ Int64   │ Count      │
-└──────────────────────────────┴─────────┴────────────┘
-_.nrows = 178
+┌──────────────────────────────┬────────────┬─────────┐
+│ names                        │ scitypes   │ types   │
+├──────────────────────────────┼────────────┼─────────┤
+│ Alcool                       │ Continuous │ Float64 │
+│ Malic acid                   │ Continuous │ Float64 │
+│ Ash                          │ Continuous │ Float64 │
+│ Alcalinity of ash            │ Continuous │ Float64 │
+│ Magnesium                    │ Count      │ Int64   │
+│ Total phenols                │ Continuous │ Float64 │
+│ Flavanoids                   │ Continuous │ Float64 │
+│ Nonflavanoid phenols         │ Continuous │ Float64 │
+│ Proanthcyanins               │ Continuous │ Float64 │
+│ Color intensity              │ Continuous │ Float64 │
+│ Hue                          │ Continuous │ Float64 │
+│ OD280/OD315 of diluted wines │ Continuous │ Float64 │
+│ Proline                      │ Count      │ Int64   │
+└──────────────────────────────┴────────────┴─────────┘

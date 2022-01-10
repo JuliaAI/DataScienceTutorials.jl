@@ -127,7 +127,7 @@ describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">21×7 
      │ Symbol         Union…      Any              Union…     Any              Int64     DataType
 ─────┼────────────────────────────────────────────────────────────────────────────────────────────
    1 │ id             4.5803e9    1000102          3.90493e9  9900000190              0  Int64
-   2 │ date                       20140502T000000             20150527T000000         0  String
+   2 │ date                       20140502T000000             20150527T000000         0  String15
    3 │ price          5.40088e5   75000.0          450000.0   7.7e6                   0  Float64
    4 │ bedrooms       3.37084     0                3.0        33                      0  Int64
    5 │ bathrooms      2.11476     0.0              2.25       8.0                     0  Float64
@@ -149,61 +149,59 @@ describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">21×7 
   21 │ sqft_lot15     12768.5     651              7620.0     871200                  0  Int64</code></pre>
 <p>We drop unrelated columns</p>
 <pre><code class="language-julia">select&#33;&#40;df, Not&#40;&#91;:id, :date&#93;&#41;&#41;
-schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────┬────────────┐
-│ _.names       │ _.types │ _.scitypes │
-├───────────────┼─────────┼────────────┤
-│ price         │ Float64 │ Continuous │
-│ bedrooms      │ Int64   │ Count      │
-│ bathrooms     │ Float64 │ Continuous │
-│ sqft_living   │ Int64   │ Count      │
-│ sqft_lot      │ Int64   │ Count      │
-│ floors        │ Float64 │ Continuous │
-│ waterfront    │ Int64   │ Count      │
-│ view          │ Int64   │ Count      │
-│ condition     │ Int64   │ Count      │
-│ grade         │ Int64   │ Count      │
-│ sqft_above    │ Int64   │ Count      │
-│ sqft_basement │ Int64   │ Count      │
-│ yr_built      │ Int64   │ Count      │
-│ yr_renovated  │ Int64   │ Count      │
-│ zipcode       │ Int64   │ Count      │
-│ lat           │ Float64 │ Continuous │
-│ long          │ Float64 │ Continuous │
-│ sqft_living15 │ Int64   │ Count      │
-│ sqft_lot15    │ Int64   │ Count      │
-└───────────────┴─────────┴────────────┘
-_.nrows = 21613
+schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────┬─────────┐
+│ names         │ scitypes   │ types   │
+├───────────────┼────────────┼─────────┤
+│ price         │ Continuous │ Float64 │
+│ bedrooms      │ Count      │ Int64   │
+│ bathrooms     │ Continuous │ Float64 │
+│ sqft_living   │ Count      │ Int64   │
+│ sqft_lot      │ Count      │ Int64   │
+│ floors        │ Continuous │ Float64 │
+│ waterfront    │ Count      │ Int64   │
+│ view          │ Count      │ Int64   │
+│ condition     │ Count      │ Int64   │
+│ grade         │ Count      │ Int64   │
+│ sqft_above    │ Count      │ Int64   │
+│ sqft_basement │ Count      │ Int64   │
+│ yr_built      │ Count      │ Int64   │
+│ yr_renovated  │ Count      │ Int64   │
+│ zipcode       │ Count      │ Int64   │
+│ lat           │ Continuous │ Float64 │
+│ long          │ Continuous │ Float64 │
+│ sqft_living15 │ Count      │ Int64   │
+│ sqft_lot15    │ Count      │ Int64   │
+└───────────────┴────────────┴─────────┘
 </code></pre>
 <p>Afterwards, we convert the zip code to an unordered factor &#40;<code>Multiclass</code>&#41;, we also create two binary features <code>isrenovated</code> and <code>has_basement</code> derived from <code>yr_renovated</code> and <code>sqft_basement</code>:</p>
 <pre><code class="language-julia">coerce&#33;&#40;df, :zipcode &#61;&gt; Multiclass&#41;
 df.isrenovated  &#61; @. &#33;iszero&#40;df.yr_renovated&#41;
 df.has_basement &#61; @. &#33;iszero&#40;df.sqft_basement&#41;
-schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────────────────────────────┬────────────────┐
-│ _.names       │ _.types                         │ _.scitypes     │
-├───────────────┼─────────────────────────────────┼────────────────┤
-│ price         │ Float64                         │ Continuous     │
-│ bedrooms      │ Int64                           │ Count          │
-│ bathrooms     │ Float64                         │ Continuous     │
-│ sqft_living   │ Int64                           │ Count          │
-│ sqft_lot      │ Int64                           │ Count          │
-│ floors        │ Float64                         │ Continuous     │
-│ waterfront    │ Int64                           │ Count          │
-│ view          │ Int64                           │ Count          │
-│ condition     │ Int64                           │ Count          │
-│ grade         │ Int64                           │ Count          │
-│ sqft_above    │ Int64                           │ Count          │
-│ sqft_basement │ Int64                           │ Count          │
-│ yr_built      │ Int64                           │ Count          │
-│ yr_renovated  │ Int64                           │ Count          │
-│ zipcode       │ CategoricalValue{Int64, UInt32} │ Multiclass{70} │
-│ lat           │ Float64                         │ Continuous     │
-│ long          │ Float64                         │ Continuous     │
-│ sqft_living15 │ Int64                           │ Count          │
-│ sqft_lot15    │ Int64                           │ Count          │
-│ isrenovated   │ Bool                            │ Count          │
-│ has_basement  │ Bool                            │ Count          │
-└───────────────┴─────────────────────────────────┴────────────────┘
-_.nrows = 21613
+schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────────┬─────────────────────────────────┐
+│ names         │ scitypes       │ types                           │
+├───────────────┼────────────────┼─────────────────────────────────┤
+│ price         │ Continuous     │ Float64                         │
+│ bedrooms      │ Count          │ Int64                           │
+│ bathrooms     │ Continuous     │ Float64                         │
+│ sqft_living   │ Count          │ Int64                           │
+│ sqft_lot      │ Count          │ Int64                           │
+│ floors        │ Continuous     │ Float64                         │
+│ waterfront    │ Count          │ Int64                           │
+│ view          │ Count          │ Int64                           │
+│ condition     │ Count          │ Int64                           │
+│ grade         │ Count          │ Int64                           │
+│ sqft_above    │ Count          │ Int64                           │
+│ sqft_basement │ Count          │ Int64                           │
+│ yr_built      │ Count          │ Int64                           │
+│ yr_renovated  │ Count          │ Int64                           │
+│ zipcode       │ Multiclass{70} │ CategoricalValue{Int64, UInt32} │
+│ lat           │ Continuous     │ Float64                         │
+│ long          │ Continuous     │ Float64                         │
+│ sqft_living15 │ Count          │ Int64                           │
+│ sqft_lot15    │ Count          │ Int64                           │
+│ isrenovated   │ Count          │ Bool                            │
+│ has_basement  │ Count          │ Bool                            │
+└───────────────┴────────────────┴─────────────────────────────────┘
 </code></pre>
 <p>These created variables should be treated as OrderedFactor,</p>
 <pre><code class="language-julia">coerce&#33;&#40;df, :isrenovated &#61;&gt; OrderedFactor, :has_basement &#61;&gt; OrderedFactor&#41;;</code></pre>
@@ -216,32 +214,31 @@ _.nrows = 21613
 coerce&#33;&#40;df, :waterfront &#61;&gt; OrderedFactor&#41;;</code></pre>
 <p>For a number of the remaining features which are treated as <code>Count</code> there are few unique values in which case it might make more sense to recode them as OrderedFactor, this can be done with <code>autotype</code>:</p>
 <pre><code class="language-julia">coerce&#33;&#40;df, autotype&#40;df, :few_to_finite&#41;&#41;
-schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬───────────────────────────────────┬───────────────────┐
-│ _.names       │ _.types                           │ _.scitypes        │
-├───────────────┼───────────────────────────────────┼───────────────────┤
-│ price         │ Float64                           │ Continuous        │
-│ bedrooms      │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{13} │
-│ bathrooms     │ CategoricalValue{Float64, UInt32} │ OrderedFactor{30} │
-│ sqft_living   │ Int64                             │ Count             │
-│ sqft_lot      │ Int64                             │ Count             │
-│ floors        │ CategoricalValue{Float64, UInt32} │ OrderedFactor{6}  │
-│ waterfront    │ CategoricalValue{Bool, UInt32}    │ OrderedFactor{1}  │
-│ view          │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{5}  │
-│ condition     │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{5}  │
-│ grade         │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{12} │
-│ sqft_above    │ Int64                             │ Count             │
-│ sqft_basement │ Int64                             │ Count             │
-│ yr_built      │ Int64                             │ Count             │
-│ yr_renovated  │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{70} │
-│ zipcode       │ CategoricalValue{Int64, UInt32}   │ Multiclass{70}    │
-│ lat           │ Float64                           │ Continuous        │
-│ long          │ Float64                           │ Continuous        │
-│ sqft_living15 │ Int64                             │ Count             │
-│ sqft_lot15    │ Int64                             │ Count             │
-│ isrenovated   │ CategoricalValue{Bool, UInt32}    │ OrderedFactor{2}  │
-│ has_basement  │ CategoricalValue{Bool, UInt32}    │ OrderedFactor{2}  │
-└───────────────┴───────────────────────────────────┴───────────────────┘
-_.nrows = 21613
+schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬───────────────────┬───────────────────────────────────┐
+│ names         │ scitypes          │ types                             │
+├───────────────┼───────────────────┼───────────────────────────────────┤
+│ price         │ Continuous        │ Float64                           │
+│ bedrooms      │ OrderedFactor{13} │ CategoricalValue{Int64, UInt32}   │
+│ bathrooms     │ OrderedFactor{30} │ CategoricalValue{Float64, UInt32} │
+│ sqft_living   │ Count             │ Int64                             │
+│ sqft_lot      │ Count             │ Int64                             │
+│ floors        │ OrderedFactor{6}  │ CategoricalValue{Float64, UInt32} │
+│ waterfront    │ OrderedFactor{1}  │ CategoricalValue{Bool, UInt32}    │
+│ view          │ OrderedFactor{5}  │ CategoricalValue{Int64, UInt32}   │
+│ condition     │ OrderedFactor{5}  │ CategoricalValue{Int64, UInt32}   │
+│ grade         │ OrderedFactor{12} │ CategoricalValue{Int64, UInt32}   │
+│ sqft_above    │ Count             │ Int64                             │
+│ sqft_basement │ Count             │ Int64                             │
+│ yr_built      │ Count             │ Int64                             │
+│ yr_renovated  │ OrderedFactor{70} │ CategoricalValue{Int64, UInt32}   │
+│ zipcode       │ Multiclass{70}    │ CategoricalValue{Int64, UInt32}   │
+│ lat           │ Continuous        │ Float64                           │
+│ long          │ Continuous        │ Float64                           │
+│ sqft_living15 │ Count             │ Int64                             │
+│ sqft_lot15    │ Count             │ Int64                             │
+│ isrenovated   │ OrderedFactor{2}  │ CategoricalValue{Bool, UInt32}    │
+│ has_basement  │ OrderedFactor{2}  │ CategoricalValue{Bool, UInt32}    │
+└───────────────┴───────────────────┴───────────────────────────────────┘
 </code></pre>
 <p>Let&#39;s also rescale the column <code>price</code> to be in 1000s of dollars:</p>
 <pre><code class="language-julia">df.price &#61; df.price ./ 1000;</code></pre>
@@ -269,14 +266,14 @@ plt.legend&#40;fontsize&#61;12&#41;</code></pre>
 <h2 id="fitting_a_first_model"><a href="#fitting_a_first_model" class="header-anchor">Fitting a first model</a></h2>
 <pre><code class="language-julia">DTR &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
 
-y, X &#61; unpack&#40;df, &#61;&#61;&#40;:price&#41;, col -&gt; true&#41;
+y, X &#61; unpack&#40;df, &#61;&#61;&#40;:price&#41;&#41;
 train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.7, shuffle&#61;true, rng&#61;5&#41;
 tree &#61; machine&#40;DTR&#40;&#41;, X, y&#41;
 
 fit&#33;&#40;tree, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.60608282203714</code></pre>
+<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.71280372976895</code></pre>
 <p>Let&#39;s try to do better.</p>
 <h3 id="random_forest_model"><a href="#random_forest_model" class="header-anchor">Random forest model</a></h3>
 <p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -289,19 +286,20 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">136.32674001136314</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">135.53923427824247</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
-               measure&#61;rms, verbosity&#61;0&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────────────────┬───────────────┬────────────────────────────────────────────┐
-│ _.measure                 │ _.measurement │ _.per_fold                                 │
-├───────────────────────────┼───────────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError @989 │ 132.0         │ [135.0, 129.0, 133.0, 125.0, 132.0, 139.0] │
-└───────────────────────────┴───────────────┴────────────────────────────────────────────┘
-_.per_observation = [missing]
-_.fitted_params_per_fold = [ … ]
-_.report_per_fold = [ … ]
-_.train_test_rows = [ … ]
+               measure&#61;rms, verbosity&#61;0&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
+  measure, measurement, operation, per_fold,
+  per_observation, fitted_params_per_fold,
+  report_per_fold, train_test_pairs
+Extract:
+┌────────────────────────┬─────────────┬───────────┬────────────────────────────────────────────┐
+│ measure                │ measurement │ operation │ per_fold                                   │
+├────────────────────────┼─────────────┼───────────┼────────────────────────────────────────────┤
+│ RootMeanSquaredError() │ 135.0       │ predict   │ [150.0, 142.0, 131.0, 125.0, 121.0, 140.0] │
+└────────────────────────┴─────────────┴───────────┴────────────────────────────────────────────┘
 </code></pre>
 <h3 id="gbm"><a href="#gbm" class="header-anchor">GBM</a></h3>
 <p>Let&#39;s try a different kind of model: Gradient Boosted Decision Trees from the package xgboost and we&#39;ll try to tune it too.</p>

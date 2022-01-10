@@ -119,7 +119,7 @@ import Flux
 using Random
 using PyPlot
 
-Random.seed&#33;&#40;11&#41;</code></pre><pre><code class="plaintext code-output">MersenneTwister(11)</code></pre>
+Random.seed&#33;&#40;11&#41;</code></pre><pre><code class="plaintext code-output">Random.TaskLocalRNG()</code></pre>
 <p>Loading the Boston dataset. Our aim will be to implement a neural network regressor to predict the price of a house, given a number of features.</p>
 <pre><code class="language-julia">features, targets &#61; MLJ.@load_boston
 features &#61; DataFrame&#40;features&#41;
@@ -156,7 +156,7 @@ end</code></pre>
 end</code></pre>
 <p>Alternatively, there a macro shortcut to take care of both steps at once. For details, do <code>?MLJFlux.@builder</code>.</p>
 <p>All definitions ready, let us create an object of this:</p>
-<pre><code class="language-julia">myregressor &#61; MyNetworkBuilder&#40;20, 10&#41;</code></pre><pre><code class="plaintext code-output">MyNetworkBuilder @614
+<pre><code class="language-julia">myregressor &#61; MyNetworkBuilder&#40;20, 10&#41;</code></pre><pre><code class="plaintext code-output">MyNetworkBuilder
 </code></pre>
 <p>Since the boston dataset is a regression problem, we&#39;ll be using <code>NeuralNetworkRegressor</code> here. One thing to remember is that a <code>NeuralNetworkRegressor</code> object works seamlessly like any other MLJ model: you can wrap it in an  MLJ <code>machine</code> and do anything you&#39;d do otherwise.</p>
 <p>Let&#39;s start by defining our NeuralNetworkRegressor object, that takes <code>myregressor</code> as it&#39;s parameter.</p>
@@ -172,39 +172,43 @@ end</code></pre>
     alpha = 0.0,
     rng = Random._GLOBAL_RNG(),
     optimiser_changes_trigger_retraining = false,
-    acceleration = ComputationalResources.CPU1{Nothing}(nothing)) @480</code></pre>
+    acceleration = ComputationalResources.CPU1{Nothing}(nothing))</code></pre>
 <p>Other parameters that NeuralNetworkRegressor takes can be found here: https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters</p>
 <p><code>nnregressor</code> now acts like any other MLJ model. Let&#39;s try wrapping it in a MLJ machine and calling <code>fit&#33;, predict</code>.</p>
-<pre><code class="language-julia">mach &#61; MLJ.machine&#40;nnregressor, features, targets&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @386 trained 0 times; caches data
+<pre><code class="language-julia">mach &#61; MLJ.machine&#40;nnregressor, features, targets&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} trained 0 times; caches data
+  model: MLJFlux.NeuralNetworkRegressor{MyNetworkBuilder, Flux.Optimise.ADAM, typeof(Flux.Losses.mse)}
   args: 
-    1:	Source @234 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @470 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @055 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @259 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>Let&#39;s fit this on the train set</p>
-<pre><code class="language-julia">MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @386 trained 1 time; caches data
+<pre><code class="language-julia">MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} trained 1 time; caches data
+  model: MLJFlux.NeuralNetworkRegressor{MyNetworkBuilder, Flux.Optimise.ADAM, typeof(Flux.Losses.mse)}
   args: 
-    1:	Source @234 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @470 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @055 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @259 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>As we can see, the training loss decreases at each epoch, showing the the neural network is gradually learning form the training set.</p>
 <pre><code class="language-julia">preds &#61; MLJ.predict&#40;mach, features&#91;test, :&#93;&#41;
 
-print&#40;preds&#91;1:5&#93;&#41;</code></pre><pre><code class="plaintext code-output">[29.32228126018145, 26.417511693320847, 24.12516952809551, -2.5468626110626493, 20.77854944458998]</code></pre>
+print&#40;preds&#91;1:5&#93;&#41;</code></pre><pre><code class="plaintext code-output">[31.56410853718178, 29.851880088092262, 24.773236945902827, -9.328833979969371, 22.55199532204612]</code></pre>
 <p>Now let&#39;s retrain our model. One thing to remember is that retrainig may OR may not re-initialize our neural network model parameters. For example, changing the number of epochs to 15 will not causes the model to train to 15 epcohs, but just 5 additional epochs.</p>
 <pre><code class="language-julia">nnregressor.epochs &#61; 15
 
-MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @386 trained 2 times; caches data
+MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} trained 2 times; caches data
+  model: MLJFlux.NeuralNetworkRegressor{MyNetworkBuilder, Flux.Optimise.ADAM, typeof(Flux.Losses.mse)}
   args: 
-    1:	Source @234 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @470 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @055 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @259 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>You can always specify that you want to retrain the model from scratch using the force&#61;true parameter. &#40;Look at documentation for <code>fit&#33;</code> for more&#41;.</p>
 <p>However, changing parameters such as batch_size will necessarily cause re-training from scratch.</p>
 <pre><code class="language-julia">nnregressor.batch_size &#61; 2
-MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} @386 trained 3 times; caches data
+MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Machine{NeuralNetworkRegressor{MyNetworkBuilder,…},…} trained 3 times; caches data
+  model: MLJFlux.NeuralNetworkRegressor{MyNetworkBuilder, Flux.Optimise.ADAM, typeof(Flux.Losses.mse)}
   args: 
-    1:	Source @234 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @470 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @055 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @259 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>Another bit to remember here is that changing the optimiser doesn&#39;t cause retaining by default. However, the <code>optimiser_changes_trigger_retraining</code> in NeuralNetworkRegressor can be toggled to accomodate this. This allows one to modify the learning rate, for example, after an initial burn-in period.</p>
 <pre><code class="language-julia"># Inspecting out-of-sample loss as a function of epochs
@@ -230,7 +234,7 @@ ylabel&#40;&quot;l2&quot;&#41;</code></pre>
 
 tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, measure&#61;MLJ.l2&#41;</code></pre><pre><code class="plaintext code-output">DeterministicTunedModel(
     model = NeuralNetworkRegressor(
-            builder = MyNetworkBuilder @614,
+            builder = MyNetworkBuilder,
             optimiser = Flux.Optimise.ADAM(0.001, (0.9, 0.999), IdDict{Any, Any}()),
             loss = Flux.Losses.mse,
             epochs = 15,
@@ -249,11 +253,10 @@ tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, me
             fraction_train = 0.7,
             shuffle = false,
             rng = Random._GLOBAL_RNG()),
-    measure = LPLoss(
-            p = 2),
+    measure = LPLoss(p = 2),
     weights = nothing,
-    operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @177],
+    operation = nothing,
+    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange(1 ≤ batch_size ≤ 5; origin=3.0, unit=2.0)],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
@@ -261,17 +264,18 @@ tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, me
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @507</code></pre>
+    cache = true)</code></pre>
 <p>For more on tuning, refer to the model-tuning tutorial.</p>
 <pre><code class="language-julia">m &#61; MLJ.machine&#40;tm, features, targets&#41;
 
-MLJ.fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{DeterministicTunedModel{Grid,…},…} @423 trained 1 time; caches data
+MLJ.fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{DeterministicTunedModel{Grid,…},…} trained 1 time; caches data
+  model: MLJTuning.DeterministicTunedModel{MLJTuning.Grid, MLJFlux.NeuralNetworkRegressor{MyNetworkBuilder, Flux.Optimise.ADAM, typeof(Flux.Losses.mse)}}
   args: 
-    1:	Source @187 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @387 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @645 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @874 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>This evaluated the model at each value of our range. The best value is:</p>
-<pre><code class="language-julia">MLJ.fitted_params&#40;m&#41;.best_model.batch_size</code></pre><pre><code class="plaintext code-output">5</code></pre>
+<pre><code class="language-julia">MLJ.fitted_params&#40;m&#41;.best_model.batch_size</code></pre><pre><code class="plaintext code-output">1</code></pre>
 
 <div class="page-foot">
   <div class="copyright">

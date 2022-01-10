@@ -226,35 +226,33 @@ end;</code></pre>
 <p>Note that the <code>describe&#40;&#41;</code> function provides you with information about missing values for each of the columns. Fortunately, there are none.</p>
 <h3 id="adjusting_the_scientific_types"><a href="#adjusting_the_scientific_types" class="header-anchor">Adjusting the scientific types</a></h3>
 <p>Let&#39;s check the default scientific type that&#39;s currently associated with the data features:</p>
-<pre><code class="language-julia">schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────┬────────────┐
-│ _.names       │ _.types │ _.scitypes │
-├───────────────┼─────────┼────────────┤
-│ Timestamp     │ String  │ Textual    │
-│ Solar_gen     │ Int64   │ Count      │
-│ Wind_gen      │ Int64   │ Count      │
-│ Windspeed     │ Float64 │ Continuous │
-│ Temperature   │ Float64 │ Continuous │
-│ Radiation_dir │ Float64 │ Continuous │
-│ Radiation_dif │ Float64 │ Continuous │
-└───────────────┴─────────┴────────────┘
-_.nrows = 10247
+<pre><code class="language-julia">schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────┬──────────┐
+│ names         │ scitypes   │ types    │
+├───────────────┼────────────┼──────────┤
+│ Timestamp     │ Textual    │ String31 │
+│ Solar_gen     │ Count      │ Int64    │
+│ Wind_gen      │ Count      │ Int64    │
+│ Windspeed     │ Continuous │ Float64  │
+│ Temperature   │ Continuous │ Float64  │
+│ Radiation_dir │ Continuous │ Float64  │
+│ Radiation_dif │ Continuous │ Float64  │
+└───────────────┴────────────┴──────────┘
 </code></pre>
 <p>It is important that the scientific type of the variables corresponds to one of the types allowed for use with the models you are planning to use. &#40;For more guidance on this, see the <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/">Scientific Type</a> tutorial. The scientific type of both <code>Wind_gen</code> and <code>Solar_gen</code> is currently <code>Count</code>. Let&#39;s coerce them to <code>Continuous</code>.</p>
 <pre><code class="language-julia">coerce&#33;&#40;data, :Wind_gen &#61;&gt; Continuous&#41;
 coerce&#33;&#40;data, :Solar_gen &#61;&gt; Continuous&#41;
 
-schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────┬────────────┐
-│ _.names       │ _.types │ _.scitypes │
-├───────────────┼─────────┼────────────┤
-│ Timestamp     │ String  │ Textual    │
-│ Solar_gen     │ Float64 │ Continuous │
-│ Wind_gen      │ Float64 │ Continuous │
-│ Windspeed     │ Float64 │ Continuous │
-│ Temperature   │ Float64 │ Continuous │
-│ Radiation_dir │ Float64 │ Continuous │
-│ Radiation_dif │ Float64 │ Continuous │
-└───────────────┴─────────┴────────────┘
-_.nrows = 10247
+schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────┬──────────┐
+│ names         │ scitypes   │ types    │
+├───────────────┼────────────┼──────────┤
+│ Timestamp     │ Textual    │ String31 │
+│ Solar_gen     │ Continuous │ Float64  │
+│ Wind_gen      │ Continuous │ Float64  │
+│ Windspeed     │ Continuous │ Float64  │
+│ Temperature   │ Continuous │ Float64  │
+│ Radiation_dir │ Continuous │ Float64  │
+│ Radiation_dif │ Continuous │ Float64  │
+└───────────────┴────────────┴──────────┘
 </code></pre>
 <p>We&#39;re now ready to go&#33;</p>
 <h2 id="exploratory_data_analysis"><a href="#exploratory_data_analysis" class="header-anchor">Exploratory Data Analysis</a></h2>

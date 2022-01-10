@@ -1,1 +1,3 @@
-import MLJLinearModels ✔
+import MLJLinearModelsArgumentError: Package MLJLinearModels not found in current path:
+- Run `import Pkg; Pkg.add("MLJLinearModels")` to install the MLJLinearModels package.
+

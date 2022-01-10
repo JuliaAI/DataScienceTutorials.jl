@@ -157,14 +157,15 @@ X &#61; select&#40;data, Not&#40;:MedV&#41;&#41;;</code></pre>
 <p>Let&#39;s declare a simple multivariate linear regression model:</p>
 <pre><code class="language-julia">mdl &#61; LinearRegressor&#40;&#41;</code></pre><pre><code class="plaintext code-output">LinearRegressor(
     fit_intercept = true,
-    solver = nothing) @957</code></pre>
+    solver = nothing)</code></pre>
 <p>First let&#39;s do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a <em>machine</em> which, in MLJ, is the composition of a model and data to apply the model on:</p>
 <pre><code class="language-julia">X_uni &#61; select&#40;X, :LStat&#41; # only a single feature
 mach_uni &#61; machine&#40;mdl, X_uni, y&#41;
-fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} @192 trained 1 time; caches data
+fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} trained 1 time; caches data
+  model: MLJLinearModels.LinearRegressor
   args: 
-    1:	Source @448 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @793 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @768 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @494 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp &#61; fitted_params&#40;mach_uni&#41;
@@ -233,14 +234,16 @@ round&#40;rms&#40;ŷ, y&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class
 mach &#61; machine&#40;mdl, X3, y&#41;
 fit&#33;&#40;mach&#41;
 ŷ &#61; MLJ.predict&#40;mach, X3&#41;
-round&#40;rms&#40;ŷ, y&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">5.507</code></pre>
+round&#40;rms&#40;ŷ, y&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">ArgumentError: Cannot inspect the internal scitypes of a non-tabular object. 
+</code></pre>
 <p>which again, we can visualise:</p>
 <pre><code class="language-julia">Xnew &#61; &#40;LStat &#61; Xnew.LStat, LStat2 &#61; Xnew.LStat.^2&#41;
 
 figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;X.LStat, y, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;&#41;
-plot&#40;Xnew.LStat, MLJ.predict&#40;mach, Xnew&#41;&#41;</code></pre>
-<img src="/assets/isl/lab-3/code/output/ISL-lab-3-lreg.svg" alt="Polynomial regression">
+plot&#40;Xnew.LStat, MLJ.predict&#40;mach, Xnew&#41;&#41;</code></pre><pre><code class="plaintext code-output">Machine{LinearRegressor,…} has not been trained.
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/isl/lab-3/code/ISL-lab-3-lreg.svg' not found. //</span></p>
 
 
 <div class="page-foot">

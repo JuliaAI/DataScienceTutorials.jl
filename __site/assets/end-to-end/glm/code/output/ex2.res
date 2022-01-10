@@ -1,1 +1,0 @@
-MLJGLMInterface.LinearBinaryClassifier

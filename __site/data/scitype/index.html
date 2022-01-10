@@ -153,25 +153,24 @@
 using ScientificTypes
 
 boston &#61; dataset&#40;&quot;MASS&quot;, &quot;Boston&quot;&#41;
-sch &#61; schema&#40;boston&#41;</code></pre><pre><code class="plaintext code-output">┌─────────┬─────────┬────────────┐
-│ _.names │ _.types │ _.scitypes │
-├─────────┼─────────┼────────────┤
-│ Crim    │ Float64 │ Continuous │
-│ Zn      │ Float64 │ Continuous │
-│ Indus   │ Float64 │ Continuous │
-│ Chas    │ Int64   │ Count      │
-│ NOx     │ Float64 │ Continuous │
-│ Rm      │ Float64 │ Continuous │
-│ Age     │ Float64 │ Continuous │
-│ Dis     │ Float64 │ Continuous │
-│ Rad     │ Int64   │ Count      │
-│ Tax     │ Int64   │ Count      │
-│ PTRatio │ Float64 │ Continuous │
-│ Black   │ Float64 │ Continuous │
-│ LStat   │ Float64 │ Continuous │
-│ MedV    │ Float64 │ Continuous │
-└─────────┴─────────┴────────────┘
-_.nrows = 506
+sch &#61; schema&#40;boston&#41;</code></pre><pre><code class="plaintext code-output">┌─────────┬────────────┬─────────┐
+│ names   │ scitypes   │ types   │
+├─────────┼────────────┼─────────┤
+│ Crim    │ Continuous │ Float64 │
+│ Zn      │ Continuous │ Float64 │
+│ Indus   │ Continuous │ Float64 │
+│ Chas    │ Count      │ Int64   │
+│ NOx     │ Continuous │ Float64 │
+│ Rm      │ Continuous │ Float64 │
+│ Age     │ Continuous │ Float64 │
+│ Dis     │ Continuous │ Float64 │
+│ Rad     │ Count      │ Int64   │
+│ Tax     │ Count      │ Int64   │
+│ PTRatio │ Continuous │ Float64 │
+│ Black   │ Continuous │ Float64 │
+│ LStat   │ Continuous │ Float64 │
+│ MedV    │ Continuous │ Float64 │
+└─────────┴────────────┴─────────┘
 </code></pre>
 <p>In this cases, most of the variables have a &#40;machine&#41; type <code>Float64</code> and their default  interpretation is <code>Continuous</code>. There is also <code>:Chas</code>, <code>:Rad</code> and <code>:Tax</code> that have a &#40;machine&#41; type <code>Int64</code> and their default interpretation is <code>Count</code>.</p>
 <p>While the interpretation as <code>Continuous</code> is usually fine, the interpretation as <code>Count</code> needs a bit more attention. For instance note that:</p>
@@ -199,23 +198,21 @@ elscitype&#40;feature2&#41;</code></pre><pre><code class="plaintext code-output"
 <h3 id="type_to_type_coercion"><a href="#type_to_type_coercion" class="header-anchor">Type to Type coercion</a></h3>
 <p>In  some cases you will want to reinterpret all features currently interpreted as some scitype <code>S1</code> into some other scitype <code>S2</code>. An example  is if some features are currently interpreted as <code>Count</code> because their original type was <code>Int</code> but you  want  to  consider all such as <code>Continuous</code>:</p>
 <pre><code class="language-julia">data &#61; select&#40;boston, &#91;:Rad, :Tax&#93;&#41;
-schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌─────────┬─────────┬────────────┐
-│ _.names │ _.types │ _.scitypes │
-├─────────┼─────────┼────────────┤
-│ Rad     │ Int64   │ Count      │
-│ Tax     │ Int64   │ Count      │
-└─────────┴─────────┴────────────┘
-_.nrows = 506
+schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌───────┬──────────┬───────┐
+│ names │ scitypes │ types │
+├───────┼──────────┼───────┤
+│ Rad   │ Count    │ Int64 │
+│ Tax   │ Count    │ Int64 │
+└───────┴──────────┴───────┘
 </code></pre>
 <p>let&#39;s coerce from <code>Count</code> to <code>Continuous</code>:</p>
 <pre><code class="language-julia">data2 &#61; coerce&#40;data, Count &#61;&gt; Continuous&#41;
-schema&#40;data2&#41;</code></pre><pre><code class="plaintext code-output">┌─────────┬─────────┬────────────┐
-│ _.names │ _.types │ _.scitypes │
-├─────────┼─────────┼────────────┤
-│ Rad     │ Float64 │ Continuous │
-│ Tax     │ Float64 │ Continuous │
-└─────────┴─────────┴────────────┘
-_.nrows = 506
+schema&#40;data2&#41;</code></pre><pre><code class="plaintext code-output">┌───────┬────────────┬─────────┐
+│ names │ scitypes   │ types   │
+├───────┼────────────┼─────────┤
+│ Rad   │ Continuous │ Float64 │
+│ Tax   │ Continuous │ Float64 │
+└───────┴────────────┴─────────┘
 </code></pre>
 <h3 id="autotype"><a href="#autotype" class="header-anchor">Autotype</a></h3>
 <p>A last useful tool is <code>autotype</code> which allows you to specify <em>rules</em> to define the interpretation of features automatically. You can code your own rules but there are three useful ones that are pre- coded:</p>
@@ -236,25 +233,24 @@ _.nrows = 506
 <p>column.</p>
 <p>For instance:</p>
 <pre><code class="language-julia">boston3 &#61; coerce&#40;boston, autotype&#40;boston, :few_to_finite&#41;&#41;
-schema&#40;boston3&#41;</code></pre><pre><code class="plaintext code-output">┌─────────┬───────────────────────────────────┬───────────────────┐
-│ _.names │ _.types                           │ _.scitypes        │
-├─────────┼───────────────────────────────────┼───────────────────┤
-│ Crim    │ Float64                           │ Continuous        │
-│ Zn      │ CategoricalValue{Float64, UInt32} │ OrderedFactor{26} │
-│ Indus   │ Float64                           │ Continuous        │
-│ Chas    │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{2}  │
-│ NOx     │ Float64                           │ Continuous        │
-│ Rm      │ Float64                           │ Continuous        │
-│ Age     │ Float64                           │ Continuous        │
-│ Dis     │ Float64                           │ Continuous        │
-│ Rad     │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{9}  │
-│ Tax     │ Int64                             │ Count             │
-│ PTRatio │ CategoricalValue{Float64, UInt32} │ OrderedFactor{46} │
-│ Black   │ Float64                           │ Continuous        │
-│ LStat   │ Float64                           │ Continuous        │
-│ MedV    │ Float64                           │ Continuous        │
-└─────────┴───────────────────────────────────┴───────────────────┘
-_.nrows = 506
+schema&#40;boston3&#41;</code></pre><pre><code class="plaintext code-output">┌─────────┬───────────────────┬───────────────────────────────────┐
+│ names   │ scitypes          │ types                             │
+├─────────┼───────────────────┼───────────────────────────────────┤
+│ Crim    │ Continuous        │ Float64                           │
+│ Zn      │ OrderedFactor{26} │ CategoricalValue{Float64, UInt32} │
+│ Indus   │ Continuous        │ Float64                           │
+│ Chas    │ OrderedFactor{2}  │ CategoricalValue{Int64, UInt32}   │
+│ NOx     │ Continuous        │ Float64                           │
+│ Rm      │ Continuous        │ Float64                           │
+│ Age     │ Continuous        │ Float64                           │
+│ Dis     │ Continuous        │ Float64                           │
+│ Rad     │ OrderedFactor{9}  │ CategoricalValue{Int64, UInt32}   │
+│ Tax     │ Count             │ Int64                             │
+│ PTRatio │ OrderedFactor{46} │ CategoricalValue{Float64, UInt32} │
+│ Black   │ Continuous        │ Float64                           │
+│ LStat   │ Continuous        │ Float64                           │
+│ MedV    │ Continuous        │ Float64                           │
+└─────────┴───────────────────┴───────────────────────────────────┘
 </code></pre>
 <p>You can also specify multiple rules, see <a href="https://juliaai.github.io/ScientificTypes.jl/dev/#Automatic-type-conversion">the docs</a> for more information.</p>
 

@@ -10,4 +10,4 @@ NeuralNetworkRegressor(
     alpha = 0.0,
     rng = Random._GLOBAL_RNG(),
     optimiser_changes_trigger_retraining = false,
-    acceleration = ComputationalResources.CPU1{Nothing}(nothing)) @480
+    acceleration = ComputationalResources.CPU1{Nothing}(nothing))

@@ -21,8 +21,6 @@ ioff() # hide
 X, y = @load_boston
 sch = schema(X)
 p = length(sch.names)
-n = sch.nrows
-@show (n, p)
 describe(y)  # From DataFrames
 
 # Let's load the decision tree regressor
@@ -42,8 +40,8 @@ e
 #
 # Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.
 
-forest = EnsembleModel(atom=DecisionTreeRegressor())
-forest.atom.n_subfeatures = 3
+forest = EnsembleModel(model=DecisionTreeRegressor())
+forest.model.n_subfeatures = 3
 
 # (**NB**: we could have fixed `n_subfeatures` in the DTR constructor too).
 #
@@ -80,7 +78,7 @@ params(forest) |> pprint
 
 # Let's define a range for the number of subfeatures and for the bagging fraction:
 
-r_sf = range(forest, :(atom.n_subfeatures), lower=1, upper=12)
+r_sf = range(forest, :(model.n_subfeatures), lower=1, upper=12)
 r_bf = range(forest, :bagging_fraction, lower=0.4, upper=1.0);
 
 # And build a tuned model as usual that we fit on a 80/20 split.

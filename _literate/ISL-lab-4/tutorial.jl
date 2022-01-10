@@ -5,7 +5,6 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
-
 # ## Stock market data
 #
 # Let's load the usual packages and the data

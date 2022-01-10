@@ -143,20 +143,19 @@ df&#91;1:5, :&#93; |&gt; pretty</code></pre><pre><code class="plaintext code-out
 └───────────┴──────────────┴──────────────┴───────────────┴──────────────┴──────────────┘
 </code></pre>
 <p>inspect the schema:</p>
-<pre><code class="language-julia">schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬─────────┬────────────┐
-│ _.names       │ _.types │ _.scitypes │
-├───────────────┼─────────┼────────────┤
-│ Frequency     │ Int64   │ Count      │
-│ Attack_Angle  │ Float64 │ Continuous │
-│ Chord+Length  │ Float64 │ Continuous │
-│ Free_Velocity │ Float64 │ Continuous │
-│ Suction_Side  │ Float64 │ Continuous │
-│ Scaled_Sound  │ Float64 │ Continuous │
-└───────────────┴─────────┴────────────┘
-_.nrows = 1503
+<pre><code class="language-julia">schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────┬─────────┐
+│ names         │ scitypes   │ types   │
+├───────────────┼────────────┼─────────┤
+│ Frequency     │ Count      │ Int64   │
+│ Attack_Angle  │ Continuous │ Float64 │
+│ Chord+Length  │ Continuous │ Float64 │
+│ Free_Velocity │ Continuous │ Float64 │
+│ Suction_Side  │ Continuous │ Float64 │
+│ Scaled_Sound  │ Continuous │ Float64 │
+└───────────────┴────────────┴─────────┘
 </code></pre>
 <p>unpack into the data and labels:</p>
-<pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Scaled_Sound&#41;, col -&gt; true&#41;;</code></pre>
+<pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Scaled_Sound&#41;&#41;;</code></pre>
 <p>Now we Standardize the features using the transformer Standardizer&#40;&#41;</p>
 <pre><code class="language-julia">X &#61; MLJ.transform&#40;fit&#33;&#40;machine&#40;Standardizer&#40;&#41;, X&#41;&#41;, X&#41;;</code></pre>
 <p>Partition into train and test set</p>
@@ -247,7 +246,7 @@ fit&#33;&#40;dcrm, rows&#61;train&#41;
 pred_dcrm &#61; predict&#40;dcrm, rows&#61;test&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Now you can call a loss function to assess the performance on test set.</p>
-<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.906199572268708</code></pre>
+<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.912630331542761</code></pre>
 <h2 id="randomforestregressor"><a href="#randomforestregressor" class="header-anchor">RandomForestRegressor</a></h2>
 <p>Now let&#39;s try out RandomForestRegressor:</p>
 <pre><code class="language-julia">RandomForestRegressor &#61; @load RandomForestRegressor pkg&#61;DecisionTree
@@ -259,7 +258,7 @@ rfr_m &#61; machine&#40;rfr, X, y&#41;;</code></pre><pre><code class="plaintext 
 <pre><code class="language-julia">fit&#33;&#40;rfr_m, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr &#61; predict&#40;rfr_m, rows&#61;test&#41;;
-rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.426064688227298</code></pre>
+rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.3791419542821077</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <h2 id="tuning"><a href="#tuning" class="header-anchor">Tuning</a></h2>
@@ -280,7 +279,7 @@ rfr_tm &#61; machine&#40;tm, X, y&#41;;</code></pre>
 <pre><code class="language-julia">fit&#33;&#40;rfr_tm, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm &#61; predict&#40;rfr_tm, rows&#61;test&#41;;
-rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.4060238870592663</code></pre>
+rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2884649951457146</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="language-julia">fitted_params&#40;rfr_tm&#41;.best_model</code></pre><pre><code class="plaintext code-output">RandomForestRegressor(
@@ -289,10 +288,10 @@ rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintex
     min_samples_split = 2,
     min_purity_increase = 0.0,
     n_subfeatures = -1,
-    n_trees = 10,
-    sampling_fraction = 0.8,
+    n_trees = 13,
+    sampling_fraction = 0.7666666666666667,
     pdf_smoothing = 0.0,
-    rng = Random._GLOBAL_RNG()) @469</code></pre>
+    rng = Random._GLOBAL_RNG())</code></pre>
 <p>Now we can investigate the tuning by using report. Let&#39;s plot a heatmap of the measurements:</p>
 <pre><code class="language-julia">r &#61; report&#40;rfr_tm&#41;
 res &#61; r.plotting

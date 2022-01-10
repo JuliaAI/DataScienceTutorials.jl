@@ -20,7 +20,7 @@ rms(ŷ, y[test])
 evaluate!(knn, resampling=Holdout(fraction_train=0.7),
           measure=rms) |> pprint
 
-ensemble_model = EnsembleModel(atom=knn_model, n=20);
+ensemble_model = EnsembleModel(model=knn_model, n=20);
 
 ensemble = machine(ensemble_model, X, y)
 estimates = evaluate!(ensemble, resampling=CV())
@@ -67,4 +67,3 @@ savefig("assets/literate/A-ensembles-heatmap.svg") # hide
 
 ŷ = predict(tuned_ensemble, rows=test)
 rms(ŷ, y[test])
-

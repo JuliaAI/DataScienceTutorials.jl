@@ -105,39 +105,13 @@ fit!(ŷ, rows=train)
 ypreds = ŷ(rows=test)
 rmsl(y[test], ypreds)
 
-# ### Using the "arrow" syntax
-#
-# If you're using Julia 1.3, you can use the following syntax to do the same thing.
-
-# *First layer*: one hot encoding and log transform:
-
-W = Xs |> OneHotEncoder()
-z = ys |> log;
-
-# *Second layer*: KNN Regression and Ridge regression
-
-ẑ₁ = (W, z) |> KNNRegressor(K=5)
-ẑ₂ = (W, z) |> RidgeRegressor(lambda=2.5);
-
-# *Third layer*: weighted sum of the two models:
-
-ẑ = 0.3ẑ₁ + 0.7ẑ₂;
-
-# then the inverse transform
-
-ŷ = exp(ẑ);
-
-# You can then fit and evaluate the model as usual:
-
-fit!(ŷ, rows=train)
-rmsl(y[test], ŷ(rows=test))
 
 # ### Tuning the model
 #
 # So far the hyperparameters were explicitly given but it makes more sense to learn them.
 # For this, we define a model around the learning network which can then be trained and tuned as any model:
 
-mutable struct KNNRidgeBlend <: DeterministicNetwork
+mutable struct KNNRidgeBlend <: DeterministicComposite
     knn_model::KNNRegressor
     ridge_model::RidgeRegressor
     knn_weight::Float64

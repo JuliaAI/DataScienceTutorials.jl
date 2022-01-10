@@ -229,7 +229,7 @@ xlim&#40;&#91;-1100, 1100&#93;&#41;</code></pre>
 <pre><code class="language-julia">pipe.model.linear_regressor &#61; RidgeRegressor&#40;&#41;
 fit&#33;&#40;pipe, rows&#61;train&#41;
 ŷ &#61; MLJ.predict&#40;pipe, rows&#61;test&#41;
-round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">109600.0</code></pre>
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">119800.0</code></pre>
 <p>Ok that&#39;s a bit better but surely we can do better with an appropriate selection of the hyperparameter.</p>
 <h3 id="cross_validating"><a href="#cross_validating" class="header-anchor">Cross validating</a></h3>
 <p>What penalty should you use? Let&#39;s do a simple CV to try to find out:</p>
@@ -240,10 +240,10 @@ mtm &#61; machine&#40;tm, Xc, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
 best_mdl &#61; fitted_params&#40;mtm&#41;.best_model
-round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">26.83</code></pre>
+round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">0.3728</code></pre>
 <p>right, and  with that we get:</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
-round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">94130.0</code></pre>
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">98040.0</code></pre>
 <p>Let&#39;s see:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 
@@ -265,19 +265,19 @@ mtm.model.range &#61; range&#40;model, :&#40;linear_regressor.lambda&#41;, lower
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
 best_mdl &#61; fitted_params&#40;mtm&#41;.best_model
-round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">500.0</code></pre>
+round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">2531.0</code></pre>
 <p>Ok and let&#39;s see how that does:</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
-round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">98740.0</code></pre>
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">98330.0</code></pre>
 <p>Pretty good&#33; and the parameters are reasonably sparse as expected:</p>
 <pre><code class="language-julia">coefs, intercept &#61; fitted_params&#40;mtm.fitresult&#41;.linear_regressor
 @show coefs
-@show intercept</code></pre><pre><code class="plaintext code-output">coefs = [:AtBat => -223.47299900072048, :Hits => 88.15051203823893, :HmRun => 0.0, :Runs => 179.00966853199657, :RBI => -29.390474497284877, :Walks => 95.01967139945249, :Years => -52.46067107036041, :CAtBat => 0.0, :CHits => 234.206384351214, :CHmRun => -30.325274901672948, :CRuns => 0.0, :CRBI => 209.59788250881334, :CWalks => -174.70781916549126, :League__A => -16.943202611202185, :League__N => 21.003667321464004, :Division__E => 70.20464829200642, :Division__W => -58.72272166046038, :PutOuts => 68.12266435844134, :Assists => 34.845065097082376, :Errors => -23.063832947776216, :NewLeague__A => 0.0, :NewLeague__N => -0.0]
-intercept = 539.2239936038059
+@show intercept</code></pre><pre><code class="plaintext code-output">coefs = [:AtBat => -0.0, :Hits => 0.0, :HmRun => -0.0, :Runs => 82.33487884749951, :RBI => 0.0, :Walks => 37.88394248222143, :Years => -0.0, :CAtBat => 0.0, :CHits => 152.33401765158266, :CHmRun => 0.0, :CRuns => 0.0, :CRBI => 28.535678620243, :CWalks => -0.0, :League__A => -0.0, :League__N => 0.0, :Division__E => 22.920702987660867, :Division__W => -45.33006538883337, :PutOuts => 64.09339067499211, :Assists => 0.0, :Errors => -0.0, :NewLeague__A => -0.0, :NewLeague__N => 0.0]
+intercept = 555.6709756637167
 </code></pre>
 <p>with around 50&#37; sparsity:</p>
 <pre><code class="language-julia">coef_vals &#61; &#91;c&#91;2&#93; for c in coefs&#93;
-sum&#40;coef_vals .≈ 0&#41; / length&#40;coefs&#41;</code></pre><pre><code class="plaintext code-output">0.22727272727272727</code></pre>
+sum&#40;coef_vals .≈ 0&#41; / length&#40;coefs&#41;</code></pre><pre><code class="plaintext code-output">0.6818181818181818</code></pre>
 <p>Let&#39;s visualise this:</p>
 <pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 stem&#40;coef_vals&#41;
@@ -305,12 +305,12 @@ fit&#33;&#40;mtm, rows&#61;train&#41;
 best_mdl &#61; fitted_params&#40;mtm&#41;.best_model
 @show round&#40;best_mdl.linear_regressor.lambda, sigdigits&#61;4&#41;
 @show round&#40;best_mdl.linear_regressor.gamma, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
-round(best_mdl.linear_regressor.lambda, sigdigits = 4) = 100.0
-round(best_mdl.linear_regressor.gamma, sigdigits = 4) = 2641.0
+round(best_mdl.linear_regressor.lambda, sigdigits = 4) = 0.1
+round(best_mdl.linear_regressor.gamma, sigdigits = 4) = 7169.0
 </code></pre>
 <p>And it&#39;s not too bad in terms of accuracy either</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
-round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">104600.0</code></pre>
+round&#40;rms&#40;ŷ, y&#91;test&#93;&#41;^2, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">128500.0</code></pre>
 <p>But the simple ridge regression seems to work best here.</p>
 
 

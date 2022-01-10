@@ -8,4 +8,4 @@ SVMRegressor(
     epsilon = 0.1,
     shrinking = true,
     cache_size = 200,
-    max_iter = -1) @745
+    max_iter = -1)

@@ -95,7 +95,7 @@ round(res.measurement[1], sigdigits=3)
 #
 # An alternative to the `@from_network`, is to fully define a new model with its `fit` method:
 
-mutable struct CompositeModel2 <: DeterministicNetwork
+mutable struct CompositeModel2 <: DeterministicComposite
     std_model::Standardizer
     box_model::UnivariateBoxCoxTransformer
     ridge_model::Ridge
