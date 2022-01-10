@@ -52,20 +52,3 @@ ridge_model.lambda = 5.0;
 fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))
 
-W = X |> Standardizer()
-z = y |> UnivariateBoxCoxTransformer()
-
-ẑ = (W, z) |> Ridge(lambda=0.1);
-
-ŷ = ẑ |> inverse_transform(z);
-
-fit!(ŷ, rows=train)
-rms(y[test], ŷ(rows=test))
-
-ẑ[:lambda] = 5.0;
-
-ẑ.machine.model.lambda = 5.0;
-
-fit!(ŷ, rows=train)
-rms(y[test], ŷ(rows=test))
-

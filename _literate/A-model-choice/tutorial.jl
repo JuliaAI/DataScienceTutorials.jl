@@ -34,7 +34,7 @@ first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty
 #
 # The function `unpack` helps specify the target and the input for a regression or classification task
 
-y, X = unpack(iris, ==(:Species), colname -> true)
+y, X = unpack(iris, ==(:Species))
 first(X, 1) |> pretty
 
 # The two arguments after the dataframes should be understood as _functions_ over column names specifying the target and the input data respectively.
