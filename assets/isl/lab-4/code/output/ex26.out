@@ -1,0 +1,6 @@
+MethodError: no method matching fit!(::typeof(PyPlot.clf); rows=1:998)
+Closest candidates are:
+  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at ~/.julia/packages/StatsBase/IPydo/src/statmodels.jl:183 got unsupported keyword argument "rows"
+  fit!(!Matched::MLJBase.Machine{<:MLJBase.Surrogate}; kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/machines.jl:251
+  fit!(!Matched::MLJBase.Node; acceleration, kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/nodes.jl:181
+  ...

@@ -1,6 +1,6 @@
 DeterministicTunedModel(
     model = NeuralNetworkRegressor(
-            builder = MyNetworkBuilder @614,
+            builder = MyNetworkBuilder,
             optimiser = Flux.Optimise.ADAM(0.001, (0.9, 0.999), IdDict{Any, Any}()),
             loss = Flux.Losses.mse,
             epochs = 15,
@@ -19,11 +19,10 @@ DeterministicTunedModel(
             fraction_train = 0.7,
             shuffle = false,
             rng = Random._GLOBAL_RNG()),
-    measure = LPLoss(
-            p = 2),
+    measure = LPLoss(p = 2),
     weights = nothing,
-    operation = MLJModelInterface.predict,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange{Int64,…} @177],
+    operation = nothing,
+    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange(1 ≤ batch_size ≤ 5; origin=3.0, unit=2.0)],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
@@ -31,4 +30,4 @@ DeterministicTunedModel(
     acceleration = ComputationalResources.CPU1{Nothing}(nothing),
     acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
     check_measure = true,
-    cache = true) @507
+    cache = true)

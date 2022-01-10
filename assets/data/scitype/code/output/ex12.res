@@ -1,19 +1,18 @@
-┌─────────┬───────────────────────────────────┬───────────────────┐
-│ _.names │ _.types                           │ _.scitypes        │
-├─────────┼───────────────────────────────────┼───────────────────┤
-│ Crim    │ Float64                           │ Continuous        │
-│ Zn      │ CategoricalValue{Float64, UInt32} │ OrderedFactor{26} │
-│ Indus   │ Float64                           │ Continuous        │
-│ Chas    │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{2}  │
-│ NOx     │ Float64                           │ Continuous        │
-│ Rm      │ Float64                           │ Continuous        │
-│ Age     │ Float64                           │ Continuous        │
-│ Dis     │ Float64                           │ Continuous        │
-│ Rad     │ CategoricalValue{Int64, UInt32}   │ OrderedFactor{9}  │
-│ Tax     │ Int64                             │ Count             │
-│ PTRatio │ CategoricalValue{Float64, UInt32} │ OrderedFactor{46} │
-│ Black   │ Float64                           │ Continuous        │
-│ LStat   │ Float64                           │ Continuous        │
-│ MedV    │ Float64                           │ Continuous        │
-└─────────┴───────────────────────────────────┴───────────────────┘
-_.nrows = 506
+┌─────────┬───────────────────┬───────────────────────────────────┐
+│ names   │ scitypes          │ types                             │
+├─────────┼───────────────────┼───────────────────────────────────┤
+│ Crim    │ Continuous        │ Float64                           │
+│ Zn      │ OrderedFactor{26} │ CategoricalValue{Float64, UInt32} │
+│ Indus   │ Continuous        │ Float64                           │
+│ Chas    │ OrderedFactor{2}  │ CategoricalValue{Int64, UInt32}   │
+│ NOx     │ Continuous        │ Float64                           │
+│ Rm      │ Continuous        │ Float64                           │
+│ Age     │ Continuous        │ Float64                           │
+│ Dis     │ Continuous        │ Float64                           │
+│ Rad     │ OrderedFactor{9}  │ CategoricalValue{Int64, UInt32}   │
+│ Tax     │ Count             │ Int64                             │
+│ PTRatio │ OrderedFactor{46} │ CategoricalValue{Float64, UInt32} │
+│ Black   │ Continuous        │ Float64                           │
+│ LStat   │ Continuous        │ Float64                           │
+│ MedV    │ Continuous        │ Float64                           │
+└─────────┴───────────────────┴───────────────────────────────────┘

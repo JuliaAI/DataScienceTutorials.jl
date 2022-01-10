@@ -30,7 +30,7 @@ df[1:5, :] |> pretty
 
 schema(df)
 
-y, X = unpack(df, ==(:Scaled_Sound), col -> true);
+y, X = unpack(df, ==(:Scaled_Sound));
 
 X = MLJ.transform(fit!(machine(Standardizer(), X)), X);
 

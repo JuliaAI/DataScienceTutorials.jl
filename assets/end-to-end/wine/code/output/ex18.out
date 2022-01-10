@@ -1,1 +1,7 @@
 import MLJMultivariateStatsInterface ✔
+MethodError: no method matching fit!(::MLJBase.UnsupervisedPipeline{NamedTuple{(:f, :standardizer, :pca), Tuple{Any, MLJModelInterface.Unsupervised, MLJModelInterface.Unsupervised}}, MLJModelInterface.predict})
+Closest candidates are:
+  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at ~/.julia/packages/StatsBase/IPydo/src/statmodels.jl:183
+  fit!(!Matched::MLJBase.Machine{<:MLJBase.Surrogate}; kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/machines.jl:251
+  fit!(!Matched::MLJBase.Node; acceleration, kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/nodes.jl:181
+  ...
