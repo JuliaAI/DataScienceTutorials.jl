@@ -147,11 +147,17 @@ ytrain = y[train];
 
 # And let's define a pipeline corresponding to the operations above
 
-SimplePipe = @pipeline(OneHotEncoder(),
-                       MultinomialClassifier(), prediction_type=:probabilistic)
+SimplePipe = Pipeline(
+    OneHotEncoder(),
+    MultinomialClassifier()
+    prediction_type=:probabilistic
+)
 mach = machine(SimplePipe, Xtrain, ytrain)
-res = evaluate!(mach; resampling=Holdout(fraction_train=0.9),
-                measure=cross_entropy)
+res = evaluate!(
+    mach;
+    resampling=Holdout(fraction_train=0.9),
+    measure=cross_entropy
+)
 round(res.measurement[1], sigdigits=3)
 
 # This is the cross entropy on some held-out 10% of the training set.
