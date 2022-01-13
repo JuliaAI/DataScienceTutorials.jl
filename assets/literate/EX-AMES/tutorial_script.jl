@@ -57,20 +57,7 @@ fit!(ŷ, rows=train)
 ypreds = ŷ(rows=test)
 rmsl(y[test], ypreds)
 
-W = Xs |> OneHotEncoder()
-z = ys |> log;
-
-ẑ₁ = (W, z) |> KNNRegressor(K=5)
-ẑ₂ = (W, z) |> RidgeRegressor(lambda=2.5);
-
-ẑ = 0.3ẑ₁ + 0.7ẑ₂;
-
-ŷ = exp(ẑ);
-
-fit!(ŷ, rows=train)
-rmsl(y[test], ŷ(rows=test))
-
-mutable struct KNNRidgeBlend <: DeterministicNetwork
+mutable struct KNNRidgeBlend <: DeterministicComposite
     knn_model::KNNRegressor
     ridge_model::RidgeRegressor
     knn_weight::Float64

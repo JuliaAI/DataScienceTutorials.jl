@@ -1,0 +1,1 @@
+NumericRange(1 ≤ max_depth ≤ 5; origin=3.0, unit=2.0)

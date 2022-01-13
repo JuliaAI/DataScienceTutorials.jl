@@ -135,50 +135,13 @@ ypreds = ŷ(rows=test)
 rmsl(y[test], ypreds)
 ```
 
-### Using the "arrow" syntax
-
-If you're using Julia 1.3, you can use the following syntax to do the same thing.
-
-*First layer*: one hot encoding and log transform:
-
-```julia:ex16
-W = Xs |> OneHotEncoder()
-z = ys |> log;
-```
-
-*Second layer*: KNN Regression and Ridge regression
-
-```julia:ex17
-ẑ₁ = (W, z) |> KNNRegressor(K=5)
-ẑ₂ = (W, z) |> RidgeRegressor(lambda=2.5);
-```
-
-*Third layer*: weighted sum of the two models:
-
-```julia:ex18
-ẑ = 0.3ẑ₁ + 0.7ẑ₂;
-```
-
-then the inverse transform
-
-```julia:ex19
-ŷ = exp(ẑ);
-```
-
-You can then fit and evaluate the model as usual:
-
-```julia:ex20
-fit!(ŷ, rows=train)
-rmsl(y[test], ŷ(rows=test))
-```
-
 ### Tuning the model
 
 So far the hyperparameters were explicitly given but it makes more sense to learn them.
 For this, we define a model around the learning network which can then be trained and tuned as any model:
 
-```julia:ex21
-mutable struct KNNRidgeBlend <: DeterministicNetwork
+```julia:ex16
+mutable struct KNNRidgeBlend <: DeterministicComposite
     knn_model::KNNRegressor
     ridge_model::RidgeRegressor
     knn_weight::Float64
@@ -187,7 +150,7 @@ end
 
 We must specify how such a model should be fit, which is effectively just the learning network we had defined before except that now the parameters are contained in the struct:
 
-```julia:ex22
+```julia:ex17
 function MLJ.fit(model::KNNRidgeBlend, verbosity::Int, X, y)
     Xs = source(X)
     ys = source(y)
@@ -211,7 +174,7 @@ end
 
 You can now instantiate and fit such a model:
 
-```julia:ex23
+```julia:ex18
 krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)
 mach = machine(krb, X, y)
 fit!(mach, rows=train)
@@ -224,7 +187,7 @@ But more interestingly, the hyperparameters of the model can be tuned.
 
 Before we get started, it's important to note that the hyperparameters of the model have different levels of *nesting*. This becomes explicit when trying to access elements:
 
-```julia:ex24
+```julia:ex19
 @show krb.knn_weight
 @show krb.knn_model.K
 @show krb.ridge_model.lambda
@@ -232,13 +195,13 @@ Before we get started, it's important to note that the hyperparameters of the mo
 
 You can also see all the hyperparameters using the `params` function:
 
-```julia:ex25
+```julia:ex20
 params(krb) |> pprint
 ```
 
 The range of values to do your hyperparameter tuning over should follow the nesting structure reflected by `params`:
 
-```julia:ex26
+```julia:ex21
 k_range = range(krb, :(knn_model.K), lower=2, upper=100, scale=:log10)
 l_range = range(krb, :(ridge_model.lambda), lower=1e-4, upper=10, scale=:log10)
 w_range = range(krb, :(knn_weight), lower=0.1, upper=0.9)
@@ -248,7 +211,7 @@ ranges = [k_range, l_range, w_range]
 
 Now there remains to define how the tuning should be done, let's just specify a very coarse grid tuning with cross validation and instantiate a tuned model:
 
-```julia:ex27
+```julia:ex22
 tuning = Grid(resolution=3)
 resampling = CV(nfolds=6)
 
@@ -258,14 +221,14 @@ tm = TunedModel(model=krb, tuning=tuning, resampling=resampling,
 
 which we can now finally fit...
 
-```julia:ex28
+```julia:ex23
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train);
 ```
 
 To retrieve the best model, you can use:
 
-```julia:ex29
+```julia:ex24
 krb_best = fitted_params(mtm).best_model
 @show krb_best.knn_model.K
 @show krb_best.ridge_model.lambda
@@ -274,7 +237,7 @@ krb_best = fitted_params(mtm).best_model
 
 you can also use `mtm` to make predictions (which will be done using the best model)
 
-```julia:ex30
+```julia:ex25
 preds = predict(mtm, rows=test)
 rmsl(y[test], preds)
 ```

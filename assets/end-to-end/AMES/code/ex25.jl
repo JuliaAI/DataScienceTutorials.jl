@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-params(krb) |> pprint
+preds = predict(mtm, rows=test)
+rmsl(y[test], preds)
