@@ -38,7 +38,7 @@ schema(df)
 
 # unpack into the data and labels:
 
-y, X = unpack(df, ==(:Scaled_Sound), col -> true);
+y, X = unpack(df, ==(:Scaled_Sound));
 
 # Now we Standardize the features using the transformer Standardizer()
 

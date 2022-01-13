@@ -99,7 +99,7 @@ y = 2X.x1 - X.x2 + 0.05 * randn(100);
 # Let's then build a simple ensemble model with decision tree regressors:
 
 DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
-forest = EnsembleModel(atom=DecisionTreeRegressor())
+forest = EnsembleModel(model=DecisionTreeRegressor())
 
 # Such a model has *nested* hyperparameters in that the ensemble has hyperparameters (e.g. the `:bagging_fraction`) and the atom has hyperparameters (e.g. `:n_subfeatures` or `:max_depth`).
 # You can see this by inspecting the parameters using `params`:
@@ -108,7 +108,7 @@ params(forest) |> pprint
 
 # Range for nested hyperparameters are specified using dot syntax, the rest is done in much the same way as before:
 
-r1 = range(forest, :(atom.n_subfeatures), lower=1, upper=3)
+r1 = range(forest, :(model.n_subfeatures), lower=1, upper=3)
 r2 = range(forest, :bagging_fraction, lower=0.4, upper=1.0)
 tm = TunedModel(model=forest, tuning=Grid(resolution=12),
                 resampling=CV(nfolds=6), ranges=[r1, r2],

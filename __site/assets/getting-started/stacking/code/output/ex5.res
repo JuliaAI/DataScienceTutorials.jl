@@ -1,4 +1,5 @@
-Machine{DeterministicSurrogate,…} @017 trained 0 times; does not cache data
+Machine{DeterministicSurrogate,…} trained 0 times; does not cache data
+  model: MLJBase.DeterministicSurrogate
   args: 
-    1:	Source @053 ⏎ `Nothing`
-    2:	Source @493 ⏎ `Nothing`
+    1:	Source @196 ⏎ `Nothing`
+    2:	Source @595 ⏎ `Nothing`

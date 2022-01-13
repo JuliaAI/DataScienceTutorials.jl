@@ -1,1 +1,1 @@
-AbstractVector{ScientificTypesBase.Continuous} (alias for AbstractArray{ScientificTypesBase.Continuous, 1})
+AbstractVector{Continuous} (alias for AbstractArray{ScientificTypesBase.Continuous, 1})

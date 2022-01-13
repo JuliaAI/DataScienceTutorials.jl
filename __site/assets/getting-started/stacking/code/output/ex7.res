@@ -8,4 +8,4 @@ MyAverageTwo(
             metric = Distances.Euclidean(0.0),
             leafsize = 10,
             reorder = true,
-            weights = NearestNeighborModels.Uniform())) @872
+            weights = NearestNeighborModels.Uniform()))

@@ -1,11 +1,10 @@
-┌───────────────┬─────────┬────────────┐
-│ _.names       │ _.types │ _.scitypes │
-├───────────────┼─────────┼────────────┤
-│ Frequency     │ Int64   │ Count      │
-│ Attack_Angle  │ Float64 │ Continuous │
-│ Chord+Length  │ Float64 │ Continuous │
-│ Free_Velocity │ Float64 │ Continuous │
-│ Suction_Side  │ Float64 │ Continuous │
-│ Scaled_Sound  │ Float64 │ Continuous │
-└───────────────┴─────────┴────────────┘
-_.nrows = 1503
+┌───────────────┬────────────┬─────────┐
+│ names         │ scitypes   │ types   │
+├───────────────┼────────────┼─────────┤
+│ Frequency     │ Count      │ Int64   │
+│ Attack_Angle  │ Continuous │ Float64 │
+│ Chord+Length  │ Continuous │ Float64 │
+│ Free_Velocity │ Continuous │ Float64 │
+│ Suction_Side  │ Continuous │ Float64 │
+│ Scaled_Sound  │ Continuous │ Float64 │
+└───────────────┴────────────┴─────────┘

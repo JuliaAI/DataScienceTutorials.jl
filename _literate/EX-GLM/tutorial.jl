@@ -65,7 +65,7 @@ LinearRegressorPipe = @pipeline(Standardizer(),
                                 OneHotEncoder(drop_last = true),
                                 LinearRegressor())
 
-LinearModel = machine(LinearRegressorPipe, X, yv)
+LinearModel = machine(LinearRegressorPipe, Xm, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)
 
@@ -73,7 +73,7 @@ fp = fitted_params(LinearModel)
 #
 # We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.
 
-ŷ = MLJ.predict(LinearModel, X)
+ŷ = MLJ.predict(LinearModel, Xm)
 yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)

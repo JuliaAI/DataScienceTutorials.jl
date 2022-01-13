@@ -47,7 +47,7 @@ evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
 # MLJ offers basic support for ensembling such as [_bagging_](https://en.wikipedia.org/wiki/Bootstrap_aggregating).
 # Defining such an ensemble of simple "atomic" models is done via the `EnsembleModel` constructor:
 
-ensemble_model = EnsembleModel(atom=knn_model, n=20);
+ensemble_model = EnsembleModel(model=knn_model, n=20);
 
 # where the `n=20` indicates how many models are present in the ensemble.
 #
@@ -76,7 +76,7 @@ params(ensemble_model) |> pprint
 
 B_range = range(ensemble_model, :bagging_fraction,
                 lower=0.5, upper=1.0)
-K_range = range(ensemble_model, :(atom.K),
+K_range = range(ensemble_model, :(model.K),
                 lower=1, upper=20);
 
 # the scale for a tuning grid is linear by default but can be specified to `:log10` for logarithmic ranges.
@@ -97,7 +97,7 @@ fit!(tuned_ensemble, rows=train);
 # The best model can be accessed like so:
 
 best_ensemble = fitted_params(tuned_ensemble).best_model
-@show best_ensemble.atom.K
+@show best_ensemble.model.K
 @show best_ensemble.bagging_fraction
 
 # The `report` method gives more detailed information on the tuning process:

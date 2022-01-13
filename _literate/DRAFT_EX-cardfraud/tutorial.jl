@@ -63,7 +63,7 @@ data[!,:Amount] = log.(data[!,:Amount] .+ 1e-6)
 # ***
 
 # Let's unpack the dataframe and create separate frames for our target variable and features.
-y, X = unpack(data, ==(:Class), col -> true)
+y, X = unpack(data, ==(:Class))
 
 # And partition between training and test observations
 train, test = partition(eachindex(y), 0.8, shuffle=true, rng=111)

@@ -1,12 +1,11 @@
-┌───────────────┬─────────┬────────────┐
-│ _.names       │ _.types │ _.scitypes │
-├───────────────┼─────────┼────────────┤
-│ Timestamp     │ String  │ Textual    │
-│ Solar_gen     │ Int64   │ Count      │
-│ Wind_gen      │ Int64   │ Count      │
-│ Windspeed     │ Float64 │ Continuous │
-│ Temperature   │ Float64 │ Continuous │
-│ Radiation_dir │ Float64 │ Continuous │
-│ Radiation_dif │ Float64 │ Continuous │
-└───────────────┴─────────┴────────────┘
-_.nrows = 10247
+┌───────────────┬────────────┬──────────┐
+│ names         │ scitypes   │ types    │
+├───────────────┼────────────┼──────────┤
+│ Timestamp     │ Textual    │ String31 │
+│ Solar_gen     │ Count      │ Int64    │
+│ Wind_gen      │ Count      │ Int64    │
+│ Windspeed     │ Continuous │ Float64  │
+│ Temperature   │ Continuous │ Float64  │
+│ Radiation_dir │ Continuous │ Float64  │
+│ Radiation_dif │ Continuous │ Float64  │
+└───────────────┴────────────┴──────────┘

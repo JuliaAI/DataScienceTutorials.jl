@@ -1,4 +1,5 @@
-Machine{LinearRegressor,…} @838 trained 0 times; caches data
+Machine{LinearRegressor,…} trained 0 times; caches data
+  model: MLJLinearModels.LinearRegressor
   args: 
-    1:	Node{Nothing} @576
-    2:	Source @990 ⏎ `AbstractVector{ScientificTypesBase.Count}`
+    1:	Node{Nothing}
+    2:	Source @014 ⏎ `AbstractVector{ScientificTypesBase.Count}`

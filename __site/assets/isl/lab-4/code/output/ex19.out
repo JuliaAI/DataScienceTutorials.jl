@@ -1,1 +1,6 @@
-MLJBase.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.504, Up=>0.496)]
+MethodError: no method matching predict(::typeof(PyPlot.clf), ::NamedTuple{(:Lag1, :Lag2), Tuple{Vector{Float64}, Vector{Float64}}})
+Closest candidates are:
+  predict(!Matched::Union{MLJBase.Composite, MLJBase.Surrogate}, ::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/operations.jl:114
+  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, ::Any, !Matched::Any) at ~/.julia/packages/MLJTuning/Al9yX/src/tuned_models.jl:745
+  predict(!Matched::Union{MLJModels.BinaryThresholdPredictor, MLJModels.ThresholdSupervisedDetector, MLJModels.ThresholdUnsupervisedDetector}, ::Any, !Matched::Any) at ~/.julia/packages/MLJModels/tMgLW/src/builtins/ThresholdPredictors.jl:186
+  ...
