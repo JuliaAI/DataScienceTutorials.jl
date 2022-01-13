@@ -67,7 +67,7 @@ yticks([1, 5, 10, 15, 20], fontsize=12)
 ylabel("Number of neighbors - K", fontsize=14)
 
 ŷ = predict(tuned_ensemble, rows=test)
-rms(ŷ, y[test])
+@show rms(ŷ, y[test])
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

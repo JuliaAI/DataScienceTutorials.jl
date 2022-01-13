@@ -79,6 +79,7 @@ r = range(atom,
 
 mach = machine(atom, X, y)
 
+figure()
 curve = learning_curve!(mach,
                         range=r,
                         measure=mav,
@@ -103,12 +104,12 @@ r = range(one_hundred_models,
 
 mach = machine(one_hundred_models, X, y)
 
+figure()
 curve = learning_curve!(mach,
                         range=r,
                         measure=mav,
                         resampling=CV(nfolds=9),
                         verbosity=0)
-
 plot(curve.parameter_values, curve.measurements)
 xlabel(curve.parameter_name)
 

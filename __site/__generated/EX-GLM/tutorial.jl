@@ -67,7 +67,7 @@ LinearRegressorPipe = @pipeline(Standardizer(),
                                 OneHotEncoder(drop_last = true),
                                 LinearRegressor())
 
-LinearModel = machine(LinearRegressorPipe, Xm, yv)
+LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)
 

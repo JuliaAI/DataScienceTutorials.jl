@@ -135,16 +135,11 @@ println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 #
 # One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here (if you're on Julia <= 1.2, use the commented-out lines as you won't be able to use the arrow-syntax)
 
-## @pipeline PCAPipe(std=Standardizer(), t=PCA(maxoutdim=2))
-## pca = machine(PCAPipe(), Xtrain)
-## fit!(pca, Xtrain)
-## W = transform(pca, Xtrain)
-
 PCA = @load PCA
-
-pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
+pca_pipe = @pipeline(Standardizer(), PCA(maxoutdim=2))
+pca = machine(pca_pipe, Xtrain)
 fit!(pca)
-W = pca(rows=train);
+W = transform(pca, Xtrain)
 
 # Let's now display this using different colours for the different classes:
 

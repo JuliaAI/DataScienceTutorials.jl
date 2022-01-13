@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -146,8 +146,8 @@ Extract:
 ┌───────────────────────────────────────────────────┬─────────────┬───────────┬──────────┐
 │ measure                                           │ measurement │ operation │ per_fold │
 ├───────────────────────────────────────────────────┼─────────────┼───────────┼──────────┤
-│ RootMeanSquaredError()                            │ 7.05        │ predict   │ [7.05]   │
-│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.327       │ predict   │ [0.327]  │
+│ RootMeanSquaredError()                            │ 7.06        │ predict   │ [7.06]   │
+│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.328       │ predict   │ [0.328]  │
 └───────────────────────────────────────────────────┴─────────────┴───────────┴──────────┘
 </code></pre>
 <p>Note that multiple measures can be reported simultaneously.</p>
@@ -167,10 +167,10 @@ curves &#61; learning_curve&#33;&#40;m, resampling&#61;Holdout&#40;fraction_trai
 plot&#40;curves.parameter_values, curves.measurements&#41;
 ylabel&#40;&quot;Root Mean Squared error&quot;, fontsize&#61;16&#41;
 xlabel&#40;&quot;Number of trees&quot;, fontsize&#61;16&#41;
-xticks&#40;&#91;10, 250, 500, 750, 1000&#93;, fontsize&#61;14&#41;
+xticks&#40;&#91;10, 100, 250, 500, 750, 1000&#93;, fontsize&#61;14&#41;
 yticks&#40;fontsize&#61;14&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/getting-started/ensembles-2/code/output/A-ensembles-2-curves.svg" alt="RMS vs number of trees">
-<p>The curve is pretty noisy but let&#39;s just go for 150 trees:</p>
+<p>Let&#39;s go for 150 trees</p>
 <pre><code class="language-julia">forest.n &#61; 150;</code></pre>
 <h3 id="tuning"><a href="#tuning" class="header-anchor">Tuning</a></h3>
 <p>As <code>forest</code> is a composite model, it has nested hyperparameters:</p>
@@ -208,8 +208,8 @@ Extract:
 ┌───────────────────────────────────────────────────┬─────────────┬───────────┬──────────┐
 │ measure                                           │ measurement │ operation │ per_fold │
 ├───────────────────────────────────────────────────┼─────────────┼───────────┼──────────┤
-│ RootMeanSquaredError()                            │ 3.95        │ predict   │ [3.95]   │
-│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.25        │ predict   │ [0.25]   │
+│ RootMeanSquaredError()                            │ 4.07        │ predict   │ [4.07]   │
+│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.256       │ predict   │ [0.256]  │
 └───────────────────────────────────────────────────┴─────────────┴───────────┴──────────┘
 </code></pre>
 <h3 id="reporting"><a href="#reporting" class="header-anchor">Reporting</a></h3>
@@ -232,11 +232,12 @@ ylabel&#40;&quot;Bagging fraction&quot;, fontsize&#61;14&#41;</code></pre>
 <p>Even though we&#39;ve only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around <code>0.75</code> work well.</p>
 <p>Now that the machine <code>m</code> is trained, you can use use it for predictions &#40;implicitly, this will use the best model&#41;. For instance we could look at predictions on the whole dataset:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;m, X&#41;
-rms&#40;ŷ, y&#41;</code></pre>
+@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.4304002565851373
+</code></pre>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

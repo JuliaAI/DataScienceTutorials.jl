@@ -6,6 +6,7 @@ r = range(atom,
 
 mach = machine(atom, X, y)
 
+figure()
 curve = learning_curve!(mach,
                         range=r,
                         measure=mav,

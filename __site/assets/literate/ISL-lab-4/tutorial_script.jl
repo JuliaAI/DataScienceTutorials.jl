@@ -54,15 +54,15 @@ savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
 
 LogisticClassifier = @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)
+classif = machine(LogisticClassifier(), X2, y)
 
-fit!(clf)
-ŷ = MLJ.predict(clf, X2)
+fit!(classif)
+ŷ = MLJ.predict(classif, X2)
 ŷ[1:3]
 
 cross_entropy(ŷ, y) |> mean |> r3
 
-ŷ = predict_mode(clf, X2)
+ŷ = predict_mode(classif, X2)
 misclassification_rate(ŷ, y) |> r3
 
 cm = confusion_matrix(ŷ, y)
@@ -77,58 +77,58 @@ cm = confusion_matrix(ŷ, y)
 train = 1:findlast(X.Year .< 2005)
 test = last(train)+1:length(y);
 
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
 X3 = select(X2, [:Lag1, :Lag2])
-clf = machine(LogisticClassifier(), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(LogisticClassifier(), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
 Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
-ŷ = MLJ.predict(clf, Xnew)
+ŷ = MLJ.predict(classif, Xnew)
 ŷ |> pprint
 
 mode.(ŷ)
 
 BayesianLDA = @load BayesianLDA pkg=MultivariateStats
 
-clf = machine(BayesianLDA(), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(BayesianLDA(), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
 LDA = @load LDA pkg=MultivariateStats
 using Distances
 
-clf = machine(LDA(dist=CosineDist()), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(LDA(dist=CosineDist()), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
 BayesianQDA = @load BayesianQDA pkg=ScikitLearn
 
-clf = machine(BayesianQDA(), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(BayesianQDA(), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
 KNNClassifier = @load KNNClassifier
 
 knnc = KNNClassifier(K=1)
-clf = machine(knnc, X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(knnc, X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
 knnc.K = 3
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 
 caravan  = dataset("ISLR", "Caravan")
@@ -162,21 +162,21 @@ var(Xs[:,1]) |> r3
 test = 1:1000
 train = last(test)+1:nrows(Xs);
 
-clf = machine(KNNClassifier(K=3), Xs, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(KNNClassifier(K=3), Xs, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
 mean(y[test] .!= "No") |> r3
 
-clf = machine(LogisticClassifier(), Xs, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(LogisticClassifier(), Xs, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
-ŷ = MLJ.predict(clf, rows=test)
+ŷ = MLJ.predict(classif, rows=test)
 
 auc(ŷ, y[test])
 

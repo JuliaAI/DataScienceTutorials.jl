@@ -1,6 +1,6 @@
-MethodError: no method matching _check(::MLJBase.FalsePositive, ::Dict{CategoricalArrays.CategoricalValue{String, UInt8}, Int64})
-Closest candidates are:
-  _check(::MLJBase.Measure, ::Any, !Matched::Any, !Matched::AbstractArray) at ~/.julia/packages/MLJBase/MuLnJ/src/measures/measures.jl:62
-  _check(::MLJBase.Measure, ::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/measures/measures.jl:54
-  _check(::MLJBase.Measure, ::Any, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/measures/measures.jl:58
-  ...
+false_positive(cm) = 598
+accuracy(ŷ, y) |> r3 = 0.518
+accuracy(cm) |> r3 = 0.518
+precision(ŷ, y) |> r3 = 0.518
+recall(ŷ, y) |> r3 = 0.992
+f1score(ŷ, y) |> r3 = 0.681

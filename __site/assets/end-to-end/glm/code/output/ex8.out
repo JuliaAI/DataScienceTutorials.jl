@@ -1,1 +1,31 @@
-UndefVarError: Xm not defined
+TaskFailedException
+
+    nested task error: MethodError: no method matching keys(::DataFrame)
+    Closest candidates are:
+      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
+      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
+      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
+      ...
+    Stacktrace:
+     [1] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
+       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:685
+     [2] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearRegressor, true}})()
+       @ MLJBase ./task.jl:423
+    
+    caused by: MethodError: no method matching keys(::DataFrame)
+    Closest candidates are:
+      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
+      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
+      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
+      ...
+    Stacktrace:
+     [1] glm_data(model::MLJGLMInterface.LinearRegressor, Xmatrix::Matrix{Float64}, X::DataFrame, y::Vector{Float64})
+       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:158
+     [2] fit(model::MLJGLMInterface.LinearRegressor, verbosity::Int64, X::DataFrame, y::Vector{Float64})
+       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:170
+     [3] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}; rows::Nothing, verbosity::Int64, force::Bool)
+       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:592
+     [4] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
+       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:681
+     [5] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearRegressor, true}})()
+       @ MLJBase ./task.jl:423

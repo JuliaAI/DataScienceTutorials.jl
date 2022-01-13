@@ -100,14 +100,14 @@ Let's now try fitting a simple logistic classifier (aka logistic regression) not
 ```julia:ex10
 LogisticClassifier = @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
-clf = machine(LogisticClassifier(), X2, y)
+classif = machine(LogisticClassifier(), X2, y)
 ```
 
 Let's fit it to the data and try to reproduce the output:
 
 ```julia:ex11
-fit!(clf)
-ŷ = MLJ.predict(clf, X2)
+fit!(classif)
+ŷ = MLJ.predict(classif, X2)
 ŷ[1:3]
 ```
 
@@ -121,7 +121,7 @@ cross_entropy(ŷ, y) |> mean |> r3
 in order to recover the class, we could use the mode and compare the misclassification rate:
 
 ```julia:ex13
-ŷ = predict_mode(clf, X2)
+ŷ = predict_mode(classif, X2)
 misclassification_rate(ŷ, y) |> r3
 ```
 
@@ -156,8 +156,8 @@ test = last(train)+1:length(y);
 We can now just re-fit the machine that we've already defined just on those rows and predict on the test:
 
 ```julia:ex17
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ```
 
@@ -166,9 +166,9 @@ Let's retrain a machine using only `:Lag1` and `:Lag2`:
 
 ```julia:ex18
 X3 = select(X2, [:Lag1, :Lag2])
-clf = machine(LogisticClassifier(), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(LogisticClassifier(), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ```
 
@@ -178,7 +178,7 @@ We can use a trained machine to predict on new data:
 
 ```julia:ex19
 Xnew = (Lag1 = [1.2, 1.5], Lag2 = [1.1, -0.8])
-ŷ = MLJ.predict(clf, Xnew)
+ŷ = MLJ.predict(classif, Xnew)
 ŷ |> pprint
 ```
 
@@ -196,9 +196,9 @@ Let's do a similar thing but with a LDA model this time:
 ```julia:ex21
 BayesianLDA = @load BayesianLDA pkg=MultivariateStats
 
-clf = machine(BayesianLDA(), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(BayesianLDA(), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 ```
@@ -210,9 +210,9 @@ You can also use the bare `LDA` model which does not make these assumptions and 
 LDA = @load LDA pkg=MultivariateStats
 using Distances
 
-clf = machine(LDA(dist=CosineDist()), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(LDA(dist=CosineDist()), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 ```
@@ -228,9 +228,9 @@ BayesianQDA = @load BayesianQDA pkg=ScikitLearn
 Using it is done in much the same way as before:
 
 ```julia:ex24
-clf = machine(BayesianQDA(), X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(BayesianQDA(), X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 ```
@@ -243,9 +243,9 @@ We can use K-Nearest Neighbors models via the [`NearestNeighbors`](https://githu
 KNNClassifier = @load KNNClassifier
 
 knnc = KNNClassifier(K=1)
-clf = machine(knnc, X3, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(knnc, X3, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ```
 
@@ -253,8 +253,8 @@ Pretty bad... let's try with three neighbors
 
 ```julia:ex26
 knnc.K = 3
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ```
 
@@ -326,9 +326,9 @@ train = last(test)+1:nrows(Xs);
 Let's now fit a KNN model and check the misclassification rate
 
 ```julia:ex33
-clf = machine(KNNClassifier(K=3), Xs, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(KNNClassifier(K=3), Xs, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 ```
@@ -342,9 +342,9 @@ mean(y[test] .!= "No") |> r3
 Let's fit a logistic classifier to this problem
 
 ```julia:ex35
-clf = machine(LogisticClassifier(), Xs, y)
-fit!(clf, rows=train)
-ŷ = predict_mode(clf, rows=test)
+classif = machine(LogisticClassifier(), Xs, y)
+fit!(classif, rows=train)
+ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 ```
@@ -354,7 +354,7 @@ accuracy(ŷ, y[test]) |> r3
 Since we have a probabilistic classifier, we can also check metrics that take _scores_ into account such as the area under the ROC curve (AUC):
 
 ```julia:ex36
-ŷ = MLJ.predict(clf, rows=test)
+ŷ = MLJ.predict(classif, rows=test)
 
 auc(ŷ, y[test])
 ```

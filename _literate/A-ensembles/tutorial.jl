@@ -127,6 +127,7 @@ savefig(joinpath(@OUTPUT, "A-ensembles-heatmap.svg")) # hide
 # Finally you can always just evaluate the model by reporting `rms` on the test set:
 
 ŷ = predict(tuned_ensemble, rows=test)
-rms(ŷ, y[test])
+@show rms(ŷ, y[test])
+
 
 PyPlot.close_figs() # hide

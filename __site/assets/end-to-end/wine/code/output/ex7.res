@@ -1,1 +1,1 @@
-ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}}}
+Table{Union{AbstractVector{Continuous}, AbstractVector{Count}}}

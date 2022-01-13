@@ -59,14 +59,14 @@ figure(figsize=(8,6))
 plot(curves.parameter_values, curves.measurements)
 ylabel("Root Mean Squared error", fontsize=16)
 xlabel("Number of trees", fontsize=16)
-xticks([10, 250, 500, 750, 1000], fontsize=14)
+xticks([10, 100, 250, 500, 750, 1000], fontsize=14)
 yticks(fontsize=14)
 
 savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
 
 # \figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
 #
-# The curve is pretty noisy but let's just go for 150 trees:
+# Let's go for 150 trees
 
 forest.n = 150;
 
@@ -122,6 +122,6 @@ savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
 # For instance we could look at predictions on the whole dataset:
 
 ŷ = predict(m, X)
-rms(ŷ, y)
+@show rms(ŷ, y)
 
 PyPlot.close_figs() # hide
