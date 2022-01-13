@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-10/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-6b/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/airfoil/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/HouseKingCounty/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/AMES/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/wine/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-2/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-3/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-4/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/index.html</loc>
+    <lastmod>2021-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/index.html</loc>
+    <lastmod>2021-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/powergen/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/categorical/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles-3/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/index.html</loc>
+    <lastmod>2021-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/processing/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/search/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/breastcancer/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/composing-models/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks/index.html</loc>
+    <lastmod>2022-01-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/loading/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/glm/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-8/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-9/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles-2/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/index.html</loc>
+    <lastmod>2021-08-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+</urlset>

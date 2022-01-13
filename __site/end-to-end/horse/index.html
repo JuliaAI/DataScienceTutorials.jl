@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
+   <title>Horse colic data</title>  
+  <!-- LUNR -->
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu">
+      <div class="pure-menu">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Enter search term" type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+        </form>
+  <!-- LIST OF MENU ITEMS -->
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+
+    <!-- DATA BASICS -->
+    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
+    </ul>
+
+    <!-- GETTING STARTED WITH MLJ -->
+    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+    <ul class="pure-menu-sublist">
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
+    </ul>
+
+    <!-- INTRO TO STATS LEARNING -->
+    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+    <ul class="pure-menu-sublist" id=isl>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+    </ul>
+
+    <!-- END TO END EXAMPLES -->
+    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+    <ul class="pure-menu-sublist" id=e2e>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+    </ul>
+  </ul>
+  <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="main"> <!-- Closed in foot -->
+      
+
+<!-- Content appended here -->
+<div class="franklin-content"><h1 id="horse_colic_data"><a href="#horse_colic_data" class="header-anchor">Horse colic data</a></h1>
+<em>Download the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/tutorial.ipynb" target="_blank"><em>notebook</em></a>
+  , the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/tutorial.jl" target="_blank"><em>annotated script</em></a>
+   or the 
+  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
+   for this tutorial &#40;right-click on the relevant link and save-as&#41;. These rely on <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/Project.toml">this Project.toml</a> and <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse/Manifest.toml">this Manifest.toml</a>.</em> <br/>   <em>You can also download the whole <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-horse.tar.gz">project folder</a>.</em></p>
+<p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
+<p><div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#getting_the_data">Getting the data</a></li><li><a href="#inspecting_columns">Inspecting columns</a></li><li><a href="#dealing_with_missing_values">Dealing with missing values</a></li></ol></li><li><a href="#a_baseline_model">A baseline model</a></li><li><a href="#trying_another_model">Trying another model</a></li></ol></div>
+<h2 id="initial_data_processing"><a href="#initial_data_processing" class="header-anchor">Initial data processing</a></h2>
+<p>In this example, we consider the <a href="http://archive.ics.uci.edu/ml/datasets/Horse&#43;Colic">UCI &quot;horse colic&quot; dataset</a></p>
+<p>This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.</p>
+<h3 id="getting_the_data"><a href="#getting_the_data" class="header-anchor">Getting the data</a></h3>
+<p>The data is pre-split in training and testing and we will keep it as such</p>
+<pre><code class="language-julia">using MLJ
+using HTTP
+using CSV
+import DataFrames: DataFrame, select&#33;, Not
+req1 &#61; HTTP.get&#40;&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.data&quot;&#41;
+req2 &#61; HTTP.get&#40;&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/horse-colic/horse-colic.test&quot;&#41;
+header &#61; &#91;&quot;surgery&quot;, &quot;age&quot;, &quot;hospital_number&quot;,
+    &quot;rectal_temperature&quot;, &quot;pulse&quot;,
+    &quot;respiratory_rate&quot;, &quot;temperature_extremities&quot;,
+    &quot;peripheral_pulse&quot;, &quot;mucous_membranes&quot;,
+    &quot;capillary_refill_time&quot;, &quot;pain&quot;,
+    &quot;peristalsis&quot;, &quot;abdominal_distension&quot;,
+    &quot;nasogastric_tube&quot;, &quot;nasogastric_reflux&quot;,
+    &quot;nasogastric_reflux_ph&quot;, &quot;feces&quot;, &quot;abdomen&quot;,
+    &quot;packed_cell_volume&quot;, &quot;total_protein&quot;,
+    &quot;abdomcentesis_appearance&quot;, &quot;abdomcentesis_total_protein&quot;,
+    &quot;outcome&quot;, &quot;surgical_lesion&quot;, &quot;lesion_1&quot;, &quot;lesion_2&quot;, &quot;lesion_3&quot;,
+    &quot;cp_data&quot;&#93;
+csv_opts &#61; &#40;header&#61;header, delim&#61;&#39; &#39;, missingstring&#61;&quot;?&quot;,
+            ignorerepeated&#61;true&#41;
+data_train &#61; CSV.read&#40;req1.body, DataFrame; csv_opts...&#41;
+data_test  &#61; CSV.read&#40;req2.body, DataFrame; csv_opts...&#41;
+@show size&#40;data_train&#41;
+@show size&#40;data_test&#41;</code></pre><pre><code class="plaintext code-output">size(data_train) = (300, 28)
+size(data_test) = (68, 28)
+</code></pre>
+<h3 id="inspecting_columns"><a href="#inspecting_columns" class="header-anchor">Inspecting columns</a></h3>
+<p>To simplify the analysis, we will drop the columns <code>Lesion *</code> as they would need specific re-encoding which would distract us a bit.</p>
+<pre><code class="language-julia">unwanted &#61; &#91;:lesion_1, :lesion_2, :lesion_3&#93;
+data &#61; vcat&#40;data_train, data_test&#41;
+select&#33;&#40;data, Not&#40;unwanted&#41;&#41;;</code></pre>
+<p>Let&#39;s also keep track of the initial train-test split</p>
+<pre><code class="language-julia">train &#61; 1:nrows&#40;data_train&#41;
+test &#61; last&#40;train&#41; .&#43; &#40;1:nrows&#40;data_test&#41;&#41;;</code></pre>
+<p>We know from reading the description that some of these features represent multiclass data; to facilitate the interpretation, we can use <code>autotype</code> from <code>ScientificTypes</code>. By default, <code>autotype</code> will check all columns and suggest a Finite type assuming there are relatively few distinct values in the column. More sophisticated rules can be passed, see <a href="https://alan-turing-institute.github.io/ScientificTypes.jl/dev/">ScientificTypes.jl</a>:</p>
+<pre><code class="language-julia">datac &#61; coerce&#40;data, autotype&#40;data&#41;&#41;;</code></pre>
+<p>Let&#39;s see column by column whether it looks ok now</p>
+<pre><code class="language-julia">sch &#61; schema&#40;datac&#41;
+for &#40;name, scitype&#41; in zip&#40;sch.names, sch.scitypes&#41;
+    println&#40;rpad&#40;&quot;&#36;name&quot;, 30&#41;, scitype&#41;
+end</code></pre><pre><code class="plaintext code-output">surgery                       Union{Missing, ScientificTypesBase.OrderedFactor{2}}
+age                           ScientificTypesBase.OrderedFactor{2}
+hospital_number               ScientificTypesBase.Count
+rectal_temperature            Union{Missing, ScientificTypesBase.Continuous}
+pulse                         Union{Missing, ScientificTypesBase.Count}
+respiratory_rate              Union{Missing, ScientificTypesBase.Count}
+temperature_extremities       Union{Missing, ScientificTypesBase.OrderedFactor{4}}
+peripheral_pulse              Union{Missing, ScientificTypesBase.OrderedFactor{4}}
+mucous_membranes              Union{Missing, ScientificTypesBase.OrderedFactor{6}}
+capillary_refill_time         Union{Missing, ScientificTypesBase.OrderedFactor{3}}
+pain                          Union{Missing, ScientificTypesBase.OrderedFactor{5}}
+peristalsis                   Union{Missing, ScientificTypesBase.OrderedFactor{4}}
+abdominal_distension          Union{Missing, ScientificTypesBase.OrderedFactor{4}}
+nasogastric_tube              Union{Missing, ScientificTypesBase.OrderedFactor{3}}
+nasogastric_reflux            Union{Missing, ScientificTypesBase.OrderedFactor{3}}
+nasogastric_reflux_ph         Union{Missing, ScientificTypesBase.OrderedFactor{24}}
+feces                         Union{Missing, ScientificTypesBase.OrderedFactor{4}}
+abdomen                       Union{Missing, ScientificTypesBase.OrderedFactor{5}}
+packed_cell_volume            Union{Missing, ScientificTypesBase.Continuous}
+total_protein                 Union{Missing, ScientificTypesBase.Continuous}
+abdomcentesis_appearance      Union{Missing, ScientificTypesBase.OrderedFactor{3}}
+abdomcentesis_total_protein   Union{Missing, ScientificTypesBase.Continuous}
+outcome                       Union{Missing, ScientificTypesBase.OrderedFactor{3}}
+surgical_lesion               ScientificTypesBase.OrderedFactor{2}
+cp_data                       ScientificTypesBase.OrderedFactor{2}
+</code></pre>
+<p>Most columns are now treated as either Multiclass or Ordered, this corresponds to the <a href="https://archive.ics.uci.edu/ml/datasets/Horse&#43;Colic">description of the data</a>. For instance:</p>
+<ul>
+<li><p><code>Surgery</code> is described as <code>1&#61;yes / 2&#61;no</code></p>
+</li>
+<li><p><code>Age</code> is described as <code>1&#61;adult / 2&#61;young</code></p>
+</li>
+</ul>
+<p>Inspecting the rest of the descriptions and the current scientific type, there are a few more things that can be observed:</p>
+<ul>
+<li><p>hospital number is still a count, this means that there are relatively many hospitals and so  that&#39;s  probably not very useful,</p>
+</li>
+<li><p>pulse and respiratory rate are still as count but the data description suggests that they can be considered as continuous</p>
+</li>
+</ul>
+<pre><code class="language-julia">length&#40;unique&#40;datac.hospital_number&#41;&#41;</code></pre><pre><code class="plaintext code-output">346</code></pre>
+<p>yeah let&#39;s drop that</p>
+<pre><code class="language-julia">datac &#61; select&#33;&#40;datac, Not&#40;:hospital_number&#41;&#41;;</code></pre>
+<p>let&#39;s also coerce the pulse and respiratory rate, in fact we can do that with <code>autotype</code> specifying as rule the <code>discrete_to_continuous</code></p>
+<pre><code class="language-julia">datac &#61; coerce&#40;datac, autotype&#40;datac, rules&#61;&#40;:discrete_to_continuous,&#41;&#41;&#41;;</code></pre>
+<h3 id="dealing_with_missing_values"><a href="#dealing_with_missing_values" class="header-anchor">Dealing with missing values</a></h3>
+<p>There&#39;s quite a lot of missing values, in this tutorial we&#39;ll be a bit rough in how we deal with them applying the following rules of thumb:</p>
+<ul>
+<li><p>drop the rows where the outcome is unknown</p>
+</li>
+<li><p>drop columns with more than 20&#37; missing values</p>
+</li>
+<li><p>simple imputation of whatever&#39;s left</p>
+</li>
+</ul>
+<pre><code class="language-julia">missing_outcome &#61; ismissing.&#40;datac.outcome&#41;
+idx_missing_outcome &#61; missing_outcome |&gt; findall</code></pre><pre><code class="plaintext code-output">2-element Vector{Int64}:
+ 133
+ 309</code></pre>
+<p>Ok there&#39;s only two row which is nice, let&#39;s remove them from the train/test indices and drop the rows</p>
+<pre><code class="language-julia">train &#61; setdiff&#33;&#40;train |&gt; collect, idx_missing_outcome&#41;
+test &#61; setdiff&#33;&#40;test |&gt; collect, idx_missing_outcome&#41;
+datac &#61; datac&#91;.&#33;missing_outcome, :&#93;;</code></pre>
+<p>Now let&#39;s look at how many missings there are per features</p>
+<pre><code class="language-julia">for name in names&#40;datac&#41;
+    col &#61; datac&#91;:, name&#93;
+    ratio_missing &#61; sum&#40;ismissing.&#40;col&#41;&#41; / nrows&#40;datac&#41; * 100
+    println&#40;rpad&#40;name, 30&#41;, round&#40;ratio_missing, sigdigits&#61;3&#41;&#41;
+end</code></pre><pre><code class="plaintext code-output">surgery                       0.0
+age                           0.0
+rectal_temperature            18.9
+pulse                         7.1
+respiratory_rate              19.4
+temperature_extremities       17.5
+peripheral_pulse              22.7
+mucous_membranes              13.1
+capillary_refill_time         10.4
+pain                          17.2
+peristalsis                   13.9
+abdominal_distension          17.5
+nasogastric_tube              35.5
+nasogastric_reflux            36.1
+nasogastric_reflux_ph         81.1
+feces                         34.7
+abdomen                       39.1
+packed_cell_volume            9.84
+total_protein                 11.5
+abdomcentesis_appearance      52.7
+abdomcentesis_total_protein   63.9
+outcome                       0.0
+surgical_lesion               0.0
+cp_data                       0.0
+</code></pre>
+<p>Let&#39;s drop the ones with more than 20&#37; &#40;quite a few&#33;&#41;</p>
+<pre><code class="language-julia">unwanted &#61; &#91;:peripheral_pulse, :nasogastric_tube, :nasogastric_reflux,
+        :nasogastric_reflux_ph, :feces, :abdomen, :abdomcentesis_appearance, :abdomcentesis_total_protein&#93;
+select&#33;&#40;datac, Not&#40;unwanted&#41;&#41;;</code></pre>
+<p>Note that we could have done this better and investigated the nature of the features for which there&#39;s a lot of missing values but don&#39;t forget that our goal is to showcase MLJ&#33;</p>
+<p>Let&#39;s conclude by filling all missing values and separating the feature matrix from the  target</p>
+<pre><code class="language-julia">@load FillImputer
+filler &#61; machine&#40;FillImputer&#40;&#41;, datac&#41;
+fit&#33;&#40;filler&#41;
+datac &#61; MLJ.transform&#40;filler, datac&#41;
+
+y, X &#61; unpack&#40;datac, &#61;&#61;&#40;:outcome&#41;, name-&gt;true&#41;;
+X &#61; coerce&#40;X, autotype&#40;X, :discrete_to_continuous&#41;&#41;;</code></pre><pre><code class="plaintext code-output">import MLJModels ✔
+</code></pre>
+<h2 id="a_baseline_model"><a href="#a_baseline_model" class="header-anchor">A baseline model</a></h2>
+<p>Let&#39;s define a first sensible model and get a baseline, basic steps are:</p>
+<ul>
+<li><p>one-hot-encode the categoricals</p>
+</li>
+<li><p>feed all this into a classifier</p>
+</li>
+</ul>
+<pre><code class="language-julia">@load OneHotEncoder
+MultinomialClassifier &#61; @load MultinomialClassifier pkg&#61;&quot;MLJLinearModels&quot;</code></pre><pre><code class="plaintext code-output">import MLJModels ✔
+import MLJLinearModels ✔
+MLJLinearModels.MultinomialClassifier</code></pre>
+<p>Let&#39;s have convenient handles over the training data</p>
+<pre><code class="language-julia">Xtrain &#61; X&#91;train,:&#93;
+ytrain &#61; y&#91;train&#93;;</code></pre>
+<p>And let&#39;s define a pipeline corresponding to the operations above</p>
+<pre><code class="language-julia">SimplePipe &#61; @pipeline&#40;OneHotEncoder&#40;&#41;,
+                       MultinomialClassifier&#40;&#41;, prediction_type&#61;:probabilistic&#41;
+mach &#61; machine&#40;SimplePipe, Xtrain, ytrain&#41;
+res &#61; evaluate&#33;&#40;mach; resampling&#61;Holdout&#40;fraction_train&#61;0.9&#41;,
+                measure&#61;cross_entropy&#41;
+round&#40;res.measurement&#91;1&#93;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">0.802</code></pre>
+<p>This is the cross entropy on some held-out 10&#37; of the training set. We can also just for the sake of getting a baseline, see the misclassification on the whole training data:</p>
+<pre><code class="language-julia">mcr &#61; misclassification_rate&#40;predict_mode&#40;mach, Xtrain&#41;, ytrain&#41;
+println&#40;rpad&#40;&quot;MNC mcr:&quot;, 10&#41;, round&#40;mcr, sigdigits&#61;3&#41;&#41;</code></pre><pre><code class="plaintext code-output">MNC mcr:  0.301
+</code></pre>
+<p>That&#39;s not bad at all actually. Let&#39;s tune it a bit and see if we can get a bit better than that, not much point in going crazy, we might get a few percents but not much more.</p>
+<pre><code class="language-julia">model &#61; SimplePipe
+lambdas &#61; range&#40;model, :&#40;multinomial_classifier.lambda&#41;, lower&#61;1e-3, upper&#61;100, scale&#61;:log10&#41;
+tm &#61; TunedModel&#40;model&#61;SimplePipe, ranges&#61;lambdas, measure&#61;cross_entropy&#41;
+mtm &#61; machine&#40;tm, Xtrain, ytrain&#41;
+fit&#33;&#40;mtm&#41;
+best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code class="plaintext code-output">Pipeline355(
+    one_hot_encoder = OneHotEncoder(
+            features = Symbol[],
+            drop_last = false,
+            ordered_factor = true,
+            ignore = false),
+    multinomial_classifier = MultinomialClassifier(
+            lambda = 0.046415888336127795,
+            gamma = 0.0,
+            penalty = :l2,
+            fit_intercept = true,
+            penalize_intercept = false,
+            scale_penalty_with_samples = true,
+            solver = nothing))</code></pre>
+<p>So it looks like it&#39;s useful to regularise a fair bit to get a lower cross entropy</p>
+<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, Xtrain&#41;
+cross_entropy&#40;ŷ, ytrain&#41; |&gt; mean</code></pre><pre><code class="plaintext code-output">0.5866213889827255</code></pre>
+<p>Interestingly this does not improve our missclassification rate</p>
+<pre><code class="language-julia">mcr &#61; misclassification_rate&#40;mode.&#40;ŷ&#41;, ytrain&#41;
+println&#40;rpad&#40;&quot;MNC mcr:&quot;, 10&#41;, round&#40;mcr, sigdigits&#61;3&#41;&#41;</code></pre><pre><code class="plaintext code-output">MNC mcr:  0.244
+</code></pre>
+<p>We&#39;ve probably reached the limit of a simple linear model.</p>
+<h2 id="trying_another_model"><a href="#trying_another_model" class="header-anchor">Trying another model</a></h2>
+<p>There are lots of categoricals, so maybe  it&#39;s just better to use something that deals well with that like a tree-based classifier.</p>
+<pre><code class="language-julia">XGBC &#61; @load XGBoostClassifier
+dtc &#61; machine&#40;XGBC&#40;&#41;, Xtrain, ytrain&#41;
+fit&#33;&#40;dtc&#41;
+ŷ &#61; MLJ.predict&#40;dtc, Xtrain&#41;
+cross_entropy&#40;ŷ, ytrain&#41; |&gt; mean</code></pre><pre><code class="plaintext code-output">import MLJXGBoostInterface ✔
+0.0248151f0</code></pre>
+<p>So we get a worse cross entropy but...</p>
+<pre><code class="language-julia">misclassification_rate&#40;mode.&#40;ŷ&#41;, ytrain&#41;</code></pre><pre><code class="plaintext code-output">0.0033444816053511705</code></pre>
+<p>a significantly better misclassification rate.</p>
+<p>We could investigate more, do more tuning etc, but the key points of this tutorial was to show how to handle data with missing values.</p>
+
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+  
+  
+      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>

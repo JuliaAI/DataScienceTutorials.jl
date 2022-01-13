@@ -1,0 +1,17 @@
+13×4 DataFrame
+ Row │ ModelName                   Accuracy  CrossEntropyLoss  F1Score
+     │ String                      Any       Any               Any
+─────┼──────────────────────────────────────────────────────────────────
+   1 │ LogisticClassifier          0.973684  0.13142           0.962025
+   2 │ BayesianLDA                 0.95614   0.145701          0.935065
+   3 │ ExtraTreesClassifier        0.947368  0.15706           0.923077
+   4 │ RandomForestClassifier      0.938596  0.171584          0.911392
+   5 │ GradientBoostingClassifier  0.938596  0.236792          0.909091
+   6 │ AdaBoostClassifier          0.95614   0.3495            0.936709
+   7 │ KNeighborsClassifier        0.938596  0.432447          0.911392
+   8 │ BaggingClassifier           0.929825  0.473429          0.9
+   9 │ ProbabilisticSGDClassifier  0.938596  0.501896          0.915663
+  10 │ GaussianProcessClassifier   0.938596  0.597197          0.909091
+  11 │ GaussianNBClassifier        0.903509  0.929409          0.864198
+  12 │ BayesianQDA                 0.903509  1.1303            0.857143
+  13 │ DummyClassifier             0.552632  16.1248           0.385542

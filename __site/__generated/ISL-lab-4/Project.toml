@@ -1,0 +1,13 @@
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
+MLJMultivariateStatsInterface = "1b6a4a23-ba22-4f51-9698-8599985d3728"
+MLJScikitLearnInterface = "5ae90465-5518-4432-b9d2-8a1def2f0cab"
+MultivariateStats = "6f286f6a-111f-5878-ab1e-185364afe411"
+NearestNeighborModels = "636a865e-7cf4-491e-846c-de09b730eb36"
+PrettyPrinting = "54e16d92-306c-5ea0-a30b-337be88ac337"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+RDatasets = "ce6b1742-4840-55fa-b093-852dadbb1d8b"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
