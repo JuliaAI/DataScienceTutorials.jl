@@ -6,6 +6,6 @@ Extract:
 ┌───────────────────────────────────────────────────┬─────────────┬───────────┬──────────┐
 │ measure                                           │ measurement │ operation │ per_fold │
 ├───────────────────────────────────────────────────┼─────────────┼───────────┼──────────┤
-│ RootMeanSquaredError()                            │ 3.95        │ predict   │ [3.95]   │
-│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.25        │ predict   │ [0.25]   │
+│ RootMeanSquaredError()                            │ 4.07        │ predict   │ [4.07]   │
+│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.256       │ predict   │ [0.256]  │
 └───────────────────────────────────────────────────┴─────────────┴───────────┴──────────┘

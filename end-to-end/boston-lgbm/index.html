@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -171,9 +171,8 @@ curve &#61; learning_curve&#33;&#40;lgbm, resampling&#61;CV&#40;nfolds&#61;5&#41
 figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;curve.parameter_values, curve.measurements&#41;
 xlabel&#40;&quot;Number of rounds&quot;, fontsize&#61;14&#41;
-ylabel&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: LGBMRegressor not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/boston-lgbm/code/lgbm_hp1.svg' not found. //</span></p>
+ylabel&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/boston-lgbm/code/output/lgbm_hp1.svg" alt="">
 <p>It looks like that we don&#39;t need to go much past 100 boosts</p>
 <p>Since LightGBM is a gradient based learning method, we also have a learning rate parameter which controls the size of gradient updates. Let us look at a learning curve for this parameter too</p>
 <pre><code class="language-julia">lgb &#61; LGBMRegressor&#40;&#41; #initialised a model with default params
@@ -188,13 +187,16 @@ figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;curve.parameter_values, curve.measurements&#41;
 xscale&#40;&quot;log&quot;&#41;
 xlabel&#40;&quot;Learning rate &#40;log scale&#41;&quot;, fontsize&#61;14&#41;
-ylabel&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: LGBMRegressor not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/boston-lgbm/code/lgbm_hp2.svg' not found. //</span></p>
+ylabel&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/boston-lgbm/code/output/lgbm_hp2.svg" alt="">
 <p>It seems like near 0.5 is a reasonable place. Bearing in mind that for lower values of learning rate we possibly require more boosting in order to converge, so the default value of 100 might not be sufficient for convergence. We leave this as an exercise to the reader. We can still try to tune this parameter, however.</p>
 <p>Finally let us check number of datapoints required to produce a leaf in an individual tree. This parameter controls the complexity of individual learner trees, and too low a value might lead to overfitting.</p>
 <pre><code class="language-julia">lgb &#61; LGBMRegressor&#40;&#41; #initialised a model with default params
-lgbm &#61; machine&#40;lgb, features&#91;train, :&#93;, targets&#91;train, 1&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: LGBMRegressor not defined
+lgbm &#61; machine&#40;lgb, features&#91;train, :&#93;, targets&#91;train, 1&#93;&#41;</code></pre><pre><code class="plaintext code-output">Machine{LGBMRegressor,…} trained 0 times; caches data
+  model: LightGBM.MLJInterface.LGBMRegressor
+  args: 
+    1:	Source @325 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @659 ⏎ `AbstractVector{Continuous}`
 </code></pre>
 <p>dataset is small enough and the lower and upper sets the tree to have certain number of leaves</p>
 <pre><code class="language-julia">leaf_range &#61; range&#40;lgb, :min_data_in_leaf, lower&#61;1, upper&#61;50&#41;
@@ -207,9 +209,8 @@ curve &#61; learning_curve&#33;&#40;lgbm, resampling&#61;CV&#40;nfolds&#61;5&#41
 figure&#40;figsize&#61;&#40;8,6&#41;&#41;
 plot&#40;curve.parameter_values, curve.measurements&#41;
 xlabel&#40;&quot;Min data in leaf&quot;, fontsize&#61;14&#41;
-ylabel&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: lgb not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/end-to-end/boston-lgbm/code/lgbm_hp3.svg' not found. //</span></p>
+ylabel&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/boston-lgbm/code/output/lgbm_hp3.svg" alt="">
 <p>It does not seem like there is a huge risk for overfitting, and lower is better for this parameter.</p>
 <p>Using the learning curves above we can select some small-ish ranges to jointly search for the best combinations of these parameters via cross validation.</p>
 <pre><code class="language-julia">r1 &#61; range&#40;lgb, :num_iterations, lower&#61;50, upper&#61;100&#41;
@@ -219,24 +220,25 @@ tm &#61; TunedModel&#40;model&#61;lgb, tuning&#61;Grid&#40;resolution&#61;5&#41;
                 resampling&#61;CV&#40;rng&#61;StableRNG&#40;123&#41;&#41;, ranges&#61;&#91;r1,r2,r3&#93;,
                 measure&#61;rms&#41;
 mtm &#61; machine&#40;tm, features, targets&#41;
-fit&#33;&#40;mtm, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">UndefVarError: lgb not defined
-</code></pre>
+fit&#33;&#40;mtm, rows&#61;train&#41;;</code></pre>
 <p>Lets see what the cross validation best model parameters turned out to be?</p>
 <pre><code class="language-julia">best_model &#61; fitted_params&#40;mtm&#41;.best_model
 @show best_model.learning_rate
 @show best_model.min_data_in_leaf
-@show best_model.num_iterations</code></pre><pre><code class="plaintext code-output">UndefVarError: fitted_params not defined
+@show best_model.num_iterations</code></pre><pre><code class="plaintext code-output">best_model.learning_rate = 0.325
+best_model.min_data_in_leaf = 8
+best_model.num_iterations = 100
 </code></pre>
 <p>Great, and now let&#39;s predict using the held out data.</p>
 <pre><code class="language-julia">predictions &#61; MLJ.predict&#40;mtm, rows&#61;test&#41;
 rms_score &#61; round&#40;rms&#40;predictions, targets&#91;test, 1&#93;&#41;, sigdigits&#61;4&#41;
 
-@show rms_score</code></pre><pre><code class="plaintext code-output">UndefVarError: test not defined
+@show rms_score</code></pre><pre><code class="plaintext code-output">rms_score = 3.669
 </code></pre>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

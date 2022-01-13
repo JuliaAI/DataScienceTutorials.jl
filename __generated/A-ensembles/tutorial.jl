@@ -126,7 +126,7 @@ ylabel("Number of neighbors - K", fontsize=14)
 # Finally you can always just evaluate the model by reporting `rms` on the test set:
 
 ŷ = predict(tuned_ensemble, rows=test)
-rms(ŷ, y[test])
+@show rms(ŷ, y[test])
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

@@ -79,7 +79,8 @@ ylabel("Number of neighbors - K", fontsize=14)
 savefig(joinpath(@OUTPUT, "A-ensembles-heatmap.svg")) # hide
 
 ŷ = predict(tuned_ensemble, rows=test)
-rms(ŷ, y[test])
+@show rms(ŷ, y[test])
+
 
 PyPlot.close_figs() # hide
 

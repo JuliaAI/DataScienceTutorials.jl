@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -136,8 +136,8 @@ KNNRegressor(
 <pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} trained 0 times; caches data
   model: NearestNeighborModels.KNNRegressor
   args: 
-    1:	Source @046 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @962 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @057 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @811 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>and fit it</p>
 <pre><code class="language-julia">fit&#33;&#40;knn, rows&#61;train&#41;
@@ -169,16 +169,16 @@ estimates</code></pre><pre><code class="plaintext code-output">PerformanceEvalua
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────┬─────────────┬───────────┬─────────────────────────────────────────────────┐
-│ measure                │ measurement │ operation │ per_fold                                        │
-├────────────────────────┼─────────────┼───────────┼─────────────────────────────────────────────────┤
-│ RootMeanSquaredError() │ 0.0862      │ predict   │ [0.0931, 0.116, 0.0733, 0.0895, 0.0667, 0.0683] │
-└────────────────────────┴─────────────┴───────────┴─────────────────────────────────────────────────┘
+┌────────────────────────┬─────────────┬───────────┬─────────────────────────────────────────────┐
+│ measure                │ measurement │ operation │ per_fold                                    │
+├────────────────────────┼─────────────┼───────────┼─────────────────────────────────────────────┤
+│ RootMeanSquaredError() │ 0.0856      │ predict   │ [0.09, 0.112, 0.079, 0.089, 0.0661, 0.0694] │
+└────────────────────────┴─────────────┴───────────┴─────────────────────────────────────────────┘
 </code></pre>
 <p>here the implicit measure is the <code>rms</code> &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
 <pre><code class="language-julia">@show estimates.measurement&#91;1&#93;
-@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.08617251246583751
-mean(estimates.per_fold[1]) = 0.0844329600043973
+@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.08560905340996186
+mean(estimates.per_fold[1]) = 0.08423976327531794
 </code></pre>
 <p>Note that multiple measurements can be specified jointly. Here only on measurement is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both  the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
 <h3 id="systematic_tuning"><a href="#systematic_tuning" class="header-anchor">Systematic tuning</a></h3>
@@ -213,8 +213,8 @@ fit&#33;&#40;tuned_ensemble, rows&#61;train&#41;;</code></pre>
 <p>The best model can be accessed like so:</p>
 <pre><code class="language-julia">best_ensemble &#61; fitted_params&#40;tuned_ensemble&#41;.best_model
 @show best_ensemble.model.K
-@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.model.K = 3
-best_ensemble.bagging_fraction = 0.5
+@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.model.K = 5
+best_ensemble.bagging_fraction = 0.6666666666666666
 </code></pre>
 <p>The <code>report</code> method gives more detailed information on the tuning process:</p>
 <pre><code class="language-julia">r &#61; report&#40;tuned_ensemble&#41;;</code></pre>
@@ -235,11 +235,12 @@ ylabel&#40;&quot;Number of neighbors - K&quot;, fontsize&#61;14&#41;</code></pre
 <img src="/DataScienceTutorials.jl/assets/getting-started/ensembles/code/output/A-ensembles-heatmap.svg" alt="Hyperparameter heatmap">
 <p>Finally you can always just evaluate the model by reporting <code>rms</code> on the test set:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;tuned_ensemble, rows&#61;test&#41;
-rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre>
+@show rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y[test]) = 0.056334546503186374
+</code></pre>
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

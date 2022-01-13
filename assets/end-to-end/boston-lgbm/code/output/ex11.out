@@ -1,1 +1,3 @@
-UndefVarError: fitted_params not defined
+best_model.learning_rate = 0.325
+best_model.min_data_in_leaf = 8
+best_model.num_iterations = 100

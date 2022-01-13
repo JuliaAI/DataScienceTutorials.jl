@@ -58,10 +58,10 @@ println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 
 PCA = @load PCA
-
-pca = Xc |> Standardizer() |> PCA(maxoutdim=2)
+pca_pipe = @pipeline(Standardizer(), PCA(maxoutdim=2))
+pca = machine(pca_pipe, Xtrain)
 fit!(pca)
-W = pca(rows=train);
+W = transform(pca, Xtrain)
 
 x1 = W.x1
 x2 = W.x2

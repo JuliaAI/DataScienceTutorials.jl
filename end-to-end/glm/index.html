@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -228,9 +228,39 @@ LinearRegressorPipe &#61; @pipeline&#40;Standardizer&#40;&#41;,
                                 OneHotEncoder&#40;drop_last &#61; true&#41;,
                                 LinearRegressor&#40;&#41;&#41;
 
-LinearModel &#61; machine&#40;LinearRegressorPipe, Xm, yv&#41;
+LinearModel &#61; machine&#40;LinearRegressorPipe, X, yv&#41;
 fit&#33;&#40;LinearModel&#41;
-fp &#61; fitted_params&#40;LinearModel&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: Xm not defined
+fp &#61; fitted_params&#40;LinearModel&#41;</code></pre><pre><code class="plaintext code-output">TaskFailedException
+
+    nested task error: MethodError: no method matching keys(::DataFrame)
+    Closest candidates are:
+      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
+      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
+      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
+      ...
+    Stacktrace:
+     [1] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
+       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:685
+     [2] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearRegressor, true}})()
+       @ MLJBase ./task.jl:423
+    
+    caused by: MethodError: no method matching keys(::DataFrame)
+    Closest candidates are:
+      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
+      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
+      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
+      ...
+    Stacktrace:
+     [1] glm_data(model::MLJGLMInterface.LinearRegressor, Xmatrix::Matrix{Float64}, X::DataFrame, y::Vector{Float64})
+       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:158
+     [2] fit(model::MLJGLMInterface.LinearRegressor, verbosity::Int64, X::DataFrame, y::Vector{Float64})
+       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:170
+     [3] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}; rows::Nothing, verbosity::Int64, force::Bool)
+       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:592
+     [4] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
+       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:681
+     [5] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearRegressor, true}})()
+       @ MLJBase ./task.jl:423
 </code></pre>
 <h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model" class="header-anchor">Reading the Output of Fitting the Linear Model</a></h2>
 <p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
@@ -245,7 +275,7 @@ println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n yhatResponse \n &quot;, yhatResponse&#91;1:5&#93;&#41;
 println&#40;&quot;\n Residuals \n &quot;, y&#91;1:5,1&#93; .- yhatResponse&#91;1:5&#93;&#41;
-println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_regressor.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: LinearModel not defined
+println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_regressor.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: Xm not defined
 </code></pre>
 <p>and get the accuracy</p>
 <pre><code class="language-julia">round&#40;rms&#40;yhatResponse, y&#91;:,1&#93;&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: yhatResponse not defined
@@ -266,34 +296,34 @@ LogisticModel &#61; machine&#40;LinearBinaryClassifierPipe, X, yc&#41;
 fit&#33;&#40;LogisticModel&#41;
 fp &#61; fitted_params&#40;LogisticModel&#41;</code></pre><pre><code class="plaintext code-output">TaskFailedException
 
-    nested task error: MethodError: no method matching keys(::DataFrames.DataFrame)
+    nested task error: MethodError: no method matching keys(::DataFrame)
     Closest candidates are:
       keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
       keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
       keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
       ...
     Stacktrace:
-     [1] fit_only!(mach::MLJBase.Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
+     [1] fit_only!(mach::Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
        @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:685
-     [2] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, MLJBase.Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}})()
+     [2] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}})()
        @ MLJBase ./task.jl:423
     
-    caused by: MethodError: no method matching keys(::DataFrames.DataFrame)
+    caused by: MethodError: no method matching keys(::DataFrame)
     Closest candidates are:
       keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
       keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
       keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
       ...
     Stacktrace:
-     [1] glm_data(model::MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, Xmatrix::Matrix{Float64}, X::DataFrames.DataFrame, y::Vector{Int64})
+     [1] glm_data(model::MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, Xmatrix::Matrix{Float64}, X::DataFrame, y::Vector{Int64})
        @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:158
-     [2] fit(model::MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, verbosity::Int64, X::DataFrames.DataFrame, y::CategoricalArrays.CategoricalVector{Int64, UInt32, Int64, CategoricalArrays.CategoricalValue{Int64, UInt32}, Union{}})
+     [2] fit(model::MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, verbosity::Int64, X::DataFrame, y::CategoricalVector{Int64, UInt32, Int64, CategoricalValue{Int64, UInt32}, Union{}})
        @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:198
-     [3] fit_only!(mach::MLJBase.Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}; rows::Nothing, verbosity::Int64, force::Bool)
+     [3] fit_only!(mach::Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}; rows::Nothing, verbosity::Int64, force::Bool)
        @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:592
-     [4] fit_only!(mach::MLJBase.Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
+     [4] fit_only!(mach::Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
        @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:681
-     [5] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, MLJBase.Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}})()
+     [5] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}})()
        @ MLJBase ./task.jl:423
 </code></pre>
 <h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model" class="header-anchor">Reading the Output from the Prediction of the Logistic Model</a></h2>
@@ -307,7 +337,7 @@ println&#40;&quot;\n Coefficients:  &quot;, fp.fitted_params_given_machine&#91;k
 println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n residuals \n &quot;, residuals&#91;1:5&#93;&#41;
-println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_classifier.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline336,…} has not been trained.
+println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_classifier.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline536,…} has not been trained.
 </code></pre>
 <p>No logistic analysis is complete without the confusion matrix:</p>
 <pre><code class="language-julia">yMode &#61; &#91;mode&#40;ŷ&#91;i&#93;&#41; for i in 1:length&#40;ŷ&#41;&#93;
@@ -318,7 +348,7 @@ confusion_matrix&#40;yMode, y&#41;</code></pre><pre><code class="plaintext code-
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

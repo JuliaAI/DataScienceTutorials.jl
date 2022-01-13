@@ -1,6 +1,0 @@
-MethodError: no method matching predict(::typeof(PyPlot.clf); rows=1:1000)
-Closest candidates are:
-  predict(!Matched::Union{MLJBase.Composite, MLJBase.Surrogate}, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/operations.jl:114 got unsupported keyword argument "rows"
-  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJTuning/Al9yX/src/tuned_models.jl:745 got unsupported keyword argument "rows"
-  predict(!Matched::Union{MLJModels.BinaryThresholdPredictor, MLJModels.ThresholdSupervisedDetector, MLJModels.ThresholdUnsupervisedDetector}, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJModels/tMgLW/src/builtins/ThresholdPredictors.jl:186 got unsupported keyword argument "rows"
-  ...

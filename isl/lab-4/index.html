@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -180,30 +180,36 @@ ylabel&#40;&quot;Number of occurences&quot;, fontsize&#61;14&#41;</code></pre>
 <p>Let&#39;s now try fitting a simple logistic classifier &#40;aka logistic regression&#41; not using <code>:Year</code> and <code>:Today</code>:</p>
 <pre><code class="language-julia">LogisticClassifier &#61; @load LogisticClassifier pkg&#61;MLJLinearModels
 X2 &#61; select&#40;X, Not&#40;&#91;:Year, :Today&#93;&#41;&#41;
-clf &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><pre><code class="plaintext code-output">import MLJLinearModelsArgumentError: Package MLJLinearModels not found in current path:
-- Run `import Pkg; Pkg.add("MLJLinearModels")` to install the MLJLinearModels package.
-
+classif &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
+Machine{LogisticClassifier,…} trained 0 times; caches data
+  model: MLJLinearModels.LogisticClassifier
+  args: 
+    1:	Source @010 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @969 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
-<pre><code class="language-julia">fit&#33;&#40;clf&#41;
-ŷ &#61; MLJ.predict&#40;clf, X2&#41;
-ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching fit!(::typeof(PyPlot.clf))
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at ~/.julia/packages/StatsBase/IPydo/src/statmodels.jl:183
-  fit!(!Matched::MLJBase.Machine{<:MLJBase.Surrogate}; kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/machines.jl:251
-  fit!(!Matched::MLJBase.Node; acceleration, kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/nodes.jl:181
-  ...
-</code></pre>
+<pre><code class="language-julia">fit&#33;&#40;classif&#41;
+ŷ &#61; MLJ.predict&#40;classif, X2&#41;
+ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteArray{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64, 1}:
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.482, Up=>0.518)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.489, Up=>0.511)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.49, Up=>0.51)</code></pre>
 <p>Note that here the <code>ŷ</code> are <em>scores</em>. We can recover the average cross-entropy loss:</p>
-<pre><code class="language-julia">cross_entropy&#40;ŷ, y&#41; |&gt; mean |&gt; r3</code></pre><pre><code class="plaintext code-output">UndefVarError: ŷ not defined
-</code></pre>
+<pre><code class="language-julia">cross_entropy&#40;ŷ, y&#41; |&gt; mean |&gt; r3</code></pre><pre><code class="plaintext code-output">0.692</code></pre>
 <p>in order to recover the class, we could use the mode and compare the misclassification rate:</p>
-<pre><code class="language-julia">ŷ &#61; predict_mode&#40;clf, X2&#41;
-misclassification_rate&#40;ŷ, y&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">UndefVarError: X2 not defined
-</code></pre>
+<pre><code class="language-julia">ŷ &#61; predict_mode&#40;classif, X2&#41;
+misclassification_rate&#40;ŷ, y&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.482</code></pre>
 <p>Well that&#39;s not fantastic...</p>
 <p>Let&#39;s visualise how we&#39;re doing building a confusion matrix, first is predicted, second is truth:</p>
-<pre><code class="language-julia">cm &#61; confusion_matrix&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: ŷ not defined
+<pre><code class="language-julia">cm &#61; confusion_matrix&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">              ┌───────────────────────────┐
+              │       Ground Truth        │
+┌─────────────┼─────────────┬─────────────┤
+│  Predicted  │    Down     │     Up      │
+├─────────────┼─────────────┼─────────────┤
+│    Down     │      4      │      5      │
+├─────────────┼─────────────┼─────────────┤
+│     Up      │     598     │     643     │
+└─────────────┴─────────────┴─────────────┘
 </code></pre>
 <p>We can then compute the accuracy or precision, etc. easily for instance:</p>
 <pre><code class="language-julia">@show false_positive&#40;cm&#41;
@@ -211,102 +217,80 @@ misclassification_rate&#40;ŷ, y&#41; |&gt; r3</code></pre><pre><code class="pl
 @show accuracy&#40;cm&#41;    |&gt; r3  # same thing
 @show precision&#40;ŷ, y&#41; |&gt; r3
 @show recall&#40;ŷ, y&#41;    |&gt; r3
-@show f1score&#40;ŷ, y&#41;   |&gt; r3</code></pre><pre><code class="plaintext code-output">MethodError: no method matching _check(::MLJBase.FalsePositive, ::Dict{CategoricalArrays.CategoricalValue{String, UInt8}, Int64})
-Closest candidates are:
-  _check(::MLJBase.Measure, ::Any, !Matched::Any, !Matched::AbstractArray) at ~/.julia/packages/MLJBase/MuLnJ/src/measures/measures.jl:62
-  _check(::MLJBase.Measure, ::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/measures/measures.jl:54
-  _check(::MLJBase.Measure, ::Any, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/measures/measures.jl:58
-  ...
+@show f1score&#40;ŷ, y&#41;   |&gt; r3</code></pre><pre><code class="plaintext code-output">false_positive(cm) = 598
+accuracy(ŷ, y) |> r3 = 0.518
+accuracy(cm) |> r3 = 0.518
+precision(ŷ, y) |> r3 = 0.518
+recall(ŷ, y) |> r3 = 0.992
+f1score(ŷ, y) |> r3 = 0.681
 </code></pre>
 <p>Let&#39;s now train on the data before 2005 and use it to predict on the rest. Let&#39;s find the row indices for which the condition holds</p>
 <pre><code class="language-julia">train &#61; 1:findlast&#40;X.Year .&lt; 2005&#41;
 test &#61; last&#40;train&#41;&#43;1:length&#40;y&#41;;</code></pre>
 <p>We can now just re-fit the machine that we&#39;ve already defined just on those rows and predict on the test:</p>
-<pre><code class="language-julia">fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">MethodError: no method matching fit!(::typeof(PyPlot.clf); rows=1:998)
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at ~/.julia/packages/StatsBase/IPydo/src/statmodels.jl:183 got unsupported keyword argument "rows"
-  fit!(!Matched::MLJBase.Machine{<:MLJBase.Surrogate}; kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/machines.jl:251
-  fit!(!Matched::MLJBase.Node; acceleration, kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/nodes.jl:181
-  ...
-</code></pre>
+<pre><code class="language-julia">fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.563</code></pre>
 <p>Well, that&#39;s not very good... Let&#39;s retrain a machine using only <code>:Lag1</code> and <code>:Lag2</code>:</p>
 <pre><code class="language-julia">X3 &#61; select&#40;X2, &#91;:Lag1, :Lag2&#93;&#41;
-clf &#61; machine&#40;LogisticClassifier&#40;&#41;, X3, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">UndefVarError: X2 not defined
-</code></pre>
+classif &#61; machine&#40;LogisticClassifier&#40;&#41;, X3, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.56</code></pre>
 <p>Interesting... it has higher accuracy than the model with more features&#33; This could be investigated further by increasing the regularisation parameter but we&#39;ll leave that aside for now.</p>
 <p>We can use a trained machine to predict on new data:</p>
 <pre><code class="language-julia">Xnew &#61; &#40;Lag1 &#61; &#91;1.2, 1.5&#93;, Lag2 &#61; &#91;1.1, -0.8&#93;&#41;
-ŷ &#61; MLJ.predict&#40;clf, Xnew&#41;
-ŷ |&gt; pprint</code></pre><pre><code class="plaintext code-output">MethodError: no method matching predict(::typeof(PyPlot.clf), ::NamedTuple{(:Lag1, :Lag2), Tuple{Vector{Float64}, Vector{Float64}}})
-Closest candidates are:
-  predict(!Matched::Union{MLJBase.Composite, MLJBase.Surrogate}, ::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/operations.jl:114
-  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, ::Any, !Matched::Any) at ~/.julia/packages/MLJTuning/Al9yX/src/tuned_models.jl:745
-  predict(!Matched::Union{MLJModels.BinaryThresholdPredictor, MLJModels.ThresholdSupervisedDetector, MLJModels.ThresholdUnsupervisedDetector}, ::Any, !Matched::Any) at ~/.julia/packages/MLJModels/tMgLW/src/builtins/ThresholdPredictors.jl:186
-  ...
-</code></pre>
+ŷ &#61; MLJ.predict&#40;classif, Xnew&#41;
+ŷ |&gt; pprint</code></pre><pre><code class="plaintext code-output">CategoricalDistributions.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.5, Up=>0.5), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.495, Up=>0.505)]</code></pre>
 <p><strong>Note</strong>: when specifying data, we used a simple <code>NamedTuple</code>; we could also have defined a dataframe or any other compatible tabular container. Note also that we retrieved the raw predictions here i.e.: a score for each class; we could have used <code>predict_mode</code> or indeed</p>
-<pre><code class="language-julia">mode.&#40;ŷ&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: ŷ not defined
-</code></pre>
+<pre><code class="language-julia">mode.&#40;ŷ&#41;</code></pre><pre><code class="plaintext code-output">2-element CategoricalArrays.CategoricalArray{String,1,UInt8}:
+ "Up"
+ "Up"</code></pre>
 <h3 id="lda"><a href="#lda" class="header-anchor">LDA</a></h3>
 <p>Let&#39;s do a similar thing but with a LDA model this time:</p>
 <pre><code class="language-julia">BayesianLDA &#61; @load BayesianLDA pkg&#61;MultivariateStats
 
-clf &#61; machine&#40;BayesianLDA&#40;&#41;, X3, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
+classif &#61; machine&#40;BayesianLDA&#40;&#41;, X3, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
 
 accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔
-UndefVarError: X3 not defined
-</code></pre>
+0.56</code></pre>
 <p>Note: <code>BayesianLDA</code> is LDA using a multivariate normal model for each class with a default prior inferred from the proportions for each class in the training data. You can also use the bare <code>LDA</code> model which does not make these assumptions and allows using a different metric in the transformed space, see the docs for details.</p>
 <pre><code class="language-julia">LDA &#61; @load LDA pkg&#61;MultivariateStats
 using Distances
 
-clf &#61; machine&#40;LDA&#40;dist&#61;CosineDist&#40;&#41;&#41;, X3, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
+classif &#61; machine&#40;LDA&#40;dist&#61;CosineDist&#40;&#41;&#41;, X3, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
 
 accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔
-UndefVarError: X3 not defined
-</code></pre>
+0.548</code></pre>
 <h3 id="qda"><a href="#qda" class="header-anchor">QDA</a></h3>
 <p>Bayesian QDA is available via ScikitLearn:</p>
 <pre><code class="language-julia">BayesianQDA &#61; @load BayesianQDA pkg&#61;ScikitLearn</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
 MLJScikitLearnInterface.BayesianQDA</code></pre>
 <p>Using it is done in much the same way as before:</p>
-<pre><code class="language-julia">clf &#61; machine&#40;BayesianQDA&#40;&#41;, X3, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
+<pre><code class="language-julia">classif &#61; machine&#40;BayesianQDA&#40;&#41;, X3, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">UndefVarError: X3 not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.599</code></pre>
 <h3 id="knn"><a href="#knn" class="header-anchor">KNN</a></h3>
 <p>We can use K-Nearest Neighbors models via the <a href="https://github.com/KristofferC/NearestNeighbors.jl"><code>NearestNeighbors</code></a> package:</p>
 <pre><code class="language-julia">KNNClassifier &#61; @load KNNClassifier
 
 knnc &#61; KNNClassifier&#40;K&#61;1&#41;
-clf &#61; machine&#40;knnc, X3, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
+classif &#61; machine&#40;knnc, X3, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
 accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
-UndefVarError: X3 not defined
-</code></pre>
+0.5</code></pre>
 <p>Pretty bad... let&#39;s try with three neighbors</p>
 <pre><code class="language-julia">knnc.K &#61; 3
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">MethodError: no method matching fit!(::typeof(PyPlot.clf); rows=1:998)
-Closest candidates are:
-  fit!(!Matched::StatsBase.StatisticalModel, !Matched::Any...) at ~/.julia/packages/StatsBase/IPydo/src/statmodels.jl:183 got unsupported keyword argument "rows"
-  fit!(!Matched::MLJBase.Machine{<:MLJBase.Surrogate}; kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/machines.jl:251
-  fit!(!Matched::MLJBase.Node; acceleration, kwargs...) at ~/.julia/packages/MLJBase/MuLnJ/src/composition/learning_networks/nodes.jl:181
-  ...
-</code></pre>
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.532</code></pre>
 <p>A bit better but not hugely so.</p>
 <h2 id="caravan_insurance_data"><a href="#caravan_insurance_data" class="header-anchor">Caravan insurance data</a></h2>
 <p>The caravan dataset is part of ISLR as well:</p>
@@ -346,32 +330,24 @@ var&#40;Xs&#91;:,1&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext co
 <pre><code class="language-julia">test &#61; 1:1000
 train &#61; last&#40;test&#41;&#43;1:nrows&#40;Xs&#41;;</code></pre>
 <p>Let&#39;s now fit a KNN model and check the misclassification rate</p>
-<pre><code class="language-julia">clf &#61; machine&#40;KNNClassifier&#40;K&#61;3&#41;, Xs, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
+<pre><code class="language-julia">classif &#61; machine&#40;KNNClassifier&#40;K&#61;3&#41;, Xs, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">cannot assign a value to variable PyPlot.clf from module FD_SANDBOX_15301797944822562081
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.925</code></pre>
 <p>that looks good but recall the problem is very unbalanced</p>
 <pre><code class="language-julia">mean&#40;y&#91;test&#93; .&#33;&#61; &quot;No&quot;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.059</code></pre>
 <p>Let&#39;s fit a logistic classifier to this problem</p>
-<pre><code class="language-julia">clf &#61; machine&#40;LogisticClassifier&#40;&#41;, Xs, y&#41;
-fit&#33;&#40;clf, rows&#61;train&#41;
-ŷ &#61; predict_mode&#40;clf, rows&#61;test&#41;
+<pre><code class="language-julia">classif &#61; machine&#40;LogisticClassifier&#40;&#41;, Xs, y&#41;
+fit&#33;&#40;classif, rows&#61;train&#41;
+ŷ &#61; predict_mode&#40;classif, rows&#61;test&#41;
 
-accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">UndefVarError: LogisticClassifier not defined
-</code></pre>
+accuracy&#40;ŷ, y&#91;test&#93;&#41; |&gt; r3</code></pre><pre><code class="plaintext code-output">0.941</code></pre>
 <h3 id="roc_and_auc"><a href="#roc_and_auc" class="header-anchor">ROC and AUC</a></h3>
 <p>Since we have a probabilistic classifier, we can also check metrics that take <em>scores</em> into account such as the area under the ROC curve &#40;AUC&#41;:</p>
-<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;clf, rows&#61;test&#41;
+<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;classif, rows&#61;test&#41;
 
-auc&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">MethodError: no method matching predict(::typeof(PyPlot.clf); rows=1:1000)
-Closest candidates are:
-  predict(!Matched::Union{MLJBase.Composite, MLJBase.Surrogate}, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJBase/MuLnJ/src/operations.jl:114 got unsupported keyword argument "rows"
-  predict(!Matched::Union{MLJTuning.DeterministicTunedModel{T, M}, MLJTuning.ProbabilisticTunedModel{T, M}} where {T, M}, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJTuning/Al9yX/src/tuned_models.jl:745 got unsupported keyword argument "rows"
-  predict(!Matched::Union{MLJModels.BinaryThresholdPredictor, MLJModels.ThresholdSupervisedDetector, MLJModels.ThresholdUnsupervisedDetector}, !Matched::Any, !Matched::Any) at ~/.julia/packages/MLJModels/tMgLW/src/builtins/ThresholdPredictors.jl:186 got unsupported keyword argument "rows"
-  ...
-</code></pre>
+auc&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.7284713341378627</code></pre>
 <p>We can also display the curve itself</p>
 <pre><code class="language-julia">fprs, tprs, thresholds &#61; roc&#40;ŷ, y&#91;test&#93;&#41;
 
@@ -381,14 +357,13 @@ plot&#40;fprs, tprs&#41;
 xlabel&#40;&quot;False Positive Rate&quot;, fontsize&#61;14&#41;
 ylabel&#40;&quot;True Positive Rate&quot;, fontsize&#61;14&#41;
 xticks&#40;fontsize&#61;12&#41;
-yticks&#40;fontsize&#61;12&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: ŷ not defined
-</code></pre>
-<p><span style="color:red;">// Image matching '/assets/isl/lab-4/code/ISL-lab-4-roc.svg' not found. //</span></p>
+yticks&#40;fontsize&#61;12&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/isl/lab-4/code/output/ISL-lab-4-roc.svg" alt="ROC">
 
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->
