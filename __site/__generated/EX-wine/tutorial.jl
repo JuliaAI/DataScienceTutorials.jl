@@ -40,7 +40,7 @@ describe(df)
 # the target is the `Class` column, everything else is a feature; we can
 # dissociate the two  using the `unpack` function:
 
-y, X = unpack(df, ==(:Class), colname->true);
+y, X = unpack(df, ==(:Class));
 
 # ### Setting the scientific type
 #
@@ -93,8 +93,10 @@ describe(Xc, :mean, :std)
 KNNC = @load KNNClassifier
 MNC = @load MultinomialClassifier pkg=MLJLinearModels;
 
-KnnPipe = @pipeline(Standardizer(), KNNC())
-MnPipe = @pipeline(Standardizer(), MNC());
+KnnPipe = Standardizer |> KNNC
+MnPipe = Standardizer |> MNC
+
+# Note the `|>` syntax, which is syntactic sugar for creating a linear `Pipeline` from components models.
 
 # We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
 
@@ -136,7 +138,7 @@ println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 # One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here (if you're on Julia <= 1.2, use the commented-out lines as you won't be able to use the arrow-syntax)
 
 PCA = @load PCA
-pca_pipe = @pipeline(Standardizer(), PCA(maxoutdim=2))
+pca_pipe = Standardizer() |> PCA(maxoutdim=2)
 pca = machine(pca_pipe, Xtrain)
 fit!(pca)
 W = transform(pca, Xtrain)

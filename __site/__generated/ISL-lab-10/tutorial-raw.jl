@@ -26,13 +26,19 @@ cumsum(r.principalvars ./ r.tvar)
 
 data = dataset("ISLR", "OJ")
 
-X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
-                  :SalePriceCH, :PriceDiff, :PctDiscMM, :PctDiscCH]);
+feature_names = [
+    :PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM, :SalePriceCH,
+    :PriceDiff, :PctDiscMM, :PctDiscCH
+]
+
+X = select(data, feature_names);
 
 Random.seed!(1515)
 
-SPCA = @pipeline(Standardizer(),
-                 PCA(pratio=1-1e-4))
+SPCA = Pipeline(
+    Standardizer(),
+    PCA(pratio=1-1e-4)
+)
 
 spca = machine(SPCA, X)
 fit!(spca)
@@ -55,9 +61,11 @@ ylabel("Ratio of explained variance", fontsize=14)
 Random.seed!(1515)
 
 KMeans = @load KMeans pkg=Clustering
-SPCA2 = @pipeline(Standardizer(),
-                  PCA(),
-                  KMeans(k=3))
+SPCA2 = Pipeline(
+    Standardizer(),
+    PCA(),
+    KMeans(k=3)
+)
 
 spca2 = machine(SPCA2, X)
 fit!(spca2)

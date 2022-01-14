@@ -1,1 +1,1 @@
-AbstractVector{Count} (alias for AbstractArray{Count, 1})
+AbstractVector{Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})

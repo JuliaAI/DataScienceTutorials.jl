@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -224,47 +224,24 @@ y &#61; copy&#40;dfY1&#41;
 coerce&#33;&#40;X, autotype&#40;X, :string_to_multiclass&#41;&#41;
 yv &#61; Vector&#40;y&#91;:, 1&#93;&#41;
 
-LinearRegressorPipe &#61; @pipeline&#40;Standardizer&#40;&#41;,
-                                OneHotEncoder&#40;drop_last &#61; true&#41;,
-                                LinearRegressor&#40;&#41;&#41;
+LinearRegressorPipe &#61; Pipeline&#40;
+    Standardizer&#40;&#41;,
+    OneHotEncoder&#40;drop_last &#61; true&#41;,
+    LinearRegressor&#40;&#41;
+&#41;
 
 LinearModel &#61; machine&#40;LinearRegressorPipe, X, yv&#41;
 fit&#33;&#40;LinearModel&#41;
-fp &#61; fitted_params&#40;LinearModel&#41;</code></pre><pre><code class="plaintext code-output">TaskFailedException
-
-    nested task error: MethodError: no method matching keys(::DataFrame)
-    Closest candidates are:
-      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
-      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
-      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
-      ...
-    Stacktrace:
-     [1] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
-       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:685
-     [2] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearRegressor, true}})()
-       @ MLJBase ./task.jl:423
-    
-    caused by: MethodError: no method matching keys(::DataFrame)
-    Closest candidates are:
-      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
-      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
-      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
-      ...
-    Stacktrace:
-     [1] glm_data(model::MLJGLMInterface.LinearRegressor, Xmatrix::Matrix{Float64}, X::DataFrame, y::Vector{Float64})
-       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:158
-     [2] fit(model::MLJGLMInterface.LinearRegressor, verbosity::Int64, X::DataFrame, y::Vector{Float64})
-       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:170
-     [3] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}; rows::Nothing, verbosity::Int64, force::Bool)
-       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:592
-     [4] fit_only!(mach::Machine{MLJGLMInterface.LinearRegressor, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
-       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:681
-     [5] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearRegressor, true}})()
-       @ MLJBase ./task.jl:423
-</code></pre>
+fp &#61; fitted_params&#40;LinearModel&#41;</code></pre><pre><code class="plaintext code-output">(linear_regressor = (features = ["V1", "V2", "V3", "V4", "V5"],
+                     coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225, 0.015893883995789806],
+                     intercept = 0.015893883995789806,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult,),
+ standardizer = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)),
+ machines = MLJBase.Machine[Machine{Standardizer,…}, Machine{OneHotEncoder,…}, Machine{LinearRegressor,…}],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{Standardizer,…} => Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)), Machine{OneHotEncoder,…} => (fitresult = OneHotEncoderResult,), Machine{LinearRegressor,…} => (features = ["V1", "V2", "V3", "V4", "V5"], coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225, 0.015893883995789806], intercept = 0.015893883995789806)),)</code></pre>
 <h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model" class="header-anchor">Reading the Output of Fitting the Linear Model</a></h2>
 <p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
-<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;LinearModel, Xm&#41;
+<pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;LinearModel, X&#41;
 yhatResponse &#61; &#91;ŷ&#91;i,1&#93;.μ for i in 1:nrow&#40;y&#41;&#93;
 residuals &#61; y .- yhatResponse
 r &#61; report&#40;LinearModel&#41;
@@ -275,11 +252,26 @@ println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n yhatResponse \n &quot;, yhatResponse&#91;1:5&#93;&#41;
 println&#40;&quot;\n Residuals \n &quot;, y&#91;1:5,1&#93; .- yhatResponse&#91;1:5&#93;&#41;
-println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_regressor.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: Xm not defined
+println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_regressor.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">
+ Coefficients:  [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225, 0.015893883995789806]
+
+ y 
+ [-2.0446341129015, -0.461528671336098, 0.458261960749596, 2.2746223981481, -0.969887403007307]
+
+ ŷ 
+ Distributions.Normal{Float64}[Distributions.Normal{Float64}(μ=-1.6915415373374758, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=1.412005563203644, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.47362968068623923, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.7266938985590492, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=-1.8396459459760566, σ=0.9580569656804974)]
+
+ yhatResponse 
+ [-1.6915415373374758, 1.412005563203644, 0.47362968068623923, 0.7266938985590492, -1.8396459459760566]
+
+ Residuals 
+ [-0.3530925755640242, -1.8735342345397419, -0.01536771993664321, 1.547928499589051, 0.8697585429687495]
+
+ Standard Error per Coefficient 
+[0.015862782503144917, 0.01515900587321476, 0.01515667698600387, 0.016546721612329368, 0.015148210698700702]
 </code></pre>
 <p>and get the accuracy</p>
-<pre><code class="language-julia">round&#40;rms&#40;yhatResponse, y&#91;:,1&#93;&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: yhatResponse not defined
-</code></pre>
+<pre><code class="language-julia">round&#40;rms&#40;yhatResponse, y&#91;:,1&#93;&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">0.9573</code></pre>
 <h2 id="defining_the_logistic_model"><a href="#defining_the_logistic_model" class="header-anchor">Defining the Logistic Model</a></h2>
 <pre><code class="language-julia">X &#61; copy&#40;dfX&#41;
 y &#61; copy&#40;dfYbinary&#41;
@@ -288,44 +280,21 @@ coerce&#33;&#40;X, autotype&#40;X, :string_to_multiclass&#41;&#41;
 yc &#61; CategoricalArray&#40;y&#91;:, 1&#93;&#41;
 yc &#61; coerce&#40;yc, OrderedFactor&#41;
 
-LinearBinaryClassifierPipe &#61; @pipeline&#40;Standardizer&#40;&#41;,
-                                       OneHotEncoder&#40;drop_last &#61; true&#41;,
-                                       LinearBinaryClassifier&#40;&#41;&#41;
+LinearBinaryClassifierPipe &#61; Pipeline&#40;
+    Standardizer&#40;&#41;,
+    OneHotEncoder&#40;drop_last &#61; true&#41;,
+    LinearBinaryClassifier&#40;&#41;
+&#41;
 
 LogisticModel &#61; machine&#40;LinearBinaryClassifierPipe, X, yc&#41;
 fit&#33;&#40;LogisticModel&#41;
-fp &#61; fitted_params&#40;LogisticModel&#41;</code></pre><pre><code class="plaintext code-output">TaskFailedException
-
-    nested task error: MethodError: no method matching keys(::DataFrame)
-    Closest candidates are:
-      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
-      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
-      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
-      ...
-    Stacktrace:
-     [1] fit_only!(mach::Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
-       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:685
-     [2] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}})()
-       @ MLJBase ./task.jl:423
-    
-    caused by: MethodError: no method matching keys(::DataFrame)
-    Closest candidates are:
-      keys(!Matched::Union{Tables.AbstractColumns, Tables.AbstractRow}) at ~/.julia/packages/Tables/M26tI/src/Tables.jl:184
-      keys(!Matched::DataStructures.MultiDict, !Matched::Any...) at ~/.julia/packages/DataStructures/vSp4s/src/delegate.jl:21
-      keys(!Matched::Test.GenericArray) at /Applications/Julia-1.7.app/Contents/Resources/julia/share/julia/stdlib/v1.7/Test/src/Test.jl:1823
-      ...
-    Stacktrace:
-     [1] glm_data(model::MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, Xmatrix::Matrix{Float64}, X::DataFrame, y::Vector{Int64})
-       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:158
-     [2] fit(model::MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, verbosity::Int64, X::DataFrame, y::CategoricalVector{Int64, UInt32, Int64, CategoricalValue{Int64, UInt32}, Union{}})
-       @ MLJGLMInterface ~/.julia/packages/MLJGLMInterface/jM45W/src/MLJGLMInterface.jl:198
-     [3] fit_only!(mach::Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}; rows::Nothing, verbosity::Int64, force::Bool)
-       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:592
-     [4] fit_only!(mach::Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}, wait_on_downstream::Bool; kwargs::Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}})
-       @ MLJBase ~/.julia/packages/MLJBase/MuLnJ/src/machines.jl:681
-     [5] (::MLJBase.var"#80#82"{Base.Pairs{Symbol, Int64, Tuple{Symbol}, NamedTuple{(:verbosity,), Tuple{Int64}}}, Machine{MLJGLMInterface.LinearBinaryClassifier{GLM.LogitLink}, true}})()
-       @ MLJBase ./task.jl:423
-</code></pre>
+fp &#61; fitted_params&#40;LogisticModel&#41;</code></pre><pre><code class="plaintext code-output">(linear_binary_classifier = (features = ["gender__female", "ethnicity__afam", "ethnicity__hispanic", "score", "fcollege__no", "mcollege__no", "home__no", "urban__no", "unemp", "wage", "tuition", "income__high", "region__other"],
+                             coef = [0.20250729378868748, 0.13075293910912905, 0.34495162493983506, 0.9977565847160846, -0.5022315102984594, -0.4785005626021653, -0.20440507809954997, -0.06922751403500084, 0.05892864973017095, -0.08344749828203228, -0.002315143333859723, 0.4617765395578657, 0.38432629581007743, -1.0766338905793653],
+                             intercept = -1.0766338905793653,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult,),
+ standardizer = Dict(:wage => (9.500506478338009, 1.3430670761078416), :unemp => (7.597214581091511, 2.763580873344848), :tuition => (0.8146082493518824, 0.33950381985971717), :score => (50.88902933684601, 8.701909614072397)),
+ machines = MLJBase.Machine[Machine{Standardizer,…}, Machine{OneHotEncoder,…}, Machine{LinearBinaryClassifier{LogitLink},…}],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{Standardizer,…} => Dict(:wage => (9.500506478338009, 1.3430670761078416), :unemp => (7.597214581091511, 2.763580873344848), :tuition => (0.8146082493518824, 0.33950381985971717), :score => (50.88902933684601, 8.701909614072397)), Machine{OneHotEncoder,…} => (fitresult = OneHotEncoderResult,), Machine{LinearBinaryClassifier{LogitLink},…} => (features = ["gender__female", "ethnicity__afam", "ethnicity__hispanic", "score", "fcollege__no", "mcollege__no", "home__no", "urban__no", "unemp", "wage", "tuition", "income__high", "region__other"], coef = [0.20250729378868748, 0.13075293910912905, 0.34495162493983506, 0.9977565847160846, -0.5022315102984594, -0.4785005626021653, -0.20440507809954997, -0.06922751403500084, 0.05892864973017095, -0.08344749828203228, -0.002315143333859723, 0.4617765395578657, 0.38432629581007743, -1.0766338905793653], intercept = -1.0766338905793653)),)</code></pre>
 <h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model" class="header-anchor">Reading the Output from the Prediction of the Logistic Model</a></h2>
 <p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;LogisticModel, X&#41;
@@ -337,13 +306,34 @@ println&#40;&quot;\n Coefficients:  &quot;, fp.fitted_params_given_machine&#91;k
 println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n residuals \n &quot;, residuals&#91;1:5&#93;&#41;
-println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_classifier.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline536,…} has not been trained.
+println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_classifier.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">
+ Coefficients:  [0.20250729378868748, 0.13075293910912905, 0.34495162493983506, 0.9977565847160846, -0.5022315102984594, -0.4785005626021653, -0.20440507809954997, -0.06922751403500084, 0.05892864973017095, -0.08344749828203228, -0.002315143333859723, 0.4617765395578657, 0.38432629581007743, -1.0766338905793653]
+
+ y 
+ [0, 0, 0, 0, 0]
+
+ ŷ 
+ CategoricalDistributions.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, Int64, UInt32, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.881, 1=>0.119), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.838, 1=>0.162), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.866, 1=>0.134), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.936, 1=>0.0637), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.944, 1=>0.056)]
+
+ residuals 
+ [0.11944603346742211, 0.16182691493524637, 0.1344573037383121, 0.06370799769022917, 0.05604680411361729]
+
+ Standard Error per Coefficient 
+[0.12260004202741961, 0.10934317995152518, 0.0466143725037294, 0.0960924372481536, 0.10743620672240194, 0.10642223545563925, 0.09190778860389343, 0.03922724536508866, 0.04118915117919154, 0.05115399636339277, 0.08454431256127869, 0.1228145565794003, 0.17884724866298368]
 </code></pre>
 <p>No logistic analysis is complete without the confusion matrix:</p>
 <pre><code class="language-julia">yMode &#61; &#91;mode&#40;ŷ&#91;i&#93;&#41; for i in 1:length&#40;ŷ&#41;&#93;
 y &#61; coerce&#40;y&#91;:,1&#93;, OrderedFactor&#41;
 yMode &#61; coerce&#40;yMode, OrderedFactor&#41;
-confusion_matrix&#40;yMode, y&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: ŷ not defined
+confusion_matrix&#40;yMode, y&#41;</code></pre><pre><code class="plaintext code-output">              ┌───────────────────────────┐
+              │       Ground Truth        │
+┌─────────────┼─────────────┬─────────────┤
+│  Predicted  │      0      │      1      │
+├─────────────┼─────────────┼─────────────┤
+│      0      │    3283     │     831     │
+├─────────────┼─────────────┼─────────────┤
+│      1      │     236     │     389     │
+└─────────────┴─────────────┴─────────────┘
 </code></pre>
 
 <div class="page-foot">

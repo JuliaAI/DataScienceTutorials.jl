@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -153,8 +153,10 @@ ylabel&#40;&quot;MPG&quot;, fontsize&#61;14&#41;</code></pre>
 <pre><code class="language-julia">hp &#61; X.Horsepower
 Xhp &#61; DataFrame&#40;hp1&#61;hp, hp2&#61;hp.^2, hp3&#61;hp.^3&#41;;</code></pre>
 <p>Now we  can write a simple pipeline where the first step selects the features we want &#40;and with it the degree of the polynomial&#41; and the second is the linear regressor:</p>
-<pre><code class="language-julia">LinMod &#61; @pipeline&#40;FeatureSelector&#40;features&#61;&#91;:hp1&#93;&#41;,
-                   LR&#40;&#41;&#41;;</code></pre>
+<pre><code class="language-julia">LinMod &#61; Pipeline&#40;
+    FeatureSelector&#40;features&#61;&#91;:hp1&#93;&#41;,
+    LR&#40;&#41;
+&#41;;</code></pre>
 <p>Then we can  instantiate and fit 3 models where we specify the features each time:</p>
 <pre><code class="language-julia">lr1 &#61; machine&#40;LinMod, Xhp, y&#41; # poly of degree 1 &#40;line&#41;
 fit&#33;&#40;lr1, rows&#61;train&#41;
@@ -165,11 +167,11 @@ fit&#33;&#40;lr2, rows&#61;train&#41;
 
 LinMod.feature_selector.features &#61; &#91;:hp1, :hp2, :hp3&#93; # poly of degree 3
 lr3 &#61; machine&#40;LinMod, Xhp, y&#41;
-fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline303,…} trained 1 time; caches data
-  model: Pipeline303
+fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine{DeterministicPipeline{NamedTuple{,…},…},…} trained 1 time; caches data
+  model: MLJBase.DeterministicPipeline{NamedTuple{(:feature_selector, :linear_regressor), Tuple{MLJModelInterface.Unsupervised, MLJModelInterface.Deterministic}}, MLJModelInterface.predict}
   args: 
-    1:	Source @139 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @283 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @112 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @035 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="language-julia">get_mse&#40;lr&#41; &#61; rms&#40;MLJ.predict&#40;lr, rows&#61;test&#41;, y&#91;test&#93;&#41;^2
@@ -210,9 +212,10 @@ cases &#61; &#91;&#91;Symbol&#40;&quot;x&#36;j&quot;&#41; for j in 1:i&#93; for 
 r &#61; range&#40;LinMod, :&#40;feature_selector.features&#41;, values&#61;cases&#41;
 
 tm &#61; TunedModel&#40;model&#61;LinMod, ranges&#61;r, resampling&#61;CV&#40;nfolds&#61;10&#41;, measure&#61;rms&#41;</code></pre><pre><code class="plaintext code-output">DeterministicTunedModel(
-    model = Pipeline303(
+    model = DeterministicPipeline(
             feature_selector = FeatureSelector,
-            linear_regressor = LinearRegressor),
+            linear_regressor = LinearRegressor,
+            cache = true),
     tuning = Grid(
             goal = nothing,
             resolution = 10,
@@ -242,7 +245,7 @@ rep &#61; report&#40;mtm&#41;
 res &#61; rep.plotting
 
 @show round.&#40;res.measurements.^2, digits&#61;2&#41;
-@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [27.44, 20.91, 20.91, 21.34, 223.98, 25.66, 21.24, 21.35, 20.96, 88.61]
+@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [20.96, 20.91, 20.91, 21.35, 27.44, 88.61, 223.98, 21.24, 25.66, 21.34]
 argmin(res.measurements) = 3
 </code></pre>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>

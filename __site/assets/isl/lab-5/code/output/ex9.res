@@ -1,5 +1,5 @@
-Machine{Pipeline303,…} trained 1 time; caches data
-  model: Main.FD_SANDBOX_994079543179437103.Pipeline303
+Machine{DeterministicPipeline{NamedTuple{,…},…},…} trained 1 time; caches data
+  model: MLJBase.DeterministicPipeline{NamedTuple{(:feature_selector, :linear_regressor), Tuple{MLJModelInterface.Unsupervised, MLJModelInterface.Deterministic}}, MLJModelInterface.predict}
   args: 
-    1:	Source @139 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @283 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @112 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @035 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`

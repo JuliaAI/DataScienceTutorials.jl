@@ -1,6 +1,5 @@
 # This file was generated, do not modify it. # hide
-HotTreeClf = @pipeline(OneHotEncoder(),
-                       DTC())
+HotTreeClf = OneHotEncoder() |> DTC()
 
 mdl = HotTreeClf
 mach = machine(mdl, X, y)

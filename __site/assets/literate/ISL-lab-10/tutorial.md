@@ -70,8 +70,12 @@ Instead of just playing with toy data, let's load the orange juice data and extr
 ```julia:ex8
 data = dataset("ISLR", "OJ")
 
-X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
-                  :SalePriceCH, :PriceDiff, :PctDiscMM, :PctDiscCH]);
+feature_names = [
+    :PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM, :SalePriceCH,
+    :PriceDiff, :PctDiscMM, :PctDiscCH
+]
+
+X = select(data, feature_names);
 ```
 
 ### PCA pipeline
@@ -79,8 +83,10 @@ X = select(data, [:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
 ```julia:ex9
 Random.seed!(1515)
 
-SPCA = @pipeline(Standardizer(),
-                 PCA(pratio=1-1e-4))
+SPCA = Pipeline(
+    Standardizer(),
+    PCA(pratio=1-1e-4)
+)
 
 spca = machine(SPCA, X)
 fit!(spca)
@@ -122,9 +128,11 @@ So 4 PCA features are enough to recover most of the variance.
 Random.seed!(1515)
 
 KMeans = @load KMeans pkg=Clustering
-SPCA2 = @pipeline(Standardizer(),
-                  PCA(),
-                  KMeans(k=3))
+SPCA2 = Pipeline(
+    Standardizer(),
+    PCA(),
+    KMeans(k=3)
+)
 
 spca2 = machine(SPCA2, X)
 fit!(spca2)

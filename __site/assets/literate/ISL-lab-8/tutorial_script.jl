@@ -24,8 +24,7 @@ carseats[!, :High] = High;
 X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;
 
-HotTreeClf = @pipeline(OneHotEncoder(),
-                       DTC())
+HotTreeClf = OneHotEncoder() |> DTC()
 
 mdl = HotTreeClf
 mach = machine(mdl, X, y)
@@ -42,9 +41,14 @@ misclassification_rate(ypred, y[test])
 r_mpi = range(mdl, :(decision_tree_classifier.max_depth), lower=1, upper=10)
 r_msl = range(mdl, :(decision_tree_classifier.min_samples_leaf), lower=1, upper=50)
 
-tm = TunedModel(model=mdl, ranges=[r_mpi, r_msl], tuning=Grid(resolution=8),
-                resampling=CV(nfolds=5, rng=112),
-                operation=predict_mode, measure=misclassification_rate)
+tm = TunedModel(
+    model=mdl,
+    ranges=[r_mpi, r_msl],
+    tuning=Grid(resolution=8),
+    resampling=CV(nfolds=5, rng=112),
+    operation=predict_mode,
+    measure=misclassification_rate
+)
 mtm = machine(tm, X, y)
 fit!(mtm, rows=train)
 
@@ -75,8 +79,14 @@ round(rms(ypred, y[test]), sigdigits=3)
 
 r_depth = range(dtr_model, :max_depth, lower=2, upper=20)
 
-tm = TunedModel(model=dtr_model, ranges=[r_depth], tuning=Grid(resolution=10),
-                resampling=CV(nfolds=5, rng=1254), measure=rms)
+tm = TunedModel(
+    model=dtr_model,
+    ranges=[r_depth],
+    tuning=Grid(resolution=10),
+    resampling=CV(nfolds=5, rng=1254),
+    measure=rms
+)
+
 mtm = machine(tm, X, y)
 
 fit!(mtm, rows=train)

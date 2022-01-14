@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -154,31 +154,31 @@ test &#61; last&#40;train&#41; .&#43; &#40;1:nrows&#40;data_test&#41;&#41;;</cod
 <pre><code class="language-julia">sch &#61; schema&#40;datac&#41;
 for &#40;name, scitype&#41; in zip&#40;sch.names, sch.scitypes&#41;
     println&#40;rpad&#40;&quot;&#36;name&quot;, 30&#41;, scitype&#41;
-end</code></pre><pre><code class="plaintext code-output">surgery                       Union{Missing, ScientificTypesBase.OrderedFactor{2}}
-age                           ScientificTypesBase.OrderedFactor{2}
-hospital_number               ScientificTypesBase.Count
-rectal_temperature            Union{Missing, ScientificTypesBase.Continuous}
-pulse                         Union{Missing, ScientificTypesBase.Count}
-respiratory_rate              Union{Missing, ScientificTypesBase.Count}
-temperature_extremities       Union{Missing, ScientificTypesBase.OrderedFactor{4}}
-peripheral_pulse              Union{Missing, ScientificTypesBase.OrderedFactor{4}}
-mucous_membranes              Union{Missing, ScientificTypesBase.OrderedFactor{6}}
-capillary_refill_time         Union{Missing, ScientificTypesBase.OrderedFactor{3}}
-pain                          Union{Missing, ScientificTypesBase.OrderedFactor{5}}
-peristalsis                   Union{Missing, ScientificTypesBase.OrderedFactor{4}}
-abdominal_distension          Union{Missing, ScientificTypesBase.OrderedFactor{4}}
-nasogastric_tube              Union{Missing, ScientificTypesBase.OrderedFactor{3}}
-nasogastric_reflux            Union{Missing, ScientificTypesBase.OrderedFactor{3}}
-nasogastric_reflux_ph         Union{Missing, ScientificTypesBase.OrderedFactor{24}}
-feces                         Union{Missing, ScientificTypesBase.OrderedFactor{4}}
-abdomen                       Union{Missing, ScientificTypesBase.OrderedFactor{5}}
-packed_cell_volume            Union{Missing, ScientificTypesBase.Continuous}
-total_protein                 Union{Missing, ScientificTypesBase.Continuous}
-abdomcentesis_appearance      Union{Missing, ScientificTypesBase.OrderedFactor{3}}
-abdomcentesis_total_protein   Union{Missing, ScientificTypesBase.Continuous}
-outcome                       Union{Missing, ScientificTypesBase.OrderedFactor{3}}
-surgical_lesion               ScientificTypesBase.OrderedFactor{2}
-cp_data                       ScientificTypesBase.OrderedFactor{2}
+end</code></pre><pre><code class="plaintext code-output">surgery                       Union{Missing, OrderedFactor{2}}
+age                           OrderedFactor{2}
+hospital_number               Count
+rectal_temperature            Union{Missing, Continuous}
+pulse                         Union{Missing, Count}
+respiratory_rate              Union{Missing, Count}
+temperature_extremities       Union{Missing, OrderedFactor{4}}
+peripheral_pulse              Union{Missing, OrderedFactor{4}}
+mucous_membranes              Union{Missing, OrderedFactor{6}}
+capillary_refill_time         Union{Missing, OrderedFactor{3}}
+pain                          Union{Missing, OrderedFactor{5}}
+peristalsis                   Union{Missing, OrderedFactor{4}}
+abdominal_distension          Union{Missing, OrderedFactor{4}}
+nasogastric_tube              Union{Missing, OrderedFactor{3}}
+nasogastric_reflux            Union{Missing, OrderedFactor{3}}
+nasogastric_reflux_ph         Union{Missing, OrderedFactor{24}}
+feces                         Union{Missing, OrderedFactor{4}}
+abdomen                       Union{Missing, OrderedFactor{5}}
+packed_cell_volume            Union{Missing, Continuous}
+total_protein                 Union{Missing, Continuous}
+abdomcentesis_appearance      Union{Missing, OrderedFactor{3}}
+abdomcentesis_total_protein   Union{Missing, Continuous}
+outcome                       Union{Missing, OrderedFactor{3}}
+surgical_lesion               OrderedFactor{2}
+cp_data                       OrderedFactor{2}
 </code></pre>
 <p>Most columns are now treated as either Multiclass or Ordered, this corresponds to the <a href="https://archive.ics.uci.edu/ml/datasets/Horse&#43;Colic">description of the data</a>. For instance:</p>
 <ul>
@@ -277,11 +277,17 @@ MLJLinearModels.MultinomialClassifier</code></pre>
 <pre><code class="language-julia">Xtrain &#61; X&#91;train,:&#93;
 ytrain &#61; y&#91;train&#93;;</code></pre>
 <p>And let&#39;s define a pipeline corresponding to the operations above</p>
-<pre><code class="language-julia">SimplePipe &#61; @pipeline&#40;OneHotEncoder&#40;&#41;,
-                       MultinomialClassifier&#40;&#41;, prediction_type&#61;:probabilistic&#41;
+<pre><code class="language-julia">SimplePipe &#61; Pipeline&#40;
+    OneHotEncoder&#40;&#41;,
+    MultinomialClassifier&#40;&#41;,
+    prediction_type&#61;:probabilistic
+&#41;
 mach &#61; machine&#40;SimplePipe, Xtrain, ytrain&#41;
-res &#61; evaluate&#33;&#40;mach; resampling&#61;Holdout&#40;fraction_train&#61;0.9&#41;,
-                measure&#61;cross_entropy&#41;
+res &#61; evaluate&#33;&#40;
+    mach;
+    resampling&#61;Holdout&#40;fraction_train&#61;0.9&#41;,
+    measure&#61;cross_entropy
+&#41;
 round&#40;res.measurement&#91;1&#93;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">0.802</code></pre>
 <p>This is the cross entropy on some held-out 10&#37; of the training set. We can also just for the sake of getting a baseline, see the misclassification on the whole training data:</p>
 <pre><code class="language-julia">mcr &#61; misclassification_rate&#40;predict_mode&#40;mach, Xtrain&#41;, ytrain&#41;
@@ -293,7 +299,7 @@ lambdas &#61; range&#40;model, :&#40;multinomial_classifier.lambda&#41;, lower&#
 tm &#61; TunedModel&#40;model&#61;SimplePipe, ranges&#61;lambdas, measure&#61;cross_entropy&#41;
 mtm &#61; machine&#40;tm, Xtrain, ytrain&#41;
 fit&#33;&#40;mtm&#41;
-best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code class="plaintext code-output">Pipeline355(
+best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code class="plaintext code-output">ProbabilisticPipeline(
     one_hot_encoder = OneHotEncoder(
             features = Symbol[],
             drop_last = false,
@@ -306,7 +312,8 @@ best_pipe &#61; fitted_params&#40;mtm&#41;.best_model</code></pre><pre><code cla
             fit_intercept = true,
             penalize_intercept = false,
             scale_penalty_with_samples = true,
-            solver = nothing))</code></pre>
+            solver = nothing),
+    cache = true)</code></pre>
 <p>So it looks like it&#39;s useful to regularise a fair bit to get a lower cross entropy</p>
 <pre><code class="language-julia">ŷ &#61; MLJ.predict&#40;mtm, Xtrain&#41;
 cross_entropy&#40;ŷ, ytrain&#41; |&gt; mean</code></pre><pre><code class="plaintext code-output">0.5866213889827255</code></pre>

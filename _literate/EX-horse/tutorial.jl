@@ -149,7 +149,7 @@ ytrain = y[train];
 
 SimplePipe = Pipeline(
     OneHotEncoder(),
-    MultinomialClassifier()
+    MultinomialClassifier(),
     prediction_type=:probabilistic
 )
 mach = machine(SimplePipe, Xtrain, ytrain)

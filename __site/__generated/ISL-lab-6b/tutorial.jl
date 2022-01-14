@@ -94,9 +94,7 @@ scitype(Xc)
 #
 # Let's first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:
 
-model = @pipeline(Standardizer(),
-                     OneHotEncoder(),
-                     LinearRegressor())
+model = Pipeline(Standardizer(), OneHotEncoder(), LinearRegressor())
 
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)
