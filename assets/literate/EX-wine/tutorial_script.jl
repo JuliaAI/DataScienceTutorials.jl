@@ -24,7 +24,7 @@ data = urldownload(url, true, format=:CSV, header=header);
 df = DataFrame(data)
 describe(df)
 
-y, X = unpack(df, ==(:Class), colname->true);
+y, X = unpack(df, ==(:Class));
 
 scitype(y)
 
@@ -43,8 +43,8 @@ describe(Xc, :mean, :std)
 KNNC = @load KNNClassifier
 MNC = @load MultinomialClassifier pkg=MLJLinearModels;
 
-KnnPipe = @pipeline(Standardizer(), KNNC())
-MnPipe = @pipeline(Standardizer(), MNC());
+KnnPipe = Standardizer |> KNNC
+MnPipe = Standardizer |> MNC
 
 train, test = partition(collect(eachindex(yc)), 0.8, shuffle=true, rng=111)
 Xtrain = selectrows(Xc, train)
@@ -68,7 +68,7 @@ println(rpad("KNN mcr:", 10), round(mcr_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 
 PCA = @load PCA
-pca_pipe = @pipeline(Standardizer(), PCA(maxoutdim=2))
+pca_pipe = Standardizer() |> PCA(maxoutdim=2)
 pca = machine(pca_pipe, Xtrain)
 fit!(pca)
 W = transform(pca, Xtrain)

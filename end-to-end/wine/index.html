@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -149,10 +149,10 @@ describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">14×7 
   13 │ OD280/OD315 of diluted wines    2.61169     1.27    2.78      4.0          0  Float64
   14 │ Proline                       746.893     278     673.5    1680            0  Int64</code></pre>
 <p>the target is the <code>Class</code> column, everything else is a feature; we can dissociate the two  using the <code>unpack</code> function:</p>
-<pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Class&#41;, colname-&gt;true&#41;;</code></pre>
+<pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Class&#41;&#41;;</code></pre>
 <h3 id="setting_the_scientific_type"><a href="#setting_the_scientific_type" class="header-anchor">Setting the scientific type</a></h3>
 <p>Let&#39;s explore the scientific type attributed by default to the target and the features</p>
-<pre><code class="language-julia">scitype&#40;y&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Count} (alias for AbstractArray{Count, 1})</code></pre>
+<pre><code class="language-julia">scitype&#40;y&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Count} (alias for AbstractArray{ScientificTypesBase.Count, 1})</code></pre>
 <p>this should be changed as it should be considered as an ordered factor. The difference is as follows:</p>
 <ul>
 <li><p>a <code>Count</code> corresponds to an integer between 0 and infinity</p>
@@ -162,7 +162,7 @@ describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">14×7 
 </ul>
 <pre><code class="language-julia">yc &#61; coerce&#40;y, OrderedFactor&#41;;</code></pre>
 <p>Let&#39;s now consider the features</p>
-<pre><code class="language-julia">scitype&#40;X&#41;</code></pre><pre><code class="plaintext code-output">Table{Union{AbstractVector{Continuous}, AbstractVector{Count}}}</code></pre>
+<pre><code class="language-julia">scitype&#40;X&#41;</code></pre><pre><code class="plaintext code-output">ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}}}</code></pre>
 <p>So there are <code>Continuous</code> values &#40;encoded as floating point&#41; and <code>Count</code> values &#40;integer&#41;. Note also that there are no missing value &#40;otherwise one of the scientific type would have been a <code>Union&#123;Missing,*&#125;</code>&#41;. Let&#39;s check which column is what:</p>
 <pre><code class="language-julia">schema&#40;X&#41;</code></pre><pre><code class="plaintext code-output">┌──────────────────────────────┬────────────┬─────────┐
 │ names                        │ scitypes   │ types   │
@@ -222,10 +222,25 @@ describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">14×7 
 <pre><code class="language-julia">KNNC &#61; @load KNNClassifier
 MNC &#61; @load MultinomialClassifier pkg&#61;MLJLinearModels;
 
-KnnPipe &#61; @pipeline&#40;Standardizer&#40;&#41;, KNNC&#40;&#41;&#41;
-MnPipe &#61; @pipeline&#40;Standardizer&#40;&#41;, MNC&#40;&#41;&#41;;</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
+KnnPipe &#61; Standardizer |&gt; KNNC
+MnPipe &#61; Standardizer |&gt; MNC</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
 import MLJLinearModels ✔
-</code></pre>
+ProbabilisticPipeline(
+    standardizer = Standardizer(
+            features = Symbol[],
+            ignore = false,
+            ordered_factor = false,
+            count = false),
+    multinomial_classifier = MultinomialClassifier(
+            lambda = 1.0,
+            gamma = 0.0,
+            penalty = :l2,
+            fit_intercept = true,
+            penalize_intercept = false,
+            scale_penalty_with_samples = true,
+            solver = nothing),
+    cache = true)</code></pre>
+<p>Note the <code>|&gt;</code> syntax, which is syntactic sugar for creating a linear <code>Pipeline</code> from components models.</p>
 <p>We can now fit this on a train split of the data setting aside 20&#37; of the data for eventual testing.</p>
 <pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;yc&#41;&#41;, 0.8, shuffle&#61;true, rng&#61;111&#41;
 Xtrain &#61; selectrows&#40;Xc, train&#41;
@@ -234,11 +249,11 @@ ytrain &#61; selectrows&#40;yc, train&#41;
 ytest &#61; selectrows&#40;yc, test&#41;;</code></pre>
 <p>Let&#39;s now wrap an instance of these models with data &#40;all hyperparameters are set to default here&#41;:</p>
 <pre><code class="language-julia">knn &#61; machine&#40;KnnPipe, Xtrain, ytrain&#41;
-multi &#61; machine&#40;MnPipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">Machine{Pipeline397,…} trained 0 times; caches data
-  model: Pipeline397
+multi &#61; machine&#40;MnPipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticPipeline{NamedTuple{,…},…},…} trained 0 times; caches data
+  model: MLJBase.ProbabilisticPipeline{NamedTuple{(:standardizer, :multinomial_classifier), Tuple{MLJModelInterface.Unsupervised, MLJModelInterface.Probabilistic}}, MLJModelInterface.predict}
   args: 
-    1:	Source @097 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @238 ⏎ `AbstractVector{OrderedFactor{3}}`
+    1:	Source @166 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+    2:	Source @129 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{3}}`
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="language-julia">opts &#61; &#40;resampling&#61;Holdout&#40;fraction_train&#61;0.9&#41;, measure&#61;cross_entropy&#41;
@@ -258,7 +273,7 @@ MNC mcr:  0.0423
 <h2 id="visualising_the_classes"><a href="#visualising_the_classes" class="header-anchor">Visualising the classes</a></h2>
 <p>One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here &#40;if you&#39;re on Julia &lt;&#61; 1.2, use the commented-out lines as you won&#39;t be able to use the arrow-syntax&#41;</p>
 <pre><code class="language-julia">PCA &#61; @load PCA
-pca_pipe &#61; @pipeline&#40;Standardizer&#40;&#41;, PCA&#40;maxoutdim&#61;2&#41;&#41;
+pca_pipe &#61; Standardizer&#40;&#41; |&gt; PCA&#40;maxoutdim&#61;2&#41;
 pca &#61; machine&#40;pca_pipe, Xtrain&#41;
 fit&#33;&#40;pca&#41;
 W &#61; transform&#40;pca, Xtrain&#41;</code></pre><pre><code class="plaintext code-output">import MLJMultivariateStatsInterface ✔

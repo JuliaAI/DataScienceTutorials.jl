@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -127,26 +127,46 @@ height &#61; &#91;178, 194, 165, 173, 168&#93;;</code></pre><pre><code class="pl
 <h2 id="declaring_a_pipeline"><a href="#declaring_a_pipeline" class="header-anchor">Declaring a pipeline</a></h2>
 <p>A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data. Let&#39;s say that we want to apply the following steps:</p>
 <ol>
-<li><p>standardize the target variable &#40;<code>:height</code>&#41;</p>
+<li><p>One hot encode the categorical features in <code>X</code></p>
 </li>
-<li><p>one hot encode the categorical data</p>
+<li><p>Standardize the target variable &#40;<code>:height</code>&#41;</p>
 </li>
-<li><p>train a KNN regression model</p>
+<li><p>Train a KNN regression model on the one hot encoded data and the Standardized target.</p>
 </li>
 </ol>
-<p>The <code>@pipeline</code> macro helps you define such a simple &#40;non-branching&#41; pipeline of steps to be applied in order:</p>
-<pre><code class="language-julia">pipe &#61; @pipeline&#40;
-    X -&gt; coerce&#40;X, :age&#61;&gt;Continuous&#41;,
-    OneHotEncoder&#40;&#41;,
-    KNNRegressor&#40;K&#61;3&#41;,
-    target &#61; UnivariateStandardizer&#40;&#41;&#41;;</code></pre>
-<p>Note the coercion of the <code>:age</code> variable to Continuous since <code>KNNRegressor</code> expects <code>Continuous</code> input. Note also the <code>target</code> keyword where you can specify a transformation of the target variable.</p>
+<p>The <code>Pipeline</code> constructor helps you define such a simple &#40;non-branching&#41; pipeline of steps to be applied in order:</p>
+<pre><code class="language-julia">pipe &#61; Pipeline&#40;
+    coercer &#61; X -&gt; coerce&#40;X, :age&#61;&gt;Continuous&#41;,
+    one_hot_encoder &#61; OneHotEncoder&#40;&#41;,
+    transformed_target_model &#61; TransformedTargetModel&#40;
+        model &#61; KNNRegressor&#40;K&#61;3&#41;;
+        target&#61;UnivariateStandardizer&#40;&#41;
+    &#41;
+&#41;</code></pre><pre><code class="plaintext code-output">DeterministicPipeline(
+    coercer = var"#1#2"(),
+    one_hot_encoder = OneHotEncoder(
+            features = Symbol[],
+            drop_last = false,
+            ordered_factor = true,
+            ignore = false),
+    transformed_target_model = TransformedTargetModelDeterministic(
+            model = KNNRegressor,
+            target = UnivariateStandardizer,
+            inverse = nothing,
+            cache = true),
+    cache = true)</code></pre>
+<p>Note the coercion of the <code>:age</code> variable to Continuous since <code>KNNRegressor</code> expects <code>Continuous</code> input. Note also the <code>TransformedTargetModel</code> which allows one to learn a transformation &#40;in this case Standardization&#41; of the target variable to be passed to the <code>KNNRegressor</code>.</p>
 <p>Hyperparameters of this pipeline can be accessed &#40;and set&#41; using dot syntax:</p>
-<pre><code class="language-julia">pipe.knn_regressor.K &#61; 2
+<pre><code class="language-julia">pipe.transformed_target_model.model.K &#61; 2
 pipe.one_hot_encoder.drop_last &#61; true;</code></pre>
 <p>Evaluation for a pipe can be done with the <code>evaluate&#33;</code> method; implicitly it will construct machines that will contain the fitted parameters etc:</p>
-<pre><code class="language-julia">evaluate&#40;pipe, X, height, resampling&#61;Holdout&#40;&#41;,
-         measure&#61;rms&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation(11.5,)</code></pre>
+<pre><code class="language-julia">evaluate&#40;
+    pipe,
+    X,
+    height,
+    resampling&#61;Holdout&#40;&#41;,
+    measure&#61;rms
+&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation(11.5,)</code></pre>
 
 <div class="page-foot">
   <div class="copyright">

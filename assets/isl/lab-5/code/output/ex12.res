@@ -1,7 +1,8 @@
 DeterministicTunedModel(
-    model = Pipeline303(
+    model = DeterministicPipeline(
             feature_selector = FeatureSelector,
-            linear_regressor = LinearRegressor),
+            linear_regressor = LinearRegressor,
+            cache = true),
     tuning = Grid(
             goal = nothing,
             resolution = 10,

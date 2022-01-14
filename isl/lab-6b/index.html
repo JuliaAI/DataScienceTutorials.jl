@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -189,9 +189,7 @@ scitype&#40;Xc&#41;</code></pre><pre><code class="plaintext code-output">Scienti
 <h2 id="ridge_pipeline"><a href="#ridge_pipeline" class="header-anchor">Ridge pipeline</a></h2>
 <h3 id="baseline"><a href="#baseline" class="header-anchor">Baseline</a></h3>
 <p>Let&#39;s first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:</p>
-<pre><code class="language-julia">model &#61; @pipeline&#40;Standardizer&#40;&#41;,
-                     OneHotEncoder&#40;&#41;,
-                     LinearRegressor&#40;&#41;&#41;
+<pre><code class="language-julia">model &#61; Pipeline&#40;Standardizer&#40;&#41;, OneHotEncoder&#40;&#41;, LinearRegressor&#40;&#41;&#41;
 
 pipe  &#61; machine&#40;model, Xc, y&#41;
 fit&#33;&#40;pipe, rows&#61;train&#41;

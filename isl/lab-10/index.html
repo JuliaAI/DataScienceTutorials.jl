@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -159,13 +159,19 @@ cumsum&#40;r.principalvars ./ r.tvar&#41;</code></pre><pre><code class="plaintex
 <p>Instead of just playing with toy data, let&#39;s load the orange juice data and extract only the columns corresponding to price data:</p>
 <pre><code class="language-julia">data &#61; dataset&#40;&quot;ISLR&quot;, &quot;OJ&quot;&#41;
 
-X &#61; select&#40;data, &#91;:PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM,
-                  :SalePriceCH, :PriceDiff, :PctDiscMM, :PctDiscCH&#93;&#41;;</code></pre>
+feature_names &#61; &#91;
+    :PriceCH, :PriceMM, :DiscCH, :DiscMM, :SalePriceMM, :SalePriceCH,
+    :PriceDiff, :PctDiscMM, :PctDiscCH
+&#93;
+
+X &#61; select&#40;data, feature_names&#41;;</code></pre>
 <h3 id="pca_pipeline__2"><a href="#pca_pipeline__2" class="header-anchor">PCA pipeline</a></h3>
 <pre><code class="language-julia">Random.seed&#33;&#40;1515&#41;
 
-SPCA &#61; @pipeline&#40;Standardizer&#40;&#41;,
-                 PCA&#40;pratio&#61;1-1e-4&#41;&#41;
+SPCA &#61; Pipeline&#40;
+    Standardizer&#40;&#41;,
+    PCA&#40;pratio&#61;1-1e-4&#41;
+&#41;
 
 spca &#61; machine&#40;SPCA, X&#41;
 fit&#33;&#40;spca&#41;
@@ -202,9 +208,11 @@ ylabel&#40;&quot;Ratio of explained variance&quot;, fontsize&#61;14&#41;</code><
 <pre><code class="language-julia">Random.seed&#33;&#40;1515&#41;
 
 KMeans &#61; @load KMeans pkg&#61;Clustering
-SPCA2 &#61; @pipeline&#40;Standardizer&#40;&#41;,
-                  PCA&#40;&#41;,
-                  KMeans&#40;k&#61;3&#41;&#41;
+SPCA2 &#61; Pipeline&#40;
+    Standardizer&#40;&#41;,
+    PCA&#40;&#41;,
+    KMeans&#40;k&#61;3&#41;
+&#41;
 
 spca2 &#61; machine&#40;SPCA2, X&#41;
 fit&#33;&#40;spca2&#41;

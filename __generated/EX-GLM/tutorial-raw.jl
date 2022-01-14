@@ -32,15 +32,17 @@ y = copy(dfY1)
 coerce!(X, autotype(X, :string_to_multiclass))
 yv = Vector(y[:, 1])
 
-LinearRegressorPipe = @pipeline(Standardizer(),
-                                OneHotEncoder(drop_last = true),
-                                LinearRegressor())
+LinearRegressorPipe = Pipeline(
+    Standardizer(),
+    OneHotEncoder(drop_last = true),
+    LinearRegressor()
+)
 
 LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)
 
-ŷ = MLJ.predict(LinearModel, Xm)
+ŷ = MLJ.predict(LinearModel, X)
 yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
@@ -62,9 +64,11 @@ coerce!(X, autotype(X, :string_to_multiclass))
 yc = CategoricalArray(y[:, 1])
 yc = coerce(yc, OrderedFactor)
 
-LinearBinaryClassifierPipe = @pipeline(Standardizer(),
-                                       OneHotEncoder(drop_last = true),
-                                       LinearBinaryClassifier())
+LinearBinaryClassifierPipe = Pipeline(
+    Standardizer(),
+    OneHotEncoder(drop_last = true),
+    LinearBinaryClassifier()
+)
 
 LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)

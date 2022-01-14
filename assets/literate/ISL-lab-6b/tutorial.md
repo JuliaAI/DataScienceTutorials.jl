@@ -120,9 +120,7 @@ There're a few features that are categorical which we'll one-hot-encode.
 Let's first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:
 
 ```julia:ex10
-model = @pipeline(Standardizer(),
-                     OneHotEncoder(),
-                     LinearRegressor())
+model = Pipeline(Standardizer(), OneHotEncoder(), LinearRegressor())
 
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)

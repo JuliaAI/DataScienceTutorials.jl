@@ -1,1 +1,7 @@
-nothing
+(linear_regressor = (features = ["V1", "V2", "V3", "V4", "V5"],
+                     coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225, 0.015893883995789806],
+                     intercept = 0.015893883995789806,),
+ one_hot_encoder = (fitresult = OneHotEncoderResult,),
+ standardizer = Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)),
+ machines = MLJBase.Machine[Machine{Standardizer,…}, Machine{OneHotEncoder,…}, Machine{LinearRegressor,…}],
+ fitted_params_given_machine = OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}}(Machine{Standardizer,…} => Dict(:V1 => (0.0024456300706479973, 1.1309193246154066), :V2 => (-0.015561621122145304, 1.1238897897565245), :V5 => (0.0077036209704558975, 1.1421493464876622), :V3 => (0.02442889884313839, 2.332713568319154), :V4 => (0.15168404285157286, 6.806065861835239)), Machine{OneHotEncoder,…} => (fitresult = OneHotEncoderResult,), Machine{LinearRegressor,…} => (features = ["V1", "V2", "V3", "V4", "V5"], coef = [1.0207869497405524, 1.03242891546997, 0.009406292423317668, 0.026633915171207462, 0.29985915636370225, 0.015893883995789806], intercept = 0.015893883995789806)),)

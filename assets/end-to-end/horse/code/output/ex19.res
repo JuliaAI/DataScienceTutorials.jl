@@ -1,4 +1,4 @@
-Pipeline355(
+ProbabilisticPipeline(
     one_hot_encoder = OneHotEncoder(
             features = Symbol[],
             drop_last = false,
@@ -11,4 +11,5 @@ Pipeline355(
             fit_intercept = true,
             penalize_intercept = false,
             scale_penalty_with_samples = true,
-            solver = nothing))
+            solver = nothing),
+    cache = true)

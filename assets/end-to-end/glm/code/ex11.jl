@@ -6,9 +6,11 @@ coerce!(X, autotype(X, :string_to_multiclass))
 yc = CategoricalArray(y[:, 1])
 yc = coerce(yc, OrderedFactor)
 
-LinearBinaryClassifierPipe = @pipeline(Standardizer(),
-                                       OneHotEncoder(drop_last = true),
-                                       LinearBinaryClassifier())
+LinearBinaryClassifierPipe = Pipeline(
+    Standardizer(),
+    OneHotEncoder(drop_last = true),
+    LinearBinaryClassifier()
+)
 
 LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)

@@ -64,9 +64,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
 Xc = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 scitype(Xc)
 
-model = @pipeline(Standardizer(),
-                     OneHotEncoder(),
-                     LinearRegressor())
+model = Pipeline(Standardizer(), OneHotEncoder(), LinearRegressor())
 
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)

@@ -86,7 +86,7 @@
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <!-- <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li> -->
+      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
       <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
@@ -136,37 +136,41 @@ carseats&#91;&#33;, :High&#93; &#61; High;</code></pre>
 <pre><code class="language-julia">X &#61; select&#40;carseats, Not&#40;&#91;:Sales, :High&#93;&#41;&#41;
 y &#61; carseats.High;</code></pre>
 <h3 id="decision_tree_classifier"><a href="#decision_tree_classifier" class="header-anchor">Decision Tree Classifier</a></h3>
-<pre><code class="language-julia">HotTreeClf &#61; @pipeline&#40;OneHotEncoder&#40;&#41;,
-                       DTC&#40;&#41;&#41;
+<pre><code class="language-julia">HotTreeClf &#61; OneHotEncoder&#40;&#41; |&gt; DTC&#40;&#41;
 
 mdl &#61; HotTreeClf
 mach &#61; machine&#40;mdl, X, y&#41;
 fit&#33;&#40;mach&#41;;</code></pre>
-<p>Note that this is trained on the whole data.</p>
+<p>Note <code>|&gt;</code> is syntactic sugar for creating a <code>Pipeline</code> model from component model instances or model types. Note also that the machine <code>mach</code> is trained on the whole data.</p>
 <pre><code class="language-julia">ypred &#61; predict_mode&#40;mach, X&#41;
 misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext code-output">0.0</code></pre>
 <p>That&#39;s right... it gets it perfectly; this tends to be classic behaviour for a DTC to overfit the data it&#39;s trained on. Let&#39;s see if it generalises:</p>
 <pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;333&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 ypred &#61; predict_mode&#40;mach, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.285</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.265</code></pre>
 <p>Not really...</p>
 <h3 id="tuning_a_dtc"><a href="#tuning_a_dtc" class="header-anchor">Tuning a DTC</a></h3>
 <p>Let&#39;s try to do a bit of tuning</p>
 <pre><code class="language-julia">r_mpi &#61; range&#40;mdl, :&#40;decision_tree_classifier.max_depth&#41;, lower&#61;1, upper&#61;10&#41;
 r_msl &#61; range&#40;mdl, :&#40;decision_tree_classifier.min_samples_leaf&#41;, lower&#61;1, upper&#61;50&#41;
 
-tm &#61; TunedModel&#40;model&#61;mdl, ranges&#61;&#91;r_mpi, r_msl&#93;, tuning&#61;Grid&#40;resolution&#61;8&#41;,
-                resampling&#61;CV&#40;nfolds&#61;5, rng&#61;112&#41;,
-                operation&#61;predict_mode, measure&#61;misclassification_rate&#41;
+tm &#61; TunedModel&#40;
+    model&#61;mdl,
+    ranges&#61;&#91;r_mpi, r_msl&#93;,
+    tuning&#61;Grid&#40;resolution&#61;8&#41;,
+    resampling&#61;CV&#40;nfolds&#61;5, rng&#61;112&#41;,
+    operation&#61;predict_mode,
+    measure&#61;misclassification_rate
+&#41;
 mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
 ypred &#61; predict_mode&#40;mtm, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.29</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.295</code></pre>
 <p>We can inspect the parameters of the best model</p>
 <pre><code class="language-julia">fitted_params&#40;mtm&#41;.best_model.decision_tree_classifier</code></pre><pre><code class="plaintext code-output">DecisionTreeClassifier(
-    max_depth = 7,
+    max_depth = 5,
     min_samples_leaf = 1,
     min_samples_split = 2,
     min_purity_increase = 0.0,
@@ -200,8 +204,14 @@ round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre>
 <p>Again we can try tuning this a bit, since it&#39;s the same idea as before, let&#39;s just try to adjust the depth of the tree:</p>
 <pre><code class="language-julia">r_depth &#61; range&#40;dtr_model, :max_depth, lower&#61;2, upper&#61;20&#41;
 
-tm &#61; TunedModel&#40;model&#61;dtr_model, ranges&#61;&#91;r_depth&#93;, tuning&#61;Grid&#40;resolution&#61;10&#41;,
-                resampling&#61;CV&#40;nfolds&#61;5, rng&#61;1254&#41;, measure&#61;rms&#41;
+tm &#61; TunedModel&#40;
+    model&#61;dtr_model,
+    ranges&#61;&#91;r_depth&#93;,
+    tuning&#61;Grid&#40;resolution&#61;10&#41;,
+    resampling&#61;CV&#40;nfolds&#61;5, rng&#61;1254&#41;,
+    measure&#61;rms
+&#41;
+
 mtm &#61; machine&#40;tm, X, y&#41;
 
 fit&#33;&#40;mtm, rows&#61;train&#41;
@@ -218,7 +228,7 @@ fit&#33;&#40;rf, rows&#61;train&#41;
 
 ypred &#61; MLJ.predict&#40;rf, rows&#61;test&#41;
 round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
-3.75</code></pre>
+3.7</code></pre>
 <h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine" class="header-anchor">Gradient Boosting Machine</a></h2>
 <pre><code class="language-julia">XGBR &#61; @load XGBoostRegressor
 

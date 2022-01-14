@@ -2,9 +2,11 @@
 Random.seed!(1515)
 
 KMeans = @load KMeans pkg=Clustering
-SPCA2 = @pipeline(Standardizer(),
-                  PCA(),
-                  KMeans(k=3))
+SPCA2 = Pipeline(
+    Standardizer(),
+    PCA(),
+    KMeans(k=3)
+)
 
 spca2 = machine(SPCA2, X)
 fit!(spca2)

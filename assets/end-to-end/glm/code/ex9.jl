@@ -1,5 +1,5 @@
 # This file was generated, do not modify it. # hide
-ŷ = MLJ.predict(LinearModel, Xm)
+ŷ = MLJ.predict(LinearModel, X)
 yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)

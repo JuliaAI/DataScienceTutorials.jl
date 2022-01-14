@@ -1,7 +1,5 @@
 # This file was generated, do not modify it. # hide
-model = @pipeline(Standardizer(),
-                     OneHotEncoder(),
-                     LinearRegressor())
+model = Pipeline(Standardizer(), OneHotEncoder(), LinearRegressor())
 
 pipe  = machine(model, Xc, y)
 fit!(pipe, rows=train)

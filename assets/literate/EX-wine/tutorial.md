@@ -47,7 +47,7 @@ the target is the `Class` column, everything else is a feature; we can
 dissociate the two  using the `unpack` function:
 
 ```julia:ex4
-y, X = unpack(df, ==(:Class), colname->true);
+y, X = unpack(df, ==(:Class));
 ```
 
 ### Setting the scientific type
@@ -116,9 +116,11 @@ We'll train two simple pipelines:
 KNNC = @load KNNClassifier
 MNC = @load MultinomialClassifier pkg=MLJLinearModels;
 
-KnnPipe = @pipeline(Standardizer(), KNNC())
-MnPipe = @pipeline(Standardizer(), MNC());
+KnnPipe = Standardizer |> KNNC
+MnPipe = Standardizer |> MNC
 ```
+
+Note the `|>` syntax, which is syntactic sugar for creating a linear `Pipeline` from components models.
 
 We can now fit this on a train split of the data setting aside 20% of the data for eventual testing.
 
@@ -171,7 +173,7 @@ One way to get intuition for why the dataset is so easy to classify is to projec
 
 ```julia:ex18
 PCA = @load PCA
-pca_pipe = @pipeline(Standardizer(), PCA(maxoutdim=2))
+pca_pipe = Standardizer() |> PCA(maxoutdim=2)
 pca = machine(pca_pipe, Xtrain)
 fit!(pca)
 W = transform(pca, Xtrain)

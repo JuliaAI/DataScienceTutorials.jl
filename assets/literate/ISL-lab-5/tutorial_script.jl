@@ -52,8 +52,10 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")) # hide
 hp = X.Horsepower
 Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 
-LinMod = @pipeline(FeatureSelector(features=[:hp1]),
-                   LR());
+LinMod = Pipeline(
+    FeatureSelector(features=[:hp1]),
+    LR()
+);
 
 lr1 = machine(LinMod, Xhp, y) # poly of degree 1 (line)
 fit!(lr1, rows=train)
