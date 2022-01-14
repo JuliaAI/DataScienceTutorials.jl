@@ -71,8 +71,10 @@ Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
 
 # Now we  can write a simple pipeline where the first step selects the features we want (and with it the degree of the polynomial) and the second is the linear regressor:
 
-LinMod = @pipeline(FeatureSelector(features=[:hp1]),
-                   LR());
+LinMod = Pipeline(
+    FeatureSelector(features=[:hp1]),
+    LR()
+);
 
 # Then we can  instantiate and fit 3 models where we specify the features each time:
 
