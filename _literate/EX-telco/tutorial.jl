@@ -749,9 +749,9 @@ ŷ_tuned[1]
 
 print(
     "Tuned model measurements on test:\n",
-    "  brier loss: ", brier_loss(ŷ_tuned, y[validation]) |> mean, "\n",
-    "  auc:        ", auc(ŷ_tuned, y[validation]),                "\n",
-    "  accuracy:   ", accuracy(mode.(ŷ_tuned), y[validation])
+    "  brier loss: ", brier_loss(ŷ_tuned, ytest) |> mean, "\n",
+    "  auc:        ", auc(ŷ_tuned, ytest),                "\n",
+    "  accuracy:   ", accuracy(mode.(ŷ_tuned), ytest)
 )
 
 # For comparison, here's the performance for the basic pipeline model
@@ -763,9 +763,9 @@ ŷ_basic = predict(mach_basic, Xtest);
 
 print(
     "Basic model measurements on test set:\n",
-    "  brier loss: ", brier_loss(ŷ_basic, y[validation]) |> mean, "\n",
-    "  auc:        ", auc(ŷ_basic, y[validation]),                "\n",
-    "  accuracy:   ", accuracy(mode.(ŷ_basic), y[validation])
+    "  brier loss: ", brier_loss(ŷ_basic, ytest) |> mean, "\n",
+    "  auc:        ", auc(ŷ_basic, ytest),                "\n",
+    "  accuracy:   ", accuracy(mode.(ŷ_basic), ytest)
 )
 
 rm("tuned_iterated_pipe.jls") # hide
