@@ -42,37 +42,38 @@ end;
 
 # |code   | purpose|
 # |:-------|:-------------------------------------------------------|
-# |`OpenML.load(id)` | grab a dataset from [OpenML.org](https://www.openml.org)|
-# |`scitype(X)`      | inspect the scientific type (scitype) of object `X`|
-# |`schema(X)`       | inspect the column scitypes (scientific types) of a table `X`|
-# |`coerce(X, ...)`   | fix column encodings to get appropriate scitypes|
-# |`partition(data, frac1, frac2, ...; rng=...)` | vertically split `data`, which can be a table, vector or matrix|
-# |`unpack(table, f1, f2, ...)` | horizontally split `table` based on conditions `f1`, `f2`, ..., applied to column names|
-# |`@load ModelType pkg=...`           | load code defining a model type|
-# |`input_scitype(model)` | inspect the scitype that a model requires for features (inputs)|
-# |`target_scitype(model)`| inspect the scitype that a model requires for the target (labels)|
-# |`ContinuousEncoder`   | built-in model type for re-encoding all features as `Continuous`|# |`model1 |> model2` |> ...` | combine multiple models into a pipeline
-# | `measures("under curve")` | list all measures (metrics) with string "under curve" in documentation
-# | `accuracy(yhat, y)` | compute accuracy of predictions `yhat` against ground truth observations `y`
-# | `auc(yhat, y)`, `brier_loss(yhat, y)` | evaluate two probabilistic measures (`yhat` a vector of probability distributions)
-# | `machine(model, X, y)` | bind `model` to training data `X` (features) and `y` (target)
-# | `fit!(mach, rows=...)` | train machine using specified rows (observation indices)
-# | `predict(mach, rows=...)`, | make in-sample model predictions given specified rows
-# | `predict(mach, Xnew)` | make predictions given new features `Xnew`
-# | `fitted_params(mach)` | inspect learned parameters
-# | `report(mach)`        | inspect other outcomes of training
-# | `confmat(yhat, y)`    | confusion matrix for predictions `yhat` and ground truth `y`
-# | `roc(yhat, y)` | compute points on the receiver-operator Characteristic
-# | `StratifiedCV(nfolds=6)` | 6-fold stratified cross-validation resampling strategy
-# | `Holdout(fraction_train=0.7)` | holdout resampling strategy
-# | `evaluate(model, X, y; resampling=..., options...)` | estimate performance metrics `model` using the data `X`, `y`
-# | `FeatureSelector()` | transformer for selecting features
-# | `Step(3)` | iteration control for stepping 3 iterations
-# | `NumberSinceBest(6)`, `TimeLimit(60/5), InvalidValue()` | iteration control stopping criteria
-# | `IteratedModel(model=..., controls=..., options...)` | wrap an iterative `model` in control strategies
-# | `range(model,  :some_hyperparam, lower=..., upper=...)` | define a numeric range
-# | `RandomSearch()` | random search tuning strategy
-# | `TunedModel(model=..., tuning=..., options...)` | wrap the supervised `model` in specified `tuning` strategy
+# | `OpenML.load(id)` | grab a dataset from [OpenML.org](https://www.openml.org)|
+# | `scitype(X)`      | inspect the scientific type (scitype) of object `X`|
+# | `schema(X)`       | inspect the column scitypes (scientific types) of a table `X`|
+# | `coerce(X, ...)`   | fix column encodings to get appropriate scitypes|
+# | `partition(data, frac1, frac2, ...; rng=...)` | vertically split `data`, which can be a table, vector or matrix|
+# | `unpack(table, f1, f2, ...)` | horizontally split `table` based on conditions `f1`, `f2`, ..., applied to column names|
+# | `@load ModelType pkg=...`           | load code defining a model type|
+# | `input_scitype(model)` | inspect the scitype that a model requires for features (inputs)|
+# | `target_scitype(model)`| inspect the scitype that a model requires for the target (labels)|
+# | `ContinuousEncoder`   | built-in model type for re-encoding all features as `Continuous`|
+# | `model1 ∣> model2 ∣> ...` | combine multiple models into a pipeline|
+# | `measures("under curve")` | list all measures (metrics) with string "under curve" in documentation|
+# | `accuracy(yhat, y)` | compute accuracy of predictions `yhat` against ground truth observations `y`|
+# | `auc(yhat, y), brier_loss(yhat, y)` | evaluate two probabilistic measures (`yhat` a vector of probability distributions)|
+# | `machine(model, X, y)` | bind `model` to training data `X` (features) and `y` (target)|
+# | `fit!(mach, rows=...)` | train machine using specified rows (observation indices)|
+# | `predict(mach, rows=...)`, | make in-sample model predictions given specified rows|
+# | `predict(mach, Xnew)` | make predictions given new features `Xnew`|
+# | `fitted_params(mach)` | inspect learned parameters|
+# | `report(mach)`        | inspect other outcomes of training|
+# | `confmat(yhat, y)`    | confusion matrix for predictions `yhat` and ground truth `y`|
+# | `roc(yhat, y)` | compute points on the receiver-operator Characteristic|
+# | `StratifiedCV(nfolds=6)` | 6-fold stratified cross-validation resampling strategy|
+# | `Holdout(fraction_train=0.7)` | holdout resampling strategy|
+# | `evaluate(model, X, y; resampling=..., options...)` | estimate performance metrics for `model` using the data `X`, `y`|
+# | `FeatureSelector()` | transformer for selecting features|
+# | `Step(3)` | iteration control for stepping 3 iterations|
+# | `NumberSinceBest(6)`, `TimeLimit(60/5), InvalidValue()` | stopping criterion iteration controls|
+# | `IteratedModel(model=..., controls=..., options...)` | wrap an iterative `model` in controls|
+# | `range(model,  :some_hyperparam, lower=..., upper=...)` | define a numeric range|
+# | `RandomSearch()` | random search tuning strategy|
+# | `TunedModel(model=..., tuning=..., options...)` | wrap the supervised `model` in specified `tuning` strategy|
 
 
 # ## Warm up: Building a model for the iris dataset
@@ -93,7 +94,7 @@ using MLJ
 
 #-
 
-const X_iris, y_iris = @load_iris;
+X_iris, y_iris = @load_iris;
 schema(X_iris)
 
 #-
@@ -151,6 +152,9 @@ yhat = predict(mach, Xnew)
 
 pdf.(yhat, "virginica")
 
+# A single prediction is displayed like this:
+
+yhat[2]
 
 # We now turn to the Telco dataset.
 
@@ -166,7 +170,7 @@ df0 = DataFrames.DataFrame(data)
 first(df0, 4)
 
 # The object of this tutorial is to build and evaluate supervised
-# learning models to predict the `:Churn` variable, a binary variable
+# learning models to predict the `Churn` variable, a binary variable
 # measuring customer retention, based on other variables that are
 # relevant.
 
@@ -177,7 +181,7 @@ first(df0, 4)
 
 # ## Type coercion
 
-# > Introduces: `scitype`, `schema`, `coerce`
+# *Introduces:* `scitype`, `schema`, `coerce`
 
 # A ["scientific
 # type"](https://juliaai.github.io/ScientificTypes.jl/dev/) or
@@ -188,7 +192,7 @@ first(df0, 4)
 
 # Here are common "scalar" scitypes:
 
-# ![](assets/scitypes.png)
+# \figalt{scalar scitypesb}{./scitypes.svg}
 
 # There are also container scitypes. For example, the scitype of any
 # `N`-dimensional array is `AbstractArray{S, N}`, where `S` is the scitype of the
@@ -202,7 +206,7 @@ schema(df0) |> DataFrames.DataFrame  # converted to DataFrame for better display
 
 # All of the fields being interpreted as `Textual` are really
 # something else, either `Multiclass` or, in the case of
-# `:TotalCharges`, `Continuous`. In fact, `:TotalCharges` is
+# `TotalCharges`, `Continuous`. In fact, `TotalCharges` is
 # mostly floats wrapped as strings. However, it needs special
 # treatment because some elements consist of a single space, " ",
 # which we'll treat as "0.0".
@@ -217,7 +221,7 @@ end
 
 df0.TotalCharges = fix_blanks(df0.TotalCharges);
 
-# Coercing the `:TotalCharges` type to ensure a `Continuous` scitype:
+# Coercing the `TotalCharges` type to ensure a `Continuous` scitype:
 
 coerce!(df0, :TotalCharges => Continuous);
 
@@ -225,7 +229,7 @@ coerce!(df0, :TotalCharges => Continuous);
 
 coerce!(df0, Textual => Multiclass);
 
-# Finally, we'll coerce our target variable `:Churn` to be
+# Finally, we'll coerce our target variable `Churn` to be
 # `OrderedFactor`, rather than `Multiclass`, to enable a reliable
 # interpretation of metrics like "true positive rate".  By convention,
 # the first class is the negative one:
@@ -240,7 +244,7 @@ schema(df0) |> DataFrames.DataFrame
 
 # ## Preparing a holdout set for final testing
 
-# > Introduces: `partition`
+# *Introduces:* `partition`
 
 # To reduce training times for the purposes of this tutorial, we're
 # going to dump 90% of observations (after shuffling) and split off
@@ -257,15 +261,15 @@ df, df_test, df_dumped = partition(df0, 0.07, 0.03, # in ratios 7:3:90
 
 # ## Splitting data into target and features
 
-# > Introduces: `unpack`
+# *Introduces:* `unpack`
 
-# In the following call, the column with name `:Churn` is copied over
-# to a vector `y`, and every remaining column, except `:customerID`
+# In the following call, the column with name `Churn` is copied over
+# to a vector `y`, and every remaining column, except `customerID`
 # (which contains no useful information) goes into a table `X`. Here
-# `:Churn` is the target variable for which we seek predictions, given
+# `Churn` is the target variable for which we seek predictions, given
 # new versions of the features `X`.
 
-const y, X = unpack(df, ==(:Churn), !=(:customerID));
+y, X = unpack(df, ==(:Churn), !=(:customerID));
 schema(X).names
 
 #-
@@ -274,11 +278,11 @@ intersect([:Churn, :customerID], schema(X).names)
 
 # We'll do the same for the holdout data:
 
-const ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
+ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 
 # ## Loading a model and checking type requirements
 
-# > Introduces: `@load`, `input_scitype`, `target_scitype`
+# *Introduces:* `@load`, `input_scitype`, `target_scitype`
 
 # For tools helping us to identify suitable models, see the [Model
 # Search](https://alan-turing-institute.github.io/MLJ.jl/dev/model_search/#model_search)
@@ -313,7 +317,7 @@ scitype(X) <: input_scitype(booster)
 
 # ## Building a model pipeline to incorporate feature encoding
 
-# > Introduces: `ContinuousEncoder`, pipeline operator `|>`
+# *Introduces:* `ContinuousEncoder`, pipeline operator `|>`
 
 # The built-in `ContinuousEncoder` model transforms an arbitrary table
 # to a table whose features are all `Continuous` (dropping any fields
@@ -341,8 +345,10 @@ pipe.evo_tree_classifier.max_depth
 
 # ## Evaluating the pipeline model's performance
 
-# > Introduces: `measures` (function), **measures:** `brier_loss`, `auc`, `accuracy`;
-# > `machine`, `fit!`, `predict`, `fitted_params`, `report`, `roc`, **resampling strategy** `StratifiedCV`, `evaluate`, `FeatureSelector`
+# *Introduces:* `measures` (function), **measures:** `brier_loss`,
+#  `auc`, `accuracy`; `machine`, `fit!`, `predict`, `fitted_params`,
+#  `report`, `roc`, **resampling strategy** `StratifiedCV`,
+#  `evaluate`, `FeatureSelector`
 
 # Without touching our test set `Xtest`, `ytest`, we will estimate the
 # performance of our pipeline model, with default hyper-parameters, in
@@ -412,11 +418,12 @@ feature_importance_table =
 # Returning to predictions and evaluations of our measures:
 
 ŷ = predict(mach_pipe, rows=validation);
-@info("Measurements",
-      brier_loss(ŷ, y[validation]) |> mean,
-      auc(ŷ, y[validation]),
-      accuracy(mode.(ŷ), y[validation])
-      )
+print(
+    "Measurements:\n",
+    "  brier loss: ", brier_loss(ŷ, y[validation]) |> mean, "\n",
+    "  auc:        ", auc(ŷ, y[validation]),                "\n",
+    "  accuracy:   ", accuracy(mode.(ŷ), y[validation])
+)
 
 # Note that we need `mode` in the last case because `accuracy` expects
 # point predictions, not probabilistic ones. (One can alternatively
@@ -488,12 +495,12 @@ function confidence_intervals(e)
     return DataFrames.DataFrame(table)
 end
 
-const confidence_intervals_basic_model = confidence_intervals(e_pipe)
+confidence_intervals_basic_model = confidence_intervals(e_pipe)
 
 
 # ## Filtering out unimportant features
 
-# > Introduces: `FeatureSelector`
+# *Introduces:* `FeatureSelector`
 
 # Before continuing, we'll modify our pipeline to drop those features
 # with low feature importance, to speed up later optimization:
@@ -506,7 +513,8 @@ pipe2 = ContinuousEncoder() |>
 
 # ## Wrapping our iterative model in control strategies
 
-# > Introduces: **control strategies:** `Step`, `NumberSinceBest`, `TimeLimit`, `InvalidValue`, **model wrapper** `IteratedModel`, **resampling strategy:** `Holdout`
+# *Introduces:* **control strategies:** `Step`, `NumberSinceBest`, `TimeLimit`,
+# `InvalidValue`, **model wrapper** `IteratedModel`, **resampling strategy:** `Holdout`
 
 # We want to optimize the hyper-parameters of our model. Since our
 # model is iterative, these parameters include the (nested) iteration
@@ -564,7 +572,7 @@ fit!(mach_iterated_pipe);
 
 # ## Hyper-parameter optimization (model tuning)
 
-# > Introduces: `range`, **model wrapper** `TunedModel`, `RandomSearch`
+# *Introduces:* `range`, **model wrapper** `TunedModel`, `RandomSearch`
 
 # We now turn to hyper-parameter optimization. A tool not discussed
 # here is the `learning_curve` function, which can be useful when
@@ -651,7 +659,11 @@ best_booster = rpt2.best_model.model.evo_tree_classifier
 
 #-
 
-@info "Optimal hyper-parameters:" best_booster.max_depth best_booster.η;
+print(
+    "Optimal hyper-parameters: \n",
+    "  max_depth: ", best_booster.max_depth, "\n",
+    "  η:         ", best_booster.η
+)
 
 # Using the `confidence_intervals` function we defined earlier:
 
@@ -675,12 +687,15 @@ savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")) # hide
 
 # ## Saving our model
 
-# > Introduces: `MLJ.save`
+# *Introduces:* `MLJ.save`
 
 # Here's how to serialize our final, trained self-iterating,
-# self-tuning pipeline machine:
+# self-tuning pipeline machine using Julia's native serializer (see
+# [the
+# manual](https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Saving-machines)
+# for more options):
 
-MLJ.save("tuned_iterated_pipe.jlso", mach_tuned_iterated_pipe)
+MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 
 
 # We'll deserialize this in "Testing the final model" below.
@@ -719,11 +734,11 @@ confidence_intervals_basic_model
 # We now determine the performance of our model on our
 # lock-and-throw-away-the-key holdout set. To demonstrate
 # deserialization, we'll pretend we're in a new Julia session (but
-# have called `import`/`using` on the same packages). Then the
+# have called import/using on the same packages). Then the
 # following should suffice to recover our model trained under
 # "Hyper-parameter optimization" above:
 
-mach_restored = machine("tuned_iterated_pipe.jlso")
+mach_restored = machine("tuned_iterated_pipe.jls")
 
 # We compute predictions on the holdout set:
 
@@ -732,11 +747,12 @@ ŷ_tuned[1]
 
 # And can compute the final performance measures:
 
-@info("Tuned model measurements on test:",
-      brier_loss(ŷ_tuned, ytest) |> mean,
-      auc(ŷ_tuned, ytest),
-      accuracy(mode.(ŷ_tuned), ytest)
-      )
+print(
+    "Tuned model measurements on test:\n",
+    "  brier loss: ", brier_loss(ŷ_tuned, y[validation]) |> mean, "\n",
+    "  auc:        ", auc(ŷ_tuned, y[validation]),                "\n",
+    "  accuracy:   ", accuracy(mode.(ŷ_tuned), y[validation])
+)
 
 # For comparison, here's the performance for the basic pipeline model
 
@@ -745,9 +761,11 @@ fit!(mach_basic, verbosity=0)
 
 ŷ_basic = predict(mach_basic, Xtest);
 
-@info("Basic model measurements on test set:",
-      brier_loss(ŷ_basic, ytest) |> mean,
-      auc(ŷ_basic, ytest),
-      accuracy(mode.(ŷ_basic), ytest)
-      )
+print(
+    "Basic model measurements on test set:\n",
+    "  brier loss: ", brier_loss(ŷ_basic, y[validation]) |> mean, "\n",
+    "  auc:        ", auc(ŷ_basic, y[validation]),                "\n",
+    "  accuracy:   ", accuracy(mode.(ŷ_basic), y[validation])
+)
 
+rm("tuned_iterated_pipe.jls") # hide
