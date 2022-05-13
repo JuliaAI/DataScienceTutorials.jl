@@ -1,0 +1,1 @@
+(:evo_tree_classifier, :continuous_encoder, :machines, :fitted_params_given_machine)

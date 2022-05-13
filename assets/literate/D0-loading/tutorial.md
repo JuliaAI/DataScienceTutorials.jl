@@ -1,9 +1,9 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg  # hideall
 Pkg.activate("_literate/D0-loading/Project.toml")
 Pkg.update()
-```
+````
 
 In this short tutorial we discuss two ways to easily load data in Julia:
 
@@ -17,21 +17,21 @@ These are well known, standard datasets that can be used to get started with dat
 
 To load such a dataset, you will need to specify which R package it belongs to as well as its name; for instance `Boston` is part of `MASS`.
 
-```julia:ex2
+````julia:ex2
 using RDatasets
 import DataFrames
 
 boston = dataset("MASS", "Boston");
-```
+````
 
 The fact that `Boston` is part of `MASS` is clearly indicated on the [list](http://vincentarelbundock.github.io/Rdatasets/datasets.html) linked to earlier.
 While it can be a bit slow, loading a dataset via RDatasets is very simple and convenient as you don't have to  worry about setting the names of columns etc.
 
 The `dataset` function returns a `DataFrame` object from the [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) package.
 
-```julia:ex3
+````julia:ex3
 typeof(boston)
-```
+````
 
 For a short introduction to DataFrame objects, see [this tutorial](/data/dataframe).
 
@@ -51,7 +51,7 @@ col1,col2,col3,col4,col5,col6,col7,col8
 ,3,3.0,3.14,three,2019-01-03,2019-01-03T00:00:00,true
 ```
 
-```julia:ex4
+````julia:ex4
 c = """
 col1,col2,col3,col4,col5,col6,col7,col8
 ,1,1.0,1,one,2019-01-01,2019-01-01T00:00:00,true
@@ -60,21 +60,21 @@ col1,col2,col3,col4,col5,col6,col7,col8
 """
 fpath, = mktemp()
 write(fpath, c);
-```
+````
 
 You can read it with CSV using
 
-```julia:ex5
+````julia:ex5
 using CSV
 data = CSV.read(fpath, DataFrames.DataFrame)
-```
+````
 
 Note that we use this `joinpath` for compatibility with  our system but you could pass any valid path on your system for instance `CSV.read("path/to/file.csv")`.
 The data is also returned as a dataframe
 
-```julia:ex6
+````julia:ex6
 typeof(data)
-```
+````
 
 Some of the useful arguments for `read` are:
 
@@ -90,7 +90,7 @@ For more details see `?CSV.File`.
 
 Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00504/), the content of which we saved in a file at path `fpath`.
 
-```julia:ex7
+````julia:ex7
 c = """
 3.26;0.829;1.676;0;1;1.453;3.770
 2.189;0.58;0.863;0;0;1.348;3.115
@@ -118,22 +118,22 @@ c = """
 """
 fpath, = mktemp()
 write(fpath, c);
-```
+````
 
 It doesn't have a header so we have to provide it ourselves.
 
-```julia:ex8
+````julia:ex8
 header = ["CIC0", "SM1_Dz", "GATS1i",
           "NdsCH", "NdssC", "MLOGP", "LC50"]
 data = CSV.read(fpath, DataFrames.DataFrame, header=header)
 first(data, 3)
-```
+````
 
 ### Example 2
 
 Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00423/), the content of which we saved at `fpath`.
 
-```julia:ex9
+````julia:ex9
 c = """
 1,0,1,0,0,0,0,1,0,1,1,?,1,0,0,0,0,1,0,0,0,0,1,67,137,15,0,1,1,1.53,95,13.7,106.6,4.9,99,3.4,2.1,34,41,183,150,7.1,0.7,1,3.5,0.5,?,?,?,1
 0,?,0,0,0,0,1,1,?,?,1,0,0,1,0,0,0,1,0,0,0,0,1,62,0,?,0,1,1,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,1.8,?,?,?,?,1
@@ -158,12 +158,12 @@ c = """
 """
 fpath, = mktemp()
 write(fpath, c);
-```
+````
 
 It does not have a header and missing values indicated by `?`.
 
-```julia:ex10
+````julia:ex10
 data = CSV.read(fpath, DataFrames.DataFrame, header=false, missingstring="?")
 first(data[:, 1:5], 3)
-```
+````
 

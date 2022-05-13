@@ -1,16 +1,16 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-8/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
-```
+````
 
 ## Getting started
 
-```julia:ex2
+````julia:ex2
 using MLJ
 import RDatasets: dataset
 using PrettyPrinting
@@ -21,49 +21,49 @@ DTC = @load DecisionTreeClassifier pkg=DecisionTree
 carseats = dataset("ISLR", "Carseats")
 
 first(carseats, 3) |> pretty
-```
+````
 
 We encode a new variable `High` based on whether the sales are higher or lower than 8 and add that column to the dataframe:
 
-```julia:ex3
+````julia:ex3
 High = ifelse.(carseats.Sales .<= 8, "No", "Yes") |> categorical;
 carseats[!, :High] = High;
-```
+````
 
 Let's now train a basic decision tree classifier for `High` given the other features after one-hot-encoding the categorical features:
 
-```julia:ex4
+````julia:ex4
 X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;
-```
+````
 
 ### Decision Tree Classifier
 
-```julia:ex5
+````julia:ex5
 HotTreeClf = OneHotEncoder() |> DTC()
 
 mdl = HotTreeClf
 mach = machine(mdl, X, y)
 fit!(mach);
-```
+````
 
 Note `|>` is syntactic sugar for creating a `Pipeline` model from component model instances or model types.
 Note also that the machine `mach` is trained on the whole data.
 
-```julia:ex6
+````julia:ex6
 ypred = predict_mode(mach, X)
 misclassification_rate(ypred, y)
-```
+````
 
 That's right... it gets it perfectly; this tends to be classic behaviour for a DTC to overfit the data it's trained on.
 Let's see if it generalises:
 
-```julia:ex7
+````julia:ex7
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=333)
 fit!(mach, rows=train)
 ypred = predict_mode(mach, rows=test)
 misclassification_rate(ypred, y[test])
-```
+````
 
 Not really...
 
@@ -71,7 +71,7 @@ Not really...
 
 Let's try to do a bit of tuning
 
-```julia:ex8
+````julia:ex8
 r_mpi = range(mdl, :(decision_tree_classifier.max_depth), lower=1, upper=10)
 r_msl = range(mdl, :(decision_tree_classifier.min_samples_leaf), lower=1, upper=50)
 
@@ -88,17 +88,17 @@ fit!(mtm, rows=train)
 
 ypred = predict_mode(mtm, rows=test)
 misclassification_rate(ypred, y[test])
-```
+````
 
 We can inspect the parameters of the best model
 
-```julia:ex9
+````julia:ex9
 fitted_params(mtm).best_model.decision_tree_classifier
-```
+````
 
 ### Decision Tree Regressor
 
-```julia:ex10
+````julia:ex10
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
 boston = dataset("MASS", "Boston")
@@ -108,11 +108,11 @@ y, X = unpack(boston, ==(:MedV))
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=551);
 
 scitype(X)
-```
+````
 
 Let's recode the Count as Continuous and then fit a DTR
 
-```julia:ex11
+````julia:ex11
 X = coerce(X, autotype(X, rules=(:discrete_to_continuous,)))
 
 dtr_model = DTR()
@@ -122,11 +122,11 @@ fit!(dtr, rows=train)
 
 ypred = MLJ.predict(dtr, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
-```
+````
 
 Again we can try tuning this a bit, since it's the same idea as before, let's just try to adjust the depth of the tree:
 
-```julia:ex12
+````julia:ex12
 r_depth = range(dtr_model, :max_depth, lower=2, upper=20)
 
 tm = TunedModel(
@@ -143,13 +143,13 @@ fit!(mtm, rows=train)
 
 ypred = MLJ.predict(mtm, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
-```
+````
 
 ## Random Forest
 
 **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
-```julia:ex13
+````julia:ex13
 RFR = @load RandomForestRegressor pkg=ScikitLearn
 
 rf_mdl = RFR()
@@ -158,11 +158,11 @@ fit!(rf, rows=train)
 
 ypred = MLJ.predict(rf, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
-```
+````
 
 ## Gradient Boosting Machine
 
-```julia:ex14
+````julia:ex14
 XGBR = @load XGBoostRegressor
 
 xgb_mdl = XGBR(num_round=10, max_depth=10)
@@ -171,7 +171,7 @@ fit!(xgb, rows=train)
 
 ypred = MLJ.predict(xgb, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
-```
+````
 
 Again we could do some tuning for this.
 

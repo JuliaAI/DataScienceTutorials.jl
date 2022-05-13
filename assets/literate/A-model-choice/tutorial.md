@@ -1,9 +1,9 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/A-model-choice/Project.toml")
 Pkg.update()
-```
+````
 
 [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
@@ -16,14 +16,14 @@ Pkg.update()
 
 ### Machine type and scientific type
 
-```julia:ex2
+````julia:ex2
 using RDatasets
 using MLJ
 MLJ.color_off() # hide
 iris = dataset("datasets", "iris")
 
 first(iris, 3) |> pretty
-```
+````
 
 Observe that below each column name there are two _types_ given: the first one is the _machine type_ and the second one is the _scientific type_.
 
@@ -32,19 +32,19 @@ Observe that below each column name there are two _types_ given: the first one i
 
 If you want to specify a different scientific type than the one inferred, you can do so by using the function `coerce` along with pairs of column names and scientific types:
 
-```julia:ex3
+````julia:ex3
 iris2 = coerce(iris, :PetalWidth => OrderedFactor)
 first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty
-```
+````
 
 ### Unpacking data
 
 The function `unpack` helps specify the target and the input for a regression or classification task
 
-```julia:ex4
+````julia:ex4
 y, X = unpack(iris, ==(:Species))
 first(X, 1) |> pretty
-```
+````
 
 The two arguments after the dataframes should be understood as _functions_ over column names specifying the target and the input data respectively.
 Let's look in more details at what we used here:
@@ -54,16 +54,16 @@ Let's look in more details at what we used here:
 
 Let's try another one:
 
-```julia:ex5
+````julia:ex5
 y, X = unpack(iris, ==(:Species), !=(:PetalLength))
 first(X, 1) |> pretty
-```
+````
 
 You can also use the shorthand `@load_iris` for such common examples:
 
-```julia:ex6
+````julia:ex6
 X, y = @load_iris;
-```
+````
 
 ## Choosing a model
 
@@ -74,13 +74,13 @@ In MLJ, a _model_ is a struct storing the _hyperparameters_ of the learning algo
 A number of models are available in MLJ, usually thanks to external packages interfacing with MLJ (see also `[MLJModels.jl]`).
 In order to see which ones are appropriate for the data you have and its scientific interpretation, you can use the function `models` along with the function `matching`; let us look specifically at models which support a probabilistic output:
 
-```julia:ex7
+````julia:ex7
 for m in models(matching(X, y))
     if m.prediction_type == :probabilistic
         println(rpad(m.name, 30), "($(m.package_name))")
     end
 end
-```
+````
 
 ### Loading a model
 
@@ -90,13 +90,13 @@ Most models are implemented outside of the MLJ ecosystem; you therefore have to 
 
 For instance, let's say you want to fit a K-Nearest Neighbours classifier:
 
-```julia:ex8
+````julia:ex8
 knc = @load KNeighborsClassifier
-```
+````
 
 In some cases, there may be several packages offering the same model, for instance `LinearRegressor` is offered by both `[GLM.jl]` and `[ScikitLearn.jl]` so you will need to specify the package you would like to use by adding `pkg="ThePackage"` in the load command:
 
-```julia:ex9
+````julia:ex9
 linreg = @load LinearRegressor pkg=GLM
-```
+````
 

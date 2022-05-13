@@ -1,12 +1,12 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg# hideall
 Pkg.activate("_literate/EX-airfoil/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
-```
+````
 
 **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
 
@@ -14,7 +14,7 @@ end;
 Here we use the [UCI "Airfoil Self-Noise" dataset](http://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise)
 ### Loading and  preparing the data
 
-```julia:ex2
+````julia:ex2
 using MLJ
 using PrettyPrinting
 import DataFrames
@@ -35,92 +35,92 @@ df = CSV.read(req.body, DataFrames.DataFrame; header=[
                    ]
               );
 df[1:5, :] |> pretty
-```
+````
 
 inspect the schema:
 
-```julia:ex3
+````julia:ex3
 schema(df)
-```
+````
 
 unpack into the data and labels:
 
-```julia:ex4
+````julia:ex4
 y, X = unpack(df, ==(:Scaled_Sound));
-```
+````
 
 Now we Standardize the features using the transformer Standardizer()
 
-```julia:ex5
+````julia:ex5
 X = MLJ.transform(fit!(machine(Standardizer(), X)), X);
-```
+````
 
 Partition into train and test set
 
-```julia:ex6
+````julia:ex6
 train, test = partition(collect(eachindex(y)), 0.7, shuffle=true, rng=StableRNG(612));
-```
+````
 
 Let's first see which models are compatible with the scientific type and machine type of our data
 
-```julia:ex7
+````julia:ex7
 for model in models(matching(X, y))
        print("Model Name: " , model.name , " , Package: " , model.package_name , "\n")
 end
-```
+````
 
 Note that if we coerce `X.Frequency` to `Continuous`, many more models are available:
 
-```julia:ex8
+````julia:ex8
 coerce!(X, :Frequency=>Continuous)
 
 for model in models(matching(X, y))
        print("Model Name: " , model.name , " , Package: " , model.package_name , "\n")
 end
-```
+````
 
 ## DecisionTreeRegressor
 
 We will first try out DecisionTreeRegressor:
 
-```julia:ex9
+````julia:ex9
 DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
 
 dcrm = machine(DecisionTreeRegressor(), X, y)
 
 fit!(dcrm, rows=train)
 pred_dcrm = predict(dcrm, rows=test);
-```
+````
 
 Now you can call a loss function to assess the performance on test set.
 
-```julia:ex10
+````julia:ex10
 rms(pred_dcrm, y[test])
-```
+````
 
 ## RandomForestRegressor
 
 Now let's try out RandomForestRegressor:
 
-```julia:ex11
+````julia:ex11
 RandomForestRegressor = @load RandomForestRegressor pkg=DecisionTree
 rfr = RandomForestRegressor()
 
 rfr_m = machine(rfr, X, y);
-```
+````
 
 train on the rows corresponding to train
 
-```julia:ex12
+````julia:ex12
 fit!(rfr_m, rows=train);
-```
+````
 
 predict values on the rows corresponding to test
 
-```julia:ex13
+````julia:ex13
 pred_rfr = predict(rfr_m, rows=test);
 rms(pred_rfr, y[test])
-```
+````
 
 Unsurprisingly, the RandomForestRegressor does a better job.
 
@@ -132,15 +132,15 @@ In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-
 
 Range of values for parameters should be specified to do hyperparameter tuning
 
-```julia:ex14
+````julia:ex14
 r_maxD = range(rfr, :n_trees, lower=9, upper=15)
 r_samF = range(rfr, :sampling_fraction, lower=0.6, upper=0.8)
 r = [r_maxD, r_samF];
-```
+````
 
 Now we specify how the tuning should be done. Let's just specify a coarse grid tuning with cross validation and instantiate a tuned model:
 
-```julia:ex15
+````julia:ex15
 tuning = Grid(resolution=7)
 resampling = CV(nfolds=6)
 
@@ -148,33 +148,33 @@ tm = TunedModel(model=rfr, tuning=tuning,
                 resampling=resampling, ranges=r, measure=rms)
 
 rfr_tm = machine(tm, X, y);
-```
+````
 
 train on the rows corresponding to train
 
-```julia:ex16
+````julia:ex16
 fit!(rfr_tm, rows=train);
-```
+````
 
 predict values on the rows corresponding to test
 
-```julia:ex17
+````julia:ex17
 pred_rfr_tm = predict(rfr_tm, rows=test);
 rms(pred_rfr_tm, y[test])
-```
+````
 
 That was great! We have further improved the accuracy
 
 Now to retrieve best model, You can use
 
-```julia:ex18
+````julia:ex18
 fitted_params(rfr_tm).best_model
-```
+````
 
 Now we can investigate the tuning by using report.
 Let's plot a heatmap of the measurements:
 
-```julia:ex19
+````julia:ex19
 r = report(rfr_tm)
 res = r.plotting
 
@@ -189,11 +189,11 @@ ylabel("Sampling fraction", fontsize=14)
 xticks(9:1:15, fontsize=12)
 yticks(fontsize=12)
 plt.savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
-```
+````
 
 \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
 
-```julia:ex20
+````julia:ex20
 PyPlot.close_figs() # hide
-```
+````
 

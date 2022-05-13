@@ -1,12 +1,12 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg# hideall
 Pkg.activate("_literate/A-model-tuning/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end
-```
+````
 
 [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
@@ -20,22 +20,22 @@ After wrapping a model in a _tuning strategy_ (e.g. cross-validation) and bindin
 Let's use a decision tree classifier and tune the maximum depth of the tree.
 As usual, start by loading data and the model
 
-```julia:ex2
+````julia:ex2
 using MLJ
 using PrettyPrinting
 MLJ.color_off() # hide
 X, y = @load_iris
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
-```
+````
 
 ### Specifying a range of value
 
 To specify a range of value, you can use the `range` function:
 
-```julia:ex3
+````julia:ex3
 dtc = DecisionTreeClassifier()
 r   = range(dtc, :max_depth, lower=1, upper=5)
-```
+````
 
 As you can see, the range function takes a model (`dtc`), a symbol for the hyperparameter of interest (`:max_depth`) and indication of how to samples values.
 For hyperparameters of type `<:Real`, you should specify a range of values as done above.
@@ -43,9 +43,9 @@ For hyperparameters of other type (e.g. `Symbol`), you should use the `values=..
 
 Once a range of values has been defined, you can then wrap the model in a `TunedModel` specifying the tuning strategy.
 
-```julia:ex4
+````julia:ex4
 tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)
-```
+````
 
 Note that "wrapping a model in a tuning strategy" as above means creating a new "self-tuning" version of the model, `tuned_model = TunedModel(model=...)`, in which further key-word arguments specify:
 1. the algorithm (a.k.a., tuning strategy) for searching the hyper-parameter space of the model (e.g., `tuning = Random(rng=123)` or `tuning = Grid(goal=100)`).
@@ -59,38 +59,38 @@ For more options do `?TunedModel`.
 
 To fit a tuned model, you can use the usual syntax:
 
-```julia:ex5
+````julia:ex5
 m = machine(tm, X, y)
 fit!(m)
-```
+````
 
 In order to inspect the best model, you can use the function `fitted_params` on the machine and inspect the `best_model` field:
 
-```julia:ex6
+````julia:ex6
 fitted_params(m).best_model.max_depth
-```
+````
 
 Note that here we have tuned a probabilistic model and consequently used a probabilistic measure for the tuning.
 We could also have decided we only cared about the mode and the misclassification rate, to do this, just use `operation=predict_mode` in the tuned model:
 
-```julia:ex7
+````julia:ex7
 tm = TunedModel(model=dtc, ranges=r, operation=predict_mode,
                 measure=misclassification_rate)
 m = machine(tm, X, y)
 fit!(m)
 fitted_params(m).best_model.max_depth
-```
+````
 
 Let's check the misclassification rate for the best model:
 
-```julia:ex8
+````julia:ex8
 r = report(m)
 r.best_history_entry.measurement[1]
-```
+````
 
 Anyone wants plots? of course:
 
-```julia:ex9
+````julia:ex9
 using PyPlot
 ioff() # hide
 figure(figsize=(8,6))
@@ -104,7 +104,7 @@ ylabel("Misclassification rate", fontsize=14)
 ylim([0, 1])
 
 savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
-```
+````
 
 \figalt{hyperparameter heatmap}{A-model-tuning-hpt}
 
@@ -112,28 +112,28 @@ savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
 
 Let's generate simple dummy regression data
 
-```julia:ex10
+````julia:ex10
 X = (x1=rand(100), x2=rand(100), x3=rand(100))
 y = 2X.x1 - X.x2 + 0.05 * randn(100);
-```
+````
 
 Let's then build a simple ensemble model with decision tree regressors:
 
-```julia:ex11
+````julia:ex11
 DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree
 forest = EnsembleModel(model=DecisionTreeRegressor())
-```
+````
 
 Such a model has *nested* hyperparameters in that the ensemble has hyperparameters (e.g. the `:bagging_fraction`) and the atom has hyperparameters (e.g. `:n_subfeatures` or `:max_depth`).
 You can see this by inspecting the parameters using `params`:
 
-```julia:ex12
+````julia:ex12
 params(forest) |> pprint
-```
+````
 
 Range for nested hyperparameters are specified using dot syntax, the rest is done in much the same way as before:
 
-```julia:ex13
+````julia:ex13
 r1 = range(forest, :(model.n_subfeatures), lower=1, upper=3)
 r2 = range(forest, :bagging_fraction, lower=0.4, upper=1.0)
 tm = TunedModel(model=forest, tuning=Grid(resolution=12),
@@ -141,18 +141,18 @@ tm = TunedModel(model=forest, tuning=Grid(resolution=12),
                 measure=rms)
 m = machine(tm, X, y)
 fit!(m);
-```
+````
 
 A useful function to inspect a model after fitting it is the `report` function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:
 
-```julia:ex14
+````julia:ex14
 r = report(m)
 r.best_history_entry.measurement[1]
-```
+````
 
 Let's visualise this
 
-```julia:ex15
+````julia:ex15
 figure(figsize=(8,6))
 
 res = r.plotting
@@ -167,11 +167,11 @@ xticks([1, 2, 3], fontsize=12)
 yticks(fontsize=12)
 
 savefig(joinpath(@OUTPUT, "A-model-tuning-hm.svg")) # hide
-```
+````
 
 \figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
 
-```julia:ex16
+````julia:ex16
 PyPlot.close_figs() # hide
-```
+````
 

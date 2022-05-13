@@ -1,15 +1,15 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/A-learning-networks/Project.toml")
 Pkg.update();
-```
+````
 
 ## Preliminary steps
 
 Let's generate a `DataFrame` with some dummy regression data, let's also load the good old ridge regressor.
 
-```julia:ex2
+````julia:ex2
 using MLJ, StableRNGs
 import DataFrames
 MLJ.color_off() # hide
@@ -24,13 +24,13 @@ y = exp.(x1 - x2 -2x3 + 0.1*rand(rng, 300))
 
 X = DataFrames.DataFrame(x1=x1, x2=x2, x3=x3)
 first(X, 3) |> pretty
-```
+````
 
 Let's also prepare the train and test split which will be useful later on.
 
-```julia:ex3
+````julia:ex3
 test, train = partition(eachindex(y), 0.8);
-```
+````
 
 ## Defining a learning network
 
@@ -50,36 +50,36 @@ It corresponds to a fairly standard regression workflow: the data is standardize
 In MLJ a learning network starts at **source** nodes and flows through nodes (`X` and `y`) defining operations/transformations (`W`, `z`, `ẑ`, `ŷ`).
 To define the source nodes, use the `source` function, you should specify whether it's a target:
 
-```julia:ex4
+````julia:ex4
 Xs = source(X)
 ys = source(y)
-```
+````
 
 To define an "trained-operation" node, you must simply create a machine wrapping a model and another node (the data) and indicate which operation should be performed (e.g. `transform`):
 
-```julia:ex5
+````julia:ex5
 stand = machine(Standardizer(), Xs)
 W = transform(stand, Xs)
-```
+````
 
 You can `fit!` a trained-operation node at any point, MLJ will fit whatever it needs that is upstream of that node.
 In this case, there is just a source node upstream of `W` so fitting `W` will just fit the standardizer:
 
-```julia:ex6
+````julia:ex6
 fit!(W, rows=train);
-```
+````
 
 If you want to get the transformed data, you can then call the node speciying on which part of the data the operation should be performed:
 
-```julia:ex7
+````julia:ex7
 W()             # transforms all data
 W(rows=test, )  # transforms only test data
 W(X[3:4, :])    # transforms specific data
-```
+````
 
 Let's now define the other nodes:
 
-```julia:ex8
+````julia:ex8
 box_model = UnivariateBoxCoxTransformer()
 box = machine(box_model, ys)
 z = transform(box, ys)
@@ -89,33 +89,33 @@ ridge = machine(ridge_model, W, z)
 ẑ = predict(ridge, W)
 
 ŷ = inverse_transform(box, ẑ)
-```
+````
 
 Note that we have not yet done any training, but if we now call `fit!` on `ŷ`, it will fit all nodes upstream of `ŷ` that need to be re-trained:
 
-```julia:ex9
+````julia:ex9
 fit!(ŷ, rows=train);
-```
+````
 
 Now that `ŷ` has been fitted, you can apply the full graph on test data (or any compatible data). For instance, let's get the `rms` between the ground truth and the predicted values:
 
-```julia:ex10
+````julia:ex10
 rms(y[test], ŷ(rows=test))
-```
+````
 
 ### Modifying hyperparameters
 
 Hyperparameters can be accessed using the dot syntax as usual.
 Let's modify the regularisation parameter of the ridge regression:
 
-```julia:ex11
+````julia:ex11
 ridge_model.lambda = 5.0;
-```
+````
 
 Since the node `ẑ` corresponds to a machine that wraps `ridge_model`, that node has effectively changed and will be retrained:
 
-```julia:ex12
+````julia:ex12
 fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))
-```
+````
 

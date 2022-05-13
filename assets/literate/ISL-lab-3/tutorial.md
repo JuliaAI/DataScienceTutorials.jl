@@ -1,12 +1,12 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-3/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
-```
+````
 
 ## Simple linear regression
 
@@ -17,71 +17,71 @@ Several packages offer it (beyond just using the backslash operator): here we wi
 
 To load the model from a given package use `@load ModelName pkg=PackageName`
 
-```julia:ex2
+````julia:ex2
 using MLJ
 MLJ.color_off() # hide
 
 LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
-```
+````
 
 Note: in order to be able to load this, you **must** have the relevant package in your environment, if you don't, you can always add it (``using Pkg; Pkg.add("MLJLinearModels")``).
 
 Let's load the _boston_ data set
 
-```julia:ex3
+````julia:ex3
 import RDatasets: dataset
 import DataFrames: describe, select, Not, rename!
 boston = dataset("MASS", "Boston")
 first(boston, 3)
-```
+````
 
 Let's get a feel for the data
 
-```julia:ex4
+````julia:ex4
 describe(boston, :mean, :std, :eltype)
-```
+````
 
 So there's no missing value and most variables are encoded as floating point numbers.
 In MLJ it's important to specify the interpretation of the features (should it be considered as a Continuous feature, as a Count, ...?), see also [this tutorial section](/getting-started/choosing-a-model/#data_and_its_interpretation) on scientific types.
 
 Here we will just interpret the integer features as continuous as we will just use a basic linear regression:
 
-```julia:ex5
+````julia:ex5
 data = coerce(boston, autotype(boston, :discrete_to_continuous));
-```
+````
 
 Let's also extract the target variable (`MedV`):
 
-```julia:ex6
+````julia:ex6
 y = data.MedV
 X = select(data, Not(:MedV));
-```
+````
 
 Let's declare a simple multivariate linear regression model:
 
-```julia:ex7
+````julia:ex7
 mdl = LinearRegressor()
-```
+````
 
 First let's do a very simple univariate regression, in order to fit it on the data, we need to wrap it in a _machine_ which, in MLJ, is the composition of a model and data to apply the model on:
 
-```julia:ex8
+````julia:ex8
 X_uni = select(X, :LStat) # only a single feature
 mach_uni = machine(mdl, X_uni, y)
 fit!(mach_uni)
-```
+````
 
 You can then retrieve the  fitted parameters using `fitted_params`:
 
-```julia:ex9
+````julia:ex9
 fp = fitted_params(mach_uni)
 @show fp.coefs
 @show fp.intercept
-```
+````
 
 You can also visualise this
 
-```julia:ex10
+````julia:ex10
 using PyPlot
 ioff() # hide
 
@@ -91,13 +91,13 @@ Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
 plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")) # hide
-```
+````
 
 \figalt{Univariate regression}{ISL-lab-3-lm1.svg}
 
 The  multivariate case is very similar
 
-```julia:ex11
+````julia:ex11
 mach = machine(mdl, X, y)
 fit!(mach)
 
@@ -108,35 +108,35 @@ for (name, val) in coefs
     println("$(rpad(name, 8)):  $(round(val, sigdigits=3))")
 end
 println("Intercept: $(round(intercept, sigdigits=3))")
-```
+````
 
 You can use the `machine` in order to _predict_ values as well and, for instance, compute the root mean squared error:
 
-```julia:ex12
+````julia:ex12
 ŷ = MLJ.predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
-```
+````
 
 Let's see what the residuals look like
 
-```julia:ex13
+````julia:ex13
 figure(figsize=(8,6))
 res = ŷ .- y
 stem(res)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
-```
+````
 
 \figalt{Plot of the residuals}{ISL-lab-3-res.svg}
 
 Maybe that a histogram is more appropriate here
 
-```julia:ex14
+````julia:ex14
 figure(figsize=(8,6))
 hist(res, density=true)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
-```
+````
 
 \figalt{Histogram of the residuals}{ISL-lab-3-res2.svg}
 
@@ -145,41 +145,41 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
 Let's say we want to also consider an interaction term of `lstat` and `age` taken together.
 To do this, just create a new dataframe with an additional column corresponding to the interaction term:
 
-```julia:ex15
+````julia:ex15
 X2 = hcat(X, X.LStat .* X.Age);
-```
+````
 
 So here we have a DataFrame with one extra column corresponding to the elementwise products between `:LStat` and `Age`.
 DataFrame gives this a default name (`:x1`) which we can change:
 
-```julia:ex16
+````julia:ex16
 rename!(X2, :x1 => :interaction);
-```
+````
 
 Ok cool, now let's try the linear regression again
 
-```julia:ex17
+````julia:ex17
 mach = machine(mdl, X2, y)
 fit!(mach)
 ŷ = MLJ.predict(mach, X2)
 round(rms(ŷ, y), sigdigits=4)
-```
+````
 
 We get slightly better results but nothing spectacular.
 
 Let's get back to the lab where they consider regressing the target variable on `lstat` and `lstat^2`; again, it's essentially a case of defining the right DataFrame:
 
-```julia:ex18
+````julia:ex18
 X3 = hcat(X.LStat, X.LStat.^2) |> MLJ.table
 mach = machine(mdl, X3, y)
 fit!(mach)
 ŷ = MLJ.predict(mach, X3)
 round(rms(ŷ, y), sigdigits=4)
-```
+````
 
 which again, we can visualise:
 
-```julia:ex19
+````julia:ex19
 Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
 figure(figsize=(8,6))
@@ -187,11 +187,11 @@ plot(X.LStat, y, ls="none", marker="o")
 plot(Xnew.LStat, MLJ.predict(mach, Xnew))
 
 savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
-```
+````
 
 \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
 
-```julia:ex20
+````julia:ex20
 PyPlot.close_figs() # hide
-```
+````
 

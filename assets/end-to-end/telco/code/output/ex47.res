@@ -1,0 +1,23 @@
+ProbabilisticPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  feature_selector = FeatureSelector(
+        features = [:TechSupport__No, Symbol("PaymentMethod__Credit card (automatic)"), :StreamingMovies__No, Symbol("Contract__One year"), Symbol("Contract__Two year"), :Partner__Yes, :OnlineBackup__No, :Dependents__Yes, :Partner__No, :gender__Male, Symbol("PaymentMethod__Mailed check"), Symbol("OnlineSecurity__No internet service"), :OnlineSecurity__No, Symbol("PaymentMethod__Electronic check"), :OnlineSecurity__Yes, Symbol("InternetService__Fiber optic"), :TechSupport__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingTV__Yes, :PhoneService__No, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), :MultipleLines__Yes, Symbol("MultipleLines__No phone service"), :InternetService__DSL], 
+        ignore = true), 
+  evo_tree_classifier = EvoTreeClassifier(
+        loss = EvoTrees.Softmax(), 
+        nrounds = 10, 
+        λ = 0.0, 
+        γ = 0.0, 
+        η = 0.1, 
+        max_depth = 5, 
+        min_weight = 1.0, 
+        rowsample = 1.0, 
+        colsample = 1.0, 
+        nbins = 64, 
+        α = 0.5, 
+        metric = :mlogloss, 
+        rng = Random.MersenneTwister(123, (0, 86172, 85170, 780)), 
+        device = "cpu"), 
+  cache = true)
