@@ -1,12 +1,12 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/EX-GLM/Project.toml")
 Pkg.update()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
-```
+````
 
 **Main author**: [Clarman Cruz](https://github.com/drcxcruz).
 
@@ -14,63 +14,63 @@ This juypter lab showcases MLJ in particular using the popular [GLM](https://git
 
 We can quickly define our models in MLJ and study their results.  It is very easy and consistent.
 
-```julia:ex2
+````julia:ex2
 using MLJ, CategoricalArrays, PrettyPrinting
 import DataFrames: DataFrame, nrow
 using UrlDownload
 
 LinearRegressor = @load LinearRegressor pkg=GLM
 LinearBinaryClassifier = @load LinearBinaryClassifier pkg=GLM
-```
+````
 
 ## Reading the data
 
 The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.
 
-```julia:ex3
+````julia:ex3
 baseurl = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/glm/"
 
 dfX = DataFrame(urldownload(baseurl * "X3.csv"))
 dfYbinary = DataFrame(urldownload(baseurl * "Y3.csv"))
 dfX1 = DataFrame(urldownload(baseurl * "X1.csv"))
 dfY1 = DataFrame(urldownload(baseurl * "Y1.csv"));
-```
+````
 
 You can have a look at those using `first`:
 
-```julia:ex4
+````julia:ex4
 first(dfX, 3)
-```
+````
 
 same for Y:
 
-```julia:ex5
+````julia:ex5
 first(dfY1, 3)
-```
+````
 
 ## Defining the Linear Model
 
 Let see how many MLJ models handle our kind of target which is the y variable.
 
-```julia:ex6
+````julia:ex6
 ms = models() do m
     AbstractVector{Count} <: m.target_scitype
 end
 foreach(m -> println(m.name), ms)
-```
+````
 
 How about if the type was Continuous:
 
-```julia:ex7
+````julia:ex7
 ms = models() do m
     Vector{Continuous} <: m.target_scitype
 end
 foreach(m -> println(m.name), ms)
-```
+````
 
 We can quickly define our models in MLJ.  It is very easy and consistent.
 
-```julia:ex8
+````julia:ex8
 X = copy(dfX1)
 y = copy(dfY1)
 
@@ -86,13 +86,13 @@ LinearRegressorPipe = Pipeline(
 LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)
-```
+````
 
 ## Reading the Output of Fitting the Linear Model
 
 We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.
 
-```julia:ex9
+````julia:ex9
 ŷ = MLJ.predict(LinearModel, X)
 yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
@@ -105,17 +105,17 @@ println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
 println("\n Residuals \n ", y[1:5,1] .- yhatResponse[1:5])
 println("\n Standard Error per Coefficient \n", r.linear_regressor.stderror[2:end])
-```
+````
 
 and get the accuracy
 
-```julia:ex10
+````julia:ex10
 round(rms(yhatResponse, y[:,1]), sigdigits=4)
-```
+````
 
 ## Defining the Logistic Model
 
-```julia:ex11
+````julia:ex11
 X = copy(dfX)
 y = copy(dfYbinary)
 
@@ -132,13 +132,13 @@ LinearBinaryClassifierPipe = Pipeline(
 LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
 fp = fitted_params(LogisticModel)
-```
+````
 
 ## Reading the Output from the Prediction of the Logistic Model
 
 The output of the MLJ model basically contain the same information as the R version of the model.
 
-```julia:ex12
+````julia:ex12
 ŷ = MLJ.predict(LogisticModel, X)
 residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
@@ -149,14 +149,14 @@ println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n residuals \n ", residuals[1:5])
 println("\n Standard Error per Coefficient \n", r.linear_binary_classifier.stderror[2:end])
-```
+````
 
 No logistic analysis is complete without the confusion matrix:
 
-```julia:ex13
+````julia:ex13
 yMode = [mode(ŷ[i]) for i in 1:length(ŷ)]
 y = coerce(y[:,1], OrderedFactor)
 yMode = coerce(yMode, OrderedFactor)
 confusion_matrix(yMode, y)
-```
+````
 

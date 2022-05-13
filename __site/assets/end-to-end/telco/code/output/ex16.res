@@ -1,0 +1,1 @@
+AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})

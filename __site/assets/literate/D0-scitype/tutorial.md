@@ -1,9 +1,9 @@
 <!--This file was generated, do not modify it.-->
-```julia:ex1
+````julia:ex1
 using Pkg  # hideall
 Pkg.activate("_literate/D0-scitype/Project.toml")
 Pkg.update()
-```
+````
 
 ## Machine type vs Scientific Type
 
@@ -53,13 +53,13 @@ unless you intend to implement your own scientific type convention.
 
 The `schema` function
 
-```julia:ex2
+````julia:ex2
 using RDatasets
 using ScientificTypes
 
 boston = dataset("MASS", "Boston")
 sch = schema(boston)
-```
+````
 
 In this cases, most of the variables have a (machine) type `Float64` and
 their default  interpretation is `Continuous`.
@@ -70,9 +70,9 @@ While the interpretation as `Continuous` is usually fine, the interpretation
 as `Count` needs a bit more attention.
 For instance note that:
 
-```julia:ex3
+````julia:ex3
 unique(boston.Chas)
-```
+````
 
 so even  though it's got a machine type of `Int64` and consequently a
 default  interpretation of `Count`, it would be more appropriate to interpret
@@ -84,28 +84,28 @@ In order to re-specify the scitype(s) of  feature(s) in a dataset, you can
 use the `coerce` function and  specify pairs of variable name and  scientific
 type:
 
-```julia:ex4
+````julia:ex4
 boston2 = coerce(boston, :Chas => OrderedFactor);
-```
+````
 
 the effect of this is to convert the `:Chas` column to an ordered categorical
 vector:
 
-```julia:ex5
+````julia:ex5
 eltype(boston2.Chas)
-```
+````
 
 corresponding to the `OrderedFactor` scitype:
 
-```julia:ex6
+````julia:ex6
 elscitype(boston2.Chas)
-```
+````
 
 You can also specify multiple pairs in one shot with `coerce`:
 
-```julia:ex7
+````julia:ex7
 boston3 = coerce(boston, :Chas => OrderedFactor, :Rad => OrderedFactor);
-```
+````
 
 ### String and Unknown
 
@@ -113,17 +113,17 @@ If a feature in  your dataset has String elements, then the  default scitype
 is `Textual`; you can either choose to  drop  such columns or to coerce them
 to categorical:
 
-```julia:ex8
+````julia:ex8
 feature = ["AA", "BB", "AA", "AA", "BB"]
 elscitype(feature)
-```
+````
 
 which you can coerce:
 
-```julia:ex9
+````julia:ex9
 feature2 = coerce(feature, Multiclass)
 elscitype(feature2)
-```
+````
 
 ## Tips and tricks
 
@@ -135,17 +135,17 @@ An example  is if some features are currently interpreted as `Count` because
 their original type was `Int` but you  want  to  consider all such as
 `Continuous`:
 
-```julia:ex10
+````julia:ex10
 data = select(boston, [:Rad, :Tax])
 schema(data)
-```
+````
 
 let's coerce from `Count` to `Continuous`:
 
-```julia:ex11
+````julia:ex11
 data2 = coerce(data, Count => Continuous)
 schema(data2)
-```
+````
 
 ### Autotype
 
@@ -163,10 +163,10 @@ column.
 
 For instance:
 
-```julia:ex12
+````julia:ex12
 boston3 = coerce(boston, autotype(boston, :few_to_finite))
 schema(boston3)
-```
+````
 
 You can also specify multiple rules, see [the docs](https://juliaai.github.io/ScientificTypes.jl/dev/#Automatic-type-conversion) for more information.
 

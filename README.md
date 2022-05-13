@@ -61,7 +61,7 @@ Once all that's done, the remaining things to do are to create the HTML page and
 **Once the changes are in the main branch**:
 
 * run `cd("path/to/DataScienceTutorials"); using Franklin` to launch Franklin
-* run `serve(single=true, verb=true)` to ensure no issues generating the relevant html pages with code block evaluations, and then run `serve()` (after restarting?) to serve the pages live on a local browser for viewing
+* run `serve(single=true, verb=true)` to ensure no issues generating the relevant html pages with code block evaluations, and then run `serve()` (after restarting) to serve the pages live on a local browser for viewing
 * run `include("deploy.jl")` to re-generate the LUNR index and push the changes to GitHub.
 
 The second step requires you have `lunr` and `cheerio` installed, if not:
