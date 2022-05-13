@@ -78,6 +78,7 @@ Note that these tutorials are not meant to teach you ML or Data Science; there m
 
 The examples can be followed in any order, the tags can guide you as to which tutorials you may want to look at first.
 
+* [Telco Churn (MLJ for Data Scientists in Two Hours)](/end-to-end/telco/), *intermediate*, *classification*, *one-hot*, *ROC curves*, *confusion matrices*, *feature importance*, *feature selection*, *controlling iteration*, *tree booster*, *hyper-parameter optimization (tuning)*.
 * [AMES](/end-to-end/AMES/), *simple*, *regression*, *one-hot*, *learning network*, *tuning*, *deterministic*
 * [Wine](/end-to-end/wine/), *simple*, *classification*, *standardizer*, *PCA*, *knn*, *multinomial*, *pipeline*
 * [Crabs XGB](/end-to-end/crabs-xgb/), *simple*, *classification*, *xg-boost*, *tuning*

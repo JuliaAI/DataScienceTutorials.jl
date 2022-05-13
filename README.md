@@ -60,7 +60,8 @@ Once all that's done, the remaining things to do are to create the HTML page and
 
 **Once the changes are in the main branch**:
 
-* run `serve(single=true)` to ensure the changes have generated the relevant html page(s)
+* run `cd("path/to/DataScienceTutorials"); using Franklin` to launch Franklin
+* run `serve(single=true, verb=true)` to ensure no issues generating the relevant html pages with code block evaluations, and then run `serve()` (after restarting?) to serve the pages live on a local browser for viewing
 * run `include("deploy.jl")` to re-generate the LUNR index and push the changes to GitHub.
 
 The second step requires you have `lunr` and `cheerio` installed, if not:
@@ -105,7 +106,10 @@ savefig(joinpath(@OUTPUT, "MyTutorial-Fig1.svg")) # hide
 # \figalt{the alt here}{MyTutorial-Fig1.svg}
 ```
 
-Please do not use anything else than SVG; please also stick to this path and start the name of the file with the name of the tutorial (to help keep files organised).
+Here "the alt here" is the text that appears if there is problem rendering the
+figure. Please do not use anything else than SVG; please also stick to
+this path and start the name of the file with the name of the tutorial
+(to help keep files organised).
 
 Do not forget to add the `# hide` which will ensure the line is not displayed on the website, notebook, or script.
 
