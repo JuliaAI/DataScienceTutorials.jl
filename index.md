@@ -2,23 +2,37 @@
 
 ## Learning by doing
 
-This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related packages.
-On each tutorial page, you will find a link to download the raw script and the notebook corresponding to the page.
+This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related packages. 
 
-Feedback and PRs are always welcome to help make these tutorials better, from the presentation to the content.
+**The code included on each tutorial page will only work reliably if:**
 
-In order to reproduce the environment that was used to generate each tutorials, please follow these steps:
-1. Go to the directory of your choice: `cd("/Users/[JohnDoe]/")`
-2. Create a folder named, e.g., "MLJ\_tutorials": `mkdir("MLJ_tutorials")`
-3. Download the tutorial `Project.toml` (available at the top of the tutorial) as well as the `Manifest.toml` in this folder;
-4. In the folder, do
 
-```julia-repl
-julia> using Pkg; Pkg.activate("."); Pkg.instantiate();
-```
+- You are running Julia 1.7.x where "x" is any integer (to check, enter
+  `VERSION` at the REPL); and
 
-The tutorials are run with the [latest stable release](https://julialang.org/downloads/#current_stable_release) of Julia, if you use a nightly version or an old version, you might encounter issues.
-In such cases, please open a PR so we can investigate.
+- You have activated the package environment associated with that package.
+
+The environment is encoded in files called `Project.toml` and
+`Manifest.toml` linked at the top of each tutorial. However, we
+recommend new Julia users follow these simple steps to activate the
+environment:
+
+1. Download and decompress the "whole project" folder that is linked near the top of the tutorial. 
+2. Launch Julia and enter `using Pkg; Pkg.activate("Path/To/Decompressed/Folder")`. 
+
+The folder you downloaded also contains the raw script, annotated
+script and Jupyter notebook versions of the tutorial, now ready to use. 
+
+
+## Having problems?
+
+Please report issues
+[here](https://github.com/JuliaAI/DataScienceTutorials.jl/issues). For
+beginners, the most common issues arise because of an incorrect
+version of Julia, or because of an incorrect package environment. So
+be sure you have followed the instructions above before raising an
+issue. 
+
 
 ## Elementary data manipulations
 
