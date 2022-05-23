@@ -4,18 +4,18 @@
 
 This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related packages. 
 
-**The code included on each tutorial page will only work reliably if:**
-
+The code included on each tutorial is only tested to work reliably
+under these conditions:
 
 - You are running Julia 1.7.x where "x" is any integer (to check, enter
   `VERSION` at the REPL); and
 
-- You have activated the package environment associated with that package.
+- You have activated the package environment associated with that tutorial.
 
 The environment is encoded in files called `Project.toml` and
 `Manifest.toml` linked at the top of each tutorial. However, we
 recommend new Julia users follow these simple steps to activate the
-environment:
+environment (before pasting the code into the REPL, for example):
 
 1. Download and decompress the "whole project" folder that is linked near the top of the tutorial. 
 2. Launch Julia and enter `using Pkg; Pkg.activate("Path/To/Decompressed/Folder")`. 
@@ -23,7 +23,7 @@ environment:
 The folder you downloaded also contains the raw script, annotated
 script and Jupyter notebook versions of the tutorial, now ready to use. 
 
-For more on package management in Julia, go
+For more on package management in Julia, see
 [here](https://docs.julialang.org/en/v1/stdlib/Pkg/).
 
 
