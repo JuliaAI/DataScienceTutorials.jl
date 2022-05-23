@@ -17,8 +17,8 @@ The environment is encoded in files called `Project.toml` and
 recommend new Julia users follow these simple steps to activate the
 environment (before pasting the code into the REPL, for example):
 
-1. Download and decompress the "whole project" folder that is linked near the top of the tutorial. 
-2. Launch Julia and enter `using Pkg; Pkg.activate("Path/To/Decompressed/Folder")`. 
+1. Download (and decompress if necessary) the "whole project folder" that is linked near the top of the tutorial. 
+2. Launch Julia and enter `using Pkg; Pkg.activate("Path/To/Whole/Project/Folder"))`. 
 
 The folder you downloaded also contains the raw script, annotated
 script and Jupyter notebook versions of the tutorial, now ready to use. 
