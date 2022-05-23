@@ -23,6 +23,9 @@ environment:
 The folder you downloaded also contains the raw script, annotated
 script and Jupyter notebook versions of the tutorial, now ready to use. 
 
+For more on package management in Julia, go
+[here](https://docs.julialang.org/en/v1/stdlib/Pkg/).
+
 
 ## Having problems?
 
