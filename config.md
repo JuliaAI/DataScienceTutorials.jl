@@ -50,8 +50,7 @@ ignore = [
 
 
 \newcommand{\tutorial}[1]{
-  *Download the \nblink{!#1}, the \sclink{!#1} or the \rawlink{!#1} for this tutorial (right-click on the relevant link and save-as). These rely on [this Project.toml](\proj{!#1}) and [this Manifest.toml](\mani{!#1}).* \\
-  *You can also download the whole [project folder](\tgz{#1}).*
+  *To ensure code in this tutorial runs as shown, download the tutorial [project folder](\tgz{#1}) and follow [these instructions](/#learning_by_doing).*
 
   *If you have questions or suggestions about this tutorial, please open an issue [here](https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new).*
 
