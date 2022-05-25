@@ -41,9 +41,10 @@ to be installed and precompiled.
 ### Running the provided Juptyer notebook
 
 The downloaded project folder contains a Juptyer notebook called
-`tutorial.ipynb`. See the [IJulia documentation]() on how to launch
-it. Copy and execute the code fragment above in a new notebook
-cell before evaluating any other cells.
+`tutorial.ipynb`. See the [IJulia
+documentation](https://julialang.github.io/IJulia.jl/stable/manual/running/)
+on how to launch it. Copy and execute the code fragment above in a new
+notebook cell before evaluating any other cells.
 
 ### Running the provided Julia script line-by-line from an IDE
 
