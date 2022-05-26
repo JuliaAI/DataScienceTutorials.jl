@@ -58,6 +58,11 @@ Once all that's done, the remaining things to do are to create the HTML page and
 
 * you have a PR with changes, someone has reviewed them and they got merged into the main branch
 
+* Be sure the version of Julia declared near the top of `index.md`
+  matches the version used to generate the web-site (which should
+  match the version declared in each tutorial's Manifest.toml file)
+
+
 **Once the changes are in the main branch**:
 
 * run `cd("path/to/DataScienceTutorials"); using Franklin` to launch Franklin
