@@ -2,7 +2,7 @@
 
 ## Learning by doing
 
-This website offers tutorials for [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl) and related packages. 
+This website offers tutorials for [MLJ.jl](https://alan-turing-institute.github.io/MLJ.jl/dev/) and related packages. 
 
 The code included on each tutorial is tested to work reliably
 under these two conditions:
