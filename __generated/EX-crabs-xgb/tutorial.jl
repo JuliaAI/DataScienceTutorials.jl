@@ -1,11 +1,8 @@
 # Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb/Manifest.toml).
-# For instance, copy these files to a folder 'EX-crabs-xgb', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
+# tutorial-specific package environment, using this
+# [`Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb/Manifest.toml), or by following
+# [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
 #

@@ -16,20 +16,20 @@ Logging.disable_logging(Logging.LogLevel(1500))
 genpath = "__site"/"__generated"
 isdir(genpath) || mkpath(genpath)
 
+
+const LINK_INSTRUCTIONS =
+    "https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing"
+
 LINK(dir, f) = "https://raw.githubusercontent.com/" *
                "juliaai/DataScienceTutorials.jl/gh-pages/__generated/" *
                "$(dir)/$(f)"
 
 ACTIVATE(dir) = """
     # Before running this, please make sure to activate and instantiate the
-    # environment with [this `Project.toml`]($(LINK(dir, "Project.toml"))) and
-    # [this `Manifest.toml`]($(LINK(dir, "Manifest.toml"))).
-    # For instance, copy these files to a folder '$dir', `cd` to it and
-    #
-    # ```julia
-    # using Pkg; Pkg.activate("."); Pkg.instantiate()
-    # ```
-
+    # tutorial-specific package environment, using this
+    # [`Project.toml`]($(LINK(dir, "Project.toml"))) and
+    # [this `Manifest.toml`]($(LINK(dir, "Manifest.toml"))), or by following
+    # [these]($LINK_INSTRUCTIONS) detailed instructions.
     """
 
  function pre_process_script(io, s)
