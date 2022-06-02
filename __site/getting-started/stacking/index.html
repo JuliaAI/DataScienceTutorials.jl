@@ -101,13 +101,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="stacking"><a href="#stacking" class="header-anchor">Stacking</a></h1>
-<em>Download the 
-  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/tutorial.ipynb" target="_blank"><em>notebook</em></a>
-  , the 
-  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/tutorial.jl" target="_blank"><em>annotated script</em></a>
-   or the 
-  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
-   for this tutorial &#40;right-click on the relevant link and save-as&#41;. These rely on <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/Project.toml">this Project.toml</a> and <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking/Manifest.toml">this Manifest.toml</a>.</em> <br/>   <em>You can also download the whole <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking.tar.gz">project folder</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-stacking.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#basic_stacking_using_out-of-sample_base_learner_predictions">Basic stacking using out-of-sample base learner predictions</a><ol><li><a href="#warm-up_exercise_define_a_model_type_to_average_predictions">Warm-up exercise: Define a model type to average predictions</a></li></ol></li><li><a href="#stacking_proper">Stacking proper</a><ol><li><a href="#helper_functions">Helper functions:</a></li><li><a href="#choose_some_test_data_optional_and_some_component_models_defaults_for_the_composite_model">Choose some test data &#40;optional&#41; and some component models &#40;defaults for the composite model&#41;:</a></li><li><a href="#define_the_training_nodes">Define the training nodes</a></li><li><a href="#define_nodes_still_needed_for_prediction">Define nodes still needed for prediction</a></li></ol></li><li><a href="#export_the_learning_network_as_a_new_model_type">Export the learning network as a new model type</a></li><li><a href="#applying_mytwomodelstack_to_some_data">Applying <code>MyTwoModelStack</code> to some data</a></li></ol></div>
 <p>In stacking one blends the predictions of different regressors or classifiers to gain, in some cases, better performance than naive averaging or majority vote.</p>
@@ -446,7 +440,7 @@ best_stack.regressor2.C</code></pre><pre><code class="plaintext code-output">10.
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: May 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: October 18, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

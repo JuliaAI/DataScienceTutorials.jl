@@ -102,13 +102,7 @@
 <!-- Content appended here -->
 <div class="franklin-content"><h1 id="mlj_for_data_scientists_in_two_hours"><a href="#mlj_for_data_scientists_in_two_hours" class="header-anchor">MLJ for Data Scientists in Two Hours</a></h1>
 <p>An end-to-end example using the <strong>Telco Churn</strong> dataset</p>
-<em>Download the 
-  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco/tutorial.ipynb" target="_blank"><em>notebook</em></a>
-  , the 
-  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco/tutorial.jl" target="_blank"><em>annotated script</em></a>
-   or the 
-  <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco/tutorial-raw.jl" target="_blank"><em>raw script</em></a>
-   for this tutorial &#40;right-click on the relevant link and save-as&#41;. These rely on <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco/Project.toml">this Project.toml</a> and <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco/Manifest.toml">this Manifest.toml</a>.</em> <br/>   <em>You can also download the whole <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco.tar.gz">project folder</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#summary_of_methods_and_types_introduced">Summary of methods and types introduced</a></li><li><a href="#warm_up_building_a_model_for_the_iris_dataset">Warm up: Building a model for the iris dataset</a></li><li><a href="#getting_the_telco_data">Getting the Telco data</a></li><li><a href="#type_coercion">Type coercion</a></li><li><a href="#preparing_a_holdout_set_for_final_testing">Preparing a holdout set for final testing</a></li><li><a href="#splitting_data_into_target_and_features">Splitting data into target and features</a></li><li><a href="#loading_a_model_and_checking_type_requirements">Loading a model and checking type requirements</a></li><li><a href="#building_a_model_pipeline_to_incorporate_feature_encoding">Building a model pipeline to incorporate feature encoding</a></li><li><a href="#evaluating_the_pipeline_models_performance">Evaluating the pipeline model&#39;s performance</a><ol><li><a href="#evaluating_by_hand_with_a_holdout_set">Evaluating by hand &#40;with a holdout set&#41;</a></li><li><a href="#automated_performance_evaluation_more_typical_workflow">Automated performance evaluation &#40;more typical workflow&#41;</a></li></ol></li><li><a href="#filtering_out_unimportant_features">Filtering out unimportant features</a></li><li><a href="#wrapping_our_iterative_model_in_control_strategies">Wrapping our iterative model in control strategies</a></li><li><a href="#hyper-parameter_optimization_model_tuning">Hyper-parameter optimization &#40;model tuning&#41;</a></li><li><a href="#saving_our_model">Saving our model</a></li><li><a href="#final_performance_estimate">Final performance estimate</a></li><li><a href="#testing_the_final_model">Testing the final model</a></li></ol></div>
 <p>An application of the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">MLJ toolbox</a> to the Telco Customer Churn dataset, aimed at practicing data scientists new to MLJ &#40;Machine Learning in Julia&#41;. This tutorial does not cover exploratory data analysis.</p>
@@ -839,7 +833,7 @@ print&#40;
 
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: May 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: May 23, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

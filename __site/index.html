@@ -105,21 +105,28 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><h2 id="learning_by_doing"><a href="#learning_by_doing" class="header-anchor">Learning by doing</a></h2>
-<p>This website offers tutorials for <a href="https://github.com/alan-turing-institute/MLJ.jl">MLJ.jl</a> and related packages. On each tutorial page, you will find a link to download the raw script and the notebook corresponding to the page.</p>
-<p>Feedback and PRs are always welcome to help make these tutorials better, from the presentation to the content.</p>
-<p>In order to reproduce the environment that was used to generate each tutorials, please follow these steps:</p>
-<ol>
-<li><p>Go to the directory of your choice: <code>cd&#40;&quot;/Users/&#91;JohnDoe&#93;/&quot;&#41;</code></p>
+<p>This website offers tutorials for <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">MLJ.jl</a> and related packages. </p>
+<p>The code included on each tutorial is tested to work reliably under these two conditions:</p>
+<ul>
+<li><p>You are running Julia 1.7.x where &quot;x&quot; is any integer &#40;to check, enter <code>VERSION</code> at the REPL&#41;.</p>
 </li>
-<li><p>Create a folder named, e.g., &quot;MLJ&#95;tutorials&quot;: <code>mkdir&#40;&quot;MLJ_tutorials&quot;&#41;</code></p>
+<li><p>You have activated and instantiated the associated <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">package environment</a>.</p>
 </li>
-<li><p>Download the tutorial <code>Project.toml</code> &#40;available at the top of the tutorial&#41; as well as the <code>Manifest.toml</code> in this folder;</p>
-</li>
-<li><p>In the folder, do</p>
-</li>
-</ol>
-<pre><code class="language-julia-repl">julia&gt; using Pkg; Pkg.activate&#40;&quot;.&quot;&#41;; Pkg.instantiate&#40;&#41;;</code></pre>
-<p>The tutorials are run with the <a href="https://julialang.org/downloads/#current_stable_release">latest stable release</a> of Julia, if you use a nightly version or an old version, you might encounter issues. In such cases, please open a PR so we can investigate.</p>
+</ul>
+<p>To make the tutorial-specific environment available to you, first download &#40;and decompress&#41; the &quot;project folder&quot; that is linked near the top of the tutorial. How you proceed next depends on your chosen mode of interaction:</p>
+<h3 id="pasting_code_copied_from_web_page_directly_into_the_julia_repl"><a href="#pasting_code_copied_from_web_page_directly_into_the_julia_repl" class="header-anchor">Pasting code copied from web page directly into the Julia REPL</a></h3>
+<p>Recommended for new Julia users.</p>
+<p>Activate and instantiate the correct environment by entering this code at the <code>julia&gt;</code> prompt:</p>
+<pre><code class="language-julia">using Pkg; Pkg.activate&#40;&quot;Path/To/Project/Folder&quot;&#41;; Pkg.instantiate&#40;&#41;</code></pre>
+<p>You need to replace <code>&quot;Path/To/Project/Folder&quot;</code> with the actual path to the downloaded project folder.  This can be just <code>&quot;.&quot;</code> if Julia has been launched from the command-line, with the project folder as the current directory.</p>
+<p>This might take a few minutes for some tutorials, as packages may need to be installed and precompiled.</p>
+<h3 id="running_the_provided_juptyer_notebook"><a href="#running_the_provided_juptyer_notebook" class="header-anchor">Running the provided Juptyer notebook</a></h3>
+<p>The downloaded project folder contains a Juptyer notebook called <code>tutorial.ipynb</code>. See the <a href="https://julialang.github.io/IJulia.jl/stable/manual/running/">IJulia documentation</a> on how to launch it. Copy and execute the code fragment above in a new notebook cell before evaluating any other cells.</p>
+<h3 id="running_the_provided_julia_script_line-by-line_from_an_ide"><a href="#running_the_provided_julia_script_line-by-line_from_an_ide" class="header-anchor">Running the provided Julia script line-by-line from an IDE</a></h3>
+<p>In your IDE &#40;e.g., VS Code or emacs&#41; open the file called <code>tutorial.jl</code> in the downloaded project folder and activate/instantiate by first running the code fragment given above.</p>
+<h2 id="having_problems"><a href="#having_problems" class="header-anchor">Having problems?</a></h2>
+<p>Please report issues <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues">here</a>. For beginners, the most common issues arise because the Julia version is incorrect, or because of an incorrect package environment. So be sure you have tried the instructions above before raising an issue.</p>
+<p>If you need to use an earlier version of Julia, you can try deleting the <code>Manifest.toml</code> file contained in the project folder and running <code>using Pkg; Pkg.instantiate&#40;&#41;</code> to generate a new package environment, but the exact package versions will be different from those used to test the tutorial and generate the output seen on the tutorial web page.</p>
 <h2 id="elementary_data_manipulations"><a href="#elementary_data_manipulations" class="header-anchor">Elementary data manipulations</a></h2>
 <p>If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on. In these we provide an introduction to some of the fundamental packages in the Julia data processing universe such as <a href="https://github.com/JuliaData/DataFrames.jl">DataFrames</a>, <a href="https://github.com/JuliaData/CSV.jl">CSV</a> and <a href="https://github.com/JuliaData/CategoricalArrays.jl">CategoricalArrays</a>.</p>
 <p></p>
@@ -211,7 +218,7 @@
 </ul>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: May 13, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 02, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div>
 </div><!-- CONTENT ENDS HERE -->

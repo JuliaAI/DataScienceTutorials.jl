@@ -1,11 +1,8 @@
 # Before running this, please make sure to activate and instantiate the
-# environment with [this `Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-choice/Project.toml) and
-# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-choice/Manifest.toml).
-# For instance, copy these files to a folder 'A-model-choice', `cd` to it and
-#
-# ```julia
-# using Pkg; Pkg.activate("."); Pkg.instantiate()
-# ```
+# tutorial-specific package environment, using this
+# [`Project.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-choice/Project.toml) and
+# [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-choice/Manifest.toml), or by following
+# [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
