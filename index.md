@@ -7,7 +7,7 @@ This website offers tutorials for [MLJ.jl](https://alan-turing-institute.github.
 The code included on each tutorial is tested to work reliably
 under these two conditions:
 
-- You are running Julia 1.7.x where "x" is any integer (to check, enter
+- You are running Julia 1.10.x where "x" is any integer (to check, enter
   `VERSION` at the REPL).
 
 - You have activated and instantiated the associated [package
