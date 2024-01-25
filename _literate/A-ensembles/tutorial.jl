@@ -137,6 +137,9 @@ r.plotting
 
 using Plots
 plt = plot(tuned_ensemble)
+gui()
+
+#-
 
 savefig(joinpath(@OUTPUT, "A-ensembles-plot.svg")) # hide
 
@@ -147,5 +150,3 @@ savefig(joinpath(@OUTPUT, "A-ensembles-plot.svg")) # hide
 ŷ = predict(tuned_ensemble, rows=test)
 @show l2(ŷ, y[test])
 
-
-PyPlot.close_figs() # hide
