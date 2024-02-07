@@ -18,7 +18,11 @@ using UrlDownload
 LinearRegressor = @load LinearRegressor pkg=GLM
 LinearBinaryClassifier = @load LinearBinaryClassifier pkg=GLM
 
+
+# @@dropdown
 # ## Reading the data
+# @@
+# @@dropdown-content
 #
 # The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.
 
@@ -37,7 +41,13 @@ first(dfX, 3)
 
 first(dfY1, 3)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Defining the Linear Model
+# @@
+# @@dropdown-content
 #
 # Let see how many MLJ models handle our kind of target which is the y variable.
 
@@ -71,7 +81,13 @@ LinearModel = machine(LinearRegressorPipe, X, yv)
 fit!(LinearModel)
 fp = fitted_params(LinearModel)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Reading the Output of Fitting the Linear Model
+# @@
+# @@dropdown-content
 #
 # We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.
 
@@ -92,7 +108,13 @@ println("\n Standard Error per Coefficient \n", r.linear_regressor.stderror[2:en
 
 round(rms(yhatResponse, y[:,1]), sigdigits=4)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Defining the Logistic Model
+# @@
+# @@dropdown-content
 
 X = copy(dfX)
 y = copy(dfYbinary)
@@ -111,7 +133,13 @@ LogisticModel = machine(LinearBinaryClassifierPipe, X, yc)
 fit!(LogisticModel)
 fp = fitted_params(LogisticModel)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Reading the Output from the Prediction of the Logistic Model
+# @@
+# @@dropdown-content
 #
 # The output of the MLJ model basically contain the same information as the R version of the model.
 
@@ -132,3 +160,6 @@ yMode = [mode(ŷ[i]) for i in 1:length(ŷ)]
 y = coerce(y[:,1], OrderedFactor)
 yMode = coerce(yMode, OrderedFactor)
 confusion_matrix(yMode, y)
+
+# ‎
+# @@

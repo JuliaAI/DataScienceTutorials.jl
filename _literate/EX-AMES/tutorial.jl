@@ -2,7 +2,11 @@ using Pkg # hideall
 Pkg.activate("_literate/EX-AMES/Project.toml")
 Pkg.update()
 
+
+# @@dropdown
 # ## Baby steps
+# @@
+# @@dropdown-content
 #
 # Let's load a reduced version of the well-known Ames House Price data set (containing six of the more important categorical features and six of the more important numerical features).
 # As "iris" the dataset is so common that you can load it directly with `@load_ames` and the reduced version via `@load_reduced_ames`
@@ -25,7 +29,13 @@ scitype(y)
 
 # so this is a standard regression problem with a mix of categorical and continuous input.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Dummy model
+# @@
+# @@dropdown-content
 #
 # Remember that a model is just a container for hyperparameters; let's take a particularly simple one: the constant regression.
 
@@ -54,7 +64,13 @@ ŷ[1:3]
 rmsl(ŷ, y[test])
 
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## KNN-Ridge blend
+# @@
+# @@dropdown-content
 #
 # Let's try something a bit fancier than a constant regressor.
 #
@@ -69,7 +85,11 @@ rmsl(ŷ, y[test])
 RidgeRegressor = @load RidgeRegressor pkg="MultivariateStats"
 KNNRegressor = @load KNNRegressor
 
+
+# @@dropdown
 # ### Using the expanded syntax
+# @@
+# @@dropdown-content
 #
 # Let's start by defining the source nodes:
 
@@ -106,7 +126,13 @@ ypreds = ŷ(rows=test)
 rmsl(y[test], ypreds)
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Tuning the model
+# @@
+# @@dropdown-content
 #
 # So far the hyperparameters were explicitly given but it makes more sense to learn them.
 # For this, we define a model around the learning network which can then be trained and tuned as any model:
@@ -192,3 +218,9 @@ krb_best = fitted_params(mtm).best_model
 
 preds = predict(mtm, rows=test)
 rmsl(y[test], preds)
+
+# ‎
+# @@
+
+# ‎
+# @@

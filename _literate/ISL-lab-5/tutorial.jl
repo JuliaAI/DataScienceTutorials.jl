@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 import RDatasets: dataset
@@ -17,7 +21,11 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 
 # Note the use of `rng=` to seed the shuffling of indices so that the results are reproducible.
 
+
+# @@dropdown
 # ### Polynomial regression
+# @@
+# @@dropdown-content
 #
 
 LR = @load LinearRegressor pkg=MLJLinearModels
@@ -123,7 +131,16 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")) # hide
 
 # \figalt{1st, 2nd and 3d order fit}{ISL-lab-5-g3.svg}
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## K-Folds Cross Validation
+# @@
+# @@dropdown-content
 #
 # Let's crossvalidate over the degree of the  polynomial.
 #
@@ -170,7 +187,16 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
 
 # \figalt{5th order fit}{ISL-lab-5-g4.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ## The Bootstrap
+# @@
+# @@dropdown-content
 #
 # _Bootstrapping is not currently supported in MLJ._
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

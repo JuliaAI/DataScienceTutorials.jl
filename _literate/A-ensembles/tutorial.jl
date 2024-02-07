@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Preliminary steps
+# @@
+# @@dropdown-content
 #
 # Let's start by loading the relevant packages and generating some dummy data.
 
@@ -42,7 +46,13 @@ rms(ŷ, y[test])
 evaluate!(knn, resampling=Holdout(fraction_train=0.7, rng=StableRNG(666)),
           measure=rms)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Homogenous ensembles
+# @@
+# @@dropdown-content
 #
 # MLJ offers basic support for ensembling such as [_bagging_](https://en.wikipedia.org/wiki/Bootstrap_aggregating).
 # Defining such an ensemble of simple "atomic" models is done via the `EnsembleModel` constructor:
@@ -51,7 +61,11 @@ ensemble_model = EnsembleModel(model=knn_model, n=20);
 
 # where the `n=20` indicates how many models are present in the ensemble.
 #
+
+# @@dropdown
 # ### Training and testing an ensemble
+# @@
+# @@dropdown-content
 #
 # Now that we've instantiated an ensemble, it can be trained and tested the same as any other model:
 
@@ -66,7 +80,13 @@ estimates
 
 # Note that multiple measurements can be specified jointly. Here only on measurement is (implicitly) specified but we still have to select the corresponding results (whence the `[1]` for both  the `measurement` and `per_fold`).
 #
+
+# ‎
+# @@
+# @@dropdown
 # ### Systematic tuning
+# @@
+# @@dropdown-content
 #
 # Let's simultaneously tune the ensemble's `bagging_fraction` and the K-Nearest neighbour hyperparameter `K`. Since one of our models is  a field of the  other, we have nested hyperparameters:
 
@@ -92,7 +112,13 @@ fit!(tuned_ensemble, rows=train);
 
 # Note the `rng=42` seeds the random number generator for reproducibility of this example.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ### Reporting results
+# @@
+# @@dropdown-content
 #
 # The best model can be accessed like so:
 
@@ -131,3 +157,9 @@ ŷ = predict(tuned_ensemble, rows=test)
 
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@
+
+# ‎
+# @@

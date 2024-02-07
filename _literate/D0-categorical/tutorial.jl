@@ -4,7 +4,11 @@ Pkg.update()
 
 # This tutorial follows loosely [the docs](https://juliadata.github.io/CategoricalArrays.jl/latest/using.html).
 #
+
+# @@dropdown
 # ## Defining a categorical vector
+# @@
+# @@dropdown-content
 
 using CategoricalArrays
 
@@ -17,9 +21,19 @@ levels(v)
 
 # which, by  default, returns the labels in lexicographic order.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Working with categoricals
+# @@
+# @@dropdown-content
 #
+
+# @@dropdown
 # ### Ordered categoricals
+# @@
+# @@dropdown-content
 #
 # You can specify that categories are *ordered* by specifying `ordered=true`, the order then follows that of the levels. If you wish to change that order, you  need to  use the `levels!` function.
 # Let's see two examples.
@@ -50,7 +64,13 @@ levels!(v, ["low", "med", "high"])
 
 v[1] < v[2]
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Missing values
+# @@
+# @@dropdown-content
 #
 # You can also have a categorical vector with missing values:
 
@@ -59,3 +79,9 @@ v = categorical(["AA", "BB", missing, "AA", "BB", "CC"]);
 # that doesn't change the levels:
 
 levels(v)
+
+# ‎
+# @@
+
+# ‎
+# @@

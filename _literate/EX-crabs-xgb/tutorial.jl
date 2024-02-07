@@ -7,7 +7,11 @@ end;
 
 # This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
 #
+
+# @@dropdown
 # ## First steps
+# @@
+# @@dropdown-content
 #
 # Again, the crabs dataset is so common that there is a  simple load function for it:
 
@@ -50,7 +54,13 @@ countmap(y[train]) |> pprint
 
 # which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## XGBoost machine
+# @@
+# @@dropdown-content
 #
 # Wrap a machine around an XGBoost model (XGB) and the data:
 
@@ -79,7 +89,11 @@ savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
 
 xgb.num_round = 200;
 
+
+# @@dropdown
 # ### More tuning (1)
+# @@
+# @@dropdown-content
 #
 # Let's now tune the maximum depth of each tree and the minimum child weight in the boosting.
 
@@ -119,7 +133,13 @@ xgb = fitted_params(mtm).best_model
 @show xgb.max_depth
 @show xgb.min_child_weight
 
+
+# ‎
+# @@
+# @@dropdown
 # ### More tuning (2)
+# @@
+# @@dropdown-content
 #
 # Let's examine the effect of `gamma`:
 
@@ -133,7 +153,13 @@ curve = learning_curve!(xgbm, range=r, resolution=30,
 @show round(minimum(curve.measurements), sigdigits=3)
 @show round(maximum(curve.measurements), sigdigits=3)
 
+
+# ‎
+# @@
+# @@dropdown
 # ### More tuning (3)
+# @@
+# @@dropdown-content
 #
 # Let's examine the effect of `subsample` and `colsample_bytree`:
 
@@ -178,3 +204,9 @@ xgb = fitted_params(mtm).best_model
 PyPlot.close_figs() # hide
 ŷ = predict_mode(mtm, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+# ‎
+# @@
+
+# ‎
+# @@

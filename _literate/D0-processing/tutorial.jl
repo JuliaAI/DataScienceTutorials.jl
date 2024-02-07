@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## More data processing
+# @@
+# @@dropdown-content
 #
 # This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
 # The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc
@@ -55,7 +59,7 @@ describe(data)
 # The describe() function shows that there are several features with missing values.
 # *Note:* the `describe()` function is from the `DataFrames` package (and won't work with other, non DataFrames, tables) whereas the `schema()` is from the MLJ package.
 
-# ---
+
 # Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
 capacity = select(data, [:country, :primary_fuel, :capacity_mw]);
 first(capacity, 5)
@@ -92,7 +96,7 @@ savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
 
 # \figalt{processing1}{D0-processing-g1.svg}
 
-# ---
+
 # Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.
 # To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
 cap_sum_ctry_gd = groupby(capacity, [:country]);
@@ -107,7 +111,7 @@ cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw
 
 # Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
 
-# ---
+
 # Now let's analyse features which exhibit some missing values.
 # Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.
 # First, the commissioning_year is not reported for all plants.
@@ -187,3 +191,6 @@ ax2.set_title("Gas")
 savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
 
 # \figalt{processing3}{D0-processing-g3.svg}
+
+# ‎
+# @@

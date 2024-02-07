@@ -7,7 +7,11 @@ end;
 
 # **Main author**: Yaqub Alwan (IQVIA).
 #
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 using PrettyPrinting
@@ -136,3 +140,6 @@ rms_score = round(rms(predictions, targets[test, 1]), sigdigits=4)
 @show rms_score
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

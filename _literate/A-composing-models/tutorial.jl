@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Generating dummy data
+# @@
+# @@dropdown-content
 # Let's start by generating some dummy data with both numerical values and categorical values:
 
 using MLJ
@@ -25,7 +29,13 @@ scitype(X.age)
 
 # We will want to coerce that to `Continuous` so that it can be given to a regressor that expects such values.
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Declaring a pipeline
+# @@
+# @@dropdown-content
 
 # A typical workflow for such data is to one-hot-encode the categorical data and then apply some regression model on the data.
 # Let's say that we want to apply the following steps:
@@ -62,3 +72,6 @@ evaluate(
     resampling=Holdout(),
     measure=rms
 ) |> pprint
+
+# ‎
+# @@

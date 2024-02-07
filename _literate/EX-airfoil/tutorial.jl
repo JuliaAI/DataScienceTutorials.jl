@@ -7,9 +7,17 @@ end;
 
 # **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
 #
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 # Here we use the [UCI "Airfoil Self-Noise" dataset](http://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise)
+
+# @@dropdown
 # ### Loading and  preparing the data
+# @@
+# @@dropdown-content
 
 using MLJ
 using PrettyPrinting
@@ -62,7 +70,16 @@ for model in models(matching(X, y))
        print("Model Name: " , model.name , " , Package: " , model.package_name , "\n")
 end
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## DecisionTreeRegressor
+# @@
+# @@dropdown-content
 #
 # We will first try out DecisionTreeRegressor:
 
@@ -77,7 +94,13 @@ pred_dcrm = predict(dcrm, rows=test);
 
 rms(pred_dcrm, y[test])
 
+
+# ‎
+# @@
+# @@dropdown
 # ## RandomForestRegressor
+# @@
+# @@dropdown-content
 #
 # Now let's try out RandomForestRegressor:
 
@@ -99,7 +122,13 @@ rms(pred_rfr, y[test])
 #
 # Can we do even better? Yeah, we can!! We can make use of Model Tuning.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Tuning
+# @@
+# @@dropdown-content
 #
 # In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/) and [model-tuning](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
 #
@@ -155,3 +184,6 @@ plt.savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
 # \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

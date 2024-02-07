@@ -15,7 +15,11 @@ end;
 # Note that MLJ has a built in model wrapper called `EnsembleModel`
 # for creating bagged ensembles with a few lines of code.
 
+
+# @@dropdown
 # ## Definition of composite model type
+# @@
+# @@dropdown-content
 
 using MLJ
 using PyPlot
@@ -51,7 +55,13 @@ end
 
 one_hundred_models = OneHundredModels()
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Application to data
+# @@
+# @@dropdown-content
 
 X, y = @load_boston;
 
@@ -103,3 +113,6 @@ savefig(joinpath(@OUTPUT, "e2.svg")) # hide
 #-
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

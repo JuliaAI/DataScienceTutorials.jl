@@ -38,7 +38,11 @@ end;
 # **Time.** Between two and three hours, first time through.
 
 
+
+# @@dropdown
 # ## Summary of methods and types introduced
+# @@
+# @@dropdown-content
 
 # |code   | purpose|
 # |:-------|:-------------------------------------------------------|
@@ -76,7 +80,13 @@ end;
 # | `TunedModel(model=..., tuning=..., options...)` | wrap the supervised `model` in specified `tuning` strategy|
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Warm up: Building a model for the iris dataset
+# @@
+# @@dropdown-content
 
 # Before turning to the Telco Customer Churn dataset, we very quickly
 # build a predictive model for Fisher's well-known iris data set, as way of
@@ -159,7 +169,13 @@ yhat[2]
 # We now turn to the Telco dataset.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Getting the Telco data
+# @@
+# @@dropdown-content
 
 import DataFrames
 
@@ -179,7 +195,13 @@ first(df0, 4)
 # two-dimensional data in MLJ.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Type coercion
+# @@
+# @@dropdown-content
 
 # *Introduces:* `scitype`, `schema`, `coerce`
 
@@ -242,7 +264,13 @@ levels(df0.Churn) # to check order
 schema(df0) |> DataFrames.DataFrame
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Preparing a holdout set for final testing
+# @@
+# @@dropdown-content
 
 # *Introduces:* `partition`
 
@@ -259,7 +287,13 @@ df, df_test, df_dumped = partition(df0, 0.07, 0.03, # in ratios 7:3:90
 # `df, df_test = partition(df0, 0.7, rng=123)`.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Splitting data into target and features
+# @@
+# @@dropdown-content
 
 # *Introduces:* `unpack`
 
@@ -280,7 +314,13 @@ intersect([:Churn, :customerID], schema(X).names)
 
 ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Loading a model and checking type requirements
+# @@
+# @@dropdown-content
 
 # *Introduces:* `@load`, `input_scitype`, `target_scitype`
 
@@ -315,7 +355,13 @@ scitype(X) <: input_scitype(booster)
 # So we need categorical feature encoding, discussed next.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Building a model pipeline to incorporate feature encoding
+# @@
+# @@dropdown-content
 
 # *Introduces:* `ContinuousEncoder`, pipeline operator `|>`
 
@@ -343,7 +389,13 @@ pipe = ContinuousEncoder() |> booster
 pipe.evo_tree_classifier.max_depth
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Evaluating the pipeline model's performance
+# @@
+# @@dropdown-content
 
 # *Introduces:* `measures` (function), **measures:** `brier_loss`,
 #  `auc`, `accuracy`; `machine`, `fit!`, `predict`, `fitted_params`,
@@ -374,7 +426,11 @@ measures("Brier")
 # the ROC curve) and `accuracy`.
 
 
+
+# @@dropdown
 # ### Evaluating by hand (with a holdout set)
+# @@
+# @@dropdown-content
 
 # Our pipeline model can be trained just like the decision tree model
 # we built for the iris data set. Binding all non-test data to the
@@ -452,7 +508,13 @@ savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")) # hide
 
 # \fig{EX-telco-roc.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Automated performance evaluation (more typical workflow)
+# @@
+# @@dropdown-content
 
 # We can also get performance estimates with a single call to the
 # `evaluate` function, which also allows for more complicated
@@ -500,7 +562,16 @@ end
 confidence_intervals_basic_model = confidence_intervals(e_pipe)
 
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Filtering out unimportant features
+# @@
+# @@dropdown-content
 
 # *Introduces:* `FeatureSelector`
 
@@ -513,7 +584,13 @@ pipe2 = ContinuousEncoder() |>
     FeatureSelector(features=unimportant_features, ignore=true) |> booster
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Wrapping our iterative model in control strategies
+# @@
+# @@dropdown-content
 
 # *Introduces:* **control strategies:** `Step`, `NumberSinceBest`, `TimeLimit`,
 # `InvalidValue`, **model wrapper** `IteratedModel`, **resampling strategy:** `Holdout`
@@ -572,7 +649,13 @@ fit!(mach_iterated_pipe);
 #   data using the number of iterations determined in the first step. Calling `predict` on `mach_iterated_pipe` means using the learned parameters of the second step.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Hyper-parameter optimization (model tuning)
+# @@
+# @@dropdown-content
 
 # *Introduces:* `range`, **model wrapper** `TunedModel`, `RandomSearch`
 
@@ -687,7 +770,13 @@ savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")) # hide
 # \fig{EX-telco-tuning.svg}
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Saving our model
+# @@
+# @@dropdown-content
 
 # *Introduces:* `MLJ.save`
 
@@ -702,7 +791,13 @@ MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 
 # We'll deserialize this in "Testing the final model" below.
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Final performance estimate
+# @@
+# @@dropdown-content
 
 # Finally, to get an even more accurate estimate of performance, we
 # can evaluate our model using stratified cross-validation and all the
@@ -731,7 +826,13 @@ confidence_intervals_basic_model
 # hyper-parameters do a pretty good job.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Testing the final model
+# @@
+# @@dropdown-content
 
 # We now determine the performance of our model on our
 # lock-and-throw-away-the-key holdout set. To demonstrate
@@ -771,3 +872,6 @@ print(
 )
 
 rm("tuned_iterated_pipe.jls") # hide
+
+# ‎
+# @@

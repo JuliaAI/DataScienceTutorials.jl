@@ -8,7 +8,11 @@ end;
 # In this tutorial, we are exploring the application of Ridge and Lasso
 # regression to the Hitters R dataset.
 #
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 import RDatasets: dataset
@@ -80,7 +84,11 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
 
 # \figalt{Distribution of salary}{ISL-lab-6-g2.svg}
 #
+
+# @@dropdown
 # ### Data preparation
+# @@
+# @@dropdown-content
 #
 # Most features are currently encoded as integers but we will consider them as continuous.
 # To coerce `int` features to `Float`, we nest the `autotype` function in the `coerce` function.
@@ -92,8 +100,21 @@ scitype(Xc)
 
 # There're a few features that are categorical which we'll one-hot-encode.
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Ridge pipeline
+# @@
+# @@dropdown-content
+
+# @@dropdown
 # ### Baseline
+# @@
+# @@dropdown-content
 #
 # Let's first fit a simple pipeline with a standardizer, a one-hot-encoder and a basic linear regression:
 
@@ -140,7 +161,13 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
 
 # \figalt{Distribution of residuals}{ISL-lab-6-g4.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Basic Ridge
+# @@
+# @@dropdown-content
 #
 # Let's now swap the linear regressor for a Ridge one without specifying the penalty (`1` by default):
 # We modify the supervised model in the pipeline directly.
@@ -152,7 +179,13 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Ok that's a bit better but surely we can do better with an appropriate selection of the hyperparameter.
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Cross validating
+# @@
+# @@dropdown-content
 
 # What penalty should you use? Let's do a simple CV to try to find out:
 
@@ -190,7 +223,16 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")) # hide
 #
 # You can compare that with the residuals obtained earlier.
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Lasso pipeline
+# @@
+# @@dropdown-content
 #
 # Let's do the same as above but using a Lasso model and adjusting the range a bit:
 
@@ -237,7 +279,13 @@ savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
 
 # \figalt{Lasso coefficients}{ISL-lab-6-g6.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Elastic net pipeline
+# @@
+# @@dropdown-content
 
 ElasticNetRegressor = @load ElasticNetRegressor pkg=MLJLinearModels
 
@@ -258,3 +306,6 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # But the simple ridge regression seems to work best here.
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

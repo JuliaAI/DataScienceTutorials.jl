@@ -2,13 +2,21 @@ using Pkg # hideall
 Pkg.activate("_literate/EX-horse/Project.toml")
 Pkg.update()
 
+
+# @@dropdown
 # ## Initial data processing
+# @@
+# @@dropdown-content
 #
 # In this example, we consider the [UCI "horse colic" dataset](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 #
 # This is a reasonably messy classification problem with missing values etc and so some work should be expected in the feature processing.
 #
+
+# @@dropdown
 # ### Getting the data
+# @@
+# @@dropdown-content
 #
 # The data is pre-split in training and testing and we will keep it as such
 
@@ -38,7 +46,13 @@ data_test  = CSV.read(req2.body, DataFrame; csv_opts...)
 @show size(data_train)
 @show size(data_test)
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Inspecting columns
+# @@
+# @@dropdown-content
 #
 # To simplify the analysis, we will drop the columns `Lesion *` as they would need specific re-encoding which would distract us a bit.
 
@@ -87,7 +101,13 @@ datac = select!(datac, Not(:hospital_number));
 
 datac = coerce(datac, autotype(datac, rules=(:discrete_to_continuous,)));
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Dealing with missing values
+# @@
+# @@dropdown-content
 #
 # There's quite a lot of missing values, in this tutorial we'll be a bit rough in how we deal with them applying the following rules of thumb:
 #
@@ -131,7 +151,16 @@ y, X = unpack(datac, ==(:outcome), name->true);
 X = coerce(X, autotype(X, :discrete_to_continuous));
 
 #
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## A baseline model
+# @@
+# @@dropdown-content
 #
 # Let's define a first sensible model and get a baseline, basic steps are:
 # - one-hot-encode the categoricals
@@ -188,7 +217,13 @@ println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
 
 # We've probably reached the limit of a simple linear model.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Trying another model
+# @@
+# @@dropdown-content
 #
 # There are lots of categoricals, so maybe  it's just better to use something that deals well with that like a tree-based classifier.
 
@@ -205,3 +240,6 @@ misclassification_rate(mode.(ŷ), ytrain)
 # a significantly better misclassification rate.
 #
 # We could investigate more, do more tuning etc, but the key points of this tutorial was to show how to handle data with missing values.
+
+# ‎
+# @@
