@@ -1,21 +1,23 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {{if hasmath}} {{insert head_katex.html }}     {{end}}
+  {{if hasmath}} {{insert head_katex.html }} {{end}}
   {{if hascode}} {{insert head_highlight.html }} {{end}}
   <link rel="stylesheet" href="/css/franklin.css">
   <link rel="stylesheet" href="/css/pure.css">
   <link rel="stylesheet" href="/css/side-menu.css">
   <link rel="stylesheet" href="/css/extra.css">
   <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
-  {{isdef title}} <title>{{fill title}}</title>  {{end}}
+  {{isdef title}} <title>{{fill title}}</title> {{end}}
   <!-- LUNR -->
   <script src="/libs/lunr/lunr.min.js"></script>
   <script src="/libs/lunr/lunr_index.js"></script>
   <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
@@ -28,70 +30,142 @@
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
-        <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/search/index.html" style="visibility:hidden">
-        </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item {{ispage index.html}}pure-menu-selected{{end}}"><a href="/" class="pure-menu-link"><strong>Home</strong></a></li>
+          <form id="lunrSearchForm" name="lunrSearchForm">
+            <input class="search-input" name="q" placeholder="Enter search term" type="text">
+            <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
+          </form>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item {{ispage index.html}}pure-menu-selected{{end}}"><a href="/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item {{ispage /data/loading/index.html}}pure-menu-selected{{end}}"><a href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item {{ispage /data/dataframe/index.html}}pure-menu-selected{{end}}"><a href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item {{ispage /data/categorical/index.html}}pure-menu-selected{{end}}"><a href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item {{ispage /data/scitype/index.html}}pure-menu-selected{{end}}"><a href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item {{ispage /data/processing/index.html}}pure-menu-selected{{end}}"><a href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item {{ispage /data/loading/index.html}}pure-menu-selected{{end}}"><a
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item {{ispage /data/dataframe/index.html}}pure-menu-selected{{end}}"><a
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item {{ispage /data/categorical/index.html}}pure-menu-selected{{end}}"><a
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item {{ispage /data/scitype/index.html}}pure-menu-selected{{end}}"><a
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item {{ispage /data/processing/index.html}}pure-menu-selected{{end}}"><a
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item {{ispage /getting-started/choosing-a-model/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item {{ispage getting-started/fit-and-predict/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item {{ispage getting-started/model-tuning/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item {{ispage getting-started/ensembles/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item {{ispage getting-started/ensembles-2/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item {{ispage getting-started/ensembles-3/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item {{ispage getting-started/composing-models/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item {{ispage getting-started/learning-networks/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item {{ispage getting-started/learning-networks-2/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item {{ispage getting-started/stacking/index.html}}pure-menu-selected{{end}}"><a href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item {{ispage isl/lab-2/index.html}}pure-menu-selected{{end}}"><a href="/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item {{ispage end-to-end/telco/index.html}}pure-menu-selected{{end}}"><a href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item {{ispage end-to-end/AMES/index.html}}pure-menu-selected{{end}}"><a href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item {{ispage end-to-end/crabs-xgb/index.html}}pure-menu-selected{{end}}"><a href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item {{ispage /getting-started/choosing-a-model/index.html}}pure-menu-selected{{end}}">
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+              <li class="pure-menu-item {{ispage getting-started/fit-and-predict/index.html}}pure-menu-selected{{end}}">
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+              <li class="pure-menu-item {{ispage getting-started/model-tuning/index.html}}pure-menu-selected{{end}}"><a
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item {{ispage getting-started/ensembles/index.html}}pure-menu-selected{{end}}"><a
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item {{ispage getting-started/ensembles-2/index.html}}pure-menu-selected{{end}}"><a
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
+              <li class="pure-menu-item {{ispage getting-started/ensembles-3/index.html}}pure-menu-selected{{end}}"><a
+                  href="/getting-started/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+              <li
+                class="pure-menu-item {{ispage getting-started/composing-models/index.html}}pure-menu-selected{{end}}">
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a></li>
+              <li
+                class="pure-menu-item {{ispage getting-started/learning-networks/index.html}}pure-menu-selected{{end}}">
+                <a href="/getting-started/learning-networks/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+              <li
+                class="pure-menu-item {{ispage getting-started/learning-networks-2/index.html}}pure-menu-selected{{end}}">
+                <a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+              <li class="pure-menu-item {{ispage getting-started/stacking/index.html}}pure-menu-selected{{end}}"><a
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item {{ispage isl/lab-2/index.html}}pure-menu-selected{{end}}"><a href="/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- END TO END EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=e2e>
+              <li class="pure-menu-item {{ispage end-to-end/telco/index.html}}pure-menu-selected{{end}}"><a
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item {{ispage end-to-end/AMES/index.html}}pure-menu-selected{{end}}"><a
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item {{ispage end-to-end/crabs-xgb/index.html}}pure-menu-selected{{end}}"><a
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+            </ul>
+          </div>
+        </ul>
+        <!-- END OF LIST OF MENU ITEMS -->
       </div>
     </div>
     <div id="main"> <!-- Closed in foot -->
@@ -101,4 +175,4 @@
       </div>
       {{end}}
 
-<!-- Content appended here -->
+      <!-- Content appended here -->
