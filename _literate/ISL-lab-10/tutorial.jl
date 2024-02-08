@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 import RDatasets: dataset
@@ -25,7 +29,13 @@ describe(data, :mean, :std)
 X = select(data, Not(:State))
 X = coerce(X, :UrbanPop=>Continuous, :Assault=>Continuous);
 
+
+# ‎
+# @@
+# @@dropdown
 # ## PCA pipeline
+# @@
+# @@dropdown-content
 #
 # PCA is usually best done after standardization but we won't do it here:
 
@@ -48,7 +58,13 @@ cumsum(r.principalvars ./ r.tvar)
 
 # In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all of the variance.
 
+
+# ‎
+# @@
+# @@dropdown
 # ## More interesting data...
+# @@
+# @@dropdown-content
 
 # Instead of just playing with toy data, let's load the orange juice data and extract only the columns corresponding to price data:
 
@@ -61,7 +77,11 @@ feature_names = [
 
 X = select(data, feature_names);
 
+
+# @@dropdown
 # ### PCA pipeline
+# @@
+# @@dropdown-content
 
 Random.seed!(1515)
 
@@ -99,7 +119,13 @@ savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
 
 # So 4 PCA features are enough to recover most of the variance.
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Clustering
+# @@
+# @@dropdown-content
 
 Random.seed!(1515)
 
@@ -135,3 +161,9 @@ savefig(joinpath(@OUTPUT, "ISL-lab-10-cluster.svg")) # hide
 
 # \fig{ISL-lab-10-cluster.svg}
 PyPlot.close_figs() # hide
+
+# ‎
+# @@
+
+# ‎
+# @@

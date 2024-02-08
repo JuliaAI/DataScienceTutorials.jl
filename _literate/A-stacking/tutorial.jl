@@ -23,7 +23,11 @@ end;
 # `MyTwoStack`.
 
 
+
+# @@dropdown
 # ## Basic stacking using out-of-sample base learner predictions
+# @@
+# @@dropdown-content
 
 # A rather general stacking protocol was first described in a [1992
 # paper](https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231)
@@ -78,7 +82,11 @@ forest = (@load RandomForestRegressor pkg=DecisionTree)()
 svm = (@load SVMRegressor)()
 
 
+
+# @@dropdown
 # ### Warm-up exercise: Define a model type to average predictions
+# @@
+# @@dropdown-content
 
 # Let's define a composite model type `MyAverageTwo` that
 # averages the predictions of two deterministic regressors. Here's the learning network:
@@ -145,8 +153,21 @@ print_performance(linear, X, y)
 print_performance(knn, X, y)
 print_performance(average_two, X, y)
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Stacking proper
+# @@
+# @@dropdown-content
+
+# @@dropdown
 # ### Helper functions:
+# @@
+# @@dropdown-content
 
 # To generate folds for generating out-of-sample predictions, we define
 
@@ -167,7 +188,13 @@ f = folds(1:10, 3)
 corestrict(string.(1:10), f, 2)
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Choose some test data (optional) and some component models (defaults for the composite model):
+# @@
+# @@dropdown-content
 
 figure(figsize=(8,6))
 steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
@@ -196,7 +223,13 @@ model2 = knn
 judge = linear
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Define the training nodes
+# @@
+# @@dropdown-content
 
 # Let's instantiate some input and target source nodes for the
 # learning network, wrapping the play data defined above in source
@@ -309,7 +342,13 @@ m1 = machine(model1, X, y)
 m2 = machine(model2, X, y)
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Define nodes still needed for prediction
+# @@
+# @@dropdown-content
 
 # To obtain the final prediction, `yhat`, we get the base learner
 # predictions, based on training with all data, and feed them to the
@@ -341,7 +380,16 @@ estack = rms(yhat(), y())
 @show e1 e2 emean estack;
 
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Export the learning network as a new model type
+# @@
+# @@dropdown-content
 
 # The learning network (less the data wrapped in the source nodes)
 # amounts to a specification of a new composite model type for
@@ -362,7 +410,13 @@ my_two_model_stack = MyTwoModelStack()
 # And this completes the definition of our re-usable stacking model type.
 
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Applying `MyTwoModelStack` to some data
+# @@
+# @@dropdown-content
 
 # Without undertaking any hyperparameter optimization, we evaluate the
 # performance of a tree boosting algorithm and a support vector
@@ -427,3 +481,6 @@ best_stack.regressor2.C
 print_performance(best_stack, X, y)
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

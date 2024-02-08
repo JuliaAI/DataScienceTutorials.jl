@@ -7,7 +7,11 @@ end;
 
 # **Main author**: Ayush Shridhar (ayush-1506).
 
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 import MLJFlux
 import MLJ
@@ -143,7 +147,13 @@ savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Tuning
+# @@
+# @@dropdown-content
 
 # As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
 # batch_size parameter.
@@ -162,3 +172,6 @@ MLJ.fit!(m)
 # The best value is:
 
 MLJ.fitted_params(m).best_model.batch_size
+
+# ‎
+# @@

@@ -9,9 +9,17 @@ Pkg.update()
 # [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
 # [GLM.jl]: https://github.com/JuliaStats/GLM.jl
 # [ScikitLearn.jl]: https://github.com/cstjean/ScikitLearn.jl
+
+# @@dropdown
 # ## Data and its interpretation
+# @@
+# @@dropdown-content
 #
+
+# @@dropdown
 # ### Machine type and scientific type
+# @@
+# @@dropdown-content
 
 using RDatasets
 using MLJ
@@ -30,7 +38,13 @@ first(iris, 3) |> pretty
 iris2 = coerce(iris, :PetalWidth => OrderedFactor)
 first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Unpacking data
+# @@
+# @@dropdown-content
 #
 # The function `unpack` helps specify the target and the input for a regression or classification task
 
@@ -52,9 +66,22 @@ first(X, 1) |> pretty
 
 X, y = @load_iris;
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Choosing a model
+# @@
+# @@dropdown-content
 #
+
+# @@dropdown
 # ### Model search
+# @@
+# @@dropdown-content
 #
 # In MLJ, a _model_ is a struct storing the _hyperparameters_ of the learning algorithm indicated by the struct name (and only that).
 #
@@ -67,7 +94,13 @@ for m in models(matching(X, y))
     end
 end
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Loading a model
+# @@
+# @@dropdown-content
 #
 # Most models are implemented outside of the MLJ ecosystem; you therefore have to _load models_ using the `@load` command.
 #
@@ -80,3 +113,9 @@ knc = @load KNeighborsClassifier
 # In some cases, there may be several packages offering the same model, for instance `LinearRegressor` is offered by both `[GLM.jl]` and `[ScikitLearn.jl]` so you will need to specify the package you would like to use by adding `pkg="ThePackage"` in the load command:
 
 linreg = @load LinearRegressor pkg=GLM
+
+# ‎
+# @@
+
+# ‎
+# @@

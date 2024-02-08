@@ -7,7 +7,11 @@ end;
 
 # **Main author**: [Geoffroy Dolphin](https://github.com/gd1989)
 #
+
+# @@dropdown
 # ## Initial data processing
+# @@
+# @@dropdown-content
 # In this tutorial we are fitting solar and wind power generation output for Germany using weather data.
 # We focus on the use of a simple linear estimator. Let's load the required packages to get started.
 
@@ -102,7 +106,11 @@ describe(data, :mean, :median, :nmissing)
 # Note that the `describe()` function provides you with information about missing values for each of the columns.
 # Fortunately, there are none.
 #
+
+# @@dropdown
 # ### Adjusting the scientific types
+# @@
+# @@dropdown-content
 #
 # Let's check the default scientific type that's currently associated with the data features:
 
@@ -120,7 +128,16 @@ schema(data)
 # We're now ready to go!
 
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Exploratory Data Analysis
+# @@
+# @@dropdown-content
 
 # To get a better understanding of our targets, let's plot their respective distributions.
 
@@ -207,7 +224,13 @@ savefig(joinpath(@OUTPUT, "wind_scatter.png"), bbox_inches="tight") # hide
 
 # As expected, solar power generation shows a strong relationship to solar irradiance while wind power generation denotes a strong relationship to wind speed.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Models
+# @@
+# @@dropdown-content
 #
 # Let's fit a linear regression to our data.
 # We focus on fitting the wind power generation but the same procedure could be applied for the solar power generation (a good exercise!).
@@ -225,7 +248,11 @@ linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
 fit!(m_linReg, rows=train);
 
+
+# @@dropdown
 # ### Model evaluation
+# @@
+# @@dropdown-content
 #
 # We've now fitted the model for wind power generation (`Wind_gen`).
 # Let's use it to predict values over the test set and investigate the performance:
@@ -281,3 +308,9 @@ savefig(joinpath(@OUTPUT, "hist_residuals.svg")) # hide
 # \figalt{Histogram of the residuals}{hist_residuals.svg}
 
 # We leave it at that for now, I hope you found this tutorial interesting.
+
+# ‎
+# @@
+
+# ‎
+# @@

@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Simple linear regression
+# @@
+# @@dropdown-content
 #
 # `MLJ` essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.
 #
@@ -111,7 +115,13 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
 
 # \figalt{Histogram of the residuals}{ISL-lab-3-res2.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Interaction and transformation
+# @@
+# @@dropdown-content
 #
 # Let's say we want to also consider an interaction term of `lstat` and `age` taken together.
 # To do this, just create a new dataframe with an additional column corresponding to the interaction term:
@@ -152,3 +162,6 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
 
 # \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

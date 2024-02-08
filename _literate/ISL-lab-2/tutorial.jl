@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Basic commands
+# @@
+# @@dropdown-content
 #
 # This is a very brief and rough primer if you're new to Julia and wondering how to do simple things that are relevant for data analysis.
 #
@@ -73,7 +77,13 @@ X = [1 2; 3 4; 5 6]
 
 size(X)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Loading data
+# @@
+# @@dropdown-content
 #
 # There are many ways to load data in Julia, one convenient one is via the [`CSV`](https://github.com/JuliaData/CSV.jl) package.
 
@@ -119,7 +129,13 @@ mpg |> mean
 # * the [`DataFrames.jl` docs](http://juliadata.github.io/DataFrames.jl/latest/)
 # * the [`StatsBases.jl` docs](https://juliastats.org/StatsBase.jl/latest/)
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Plotting data
+# @@
+# @@dropdown-content
 #
 # There are multiple libraries that can be used to  plot things in Julia:
 #
@@ -141,3 +157,6 @@ savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
 
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

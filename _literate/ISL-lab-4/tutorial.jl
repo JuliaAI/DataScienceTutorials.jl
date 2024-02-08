@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Stock market data
+# @@
+# @@dropdown-content
 #
 # Let's load the usual packages and the data
 
@@ -54,7 +58,11 @@ savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
 
 # \figalt{volume}{ISL-lab-4-volume.svg}
 
+
+# @@dropdown
 # ### Logistic Regression
+# @@
+# @@dropdown-content
 #
 # We will now try to train models; the target `:Direction` has two classes: `Up` and `Down`; it needs to be interpreted as a categorical object, and we will mark it as a _ordered factor_ to specify that 'Up' is positive and 'Down' negative (for the confusion matrix later):
 
@@ -148,7 +156,13 @@ ŷ |> pprint
 
 mode.(ŷ)
 
+
+# ‎
+# @@
+# @@dropdown
 # ### LDA
+# @@
+# @@dropdown-content
 #
 # Let's do a similar thing but with a LDA model this time:
 
@@ -172,7 +186,13 @@ ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
+
+# ‎
+# @@
+# @@dropdown
 # ### QDA
+# @@
+# @@dropdown-content
 #
 # Bayesian QDA is available via ScikitLearn:
 
@@ -186,7 +206,13 @@ ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
+
+# ‎
+# @@
+# @@dropdown
 # ### KNN
+# @@
+# @@dropdown-content
 #
 # We can use K-Nearest Neighbors models via the [`NearestNeighbors`](https://github.com/KristofferC/NearestNeighbors.jl) package:
 
@@ -207,7 +233,16 @@ accuracy(ŷ, y[test]) |> r3
 
 # A bit better but not hugely so.
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Caravan insurance data
+# @@
+# @@dropdown-content
 #
 # The caravan dataset is part of ISLR as well:
 
@@ -278,7 +313,11 @@ ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
+
+# @@dropdown
 # ### ROC and AUC
+# @@
+# @@dropdown-content
 #
 # Since we have a probabilistic classifier, we can also check metrics that take _scores_ into account such as the area under the ROC curve (AUC):
 
@@ -302,3 +341,9 @@ savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
 
 # \figalt{ROC}{ISL-lab-4-roc.svg}
 PyPlot.close_figs() # hide
+
+# ‎
+# @@
+
+# ‎
+# @@

@@ -2,7 +2,11 @@ using Pkg # hideall
 Pkg.activate("_literate/A-learning-networks/Project.toml")
 Pkg.update();
 
+
+# @@dropdown
 # ## Preliminary steps
+# @@
+# @@dropdown-content
 #
 # Let's generate a `DataFrame` with some dummy regression data, let's also load the good old ridge regressor.
 
@@ -25,7 +29,13 @@ first(X, 3) |> pretty
 
 test, train = partition(eachindex(y), 0.8);
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Defining a learning network
+# @@
+# @@dropdown-content
 #
 # In MLJ, a *learning network* is a directed acyclic graph (DAG) whose *nodes* apply trained or untrained operations such as a `predict` or `transform` (trained) or `+`, `vcat` etc. (untrained).
 # Learning networks can be seen as pipelines on steroids.
@@ -38,7 +48,11 @@ test, train = partition(eachindex(y), 0.8);
 #
 # **Note**: actually  this DAG is simple enough that it could also have been done with a pipeline.
 #
+
+# @@dropdown
 # ### Sources and nodes
+# @@
+# @@dropdown-content
 #
 # In MLJ a learning network starts at **source** nodes and flows through nodes (`X` and `y`) defining operations/transformations (`W`, `z`, `ẑ`, `ŷ`).
 # To define the source nodes, use the `source` function, you should specify whether it's a target:
@@ -82,7 +96,13 @@ fit!(ŷ, rows=train);
 
 rms(y[test], ŷ(rows=test))
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Modifying hyperparameters
+# @@
+# @@dropdown-content
 #
 # Hyperparameters can be accessed using the dot syntax as usual.
 # Let's modify the regularisation parameter of the ridge regression:
@@ -93,3 +113,9 @@ ridge_model.lambda = 5.0;
 
 fit!(ŷ, rows=train)
 rms(y[test], ŷ(rows=test))
+
+# ‎
+# @@
+
+# ‎
+# @@

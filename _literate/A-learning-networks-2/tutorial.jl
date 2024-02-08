@@ -3,7 +3,11 @@ Pkg.activate("_literate/A-learning-networks-2/Project.toml")
 Pkg.update()
 
 
+
+# @@dropdown
 # ## Preliminary steps
+# @@
+# @@dropdown-content
 #
 # Let's start as with the previous tutorial:
 
@@ -30,7 +34,13 @@ test, train = partition(eachindex(y), 0.8);
 #
 # Generating a model from a network allows subsequent composition of that network with other tasks and tuning of that network.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Using the `@from_network` macro
+# @@
+# @@dropdown-content
 #
 # Let's define a simple network
 #
@@ -91,7 +101,13 @@ res = evaluate!(cm, resampling=Holdout(fraction_train=0.8, rng=51),
                 measure=rms)
 round(res.measurement[1], sigdigits=3)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Defining a model from scratch
+# @@
+# @@dropdown-content
 #
 # An alternative to the `@from_network`, is to fully define a new model with its `fit` method:
 
@@ -120,3 +136,6 @@ res = evaluate!(cm, resampling=Holdout(fraction_train=0.8), measure=rms)
 round(res.measurement[1], sigdigits=3)
 
 # Either way you now have a constructor to a  model which can be used as a stand-alone object, tuned and composed as you would with any basic model.
+
+# ‎
+# @@

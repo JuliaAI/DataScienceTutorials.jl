@@ -5,11 +5,19 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 #
 # This tutorial is adapted from [the corresponding MLR3 tutorial](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/).
 #
+
+# @@dropdown
 # ### Loading and  preparing the data
+# @@
+# @@dropdown-content
 
 using MLJ
 using PrettyPrinting
@@ -63,7 +71,13 @@ df.price = df.price ./ 1000;
 
 select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Basic data visualisation
+# @@
+# @@dropdown-content
 #
 # Let's plot a basic histogram of the prices to get an idea for the distribution:
 
@@ -94,7 +108,16 @@ plt.savefig(joinpath(@OUTPUT, "hist_price2.svg")) # hide
 #
 # Likewise, this could be done to verify that `condition`, `waterfront` etc are important features.
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Fitting a first model
+# @@
+# @@dropdown-content
 
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
@@ -110,7 +133,11 @@ rms(y[test], MLJ.predict(tree, rows=test))
 
 # Let's try to do better.
 
+
+# @@dropdown
 # ### Random forest model
+# @@
+# @@dropdown-content
 
 # We might be able to improve upon the RMSE using more powerful learners.
 
@@ -134,7 +161,13 @@ cv3 = CV(; nfolds=3)
 res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
                measure=rms, verbosity=0)
 
+
+# ‎
+# @@
+# @@dropdown
 # ### GBM
+# @@
+# @@dropdown-content
 #
 # Let's try a different kind of model: Gradient Boosted Decision Trees from the package xgboost and we'll try to tune it too.
 
@@ -168,3 +201,9 @@ rms(y[test], MLJ.predict(mtm, rows=test))
 #
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@
+
+# ‎
+# @@

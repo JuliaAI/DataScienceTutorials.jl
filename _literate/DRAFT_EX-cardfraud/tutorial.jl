@@ -34,7 +34,11 @@ using Flux.Data
 
 # ***
 
+
+# @@dropdown
 # ## *Data Preparation*
+# @@
+# @@dropdown-content
 
 # Divide the sample into two equal sub-samples. Keep the proportion of frauds the same in each sub-sample (246 frauds in each).
 # Use one sub-sample to estimate (train) your models and the second one to evaluate the out-of-sample performance of each model.
@@ -96,7 +100,11 @@ Xtest_std = MLJModels.transform(std_m_fit, Xtest)
 # 2. support vector machines
 # 3. neural network.
 
+
+# @@dropdown
 # ### Logit
+# @@
+# @@dropdown-content
 
 # **Initial logit classification with lambda = 1.0**
 @load LogisticClassifier pkg=MLJLinearModels
@@ -125,7 +133,13 @@ yhat_logit = categorical(mode.(yhat_logit_p))
 
 # ***
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Tuned logit
+# @@
+# @@dropdown-content
 
 # Still LogisticClassifier but implementing hyperparameter tuning.
 
@@ -149,7 +163,13 @@ yhat_logit_tuned = categorical(mode.(yhat_logit_tuned_p))
 # Let's take a look at the misclassification_rate. It is, surprisingly, slightly higher than the one calculated for the non tuned model.
 @show misclassification_rate(yhat_logit_tuned, ytest_cat)
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Support Vector Machine
+# @@
+# @@dropdown-content
 
 # ***
 
@@ -204,7 +224,13 @@ yhat_svm_tuned = MLJBase.predict(self_tuning_svm, Xtest_std)
 
 #CSV.write("yhat_svm_tuned.csv", yhat_svm_tuned)
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Neural Network
+# @@
+# @@dropdown-content
 
 #oversample fraudulent cases (since data so imbalanced)
 X_train_oversampled = vcat(X_train,repeat(data_fraud[1:Int(nrow(data_fraud)/2),1:29], 100))
@@ -290,3 +316,9 @@ plot(prcurve(yhat_nn_p, y_test_int))
 
 
 #END
+
+# ‎
+# @@
+
+# ‎
+# @@

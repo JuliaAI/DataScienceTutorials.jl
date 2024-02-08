@@ -5,11 +5,21 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Introduction
+# @@
+# @@dropdown-content
 # This tutorial covers the concepts of iterative model selection on the popular ["Breast Cancer Wisconsin (Diagnostic) Data Set"](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic))
 # from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Loading the relevant packages
+# @@
+# @@dropdown-content
 # For a guide to package intsllation in Julia please refer this [link](https://docs.julialang.org/en/v1/stdlib/Pkg/) taken directly from Juliav1 documentation
 using UrlDownload
 using DataFrames
@@ -22,14 +32,30 @@ MLJ.color_off(); # hide
 # Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results
 RANDOM_SEED = 42;
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Downloading and loading the data
+# @@
+# @@dropdown-content
 # Using the package UrlDownload.jl, we can capture the data from the given link using the below commands
 url = "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data";
 feature_names = ["ID", "Class", "mean radius", "mean texture", "mean perimeter", "mean area", "mean smoothness", "mean compactness", "mean concavity", "mean concave points", "mean symmetry", "mean fractal dimension", "radius error", "texture error", "perimeter error", "area error", "smoothness error", "compactness error", "concavity error", "concave points error", "symmetry error", "fractal dimension error", "worst radius", "worst texture", "worst perimeter", "worst area", "worst smoothness", "worst compactness", "worst concavity", "worst concave points", "worst symmetry", "worst fractal dimension"]
 data = urldownload(url, true, format = :CSV, header = feature_names);
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Exploring the obtained data
+# @@
+# @@dropdown-content
+
+# @@dropdown
 # ### Inspecting the class variable
+# @@
+# @@dropdown-content
 figure(figsize=(8, 6))
 hist(data.Class)
 xlabel("Classes")
@@ -38,7 +64,13 @@ plt.savefig(joinpath(@OUTPUT, "Target_class.svg")); # hide
 
 # \figalt{Distribution of target classes}{Target_class.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Inspecting the feature set
+# @@
+# @@dropdown-content
 df = DataFrame(data)[:, 2:end];
 
 # Printing the 1st 10 rows so as to get a visual idea about the type of data we're dealing with
@@ -55,31 +87,68 @@ pprint(schema(df))
 # As the target variable is 'Textual' in nature, we'll have to change it to a more appropriate scientific type. Using the __coerce()__ method, let's change it to an OrderedFactor.
 coerce!(df, :Class => OrderedFactor{2});
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Unpacking the values
+# @@
+# @@dropdown-content
 # Now that our data is fully processed, we can separate the target variable 'y' from the feature set 'X' using the __unpack()__ method.
 y, X = unpack(df, ==(:Class),name->true, rng = RANDOM_SEED);
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Standardizing the "feature set"
+# @@
+# @@dropdown-content
 # Now that our feature set is separated from the target variable, we can use the __Standardizer()__ worklow to obtain to standadrize our feature set 'X'.
 transformer_instance = Standardizer()
 transformer_model = machine(transformer_instance, X)
 fit!(transformer_model)
 X = MLJ.transform(transformer_model, X);
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Train-test split
+# @@
+# @@dropdown-content
 # After feature scaling, our data is ready to put into a Machine Learning model for classification! Using 80% of data for training, we can perform a train-test split using the __partition()__ method.
 train, test = partition(eachindex(y), 0.8, shuffle=true, rng=RANDOM_SEED);
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Model compatibility
+# @@
+# @@dropdown-content
 # Now that we have separate training and testing set, let's see the models compatible with our data!
 for m in models(matching(X, y))
     println("Model name = ",m.name,", ","Prediction type = ",m.prediction_type,", ","Package name = ",m.package_name);
 end
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Analyzing the performance of different models
+# @@
+# @@dropdown-content
 # Thats a lot of models for our data! To narrow it down, lets analyze the performance of "probabilistic classifiers" from the "ScikitLearn" package.
 
+
+# @@dropdown
 # ### Creating various empty vectors for our analysis
+# @@
+# @@dropdown-content
 # - __model_names__ captures the names of the models being iterated
 # - __loss_acc captures__ the value of the model accuracy on the test set
 # - __loss_ce captures__ the values of the Cross-entropy loss on the test set
@@ -89,7 +158,13 @@ loss_acc=[];
 loss_ce=[];
 loss_f1=[];
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Collecting data for analysis
+# @@
+# @@dropdown-content
 figure(figsize=(8, 6))
 for m in models(matching(X, y))
     if m.prediction_type==Symbol("probabilistic") && m.package_name=="ScikitLearn" && m.name!="LogisticCVClassifier"
@@ -132,7 +207,13 @@ title("ROC curve")
 plt.savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Analyzing models
+# @@
+# @@dropdown-content
 # Let's collect the data in form a dataframe for a more precise analysis
 model_info=DataFrame(ModelName=model_names,Accuracy=loss_acc,CrossEntropyLoss=loss_ce,F1Score=loss_f1);
 # Now, let's sort the data on basis of the Cross-entropy loss
@@ -143,3 +224,9 @@ pprint(sort!(model_info,[:CrossEntropyLoss]));
 # # Conclusion
 # This article covered iterative feature selection on the Breast cancer classification dataset. In this tutorial, we only analyzed the __ScikitLearn__
 # models so as to keep the flow of the content precise, but the same workflow can be applied to any compatible model in the __MLJ__ family.
+
+# ‎
+# @@
+
+# ‎
+# @@

@@ -9,7 +9,11 @@ end
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
 #
+
+# @@dropdown
 # ## Tuning a single hyperparameter
+# @@
+# @@dropdown-content
 #
 # In MLJ, tuning is implemented as a model wrapper.
 # After wrapping a model in a _tuning strategy_ (e.g. cross-validation) and binding the wrapped model to data in a _machine_, fitting the machine initiates a search for optimal model hyperparameters.
@@ -23,7 +27,11 @@ MLJ.color_off() # hide
 X, y = @load_iris
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
 
+
+# @@dropdown
 # ### Specifying a range of value
+# @@
+# @@dropdown-content
 #
 # To specify a range of value, you can use the `range` function:
 
@@ -46,7 +54,13 @@ tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)
 
 # For more options do `?TunedModel`.
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Fitting and inspecting a tuned model
+# @@
+# @@dropdown-content
 #
 # To fit a tuned model, you can use the usual syntax:
 
@@ -89,7 +103,16 @@ savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
 
 # \figalt{hyperparameter heatmap}{A-model-tuning-hpt}
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Tuning nested hyperparameters
+# @@
+# @@dropdown-content
 
 # Let's generate simple dummy regression data
 
@@ -140,3 +163,6 @@ savefig(joinpath(@OUTPUT, "A-model-tuning-hm.svg")) # hide
 
 # \figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

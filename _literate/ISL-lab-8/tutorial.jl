@@ -6,7 +6,11 @@ macro OUTPUT()
 end;
 
 
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 import RDatasets: dataset
@@ -29,7 +33,11 @@ carseats[!, :High] = High;
 X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;
 
+
+# @@dropdown
 # ### Decision Tree Classifier
+# @@
+# @@dropdown-content
 
 HotTreeClf = OneHotEncoder() |> DTC()
 
@@ -53,7 +61,13 @@ misclassification_rate(ypred, y[test])
 
 # Not really...
 #
+
+# ‎
+# @@
+# @@dropdown
 # ### Tuning a DTC
+# @@
+# @@dropdown-content
 #
 # Let's try to do a bit of tuning
 
@@ -78,7 +92,13 @@ misclassification_rate(ypred, y[test])
 
 fitted_params(mtm).best_model.decision_tree_classifier
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Decision Tree Regressor
+# @@
+# @@dropdown-content
 #
 
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
@@ -122,7 +142,16 @@ fit!(mtm, rows=train)
 ypred = MLJ.predict(mtm, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Random Forest
+# @@
+# @@dropdown-content
 #
 # **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
@@ -135,7 +164,13 @@ fit!(rf, rows=train)
 ypred = MLJ.predict(rf, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Gradient Boosting Machine
+# @@
+# @@dropdown-content
 
 XGBR = @load XGBoostRegressor
 
@@ -147,3 +182,6 @@ ypred = MLJ.predict(xgb, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
 # Again we could do some tuning for this.
+
+# ‎
+# @@

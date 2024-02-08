@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Prelims
+# @@
+# @@dropdown-content
 #
 # This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
 #
@@ -36,7 +40,13 @@ e
 
 # Note that multiple measures can be reported simultaneously.
 
+
+# ‎
+# @@
+# @@dropdown
 # ## Random forest
+# @@
+# @@dropdown-content
 #
 # Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.
 
@@ -70,7 +80,11 @@ savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
 
 forest.n = 150;
 
+
+# @@dropdown
 # ### Tuning
+# @@
+# @@dropdown-content
 #
 # As `forest` is a composite model, it has nested hyperparameters:
 
@@ -94,7 +108,13 @@ e = evaluate!(m, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
 e
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Reporting
+# @@
+# @@dropdown-content
 # Again, you could show a 2D heatmap of the hyperparameters
 
 r = report(m)
@@ -125,3 +145,9 @@ ŷ = predict(m, X)
 @show rms(ŷ, y)
 
 PyPlot.close_figs() # hide
+
+# ‎
+# @@
+
+# ‎
+# @@

@@ -5,13 +5,21 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Initial data processing
+# @@
+# @@dropdown-content
 #
 # In this example, we consider the [UCI "wine" dataset](http://archive.ics.uci.edu/ml/datasets/wine)
 #
 # > These data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. The analysis determined the quantities of 13 constituents found in each of the three types of wines.
 #
+
+# @@dropdown
 # ### Getting the data
+# @@
+# @@dropdown-content
 #
 # Let's download the data thanks to the [UrlDownload.jl](https://github.com/Arkoniak/UrlDownload.jl) package and load it into a DataFrame:
 
@@ -41,7 +49,13 @@ describe(df)
 
 y, X = unpack(df, ==(:Class));
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Setting the scientific type
+# @@
+# @@dropdown-content
 #
 # Let's explore the scientific type attributed by default to the target and the features
 
@@ -83,7 +97,16 @@ describe(Xc, :mean, :std)
 #
 # **Note**: to complete such a first step, one could explore histograms of the various features for instance, check that there is enough variation among the continuous features and that there does not seem to be problems in the encoding, we cut this out to shorten the tutorial. We could also have checked that the data is balanced.
 #
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Getting a baseline
+# @@
+# @@dropdown-content
 #
 # It's a multiclass classification problem with continuous inputs so a sensible start is  to test two very simple classifiers to get a baseline.
 # We'll train two simple pipelines:
@@ -133,7 +156,13 @@ println(rpad("MNC mcr:", 10), round(mcr_m, sigdigits=3))
 # So here we have done no hyperparameter training and already have a misclassification rate below 5%.
 # Clearly the problem is not very difficult.
 #
+
+# ‎
+# @@
+# @@dropdown
 # ## Visualising the classes
+# @@
+# @@dropdown-content
 #
 # One way to get intuition for why the dataset is so easy to classify is to project it onto a 2D space using the PCA and display the two classes to see if they are well separated; we use the arrow-syntax here (if you're on Julia <= 1.2, use the commented-out lines as you won't be able to use the arrow-syntax)
 
@@ -179,3 +208,6 @@ println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
 # Pretty good for so little work!
 PyPlot.close_figs() # hide
+
+# ‎
+# @@

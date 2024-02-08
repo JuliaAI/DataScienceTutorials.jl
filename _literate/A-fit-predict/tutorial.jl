@@ -6,9 +6,17 @@ Pkg.update()
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl
 #
+
+# @@dropdown
 # ## Preliminary steps
+# @@
+# @@dropdown-content
 #
+
+# @@dropdown
 # ### Data
+# @@
+# @@dropdown-content
 #
 # As in "[choosing a model](/getting-started/choosing-a-model/)", let's load the Iris dataset and unpack it:
 
@@ -25,7 +33,13 @@ X, y = @load_iris;
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
 tree_model = DecisionTreeClassifier()
 
+
+# ‎
+# @@
+# @@dropdown
 # ### MLJ Machine
+# @@
+# @@dropdown-content
 #
 # In MLJ, remember that a *model* is an object that only serves as a container for the hyperparameters of the model.
 # A *machine* is an object wrapping both a model and data and can contain information on the *trained* model; it does *not* fit the model by itself.
@@ -36,11 +50,24 @@ tree = machine(tree_model, X, y)
 # A machine is used both for supervised and unsupervised model.
 # In this tutorial we give an example for the supervised model first and then go on with the unsupervised case.
 #
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Training and testing a supervised model
+# @@
+# @@dropdown-content
 #
 # Now that you've declared the model you'd like to consider and the data, we are left with the standard training and testing step for a supervised learning algorithm.
 #
+
+# @@dropdown
 # ### Splitting the data
+# @@
+# @@dropdown-content
 #
 # To split the data into a *training* and *testing* set, you can use the function `partition` to obtain indices for data points that should be considered either as training or testing data:
 
@@ -48,7 +75,13 @@ rng = StableRNG(566)
 train, test = partition(eachindex(y), 0.7, shuffle=true, rng=rng)
 test[1:3]
 
+
+# ‎
+# @@
+# @@dropdown
 # ### Fitting and testing the machine
+# @@
+# @@dropdown-content
 #
 # To fit the machine, you can use the function `fit!` specifying the rows to be used for the training:
 
@@ -78,7 +111,16 @@ ȳ = predict_mode(tree, rows=test)
 mce = cross_entropy(ŷ, y[test]) |> mean
 round(mce, digits=4)
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Unsupervised models
+# @@
+# @@dropdown-content
 #
 # Unsupervised models define a `transform` method,
 # and may optionally implement an `inverse_transform` method.
@@ -100,3 +142,6 @@ w = transform(stand, v)
 
 vv = inverse_transform(stand, w)
 sum(abs.(vv .- v))
+
+# ‎
+# @@

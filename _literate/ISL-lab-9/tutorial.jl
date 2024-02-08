@@ -5,7 +5,11 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 import RDatasets: dataset
@@ -57,7 +61,11 @@ misclassification_rate(ypred, y)
 
 
 
+
+# @@dropdown
 # ### Basic tuning
+# @@
+# @@dropdown-content
 
 # As usual we could tune the model, for instance the penalty encoding the tradeoff between margin width and misclassification:
 
@@ -73,3 +81,9 @@ misclassification_rate(ypred, y)
 
 # You could also change the kernel etc.
 PyPlot.close_figs() # hide
+
+# ‎
+# @@
+
+# ‎
+# @@
