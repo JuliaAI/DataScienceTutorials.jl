@@ -1,19 +1,27 @@
 /* Geometry adjustments */
 .franklin-content{
-    margin-top: 5em;
-    padding-left:10%;}
+    margin-top: 2em;
+    padding-left:10%;
+}
 
 @media (min-width: 1050px) {
     .franklin-content {
         width: 80%;
-        margin-left: 0px;
-        padding-left: 80px;
+        margin: auto;
+        //margin-left: 0px;
+        margin: auto;
+        //padding-left: 80px;
     }
     .header {
         width: 80%;
         text-align: left;
-        padding-left: 0px;
-        margin-left: 80px;
+        margin: auto;
+        //padding-left: 0px;
+        margin: auto;
+        //margin-left: 80px;
+    }
+    .header h1 {
+        font-weight: 600 !important;
     }
 }
 /* MENU adjustments */

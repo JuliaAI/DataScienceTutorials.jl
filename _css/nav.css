@@ -8,6 +8,7 @@
      left: 0;
      right: 0;
      z-index: 99;
+	 width: 100%;
 }
  .brand {
 	 position: absolute;
@@ -52,7 +53,7 @@
 
 
  nav ul li a:hover, nav ul li a:visited:hover {
-	 background: MediumPurple;
+	 background: #9b59b6;
      color: #fff;
 }
  nav ul li a:not(:only-child):after, nav ul li a:visited:not(:only-child):after {

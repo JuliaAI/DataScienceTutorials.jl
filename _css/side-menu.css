@@ -1,6 +1,7 @@
 body {
     background: #fff;
     color: #363636;
+    overflow-x: hidden;
 }
 
 .header h2 {
