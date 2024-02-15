@@ -7,9 +7,14 @@
     .franklin-content {
         width: 80%;
         margin-left: 0px;
-        padding-left: 80px;}
+        padding-left: 80px;
+    }
     .header {
-        width: 760px;}
+        width: 80%;
+        text-align: left;
+        padding-left: 0px;
+        margin-left: 80px;
+    }
 }
 /* MENU adjustments */
 
