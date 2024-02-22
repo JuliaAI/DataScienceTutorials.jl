@@ -21,6 +21,12 @@
     display: flex;
     gap: 1rem;
 }
+/* smaller tab on smaller screens*/
+@media only screen and (max-width: 1030px) {
+    .get-started-tab-container {
+        gap: 0.5rem;
+    }
+}
 .get-started-tab {
     background-color: #f0f0f099;
     font-weight: 600;
@@ -33,6 +39,14 @@
     transition: background-color 0.3s, color 0.3s, transform 0.4s;
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2); 
 }
+/* smaller tab on smaller screens*/
+@media only screen and (max-width: 1030px) {
+    .get-started-tab {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+    }
+}
+
 .selected {
     background-color: #d1d1d166;
 }
@@ -49,6 +63,11 @@
     box-shadow: none 0 0 0 rgba(0, 0, 0, 0.2); 
     transition: display 0.3s;
     margin-bottom: 2rem;
+}
+@media only screen and (max-width: 630px) {
+    .tab-content {
+        border-radius: 0px 0px 25px 25px;
+    }
 }
 
 .selected-content {

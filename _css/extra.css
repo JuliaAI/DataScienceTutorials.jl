@@ -24,6 +24,11 @@
         font-weight: 600 !important;
     }
 }
+@media (max-width: 1050px) {
+    .header h1 {
+        font-size: 2.5em;
+    }
+}
 /* MENU adjustments */
 
 #menu-logo-link { text-decoration: none;}
@@ -178,7 +183,7 @@ h3 {
 /* decrease width of search box upon resize */
 @media only screen and (min-width: 1030px) and (max-width: 1200px) {
     #lunrSearchForm .search-input {
-        max-width: 50px;
+        max-width: 80px;
         margin-right: 1rem;
     }
 }
