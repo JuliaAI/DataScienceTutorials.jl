@@ -18,6 +18,12 @@
 	 font-weight: 600;
 	 font-size: 1.2em;
 }
+/* hide if screen size is from 900 to 1000 */
+@media screen and (max-width: 1200px) {
+    .brand {
+        display: none;
+    }
+}
  .brand a, .brand a:visited {
     color: #363636;
     text-decoration: none;

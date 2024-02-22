@@ -173,4 +173,26 @@ h3 {
     border: 1px solid #ced4da;
     outline: none;
     margin-bottom: 0.8rem;
+    max-width:180px;
+}
+/* decrease width of search box upon resize */
+@media only screen and (min-width: 1030px) and (max-width: 1200px) {
+    #lunrSearchForm .search-input {
+        max-width: 50px;
+        margin-right: 1rem;
+    }
+}
+@media only screen and (min-width: 1100px) and (max-width: 1200px) {
+    #lunrSearchForm .search-input {
+        max-width: 130px;
+        margin-right: 1rem;
+    }
+}
+
+/* increase width of search box upon when sidebar is back */
+@media only screen and @media screen (max-width: 1030px) {
+    #lunrSearchForm .search-input {
+        max-width: 80px;
+        margin-right: 1rem;
+    }
 }
