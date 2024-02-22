@@ -2,4 +2,12 @@
 test/*.svg
 /*.svg
 node_modules/
-package-lock.json
+__site/*
+
+*.toml
+*.dist
+*.cnf
+*.pem
+.CondaPkg
+*.toml
+_literate/A-composing-models/Manifest.toml
