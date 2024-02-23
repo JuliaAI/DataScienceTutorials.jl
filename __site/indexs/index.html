@@ -1,0 +1,109 @@
+<h1>Data Science Tutorials in Julia</h1>
+<h2 id="learning-by-doing">Learning by doing</h2>
+<p>This website offers tutorials for <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">MLJ.jl</a> and related packages. </p>
+<p>The code included on each tutorial is tested to work reliably
+under these two conditions:</p>
+<ul>
+<li><p>You are running Julia 1.7.x where &quot;x&quot; is any integer (to check, enter
+<code>VERSION</code> at the REPL).</p>
+</li>
+<li><p>You have activated and instantiated the associated <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">package
+environment</a>.</p>
+</li>
+</ul>
+<p>To make the tutorial-specific environment available to you, first download (and
+decompress) the &quot;project folder&quot; that is linked near the top of the
+tutorial. How you proceed next depends on your chosen mode of interaction:</p>
+<h3 id="pasting-code-copied-from-web-page-directly-into-the-julia-repl">Pasting code copied from web page directly into the Julia REPL</h3>
+<p>Recommended for new Julia users.</p>
+<p>Activate and instantiate the correct environment by entering this code
+at the <code>julia&gt;</code> prompt:</p>
+<pre><code class="lang-julia"><span class="hljs-built_in">using</span> Pkg; Pkg.activate(<span class="hljs-string">"Path/To/Project/Folder"</span>); Pkg.<span class="hljs-built_in">instantiate</span>()
+</code></pre>
+<p>You need to replace <code>&quot;Path/To/Project/Folder&quot;</code> with the actual path to
+the downloaded project folder.  This can be just <code>&quot;.&quot;</code> if Julia has been
+launched from the command-line, with the project folder as the current
+directory.</p>
+<p>This might take a few minutes for some tutorials, as packages may need
+to be installed and precompiled.</p>
+<h3 id="running-the-provided-juptyer-notebook">Running the provided Juptyer notebook</h3>
+<p>The downloaded project folder contains a Juptyer notebook called
+<code>tutorial.ipynb</code>. See the <a href="https://julialang.github.io/IJulia.jl/stable/manual/running/">IJulia
+documentation</a>
+on how to launch it. Copy and execute the code fragment above in a new
+notebook cell before evaluating any other cells.</p>
+<h3 id="running-the-provided-julia-script-line-by-line-from-an-ide">Running the provided Julia script line-by-line from an IDE</h3>
+<p>In your IDE (e.g., VS Code or emacs) open the file called
+<code>tutorial.jl</code> in the downloaded project folder and
+activate/instantiate by first running the code fragment given above.</p>
+<h2 id="having-problems-">Having problems?</h2>
+<p>Please report issues
+<a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues">here</a>. For
+beginners, the most common issues arise because the Julia version is
+incorrect, or because of an incorrect package environment. So be sure
+you have tried the instructions above before raising an issue.</p>
+<p>If you need to use an earlier version of Julia, you can try deleting
+the <code>Manifest.toml</code> file contained in the project folder and running
+<code>using Pkg; Pkg.instantiate()</code> to generate a new package environment,
+but the exact package versions will be different from those used to
+test the tutorial and generate the output seen on the tutorial web
+page.</p>
+<h2 id="elementary-data-manipulations">Elementary data manipulations</h2>
+<p>If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on.
+In these we provide an introduction to some of the fundamental packages in the Julia data processing universe such as <a href="https://github.com/JuliaData/DataFrames.jl">DataFrames</a>, <a href="https://github.com/JuliaData/CSV.jl">CSV</a> and <a href="https://github.com/JuliaData/CategoricalArrays.jl">CategoricalArrays</a>.</p>
+<ul>
+<li>How to <a href="/data/loading/">load data</a>,</li>
+<li>Short intro to <a href="/data/dataframe/">dataframes</a>,</li>
+<li>Dealing with <a href="/data/categorical/">categorical data</a></li>
+<li>Specifying <a href="/data/scitype/">data interpretation</a></li>
+</ul>
+<h2 id="getting-started-with-mlj">Getting started with MLJ</h2>
+<p>If you are new to MLJ but are familiar with Julia and with Machine Learning, we recommend you start by going through the short <em>Getting started</em> examples in order:</p>
+<ol>
+<li>How to <a href="/getting-started/choosing-a-model/">choose a model</a>,</li>
+<li>How to <a href="/getting-started/fit-and-predict/">fit, predict and transform</a></li>
+<li>How to <a href="/getting-started/model-tuning/">tune models</a></li>
+<li>How to <a href="/getting-started/ensembles/">ensemble models</a></li>
+<li>How to <a href="/getting-started/ensembles-2/">ensemble models (2)</a></li>
+<li>More on <a href="/getting-started/ensembles-3/">ensembles</a></li>
+<li>How to <a href="/getting-started/composing-models/">compose models</a></li>
+<li>How to build a <a href="/getting-started/learning-networks/">learning network</a></li>
+<li>How to <a href="/getting-started/learning-networks-2/">create models</a> from learning networks</li>
+<li>An extended tutorial on <a href="/getting-started/stacking/">stacking</a></li>
+</ol>
+<p>Additionally, you can refer to the <a href="https://alan-turing-institute.github.io/MLJ.jl/stable/">documentation</a> for more detailed information.</p>
+<h2 id="introduction-to-statistical-learning-with-mlj">Introduction to Statistical Learning with MLJ</h2>
+<p>This is a sequence of tutorials adapted from the labs associated with <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/code.html"><em>An introduction to statistical learning</em></a> which were originally written in R.
+These tutorials may be useful if you want a gentle intro to MLJ <strong>and</strong> other relevant tools in the Julia environment.
+If you&#39;re fairly new to Julia and ML, this is probably where you should start.</p>
+<p><strong>Note</strong>: the adaptation is fairly liberal, adding content when it helps highlights specificities with MLJ and removing content when it seems unnecessary.
+Also note that some of the things used in the ISL labs are not (yet) supported by MLJ.</p>
+<ul>
+<li><a href="/isl/lab-2/">Lab 2</a>, a very short intro to Julia for data analysis</li>
+<li><a href="/isl/lab-3/">Lab 3</a>, linear regression and metrics</li>
+<li><a href="/isl/lab-4/">Lab 4</a>, classification with LDA, QDA, KNN and metrics</li>
+<li><a href="/isl/lab-5/">Lab 5</a>, k-folds cross validation</li>
+<li><a href="/isl/lab-6b/">Lab 6b</a>, Ridge and Lasso regression</li>
+<li><a href="/isl/lab-8/">Lab 8</a>, Tree-based models</li>
+<li><a href="/isl/lab-9/">Lab 9</a>, SVM (<em>partial</em>)</li>
+<li><a href="/isl/lab-10/">Lab 10</a>, PCA and clustering (<em>partial</em>)</li>
+</ul>
+<h2 id="end-to-end-examples-with-mlj">End to end examples with MLJ</h2>
+<p>These are examples that are meant to show how MLJ can be used from loading data to producing a model.
+They assume familiarity with Machine Learning and MLJ.</p>
+<p>Note that these tutorials are not meant to teach you ML or Data Science; there may be better ways to analyse the data, the primary aim is to show quick analysis so that you can get more familiar with using MLJ.</p>
+<p>The examples can be followed in any order, the tags can guide you as to which tutorials you may want to look at first.</p>
+<ul>
+<li><a href="/end-to-end/telco/">Telco Churn (MLJ for Data Scientists in Two Hours)</a>, <em>intermediate</em>, <em>classification</em>, <em>one-hot</em>, <em>ROC curves</em>, <em>confusion matrices</em>, <em>feature importance</em>, <em>feature selection</em>, <em>controlling iteration</em>, <em>tree booster</em>, <em>hyper-parameter optimization (tuning)</em>.</li>
+<li><a href="/end-to-end/AMES/">AMES</a>, <em>simple</em>, <em>regression</em>, <em>one-hot</em>, <em>learning network</em>, <em>tuning</em>, <em>deterministic</em></li>
+<li><a href="/end-to-end/wine/">Wine</a>, <em>simple</em>, <em>classification</em>, <em>standardizer</em>, <em>PCA</em>, <em>knn</em>, <em>multinomial</em>, <em>pipeline</em></li>
+<li><a href="/end-to-end/crabs-xgb/">Crabs XGB</a>, <em>simple</em>, <em>classification</em>, <em>xg-boost</em>, <em>tuning</em></li>
+<li><a href="/end-to-end/horse/">Horse</a>, <em>simple</em>, <em>classification</em>, <em>scientific type</em> and <em>autotype</em>, <em>missing values</em>, <em>imputation</em>, <em>one-hot</em>, <em>tuning</em></li>
+<li><a href="/end-to-end/HouseKingCounty/">King County Houses</a>, <em>simple</em>, <em>regression</em>, <em>scientific type</em>, <em>tuning</em>, <em>xg-boost</em></li>
+<li><a href="/end-to-end/airfoil/">Airfoil</a>, <em>simple</em>, <em>regression</em>, <em>random forest</em></li>
+<li><a href="/end-to-end/boston-lgbm/">Boston LGBM</a>, <em>intermediate</em>, <em>regression</em>, <em>LightGBM</em></li>
+<li><a href="/end-to-end/boston-flux/">Boston Flux</a>, <em>intermediate</em>, <em>regression</em>, <em>Flux</em>, <em>Neural Network</em></li>
+<li><a href="/end-to-end/glm/">Using GLM.jl</a>, <em>simple</em>, <em>regression</em></li>
+<li><a href="/end-to-end/powergen/">Power Generation</a>, <em>simple</em>, <em>feature pre-processing</em>, <em>regression</em>, <em>temporal data</em></li>
+<li><a href="/end-to-end/breastcancer/">Breast cancer</a>, <em>simple</em>, <em>model comparisons</em>, <em>binary classification</em></li>
+</ul>
