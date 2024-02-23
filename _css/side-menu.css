@@ -59,12 +59,29 @@ The content `<div>` is where all your content goes.
      text-align: center;
      padding: 2.5em 2em 0;
      border-bottom: 1px solid #eee;
+     position: relative;
  }
     .header h1 {
         margin: 0.2em 0;
         font-size: 3em;
         font-weight: 300;
     }
+    .header h1::before {
+        content: url('https://seeklogo.com/images/J/julia-logo-DC9698BAF9-seeklogo.com.png');
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 2.8rem;
+        margin-left: -3rem;
+        transform: scale(0.19);
+        width: 120px;
+        height: 40px;
+      }
+      /* media queries for header */
+      @media only screen and (max-width: 800px) {
+        .header h1::before {
+         display: none;
+        }
+      }
      .header h2 {
         font-weight: 300;
         color: #ccc;
