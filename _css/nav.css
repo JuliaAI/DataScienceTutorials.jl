@@ -84,6 +84,10 @@ nav ul li a:visited:hover {
   background: #9b59b6;
   color: #fff;
 }
+#home:hover {
+  background-color: #9b59b6;
+  color: white !important;
+}
 nav ul li a:not(:only-child):after,
 nav ul li a:visited:not(:only-child):after {
   padding-left: 4px;
