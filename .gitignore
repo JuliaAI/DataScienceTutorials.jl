@@ -1,3 +1,4 @@
+.DS_Store
 test/*.svg
 /*.svg
 node_modules/
