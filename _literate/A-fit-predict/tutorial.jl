@@ -108,7 +108,7 @@ ȳ = predict_mode(tree, rows=test)
 
 # To measure the discrepancy between `ŷ` and `y` you could use the average cross entropy:
 
-mce = cross_entropy(ŷ, y[test]) |> mean
+mce = cross_entropy(ŷ, y[test]) 
 round(mce, digits=4)
 
 
