@@ -22,8 +22,6 @@ end;
 # @@dropdown-content
 
 using MLJ
-using PyPlot
-ioff() # hide
 import Statistics
 
 # Defining the learning network (composite model spec):
@@ -74,15 +72,15 @@ r = range(atom,
 
 mach = machine(atom, X, y)
 
-figure()
-curve = learning_curve!(mach,
+curve = learning_curve(mach,
                         range=r,
                         measure=mav,
                         resampling=CV(nfolds=9),
                         verbosity=0)
 
+using Plots
 plot(curve.parameter_values, curve.measurements)
-xlabel(curve.parameter_name)
+xlabel!(curve.parameter_name)
 
 savefig(joinpath(@OUTPUT, "e1.svg")) # hide
 
@@ -97,22 +95,19 @@ r = range(one_hundred_models,
 
 mach = machine(one_hundred_models, X, y)
 
-figure()
-curve = learning_curve!(mach,
+curve = learning_curve(mach,
                         range=r,
                         measure=mav,
                         resampling=CV(nfolds=9),
                         verbosity=0)
 plot(curve.parameter_values, curve.measurements)
-xlabel(curve.parameter_name)
+xlabel!(curve.parameter_name)
 
 savefig(joinpath(@OUTPUT, "e2.svg")) # hide
 
 # \fig{e2}
 
 #-
-
-PyPlot.close_figs() # hide
 
 # ‎
 # @@
