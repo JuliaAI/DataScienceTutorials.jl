@@ -67,8 +67,6 @@ end;
 # hyperparameters of the composite model.
 
 using MLJ
-using PyPlot
-ioff() # hide
 MLJ.color_off() # hide
 using StableRNGs
 
@@ -196,7 +194,6 @@ corestrict(string.(1:10), f, 2)
 # @@
 # @@dropdown-content
 
-figure(figsize=(8,6))
 steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
 x = Float64[-4, -1, 2, -3, 0, 3, -2, 1, 4]
 Xraw = (x = x, )
@@ -204,10 +201,8 @@ yraw = steps.(x);
 idxsort = sortperm(x)
 xsort = x[idxsort]
 ysort = yraw[idxsort]
-step(xsort, ysort, label="truth", where="mid")
-plot(x, yraw, ls="none", marker="o", label="data")
-xlim(-4.5, 4.5)
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(x, yraw, seriestype=:scatter, markershape=:circle, label="data", xlim=(-4.5, 4.5))
 
 savefig(joinpath(@OUTPUT, "s1.svg")) # hide
 
@@ -292,10 +287,9 @@ y1_oos = vcat(y11, y12, y13);
 
 fit!(y1_oos, verbosity=0)
 
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(x, y1_oos(), seriestype=:scatter, markershape=:circle, label="linear oos", xlim=(-4.5, 4.5))
+
 
 savefig(joinpath(@OUTPUT, "s2.svg")) # hide
 
@@ -315,10 +309,9 @@ y23 = predict(m23, restrict(X, f, 3));
 y2_oos = vcat(y21, y22, y23);
 fit!(y2_oos, verbosity=0)
 
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(x, y2_oos(), seriestype=:scatter, markershape=:circle, label="knn oos", xlim=(-4.5, 4.5))
+
 
 savefig(joinpath(@OUTPUT, "s3.svg")) # hide
 
@@ -361,10 +354,9 @@ yhat = predict(m_judge, X_judge)
 # Let's check the final prediction node can be fit and called:
 fit!(yhat, verbosity=0)
 
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, yhat(), ls="none", marker="o", label="yhat")
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(x, yhat(), seriestype=:scatter, markershape=:circle, label="yhat", xlim=(-4.5, 4.5))
+
 
 savefig(joinpath(@OUTPUT, "s4.svg")) # hide
 
