@@ -21,8 +21,6 @@ end;
 import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
-using PyPlot
-ioff() # hide
 
 # Import data
 
@@ -87,10 +85,9 @@ cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_
 # Before plotting, we can also sort values by decreasing order using `sort!()`.
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
-figure(figsize=(8,6))
+using Plots
 
-plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
-plt.xticks(rotation=90)
+Plots.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend=false)
 
 savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
 
@@ -117,7 +114,6 @@ cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw
 # First, the commissioning_year is not reported for all plants.
 # We need to gauge the representativity of the plants for which it is available with regard to the full dataset.
 # One way to count the missing values is
-
 nMissings = length(findall(x -> ismissing(x), data.commissioning_year))
 
 # This represents about half of our observations
@@ -150,16 +146,11 @@ median_age = median(skipmissing(data_nmiss.plant_age))
 
 # And bring this into a frequency plot of the plant age observations
 
-figure(figsize=(8,6))
+histogram(data_nmiss.plant_age, color="blue",  bins=100, label="Plant Age Frequency",
+          normalize=:pdf, alpha=0.5, xlim=(0,130))
+vline!([mean_age], linewidth=2, color="red", label="Mean Age")
+vline!([median_age], linewidth=2, color="orange", label="Median Age")
 
-plt.hist(data_nmiss.plant_age, color="blue", edgecolor="white", bins=100,
-      density=true, alpha=0.5)
-plt.axvline(mean_age, label = "Mean", color = "red")
-plt.axvline(median_age, label = "Median")
-
-plt.legend()
-
-plt.xlim(0,)
 
 savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
 
@@ -174,19 +165,14 @@ age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 coal_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Coal", age_mean.primary_fuel), :]
 gas_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Gas", age_mean.primary_fuel), :]
 
-width = 0.35  # the width of the bars
 
-fig, (ax1, ax2) = plt.subplots(1,2)
+# fig.suptitle("Mean plant age by country and technology")
 
-fig.suptitle("Mean plant age by country and technology")
+p1 = Plots.bar(coal_means.country, coal_means.plant_age_mean, ylabel="Age", title="Coal")
+p2 = Plots.bar(gas_means.country, gas_means.plant_age_mean, title="Gas")
 
-ax1.bar(coal_means.country, coal_means.plant_age_mean, width, label="Coal")
-ax2.bar(gas_means.country, gas_means.plant_age_mean, width, label="Gas")
+plot(p1, p2, layout=(1, 2), size=(900,600), plot_title="Mean plant age by country and technology")
 
-ax1.set_ylabel("Age")
-
-ax1.set_title("Coal")
-ax2.set_title("Gas")
 
 savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
 
