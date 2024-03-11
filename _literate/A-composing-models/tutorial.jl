@@ -5,7 +5,6 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
-
 # @@dropdown
 # ## Generating dummy data
 # @@
@@ -50,7 +49,7 @@ pipe = Pipeline(
     one_hot_encoder = OneHotEncoder(),
     transformed_target_model = TransformedTargetModel(
         model = KNNRegressor(K=3);
-        target=UnivariateStandardizer()
+        transformer=UnivariateStandardizer()
     )
 )
 
