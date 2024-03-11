@@ -19,7 +19,6 @@ import DataFrames: DataFrame
 import Statistics
 import Flux
 using Random
-using PyPlot
 
 MLJ.color_off() # hide
 Random.seed!(11)
@@ -134,14 +133,13 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
-figure(figsize=(8,6))
+using Plots
 
-plt.plot(curve.parameter_values,
-    curve.measurements)
+plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 
-yscale("log")
-xlabel(curve.parameter_name)
-ylabel("l2")
+#yscale("log")
+xlabel!(curve.parameter_name)
+ylabel!("l2-log")
 
 savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
 
