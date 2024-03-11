@@ -38,7 +38,7 @@ knn = machine(knn_model, X, y)
 # and fit it
 
 fit!(knn, rows=train)
-ŷ = predict(knn, X[test, :]) # or use rows=test
+ŷ = MLJ.predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
 # The few steps above are equivalent to just calling `evaluate!`:
@@ -130,21 +130,11 @@ best_ensemble = fitted_params(tuned_ensemble).best_model
 
 r = report(tuned_ensemble);
 
-# For instance, `r.measurements` are the measurements for all pairs of hyperparameters which you could visualise nicely:
+# We can as well plot the grid search results as follows:
 
-using PyPlot
+using Plots
 
-figure(figsize=(8,6))
-
-res = r.plotting
-vals_b = res.parameter_values[:, 1]
-vals_k = res.parameter_values[:, 2]
-
-tricontourf(vals_b, vals_k, res.measurements)
-xticks(0.5:0.1:1, fontsize=12)
-xlabel("Bagging fraction", fontsize=14)
-yticks([1, 5, 10, 15, 20], fontsize=12)
-ylabel("Number of neighbors - K", fontsize=14)
+plot(tuned_ensemble)
 
 savefig(joinpath(@OUTPUT, "A-ensembles-heatmap.svg")) # hide
 
@@ -156,7 +146,6 @@ ŷ = predict(tuned_ensemble, rows=test)
 @show rms(ŷ, y[test])
 
 
-PyPlot.close_figs() # hide
 
 # ‎
 # @@
