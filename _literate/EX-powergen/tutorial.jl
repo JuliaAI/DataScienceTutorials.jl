@@ -17,8 +17,6 @@ end;
 
 using MLJ
 using UrlDownload
-using PyPlot
-ioff() # hide
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 
@@ -141,13 +139,9 @@ schema(data)
 
 # To get a better understanding of our targets, let's plot their respective distributions.
 
-figure(figsize=(8, 6))
-hist(data.Solar_gen, color="blue", edgecolor="white", bins=100,
-     density=true, alpha=0.5)
-xlabel("Solar power generation (MWh)", fontsize=14)
-ylabel("Frequency", fontsize=14)
-xticks(fontsize=12)
-yticks([0, 1e-3, 2e-3], fontsize=12)
+histogram(data.Solar_gen, color="blue", bins=100, normalize=:pdf, alpha=0.5, yticks=[0, 1e-3, 2e-3])
+xlabel!("Solar power generation (MWh)")
+ylabel!("Frequency")
 savefig(joinpath(@OUTPUT, "hist_solar.svg")) # hide
 
 # \figalt{Histogram of the solar power generated}{hist_solar.svg}
@@ -155,11 +149,9 @@ savefig(joinpath(@OUTPUT, "hist_solar.svg")) # hide
 # As one might expect, the sun doesn't always shine (and certainly not at night), hence there is a very high proportion of observations whose value is equal or close to 0.
 # The distribution of wind power generation looks markedly different
 
-figure(figsize=(8, 6))
-hist(data.Wind_gen, color="blue", edgecolor = "white", bins=50,
-     density=true, alpha=0.5)
-xlabel("Wind power generation (MWh)", fontsize=14)
-ylabel("Frequency", fontsize=14)
+histogram(data.Wind_gen, color="blue",  bins=50, normalize=:pdf, alpha=0.5)
+xlabel!("Wind power generation (MWh)")
+ylabel!("Frequency")
 
 savefig(joinpath(@OUTPUT, "hist_wind.svg")) # hide
 
@@ -168,27 +160,16 @@ savefig(joinpath(@OUTPUT, "hist_wind.svg")) # hide
 # Finally, before fitting the estimator, we might want to gauge what to expect from them by looking at scatter plots.
 # Let's look at solar power first.
 
-fig = figure(figsize=(15, 15))
 
-subplot(221)
-scatter(data.Solar_gen, data.Radiation_dir)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p1 = scatter(data.Solar_gen, data.Radiation_dir, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Solar radiation - directional")
 
-subplot(222)
-scatter(data.Solar_gen, data.Radiation_dif)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p2 = scatter(data.Solar_gen, data.Radiation_dif, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Solar radiation - diffuse")
 
-subplot(223)
-scatter(data.Solar_gen, data.Windspeed)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p3 = scatter(data.Solar_gen, data.Windspeed, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Wind speed (m/s)")
 
-subplot(224)
-scatter(data.Solar_gen, data.Temperature)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+p4 = scatter(data.Solar_gen, data.Temperature, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Temperature (C)")
+
+plot!(p1, p2, p3, p4, layout=(2,2), size=(1000,1000))
 
 savefig(joinpath(@OUTPUT, "solar_scatter.png"), bbox_inches="tight") # hide
 
@@ -196,29 +177,18 @@ savefig(joinpath(@OUTPUT, "solar_scatter.png"), bbox_inches="tight") # hide
 
 # Then at wind generation
 
-fig = figure(figsize=(15, 15))
+p1 = scatter(data.Wind_gen, data.Radiation_dir, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Solar radiation - directional")
 
-subplot(221)
-scatter(data.Wind_gen, data.Radiation_dir)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p2 = scatter(data.Wind_gen, data.Radiation_dif, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Solar radiation - diffuse")
 
-subplot(222)
-scatter(data.Wind_gen, data.Radiation_dif)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p3 = scatter(data.Wind_gen, data.Windspeed, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Wind speed (m/s)")
 
-subplot(223)
-scatter(data.Wind_gen, data.Windspeed)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p4 = scatter(data.Wind_gen, data.Temperature, size=(150,150), legend=false, xlabel="Solar power (kW)", ylabel="Temperature (C)")
 
-subplot(224)
-scatter(data.Wind_gen, data.Temperature)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+plot!(p1, p2, p3, p4, layout=(2,2), size=(1000,1000))
 
-savefig(joinpath(@OUTPUT, "wind_scatter.png"), bbox_inches="tight") # hide
+
+savefig(joinpath(@OUTPUT, "wind_scatter.png")) # hide
 
 # @@img-wide \figalt{Wind power scatter plots}{wind_scatter.png} @@
 
@@ -261,15 +231,10 @@ y_hat = MLJ.predict(m_linReg, rows=test);
 
 # We can start by visualising the observed and predicted valzes of wind power generation.
 
-figure(figsize=(8, 6))
-plot(y_hat, color="blue", label="Predicted")
-plot(y_wind[test], color="red", label="Observed")
-xlabel("Time", fontsize=14)
-ylabel("Power generation", fontsize=14)
-xticks([])
-yticks(fontsize=12)
-xlim(0, 100)
-legend(fontsize=14)
+plot(y_hat, color="blue", label="Predicted", xlim=(0,100), xticks=[])
+plot!(y_wind[test], color="red", label="Observed")
+xlabel!("Time")
+ylabel!("Power generation")
 
 savefig(joinpath(@OUTPUT, "obs_v_pred.svg")) # hide
 
@@ -289,9 +254,8 @@ res = y_hat .- y_wind[test];
 
 # Let's look at the stem plot of the residuals to check if there's any structure we might not have picked up:
 
-figure(figsize=(12, 6))
-stem(res)
-xlim(0, length(res))
+plot(res, line=:stem, marker=:circle, xlim=(0, length(res)))
+hline!([0], color="red", linewidth=3)
 
 savefig(joinpath(@OUTPUT, "residuals.png")) # hide
 
@@ -299,9 +263,7 @@ savefig(joinpath(@OUTPUT, "residuals.png")) # hide
 
 # Nothing really stands out, the distribution also looks ok:
 
-figure(figsize=(8, 6))
-hist(res, color="blue", edgecolor="white", bins=50,
-     density=true, alpha=0.5)
+histogram(res, color="blue",  bins=50, normalize=:pdf, alpha=0.5, legend=false)
 
 savefig(joinpath(@OUTPUT, "hist_residuals.svg")) # hide
 
