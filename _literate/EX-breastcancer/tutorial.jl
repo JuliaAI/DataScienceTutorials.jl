@@ -24,9 +24,7 @@ end;
 using UrlDownload
 using DataFrames
 using PrettyPrinting
-using PyPlot
 using MLJ
-ioff() # hide
 MLJ.color_off(); # hide
 
 # Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results
@@ -56,11 +54,12 @@ data = urldownload(url, true, format = :CSV, header = feature_names);
 # ### Inspecting the class variable
 # @@
 # @@dropdown-content
-figure(figsize=(8, 6))
-hist(data.Class)
-xlabel("Classes")
-ylabel("Number of samples")
-plt.savefig(joinpath(@OUTPUT, "Target_class.svg")); # hide
+using Plots
+
+Plots.bar(countmap(data.Class), legend=false,)
+xlabel!("Classes")
+ylabel!("Number of samples")
+savefig(joinpath(@OUTPUT, "Target_class.svg")); # hide
 
 # \figalt{Distribution of target classes}{Target_class.svg}
 
@@ -165,9 +164,10 @@ loss_f1=[];
 # ### Collecting data for analysis
 # @@
 # @@dropdown-content
-figure(figsize=(8, 6))
+
+p = plot(legendfontsize=7)
 for m in models(matching(X, y))
-    if m.prediction_type==Symbol("probabilistic") && m.package_name=="ScikitLearn" && m.name!="LogisticCVClassifier"
+    if m.prediction_type==Symbol("probabilistic") && m.package_name=="MLJScikitLearnInterface" && m.name!="LogisticCVClassifier"
         #Excluding LogisticCVClassfiier as we can infer similar baseline results from the LogisticClassifier
 
         #Capturing the model and loading it using the @load utility
@@ -183,13 +183,12 @@ for m in models(matching(X, y))
         y_pred = MLJ.predict(clf_machine, rows=test);
 
         #Plotting the ROC-AUC curve for each model being iterated
-        fprs, tprs, thresholds = roc(y_pred, y[test])
-        plot(fprs, tprs,label=model_name);
-
+        fprs, tprs, thresholds = roc_curve(y_pred, y[test])
+        plot!(p, fprs, tprs,label=model_name);
         #Obtaining different evaluation metrics
         ce_loss = mean(cross_entropy(y_pred,y[test]))
         acc = accuracy(mode.(y_pred), y[test])
-        f1_score = f1score(mode.(y_pred), y[test])
+        f1_score = MLJ.f1score(mode.(y_pred), y[test])
 
         #Adding the different obtained values of the evaluation metrics to the respective vectors
         push!(model_names, m.name)
@@ -200,11 +199,11 @@ for m in models(matching(X, y))
 end
 
 #Adding labels and legend to the ROC-AUC curve
-xlabel("False Positive Rate")
-ylabel("True Positive Rate")
-legend(loc="best", fontsize="xx-small")
-title("ROC curve")
-plt.savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
+xlabel!("False Positive Rate")
+ylabel!("True Positive Rate")
+#legend(loc="best", fontsize="xx-small")
+#title("ROC curve")
+savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 
 
