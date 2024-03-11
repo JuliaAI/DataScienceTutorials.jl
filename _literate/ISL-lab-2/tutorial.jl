@@ -147,16 +147,13 @@ mpg |> mean
 #
 # In these tutorials we use `PyPlot` but you could use another package of course.
 
-using PyPlot
-ioff() # hide
+using Plots
 
-figure(figsize=(8,6))
-plot(mpg)
+plot(mpg, size=(800,600), linewidth=2, legend=false)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
 
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
-PyPlot.close_figs() # hide
 
 # ‎
 # @@
