@@ -112,7 +112,7 @@ cm = confusion_matrix(ŷ, y)
 @show false_positive(cm)
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
-@show StatisticalMeasures.precision(ŷ, y) |> r3
+@show postive_predictive_value(ŷ, y) |> r3   # a.k.a. precision
 @show recall(ŷ, y)    |> r3
 @show f1score(ŷ, y)   |> r3
 
