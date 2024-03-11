@@ -51,34 +51,26 @@ X = X[no_miss, :]
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=424);
 
 # Let's have a look at the target.
+using Plots
 
-using PyPlot
-ioff() # hide
+plot(y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
 
-figure(figsize=(8,6))
-plot(y, ls="none", marker="o")
-
-xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14), ylabel("Salary", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g1.svg")) # hide
+xlabel!("Index")
+ylabel!("Salary")
 
 # \figalt{Salary}{ISL-lab-6-g1.svg}
 
 # That looks quite skewed, let's have a look at a histogram:
 
-figure(figsize=(8,6))
-hist(y, bins=50, density=true)
-
-xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Salary", fontsize=14); ylabel("Density", fontsize=14)
+histogram(y, bins=50, normalize=true, label=false, size=(800,600))
+xlabel!("Salary")
+ylabel!("Density")
 
 edfit = D.fit_mle(D.Exponential, y)
 xx = range(minimum(y), 2500, length=100)
 yy = pdf.(edfit, xx)
-plot(xx, yy, lw=3, label="Exponential distribution fit")
+plot!(xx, yy, label="Exponential distribution fit", linecolor=:orange, linewidth = 4)
 
-legend(fontsize=12)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
 
@@ -127,35 +119,26 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Let's get a feel for how we're doing
 
-figure(figsize=(8,6))
-
 res = ŷ .- y[test]
-stem(res)
-
-xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14); ylabel("Residual (ŷ - y)", fontsize=14)
-
-ylim([-1300, 1000])
+plot(res, line=:stem, ylims=(-1300, 1000), linewidth=3, marker=:circle, legend=false, size=((800,600)))
+hline!([0], linewidth=2, color=:red)
+xlabel!("Index")
+ylabel!("Residual (ŷ - y)")
 
 savefig(joinpath(@OUTPUT, "ISL-lab-6-g3.svg")) # hide
 
 # \figalt{Residuals}{ISL-lab-6-g3.svg}
 
-figure(figsize=(8,6))
-hist(res, bins=30, density=true, color="green")
+histogram(res, bins=30, normalize=true, color=:green, label=false, size=(800,600), xlims=(-1100, 1100))
 
 xx = range(-1100, 1100, length=100)
 ndfit = D.fit_mle(D.Normal, res)
 lfit  = D.fit_mle(D.Laplace, res)
 
-plot(xx, pdf.(ndfit, xx), lw=3, color="orange", label="Normal fit")
-plot(xx, pdf.(lfit, xx), lw=3, color="magenta", label="Laplace fit")
-
-legend(fontsize=12)
-
-xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Residual (ŷ - y)", fontsize=14); ylabel("Density", fontsize=14)
-xlim([-1100, 1100])
+plot!(xx, pdf.(ndfit, xx), linecolor=:orange, label="Normal fit", linewidth = 3)
+plot!(xx, pdf.(lfit, xx), linecolor=:magenta, label="Laplace fit", linewidth = 3)
+xlabel!("Residual (ŷ - y)")
+ylabel!("Density")
 
 savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
 
@@ -205,17 +188,13 @@ round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # Let's see:
 
-figure(figsize=(8,6))
 
 res = ŷ .- y[test]
-stem(res)
+plot(res, line=:stem, xlims=(1, length(res)), ylims=(-1400, 1000), linewidth=3, marker=:circle, legend=false, size=((800,600)))
+hline!([0], linewidth=2, color=:red)
+xlabel!("Index")
+ylabel!("Residual (ŷ - y)")
 
-xticks(fontsize=12); yticks(fontsize=12)
-xlabel("Index", fontsize=14);
-ylabel("Residual (ŷ - y)", fontsize=14)
-xlim(1, length(res))
-
-ylim([-1300, 1000])
 
 savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")) # hide
 
@@ -258,11 +237,7 @@ coefs, intercept = fitted_params(mtm.fitresult).linear_regressor
 
 coef_vals = [c[2] for c in coefs]
 sum(coef_vals .≈ 0) / length(coefs)
-
 # Let's visualise this:
-
-figure(figsize=(8,6))
-stem(coef_vals)
 
 ## name of the features including one-hot-encoded ones
 all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
@@ -270,10 +245,12 @@ all_names = [:AtBat, :Hits, :HmRun, :Runs, :RBI, :Walks, :Years,
              :League__A, :League__N, :Div_E, :Div_W,
              :PutOuts, :Assists, :Errors, :NewLeague_A, :NewLeague_N]
 
-idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 10]
-xticks(idxshow .- 1, all_names[idxshow], rotation=45, fontsize=12)
-yticks(fontsize=12)
-ylabel("Amplitude", fontsize=14)
+idxshow = collect(1:length(coef_vals))[abs.(coef_vals) .> 0]
+
+plot(coef_vals, xticks=(idxshow, all_names), legend=false, xrotation=90, line=:stem, marker=:circle, size=((800,700)))
+hline!([0], linewidth=2, color=:red)
+ylabel!("Amplitude")
+xlabel!("Coefficient")
 
 savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
 
@@ -305,7 +282,6 @@ ŷ = MLJ.predict(mtm, rows=test)
 round(rms(ŷ, y[test])^2, sigdigits=4)
 
 # But the simple ridge regression seems to work best here.
-PyPlot.close_figs() # hide
 
 # ‎
 # @@
