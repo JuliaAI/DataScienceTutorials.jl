@@ -25,7 +25,6 @@ end;
 
 using HTTP
 using MLJ
-using PyPlot
 import DataFrames: DataFrame, describe
 using UrlDownload
 MLJ.color_off() # hide
@@ -170,7 +169,7 @@ PCA = @load PCA
 pca_pipe = Standardizer() |> PCA(maxoutdim=2)
 pca = machine(pca_pipe, Xtrain)
 fit!(pca)
-W = transform(pca, Xtrain)
+W = MLJ.transform(pca, Xtrain)
 
 # Let's now display this using different colours for the different classes:
 
@@ -181,16 +180,12 @@ mask_1 = ytrain .== 1
 mask_2 = ytrain .== 2
 mask_3 = ytrain .== 3
 
-figure(figsize=(8, 6))
-plot(x1[mask_1], x2[mask_1], linestyle="none", marker="o", color="red")
-plot(x1[mask_2], x2[mask_2], linestyle="none", marker="o", color="blue")
-plot(x1[mask_3], x2[mask_3], linestyle="none", marker="o", color="magenta")
+scatter(x1[mask_1], x2[mask_1], marker="o", color="red", label="Class 1")
+scatter!(x1[mask_2], x2[mask_2], marker="o", color="blue", label="Class 2")
+scatter!(x1[mask_3], x2[mask_3], marker="o", color="magenta", label="Class 3")
 
-xlabel("PCA dimension 1", fontsize=14)
-ylabel("PCA dimension 2", fontsize=14)
-legend(["Class 1", "Class 2", "Class 3"], fontsize=12)
-xticks(fontsize=12)
-yticks(fontsize=12)
+xlabel!("PCA dimension 1")
+ylabel!("PCA dimension 2")
 
 savefig(joinpath(@OUTPUT, "EX-wine-pca.svg")) # hide
 
@@ -207,7 +202,6 @@ println(rpad("KNN mcr:", 10), round(perf_k, sigdigits=3))
 println(rpad("MNC mcr:", 10), round(perf_m, sigdigits=3))
 
 # Pretty good for so little work!
-PyPlot.close_figs() # hide
 
 # ‎
 # @@
