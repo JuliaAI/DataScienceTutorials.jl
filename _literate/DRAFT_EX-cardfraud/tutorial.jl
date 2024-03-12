@@ -1,7 +1,7 @@
 # hideall
 using Pkg
 Pkg.activate(@__DIR__)
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end
@@ -12,7 +12,7 @@ end
 #
 # ```julia
 # cd("MLJTutorials") # cd to folder with the *.toml
-# using Pkg; Pkg.activate("."); Pkg.update()
+# using Pkg; Pkg.activate("."); Pkg.instantiate()
 # ```
 
 # Classification of fraudulent/not credit card transactions (imbalanced data)

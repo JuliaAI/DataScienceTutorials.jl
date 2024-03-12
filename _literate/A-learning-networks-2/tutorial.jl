@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-learning-networks-2/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 
 

@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-learning-networks/Project.toml")
-Pkg.update();
+Pkg.instantiate();
 
 
 # @@dropdown
