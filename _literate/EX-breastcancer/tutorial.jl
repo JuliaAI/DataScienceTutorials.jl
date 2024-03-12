@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-breastcancer/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -25,6 +25,7 @@ using UrlDownload
 using DataFrames
 using PrettyPrinting
 using MLJ
+using StatsBase
 MLJ.color_off(); # hide
 
 # Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results
@@ -165,7 +166,7 @@ loss_f1=[];
 # @@
 # @@dropdown-content
 
-p = plot(legendfontsize=7)
+p = plot(legendfontsize=7, title="ROC Curve")
 for m in models(matching(X, y))
     if m.prediction_type==Symbol("probabilistic") && m.package_name=="MLJScikitLearnInterface" && m.name!="LogisticCVClassifier"
         #Excluding LogisticCVClassfiier as we can infer similar baseline results from the LogisticClassifier
@@ -188,7 +189,7 @@ for m in models(matching(X, y))
         #Obtaining different evaluation metrics
         ce_loss = mean(cross_entropy(y_pred,y[test]))
         acc = accuracy(mode.(y_pred), y[test])
-        f1_score = MLJ.f1score(mode.(y_pred), y[test])
+        f1_score = f1score(mode.(y_pred), y[test])
 
         #Adding the different obtained values of the evaluation metrics to the respective vectors
         push!(model_names, m.name)
@@ -201,8 +202,7 @@ end
 #Adding labels and legend to the ROC-AUC curve
 xlabel!("False Positive Rate")
 ylabel!("True Positive Rate")
-#legend(loc="best", fontsize="xx-small")
-#title("ROC curve")
+
 savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 

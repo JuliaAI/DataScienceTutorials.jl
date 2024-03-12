@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-wine/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -169,7 +169,7 @@ PCA = @load PCA
 pca_pipe = Standardizer() |> PCA(maxoutdim=2)
 pca = machine(pca_pipe, Xtrain)
 fit!(pca)
-W = MLJ.transform(pca, Xtrain)
+W = transform(pca, Xtrain)
 
 # Let's now display this using different colours for the different classes:
 
@@ -179,6 +179,8 @@ x2 = W.x2
 mask_1 = ytrain .== 1
 mask_2 = ytrain .== 2
 mask_3 = ytrain .== 3
+
+using Plots
 
 scatter(x1[mask_1], x2[mask_1], marker="o", color="red", label="Class 1")
 scatter!(x1[mask_2], x2[mask_2], marker="o", color="blue", label="Class 2")

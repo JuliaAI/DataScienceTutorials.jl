@@ -1,6 +1,6 @@
 using Pkg# hideall
 Pkg.activate("_literate/A-model-tuning/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end
@@ -87,11 +87,8 @@ r.best_history_entry.measurement[1]
 
 # Anyone wants plots? of course:
 using Plots
-res = r.plotting # contains all you need for plotting
-plot(vec(res.parameter_values), res.measurements, seriestype=:scatter, markershape=:circle, ylim=(0,1),
-                                legend=false, size=(800,600))
-xlabel!("Maximum depth")
-ylabel!("Misclassification rate")
+
+plot(m)
 
 savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
 

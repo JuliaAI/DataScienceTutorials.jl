@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-ensembles/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -38,7 +38,7 @@ knn = machine(knn_model, X, y)
 # and fit it
 
 fit!(knn, rows=train)
-ŷ = MLJ.predict(knn, X[test, :]) # or use rows=test
+ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
 # The few steps above are equivalent to just calling `evaluate!`:

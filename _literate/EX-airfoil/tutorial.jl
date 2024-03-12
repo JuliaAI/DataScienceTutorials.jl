@@ -1,6 +1,6 @@
 using Pkg# hideall
 Pkg.activate("_literate/EX-airfoil/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -162,7 +162,7 @@ rms(pred_rfr_tm, y[test])
 fitted_params(rfr_tm).best_model
 
 # Let's visualize the tuning results:
-
+using Plots
 plot(rfr_tm)
 
 savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide

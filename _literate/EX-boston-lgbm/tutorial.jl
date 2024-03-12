@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-boston-lgbm/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -17,11 +17,10 @@ using MLJ
 using PrettyPrinting
 import DataFrames
 import Statistics
-using PyPlot
 using StableRNGs
 
 MLJ.color_off() # hide
-LGBMRegressor = @load LGBMRegressor
+LGBMRegressor = @load LGBMRegressor pkg=LightGBM
 
 # Let us try LightGBM out by doing a regression task on the Boston house prices dataset.
 # This is a commonly used dataset so there is a loader built into MLJ.
@@ -49,7 +48,7 @@ train, test = partition(collect(eachindex(targets)), 0.70, shuffle=true,
 lgb = LGBMRegressor() #initialised a model with default params
 lgbm = machine(lgb, features[train, :], targets[train, 1])
 boostrange = range(lgb, :num_iterations, lower=2, upper=500)
-curve = learning_curve!(lgbm, resampling=CV(nfolds=5),
+curve = learning_curve(lgbm, resampling=CV(nfolds=5),
                         range=boostrange, resolution=100,
                         measure=rms)
 
