@@ -166,7 +166,7 @@ loss_f1=[];
 # @@
 # @@dropdown-content
 
-p = plot(legendfontsize=7)
+p = plot(legendfontsize=7, title="ROC Curve")
 for m in models(matching(X, y))
     if m.prediction_type==Symbol("probabilistic") && m.package_name=="MLJScikitLearnInterface" && m.name!="LogisticCVClassifier"
         #Excluding LogisticCVClassfiier as we can infer similar baseline results from the LogisticClassifier
@@ -202,8 +202,7 @@ end
 #Adding labels and legend to the ROC-AUC curve
 xlabel!("False Positive Rate")
 ylabel!("True Positive Rate")
-#legend(loc="best", fontsize="xx-small")
-#title("ROC curve")
+
 savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 
