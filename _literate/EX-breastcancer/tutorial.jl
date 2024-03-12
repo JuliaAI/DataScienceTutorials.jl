@@ -25,6 +25,7 @@ using UrlDownload
 using DataFrames
 using PrettyPrinting
 using MLJ
+using StatsBase
 MLJ.color_off(); # hide
 
 # Inititalizing a global random seed which we'll use throughout the code to maintain consistency in results
@@ -188,7 +189,7 @@ for m in models(matching(X, y))
         #Obtaining different evaluation metrics
         ce_loss = mean(cross_entropy(y_pred,y[test]))
         acc = accuracy(mode.(y_pred), y[test])
-        f1_score = MLJ.f1score(mode.(y_pred), y[test])
+        f1_score = f1score(mode.(y_pred), y[test])
 
         #Adding the different obtained values of the evaluation metrics to the respective vectors
         push!(model_names, m.name)
