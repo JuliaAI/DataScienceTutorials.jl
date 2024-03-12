@@ -162,7 +162,7 @@ rms(pred_rfr_tm, y[test])
 fitted_params(rfr_tm).best_model
 
 # Let's visualize the tuning results:
-
+using Plots
 plot(rfr_tm)
 
 savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
