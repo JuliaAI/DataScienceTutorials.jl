@@ -7,18 +7,20 @@
 # - Note that an invisible character `U+200E` is used due to a bug that occurs whenever a section ends with a line of code rather than raw text.
 # - The script is idempotent (won't modify a file it touched before) so it could be run after a new tutorial is added.
 
+using Pkg
+Pkg.activate(temp=true)
 import Pkg; Pkg.add("RegularExpressions")
 import Pkg; Pkg.add("ReadableRegex")
 using RegularExpressions
 using ReadableRegex
 
 
-# modify h2 or h3 headings (depending on pattern) for a single file 
+# modify h2 or h3 headings (depending on pattern) for a single file
 function modify_string(input, pattern)
     matches = eachmatch(pattern, input)
     modified_string = ""
     last_end = 1
-    
+
     for match in matches
         modified_string *= input[last_end:match.offset-1]
         if match.match != ""
@@ -30,7 +32,7 @@ function modify_string(input, pattern)
             last_end = match.offset + length(match.match)
         end
     end
-    
+
     modified_string *= input[last_end:end]
     (input == modified_string && return input)
     return modified_string*"\n# ‎\n# @@\n"
@@ -50,7 +52,7 @@ function introduce_dropdowns(input::AbstractString)
     end
     chunks = split_keeping_splitter(input, "# ## ")
     for (i, chunk) in enumerate(chunks)
-        if chunk !="# ## " 
+        if chunk !="# ## "
             chunks[i] = modify_string(chunk, r"(# ### .*\n)")
         end
     end
@@ -89,4 +91,4 @@ end
 
 
 
-read_tutorials("_literate")
+read_tutorials(joinpath(@__DIR__, "_literate"))
