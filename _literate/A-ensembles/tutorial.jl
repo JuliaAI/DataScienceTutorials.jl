@@ -38,7 +38,7 @@ knn = machine(knn_model, X, y)
 # and fit it
 
 fit!(knn, rows=train)
-ŷ = MLJ.predict(knn, X[test, :]) # or use rows=test
+ŷ = predict(knn, X[test, :]) # or use rows=test
 rms(ŷ, y[test])
 
 # The few steps above are equivalent to just calling `evaluate!`:
