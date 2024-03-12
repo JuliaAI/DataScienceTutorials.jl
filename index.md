@@ -1,140 +1,94 @@
 @def title = "Data Science Tutorials in Julia"
+Tutorials for learning data science using Julia, with a focus on machine learning (ML) using the [MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/) toolbox and related packages.
 
-## Learning by doing
+@@run-code
 
-This website offers tutorials for [MLJ.jl](https://alan-turing-institute.github.io/MLJ.jl/dev/) and related packages. 
+How to Run Code ►
 
-The code included on each tutorial is tested to work reliably
-under these two conditions:
+@@
 
-- You are running Julia 1.10.x where "x" is any integer (to check, enter
-  `VERSION` at the REPL).
+What kind of user are you? These are our recommendations for different types of users:
 
-- You have activated and instantiated the associated [package
-  environment](https://docs.julialang.org/en/v1/stdlib/Pkg/).
+@@get-started-tab-container
 
-To make the tutorial-specific environment available to you, first download (and
-decompress) the "project folder" that is linked near the top of the
-tutorial. How you proceed next depends on your chosen mode of interaction:
+  @@get-started-tab,selected
+  New to Julia?
+  @@
 
+  @@get-started-tab
+  New to ML?
+  @@
 
-### Pasting code copied from web page directly into the Julia REPL
+  @@get-started-tab
+  New to Julia and ML?
+  @@
 
-Recommended for new Julia users.
+@@
 
-Activate and instantiate the correct environment by entering this code
-at the `julia> ` prompt:
+@@tab-content-container
+  @@tab-content,selected-content
+  ## Completely new to Julia?
 
-```julia
-using Pkg; Pkg.activate("Path/To/Project/Folder"); Pkg.instantiate()
-```
+  Try one of these [external resources](/external_resources.md):
 
-You need to replace `"Path/To/Project/Folder"` with the actual path to
-the downloaded project folder.  This can be just `"."` if Julia has been
-launched from the command-line, with the project folder as the current
-directory.
+  - [Julia's learning resources page](https://julialang.org/learning/) 
 
-This might take a few minutes for some tutorials, as packages may need
-to be installed and precompiled.
+  - [Learn X in Y minutes](https://learnxinyminutes.com/docs/julia/)
 
-
-### Running the provided Juptyer notebook
-
-The downloaded project folder contains a Juptyer notebook called
-`tutorial.ipynb`. See the [IJulia
-documentation](https://julialang.github.io/IJulia.jl/stable/manual/running/)
-on how to launch it. Copy and execute the code fragment above in a new
-notebook cell before evaluating any other cells.
-
-### Running the provided Julia script line-by-line from an IDE
-
-In your IDE (e.g., VS Code or emacs) open the file called
-`tutorial.jl` in the downloaded project folder and
-activate/instantiate by first running the code fragment given above.
-
-## Having problems?
-
-Please report issues
-[here](https://github.com/JuliaAI/DataScienceTutorials.jl/issues). For
-beginners, the most common issues arise because the Julia version is
-incorrect, or because of an incorrect package environment. So be sure
-you have tried the instructions above before raising an issue.
-
-If you need to use an earlier version of Julia, you can try deleting
-the `Manifest.toml` file contained in the project folder and running
-`using Pkg; Pkg.instantiate()` to generate a new package environment,
-but the exact package versions will be different from those used to
-test the tutorial and generate the output seen on the tutorial web
-page.
+  - [HelloJulia](https://github.com/ablaom/HelloJulia.jl)
 
 
-## Elementary data manipulations
+  ## Machine Learning expert with beginner-level Julia?
 
-If you have some programming experience but are otherwise fairly new to data processing in Julia, you may appreciate the following few tutorials before moving on.
-In these we provide an introduction to some of the fundamental packages in the Julia data processing universe such as [DataFrames], [CSV] and [CategoricalArrays].
+  We suggest you start with this tutorial:
 
-[DataFrames]: https://github.com/JuliaData/DataFrames.jl
-[CSV]: https://github.com/JuliaData/CSV.jl
-[CategoricalArrays]: https://github.com/JuliaData/CategoricalArrays.jl
+  - [Telco Churn (MLJ for Data Scientists in Two
+    Hours)](/end-to-end/telco/), *intermediate*, *classification*,
+    *one-hot*, *ROC curves*, *confusion matrices*, *feature importance*,
+    *feature selection*, *controlling iteration*, *tree booster*,
+    *hyper-parameter optimization (tuning)*
 
-* How to [load data](/data/loading/),
-* Short intro to [dataframes](/data/dataframe/),
-* Dealing with [categorical data](/data/categorical/)
-* Specifying [data interpretation](/data/scitype/)
+  or the [Getting started with
+  MLJ](/categories/starting_out_with_mlj.md) tutorials. Alternatively,
+  you can try this [external resource](/external_resources.md):
 
-## Getting started with MLJ
+  - [MLJTutorial](https://github.com/ablaom/MLJTutorial.jl): Tutorials
+    forming a basis for a day-long workshop on MLJ.
+  @@
 
-If you are new to MLJ but are familiar with Julia and with Machine Learning, we recommend you start by going through the short _Getting started_ examples in order:
+  @@tab-content
+  # New to machine learning but have moderate Julia skills?
 
-1. How to [choose a model](/getting-started/choosing-a-model/),
-1. How to [fit, predict and transform](/getting-started/fit-and-predict/)
-1. How to [tune models](/getting-started/model-tuning/)
-1. How to [ensemble models](/getting-started/ensembles/)
-1. How to [ensemble models (2)](/getting-started/ensembles-2/)
-1. More on [ensembles](/getting-started/ensembles-3/)
-1. How to [compose models](/getting-started/composing-models/)
-1. How to build a [learning network](/getting-started/learning-networks/)
-1. How to [create models](/getting-started/learning-networks-2/) from learning networks
-1. An extended tutorial on [stacking](/getting-started/stacking/)
+  Start out with the [Introduction to Statistical
+  Learning](/categories/intro_to_stats_learning.md) tutorials, or one of
+  these [external resources](/external_resources.md):
 
-Additionally, you can refer to the [documentation](https://alan-turing-institute.github.io/MLJ.jl/stable/) for more detailed information.
+  - [MLCourse](https://github.com/jbrea/MLCourse): Teaching material for
+    an introductory machine learning course at EPFL (for an interactive
+    preview see [here](https://bio322.epfl.ch)).
 
-## Introduction to Statistical Learning with MLJ
+  - [Julia Data
+    Science](https://github.com/JuliaDataScience/JuliaDataScience): Book
+    focused on exploratory data analysis with less on ML.
+  @@
 
-This is a sequence of tutorials adapted from the labs associated with [_An introduction to statistical learning_](http://faculty.marshall.usc.edu/gareth-james/ISL/code.html) which were originally written in R.
-These tutorials may be useful if you want a gentle intro to MLJ **and** other relevant tools in the Julia environment.
-If you're fairly new to Julia and ML, this is probably where you should start.
+  @@tab-content
+  # New to both Julia and machine learning?
 
-**Note**: the adaptation is fairly liberal, adding content when it helps highlights specificities with MLJ and removing content when it seems unnecessary.
-Also note that some of the things used in the ISL labs are not (yet) supported by MLJ.
+  To get started with Julia, you can try one of the external resources
+  at the top of [this page](new_to_julia.md). 
 
-* [Lab 2](/isl/lab-2/), a very short intro to Julia for data analysis
-* [Lab 3](/isl/lab-3/), linear regression and metrics
-* [Lab 4](/isl/lab-4/), classification with LDA, QDA, KNN and metrics
-* [Lab 5](/isl/lab-5/), k-folds cross validation
-* [Lab 6b](/isl/lab-6b/), Ridge and Lasso regression
-* [Lab 8](/isl/lab-8/), Tree-based models
-* [Lab 9](/isl/lab-9/), SVM (_partial_)
-* [Lab 10](/isl/lab-10/), PCA and clustering (_partial_)
+  Once you have basic Julia competency, try the [Introduction to
+  Statistical Learning](/categories/intro_to_stats_.earning.md)
+  tutorials or one of these [external reources](/external_resources.md):
 
-## End to end examples with MLJ
+  - [Julia Data
+    Science](https://github.com/JuliaDataScience/JuliaDataScience): Book
+    focused on exploratory data analysis with less on ML.
 
-These are examples that are meant to show how MLJ can be used from loading data to producing a model.
-They assume familiarity with Machine Learning and MLJ.
-
-Note that these tutorials are not meant to teach you ML or Data Science; there may be better ways to analyse the data, the primary aim is to show quick analysis so that you can get more familiar with using MLJ.
-
-The examples can be followed in any order, the tags can guide you as to which tutorials you may want to look at first.
-
-* [Telco Churn (MLJ for Data Scientists in Two Hours)](/end-to-end/telco/), *intermediate*, *classification*, *one-hot*, *ROC curves*, *confusion matrices*, *feature importance*, *feature selection*, *controlling iteration*, *tree booster*, *hyper-parameter optimization (tuning)*.
-* [AMES](/end-to-end/AMES/), *simple*, *regression*, *one-hot*, *learning network*, *tuning*, *deterministic*
-* [Wine](/end-to-end/wine/), *simple*, *classification*, *standardizer*, *PCA*, *knn*, *multinomial*, *pipeline*
-* [Crabs XGB](/end-to-end/crabs-xgb/), *simple*, *classification*, *xg-boost*, *tuning*
-* [Horse](/end-to-end/horse/), *simple*, *classification*, *scientific type* and *autotype*, *missing values*, *imputation*, *one-hot*, *tuning*
-* [King County Houses](/end-to-end/HouseKingCounty/), *simple*, *regression*, *scientific type*, *tuning*, *xg-boost*
-* [Airfoil](/end-to-end/airfoil/), *simple*, *regression*, *random forest*
-* [Boston LGBM](/end-to-end/boston-lgbm/), *intermediate*, *regression*, *LightGBM*
-* [Boston Flux](/end-to-end/boston-flux/), *intermediate*, *regression*, *Flux*, *Neural Network*
-* [Using GLM.jl](/end-to-end/glm/), *simple*, *regression*
-* [Power Generation](/end-to-end/powergen/), *simple*, *feature pre-processing*, *regression*, *temporal data*
-* [Breast cancer](/end-to-end/breastcancer/), *simple*, *model comparisons*, *binary classification*
+  - [MLCourse](https://github.com/jbrea/MLCourse): Teaching material for
+    an introductory machine learning course at EPFL (for an interactive
+    preview see [here](https://bio322.epfl.ch)).
+  @@
+@@
+Willing to contribute? Consider checking our [repository](https://github.com/JuliaAI/DataScienceTutorials.jl) on Github.

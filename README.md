@@ -50,6 +50,7 @@ Once all that's done, the remaining things to do are to create the HTML page and
 * add links pointing to that tutorial
   * in `index.md` following the template
   * in `_layout/head.html` following the template
+* lastly, to make sections in your tutorial collapsible like other tutorials run the `collapse-script.jl` file via `julia collapse-script.jl`
 
 
 ### Publishing updates

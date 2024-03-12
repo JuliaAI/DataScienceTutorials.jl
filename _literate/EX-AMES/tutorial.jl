@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-AMES/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 
 # @@dropdown

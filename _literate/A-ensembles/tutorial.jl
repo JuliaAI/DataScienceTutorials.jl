@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-ensembles/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -159,11 +159,10 @@ keys(r)
 
 r.plotting
 
-# Although for that we can  use a built-in plot recipe for `TunedModel`:
+# Although for that we can also use a built-in plot recipe for `TunedModel`:
 
 using Plots
-plt = plot(tuned_ensemble)
-gui()
+plot(tuned_ensemble)
 
 #-
 
@@ -176,7 +175,6 @@ savefig(joinpath(@OUTPUT, "A-ensembles-plot.svg")) # hide
 ŷ = predict(tuned_ensemble, rows=test)
 @show l2(ŷ, y[test])
 
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

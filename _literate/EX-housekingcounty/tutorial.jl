@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-housekingcounty/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -24,8 +24,6 @@ using PrettyPrinting
 import DataFrames: DataFrame, select!, Not, describe
 import Statistics
 using Dates
-using PyPlot
-ioff() # hide
 using UrlDownload
 
 MLJ.color_off() # hide
@@ -81,26 +79,21 @@ select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 #
 # Let's plot a basic histogram of the prices to get an idea for the distribution:
 
-plt.figure(figsize=(8,6))
-plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
-         density=true, alpha=0.5)
-plt.xlabel("Price", fontsize=14)
-plt.ylabel("Frequency", fontsize=14)
-plt.savefig(joinpath(@OUTPUT, "hist_price.svg")) # hide
+using Plots
+histogram(df.price, color = "blue", normalize=:pdf, bins=50, alpha=0.5, legend=false)
+xlabel!("Price")
+ylabel!("Frequency")
+savefig(joinpath(@OUTPUT, "hist_price.svg")) # hide
 
 # \figalt{Histogram of the prices}{hist_price.svg}
 
 # Let's see if there's a difference between renovated and unrenovated flats:
 
-plt.figure(figsize=(8,6))
-plt.hist(df.price[df.isrenovated .== true], color="blue", density=true,
-        edgecolor="white", bins=50, label="renovated", alpha=0.5)
-plt.hist(df.price[df.isrenovated .== false], color="red", density=true,
-        edgecolor="white", bins=50, label="unrenovated", alpha=0.5)
-plt.xlabel("Price", fontsize=14)
-plt.ylabel("Frequency", fontsize=14)
-plt.legend(fontsize=12)
-plt.savefig(joinpath(@OUTPUT, "hist_price2.svg")) # hide
+histogram(df.price[df.isrenovated .== true], color = "blue", normalize=:pdf, bins=50, alpha=0.5, label="renovated")
+histogram!(df.price[df.isrenovated .== false], color = "red", normalize=:pdf, bins=50, alpha=0.5, label="unrenovated")
+xlabel!("Price")
+ylabel!("Frequency")
+savefig(joinpath(@OUTPUT, "hist_price2.svg")) # hide
 
 # \figalt{Histogram of the prices depending on renovation}{hist_price2.svg}
 # We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.
@@ -141,7 +134,7 @@ rms(y[test], MLJ.predict(tree, rows=test))
 
 # We might be able to improve upon the RMSE using more powerful learners.
 
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 # That model only accepts input in the form of `Count` and so we have to coerce all `Finite` types into `Count`:
 
@@ -200,7 +193,6 @@ rms(y[test], MLJ.predict(mtm, rows=test))
 
 #
 
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

@@ -6,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{if hasmath}} {{insert head_katex.html }} {{end}}
   {{if hascode}} {{insert head_highlight.html }} {{end}}
+  <link rel="stylesheet" href="/css/landing.css">
   <link rel="stylesheet" href="/css/franklin.css">
   <link rel="stylesheet" href="/css/pure.css">
   <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="/css/extra.css">
   <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
   {{isdef title}} <title>{{fill title}}</title> {{end}}
@@ -22,7 +24,7 @@
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
         <a href="/" id="menu-logo-link">
           <div class="menu-logo">
@@ -30,10 +32,10 @@
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
-          <form id="lunrSearchForm" name="lunrSearchForm">
-            <input class="search-input" name="q" placeholder="Enter search term" type="text">
-            <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
-          </form>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
+        </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
           <li class="pure-menu-item pure-menu-top-item {{ispage index.html}}pure-menu-selected{{end}}"><a href="/"
@@ -41,7 +43,7 @@
 
           <!-- DATA BASICS -->
           <div class="dropdown">
-            <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
           </div>
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist">
@@ -65,17 +67,19 @@
 
           <!-- GETTING STARTED WITH MLJ -->
           <div class="dropdown">
-            <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
           </div>
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist">
               <li
                 class="pure-menu-item {{ispage /getting-started/choosing-a-model/index.html}}pure-menu-selected{{end}}">
                 <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
-                    style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
               <li class="pure-menu-item {{ispage getting-started/fit-and-predict/index.html}}pure-menu-selected{{end}}">
                 <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
-                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
               <li class="pure-menu-item {{ispage getting-started/model-tuning/index.html}}pure-menu-selected{{end}}"><a
                   href="/getting-started/model-tuning/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Model tuning</a></li>
@@ -91,15 +95,18 @@
               <li
                 class="pure-menu-item {{ispage getting-started/composing-models/index.html}}pure-menu-selected{{end}}">
                 <a href="/getting-started/composing-models/" class="pure-menu-link"><span
-                    style="padding-right:0.5rem;">•</span> Composing models</a></li>
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
               <li
                 class="pure-menu-item {{ispage getting-started/learning-networks/index.html}}pure-menu-selected{{end}}">
                 <a href="/getting-started/learning-networks/" class="pure-menu-link"><span
-                    style="padding-right:0.5rem;">•</span> Learning networks</a></li>
+                    style="padding-right:0.5rem;">•</span> Learning networks</a>
+              </li>
               <li
                 class="pure-menu-item {{ispage getting-started/learning-networks-2/index.html}}pure-menu-selected{{end}}">
                 <a href="/getting-started/learning-networks-2/" class="pure-menu-link"><span
-                    style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
+                    style="padding-right:0.5rem;">•</span> Learning networks (2)</a>
+              </li>
               <li class="pure-menu-item {{ispage getting-started/stacking/index.html}}pure-menu-selected{{end}}"><a
                   href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Stacking</a></li>
@@ -131,7 +138,7 @@
           </div>
           <!-- END TO END EXAMPLES -->
           <div class="dropdown">
-            <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
+            <li class="pure-menu-sublist-title"><strong>End to End Examples</strong></li>
           </div>
           <div class="dropdown-content collapse">
             <ul class="pure-menu-sublist" id=e2e>
@@ -166,6 +173,86 @@
           </div>
         </ul>
         <!-- END OF LIST OF MENU ITEMS -->
+      </div>
+    </div>
+    <div id="nav" class="navigation">
+      <div class="nav-container">
+        <div class="brand">
+          <a href="/">DataScienceTutorials.jl</a>
+        </div>
+        <nav>
+          <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+          <ul class="nav-list">
+            <li>
+              <a id="home" class="main-nav-item" style="border-radius: 2rem 2rem 2rem 2rem;"  href="/">Home</a>
+            </li>
+            <li>
+              <a class="main-nav-item" id="data"  href="#!">Data Basics</a>
+              <ul class="nav-dropdown">
+                <li class="short-item"><a href="/data/loading/">Loading data</a></li>
+                <li class="short-item"><a href="/data/dataframe/">Data Frames</a></li>
+                <li class="short-item"><a href="/data/categorical/">Categorical Arrays</a></li>
+                <li class="short-item"><a href="/data/scitype/">Scientific Type</a></li>
+                <li class="short-item"><a href="/data/processing/">Data processing</a></li>
+              </ul>
+            </li>
+            <li>
+              <a class="main-nav-item" id="getting-started"  href="#!">Getting Started</a>
+              <ul class="nav-dropdown">
+                <li>
+                  <a href="/getting-started/choosing-a-model/"> Choosing a model</a>
+                </li>
+                <li>
+                  <a href="/getting-started/fit-and-predict/"> Fit, predict, transform</a>
+                </li>
+                <li class="medium-item"><a href="/getting-started/model-tuning/"> Model tuning</a></li>
+                <li class="medium-item"><a href="/getting-started/ensembles/"> Ensembles</a></li>
+                <li class="medium-item"><a href="/getting-started/ensembles-2/"> Ensembles (2)</a></li>
+                <li class="medium-item"><a href="/getting-started/ensembles-3/"> Ensembles (3)</a></li>
+                <li class="medium-item"><a href="/getting-started/composing-models/"> Composing models</a></li>
+                <li class="medium-item"><a href="/getting-started/learning-networks/"> Learning networks</a></li>
+                <li class="medium-item"><a href="/getting-started/learning-networks-2/"> Learning networks (2)</a></li>
+                <li class="medium-item"><a href="/getting-started/stacking/"> Stacking</a></li>
+              </ul>
+            </li>
+            <li>
+              <a class="main-nav-item" id="stats-learning"  href="#!">Intro to Stats Learning</a>
+              <ul class="nav-dropdown">
+                <li class="long-item"><a href="/isl/lab-2/"> Lab 2</a></li>
+                <li class="long-item"><a href="/isl/lab-3/"> Lab 3</a></li>
+                <li class="long-item"><a href="/isl/lab-4/"> Lab 4</a></li>
+                <li class="long-item"><a href="/isl/lab-5/"> Lab 5</a></li>
+                <li class="long-item"><a href="/isl/lab-6b/"> Lab 6b</a></li>
+                <li class="long-item"><a href="/isl/lab-8/"> Lab 8</a></li>
+                <li class="long-item"><a href="/isl/lab-9/"> Lab 9</a></li>
+                <li class="long-item"><a href="/isl/lab-10/"> Lab 10</a></li>
+              </ul>
+            </li>
+            <li>
+              <a class="main-nav-item" href="#!" id="end-to-end">End to End Examples</a>
+              <ul class="nav-dropdown">
+                <li class="long-item"><a href="/end-to-end/telco/">Telco Churn</a></li>
+                <li class="long-item"><a href="/end-to-end/AMES/"> AMES</a></li>
+                <li class="long-item"><a href="/end-to-end/wine/"> Wine</a></li>
+                <li class="long-item"><a href="/end-to-end/crabs-xgb/"> Crabs (XGB)</a></li>
+                <li class="long-item"><a href="/end-to-end/horse/"> Horse</a></li>
+                <li class="long-item"><a href="/end-to-end/HouseKingCounty/"> King County Houses</a></li>
+                <li class="long-item"><a href="/end-to-end/airfoil"> Airfoil </a></li>
+                <li class="long-item"><a href="/end-to-end/boston-lgbm"> Boston (lgbm) </a></li>
+                <li class="long-item"><a href="/end-to-end/glm/"> Using GLM.jl </a></li>
+                <li class="long-item"><a href="/end-to-end/powergen/"> Power Generation </a></li>
+                <li class="long-item"><a href="/end-to-end/boston-flux"> Boston (Flux) </a></li>
+                <li class="long-item"><a href="/end-to-end/breastcancer"> Breast Cancer</a></li>
+              </ul>
+            </li>
+            <li>
+              <form id="lunrSearchForm" name="lunrSearchForm" style="margin-left: 1.5rem; margin-right: -2rem;">
+                <input class="search-input" name="q" placeholder="Search..." type="text">
+                <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
+              </form>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
     <div id="main"> <!-- Closed in foot -->

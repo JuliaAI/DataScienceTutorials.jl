@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-8/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -155,7 +155,7 @@ round(rms(ypred, y[test]), sigdigits=3)
 #
 # **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)

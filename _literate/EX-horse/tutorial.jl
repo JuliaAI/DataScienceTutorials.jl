@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/EX-horse/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 
 # @@dropdown
@@ -208,7 +208,7 @@ best_pipe = fitted_params(mtm).best_model
 # So it looks like it's useful to regularise a fair bit to get a lower cross entropy
 
 ŷ = MLJ.predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+cross_entropy(ŷ, ytrain) 
 
 # Interestingly this does not improve our missclassification rate
 
@@ -231,7 +231,7 @@ XGBC = @load XGBoostClassifier
 dtc = machine(XGBC(), Xtrain, ytrain)
 fit!(dtc)
 ŷ = MLJ.predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+cross_entropy(ŷ, ytrain) 
 
 # So we get a worse cross entropy but...
 

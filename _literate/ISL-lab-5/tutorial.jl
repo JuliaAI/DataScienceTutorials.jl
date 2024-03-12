@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-5/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -32,16 +32,11 @@ LR = @load LinearRegressor pkg=MLJLinearModels
 
 # In this part we only build models with the `Horsepower` feature.
 
-using PyPlot
-ioff() # hide
+using Plots
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+xlabel!("Horsepower")
+ylabel!("MPG")
 
 savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")) # hide
 
@@ -59,14 +54,11 @@ rms(MLJ.predict(mlm, rows=test), y[test])^2
 xx = (Horsepower=range(50, 225, length=100) |> collect, )
 yy = MLJ.predict(mlm, xx)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy, lw=3)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+plot!(xx.Horsepower, yy,  legend=false, linewidth=3, color=:orange)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
 
 savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")) # hide
 
@@ -114,18 +106,13 @@ yy1 = MLJ.predict(lr1, Xnew)
 yy2 = MLJ.predict(lr2, Xnew)
 yy3 = MLJ.predict(lr3, Xnew)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy1, lw=3, label="Order 1")
-plot(xx.Horsepower, yy2, lw=3, label="Order 2")
-plot(xx.Horsepower, yy3, lw=3, label="Order 3")
+plot(X.Horsepower, y, seriestype=:scatter, label=false,  size=(800,600))
+plot!(xx.Horsepower, yy1,  label="Order 1", linewidth=3, color=:orange,)
+plot!(xx.Horsepower, yy2,  label="Order 2", linewidth=3, color=:green,)
+plot!(xx.Horsepower, yy3,  label="Order 3", linewidth=3, color=:red,)
 
-legend(fontsize=14)
-
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
 savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")) # hide
 
@@ -174,14 +161,10 @@ res = rep.plotting
 Xnew = DataFrame([hpn.^i for i in 1:10], :auto)
 yy5 = MLJ.predict(mtm, Xnew)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy5, lw=3)
-
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+plot!(xx.Horsepower, yy5, color=:orange, linewidth=4, legend=false)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
 savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
 
@@ -196,7 +179,6 @@ savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
 # @@dropdown-content
 #
 # _Bootstrapping is not currently supported in MLJ._
-PyPlot.close_figs() # hide
 
 # ‎
 # @@
