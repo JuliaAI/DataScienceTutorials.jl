@@ -1,6 +1,6 @@
 @def hascode = true
 @def showall = true
 
-# Ensemble models - extended tutorial
+# Ensemble models (learning networks)
 
 \tutorial{A-ensembles-3}
