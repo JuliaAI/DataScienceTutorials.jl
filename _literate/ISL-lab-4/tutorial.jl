@@ -270,7 +270,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
 #
 # Apart from the target, all other variables are numbers; we can standardize the data:
 
-y, X = unpack(caravan, ==(:Purchase), col->true)
+y, X = unpack(caravan, ==(:Purchase))
 
 mstd = machine(Standardizer(), X)
 fit!(mstd)

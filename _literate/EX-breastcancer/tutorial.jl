@@ -97,8 +97,11 @@ coerce!(df, :Class => OrderedFactor{2});
 # ## Unpacking the values
 # @@
 # @@dropdown-content
-# Now that our data is fully processed, we can separate the target variable 'y' from the feature set 'X' using the __unpack()__ method.
-y, X = unpack(df, ==(:Class),name->true, rng = RANDOM_SEED);
+
+# Now that our data is fully processed, we can separate the target variable 'y' from the
+# feature set 'X' using the __unpack()__ method.
+
+y, X = unpack(df, ==(:Class), rng = RANDOM_SEED);
 
 
 # ‎
