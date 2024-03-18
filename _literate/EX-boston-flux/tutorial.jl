@@ -137,7 +137,6 @@ using Plots
 
 plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 
-#yscale("log")
 xlabel!(curve.parameter_name)
 ylabel!("l2-log")
 
