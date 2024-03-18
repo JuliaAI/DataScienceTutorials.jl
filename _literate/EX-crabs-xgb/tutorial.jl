@@ -5,7 +5,9 @@ macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
-# This example is inspired from [this post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/) showing how to use XGBoost.
+# This example is inspired from [this
+# post](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/)
+# showing how to use XGBoost.
 #
 
 # @@dropdown
@@ -13,46 +15,46 @@ end;
 # @@
 # @@dropdown-content
 #
-# Again, the crabs dataset is so common that there is a  simple load function for it:
+# MLJ provides a built-in function to load the Crabs dataset:
 
 using MLJ
 using StatsBase
 using Random
-using PyPlot
-ioff() # hide
-using CategoricalArrays
-using PrettyPrinting
+using Plots
+MLJ.color_off() # hide
 import DataFrames
+import StableRNGs.StableRNG
 
 MLJ.color_off() # hide
-X, y = @load_crabs
+X, y = @load_crabs # a table and a vector
 X = DataFrames.DataFrame(X)
 @show size(X)
 @show y[1:3]
-first(X, 3) |> pretty
+first(X, 3)
 
-# It's a classification problem with the following classes:
+#-
 
-levels(y) |> pprint
+schema(X)
 
-# Note that the dataset is currently sorted by target, let's shuffle it to avoid the obvious issues this may cause
+# We are looking at a classification problem with the following classes:
 
-Random.seed!(523)
-perm = randperm(length(y))
-X = X[perm,:]
-y = y[perm];
+levels(y)
 
-# It's not a very big dataset so we will likely overfit it badly using something as sophisticated as XGBoost but it will do for a demonstration.
+# It's not a very big dataset so we will likely overfit it badly using something as
+# sophisticated as XGBoost but it will do for a demonstration. Since our data set is
+# ordered by target class, we'll be sure to create shuffled train/test index sets:
 
-train, test = partition(collect(eachindex(y)), 0.70, shuffle=true, rng=52)
+train, test = partition(collect(eachindex(y)), 0.70, rng=StableRNG(123))
 XGBC = @load XGBoostClassifier
 xgb_model = XGBC()
 
-# Let's check whether the training and  is balanced, `StatsBase.countmap` is useful for that:
+# Let's check whether the training and is balanced, `StatsBase.countmap` is useful for
+# that:
 
-countmap(y[train]) |> pprint
+countmap(y[train])
 
-# which is pretty balanced. You could check the same on the test set and full set and the same comment would still hold.
+# which is pretty balanced. You could check the same on the test set and full set and the
+# same comment would still hold.
 #
 
 # ‎
@@ -61,25 +63,27 @@ countmap(y[train]) |> pprint
 # ## XGBoost machine
 # @@
 # @@dropdown-content
-#
+
 # Wrap a machine around an XGBoost model (XGB) and the data:
 
 xgb  = XGBC()
-xgbm = machine(xgb, X, y)
+mach = machine(xgb, X, y)
 
 # We will tune it varying the number of rounds used and generate a learning curve
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve(xgbm, range=r, resolution=50,
-                        measure=L1HingeLoss())
+curve = learning_curve(
+    mach,
+    range=r,
+    resolution=50,
+    measure=cross_entropy,
+)
 
 # Let's have a look
 
-figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
-xlabel("Number of rounds", fontsize=14)
-ylabel("HingeLoss", fontsize=14)
-xticks([10, 100, 200, 500], fontsize=12)
+xlabel!("Number of rounds", fontsize=14)
+ylabel!("HingeLoss", fontsize=14)
 
 savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
 
@@ -94,45 +98,36 @@ xgb.num_round = 200;
 # ### More tuning (1)
 # @@
 # @@dropdown-content
-#
-# Let's now tune the maximum depth of each tree and the minimum child weight in the boosting.
+
+# Let's now tune the maximum depth of each tree and the minimum child weight in the
+# boosting.
 
 r1 = range(xgb, :max_depth, lower=3, upper=10)
 r2 = range(xgb, :min_child_weight, lower=0, upper=5)
 
-tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
-                resampling=CV(rng=11), ranges=[r1,r2],
-                measure=cross_entropy)
-mtm = machine(tm, X, y)
-fit!(mtm, rows=train)
+tuned_model = TunedModel(
+    xgb,
+    tuning=Grid(resolution=8),
+    resampling=CV(rng=11),
+    ranges=[r1,r2],
+    measure=cross_entropy,
+)
+mach = machine(tuned_model, X, y)
+fit!(mach, rows=train)
 
-# Great, as always we can investigate the tuning by using `report` and can, for instance, plot a heatmap of the measurements:
+# Let's visualize details about the tuning:
 
-r = report(mtm)
+plot(mach)
 
-res = r.plotting
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot.svg")) # hide
 
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
+# \figalt{Hyperparameter tuningplot}{EX-crabs-xgb-tuningplot.svg}
 
-figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
-
-xlabel("Maximum tree depth", fontsize=14)
-ylabel("Minimum child weight", fontsize=14)
-xticks(3:2:10, fontsize=12)
-yticks(fontsize=12)
-
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap.svg")) # hide
-
-# \figalt{Hyperparameter heatmap}{EX-crabs-xgb-heatmap.svg}
-#
 # Let's extract the optimal model and inspect its parameters:
 
-xgb = fitted_params(mtm).best_model
+xgb = fitted_params(mach).best_model
 @show xgb.max_depth
 @show xgb.min_child_weight
-
 
 # ‎
 # @@
@@ -143,18 +138,25 @@ xgb = fitted_params(mtm).best_model
 #
 # Let's examine the effect of `gamma`:
 
-xgbm = machine(xgb, X, y)
-r = range(xgb, :gamma, lower=0, upper=10)
-curve = learning_curve!(xgbm, range=r, resolution=30,
-                        measure=cross_entropy);
+mach = machine(xgb, X, y)
+curve = learning_curve(
+    mach,
+    range= range(xgb, :gamma, lower=0, upper=10),
+    resolution=30,
+    measure=cross_entropy,
+);
 
-# it looks like the `gamma` parameter substantially affects model performance:
+plot(curve.parameter_values, curve.measurements)
+xlabel!("gamma", fontsize=14)
+ylabel!("cross entropy", fontsize=14)
 
-@show round(minimum(curve.measurements), sigdigits=3)
-@show round(maximum(curve.measurements), sigdigits=3)
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")) # hide
 
+# \figalt{Tuning gamma}{EX-crabs-xgb-gamma.svg}
 
-# ‎
+# It doesn't look like increasing `gamma` from its zero default value is going to improve
+# performance.
+
 # @@
 # @@dropdown
 # ### More tuning (3)
@@ -165,48 +167,33 @@ curve = learning_curve!(xgbm, range=r, resolution=30,
 
 r1 = range(xgb, :subsample, lower=0.6, upper=1.0)
 r2 = range(xgb, :colsample_bytree, lower=0.6, upper=1.0)
-tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
-                resampling=CV(rng=234), ranges=[r1,r2],
-                measure=cross_entropy)
-mtm = machine(tm, X, y)
-fit!(mtm, rows=train)
 
-# and the usual procedure to visualise it:
+tuned_model = TunedModel(
+    xgb,
+    tuning=Grid(resolution=8),
+    resampling=CV(rng=234),
+    ranges=[r1,r2],
+    measure=cross_entropy,
+)
+mach = machine(tuned_model, X, y)
+fit!(mach, rows=train)
 
-r = report(mtm)
+#-
 
-res = r.plotting
+plot(mach)
 
-ss = res.parameter_values[:,1]
-cbt = res.parameter_values[:,2]
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot2.svg")) # hide
 
-figure(figsize=(8,6))
-tricontourf(ss, cbt, res.measurements)
-
-xlabel("Sub sample", fontsize=14)
-ylabel("Col sample by tree", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
-
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap2.svg")) # hide
-
-# \figalt{Hyperparameter heatmap}{EX-crabs-xgb-heatmap2.svg}
+# \figalt{Hyperparameter tuningplot}{EX-crabs-xgb-tuningplot2.svg}
 #
 # Let's retrieve the best models:
 
-xgb = fitted_params(mtm).best_model
+xgb = fitted_params(mach).best_model
 @show xgb.subsample
 @show xgb.colsample_bytree
 
-# We could continue with more fine tuning but given how small the dataset is, it doesn't make much sense.
-# How does it fare on the test set?
+# We could continue with more fine tuning but given how small the dataset is, it doesn't
+# make much sense.  How does it fare on the test set?
 
-PyPlot.close_figs() # hide
-ŷ = predict_mode(mtm, rows=test)
+ŷ = predict_mode(mach, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
-
-# ‎
-# @@
-
-# ‎
-# @@
