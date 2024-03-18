@@ -147,7 +147,7 @@ filler = machine(FillImputer(), datac)
 fit!(filler)
 datac = MLJ.transform(filler, datac)
 
-y, X = unpack(datac, ==(:outcome), name->true);
+y, X = unpack(datac, ==(:outcome));
 X = coerce(X, autotype(X, :discrete_to_continuous));
 
 #
