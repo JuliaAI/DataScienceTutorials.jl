@@ -24,10 +24,14 @@ import StatsBase # needed for `countmap`
 Plots.scalefontsizes() # reset font sizes
 Plots.scalefontsizes(0.85)
 
+
+
 # @@dropdown
 # ## Data Preparation
 # @@
 # @@dropdown-content
+
+
 
 # Divide the sample into two equal sub-samples. Keep the proportion of frauds the same in
 # each sub-sample (246 frauds in each).  Use one sub-sample to estimate (train) your
@@ -98,10 +102,16 @@ StatsBase.countmap(ytrain)
 
 StatsBase.countmap(ytest)
 
+
+
+# ‎
+# @@
 # @@dropdown
 # ## Estimation of models
 # @@
 # @@dropdown-content
+
+
 
 # We will estimate of three different models:
 
@@ -109,12 +119,22 @@ StatsBase.countmap(ytest)
 # 2. support vector machines
 # 3. neural network.
 
+
+
 # @@dropdown
 # ### Logit
 # @@
 # @@dropdown-content
 
+
+
+
+# ‎
+# @@
+# @@dropdown
 # ### Initial logit classification with lambda = 1.0
+# @@
+# @@dropdown-content
 
 LogisticClassifier = @load LogisticClassifier pkg=MLJLinearModels
 model_logit = LogisticClassifier(lambda=1.0)
@@ -159,11 +179,17 @@ misclassification_rate(yhat_logit, ytest)
 # tuning.
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### Tuned logit
 # @@
 # @@dropdown-content
+
+
 
 # Still LogisticClassifier but implementing hyperparameter tuning.
 
@@ -191,11 +217,17 @@ yhat_logit_tuned = predict_mode(mach, Xtest);
 # This is lower, although the difference may not be statistically significant.
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### Support Vector Machine
 # @@
 # @@dropdown-content
+
+
 
 # #### Initial SVM classification with cost = 1.0:
 
@@ -247,11 +279,17 @@ confusion_matrix(yhat_svm_tuned, ytest)
 misclassification_rate(yhat_svm_tuned, ytest)
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### Neural Network
 # @@
 # @@dropdown-content
+
+
 
 NeuralNetworkClassifier = @load NeuralNetworkClassifier pkg=MLJFlux
 
@@ -316,7 +354,16 @@ confusion_matrix(yhat_nn, ytest)
 
 misclassification_rate(yhat_nn, ytest)
 
+
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Editorial notes
+# @@
+# @@dropdown-content
 
 # - In the original notebook the train-test-validation split was not stratified.
 
@@ -329,3 +376,6 @@ misclassification_rate(yhat_nn, ytest)
 
 # - In tuning the metric used for the objective function is always
 #   `misclassification_rate`, for consistency.
+
+# ‎
+# @@

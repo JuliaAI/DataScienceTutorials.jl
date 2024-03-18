@@ -10,10 +10,14 @@ end;
 # showing how to use XGBoost.
 #
 
+
+
 # @@dropdown
 # ## First steps
 # @@
 # @@dropdown-content
+
+
 #
 # MLJ provides a built-in function to load the Crabs dataset:
 
@@ -58,11 +62,17 @@ countmap(y[train])
 #
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## XGBoost machine
 # @@
 # @@dropdown-content
+
+
 
 # Wrap a machine around an XGBoost model (XGB) and the data:
 
@@ -94,10 +104,14 @@ savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
 xgb.num_round = 200;
 
 
+
+
 # @@dropdown
 # ### More tuning (1)
 # @@
 # @@dropdown-content
+
+
 
 # Let's now tune the maximum depth of each tree and the minimum child weight in the
 # boosting.
@@ -130,11 +144,17 @@ xgb = fitted_params(mach).best_model
 @show xgb.min_child_weight
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### More tuning (2)
 # @@
 # @@dropdown-content
+
+
 #
 # Let's examine the effect of `gamma`:
 
@@ -157,11 +177,17 @@ savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")) # hide
 # It doesn't look like increasing `gamma` from its zero default value is going to improve
 # performance.
 
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### More tuning (3)
 # @@
 # @@dropdown-content
+
+
 #
 # Let's examine the effect of `subsample` and `colsample_bytree`:
 
@@ -197,3 +223,9 @@ xgb = fitted_params(mach).best_model
 
 ŷ = predict_mode(mach, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+# ‎
+# @@
+
+# ‎
+# @@

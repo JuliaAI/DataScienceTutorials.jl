@@ -8,10 +8,14 @@ end;
 # A tutorial showing how to wrap a supervised model in input feature preprocessing (create
 # a pipeline model) and transforamtions of the target.
 
+
+
 # @@dropdown
 # ## Generating dummy data
 # @@
 # @@dropdown-content
+
+
 # Let's start by generating some dummy data with both numerical values and categorical values:
 
 using MLJ
@@ -47,11 +51,17 @@ schema(X)
 # 1. Return target prediction on the original scale
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## Wrapping a supervised model in learned target transformations
 # @@
 # @@dropdown-content
+
+
 
 # First, we wrap our supervised model in the target transformation we want:
 
@@ -76,11 +86,17 @@ yhat = predict(mach, Xcont)
 mach = machine(RidgeRegressor(), Xcont, y) |> fit!
 yhat - predict(mach, Xcont)
 
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## The final pipeline
 # @@
 # @@dropdown-content
+
+
 
 # Next we insert our target-transformed model into a pipeline, to create a new model which
 # includes the input data pre-processing we want:
@@ -98,6 +114,9 @@ pipe.one_hot_encoder.drop_last = true;
 # Evaluation for a pipe can be done with the `evaluate!` method.
 
 evaluate(pipe, X, y, resampling=CV(nfolds=3), measure=l1)
+
+# ‎
+
 
 # ‎
 # @@

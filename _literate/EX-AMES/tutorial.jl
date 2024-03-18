@@ -5,10 +5,14 @@ Pkg.instantiate()
 # Build a model for the Ames House Price data set using a simple learning network to blend
 # their predictions of two regressors.
 
+
+
 # @@dropdown
 # ## Baby steps
 # @@
 # @@dropdown-content
+
+
 #
 # Let's load a reduced version of the well-known Ames House Price data set (containing six
 # of the more important categorical features and six of the more important numerical
@@ -38,11 +42,17 @@ scitype(y)
 #
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## Dummy model
 # @@
 # @@dropdown-content
+
+
 
 # Remember that a "model" in MLJ is just a container for hyperparameters; let's take a
 # particularly simple one: constant regression.
@@ -79,11 +89,17 @@ ŷ[1:3]
 rmsl(ŷ, y[test])
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## KNN-Ridge blend
 # @@
 # @@dropdown-content
+
+
 #
 # Let's try something a bit fancier than a constant regressor.
 #
@@ -101,10 +117,14 @@ RidgeRegressor = @load RidgeRegressor pkg="MultivariateStats"
 KNNRegressor = @load KNNRegressor
 
 
+
+
 # @@dropdown
 # ### A learning network
 # @@
 # @@dropdown-content
+
+
 #
 # Let's start by defining the source nodes of the network, which will wrap our data. Here
 # we are including data only for testing purposes. Later when we "export" our functioning
@@ -152,11 +172,17 @@ rmsl(y[test], ypreds)
 
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### Exporting the learning network
 # @@
 # @@dropdown-content
+
+
 #
 
 # Here's the struct for our new model type. Notice it has other models as hyperparameters.
@@ -192,7 +218,7 @@ function prefit(model::BlendedRegressor, verbosity, X, y)
 
     ŷ = exp(ẑ)
 
-    # return learning network interface:
+    # return learning network interface
     (predict=ŷ,)
 end
 
@@ -206,11 +232,17 @@ preds = predict(mach, rows=test)
 rmsl(y[test], preds)
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### Tuning the blended model
 # @@
 # @@dropdown-content
+
+
 #
 
 
@@ -268,3 +300,9 @@ blended_best = fitted_params(mach).best_model
 
 preds = predict(mach, rows=test)
 rmsl(y[test], preds)
+
+# ‎
+# @@
+
+# ‎
+# @@
