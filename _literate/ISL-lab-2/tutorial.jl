@@ -145,7 +145,7 @@ mpg |> mean
 # * [PGFPlotsX.jl](https://github.com/KristofferC/PGFPlotsX.jl) and [PGFPlots](https://github.com/JuliaTeX/PGFPlots.jl) using the LaTeX package  pgfplots,
 # * [Makie](https://github.com/JuliaPlots/Makie.jl), [Gaston](https://github.com/mbaz/Gaston.jl), [Vega](https://github.com/queryverse/VegaLite.jl), ...
 #
-# In these tutorials we use `PyPlot` but you could use another package of course.
+# In these tutorials we use `Plots.jl` but you could use another package of course.
 
 using Plots
 
