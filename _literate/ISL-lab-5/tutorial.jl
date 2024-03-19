@@ -38,7 +38,7 @@ plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
 xlabel!("Horsepower")
 ylabel!("MPG")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")); # hide
 
 # \figalt{MPG v Horsepower}{ISL-lab-5-g1.svg}
 
@@ -60,7 +60,7 @@ xlabel!("Horsepower")
 ylabel!("MPG")
 
 
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")); # hide
 
 # \figalt{1st order baseline}{ISL-lab-5-g2.svg}
 
@@ -114,7 +114,7 @@ plot!(xx.Horsepower, yy3,  label="Order 3", linewidth=3, color=:red,)
 xlabel!("Horsepower")
 ylabel!("MPG")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")); # hide
 
 # \figalt{1st, 2nd and 3d order fit}{ISL-lab-5-g3.svg}
 
@@ -166,7 +166,7 @@ plot!(xx.Horsepower, yy5, color=:orange, linewidth=4, legend=false)
 xlabel!("Horsepower")
 ylabel!("MPG")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")); # hide
 
 # \figalt{5th order fit}{ISL-lab-5-g4.svg}
 

@@ -70,7 +70,7 @@ plt = plot(curve.parameter_values, curve.measurements, size=dims)
 xlabel!("Number of rounds", fontsize=14)
 ylabel!("RMSE", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "lgbm_hp1.svg")) # hide
+savefig(joinpath(@OUTPUT, "lgbm_hp1.svg")); # hide
 
 # \fig{lgbm_hp1.svg}
 
@@ -101,7 +101,7 @@ plot(
 xlabel!("Learning rate (log scale)", fontsize=14)
 ylabel!("RMSE", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "lgbm_hp2.svg")) # hide
+savefig(joinpath(@OUTPUT, "lgbm_hp2.svg")); # hide
 
 # \fig{lgbm_hp2.svg}
 
@@ -131,7 +131,7 @@ plot(curve.parameter_values, curve.measurements, size=dims)
 xlabel!("Min data in leaf", fontsize=14)
 ylabel!("RMSE", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "lgbm_hp3.svg")) # hide
+savefig(joinpath(@OUTPUT, "lgbm_hp3.svg")); # hide
 
 # \fig{lgbm_hp3.svg}
 

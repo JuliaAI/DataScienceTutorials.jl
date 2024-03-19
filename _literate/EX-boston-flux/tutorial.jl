@@ -140,7 +140,7 @@ plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 xlabel!(curve.parameter_name)
 ylabel!("l2-log")
 
-savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")); # hide
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 

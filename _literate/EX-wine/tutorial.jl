@@ -189,7 +189,7 @@ scatter!(x1[mask_3], x2[mask_3], marker="o", color="magenta", label="Class 3")
 xlabel!("PCA dimension 1")
 ylabel!("PCA dimension 2")
 
-savefig(joinpath(@OUTPUT, "EX-wine-pca.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-wine-pca.svg")); # hide
 
 # \figalt{PCA}{EX-wine-pca.svg}
 #

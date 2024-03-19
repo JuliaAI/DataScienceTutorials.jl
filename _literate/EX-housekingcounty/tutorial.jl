@@ -83,7 +83,7 @@ using Plots
 histogram(df.price, color = "blue", normalize=:pdf, bins=50, alpha=0.5, legend=false)
 xlabel!("Price")
 ylabel!("Frequency")
-savefig(joinpath(@OUTPUT, "hist_price.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_price.svg")); # hide
 
 # \figalt{Histogram of the prices}{hist_price.svg}
 
@@ -93,7 +93,7 @@ histogram(df.price[df.isrenovated .== true], color = "blue", normalize=:pdf, bin
 histogram!(df.price[df.isrenovated .== false], color = "red", normalize=:pdf, bins=50, alpha=0.5, label="unrenovated")
 xlabel!("Price")
 ylabel!("Frequency")
-savefig(joinpath(@OUTPUT, "hist_price2.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_price2.svg")); # hide
 
 # \figalt{Histogram of the prices depending on renovation}{hist_price2.svg}
 # We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.

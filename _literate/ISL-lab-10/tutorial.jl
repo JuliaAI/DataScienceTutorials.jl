@@ -109,7 +109,7 @@ xlabel!("Number of PCA features")
 ylabel!("Ratio of explained variance")
 plot!(1:length(cs), cs, color="red", marker="o", linewidth=3)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")); # hide
 
 # \figalt{PCA explained variance}{ISL-lab-10-g1.svg}
 
@@ -152,7 +152,7 @@ plot(p)
 xlabel!("PCA-1")
 ylabel!("PCA-2")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-10-cluster.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-10-cluster.svg")); # hide
 
 # \fig{ISL-lab-10-cluster.svg}
 

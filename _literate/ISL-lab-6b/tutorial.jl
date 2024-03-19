@@ -85,7 +85,7 @@ plot!(
     linewidth = 4,
 )
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-6-g2.svg")); # hide
 
 # \figalt{Distribution of salary}{ISL-lab-6-g2.svg}
 #
@@ -148,7 +148,7 @@ hline!([0], linewidth = 2, color = :red)
 xlabel!("Index")
 ylabel!("Residual (ŷ - y)")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g3.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-6-g3.svg")); # hide
 
 # \figalt{Residuals}{ISL-lab-6-g3.svg}
 
@@ -171,7 +171,7 @@ plot!(xx, pdf.(lfit, xx), linecolor = :magenta, label = "Laplace fit", linewidth
 xlabel!("Residual (ŷ - y)")
 ylabel!("Density")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-6-g4.svg")); # hide
 
 # \figalt{Distribution of residuals}{ISL-lab-6-g4.svg}
 
@@ -250,7 +250,7 @@ xlabel!("Index")
 ylabel!("Residual (ŷ - y)")
 
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-6-g5.svg")); # hide
 
 # \figalt{Ridge residuals}{ISL-lab-6-g5.svg}
 #
@@ -324,7 +324,7 @@ hline!([0], linewidth = 2, color = :red)
 ylabel!("Amplitude")
 xlabel!("Coefficient")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-6-g6.svg")); # hide
 
 # \figalt{Lasso coefficients}{ISL-lab-6-g6.svg}
 

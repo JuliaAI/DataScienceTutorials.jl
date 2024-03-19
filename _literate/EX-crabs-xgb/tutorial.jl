@@ -95,7 +95,7 @@ plot(curve.parameter_values, curve.measurements)
 xlabel!("Number of rounds", fontsize=14)
 ylabel!("HingeLoss", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")); # hide
 
 # \figalt{Cross entropy vs Num Round}{EX-crabs-xgb-curve1.svg}
 #
@@ -133,7 +133,7 @@ fit!(mach, rows=train)
 
 plot(mach)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot.svg")); # hide
 
 # \figalt{Hyperparameter tuningplot}{EX-crabs-xgb-tuningplot.svg}
 
@@ -170,7 +170,7 @@ plot(curve.parameter_values, curve.measurements)
 xlabel!("gamma", fontsize=14)
 ylabel!("cross entropy", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")); # hide
 
 # \figalt{Tuning gamma}{EX-crabs-xgb-gamma.svg}
 
@@ -208,7 +208,7 @@ fit!(mach, rows=train)
 
 plot(mach)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot2.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot2.svg")); # hide
 
 # \figalt{Hyperparameter tuningplot}{EX-crabs-xgb-tuningplot2.svg}
 #

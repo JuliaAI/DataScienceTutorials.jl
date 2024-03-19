@@ -79,7 +79,7 @@ describe(data)
 data[!,:Amount] = log.(data[!,:Amount] .+ 1e-6);
 histogram(data.Amount)
 
-savefig(joinpath(@OUTPUT, "EX-creditfraud-amount.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-creditfraud-amount.svg")); # hide
 
 # \fig{EX-telco-creditfraud-amount.svg}
 
@@ -167,7 +167,7 @@ plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black, label=:none)
 xlabel!("false positive rate")
 ylabel!("true positive rate")
 
-savefig(joinpath(@OUTPUT, "EX-creditfraud-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-creditfraud-roc.svg")); # hide
 
 # \fig{EX-telco-creditfraud-tuned_svm.svg}
 
@@ -265,7 +265,7 @@ fitted_params(mach).best_model
 
 plot(mach)
 
-savefig(joinpath(@OUTPUT, "EX-creditfraud-tuned_svm.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-creditfraud-tuned_svm.svg")); # hide
 
 # \fig{EX-telco-creditfraud-tuned_svm.svg}
 

@@ -151,7 +151,7 @@ using Plots
 
 plot(mpg, size=(800,600), linewidth=2, legend=false)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")); # hide
 
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
 

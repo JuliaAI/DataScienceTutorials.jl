@@ -154,7 +154,7 @@ using Plots
 plot(curve.parameter_values, curve.measurements)
 xlabel!(curve.parameter_name)
 
-savefig(joinpath(@OUTPUT, "e1.svg")) # hide
+savefig(joinpath(@OUTPUT, "e1.svg")); # hide
 
 # \fig{e1.svg}
 
@@ -186,7 +186,7 @@ curve = learning_curve(
 plot(curve.parameter_values, curve.measurements)
 xlabel!(curve.parameter_name)
 
-savefig(joinpath(@OUTPUT, "e2.svg")) # hide
+savefig(joinpath(@OUTPUT, "e2.svg")); # hide
 
 # \fig{e2}
 

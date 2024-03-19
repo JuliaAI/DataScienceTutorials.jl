@@ -166,7 +166,7 @@ plot(tuned_ensemble)
 
 #-
 
-savefig(joinpath(@OUTPUT, "A-ensembles-plot.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-plot.svg")); # hide
 
 # \figalt{Hyperparameter tuning}{A-ensembles-plot.svg}
 #

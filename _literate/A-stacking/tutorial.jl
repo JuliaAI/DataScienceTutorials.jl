@@ -217,7 +217,7 @@ ysort = yraw[idxsort]
 plot(xsort, ysort, linetype=:stepmid, label="truth")
 plot!(x, yraw, seriestype=:scatter, markershape=:circle, label="data", xlim=(-4.5, 4.5))
 
-savefig(joinpath(@OUTPUT, "s1.svg")) # hide
+savefig(joinpath(@OUTPUT, "s1.svg")); # hide
 
 # \fig{s1.svg}
 
@@ -309,7 +309,7 @@ plot!(
     xlim=(-4.5, 4.5),
 )
 
-savefig(joinpath(@OUTPUT, "s2.svg")) # hide
+savefig(joinpath(@OUTPUT, "s2.svg")); # hide
 
 # \fig{s2.svg}
 
@@ -338,7 +338,7 @@ plot!(
 )
 
 
-savefig(joinpath(@OUTPUT, "s3.svg")) # hide
+savefig(joinpath(@OUTPUT, "s3.svg")); # hide
 
 # \fig{s3.svg}
 
@@ -390,7 +390,7 @@ plot(xsort, ysort, linetype=:stepmid, label="truth")
 plot!(x, yhat(), seriestype=:scatter, markershape=:circle, label="yhat", xlim=(-4.5, 4.5))
 
 
-savefig(joinpath(@OUTPUT, "s4.svg")) # hide
+savefig(joinpath(@OUTPUT, "s4.svg")); # hide
 
 # \fig{s4}
 
