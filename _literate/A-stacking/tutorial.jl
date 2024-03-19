@@ -110,7 +110,6 @@ end
 import MLJ.MLJBase.prefit
 function prefit(::MyAverageTwo, verbosity, X, y)
 
-    # the learning network:
     Xs = source(X)
     ys = source(y)
 
@@ -122,7 +121,6 @@ function prefit(::MyAverageTwo, verbosity, X, y)
 
     yhat = 0.5*y1 + 0.5*y2
 
-    # the learning network interface
     return (predict=yhat,)
 end
 

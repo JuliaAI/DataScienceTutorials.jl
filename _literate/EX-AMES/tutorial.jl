@@ -218,7 +218,6 @@ function prefit(model::BlendedRegressor, verbosity, X, y)
 
     ŷ = exp(ẑ)
 
-    # return learning network interface
     (predict=ŷ,)
 end
 

@@ -117,8 +117,7 @@ function prefit(ensemble::MyEnsemble, verbosity, X, y)
     machines = (machine(:atom, Xs, ys) for i in 1:n)
     ys = [predict(m, Xs) for  m in machines]
     yhat = mean(ys)
-
-    # the returned interface indicates the node that will produce output for predict
+    
     return (predict=yhat,)
 end
 
@@ -151,6 +150,7 @@ curve = learning_curve(
 )
 
 using Plots
+
 plot(curve.parameter_values, curve.measurements)
 xlabel!(curve.parameter_name)
 
