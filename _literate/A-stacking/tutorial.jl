@@ -138,7 +138,7 @@ function print_performance(model, data...)
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)
     ste = round(std(e.per_fold[1])/sqrt(8), digits=5)
-    println("$(typeof(model)) = $μ ± $(2*ste)")
+    println("$(MLJ.name(model)) = $μ ± $(2*ste)")
 end;
 
 X, y = @load_boston
