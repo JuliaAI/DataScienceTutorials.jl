@@ -54,6 +54,8 @@ train, test = partition(eachindex(y), 0.5, shuffle = true, rng = 424);
 # Let's have a look at the target.
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
 plot(
     y,

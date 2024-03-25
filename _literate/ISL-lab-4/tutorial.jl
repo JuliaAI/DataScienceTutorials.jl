@@ -46,6 +46,9 @@ round.(cm, sigdigits=1)
 # Let's see what the `:Volume` feature looks like:
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
+
 plot(X.Volume, size=(800,600), linewidth=2, legend=false)
 xlabel!("Tick number")
 ylabel!("Volume")

@@ -203,8 +203,8 @@ for m in models(matching(X, y))
 end
 
 #Adding labels and legend to the ROC-AUC curve
-xlabel!("False Positive Rate")
-ylabel!("True Positive Rate")
+xlabel!("False Positive Rate", fontsize=14)
+ylabel!("True Positive Rate", fontsize=14)
 
 savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")); # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}

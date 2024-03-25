@@ -181,6 +181,8 @@ mask_2 = ytrain .== 2
 mask_3 = ytrain .== 3
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
 scatter(x1[mask_1], x2[mask_1], marker="o", color="red", label="Class 1")
 scatter!(x1[mask_2], x2[mask_2], marker="o", color="blue", label="Class 2")

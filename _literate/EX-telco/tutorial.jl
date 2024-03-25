@@ -507,7 +507,7 @@ confmat(mode.(ŷ), y[validation])
 # functions for the first time can take a minute or so.
 
 using Plots
-Plots.scalefontsizes() # reset font sizes
+Plots.scalefontsizes() #hide # reset font sizes
 Plots.scalefontsizes(0.85)
 
 #-

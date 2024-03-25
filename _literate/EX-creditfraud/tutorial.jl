@@ -21,7 +21,7 @@ import StatsBase # needed for `countmap`
 
 # Adjusting fontsize in plotting:
 
-Plots.scalefontsizes() # reset font sizes
+Plots.scalefontsizes() #hide # reset font sizes
 Plots.scalefontsizes(0.85)
 
 

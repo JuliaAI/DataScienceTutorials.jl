@@ -139,6 +139,8 @@ schema(data)
 
 # To get a better understanding of our targets, let's plot their respective distributions.
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 histogram(
 	data.Solar_gen,

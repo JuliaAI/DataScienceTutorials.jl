@@ -67,6 +67,8 @@ fp = fitted_params(mach_uni)
 # You can also visualise this
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
 

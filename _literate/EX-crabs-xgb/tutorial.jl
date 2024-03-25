@@ -25,11 +25,13 @@ using MLJ
 using StatsBase
 using Random
 using Plots
-MLJ.color_off() # hide
 import DataFrames
 import StableRNGs.StableRNG
 
 MLJ.color_off() # hide
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.1) #hide
+
 X, y = @load_crabs # a table and a vector
 X = DataFrames.DataFrame(X)
 @show size(X)

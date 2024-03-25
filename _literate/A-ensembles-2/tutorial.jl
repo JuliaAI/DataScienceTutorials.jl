@@ -63,6 +63,8 @@ curves = learning_curve(m, resampling=Holdout(fraction_train=0.8, rng=rng),
 
 # let's plot the curves
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
 plot(curves.parameter_values, curves.measurements, 
 xticks = [10, 100, 250, 500, 750, 1000],

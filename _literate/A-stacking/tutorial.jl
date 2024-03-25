@@ -207,6 +207,9 @@ corestrict(string.(1:10), f, 2)
 
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
+
 steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
 x = Float64[-4, -1, 2, -3, 0, 3, -2, 1, 4]
 Xraw = (x = x, )

@@ -103,6 +103,8 @@ cs = cumsum(rpca.principalvars ./ rpca.tvar)
 # Let's visualise this
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 Plots.bar(1:length(cs), cs, legend=false, size=((800,600)), ylim=(0, 1.1))
 xlabel!("Number of PCA features")

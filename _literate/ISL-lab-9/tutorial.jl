@@ -25,6 +25,8 @@ y = vcat(-ones(10), ones(10))
 
 # which we can visualise
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 ym1 = y .== -1
 ym2 = .!ym1

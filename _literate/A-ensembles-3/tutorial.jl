@@ -150,6 +150,8 @@ curve = learning_curve(
 )
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 plot(curve.parameter_values, curve.measurements)
 xlabel!(curve.parameter_name)

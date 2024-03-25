@@ -86,6 +86,8 @@ cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 Plots.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend=false)
 

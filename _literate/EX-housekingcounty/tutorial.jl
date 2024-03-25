@@ -80,6 +80,9 @@ select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 # Let's plot a basic histogram of the prices to get an idea for the distribution:
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
+
 histogram(df.price, color = "blue", normalize=:pdf, bins=50, alpha=0.5, legend=false)
 xlabel!("Price")
 ylabel!("Frequency")

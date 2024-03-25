@@ -87,6 +87,8 @@ r.best_history_entry.measurement[1]
 
 # Anyone wants plots? of course:
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
 plot(m, size=(800,600))
 

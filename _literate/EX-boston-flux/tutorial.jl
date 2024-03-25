@@ -134,6 +134,8 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        measure=MLJ.l2)
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.1) #hide
 
 plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 
