@@ -67,13 +67,15 @@ fp = fitted_params(mach_uni)
 # You can also visualise this
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
 
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
 plot!(Xnew.LStat, MLJ.predict(mach_uni, Xnew), linewidth=3, color=:orange)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")); # hide
 
 # \figalt{Univariate regression}{ISL-lab-3-lm1.svg}
 
@@ -100,7 +102,7 @@ round(rms(ŷ, y), sigdigits=4)
 res = ŷ .- y
 plot(res, line=:stem, linewidth=1, marker=:circle, legend=false, size=((800,600)))
 hline!([0], linewidth=2, color=:red)    # add a horizontal line at x=0
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")); # hide
 
 # \figalt{Plot of the residuals}{ISL-lab-3-res.svg}
 
@@ -108,7 +110,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
 
 histogram(res, normalize=true, size=(800,600), label="residual")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")); # hide
 
 # \figalt{Histogram of the residuals}{ISL-lab-3-res2.svg}
 
@@ -154,7 +156,7 @@ Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
 plot!(Xnew.LStat, MLJ.predict(mach, Xnew), linewidth=3, color=:orange)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")); # hide
 
 # \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
 

@@ -24,10 +24,10 @@ end;
 # example](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/#Learning-networks-by-example)
 # will be helpful, but is not essential.
 
-# @@dropdown
+
 # ## Definition of composite model type
-# @@
-# @@dropdown-content
+
+
 
 using MLJ
 import Statistics
@@ -117,18 +117,15 @@ function prefit(ensemble::MyEnsemble, verbosity, X, y)
     machines = (machine(:atom, Xs, ys) for i in 1:n)
     ys = [predict(m, Xs) for  m in machines]
     yhat = mean(ys)
-
-    # the returned "interface" indicates the node that will produce output for `predict`:
+    
     return (predict=yhat,)
-
 end
 
-# ‎
-# @@
-# @@dropdown
+
+
 # ## Application to data
-# @@
-# @@dropdown-content
+
+
 
 X, y = @load_boston;
 
@@ -153,10 +150,13 @@ curve = learning_curve(
 )
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
+
 plot(curve.parameter_values, curve.measurements)
 xlabel!(curve.parameter_name)
 
-savefig(joinpath(@OUTPUT, "e1.svg")) # hide
+savefig(joinpath(@OUTPUT, "e1.svg")); # hide
 
 # \fig{e1.svg}
 
@@ -188,11 +188,10 @@ curve = learning_curve(
 plot(curve.parameter_values, curve.measurements)
 xlabel!(curve.parameter_name)
 
-savefig(joinpath(@OUTPUT, "e2.svg")) # hide
+savefig(joinpath(@OUTPUT, "e2.svg")); # hide
 
 # \fig{e2}
 
 #-
 
-# ‎
-# @@
+

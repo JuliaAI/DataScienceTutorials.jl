@@ -46,11 +46,14 @@ round.(cm, sigdigits=1)
 # Let's see what the `:Volume` feature looks like:
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
+
 plot(X.Volume, size=(800,600), linewidth=2, legend=false)
 xlabel!("Tick number")
 ylabel!("Volume")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")); # hide
 
 # \figalt{volume}{ISL-lab-4-volume.svg}
 
@@ -72,7 +75,7 @@ categories, vals = collect(keys(cm)), collect(values(cm))
 Plots.bar(categories, vals, title="Bar Chart Example", legend=false)
 ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")); # hide
 
 # \fig{ISL-lab-4-bal.svg}
 #
@@ -112,7 +115,7 @@ cm = confusion_matrix(ŷ, y)
 @show false_positive(cm)
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
-@show postive_predictive_value(ŷ, y) |> r3   # a.k.a. precision
+@show positive_predictive_value(ŷ, y) |> r3   # a.k.a. precision
 @show recall(ŷ, y)    |> r3
 @show f1score(ŷ, y)   |> r3
 
@@ -262,7 +265,7 @@ categories, vals = collect(keys(cm)), collect(values(cm))
 bar(categories, vals, title="Bar Chart Example", legend=false)
 ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")); # hide
 
 # \fig{ISL-lab-4-bal2.svg}
 
@@ -326,7 +329,7 @@ xlabel!("False Positive Rate")
 ylabel!("True Positive Rate")
 
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")); # hide
 
 # \figalt{ROC}{ISL-lab-4-roc.svg}
 

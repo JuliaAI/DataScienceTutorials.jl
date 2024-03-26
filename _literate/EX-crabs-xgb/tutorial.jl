@@ -10,10 +10,14 @@ end;
 # showing how to use XGBoost.
 #
 
+
+
 # @@dropdown
 # ## First steps
 # @@
 # @@dropdown-content
+
+
 #
 # MLJ provides a built-in function to load the Crabs dataset:
 
@@ -21,9 +25,11 @@ using MLJ
 using StatsBase
 using Random
 using Plots
-MLJ.color_off() # hide
 import DataFrames
 import StableRNGs.StableRNG
+
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.1) #hide
 
 X, y = @load_crabs # a table and a vector
 X = DataFrames.DataFrame(X)
@@ -57,11 +63,17 @@ countmap(y[train])
 #
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## XGBoost machine
 # @@
 # @@dropdown-content
+
+
 
 # Wrap a machine around an XGBoost model (XGB) and the data:
 
@@ -84,7 +96,7 @@ plot(curve.parameter_values, curve.measurements)
 xlabel!("Number of rounds", fontsize=14)
 ylabel!("Brier loss", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")); # hide
 
 # \figalt{Brier loss vs Num Round}{EX-crabs-xgb-curve1.svg}
 #
@@ -93,10 +105,14 @@ savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
 xgb.num_round = 300;
 
 
+
+
 # @@dropdown
 # ### More tuning (1)
 # @@
 # @@dropdown-content
+
+
 
 # Let's now tune the maximum depth of each tree and the minimum child weight in the
 # boosting.
@@ -118,7 +134,7 @@ fit!(mach, rows=train)
 
 plot(mach)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot.svg")); # hide
 
 # \figalt{Hyperparameter tuningplot}{EX-crabs-xgb-tuningplot.svg}
 
@@ -129,11 +145,17 @@ xgb = fitted_params(mach).best_model
 @show xgb.min_child_weight
 
 # ‎
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### More tuning (2)
 # @@
 # @@dropdown-content
+
+
 #
 # Let's examine the effect of `gamma`. This time we'll use a visual approach:
 
@@ -149,7 +171,7 @@ plot(curve.parameter_values, curve.measurements)
 xlabel!("gamma", fontsize=14)
 ylabel!("Brier loss", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")); # hide
 
 # \figalt{Tuning gamma}{EX-crabs-xgb-gamma.svg}
 
@@ -159,11 +181,17 @@ xgb.gamma = 3.8
 
 # performance.
 
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ### More tuning (3)
 # @@
 # @@dropdown-content
+
+
 #
 # Let's next examine the effect of `subsample` and `colsample_bytree`:
 
@@ -184,7 +212,7 @@ fit!(mach, rows=train)
 
 plot(mach)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot2.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot2.svg")); # hide
 
 # \figalt{Hyperparameter tuningplot}{EX-crabs-xgb-tuningplot2.svg}
 #
@@ -201,3 +229,9 @@ ŷ = predict_mode(mach, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
 
 # Not too bad.
+
+# ‎
+# @@
+
+# ‎
+# @@

@@ -134,13 +134,15 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        measure=MLJ.l2)
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.1) #hide
 
 plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 
 xlabel!(curve.parameter_name)
 ylabel!("l2-log")
 
-savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")); # hide
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 

@@ -507,7 +507,7 @@ confmat(mode.(ŷ), y[validation])
 # functions for the first time can take a minute or so.
 
 using Plots
-Plots.scalefontsizes() # reset font sizes
+Plots.scalefontsizes() #hide # reset font sizes
 Plots.scalefontsizes(0.85)
 
 #-
@@ -517,7 +517,7 @@ plt = scatter(roc, legend=false)
 plot!(plt, xlab="false positive rate", ylab="true positive rate")
 plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 
-savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")); # hide
 
 # \fig{EX-telco-roc.svg}
 
@@ -759,7 +759,7 @@ rpt2.best_report.controls |> collect
 
 plot(mach_tuned_iterated_pipe, size=(600,450))
 
-savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")); # hide
 
 # \fig{EX-telco-tuning.svg}
 

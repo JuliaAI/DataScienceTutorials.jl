@@ -165,7 +165,7 @@ fitted_params(rfr_tm).best_model
 using Plots
 plot(rfr_tm)
 
-savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")); # hide
 
 # \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
 

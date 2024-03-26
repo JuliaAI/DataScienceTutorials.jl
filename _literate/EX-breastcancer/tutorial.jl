@@ -225,7 +225,7 @@ end
 xlabel!("False Positive Rate (positive=malignant)")
 ylabel!("True Positive Rate")
 
-savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")) # hide
+savefig(joinpath(@OUTPUT, "breastcancer_auc_curve.svg")); # hide
 # \figalt{ROC-AUC Curve}{breastcancer_auc_curve.svg}
 
 
