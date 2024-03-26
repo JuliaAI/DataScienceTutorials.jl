@@ -28,7 +28,6 @@ using Plots
 import DataFrames
 import StableRNGs.StableRNG
 
-MLJ.color_off() # hide
 Plots.scalefontsizes() #hide
 Plots.scalefontsizes(1.1) #hide
 
@@ -88,22 +87,22 @@ curve = learning_curve(
     mach,
     range=r,
     resolution=50,
-    measure=cross_entropy,
+    measure=brier_loss,
 )
 
 # Let's have a look
 
 plot(curve.parameter_values, curve.measurements)
 xlabel!("Number of rounds", fontsize=14)
-ylabel!("HingeLoss", fontsize=14)
+ylabel!("Brier loss", fontsize=14)
 
 savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")); # hide
 
-# \figalt{Cross entropy vs Num Round}{EX-crabs-xgb-curve1.svg}
+# \figalt{Brier loss vs Num Round}{EX-crabs-xgb-curve1.svg}
 #
-# So, in short, using more rounds helps. Let's arbitrarily fix it to 200.
+# Not a lot of improvement after 300 rounds.
 
-xgb.num_round = 200;
+xgb.num_round = 300;
 
 
 
@@ -126,7 +125,7 @@ tuned_model = TunedModel(
     tuning=Grid(resolution=8),
     resampling=CV(rng=11),
     ranges=[r1,r2],
-    measure=cross_entropy,
+    measure=brier_loss,
 )
 mach = machine(tuned_model, X, y)
 fit!(mach, rows=train)
@@ -158,25 +157,28 @@ xgb = fitted_params(mach).best_model
 
 
 #
-# Let's examine the effect of `gamma`:
+# Let's examine the effect of `gamma`. This time we'll use a visual approach:
 
 mach = machine(xgb, X, y)
 curve = learning_curve(
     mach,
     range= range(xgb, :gamma, lower=0, upper=10),
     resolution=30,
-    measure=cross_entropy,
+    measure=brier_loss,
 );
 
 plot(curve.parameter_values, curve.measurements)
 xlabel!("gamma", fontsize=14)
-ylabel!("cross entropy", fontsize=14)
+ylabel!("Brier loss", fontsize=14)
 
 savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")); # hide
 
 # \figalt{Tuning gamma}{EX-crabs-xgb-gamma.svg}
 
-# It doesn't look like increasing `gamma` from its zero default value is going to improve
+# The following choice looks about optimal:
+
+xgb.gamma = 3.8
+
 # performance.
 
 
@@ -191,7 +193,7 @@ savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")); # hide
 
 
 #
-# Let's examine the effect of `subsample` and `colsample_bytree`:
+# Let's next examine the effect of `subsample` and `colsample_bytree`:
 
 r1 = range(xgb, :subsample, lower=0.6, upper=1.0)
 r2 = range(xgb, :colsample_bytree, lower=0.6, upper=1.0)
@@ -201,7 +203,7 @@ tuned_model = TunedModel(
     tuning=Grid(resolution=8),
     resampling=CV(rng=234),
     ranges=[r1,r2],
-    measure=cross_entropy,
+    measure=brier_loss,
 )
 mach = machine(tuned_model, X, y)
 fit!(mach, rows=train)
@@ -225,6 +227,8 @@ xgb = fitted_params(mach).best_model
 
 ŷ = predict_mode(mach, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
+
+# Not too bad.
 
 # ‎
 # @@
