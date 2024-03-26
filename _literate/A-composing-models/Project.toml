@@ -1,4 +1,4 @@
 [deps]
 MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-NearestNeighborModels = "636a865e-7cf4-491e-846c-de09b730eb36"
-PrettyPrinting = "54e16d92-306c-5ea0-a30b-337be88ac337"
+MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
+StableRNGs = "860ef19b-820b-49d6-a774-d7a799459cd3"

@@ -1,6 +1,6 @@
 using Pkg# hideall
 Pkg.activate("_literate/A-model-tuning/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end
@@ -86,18 +86,9 @@ r = report(m)
 r.best_history_entry.measurement[1]
 
 # Anyone wants plots? of course:
+using Plots
 
-using PyPlot
-ioff() # hide
-figure(figsize=(8,6))
-res = r.plotting # contains all you need for plotting
-plot(res.parameter_values, res.measurements, ls="none", marker="o")
-
-xticks(1:5, fontsize=12)
-yticks(fontsize=12)
-xlabel("Maximum depth", fontsize=14)
-ylabel("Misclassification rate", fontsize=14)
-ylim([0, 1])
+plot(m)
 
 savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
 
@@ -146,23 +137,11 @@ r.best_history_entry.measurement[1]
 
 # Let's visualise this
 
-figure(figsize=(8,6))
-
-res = r.plotting
-
-vals_sf = res.parameter_values[:, 1]
-vals_bf = res.parameter_values[:, 2]
-
-tricontourf(vals_sf, vals_bf, res.measurements)
-xlabel("Number of sub-features", fontsize=14)
-ylabel("Bagging fraction", fontsize=14)
-xticks([1, 2, 3], fontsize=12)
-yticks(fontsize=12)
+plot(m)
 
 savefig(joinpath(@OUTPUT, "A-model-tuning-hm.svg")) # hide
 
 # \figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

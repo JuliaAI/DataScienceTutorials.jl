@@ -1,5 +1,0 @@
-[deps]
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-MLJMultivariateStatsInterface = "1b6a4a23-ba22-4f51-9698-8599985d3728"
-StableRNGs = "860ef19b-820b-49d6-a774-d7a799459cd3"

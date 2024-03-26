@@ -3,8 +3,7 @@
 The code included on each tutorial is tested to work reliably
 under these two conditions:
 
-- You are running Julia 1.7.x where "x" is any integer (to check, enter
-  `VERSION` at the REPL).
+- You are running Julia version 1.10 or higher (to check, enter `VERSION` at the REPL).
 
 - You have activated and instantiated the associated [package
   environment](https://docs.julialang.org/en/v1/stdlib/Pkg/).
