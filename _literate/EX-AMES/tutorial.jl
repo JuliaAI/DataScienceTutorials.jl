@@ -110,7 +110,6 @@ KNNRegressor = @load KNNRegressor
 # we are including data only for testing purposes. Later when we "export" our functioning
 # network, we'll remove reference to the data.
 
-
 Xs = source(X)
 ys = source(y)
 
@@ -120,7 +119,7 @@ ys = source(y)
 hot = machine(OneHotEncoder(), Xs)
 
 W = transform(hot, Xs)
-z = log(ys);
+z = log(ys)
 
 # In the second "layer", there's a KNN regressor and a ridge regressor, these lead to nodes
 # `ẑ₁` and `ẑ₂`
@@ -128,8 +127,8 @@ z = log(ys);
 knn   = machine(KNNRegressor(K=5), W, z)
 ridge = machine(RidgeRegressor(lambda=2.5), W, z)
 
-ẑ₁ = predict(ridge, W)
-ẑ₂ = predict(knn, W)
+ẑ₁ = predict(knn, W)
+ẑ₂ = predict(ridge, W)
 
 # In the third "layer", there's a weighted combination of the two regression models:
 
@@ -141,9 +140,9 @@ ŷ = exp(ẑ);
 
 # You've now defined the learning network we need, which we test like this:
 
-fit!(ŷ, rows=train)
-ypreds = ŷ(rows=test)
-rmsl(y[test], ypreds)
+fit!(ŷ, rows=train);
+preds = ŷ(rows=test);
+rmsl(preds, y[test])
 
 # While that's essentially all we need to solve our problem, we'll go one step further,
 # exporting our learning network as a stand-alone model type we can apply to any data set,
@@ -174,7 +173,8 @@ end
 
 # The other step we need is to wrap our learning network in a `prefit` definition,
 # substituting the component models we used with symbol "placeholders" with names
-# corresponding to fields of our new struct:
+# corresponding to fields of our new struct. We'll also use the `knn_weight` field of our
+# struct to set the mix, instead of hard-coding it as we did above.
 
 import MLJ.MLJBase.prefit
 function prefit(model::BlendedRegressor, verbosity, X, y)
@@ -203,7 +203,7 @@ mach = machine(blended, X, y)
 fit!(mach, rows=train)
 
 preds = predict(mach, rows=test)
-rmsl(y[test], preds)
+rmsl(preds, y[test])
 
 # ‎
 # @@
