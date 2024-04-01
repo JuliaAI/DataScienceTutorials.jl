@@ -126,7 +126,7 @@ idx_missing_outcome = missing_outcome |> findall
 
 train = setdiff!(train |> collect, idx_missing_outcome)
 test = setdiff!(test |> collect, idx_missing_outcome)
-all = vcat(train, test)
+all = vcat(train, test);
 
 # Now let's look at how many missings there are per features
 

@@ -112,7 +112,7 @@ scitype(df.Class)
 # feature set 'X' using the __unpack()__ method.
 
 rng = StableRNG(123)
-y, X = unpack(df, ==(:Class); rng)
+y, X = unpack(df, ==(:Class); rng);
 
 
 # We'll be using 80% of data for training, and can perform a train-test split using the
@@ -195,26 +195,21 @@ end
 p = plot(legendfontsize=7, title="ROC Curve")
 plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 for m in models_to_evaluate
-    # Capturing the model and loading it using the @load utility:
     model=m.name
     pkg = m.package_name
     model_name = "$model ($pkg)"
     @info "Evaluating $model_name. "
     eval(:(clf = @load $model pkg=$pkg verbosity=0))
 
-    # Fitting the captured model onto the training set:
     clf_machine = machine(clf(), X, y)
     fit!(clf_machine, rows=train, verbosity=0)
 
-    # Getting the predictions onto the test set
     y_pred = MLJ.predict(clf_machine, rows=test);
 
-    # Each model gets an ROC-AUC curve:
     fprs, tprs, thresholds = roc_curve(y_pred, y[test])
     plot!(p, fprs, tprs,label=model_name)
     gui()
 
-    # Calculate and save metrics:
     push!(model_names, model_name)
     push!(accuracies, accuracy(mode.(y_pred), y[test]))
     push!(log_losses, log_loss(y_pred,y[test]))

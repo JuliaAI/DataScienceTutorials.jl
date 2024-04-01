@@ -129,7 +129,7 @@ multinom_pipe = Standardizer() |> MultinomialClassifier()
 # eventual testing.
 
 (Xtrain, Xtest), (ytrain, ytest) =
-    partition((Xc, yc), 0.8, rng=StableRNG(123), multi=true)
+    partition((Xc, yc), 0.8, rng=StableRNG(123), multi=true);
 
 # Let's now wrap an instance of these models with data (all hyperparameters are set to
 # default here):
@@ -182,7 +182,7 @@ PCA = @load PCA
 pca_pipe = Standardizer() |> PCA(maxoutdim=2)
 pca = machine(pca_pipe, Xtrain)
 fit!(pca)
-W = transform(pca, Xtrain)
+W = transform(pca, Xtrain);
 
 # Let's now display this using different colours for the different classes:
 
