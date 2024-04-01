@@ -118,7 +118,6 @@ function prefit(ensemble::MyEnsemble, verbosity, X, y)
     ys = [predict(m, Xs) for  m in machines]
     yhat = mean(ys)
 
-    # the returned "interface" indicates the node that will produce output for `predict`:
     return (predict=yhat,)
 
 end
