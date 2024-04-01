@@ -80,8 +80,8 @@ function setBackgroundColor() {
   let isStart = colorNavItem(url, "/getting-started/", "getting-started");
   let isStats = colorNavItem(url, "/isl/", "stats-learning");
   let isEnd = colorNavItem(url, "/end-to-end/", "end-to-end");
-  let isAdv = colorNavItem(url, "/advanced/", "advanced");
-  if (!(isData || isStart || isStats || isEnd || isAdv)) {
+  
+  if (!isData && !isStart && !isStats && !isEnd) {
     document.getElementById("home").style.backgroundColor = "";
     document.getElementById("home").style.color = "#9b59b6";
   }

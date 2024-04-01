@@ -24,14 +24,10 @@ end;
 # example](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/#Learning-networks-by-example)
 # will be helpful, but is not essential.
 
-
-
 # @@dropdown
 # ## Definition of composite model type
 # @@
 # @@dropdown-content
-
-
 
 using MLJ
 import Statistics
@@ -122,13 +118,10 @@ function prefit(ensemble::MyEnsemble, verbosity, X, y)
     ys = [predict(m, Xs) for  m in machines]
     yhat = mean(ys)
 
+    # the returned "interface" indicates the node that will produce output for `predict`:
     return (predict=yhat,)
 
 end
-
-# ‎
-
-
 
 # ‎
 # @@
@@ -136,8 +129,6 @@ end
 # ## Application to data
 # @@
 # @@dropdown-content
-
-
 
 X, y = @load_boston;
 
@@ -202,9 +193,6 @@ savefig(joinpath(@OUTPUT, "e2.svg")) # hide
 # \fig{e2}
 
 #-
-
-# ‎
-
 
 # ‎
 # @@

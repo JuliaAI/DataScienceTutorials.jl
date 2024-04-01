@@ -3,4 +3,4 @@
 
 # Ensemble models 3 (learning networks)
 
-\tutorial{ADV-ensembles-3}
+\tutorial{A-ensembles-3}
