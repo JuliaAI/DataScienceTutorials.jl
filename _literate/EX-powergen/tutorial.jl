@@ -325,7 +325,7 @@ hline!([0], color = "red", linewidth = 3)
 
 savefig(joinpath(@OUTPUT, "residuals.png")); # hide
 
-# @@img-wide \figalt{Residuals}{residuals.png} @@
+# \figalt{Residuals}{residuals.png} @@
 
 # Nothing really stands out, the distribution also looks ok:
 
