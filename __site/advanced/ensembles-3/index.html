@@ -4,8 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {{if hasmath}} {{insert head_katex.html }} {{end}}
-  {{if hascode}} {{insert head_highlight.html }} {{end}}
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+ 
   <link rel="stylesheet" href="/css/landing.css">
   <link rel="stylesheet" href="/css/franklin.css">
   <link rel="stylesheet" href="/css/pure.css">
@@ -13,7 +15,7 @@
   <link rel="stylesheet" href="/css/nav.css">
   <link rel="stylesheet" href="/css/extra.css">
   <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
-  {{isdef title}} <title>{{fill title}}</title> {{end}}
+   <title>Ensemble models 3 &#40;learning networks&#41;</title> 
   <!-- LUNR -->
   <script src="/libs/lunr/lunr.min.js"></script>
   <script src="/libs/lunr/lunr_index.js"></script>
@@ -38,7 +40,7 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item {{ispage index.html}}pure-menu-selected{{end}}"><a href="/"
+          <li class="pure-menu-item pure-menu-top-item "><a href="/"
               class="pure-menu-link"><strong>Home</strong></a></li>
 
           <!-- DATA BASICS -->
@@ -47,19 +49,19 @@
           </div>
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist">
-              <li class="pure-menu-item {{ispage /data/loading/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
                   data</a></li>
-              <li class="pure-menu-item {{ispage /data/dataframe/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
                   Frames</a></li>
-              <li class="pure-menu-item {{ispage /data/categorical/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Categorical Arrays</a></li>
-              <li class="pure-menu-item {{ispage /data/scitype/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
                   Type</a></li>
-              <li class="pure-menu-item {{ispage /data/processing/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
                   processing</a></li>
             </ul>
@@ -72,29 +74,29 @@
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist">
               <li
-                class="pure-menu-item {{ispage /getting-started/choosing-a-model/index.html}}pure-menu-selected{{end}}">
+                class="pure-menu-item ">
                 <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Choosing a model</a>
               </li>
-              <li class="pure-menu-item {{ispage getting-started/fit-and-predict/index.html}}pure-menu-selected{{end}}">
+              <li class="pure-menu-item ">
                 <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
               </li>
-              <li class="pure-menu-item {{ispage getting-started/model-tuning/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/getting-started/model-tuning/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-              <li class="pure-menu-item {{ispage getting-started/ensembles/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Ensembles</a></li>
-              <li class="pure-menu-item {{ispage getting-started/ensembles-2/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/getting-started/ensembles-2/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
               <li
-                class="pure-menu-item {{ispage getting-started/composing-models/index.html}}pure-menu-selected{{end}}">
+                class="pure-menu-item ">
                 <a href="/getting-started/composing-models/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Composing models</a>
               </li>
-              <li class="pure-menu-item {{ispage getting-started/stacking/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Stacking</a></li>
             </ul>
@@ -105,7 +107,7 @@
           </div>
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist" id=isl>
-              <li class="pure-menu-item {{ispage isl/lab-2/index.html}}pure-menu-selected{{end}}"><a href="/isl/lab-2/"
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
                   class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
               <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 3</a></li>
@@ -129,15 +131,15 @@
           </div>
           <div class="dropdown-content collapse">
             <ul class="pure-menu-sublist" >
-              <li class="pure-menu-item {{ispage end-to-end/telco/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
                   Churn</a></li>
-              <li class="pure-menu-item {{ispage end-to-end/AMES/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
               </li>
               <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Wine</a></li>
-              <li class="pure-menu-item {{ispage end-to-end/crabs-xgb/index.html}}pure-menu-selected{{end}}"><a
+              <li class="pure-menu-item "><a
                   href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Crabs (XGB)</a></li>
               <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
@@ -260,10 +262,192 @@
     </div>
   </div>
   <div id="main"> <!-- Closed in foot -->
-    {{ispage index.html}}
-    <div class="header">
-      <h1>{{fill title}}</h1>
-    </div>
-    {{end}}
+    
 
-    <!-- Content appended here -->
+    <!-- Content appended here --><div class="franklin-content"><h1 id="ensemble_models_3_learning_networks"><a href="#ensemble_models_3_learning_networks" class="header-anchor">Ensemble models 3 &#40;learning networks&#41;</a></h1>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ADV-ensembles-3.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
+<p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
+<p><div class="franklin-toc"><ol><li><a href="#definition_of_composite_model_type">Definition of composite model type</a></li><li><a href="#application_to_data">Application to data</a></li></ol></div>
+<p>Illustration of learning networks to create homogeneous ensemble using learning networks.</p>
+<p>Learning networks are an advanced MLJ feature which are covered in detail, with examples, in the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/">Learning networks</a> section of the manual. In the &quot;Ensemble&quot; and &quot;Ensemble &#40;2&#41;&quot; tutorials it is shown how to create and apply homogeneous ensembles using MLJ&#39;s built-in <code>EnsembleModel</code> wrapper. To provide a simple illustration of learning networks we show how a user could build their own ensemble wrapper. We simplify the illustration by excluding bagging, which means all randomness has to be generated by the atomic models themselves &#40;e.g., by the random selection of features in each split of a decision tree&#41;.</p>
+<p>For a more advanced illustration, see the &quot;Stacking&quot; tutorial.</p>
+<p>Some familiarity with the early parts of <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/#Learning-networks-by-example">Learning networks by example</a> will be helpful, but is not essential.</p>
+<div class="dropdown"><h2 id="definition_of_composite_model_type"><a href="#definition_of_composite_model_type" class="header-anchor">Definition of composite model type</a></h2></div>
+<div class="dropdown-content"><pre><code class="language-julia">using MLJ
+import Statistics</code></pre>
+<p>We load a model type we might want to use as an atomic model in our ensemble, and instantiate a default instance:</p>
+<pre><code class="language-julia">DecisionTreeRegressor &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
+atom &#61; DecisionTreeRegressor&#40;&#41;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
+DecisionTreeRegressor(
+  max_depth = -1, 
+  min_samples_leaf = 5, 
+  min_samples_split = 2, 
+  min_purity_increase = 0.0, 
+  n_subfeatures = 0, 
+  post_prune = false, 
+  merge_purity_threshold = 1.0, 
+  feature_importance = :impurity, 
+  rng = Random._GLOBAL_RNG())</code></pre>
+<p>We&#39;ll be able to change this later on if we want.</p>
+<p>The standard workflow for defining a new composite model type using learning networks is in two stages:</p>
+<ol>
+<li><p>Define and test a learning network using some small test data set</p>
+</li>
+<li><p>&quot;Export&quot; the network as a new stand-alone model type, unattached to any data</p>
+</li>
+</ol>
+<p>Here&#39;s a small data set we can use for step 1:</p>
+<pre><code class="language-julia">X &#61; &#40;; x&#61;rand&#40;5&#41;&#41;
+y &#61; rand&#40;5&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
+ 0.2885335046108337
+ 0.2651331350030508
+ 0.19983129189403714
+ 0.36292782460780615
+ 0.24516948627435398</code></pre>
+<p>As a warm-up exercise, we&#39;ll suppose we have only two models in the ensemble.  We start by wrapping the input data in source nodes. These nodes will be interface points for new training data when we <code>fit&#33;</code> our new ensemble model type; <code>Xs</code> will also be an interface point for production data when we call <code>predict</code> on our new ensemble model type.</p>
+<pre><code class="language-julia">Xs &#61; source&#40;X&#41;
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @716 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+<p>Here are two distinct machines &#40;for learning distinct trees&#41; that share the same atomic model &#40;hyperparameters&#41;:</p>
+<pre><code class="language-julia">mach1 &#61; machine&#40;atom, Xs, ys&#41;
+mach2 &#61; machine&#40;atom, Xs, ys&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
+  model: DecisionTreeRegressor(max_depth = -1, …)
+  args: 
+    1:	Source @990 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @716 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+</code></pre>
+<p>Here are prediction nodes:</p>
+<pre><code class="language-julia">y1 &#61; predict&#40;mach1, Xs&#41;
+y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @752 → DecisionTreeRegressor(…)
+  args:
+    1:	Source @990
+  formula:
+    predict(
+      machine(DecisionTreeRegressor(max_depth = -1, …), …), 
+      Source @990)</code></pre>
+<p>It happens that <code>mean</code> immediately works on vectors of nodes, because <code>&#43;</code> and division by a scalar works for nodes:</p>
+<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @450
+  args:
+    1:	Node @823
+  formula:
+    #113(
+      +(
+        predict(
+          machine(DecisionTreeRegressor(max_depth = -1, …), …), 
+          Source @990),
+        predict(
+          machine(DecisionTreeRegressor(max_depth = -1, …), …), 
+          Source @990)))</code></pre>
+<p>Let&#39;s test the network:</p>
+<pre><code class="language-julia">fit&#33;&#40;yhat&#41;
+Xnew &#61; &#40;; x&#61;rand&#40;2&#41;&#41;
+yhat&#40;Xnew&#41;</code></pre><pre><code class="plaintext code-output">2-element Vector{Float64}:
+ 0.27231904847801636
+ 0.27231904847801636</code></pre>
+<p>Great. No issues. Here&#39;s how we have an ensemble of any size:</p>
+<pre><code class="language-julia">n &#61; 10
+machines &#61; &#40;machine&#40;atom, Xs, ys&#41; for i in 1:n&#41;
+ys &#61; &#91;predict&#40;m, Xs&#41; for  m in machines&#93;
+yhat &#61; mean&#40;ys&#41;;</code></pre>
+<p>You can go ahead and test the modified network as before.</p>
+<p>We define a struct for our new ensemble type:</p>
+<pre><code class="language-julia">mutable struct MyEnsemble &lt;: DeterministicNetworkComposite
+    atom
+    n::Int64
+end</code></pre>
+<p>Note carefully the supertype <code>DeterministicNetworkComposite</code>, which we are using because our atomic model will always be <code>Deterministic</code> predictors, and we are exporting a learning network to make a new composite model. Refer to documentation for other options here.</p>
+<p>Finally, we wrap our learning network in a <code>prefit</code> method. In this case we leave out the test data, and substitute the actual <code>atom</code> we used with a symbolic &quot;placeholder&quot;, with the name of the corresponding model field, in this case <code>:atom</code>:</p>
+<pre><code class="language-julia">import MLJ.MLJBase.prefit
+function prefit&#40;ensemble::MyEnsemble, verbosity, X, y&#41;
+
+    Xs &#61; source&#40;X&#41;
+    ys &#61; source&#40;y&#41;
+
+    n &#61; ensemble.n
+    machines &#61; &#40;machine&#40;:atom, Xs, ys&#41; for i in 1:n&#41;
+    ys &#61; &#91;predict&#40;m, Xs&#41; for  m in machines&#93;
+    yhat &#61; mean&#40;ys&#41;
+
+    return &#40;predict&#61;yhat,&#41;
+
+end</code></pre><pre><code class="plaintext code-output">prefit (generic function with 10 methods)</code></pre>
+<p>‎</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="application_to_data"><a href="#application_to_data" class="header-anchor">Application to data</a></h2></div>
+<div class="dropdown-content"><pre><code class="language-julia">X, y &#61; @load_boston;</code></pre>
+<p>Here&#39;s a learning curve for the <code>min_samples_split</code> parameter of a <em>single</em> tree:</p>
+<pre><code class="language-julia">r &#61; range&#40;
+    atom,
+    :min_samples_split,
+    lower&#61;2,
+    upper&#61;100,
+    scale&#61;:log,
+&#41;
+
+mach &#61; machine&#40;atom, X, y&#41;
+
+curve &#61; learning_curve&#40;
+    mach,
+    range&#61;r,
+    measure&#61;mav,
+    resampling&#61;CV&#40;nfolds&#61;6&#41;,
+    verbosity&#61;0,
+&#41;
+
+using Plots
+plot&#40;curve.parameter_values, curve.measurements&#41;
+xlabel&#33;&#40;curve.parameter_name&#41;</code></pre><pre><code class="plaintext code-output">"/Users/essam/Documents/GitHub/DataScienceTutorials.jl/__site/assets/advanced/ensembles-3/code/output/e1.svg"</code></pre>
+<img src="/assets/advanced/ensembles-3/code/output/e1.svg" alt="">
+<p>We&#39;ll now generate a similar curve for a 100-tree ensemble of tree but this time we&#39;ll make sure to make the atom random:</p>
+<pre><code class="language-julia">atom_rand &#61; DecisionTreeRegressor&#40;n_subfeatures&#61;4&#41;
+forest &#61; MyEnsemble&#40;atom_rand, 100&#41;
+
+r &#61; range&#40;
+    forest,
+    :&#40;atom.min_samples_split&#41;,
+    lower&#61;2,
+    upper&#61;100,
+    scale&#61;:log,
+&#41;
+
+mach &#61; machine&#40;forest, X, y&#41;
+
+curve &#61; learning_curve&#40;
+    mach,
+    range&#61;r,
+    measure&#61;mav,
+    resampling&#61;CV&#40;nfolds&#61;6&#41;,
+    verbosity&#61;0,
+    acceleration_grid&#61;CPUThreads&#40;&#41;,
+&#41;
+
+plot&#40;curve.parameter_values, curve.measurements&#41;
+xlabel&#33;&#40;curve.parameter_name&#41;</code></pre><pre><code class="plaintext code-output">"/Users/essam/Documents/GitHub/DataScienceTutorials.jl/__site/assets/advanced/ensembles-3/code/output/e2.svg"</code></pre>
+<img src="/assets/advanced/ensembles-3/code/output/e2.svg" alt="">
+<p>‎</p>
+<p>‎</p></div>
+
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 01, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+      </div> <!-- end of id=main -->
+  </div> <!-- end of id=layout -->
+  <!-- for collapse functionality -->
+  <script src="/libs/collapse/collapse.js"></script>
+  <script src="/libs/pure/ui.min.js"></script>
+    <!-- navigation bar -->
+    <script src="/libs/nav/nav.js"></script>
+    <!-- responsive navigation bar -->
+    <script src="/libs/nav/responsive.js"></script>
+    <!-- landing page -->
+    <script src="/libs/landing/landing.js"></script>
+  
+  
+      <script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+  
+</body>
+</html>
