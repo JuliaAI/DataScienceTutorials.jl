@@ -139,6 +139,8 @@ schema(data)
 
 # To get a better understanding of our targets, let's plot their respective distributions.
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 histogram(
 	data.Solar_gen,
@@ -150,7 +152,7 @@ histogram(
 )
 xlabel!("Solar power generation (MWh)")
 ylabel!("Frequency")
-savefig(joinpath(@OUTPUT, "hist_solar.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_solar.svg")); # hide
 
 # \figalt{Histogram of the solar power generated}{hist_solar.svg}
 
@@ -161,7 +163,7 @@ histogram(data.Wind_gen, color = "blue", bins = 50, normalize = :pdf, alpha = 0.
 xlabel!("Wind power generation (MWh)")
 ylabel!("Frequency")
 
-savefig(joinpath(@OUTPUT, "hist_wind.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_wind.svg")); # hide
 
 # \figalt{Histogram of the wind power generated}{hist_wind.svg}
 
@@ -207,7 +209,7 @@ p4 = scatter(
 
 plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
 
-savefig(joinpath(@OUTPUT, "solar_scatter.png")) # hide
+savefig(joinpath(@OUTPUT, "solar_scatter.png")); # hide
 
 # @@img-wide \figalt{Solar power scatter plots}{solar_scatter.png} @@
 
@@ -252,7 +254,7 @@ p4 = scatter(
 plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
 
 
-savefig(joinpath(@OUTPUT, "wind_scatter.png")) # hide
+savefig(joinpath(@OUTPUT, "wind_scatter.png")); # hide
 
 # @@img-wide \figalt{Wind power scatter plots}{wind_scatter.png} @@
 
@@ -300,7 +302,7 @@ plot!(y_wind[test], color = "red", label = "Observed")
 xlabel!("Time")
 ylabel!("Power generation")
 
-savefig(joinpath(@OUTPUT, "obs_v_pred.svg")) # hide
+savefig(joinpath(@OUTPUT, "obs_v_pred.svg")); # hide
 
 # \figalt{Observed vs Predicted}{obs_v_pred.svg}
 
@@ -321,15 +323,15 @@ res = y_hat .- y_wind[test];
 plot(res, line = :stem, marker = :circle, xlim = (0, length(res)))
 hline!([0], color = "red", linewidth = 3)
 
-savefig(joinpath(@OUTPUT, "residuals.png")) # hide
+savefig(joinpath(@OUTPUT, "residuals.png")); # hide
 
-# @@img-wide \figalt{Residuals}{residuals.png} @@
+# \figalt{Residuals}{residuals.png} @@
 
 # Nothing really stands out, the distribution also looks ok:
 
 histogram(res, color = "blue", bins = 50, normalize = :pdf, alpha = 0.5, legend = false)
 
-savefig(joinpath(@OUTPUT, "hist_residuals.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_residuals.svg")); # hide
 
 # \figalt{Histogram of the residuals}{hist_residuals.svg}
 

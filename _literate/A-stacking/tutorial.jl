@@ -31,10 +31,14 @@ end;
 # usual meta-algorithms, such as performance evaluation and tuning, to
 # `MyTwoStack`.
 
+
+
 # @@dropdown
 # ## Basic stacking using out-of-sample base learner predictions
 # @@
 # @@dropdown-content
+
+
 
 # A rather general stacking protocol was first described in a [1992
 # paper](https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231)
@@ -86,10 +90,14 @@ tree_booster = (@load EvoTreeRegressor)()
 forest = (@load RandomForestRegressor pkg=DecisionTree)()
 svm = (@load EpsilonSVR pkg=LIBSVM)()
 
+
+
 # @@dropdown
 # ### Warm-up exercise: Define a model type to average predictions
 # @@
 # @@dropdown-content
+
+
 
 # Let's define a composite model type `MyAverageTwo` that
 # averages the predictions of two deterministic regressors. Here's the learning network:
@@ -102,7 +110,6 @@ end
 import MLJ.MLJBase.prefit
 function prefit(::MyAverageTwo, verbosity, X, y)
 
-    # the learning network:
     Xs = source(X)
     ys = source(y)
 
@@ -114,7 +121,6 @@ function prefit(::MyAverageTwo, verbosity, X, y)
 
     yhat = 0.5*y1 + 0.5*y2
 
-    # the learning network interface:
     return (predict=yhat,)
 end
 
@@ -132,7 +138,7 @@ function print_performance(model, data...)
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)
     ste = round(std(e.per_fold[1])/sqrt(8), digits=5)
-    println("$(typeof(model)) = $μ ± $(2*ste)")
+    println("$(MLJ.name(model)) = $μ ± $(2*ste)")
 end;
 
 X, y = @load_boston
@@ -140,6 +146,13 @@ X, y = @load_boston
 print_performance(linear, X, y)
 print_performance(knn, X, y)
 print_performance(average_two, X, y)
+
+
+
+
+
+
+
 
 # ‎
 # @@
@@ -151,10 +164,16 @@ print_performance(average_two, X, y)
 # @@
 # @@dropdown-content
 
+
+
+
+
 # @@dropdown
 # ### Helper functions:
 # @@
 # @@dropdown-content
+
+
 
 # To generate folds for generating out-of-sample predictions, we define
 
@@ -174,6 +193,10 @@ f = folds(1:10, 3)
 
 corestrict(string.(1:10), f, 2)
 
+
+
+
+
 # ‎
 # @@
 # @@dropdown
@@ -181,7 +204,12 @@ corestrict(string.(1:10), f, 2)
 # @@
 # @@dropdown-content
 
+
+
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
+
 steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
 x = Float64[-4, -1, 2, -3, 0, 3, -2, 1, 4]
 Xraw = (x = x, )
@@ -192,7 +220,7 @@ ysort = yraw[idxsort]
 plot(xsort, ysort, linetype=:stepmid, label="truth")
 plot!(x, yraw, seriestype=:scatter, markershape=:circle, label="data", xlim=(-4.5, 4.5))
 
-savefig(joinpath(@OUTPUT, "s1.svg")) # hide
+savefig(joinpath(@OUTPUT, "s1.svg")); # hide
 
 # \fig{s1.svg}
 
@@ -205,12 +233,18 @@ model2 = knn
 
 judge = linear
 
+
+
+
+
 # ‎
 # @@
 # @@dropdown
 # ### Define the training nodes
 # @@
 # @@dropdown-content
+
+
 
 # Let's instantiate some input and target source nodes for the
 # learning network, wrapping the play data defined above in source
@@ -278,7 +312,7 @@ plot!(
     xlim=(-4.5, 4.5),
 )
 
-savefig(joinpath(@OUTPUT, "s2.svg")) # hide
+savefig(joinpath(@OUTPUT, "s2.svg")); # hide
 
 # \fig{s2.svg}
 
@@ -307,7 +341,7 @@ plot!(
 )
 
 
-savefig(joinpath(@OUTPUT, "s3.svg")) # hide
+savefig(joinpath(@OUTPUT, "s3.svg")); # hide
 
 # \fig{s3.svg}
 
@@ -330,12 +364,18 @@ m2 = machine(model2, X, y)
 
 
 
+
+
+
+
 # ‎
 # @@
 # @@dropdown
 # ### Define nodes still needed for prediction
 # @@
 # @@dropdown-content
+
+
 
 # To obtain the final prediction, `yhat`, we get the base learner
 # predictions, based on training with all data, and feed them to the
@@ -353,7 +393,7 @@ plot(xsort, ysort, linetype=:stepmid, label="truth")
 plot!(x, yhat(), seriestype=:scatter, markershape=:circle, label="yhat", xlim=(-4.5, 4.5))
 
 
-savefig(joinpath(@OUTPUT, "s4.svg")) # hide
+savefig(joinpath(@OUTPUT, "s4.svg")); # hide
 
 # \fig{s4}
 
@@ -366,6 +406,13 @@ emean = rms(0.5*y1() + 0.5*y2(), y())
 estack = rms(yhat(), y())
 @show e1 e2 emean estack;
 
+
+
+
+
+
+
+
 # ‎
 # @@
 
@@ -375,6 +422,8 @@ estack = rms(yhat(), y())
 # ## Export the learning network as a new model type
 # @@
 # @@dropdown-content
+
+
 
 # The learning network (less the data wrapped in the source nodes) amounts to a
 # specification of a new composite model type for two-model stacks, trained with
@@ -437,11 +486,17 @@ MyTwoModelStack(; model1=linear, model2=knn, judge=linear) =
 
 # And this completes the definition of our re-usable stacking model type.
 
+
+
+
+# ‎
 # @@
 # @@dropdown
 # ## Applying `MyTwoModelStack` to some data
 # @@
 # @@dropdown-content
+
+
 
 # Without undertaking any hyperparameter optimization, we evaluate the
 # performance of a tree boosting algorithm and a support vector
@@ -499,3 +554,6 @@ best_stack.model2.cost
 # data hygiene!):
 
 print_performance(best_stack, X, y)
+
+# ‎
+# @@

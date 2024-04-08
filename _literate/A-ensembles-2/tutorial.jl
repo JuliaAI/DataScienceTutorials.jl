@@ -63,6 +63,8 @@ curves = learning_curve(m, resampling=Holdout(fraction_train=0.8, rng=rng),
 
 # let's plot the curves
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
 plot(curves.parameter_values, curves.measurements, 
 xticks = [10, 100, 250, 500, 750, 1000],
@@ -70,7 +72,7 @@ size=(800,600), linewidth=2, legend=false)
 xlabel!("Number of trees")
 ylabel!("Root Mean Squared error")
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")); # hide
 
 # \figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
 #
@@ -117,7 +119,7 @@ e
 
 plot(m)
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")); # hide
 
 # \fig{A-ensembles-2-heatmap.svg}
 #

@@ -86,10 +86,12 @@ cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
 using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
 Plots.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend=false)
 
-savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")); # hide
 
 # \figalt{processing1}{D0-processing-g1.svg}
 
@@ -152,7 +154,7 @@ vline!([mean_age], linewidth=2, color="red", label="Mean Age")
 vline!([median_age], linewidth=2, color="orange", label="Median Age")
 
 
-savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")); # hide
 
 # \figalt{processing2}{D0-processing-g2.svg}
 
@@ -174,7 +176,7 @@ p2 = Plots.bar(gas_means.country, gas_means.plant_age_mean, title="Gas")
 plot(p1, p2, layout=(1, 2), size=(900,600), plot_title="Mean plant age by country and technology")
 
 
-savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")); # hide
 
 # \figalt{processing3}{D0-processing-g3.svg}
 
