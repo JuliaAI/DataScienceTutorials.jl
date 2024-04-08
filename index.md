@@ -69,8 +69,7 @@ What kind of user are you? These are our recommendations for different types of 
   @@tab-content
   # New to both Julia and machine learning?
 
-  To get started with Julia, you can try one of the external resources
-  at the top of [this page](new_to_julia.md). 
+  To get started with Julia, you can try one of the external resources found in the **New to Julia** tab.
 
   Once you have basic Julia competency, try the [Introduction to
   Statistical Learning](/categories/intro_to_stats_.earning.md)
