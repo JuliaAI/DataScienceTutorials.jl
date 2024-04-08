@@ -47,9 +47,7 @@ Find the corresponding script, fix it in a PR.
 Once all that's done, the remaining things to do are to create the HTML page and a link in the appropriate location. Let's assume you wanted to add an E2E tutorial "Dinosaurs" then in the previous step you'd have `EX-dinosaurs` and you would
 
 * create a file `dinosaurs.md` in `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{EX-dinosaurs}`
-* add links pointing to that tutorial
-  * in `index.md` following the template
-  * in `_layout/head.html` following the template
+* add a link pointing to that tutorial in `_libs/nav/head.js` following the template so your tutorial shows in the navigation bar
 * lastly, to make sections in your tutorial collapsible like other tutorials run the `collapse-script.jl` file via `julia collapse-script.jl`
 
 
