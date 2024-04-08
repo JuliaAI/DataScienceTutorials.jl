@@ -54,7 +54,7 @@ What kind of user are you? These are our recommendations for different types of 
   # New to machine learning but have moderate Julia skills?
 
   Start out with the [Introduction to Statistical
-  Learning](/categories/intro_to_stats_learning.md) tutorials, or one of
+  Learning](/isl) tutorials, or one of
   these [external resources](/external-resources):
 
   - [MLCourse](https://github.com/jbrea/MLCourse): Teaching material for
@@ -72,7 +72,7 @@ What kind of user are you? These are our recommendations for different types of 
   To get started with Julia, you can try one of the external resources found in the **New to Julia** tab.
 
   Once you have basic Julia competency, try the [Introduction to
-  Statistical Learning](/categories/intro_to_stats_.earning.md)
+  Statistical Learning](/isl)
   tutorials or one of these [external reources](/external-resources):
 
   - [Julia Data
