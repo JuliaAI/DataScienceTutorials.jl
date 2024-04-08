@@ -58,7 +58,7 @@ select!(data, Not(:Time));
 # intrinsic `positive` class, corresponding here to `1`, the second in the lexigrahic
 # ordering).
 
-coerce!(data, :Class => OrderedFactor)
+coerce!(data, :Class => OrderedFactor);
 
 # We can check by calling `schema` again, or like this:
 
@@ -81,7 +81,7 @@ histogram(data.Amount)
 
 savefig(joinpath(@OUTPUT, "EX-creditfraud-amount.svg")); # hide
 
-# \fig{EX-telco-creditfraud-amount.svg}
+# \fig{EX-creditfraud-amount.svg}
 
 # Next we unpack the dataframe and creating a separate frame `X` for input features
 # (predictors) and vector `y` for the target variable. Because of class imbalance, we make
@@ -169,7 +169,7 @@ ylabel!("true positive rate")
 
 savefig(joinpath(@OUTPUT, "EX-creditfraud-roc.svg")); # hide
 
-# \fig{EX-telco-creditfraud-tuned_svm.svg}
+# \fig{EX-creditfraud-roc.svg}
 
 #-
 
@@ -267,7 +267,7 @@ plot(mach)
 
 savefig(joinpath(@OUTPUT, "EX-creditfraud-tuned_svm.svg")); # hide
 
-# \fig{EX-telco-creditfraud-tuned_svm.svg}
+# \fig{EX-creditfraud-tuned_svm.svg}
 
 #-
 
