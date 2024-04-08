@@ -4,7 +4,7 @@ const navItems = [
   {
     name: 'Data Basics',                                    // Category name to be shown in navigation bar
     id: 'data',                                             // id to be manipulated with js
-    href: '/data',                                             // in case it should link anywhere
+    href: '#!',                                             // in case it should link anywhere
     sections: [                                             // list items to be shown in its dropdown and where they link to
       { name: 'Loading Data', href: '/data/loading/' },
       { name: 'Data Frames', href: '/data/dataframe/' },
@@ -17,7 +17,7 @@ const navItems = [
   {
     name: 'Getting Started',
     id: 'getting-started',
-    href: '/getting-started',
+    href: '#!',
     sections: [
       { name: 'Choosing a model', href: '/getting-started/choosing-a-model/' },
       { name: 'Fit, predict, transform', href: '/getting-started/fit-and-predict/' },
@@ -32,7 +32,7 @@ const navItems = [
   {
     name: 'Intro to Stats Learning',
     id: 'stats-learning',
-    href: '/isl',
+    href: '#!',
     sections: [
       { name: 'Lab 2', href: '/isl/lab-2/' },
       { name: 'Lab 3', href: '/isl/lab-3/' },
@@ -49,7 +49,7 @@ const navItems = [
   {
     name: 'End to End',
     id: 'end-to-end',
-    href: '/end-to-end',
+    href: '#!',
     sections: [
       { name: 'Telco Churn', href: '/end-to-end/telco/' },
       { name: 'AMES', href: '/end-to-end/AMES/' },
@@ -187,8 +187,7 @@ generateSidebar(navItems);
 // Flatten the nav items so we can easily iterate through them
 function flattenNavItems(items) {
   return items.reduce((acc, item) => {
-    const mainHrefs = ["/data", "/end-to-end", "/getting-started", "/isl", "#!"];
-    if (!mainHrefs.includes(item.href)) {      
+    if (item.href != "#!") {
       acc.push(item);
     }
     if (item.sections) {
