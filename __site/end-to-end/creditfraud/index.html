@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/landing.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/nav.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
+   <title>Credit Card Fraud</title> 
+  <!-- LUNR -->
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+</head>
+
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu" style="display: none;">
+      <div class="pure-menu">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="display:none">
+        </form>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
+
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
+
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
+      </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
+    </div>
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/DataScienceTutorials.jl/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
+
+    <!-- Content appended here --><div class="franklin-content"><h1 id="credit_card_fraud"><a href="#credit_card_fraud" class="header-anchor">Credit Card Fraud</a></h1>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-creditfraud.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
+<p><div class="franklin-toc"><ol><li><a href="#data_preparation">Data Preparation</a></li><li><a href="#estimation_of_models">Estimation of models</a><ol><li><a href="#logit">Logit</a></li><li><a href="#initial_logit_classification_with_lambda_10">Initial logit classification with lambda &#61; 1.0</a></li><li><a href="#tuned_logit">Tuned logit</a></li><li><a href="#support_vector_machine">Support Vector Machine</a></li><li><a href="#neural_network">Neural Network</a></li></ol></li><li><a href="#editorial_notes">Editorial notes</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
+<p>Classification of fraudulent/not credit card transactions &#40;imbalanced data&#41; By Kristian Bjarnason. The original script can be found <a href="https://github.com/kbjarnason/credit-card-fraud-classification">here</a></p>
+<p><strong>Editor&#39;s note.</strong> To reduce training times, we have reduced the the original number of data observations. To re-instate the full dataset &#40;290k observations&#41; change <code>reduction&#61;0.05</code> to <code>reduction&#61;1</code>. The data is highly imbalanced, and this is ignored when training some models. Some other changes to Bjarnason&#39;s original notebook are noted at the end.</p>
+<pre><code class="language-julia">using Dates, Statistics, LinearAlgebra, Random # standard libraries
+using MLJ, Plots, DataFrames, UrlDownload
+using CSV # needed for &#96;urldownload&#96; to work
+import StatsBase # needed for &#96;countmap&#96;</code></pre>
+<p>Adjusting fontsize in plotting:</p>
+<pre><code class="language-julia">Plots.scalefontsizes&#40;0.85&#41;</code></pre>
+<div class="dropdown"><h2 id="data_preparation"><a href="#data_preparation" class="header-anchor">Data Preparation</a></h2></div>
+<div class="dropdown-content"><p>Divide the sample into two equal sub-samples. Keep the proportion of frauds the same in each sub-sample &#40;246 frauds in each&#41;.  Use one sub-sample to estimate &#40;train&#41; your models and the second one to evaluate the out-of-sample performance of each model.</p>
+<p>Importing the data:</p>
+<pre><code class="language-julia">table &#61; urldownload&#40;
+&quot;https://storage.googleapis.com/download.tensorflow.org/data/creditcard.csv&quot;,
+&#41;;
+data &#61; DataFrame&#40;table&#41;
+first&#40;data, 4&#41;</code></pre><pre><code class="plaintext code-output">4×31 DataFrame
+ Row │ Time     V1         V2          V3       V4         V5          V6          V7         V8         V9         V10         V11        V12         V13        V14        V15        V16        V17        V18         V19        V20         V21         V22         V23        V24         V25        V26        V27         V28         Amount   Class
+     │ Float64  Float64    Float64     Float64  Float64    Float64     Float64     Float64    Float64    Float64    Float64     Float64    Float64     Float64    Float64    Float64    Float64    Float64    Float64     Float64    Float64     Float64     Float64     Float64    Float64     Float64    Float64    Float64     Float64     Float64  Int64
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │     0.0  -1.35981   -0.0727812  2.53635   1.37816   -0.338321    0.462388    0.239599  0.0986979   0.363787   0.0907942  -0.5516    -0.617801   -0.99139   -0.311169   1.46818   -0.470401   0.207971   0.0257906   0.403993   0.251412   -0.0183068   0.277838   -0.110474   0.0669281   0.128539  -0.189115   0.133558   -0.0210531   149.62      0
+   2 │     0.0   1.19186    0.266151   0.16648   0.448154   0.0600176  -0.0823608  -0.078803  0.0851017  -0.255425  -0.166974    1.61273    1.06524     0.489095  -0.143772   0.635558   0.463917  -0.114805  -0.183361   -0.145783  -0.0690831  -0.225775   -0.638672    0.101288  -0.339846    0.16717    0.125895  -0.0089831   0.0147242     2.69      0
+   3 │     1.0  -1.35835   -1.34016    1.77321   0.37978   -0.503198    1.8005      0.791461  0.247676   -1.51465    0.207643    0.624501   0.0660837   0.717293  -0.165946   2.34586   -2.89008    1.10997   -0.121359   -2.26186    0.52498     0.247998    0.771679    0.909412  -0.689281   -0.327642  -0.139097  -0.0553528  -0.0597518   378.66      0
+   4 │     1.0  -0.966272  -0.185226   1.79299  -0.863291  -0.0103089   1.2472      0.237609  0.377436   -1.38702   -0.0549519  -0.226487   0.178228    0.507757  -0.287924  -0.631418  -1.05965   -0.684093   1.96578    -1.23262   -0.208038   -0.1083      0.0052736  -0.190321  -1.17558     0.647376  -0.221929   0.0627228   0.0614576   123.5       0</code></pre>
+<p>Inspecting the scientific types of variables contained in the DataFrame:</p>
+<pre><code class="language-julia">schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌────────┬────────────┬─────────┐
+│ names  │ scitypes   │ types   │
+├────────┼────────────┼─────────┤
+│ Time   │ Continuous │ Float64 │
+│ V1     │ Continuous │ Float64 │
+│ V2     │ Continuous │ Float64 │
+│ V3     │ Continuous │ Float64 │
+│ V4     │ Continuous │ Float64 │
+│ V5     │ Continuous │ Float64 │
+│ V6     │ Continuous │ Float64 │
+│ V7     │ Continuous │ Float64 │
+│ V8     │ Continuous │ Float64 │
+│ V9     │ Continuous │ Float64 │
+│ V10    │ Continuous │ Float64 │
+│ V11    │ Continuous │ Float64 │
+│ V12    │ Continuous │ Float64 │
+│ V13    │ Continuous │ Float64 │
+│ V14    │ Continuous │ Float64 │
+│ V15    │ Continuous │ Float64 │
+│ V16    │ Continuous │ Float64 │
+│ V17    │ Continuous │ Float64 │
+│ V18    │ Continuous │ Float64 │
+│ V19    │ Continuous │ Float64 │
+│ V20    │ Continuous │ Float64 │
+│ V21    │ Continuous │ Float64 │
+│ V22    │ Continuous │ Float64 │
+│ V23    │ Continuous │ Float64 │
+│ V24    │ Continuous │ Float64 │
+│ V25    │ Continuous │ Float64 │
+│ V26    │ Continuous │ Float64 │
+│ V27    │ Continuous │ Float64 │
+│ V28    │ Continuous │ Float64 │
+│ Amount │ Continuous │ Float64 │
+│ Class  │ Count      │ Int64   │
+└────────┴────────────┴─────────┘
+</code></pre>
+<p>The Time column is not relevant to our analysis, we drop it:</p>
+<pre><code class="language-julia">select&#33;&#40;data, Not&#40;:Time&#41;&#41;;</code></pre>
+<p>And the target variable, <code>Class</code>, should not be interpretted by our algorithms as a <code>Count</code> variable. We&#39;ll view it as an <em>ordered</em> factor &#40;i.e., binary data with an intrinsic <code>positive</code> class, corresponding here to <code>1</code>, the second in the lexigrahic ordering&#41;.</p>
+<pre><code class="language-julia">coerce&#33;&#40;data, :Class &#61;&gt; OrderedFactor&#41;;</code></pre>
+<p>We can check by calling <code>schema</code> again, or like this:</p>
+<pre><code class="language-julia">scitype&#40;data.Class&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{OrderedFactor{2}} (alias for AbstractArray{ScientificTypesBase.OrderedFactor{2}, 1})</code></pre>
+<pre><code class="language-julia">levels&#40;data.Class&#41; # second element is &#96;positive&#96; class</code></pre><pre><code class="plaintext code-output">2-element Vector{Int64}:
+ 0
+ 1</code></pre>
+<p>Let&#39;s get a summary of the remaining data.</p>
+<pre><code class="language-julia">describe&#40;data&#41;</code></pre><pre><code class="plaintext code-output">30×7 DataFrame
+ Row │ variable  mean          min       median       max      nmissing  eltype
+     │ Symbol    Union…        Any       Union…       Any      Int64     DataType
+─────┼───────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ V1        1.17516e-15   -56.4075  0.0181088    2.45493         0  Float64
+   2 │ V2        3.35304e-16   -72.7157  0.0654856    22.0577         0  Float64
+   3 │ V3        -1.43063e-15  -48.3256  0.179846     9.38256         0  Float64
+   4 │ V4        2.08208e-15   -5.68317  -0.0198465   16.8753         0  Float64
+   5 │ V5        1.02188e-15   -113.743  -0.0543358   34.8017         0  Float64
+   6 │ V6        1.48811e-15   -26.1605  -0.274187    73.3016         0  Float64
+   7 │ V7        -5.62033e-16  -43.5572  0.0401031    120.589         0  Float64
+   8 │ V8        1.14961e-16   -73.2167  0.022358     20.0072         0  Float64
+   9 │ V9        -2.42058e-15  -13.4341  -0.0514287   15.595          0  Float64
+  10 │ V10       2.23855e-15   -24.5883  -0.0929174   23.7451         0  Float64
+  11 │ V11       1.69887e-15   -4.79747  -0.0327574   12.0189         0  Float64
+  12 │ V12       -1.24542e-15  -18.6837  0.140033     7.84839         0  Float64
+  13 │ V13       8.30277e-16   -5.79188  -0.0135681   7.12688         0  Float64
+  14 │ V14       1.2039e-15    -19.2143  0.0506013    10.5268         0  Float64
+  15 │ V15       4.87947e-15   -4.49894  0.0480715    8.87774         0  Float64
+  16 │ V16       1.43782e-15   -14.1299  0.0664133    17.3151         0  Float64
+  17 │ V17       -3.70431e-16  -25.1628  -0.0656758   9.25353         0  Float64
+  18 │ V18       9.70785e-16   -9.49875  -0.00363631  5.04107         0  Float64
+  19 │ V19       1.03625e-15   -7.21353  0.00373482   5.59197         0  Float64
+  20 │ V20       6.41868e-16   -54.4977  -0.0624811   39.4209         0  Float64
+  21 │ V21       1.62862e-16   -34.8304  -0.0294502   27.2028         0  Float64
+  22 │ V22       -3.57658e-16  -10.9331  0.00678194   10.5031         0  Float64
+  23 │ V23       2.61857e-16   -44.8077  -0.0111929   22.5284         0  Float64
+  24 │ V24       4.47312e-15   -2.83663  0.0409761    4.58455         0  Float64
+  25 │ V25       5.1094e-16    -10.2954  0.0165935    7.51959         0  Float64
+  26 │ V26       1.6877e-15    -2.60455  -0.0521391   3.51735         0  Float64
+  27 │ V27       -3.64943e-16  -22.5657  0.00134215   31.6122         0  Float64
+  28 │ V28       -1.22146e-16  -15.4301  0.0112438    33.8478         0  Float64
+  29 │ Amount    88.3496       0.0       22.0         25691.2         0  Float64
+  30 │ Class                   0                      1               0  CategoricalValue{Int64, UInt32}</code></pre>
+<p>Note that the <code>Amount</code> variable spans a wide range of values.  To reduce variation in the data, we take logs. Since some values are <code>0</code>, we first add <code>1e-6</code> to eavh value. We transform in place using &#39;&#33;&#39;:</p>
+<pre><code class="language-julia">data&#91;&#33;,:Amount&#93; &#61; log.&#40;data&#91;&#33;,:Amount&#93; .&#43; 1e-6&#41;;
+histogram&#40;data.Amount&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/creditfraud/code/output/EX-creditfraud-amount.svg" alt="">
+<p>Next we unpack the dataframe and creating a separate frame <code>X</code> for input features &#40;predictors&#41; and vector <code>y</code> for the target variable. Because of class imbalance, we make the partition stratified, and we also dump some observations, to reduce training times. Change the next line to <code>reduction &#61; 1</code> to keep all the data:</p>
+<pre><code class="language-julia">reduction &#61; 0.05
+frac_train &#61; 0.8*reduction
+frac_test &#61; 0.2*reduction
+
+y, X &#61; unpack&#40;data, &#61;&#61;&#40;:Class&#41;&#41;
+&#40;Xtrain, Xtest, _&#41;, &#40;ytrain, ytest, _&#41; &#61;
+    partition&#40;&#40;X, y&#41;, frac_train, frac_test; stratify&#61;y, multi&#61;true, rng&#61;111&#41;;
+
+StatsBase.countmap&#40;ytrain&#41;</code></pre><pre><code class="plaintext code-output">Dict{CategoricalArrays.CategoricalValue{Int64, UInt32}, Int64} with 2 entries:
+  0 => 11373
+  1 => 20</code></pre>
+<pre><code class="language-julia">StatsBase.countmap&#40;ytest&#41;</code></pre><pre><code class="plaintext code-output">Dict{CategoricalArrays.CategoricalValue{Int64, UInt32}, Int64} with 2 entries:
+  0 => 2843
+  1 => 5</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="estimation_of_models"><a href="#estimation_of_models" class="header-anchor">Estimation of models</a></h2></div>
+<div class="dropdown-content"><p>We will estimate of three different models:</p>
+<ol>
+<li><p>logit</p>
+</li>
+<li><p>support vector machines</p>
+</li>
+<li><p>neural network.</p>
+</li>
+</ol>
+<div class="dropdown"><h3 id="logit"><a href="#logit" class="header-anchor">Logit</a></h3></div>
+<div class="dropdown-content">‎</div>
+<div class="dropdown"><h3 id="initial_logit_classification_with_lambda_10"><a href="#initial_logit_classification_with_lambda_10" class="header-anchor">Initial logit classification with lambda &#61; 1.0</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">LogisticClassifier &#61; @load LogisticClassifier pkg&#61;MLJLinearModels
+model_logit &#61; LogisticClassifier&#40;lambda&#61;1.0&#41;
+mach &#61; machine&#40;model_logit, Xtrain, ytrain&#41; |&gt; fit&#33;</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
+trained Machine; caches model-specific representations of data
+  model: LogisticClassifier(lambda = 1.0, …)
+  args: 
+    1:	Source @302 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @569 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+</code></pre>
+<h4 id="predictions"><a href="#predictions" class="header-anchor">Predictions</a></h4>
+<p><code>LogisticClassifier</code> is a probabilistic predictor, i.e. for each observation in the sample it attaches a probability to each of the possible values of the target.  To recover a deterministic output, we use <code>predict_mode</code> instead of <code>predict</code>:</p>
+<pre><code class="language-julia">yhat_logit &#61; predict_mode&#40;mach, Xtest&#41;;
+first&#40;yhat_logit, 4&#41;
+
+# How does this model perform?
+
+confusion_matrix&#40;yhat_logit, ytest&#41;</code></pre><pre><code class="plaintext code-output">          ┌─────────────┐
+          │Ground Truth │
+┌─────────┼──────┬──────┤
+│Predicted│  0   │  1   │
+├─────────┼──────┼──────┤
+│    0    │ 2843 │  5   │
+├─────────┼──────┼──────┤
+│    1    │  0   │  0   │
+└─────────┴──────┴──────┘
+</code></pre>
+<p>To plot a receiver operator characteristic, we need the <em>probabilistic</em> predictions:</p>
+<pre><code class="language-julia">yhat &#61; predict&#40;mach, Xtest&#41;;
+yhat&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.OrderedFactor{2}, Int64, UInt32, Float64}:
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.998, 1=>0.00178)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.998, 1=>0.00174)
+ UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(0=>0.998, 1=>0.00185)</code></pre>
+<pre><code class="language-julia">false_positive_rates, true_positive_rates, thresholds &#61;
+    roc_curve&#40;yhat, ytest&#41;
+plot&#40;false_positive_rates, true_positive_rates&#41;
+plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black, label&#61;:none&#41;
+xlabel&#33;&#40;&quot;false positive rate&quot;&#41;
+ylabel&#33;&#40;&quot;true positive rate&quot;&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/creditfraud/code/output/EX-creditfraud-roc.svg" alt="">
+<pre><code class="language-julia">misclassification_rate&#40;yhat_logit, ytest&#41;</code></pre><pre><code class="plaintext code-output">0.0017556179775280898</code></pre>
+<p>Looks like it&#39;s not too bad. Let&#39;s see if we can do even better by doing a little tuning.</p>
+<p>‎</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="tuned_logit"><a href="#tuned_logit" class="header-anchor">Tuned logit</a></h3></div>
+<div class="dropdown-content"><p>Still LogisticClassifier but implementing hyperparameter tuning.</p>
+<pre><code class="language-julia">r &#61; range&#40;model_logit, :lambda, lower&#61;1e-6, upper&#61;100, scale&#61;:log&#41;
+
+self_tuning_logit_model &#61; TunedModel&#40;
+    model_logit,
+    tuning &#61; Grid&#40;resolution&#61;10&#41;,
+    resampling &#61; CV&#40;nfolds&#61;3&#41;,
+    range &#61; r,
+    measure &#61; misclassification_rate,
+&#41;
+
+mach &#61; machine&#40;self_tuning_logit_model, Xtrain, ytrain&#41; |&gt; fit&#33;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
+  model: ProbabilisticTunedModel(model = LogisticClassifier(lambda = 1.0, …), …)
+  args: 
+    1:	Source @226 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @177 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+</code></pre>
+<h4 id="predictions__2"><a href="#predictions__2" class="header-anchor">Predictions</a></h4>
+<pre><code class="language-julia">yhat_logit_tuned &#61; predict_mode&#40;mach, Xtest&#41;;</code></pre>
+<p>Let&#39;s take a look at the misclassification_rate. It is, surprisingly, slightly higher than the one calculated for the non tuned model.</p>
+<pre><code class="language-julia">@show misclassification_rate&#40;yhat_logit_tuned, ytest&#41;</code></pre><pre><code class="plaintext code-output">misclassification_rate(yhat_logit_tuned, ytest) = 0.001053370786516854
+</code></pre>
+<p>This is lower, although the difference may not be statistically significant.</p>
+<p>‎</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="support_vector_machine"><a href="#support_vector_machine" class="header-anchor">Support Vector Machine</a></h3></div>
+<div class="dropdown-content"><h4 id="initial_svm_classification_with_cost_10"><a href="#initial_svm_classification_with_cost_10" class="header-anchor">Initial SVM classification with cost &#61; 1.0:</a></h4>
+<pre><code class="language-julia">SVC &#61; @load SVC pkg &#61; LIBSVM</code></pre><pre><code class="plaintext code-output">import MLJLIBSVMInterface ✔
+MLJLIBSVMInterface.SVC</code></pre>
+<p>To fit the SVM, we declare a pipeline which comprises both a standardizer and the model. Training is substantially longer than for the preceding linear model &#40;over 10 minutes&#41;:</p>
+<pre><code class="language-julia">model_svm &#61; Standardizer&#40;&#41; |&gt;  SVC&#40;&#41;
+mach &#61; machine&#40;model_svm, Xtrain, ytrain&#41; |&gt; fit&#33;
+yhat_svm &#61; predict&#40;mach, Xtest&#41;
+confusion_matrix&#40;yhat_svm, ytest&#41;</code></pre><pre><code class="plaintext code-output">          ┌─────────────┐
+          │Ground Truth │
+┌─────────┼──────┬──────┤
+│Predicted│  0   │  1   │
+├─────────┼──────┼──────┤
+│    0    │ 2843 │  4   │
+├─────────┼──────┼──────┤
+│    1    │  0   │  1   │
+└─────────┴──────┴──────┘
+</code></pre>
+<pre><code class="language-julia">@show misclassification_rate&#40;yhat_svm, ytest&#41;</code></pre><pre><code class="plaintext code-output">misclassification_rate(yhat_svm, ytest) = 0.0014044943820224719
+</code></pre>
+<h4 id="tuned_svm"><a href="#tuned_svm" class="header-anchor">Tuned SVM</a></h4>
+<pre><code class="language-julia">r &#61; range&#40;model_svm, :&#40;svc.cost&#41;, lower&#61;0.1, upper&#61;3.5, scale&#61;:linear&#41;
+self_tuning_svm_model &#61; TunedModel&#40;
+    model_svm,
+    resampling &#61; CV&#40;nfolds&#61;3&#41;,
+    tuning &#61; Grid&#40;resolution&#61;6&#41;,
+    range &#61; r,
+    measure &#61; misclassification_rate,
+&#41;
+mach &#61; machine&#40;self_tuning_svm_model, Xtrain, ytrain&#41; |&gt; fit&#33;
+
+fitted_params&#40;mach&#41;.best_model</code></pre><pre><code class="plaintext code-output">DeterministicPipeline(
+  standardizer = Standardizer(
+        features = Symbol[], 
+        ignore = false, 
+        ordered_factor = false, 
+        count = false), 
+  svc = SVC(
+        kernel = LIBSVM.Kernel.RadialBasis, 
+        gamma = 0.0, 
+        cost = 2.14, 
+        cachesize = 200.0, 
+        degree = 3, 
+        coef0 = 0.0, 
+        tolerance = 0.001, 
+        shrinking = true), 
+  cache = true)</code></pre>
+<pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
+<img src="/DataScienceTutorials.jl/assets/end-to-end/creditfraud/code/output/EX-creditfraud-tuned_svm.svg" alt="">
+<pre><code class="language-julia">yhat_svm_tuned &#61; predict&#40;mach, Xtest&#41;
+confusion_matrix&#40;yhat_svm_tuned, ytest&#41;</code></pre><pre><code class="plaintext code-output">          ┌─────────────┐
+          │Ground Truth │
+┌─────────┼──────┬──────┤
+│Predicted│  0   │  1   │
+├─────────┼──────┼──────┤
+│    0    │ 2843 │  3   │
+├─────────┼──────┼──────┤
+│    1    │  0   │  2   │
+└─────────┴──────┴──────┘
+</code></pre>
+<pre><code class="language-julia">misclassification_rate&#40;yhat_svm_tuned, ytest&#41;</code></pre><pre><code class="plaintext code-output">0.001053370786516854</code></pre>
+<p>‎</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="neural_network"><a href="#neural_network" class="header-anchor">Neural Network</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">NeuralNetworkClassifier &#61; @load NeuralNetworkClassifier pkg&#61;MLJFlux</code></pre><pre><code class="plaintext code-output">import MLJFlux ✔
+MLJFlux.NeuralNetworkClassifier</code></pre>
+<p>We assume familiarity with the building blocks of Flux models. In MLJFlux, a <em>builder</em> is essentially a rule for creating a Flux chain, once the data has been inspected for size. See the <a href="https://github.com/FluxML/MLJFlux.jl/blob/dev/README.md">MLJFlux documentation</a> for further details. We do note specify the softmax &quot;finalizer&quot; because MLJFlux classifiers add that under the hood.</p>
+<pre><code class="language-julia">import MLJFlux.@builder
+using Flux
+
+builder &#61; @builder Chain&#40;
+    Dense&#40;n_in, 16, relu&#41;,
+    Dropout&#40;0.1; rng&#61;rng&#41;,
+    Dense&#40;16, n_out&#41;,
+&#41;</code></pre><pre><code class="plaintext code-output">GenericBuilder(apply = #1)
+</code></pre>
+<p>In the @builder macro call, <code>n_in</code>, <code>n_out</code>, and <code>rng</code> are replaced with the actual number of input features found in the data, the actual number of output classes, and the <code>rng</code> specified in the model hyperparameters &#40;see below&#41;.</p>
+<p>We are now ready to specify the MLJFlux model. If you have running with GPU, you can try adding the option <code>acceleration&#61;CUDALibs&#40;&#41;</code>.</p>
+<pre><code class="language-julia">rng &#61; Xoshiro&#40;123&#41;
+model &#61; NeuralNetworkClassifier&#40;
+    ; builder,
+    loss&#61;&#40;yhat, y&#41;-&gt;Flux.tversky_loss&#40;yhat, y, β&#61;0.9&#41;, # combines precision and recall
+    batch_size &#61; round&#40;Int, reduction*2048&#41;,
+    epochs&#61;50,
+    rng,
+&#41;</code></pre><pre><code class="plaintext code-output">NeuralNetworkClassifier(
+  builder = GenericBuilder(
+        apply = var"#1#2"()), 
+  finaliser = NNlib.softmax, 
+  optimiser = Flux.Optimise.Adam(0.001, (0.9, 0.999), 1.0e-8, IdDict{Any, Any}()), 
+  loss = var"#3#4"(), 
+  epochs = 50, 
+  batch_size = 102, 
+  lambda = 0.0, 
+  alpha = 0.0, 
+  rng = Random.Xoshiro(0xfefa8d41b8f5dca5, 0xf80cc98e147960c1, 0x20e2ccc17662fc1d, 0xea7a7dcb2e787c01, 0xf4e85a418b9c4f80), 
+  optimiser_changes_trigger_retraining = false, 
+  acceleration = ComputationalResources.CPU1{Nothing}(nothing))</code></pre>
+<p>Although we have not paid attention to it so far &#40;and probably should have&#41; there is substantial class imbalance for our target:</p>
+<pre><code class="language-julia">StatsBase.countmap&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Dict{CategoricalArrays.CategoricalValue{Int64, UInt32}, Int64} with 2 entries:
+  0 => 284315
+  1 => 492</code></pre>
+<p>We will address this by wrapping our model in a SMOTE overampling strategy, using MLJ&#39;s <code>BalancedModel</code> wrapper. Here are options for oversampling:</p>
+<pre><code class="language-julia">models&#40;&quot;oversampler&quot;&#41;</code></pre><pre><code class="plaintext code-output">7-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = BorderlineSMOTE1, package_name = Imbalance, ... )
+ (name = ROSE, package_name = Imbalance, ... )
+ (name = RandomOversampler, package_name = Imbalance, ... )
+ (name = RandomWalkOversampler, package_name = Imbalance, ... )
+ (name = SMOTE, package_name = Imbalance, ... )
+ (name = SMOTEN, package_name = Imbalance, ... )
+ (name = SMOTENC, package_name = Imbalance, ... )</code></pre>
+<p>We&#39;ll use SMOTE:</p>
+<pre><code class="language-julia">SMOTE &#61; @load SMOTE pkg&#61;Imbalance
+balanced_model &#61; BalancedModel&#40;model, oversampler&#61;SMOTE&#40;&#41;&#41;</code></pre><pre><code class="plaintext code-output">import Imbalance ✔
+BalancedModelProbabilistic(
+  model = NeuralNetworkClassifier(
+        builder = GenericBuilder(apply = #1), 
+        finaliser = NNlib.softmax, 
+        optimiser = Flux.Optimise.Adam(0.001, (0.9, 0.999), 1.0e-8, IdDict{Any, Any}()), 
+        loss = var"#3#4"(), 
+        epochs = 50, 
+        batch_size = 102, 
+        lambda = 0.0, 
+        alpha = 0.0, 
+        rng = Random.Xoshiro(0xfefa8d41b8f5dca5, 0xf80cc98e147960c1, 0x20e2ccc17662fc1d, 0xea7a7dcb2e787c01, 0xf4e85a418b9c4f80), 
+        optimiser_changes_trigger_retraining = false, 
+        acceleration = ComputationalResources.CPU1{Nothing}(nothing)), 
+  oversampler = SMOTE(
+        k = 5, 
+        ratios = 1.0, 
+        rng = Random.TaskLocalRNG(), 
+        try_preserve_type = true))</code></pre>
+<p>Our final model adds standarization as a pre-processor:</p>
+<pre><code class="language-julia">model_nn &#61; Standardizer&#40;&#41; |&gt; balanced_model</code></pre><pre><code class="plaintext code-output">ProbabilisticPipeline(
+  standardizer = Standardizer(
+        features = Symbol[], 
+        ignore = false, 
+        ordered_factor = false, 
+        count = false), 
+  balanced_model_probabilistic = BalancedModelProbabilistic(
+        model = NeuralNetworkClassifier(builder = GenericBuilder(apply = #1), …), 
+        oversampler = SMOTE(k = 5, …)), 
+  cache = true)</code></pre>
+<pre><code class="language-julia">mach &#61; machine&#40;model_nn, Xtrain, ytrain&#41; |&gt; fit&#33;
+yhat_nn &#61; predict_mode&#40;mach, Xtest&#41;;
+confusion_matrix&#40;yhat_nn, ytest&#41;</code></pre><pre><code class="plaintext code-output">          ┌─────────────┐
+          │Ground Truth │
+┌─────────┼──────┬──────┤
+│Predicted│  0   │  1   │
+├─────────┼──────┼──────┤
+│    0    │ 2843 │  2   │
+├─────────┼──────┼──────┤
+│    1    │  0   │  3   │
+└─────────┴──────┴──────┘
+</code></pre>
+<pre><code class="language-julia">misclassification_rate&#40;yhat_nn, ytest&#41;</code></pre><pre><code class="plaintext code-output">0.0007022471910112359</code></pre>
+<p>‎</p></div>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="editorial_notes"><a href="#editorial_notes" class="header-anchor">Editorial notes</a></h2></div>
+<div class="dropdown-content"><ul>
+<li><p>In the original notebook the train-test-validation split was not stratified.</p>
+</li>
+<li><p>The original raw Flux model has been replaced with an MLJFlux model, for a common</p>
+</li>
+<li><p>interface.</p>
+</li>
+<li><p>MLJ&#39;s <code>BalancedModel</code> wrapper has been used to correct for class imbalance in the MLJFlux model, using the SMOTE algorithm. Originally, naive oversampling was applied in a separate pre-processing step.</p>
+</li>
+<li><p>In tuning the metric used for the objective function is always <code>misclassification_rate</code>, for consistency.</p>
+</li>
+</ul>
+<p>‎</p></div>
+
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 09, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
+<script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/DataScienceTutorials.jl/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/DataScienceTutorials.jl/libs/nav/responsive.js"></script>
+
+
+<script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+</body>
+
+</html>

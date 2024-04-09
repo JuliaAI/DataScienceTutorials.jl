@@ -1,0 +1,1 @@
+GenericBuilder(apply = #1)
