@@ -1,1 +1,0 @@
-GenericBuilder(apply = #1)

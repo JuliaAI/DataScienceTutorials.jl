@@ -1,1 +1,0 @@
-misclassification_rate(yhat_logit_tuned, ytest) = 0.001053370786516854

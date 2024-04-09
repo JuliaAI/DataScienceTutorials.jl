@@ -1,1 +1,0 @@
-AbstractVector{OrderedFactor{2}} (alias for AbstractArray{ScientificTypesBase.OrderedFactor{2}, 1})
