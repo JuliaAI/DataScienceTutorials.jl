@@ -17,7 +17,7 @@
 }
 
 /* hide if screen size is from 900 to 1000 */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1300px) {
   .brand {
     display: none;
   }

@@ -77,7 +77,7 @@ The content `<div>` is where all your content goes.
         height: 40px;
       }
       /* media queries for header */
-      @media only screen and (max-width: 800px) {
+      @media only screen and (max-width: 1200px) {
         .header h1::before {
          display: none;
         }
