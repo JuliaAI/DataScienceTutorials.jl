@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-4/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -45,16 +45,15 @@ round.(cm, sigdigits=1)
 
 # Let's see what the `:Volume` feature looks like:
 
-using PyPlot
-ioff() # hide
-figure(figsize=(8,6))
-plot(X.Volume)
-xlabel("Tick number", fontsize=14)
-ylabel("Volume", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
+plot(X.Volume, size=(800,600), linewidth=2, legend=false)
+xlabel!("Tick number")
+ylabel!("Volume")
+
+savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")); # hide
 
 # \figalt{volume}{ISL-lab-4-volume.svg}
 
@@ -71,14 +70,12 @@ classes(y[1])
 
 # Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since `D`  comes before `U`.
 
-figure(figsize=(8,6))
 cm = countmap(y)
-PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
-xticks([1, 2], ["Down", "Up"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+Plots.bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")); # hide
 
 # \fig{ISL-lab-4-bal.svg}
 #
@@ -118,7 +115,7 @@ cm = confusion_matrix(ŷ, y)
 @show false_positive(cm)
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
-@show precision(ŷ, y) |> r3
+@show positive_predictive_value(ŷ, y) |> r3   # a.k.a. precision
 @show recall(ŷ, y)    |> r3
 @show f1score(ŷ, y)   |> r3
 
@@ -196,7 +193,7 @@ accuracy(ŷ, y[test]) |> r3
 #
 # Bayesian QDA is available via ScikitLearn:
 
-BayesianQDA = @load BayesianQDA pkg=ScikitLearn
+BayesianQDA = @load BayesianQDA pkg=MLJScikitLearnInterface
 
 # Using it is done in much the same way as before:
 
@@ -263,14 +260,12 @@ println("#$(vals[2]) ", nl2)
 
 # we can also visualise this as was done before:
 
-figure(figsize=(8,6))
 cm = countmap(purchase)
-PyPlot.bar([1, 2], [cm["No"], cm["Yes"]])
-xticks([1, 2], ["No", "Yes"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")); # hide
 
 # \fig{ISL-lab-4-bal2.svg}
 
@@ -278,7 +273,7 @@ savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
 #
 # Apart from the target, all other variables are numbers; we can standardize the data:
 
-y, X = unpack(caravan, ==(:Purchase), col->true)
+y, X = unpack(caravan, ==(:Purchase))
 
 mstd = machine(Standardizer(), X)
 fit!(mstd)
@@ -327,20 +322,16 @@ auc(ŷ, y[test])
 
 # We can also display the curve itself
 
-fprs, tprs, thresholds = roc(ŷ, y[test])
+fprs, tprs, thresholds = roc_curve(ŷ, y[test])
 
-figure(figsize=(8,6))
-plot(fprs, tprs)
+plot(fprs, tprs, linewidth=2, size=(800,600))
+xlabel!("False Positive Rate")
+ylabel!("True Positive Rate")
 
-xlabel("False Positive Rate", fontsize=14)
-ylabel("True Positive Rate", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")); # hide
 
 # \figalt{ROC}{ISL-lab-4-roc.svg}
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

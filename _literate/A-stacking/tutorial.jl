@@ -1,22 +1,31 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-stacking/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
-# In stacking one blends the predictions of different regressors or
-# classifiers to gain, in some cases, better performance than naive
-# averaging or majority vote.
+# An advanced illustration of learning networks.
 
-# For routine stacking tasks the MLJ user should use the `Stack` model
-# documented
-# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Model-Stacking). In
-# this tutorial we build a two-model stack as an MLJ learning network,
-# which we export as a new stand-alone composite model type
-# `MyTwoStack`. The objective of this tutorial is to: (i) Explain with
-# julia code how stacking works; and (ii) Give an advanced
-# demonstration of MLJ's composite model interface.
+# In stacking one blends the predictions of different regressors or classifiers to gain,
+# in some cases, better performance than naive averaging or majority vote. The gains may
+# small, their statistical significance in doubt, and the approach is computationally
+# intensive. Nevertheless, stacking has been used successfully by teams in data science
+# science competitions.
+
+# For routine stacking tasks the MLJ user should use the `Stack` model documented
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Model-Stacking). Internally,
+# `Stack` is implemented using MLJ's learning networks feature, and the purpose of this
+# tutorial give an advanced illustration of MLJ learning networks by presenting a
+# simplified version of this implementation. Familiarity with model stacking is not
+# essential, but we assume the reader is already familiar with learning network basics, as
+# illustrated in the [Learning
+# networks](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/) section
+# of the MLJ manual. The "Ensembles (learning networks)" tutorial also gives a simple
+# illustration.
+
+# Specifically, we build a two-model stack, first as an MLJ learning
+# network, and then as an "exported" stand-alone composite model type `MyTwoStack`.
 
 # As we shall see, as a new stand-alone model type, we can apply the
 # usual meta-algorithms, such as performance evaluation and tuning, to
@@ -28,6 +37,8 @@ end;
 # ## Basic stacking using out-of-sample base learner predictions
 # @@
 # @@dropdown-content
+
+
 
 # A rather general stacking protocol was first described in a [1992
 # paper](https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231)
@@ -67,10 +78,8 @@ end;
 # hyperparameters of the composite model.
 
 using MLJ
-using PyPlot
-ioff() # hide
 MLJ.color_off() # hide
-using StableRNGs
+import StableRNGs.StableRNG
 
 # Some models we will use:
 
@@ -79,7 +88,7 @@ knn = (@load KNNRegressor)()
 
 tree_booster = (@load EvoTreeRegressor)()
 forest = (@load RandomForestRegressor pkg=DecisionTree)()
-svm = (@load SVMRegressor)()
+svm = (@load EpsilonSVR pkg=LIBSVM)()
 
 
 
@@ -88,51 +97,36 @@ svm = (@load SVMRegressor)()
 # @@
 # @@dropdown-content
 
+
+
 # Let's define a composite model type `MyAverageTwo` that
 # averages the predictions of two deterministic regressors. Here's the learning network:
 
-X = source()
-y = source()
-
-model1 = linear
-model2 = knn
-
-m1 = machine(model1, X, y)
-y1 = predict(m1, X)
-
-m2 = machine(model2, X, y)
-y2 = predict(m2, X)
-
-yhat = 0.5*y1 + 0.5*y2
-
-# In preparation for export, we wrap the learning network in a
-# learning network machine, which specifies what the source nodes are,
-# and which node is for prediction. As our exported model will make
-# point-predictions (as opposed to probabilistic ones), we use a
-# `Deterministic` ["surrogate" model](https://alan-turing-institute.github.io/MLJ.jl/dev/performance_measures/):
-
-mach = machine(Deterministic(), X, y; predict=yhat)
-
-# Note that we cannot actually fit this machine because we chose not
-# to wrap our source nodes `X` and `y` in data.
-
-# Here's the macro call that "exports" the learning network as a new
-# composite model `MyAverageTwo`:
-
-@from_network mach begin
-    mutable struct MyAverageTwo
-        regressor1=model1
-        regressor2=model2
-    end
+mutable struct MyAverageTwo <: DeterministicNetworkComposite
+    regressor1
+    regressor2
 end
 
-# Note that, unlike a normal struct definition, the defaults `model1`
-# and `model2` must be specified, and they must refer to model
-# instances in the learning network.
+import MLJ.MLJBase.prefit
+function prefit(::MyAverageTwo, verbosity, X, y)
 
-# We can now create an instance of the new type:
+    Xs = source(X)
+    ys = source(y)
 
-average_two = MyAverageTwo()
+    m1 = machine(:regressor1, Xs, ys)
+    y1 = predict(m1, Xs)
+
+    m2 = machine(:regressor2, Xs, ys)
+    y2 = predict(m2, Xs)
+
+    yhat = 0.5*y1 + 0.5*y2
+
+    return (predict=yhat,)
+end
+
+# Let's create an instance of the new type:
+
+average_two = MyAverageTwo(linear, knn)
 
 # Evaluating this average model on the Boston data set, and comparing
 # with the base model predictions:
@@ -144,7 +138,7 @@ function print_performance(model, data...)
                  verbosity=0)
     μ = round(e.measurement[1], sigdigits=5)
     ste = round(std(e.per_fold[1])/sqrt(8), digits=5)
-    println("$model = $μ ± $(2*ste)")
+    println("$(MLJ.name(model)) = $μ ± $(2*ste)")
 end;
 
 X, y = @load_boston
@@ -152,6 +146,12 @@ X, y = @load_boston
 print_performance(linear, X, y)
 print_performance(knn, X, y)
 print_performance(average_two, X, y)
+
+
+
+
+
+
 
 
 # ‎
@@ -164,10 +164,16 @@ print_performance(average_two, X, y)
 # @@
 # @@dropdown-content
 
+
+
+
+
 # @@dropdown
 # ### Helper functions:
 # @@
 # @@dropdown-content
+
+
 
 # To generate folds for generating out-of-sample predictions, we define
 
@@ -189,6 +195,8 @@ corestrict(string.(1:10), f, 2)
 
 
 
+
+
 # ‎
 # @@
 # @@dropdown
@@ -196,7 +204,12 @@ corestrict(string.(1:10), f, 2)
 # @@
 # @@dropdown-content
 
-figure(figsize=(8,6))
+
+
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
+
 steps(x) = x < -3/2 ? -1 : (x < 3/2 ? 0 : 1)
 x = Float64[-4, -1, 2, -3, 0, 3, -2, 1, 4]
 Xraw = (x = x, )
@@ -204,12 +217,10 @@ yraw = steps.(x);
 idxsort = sortperm(x)
 xsort = x[idxsort]
 ysort = yraw[idxsort]
-step(xsort, ysort, label="truth", where="mid")
-plot(x, yraw, ls="none", marker="o", label="data")
-xlim(-4.5, 4.5)
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(x, yraw, seriestype=:scatter, markershape=:circle, label="data", xlim=(-4.5, 4.5))
 
-savefig(joinpath(@OUTPUT, "s1.svg")) # hide
+savefig(joinpath(@OUTPUT, "s1.svg")); # hide
 
 # \fig{s1.svg}
 
@@ -224,12 +235,16 @@ judge = linear
 
 
 
+
+
 # ‎
 # @@
 # @@dropdown
 # ### Define the training nodes
 # @@
 # @@dropdown-content
+
+
 
 # Let's instantiate some input and target source nodes for the
 # learning network, wrapping the play data defined above in source
@@ -238,33 +253,28 @@ judge = linear
 X = source(Xraw)
 y = source(yraw)
 
-# Our first internal node will represent the three folds (vectors of row
-# indices) for creating the out-of-sample predictions. We would like
-# to define `f = folds(X, 3)` but this will not work because `X` is
-# not a table, just a node representing a table. We could fix this
-# by using the @node macro:
+# Our first internal node will represent the three folds (vectors of row indices) for
+# creating the out-of-sample predictions. We would like to define `f = folds(X, 3)` but
+# this will not work because `X` is not a table, just a node representing a table. So
+# instead we do this:
 
-f = @node folds(X, 3)
+f = node(X) do x
+    folds(x, 3)
+end
 
 # Now `f` is itself a node, and so callable:
 
 f()
 
-# However, we can also just overload `folds` to work on nodes, using the
-# `node` *function*:
+# We'll overload `restrict` and `corestrict` for nodes, to save us having to write
+# `node(....)` all the time:
 
-folds(X::AbstractNode, nfolds) = node(XX->folds(XX, nfolds), X)
-f = folds(X, 3)
-f()
-
-# In the case of `restrict` and `corestrict`, which also don't
-# operate on nodes, method overloading will save us writing `@node`
-# all the time:
-
-MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> restrict(XX, ff, i), X, f);
-MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) =
-    node((XX, ff) -> corestrict(XX, ff, i), X, f);
+MLJ.restrict(X::AbstractNode, f::AbstractNode, i) =  node(X, f) do XX, ff
+    restrict(XX, ff, i)
+end
+MLJ.corestrict(X::AbstractNode, f::AbstractNode, i) = node(X, f) do XX, ff
+    corestrict(XX, ff, i)
+end
 
 # We are now ready to define machines for training `model1` on each
 # fold-complement:
@@ -292,12 +302,17 @@ y1_oos = vcat(y11, y12, y13);
 
 fit!(y1_oos, verbosity=0)
 
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, y1_oos(), ls="none", marker="o", label="linear oos")
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(
+    x,
+    y1_oos(),
+    seriestype=:scatter,
+    markershape=:circle,
+    label="linear oos",
+    xlim=(-4.5, 4.5),
+)
 
-savefig(joinpath(@OUTPUT, "s2.svg")) # hide
+savefig(joinpath(@OUTPUT, "s2.svg")); # hide
 
 # \fig{s2.svg}
 
@@ -315,12 +330,18 @@ y23 = predict(m23, restrict(X, f, 3));
 y2_oos = vcat(y21, y22, y23);
 fit!(y2_oos, verbosity=0)
 
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, y2_oos(), ls="none", marker="o", label="knn oos")
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(
+    x,
+    y2_oos(),
+    seriestype=:scatter,
+    markershape=:circle,
+    label="knn oos",
+    xlim=(-4.5, 4.5),
+)
 
-savefig(joinpath(@OUTPUT, "s3.svg")) # hide
+
+savefig(joinpath(@OUTPUT, "s3.svg")); # hide
 
 # \fig{s3.svg}
 
@@ -343,6 +364,10 @@ m2 = machine(model2, X, y)
 
 
 
+
+
+
+
 # ‎
 # @@
 # @@dropdown
@@ -350,9 +375,12 @@ m2 = machine(model2, X, y)
 # @@
 # @@dropdown-content
 
+
+
 # To obtain the final prediction, `yhat`, we get the base learner
 # predictions, based on training with all data, and feed them to the
 # adjudicator:
+
 y1 = predict(m1, X);
 y2 = predict(m2, X);
 X_judge = MLJ.table(hcat(y1, y2))
@@ -361,23 +389,27 @@ yhat = predict(m_judge, X_judge)
 # Let's check the final prediction node can be fit and called:
 fit!(yhat, verbosity=0)
 
-figure(figsize=(8,6))
-step(xsort, ysort, label="truth", where="mid")
-plot(x, yhat(), ls="none", marker="o", label="yhat")
-legend()
+plot(xsort, ysort, linetype=:stepmid, label="truth")
+plot!(x, yhat(), seriestype=:scatter, markershape=:circle, label="yhat", xlim=(-4.5, 4.5))
 
-savefig(joinpath(@OUTPUT, "s4.svg")) # hide
+
+savefig(joinpath(@OUTPUT, "s4.svg")); # hide
 
 # \fig{s4}
 
-# Although of little statistical significance here, we note that
-# stacking gives a lower *training* error than naive averaging:
+# We note only in passing that, in this baby example at least, stacking has a worse
+# *training* error than naive averaging:
 
 e1 = rms(y1(), y())
 e2 = rms(y2(), y())
 emean = rms(0.5*y1() + 0.5*y2(), y())
 estack = rms(yhat(), y())
 @show e1 e2 emean estack;
+
+
+
+
+
 
 
 
@@ -391,23 +423,69 @@ estack = rms(yhat(), y())
 # @@
 # @@dropdown-content
 
-# The learning network (less the data wrapped in the source nodes)
-# amounts to a specification of a new composite model type for
-# two-model stacks, trained with three-fold resampling of base model
-# predictions. Let's create the new type `MyTwoModelStack`, in the
-# same way we exported the network for model averaging:
 
-@from_network machine(Deterministic(), X, y; predict=yhat) begin
-    mutable struct MyTwoModelStack
-        regressor1=model1
-        regressor2=model2
-        judge=judge
-    end
+
+# The learning network (less the data wrapped in the source nodes) amounts to a
+# specification of a new composite model type for two-model stacks, trained with
+# three-fold resampling of base model predictions. Let's create the new "exported" type
+# `MyTwoModelStack`, in the same way we exported the network for model averaging
+# (essentially a copy and paste exercise):
+
+mutable struct MyTwoModelStack <: DeterministicNetworkComposite
+    model1
+    model2
+    judge
 end
 
-my_two_model_stack = MyTwoModelStack()
+function prefit(::MyTwoModelStack, verbosity, X, y)
+
+    Xs = source(X)
+    ys = source(y)
+
+    f = node(Xs) do x
+        folds(x, 3)
+    end
+
+    m11 = machine(:model1, corestrict(Xs, f, 1), corestrict(ys, f, 1))
+    m12 = machine(:model1, corestrict(Xs, f, 2), corestrict(ys, f, 2))
+    m13 = machine(:model1, corestrict(Xs, f, 3), corestrict(ys, f, 3))
+
+    y11 = predict(m11, restrict(Xs, f, 1));
+    y12 = predict(m12, restrict(Xs, f, 2));
+    y13 = predict(m13, restrict(Xs, f, 3));
+
+    y1_oos = vcat(y11, y12, y13);
+
+    m21 = machine(:model2, corestrict(Xs, f, 1), corestrict(ys, f, 1))
+    m22 = machine(:model2, corestrict(Xs, f, 2), corestrict(ys, f, 2))
+    m23 = machine(:model2, corestrict(Xs, f, 3), corestrict(ys, f, 3))
+    y21 = predict(m21, restrict(Xs, f, 1));
+    y22 = predict(m22, restrict(Xs, f, 2));
+    y23 = predict(m23, restrict(Xs, f, 3));
+
+    y2_oos = vcat(y21, y22, y23);
+
+    X_oos = MLJ.table(hcat(y1_oos, y2_oos))
+    m_judge = machine(:judge, X_oos, ys)
+
+    m1 = machine(:model1, Xs, ys)
+    m2 = machine(:model2, Xs, ys)
+
+    y1 = predict(m1, Xs);
+    y2 = predict(m2, Xs);
+    X_judge = MLJ.table(hcat(y1, y2))
+    yhat = predict(m_judge, X_judge)
+
+    return (predict=yhat,)
+end
+
+# For convenience, we'll give this a keywork argument constructor:
+
+MyTwoModelStack(; model1=linear, model2=knn, judge=linear) =
+    MyTwoModelStack(model1, model2, judge)
 
 # And this completes the definition of our re-usable stacking model type.
+
 
 
 
@@ -417,6 +495,8 @@ my_two_model_stack = MyTwoModelStack()
 # ## Applying `MyTwoModelStack` to some data
 # @@
 # @@dropdown-content
+
+
 
 # Without undertaking any hyperparameter optimization, we evaluate the
 # performance of a tree boosting algorithm and a support vector
@@ -428,20 +508,13 @@ my_two_model_stack = MyTwoModelStack()
 # on perturbations to linear models, we are deliberately avoiding
 # linear models in stacking illustration.)
 
-X, y = make_regression(1000, 20; sparse=0.75, noise=0.1, rng=123);
+X, y = make_regression(1000, 20; sparse=0.75, noise=0.1, rng=StableRNG(1));
 
 
 # #### Define the stack and compare performance
 
-
-avg = MyAverageTwo(regressor1=tree_booster,
-                   regressor2=svm)
-
-
-stack = MyTwoModelStack(regressor1=tree_booster,
-                        regressor2=svm,
-                        judge=forest)
-
+avg = MyAverageTwo(tree_booster,svm)
+stack = MyTwoModelStack(model1=tree_booster, model2=svm, judge=forest)
 all_models = [tree_booster, svm, forest, avg, stack];
 
 for model in all_models
@@ -456,31 +529,31 @@ end
 # hyperparameters (using the same resampling of the data) with the
 # base learners fixed. Although more computationally expensive, better
 # generalization might be expected by applying tuning to the stack as
-# a whole, either simultaneously, or in in cheaper sequential
+# a whole, either simultaneously, or in cheaper sequential
 # steps. Since our stack is a stand-alone model, this is readily
 # implemented.
 
 # As a proof of concept, let's see how to tune one of the base model
 # hyperparameters, based on performance of the stack as a whole:
 
-r = range(stack, :(regressor2.C), lower = 0.01, upper = 10, scale=:log)
-tuned_stack = TunedModel(model=stack,
-                         ranges=r,
-                         tuning=Grid(shuffle=false),
-                         measure=rms,
-                         resampling=Holdout())
+r = range(stack, :(model2.cost), lower = 0.01, upper = 10, scale=:log)
+tuned_stack = TunedModel(
+    model=stack,
+    ranges=r,
+    tuning=Grid(shuffle=false),
+    measure=rms,
+    resampling=Holdout(),
+)
 
 mach = fit!(machine(tuned_stack,  X, y), verbosity=0)
 best_stack = fitted_params(mach).best_model
-best_stack.regressor2.C
+best_stack.model2.cost
 
 # Let's evaluate the best stack using the same data resampling used to
-# the evaluate the various untuned models earlier (now we are neglecting
+# evaluate the various untuned models earlier (now we are neglecting
 # data hygiene!):
 
 print_performance(best_stack, X, y)
-
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

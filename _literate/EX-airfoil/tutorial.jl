@@ -1,6 +1,6 @@
 using Pkg# hideall
 Pkg.activate("_literate/EX-airfoil/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -24,8 +24,6 @@ using PrettyPrinting
 import DataFrames
 import Statistics
 using CSV
-using PyPlot
-ioff() # hide
 using HTTP
 using StableRNGs
 
@@ -163,27 +161,14 @@ rms(pred_rfr_tm, y[test])
 
 fitted_params(rfr_tm).best_model
 
-# Now we can investigate the tuning by using report.
-# Let's plot a heatmap of the measurements:
+# Let's visualize the tuning results:
+using Plots
+plot(rfr_tm)
 
-r = report(rfr_tm)
-res = r.plotting
-
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
-
-figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
-
-xlabel("Number of trees", fontsize=14)
-ylabel("Sampling fraction", fontsize=14)
-xticks(9:1:15, fontsize=12)
-yticks(fontsize=12)
-plt.savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")); # hide
 
 # \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
 
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

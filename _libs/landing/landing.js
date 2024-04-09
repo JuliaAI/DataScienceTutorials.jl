@@ -17,6 +17,27 @@ tabContainer.addEventListener('click', function(event) {
     const index = Array.from(tabs).indexOf(event.target);
     // add "selected-content" class to the corresponding content
     tabContents[index].classList.add('selected-content');
+
+    // Store the selected tab index in local storage
+    localStorage.setItem('selectedTabIndex', index.toString());
+});
+
+// Restore selected tab on page load
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the stored index from local storage
+    const storedIndex = localStorage.getItem('selectedTabIndex');
+    if (storedIndex !== null) {
+        const index = parseInt(storedIndex);
+        // Get all tabs and select the one corresponding to the stored index
+        const tabs = tabContainer.querySelectorAll('.get-started-tab');
+        tabs.forEach(tab => tab.classList.remove('selected'));
+        tabs[index].classList.add('selected');
+        
+        // Get all tab contents and select the one corresponding to the stored index
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(tab => tab.classList.remove('selected-content'));
+        tabContents[index].classList.add('selected-content');
+    }
 });
 
 // make the button link to how-to-run-code

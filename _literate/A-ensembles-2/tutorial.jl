@@ -1,6 +1,6 @@
 using Pkg # hideall
 Pkg.activate("_literate/A-ensembles-2/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -15,12 +15,10 @@ end;
 #
 
 using MLJ
-using PyPlot
 using PrettyPrinting
 using StableRNGs
 import DataFrames: DataFrame, describe
 MLJ.color_off() # hide
-ioff() # hide
 
 X, y = @load_boston
 sch = schema(X)
@@ -60,19 +58,21 @@ forest.model.n_subfeatures = 3
 rng = StableRNG(5123) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
+curves = learning_curve(m, resampling=Holdout(fraction_train=0.8, rng=rng),
                          range=r, measure=rms);
 
 # let's plot the curves
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
-figure(figsize=(8,6))
-plot(curves.parameter_values, curves.measurements)
-ylabel("Root Mean Squared error", fontsize=16)
-xlabel("Number of trees", fontsize=16)
-xticks([10, 100, 250, 500, 750, 1000], fontsize=14)
-yticks(fontsize=14)
+plot(curves.parameter_values, curves.measurements, 
+xticks = [10, 100, 250, 500, 750, 1000],
+size=(800,600), linewidth=2, legend=false)
+xlabel!("Number of trees")
+ylabel!("Root Mean Squared error")
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")); # hide
 
 # \figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
 #
@@ -115,24 +115,11 @@ e
 # ### Reporting
 # @@
 # @@dropdown-content
-# Again, you could show a 2D heatmap of the hyperparameters
+# Again, we can visualize the results from the hyperparameter search
 
-r = report(m)
+plot(m)
 
-figure(figsize=(8,6))
-
-res = r.plotting
-
-vals_sf = res.parameter_values[:, 1]
-vals_bf = res.parameter_values[:, 2]
-
-tricontourf(vals_sf, vals_bf, res.measurements)
-xticks(1:3:12, fontsize=12)
-xlabel("Number of sub-features", fontsize=14)
-yticks(0.4:0.2:1, fontsize=12)
-ylabel("Bagging fraction", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")); # hide
 
 # \fig{A-ensembles-2-heatmap.svg}
 #
@@ -144,7 +131,6 @@ savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
 ŷ = predict(m, X)
 @show rms(ŷ, y)
 
-PyPlot.close_figs() # hide
 
 # ‎
 # @@

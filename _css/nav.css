@@ -17,11 +17,16 @@
 }
 
 /* hide if screen size is from 900 to 1000 */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1300px) {
   .brand {
     display: none;
   }
 }
+
+a#home {
+  border-radius: 3rem;
+}
+
 .brand a,
 .brand a:visited {
   text-decoration: none;
@@ -115,4 +120,39 @@ nav ul li ul li a {
   border-radius: 0rem 0rem 1rem 1rem;
   background-color: #f1f1f1;
 
+}
+
+.bottom-nav-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+
+}
+
+.bottom-nav {
+  background-color: #f1f1f1;
+  font-weight: 600;
+  padding: 8px 8px;
+  color: #2e2e2e;
+  border-radius: 45px;
+  outline: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  width: 200px;
+  border: 2px solid #c1c1c1;
+}
+.bottom-nav:hover {
+  background-color: #9b59b6;
+  color: #f1f1f1;
+}
+.button-label {
+  font-size: 0.9rem;
+  font-weight: 400;
 }

@@ -29,7 +29,7 @@ What kind of user are you? These are our recommendations for different types of 
   @@tab-content,selected-content
   ## Completely new to Julia?
 
-  Try one of these [external resources](/external_resources.md):
+  Try one of these [external resources](/external-resources):
 
   - [Julia's learning resources page](https://julialang.org/learning/) 
 
@@ -48,20 +48,14 @@ What kind of user are you? These are our recommendations for different types of 
     *feature selection*, *controlling iteration*, *tree booster*,
     *hyper-parameter optimization (tuning)*
 
-  or the [Getting started with
-  MLJ](/categories/starting_out_with_mlj.md) tutorials. Alternatively,
-  you can try this [external resource](/external_resources.md):
-
-  - [MLJTutorial](https://github.com/ablaom/MLJTutorial.jl): Tutorials
-    forming a basis for a day-long workshop on MLJ.
   @@
 
   @@tab-content
   # New to machine learning but have moderate Julia skills?
 
   Start out with the [Introduction to Statistical
-  Learning](/categories/intro_to_stats_learning.md) tutorials, or one of
-  these [external resources](/external_resources.md):
+  Learning](/isl) tutorials, or one of
+  these [external resources](/external-resources):
 
   - [MLCourse](https://github.com/jbrea/MLCourse): Teaching material for
     an introductory machine learning course at EPFL (for an interactive
@@ -75,12 +69,11 @@ What kind of user are you? These are our recommendations for different types of 
   @@tab-content
   # New to both Julia and machine learning?
 
-  To get started with Julia, you can try one of the external resources
-  at the top of [this page](new_to_julia.md). 
+  To get started with Julia, you can try one of the external resources found in the **New to Julia** tab.
 
   Once you have basic Julia competency, try the [Introduction to
-  Statistical Learning](/categories/intro_to_stats_.earning.md)
-  tutorials or one of these [external reources](/external_resources.md):
+  Statistical Learning](/isl)
+  tutorials or one of these [external reources](/external-resources):
 
   - [Julia Data
     Science](https://github.com/JuliaDataScience/JuliaDataScience): Book
