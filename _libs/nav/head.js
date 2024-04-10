@@ -58,7 +58,7 @@ const navItems = [
       { name: 'Horse', href: '/end-to-end/horse/' },
       { name: 'King County Houses', href: '/end-to-end/HouseKingCounty/' },
       { name: 'Airfoil', href: '/end-to-end/airfoil' },
-      // { name: 'Boston (lgbm)', href: '/end-to-end/boston-lgbm' },
+      { name: 'Boston (lgbm)', href: '/end-to-end/boston-lgbm' },
       { name: 'Using GLM.jl', href: '/end-to-end/glm/' },
       { name: 'Power Generation', href: '/end-to-end/powergen/' },
       { name: 'Boston (Flux)', href: '/end-to-end/boston-flux' },
