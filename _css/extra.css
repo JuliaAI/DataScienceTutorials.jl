@@ -163,7 +163,7 @@ h3 {
     padding: 2px;
 }
 
-.franklin-content .img-wide img { width: 95%; padding-left: 0;}
+.franklin-content .img-wide img { width: 65%; padding-left: 0;}
 
 /* so that when collapse class is given to an element, its initially collapsed */
 .collapse {
