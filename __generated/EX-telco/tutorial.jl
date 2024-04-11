@@ -10,7 +10,7 @@
 # new to MLJ (Machine Learning in Julia). This tutorial does not
 # cover exploratory data analysis.
 
-# MLJ is a *multi-paradigm* machine learning toolbox (i.e., not just
+# MLJ is a general machine learning toolbox (i.e., not just
 # deep-learning).
 
 # For other MLJ learning resources see the [Learning
@@ -36,7 +36,10 @@
 
 # **Time.** Between two and three hours, first time through.
 
+# @@dropdown
 # ## Summary of methods and types introduced
+# @@
+# @@dropdown-content
 
 # |code   | purpose|
 # |:-------|:-------------------------------------------------------|
@@ -60,6 +63,7 @@
 # | `predict(mach, Xnew)` | make predictions given new features `Xnew`|
 # | `fitted_params(mach)` | inspect learned parameters|
 # | `report(mach)`        | inspect other outcomes of training|
+# | `feature_importances(mach)` | inspect feature importances, where reported |
 # | `confmat(yhat, y)`    | confusion matrix for predictions `yhat` and ground truth `y`|
 # | `roc(yhat, y)` | compute points on the receiver-operator Characteristic|
 # | `StratifiedCV(nfolds=6)` | 6-fold stratified cross-validation resampling strategy|
@@ -73,7 +77,12 @@
 # | `RandomSearch()` | random search tuning strategy|
 # | `TunedModel(model=..., tuning=..., options...)` | wrap the supervised `model` in specified `tuning` strategy|
 
+# ‎
+# @@
+# @@dropdown
 # ## Warm up: Building a model for the iris dataset
+# @@
+# @@dropdown-content
 
 # Before turning to the Telco Customer Churn dataset, we very quickly
 # build a predictive model for Fisher's well-known iris data set, as way of
@@ -148,8 +157,12 @@ pdf.(yhat, "virginica")
 yhat[2]
 
 # We now turn to the Telco dataset.
-
+# ‎
+# @@
+# @@dropdown
 # ## Getting the Telco data
+# @@
+# @@dropdown-content
 
 import DataFrames
 
@@ -166,7 +179,12 @@ first(df0, 4)
 # columns, which is the convention for representing all
 # two-dimensional data in MLJ.
 
+# ‎
+# @@
+# @@dropdown
 # ## Type coercion
+# @@
+# @@dropdown-content
 
 # *Introduces:* `scitype`, `schema`, `coerce`
 
@@ -228,23 +246,38 @@ levels(df0.Churn) # to check order
 
 schema(df0) |> DataFrames.DataFrame
 
+# ‎
+# @@
+# @@dropdown
 # ## Preparing a holdout set for final testing
+# @@
+# @@dropdown-content
 
 # *Introduces:* `partition`
 
 # To reduce training times for the purposes of this tutorial, we're
 # going to dump 90% of observations (after shuffling) and split off
 # 30% of the remainder for use as a lock-and-throw-away-the-key
-# holdout set:
+# holdout set.
 
-df, df_test, df_dumped = partition(df0, 0.07, 0.03, # in ratios 7:3:90
+import Random.Xoshiro
+rng = Xoshiro(123)
+df, df_test, df_dumped = partition(df0, 0.07, 0.03; # in ratios 7:3:90
                                    stratify=df0.Churn,
-                                   rng=123);
+                                   rng=rng);
 
 # The reader interested in including all data can instead do
-# `df, df_test = partition(df0, 0.7, rng=123)`.
+# `df, df_test = partition(df0, 0.7; rng=rng )`.
 
+# We have included the option `stratify=df0.Churn` to ensure the `Churn` classes have
+# similary distributions in `df` and `df_test`.
+
+# ‎
+# @@
+# @@dropdown
 # ## Splitting data into target and features
+# @@
+# @@dropdown-content
 
 # *Introduces:* `unpack`
 
@@ -263,7 +296,12 @@ intersect([:Churn, :customerID], schema(X).names)
 
 ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 
+# ‎
+# @@
+# @@dropdown
 # ## Loading a model and checking type requirements
+# @@
+# @@dropdown-content
 
 # *Introduces:* `@load`, `input_scitype`, `target_scitype`
 
@@ -288,16 +326,25 @@ booster = Booster()
 
 scitype(y) <: target_scitype(booster)
 
-# However, our features `X` cannot be directly used with `booster`:
+# Our features `X` are also compatible with `booster`:
 
 scitype(X) <: input_scitype(booster)
 
-# As it turns out, this is because `booster`, like the majority of MLJ
-# supervised models, expects the features to be `Continuous`. (With
-# some experience, this can be gleaned from `input_scitype(booster)`.)
-# So we need categorical feature encoding, discussed next.
+# The majority of MLJ supervised models expects all features to be `Continuous` (and this
+# used to be true for an earlier version of the EvoTrees.jl models.). For the sake of
+# illustration, we will pretend this is true here, and introduce our own
+# categorical feature encoding, discussed next.
 
+# To see a list of all models that directly support the data (`X`, `y`) we can do this:
+
+models(matching(X, y))
+
+# ‎
+# @@
+# @@dropdown
 # ## Building a model pipeline to incorporate feature encoding
+# @@
+# @@dropdown-content
 
 # *Introduces:* `ContinuousEncoder`, pipeline operator `|>`
 
@@ -324,12 +371,17 @@ pipe = ContinuousEncoder() |> booster
 
 pipe.evo_tree_classifier.max_depth
 
+# ‎
+# @@
+# @@dropdown
 # ## Evaluating the pipeline model's performance
+# @@
+# @@dropdown-content
 
 # *Introduces:* `measures` (function), **measures:** `brier_loss`,
 #  `auc`, `accuracy`; `machine`, `fit!`, `predict`, `fitted_params`,
 #  `report`, `roc`, **resampling strategy** `StratifiedCV`,
-#  `evaluate`, `FeatureSelector`
+#  `evaluate`, `FeatureSelector`, `feature_importances`
 
 # Without touching our test set `Xtest`, `ytest`, we will estimate the
 # performance of our pipeline model, with default hyper-parameters, in
@@ -354,7 +406,10 @@ measures("Brier")
 # We will be primarily using `brier_loss`, but also `auc` (area under
 # the ROC curve) and `accuracy`.
 
+# @@dropdown
 # ### Evaluating by hand (with a holdout set)
+# @@
+# @@dropdown-content
 
 # Our pipeline model can be trained just like the decision tree model
 # we built for the iris data set. Binding all non-test data to the
@@ -371,24 +426,45 @@ fit!(mach_pipe, rows=train)
 
 # We note in passing that we can access two kinds of information from a trained machine:
 
-# - The **learned parameters** (eg, coefficients of a linear model): We use `fitted_params(mach_pipe)`
-# - Other **by-products of training** (eg, feature importances): We use `report(mach_pipe)`
+# - The **learned parameters** (eg, coefficients of a linear model): We use
+#   `fitted_params(mach_pipe)`
+
+# - Other **by-products of training** (eg, p-values): We use
+#   `report(mach_pipe)`
 
 fp = fitted_params(mach_pipe);
 keys(fp)
 
-# For example, we can check that the encoder did not actually drop any features:
+# For example, we can extract the raw EvoTrees.jl learned parameter object:
 
-Set(fp.continuous_encoder.features_to_keep) == Set(schema(X).names)
+fp.evo_tree_classifier.fitresult
 
-# And, from the report, extract feature importances:
+# And, from the report, extract the names of all features generated for the one-hot
+# encoding:
 
-rpt = report(mach_pipe)
-keys(rpt.evo_tree_classifier)
+rpt = report(mach_pipe);
+keys(rpt.continuous_encoder)
 
-fi = rpt.evo_tree_classifier.feature_importances
+join(string.(rpt.continuous_encoder.new_features), ", ") |> println
+
+# Another example of information sometimes appearing in a report is feature
+# importances. However, for models supporting feature importances, they are always
+# available directly.
+
+reports_feature_importances(pipe)
+
+# This hods because the supervised component of our pipeline supports feature imporances:
+
+reports_feature_importances(booster)
+
+# And we can get the booster feature imporances from the pipeline's machine like this:
+
+fi = feature_importances(mach_pipe)
+
+# which we'll put into data frame for later:
+
 feature_importance_table =
-    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame
+    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame;
 
 # For models not reporting feature importances, we recommend the
 # [Shapley.jl](https://expandingman.gitlab.io/Shapley.jl/) package.
@@ -398,7 +474,7 @@ feature_importance_table =
 ŷ = predict(mach_pipe, rows=validation);
 print(
     "Measurements:\n",
-    "  brier loss: ", brier_loss(ŷ, y[validation]) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ, y[validation]), "\n",
     "  auc:        ", auc(ŷ, y[validation]),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ), y[validation])
 )
@@ -418,15 +494,23 @@ confmat(mode.(ŷ), y[validation])
 # functions for the first time can take a minute or so.
 
 using Plots
+Plots.scalefontsizes(0.85)
 
-roc_curve = roc(ŷ, y[validation])
-plt = scatter(roc_curve, legend=false)
+roc = roc_curve(ŷ, y[validation])
+plt = scatter(roc, legend=false)
 plot!(plt, xlab="false positive rate", ylab="true positive rate")
 plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 
 # \fig{EX-telco-roc.svg}
 
+# (Warning here is a [minor bug](https://github.com/Evovest/EvoTrees.jl/issues/267).)
+
+# ‎
+# @@
+# @@dropdown
 # ### Automated performance evaluation (more typical workflow)
+# @@
+# @@dropdown-content
 
 # We can also get performance estimates with a single call to the
 # `evaluate` function, which also allows for more complicated
@@ -440,7 +524,7 @@ plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 # [here](https://alan-turing-institute.github.io/MLJ.jl/dev/evaluating_model_performance/#Built-in-resampling-strategies).
 
 e_pipe = evaluate(pipe, X, y,
-                  resampling=StratifiedCV(nfolds=6, rng=123),
+                  resampling=StratifiedCV(nfolds=6, rng=rng),
                   measures=[brier_loss, auc, accuracy],
                   repeats=3,
                   acceleration=CPUThreads())
@@ -449,29 +533,21 @@ e_pipe = evaluate(pipe, X, y,
 # `evaluate` and `evaluate!` doc-strings to learn more about these
 # functions and what the `PerformanceEvaluation` object `e_pipe` records.)
 
-# While [less than ideal](https://arxiv.org/abs/2104.00673), let's
-# adopt the common practice of using the standard error of a
-# cross-validation score as an estimate of the uncertainty of a
-# performance measure's expected value. Here's a utility function to
-# calculate 95% confidence intervals for our performance estimates
-# based on this practice, and it's application to the current
-# evaluation:
+# While [less than ideal](https://arxiv.org/abs/2104.00673), let's adopt the common
+# practice of using the standard error of a cross-validation score as an estimate of the
+# uncertainty of a performance measure's expected value. To get a 95% confidence interval
+# based on this error, use "measurement ± delta" where "delta" is the number in the
+# "1.96*SE" column.
 
-using Measurements
+# ‎
+# @@
 
-function confidence_intervals(e)
-    factor = 2.0 # to get level of 95%
-    measure = e.measure
-    nfolds = length(e.per_fold[1])
-    measurement = [e.measurement[j] ± factor*std(e.per_fold[j])/sqrt(nfolds - 1)
-                   for j in eachindex(measure)]
-    table = (measure=measure, measurement=measurement)
-    return DataFrames.DataFrame(table)
-end
-
-confidence_intervals_basic_model = confidence_intervals(e_pipe)
-
+# ‎
+# @@
+# @@dropdown
 # ## Filtering out unimportant features
+# @@
+# @@dropdown-content
 
 # *Introduces:* `FeatureSelector`
 
@@ -483,7 +559,12 @@ unimportant_features = filter(:importance => <(0.005), feature_importance_table)
 pipe2 = ContinuousEncoder() |>
     FeatureSelector(features=unimportant_features, ignore=true) |> booster
 
+# ‎
+# @@
+# @@dropdown
 # ## Wrapping our iterative model in control strategies
+# @@
+# @@dropdown-content
 
 # *Introduces:* **control strategies:** `Step`, `NumberSinceBest`, `TimeLimit`,
 # `InvalidValue`, **model wrapper** `IteratedModel`, **resampling strategy:** `Holdout`
@@ -537,11 +618,20 @@ fit!(mach_iterated_pipe);
 
 # To recap, internally this training is split into two separate steps:
 
-# - A controlled iteration step, training on the holdout set, with the total number of iterations determined by the specified stopping criteria (based on the out-of-sample performance estimates)
-# - A final step that trains the atomic model on *all* available
-#   data using the number of iterations determined in the first step. Calling `predict` on `mach_iterated_pipe` means using the learned parameters of the second step.
+# - A controlled iteration step, training on the holdout set, with the total number of
+#   iterations determined by the specified stopping criteria (based on the out-of-sample
+#   performance estimates)
 
+# - A final step that trains the atomic model on *all* available data using the number of
+#   iterations determined in the first step. Calling `predict` on `mach_iterated_pipe`
+#   means using the learned parameters of the second step.
+
+# ‎
+# @@
+# @@dropdown
 # ## Hyper-parameter optimization (model tuning)
+# @@
+# @@dropdown-content
 
 # *Introduces:* `range`, **model wrapper** `TunedModel`, `RandomSearch`
 
@@ -576,7 +666,7 @@ fit!(mach_iterated_pipe);
 
 show(iterated_pipe, 2)
 
-p1 = :(model.evo_tree_classifier.η)
+p1 = :(model.evo_tree_classifier.eta)
 p2 = :(model.evo_tree_classifier.max_depth)
 
 r1 = range(iterated_pipe, p1, lower=-2, upper=-0.5, scale=x->10^x)
@@ -588,7 +678,7 @@ r2 = range(iterated_pipe, p2, lower=2, upper=6)
 # Next, we choose an optimization strategy from [this
 # list](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/#Tuning-Models):
 
-tuning = RandomSearch(rng=123)
+tuning = RandomSearch(rng=rng)
 
 # Then we wrap the model, specifying a `resampling` strategy and a
 # `measure`, as we did for `IteratedModel`.  In fact, we can include a
@@ -603,7 +693,7 @@ tuned_iterated_pipe = TunedModel(model=iterated_pipe,
                                  range=[r1, r2],
                                  tuning=tuning,
                                  measures=[brier_loss, auc, accuracy],
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  acceleration=CPUThreads(),
                                  n=40)
 
@@ -629,13 +719,11 @@ best_booster = rpt2.best_model.model.evo_tree_classifier
 print(
     "Optimal hyper-parameters: \n",
     "  max_depth: ", best_booster.max_depth, "\n",
-    "  η:         ", best_booster.η
+    "  eta:         ", best_booster.eta
 )
 
-# Using the `confidence_intervals` function we defined earlier:
-
 e_best = rpt2.best_history_entry
-confidence_intervals(e_best)
+e_best.evaluation
 
 # Digging a little deeper, we can learn what stopping criterion was
 # applied in the case of the optimal model, and how many iterations
@@ -649,7 +737,12 @@ plot(mach_tuned_iterated_pipe, size=(600,450))
 
 # \fig{EX-telco-tuning.svg}
 
+# ‎
+# @@
+# @@dropdown
 # ## Saving our model
+# @@
+# @@dropdown-content
 
 # *Introduces:* `MLJ.save`
 
@@ -663,7 +756,12 @@ MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 
 # We'll deserialize this in "Testing the final model" below.
 
+# ‎
+# @@
+# @@dropdown
 # ## Final performance estimate
+# @@
+# @@dropdown-content
 
 # Finally, to get an even more accurate estimate of performance, we
 # can evaluate our model using stratified cross-validation and all the
@@ -675,21 +773,25 @@ MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 # time):
 
 e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  measures=[brier_loss, auc, accuracy])
 
-confidence_intervals(e_tuned_iterated_pipe)
-
-# For comparison, here are the confidence intervals for the basic
+# For comparison, here again is the evaluation for the basic
 # pipeline model (no feature selection and default hyperparameters):
 
-confidence_intervals_basic_model
+e_pipe
 
-# As each pair of intervals overlap, it's doubtful the small changes
-# here can be assigned statistical significance. Default `booster`
-# hyper-parameters do a pretty good job.
+# Tuning appears to improve all three scores (not just the Brier loss used in
+# optimization). However, 95% confidence intervals, based on the standard errors, suggest
+# we are not detecting statistically significant differences for `auc` and `accuracy`. In
+# any case, the default `booster` hyper-parameters do a pretty good job. But it would
+# definitely be worth revisiting this in the case we use all the data.
 
+# @@
+# @@dropdown
 # ## Testing the final model
+# @@
+# @@dropdown-content
 
 # We now determine the performance of our model on our
 # lock-and-throw-away-the-key holdout set. To demonstrate
@@ -709,7 +811,7 @@ ŷ_tuned[1]
 
 print(
     "Tuned model measurements on test:\n",
-    "  brier loss: ", brier_loss(ŷ_tuned, ytest) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ_tuned, ytest), "\n",
     "  auc:        ", auc(ŷ_tuned, ytest),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ_tuned), ytest)
 )
@@ -723,10 +825,12 @@ ŷ_basic = predict(mach_basic, Xtest);
 
 print(
     "Basic model measurements on test set:\n",
-    "  brier loss: ", brier_loss(ŷ_basic, ytest) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ_basic, ytest), "\n",
     "  auc:        ", auc(ŷ_basic, ytest),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ_basic), ytest)
 )
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

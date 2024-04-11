@@ -1,5 +1,5 @@
 # This file was generated, do not modify it. # hide
-y, X = unpack(caravan, ==(:Purchase), col->true)
+y, X = unpack(caravan, ==(:Purchase))
 
 mstd = machine(Standardizer(), X)
 fit!(mstd)

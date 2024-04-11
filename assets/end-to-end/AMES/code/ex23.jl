@@ -1,3 +1,9 @@
 # This file was generated, do not modify it. # hide
-mtm = machine(tm, X, y)
-fit!(mtm, rows=train);
+tuned_blended = TunedModel(
+    blended;
+    tuning=Grid(resolution=7),
+    resampling=CV(nfolds=6),
+    ranges,
+    measure=rmsl,
+    acceleration=CPUThreads(),
+)

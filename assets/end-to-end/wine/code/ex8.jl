@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-schema(X)
+X[1:5, :Proline]

@@ -1,5 +1,5 @@
-Machine{ProbabilisticTunedModel{Grid,…},…} trained 1 time; caches data
-  model: MLJTuning.ProbabilisticTunedModel{MLJTuning.Grid, MLJXGBoostInterface.XGBoostClassifier}
+trained Machine; does not cache data
+  model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @467 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @177 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{2}}`
+    1:	Source @386 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @230 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}

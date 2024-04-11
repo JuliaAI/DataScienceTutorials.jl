@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/D0-categorical/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using CategoricalArrays
 
@@ -29,4 +29,3 @@ v[1] < v[2]
 v = categorical(["AA", "BB", missing, "AA", "BB", "CC"]);
 
 levels(v)
-

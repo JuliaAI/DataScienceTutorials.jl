@@ -1,2 +1,4 @@
 # This file was generated, do not modify it. # hide
-confidence_intervals_basic_model
+e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
+                                 measures=[brier_loss, auc, accuracy])

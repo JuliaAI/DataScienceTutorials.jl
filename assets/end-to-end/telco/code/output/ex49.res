@@ -1,19 +1,12 @@
-ProbabilisticIteratedModel(
-  model = ProbabilisticPipeline(
-        continuous_encoder = ContinuousEncoder(drop_last = false, …), 
-        feature_selector = FeatureSelector(features = [:TechSupport__No, Symbol("PaymentMethod__Credit card (automatic)"), :StreamingMovies__No, Symbol("Contract__One year"), Symbol("Contract__Two year"), :Partner__Yes, :OnlineBackup__No, :Dependents__Yes, :Partner__No, :gender__Male, Symbol("PaymentMethod__Mailed check"), Symbol("OnlineSecurity__No internet service"), :OnlineSecurity__No, Symbol("PaymentMethod__Electronic check"), :OnlineSecurity__Yes, Symbol("InternetService__Fiber optic"), :TechSupport__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingTV__Yes, :PhoneService__No, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), :MultipleLines__Yes, Symbol("MultipleLines__No phone service"), :InternetService__DSL], …), 
-        evo_tree_classifier = EvoTreeClassifier(loss = EvoTrees.Softmax(), …), 
-        cache = true), 
-  controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
-  resampling = Holdout(
-        fraction_train = 0.7, 
-        shuffle = false, 
-        rng = Random._GLOBAL_RNG()), 
-  measure = BrierLoss(), 
-  weights = nothing, 
-  class_weights = nothing, 
-  operation = MLJModelInterface.predict, 
-  retrain = false, 
-  check_measure = true, 
-  iteration_parameter = nothing, 
-  cache = true)
+PerformanceEvaluation object with these fields:
+  model, measure, operation, measurement, per_fold,
+  per_observation, fitted_params_per_fold,
+  report_per_fold, train_test_rows, resampling, repeats
+Extract:
+┌──────────────────┬──────────────┬─────────────┬─────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                                                                                                             │
+├──────────────────┼──────────────┼─────────────┼─────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ BrierLoss()      │ predict      │ 0.36        │ 0.0305  │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │
+│ AreaUnderCurve() │ predict      │ 0.79        │ 0.0227  │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │
+│ Accuracy()       │ predict_mode │ 0.759       │ 0.0213  │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │
+└──────────────────┴──────────────┴─────────────┴─────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

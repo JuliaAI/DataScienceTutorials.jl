@@ -2,26 +2,24 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/EX-powergen/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+	return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
 using MLJ
 using UrlDownload
-using PyPlot
-ioff() # hide
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 
-LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
+LinearRegressor = @load LinearRegressor pkg = MLJLinearModels
 
 data_repo = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data"
 
 url_power   = data_repo * "/power_syst/DE_power_hourly.csv"
 url_weather = data_repo * "/power_syst/DE_weather_data.csv"
 
-power   = DataFrame(urldownload(url_power))
+power = DataFrame(urldownload(url_power))
 weather = DataFrame(urldownload(url_weather));
 
 describe(power, :mean, :nmissing)
@@ -29,14 +27,14 @@ describe(power, :mean, :nmissing)
 first(describe(weather, :mean, :nmissing), 20)
 
 select!(power, [
-    :utc_timestamp,
-    :DE_solar_generation_actual,
-    :DE_wind_generation_actual]);
+	:utc_timestamp,
+	:DE_solar_generation_actual,
+	:DE_wind_generation_actual]);
 
 colnames = names(weather)
 
 filter_by_name(name, cols) =
-    filter(cn -> occursin(name, String(cn)), cols)
+	filter(cn -> occursin(name, String(cn)), cols)
 
 wind   = weather[:, filter_by_name("windspeed", colnames)]
 temp   = weather[:, filter_by_name("temperature", colnames)]
@@ -48,20 +46,20 @@ col_mean = [:windspeed_mean, :temp_mean, :raddir_mean, :raddif_mean];
 
 n_rows = size(first(dfs), 1)
 for (df, name) in zip(dfs, col_mean)
-    df[!, name] = zeros(n_rows)
-    for (i, row) in enumerate(eachrow(df))
-      df[i, name] = mean(row)
-    end
+	df[!, name] = zeros(n_rows)
+	for (i, row) in enumerate(eachrow(df))
+		df[i, name] = mean(row)
+	end
 end;
 
 data = DataFrame(
-    Timestamp     = weather.utc_timestamp,
-    Solar_gen     = power.DE_solar_generation_actual,
-    Wind_gen      = power.DE_wind_generation_actual,
-    Windspeed     = wind.windspeed_mean,
-    Temperature   = temp.temp_mean,
-    Radiation_dir = raddir.raddir_mean,
-    Radiation_dif = raddif.raddif_mean);
+	Timestamp     = weather.utc_timestamp,
+	Solar_gen     = power.DE_solar_generation_actual,
+	Wind_gen      = power.DE_wind_generation_actual,
+	Windspeed     = wind.windspeed_mean,
+	Temperature   = temp.temp_mean,
+	Radiation_dir = raddir.raddir_mean,
+	Radiation_dif = raddif.raddif_mean);
 
 describe(data, :mean, :median, :nmissing)
 
@@ -72,109 +70,138 @@ coerce!(data, :Solar_gen => Continuous)
 
 schema(data)
 
-figure(figsize=(8, 6))
-hist(data.Solar_gen, color="blue", edgecolor="white", bins=100,
-     density=true, alpha=0.5)
-xlabel("Solar power generation (MWh)", fontsize=14)
-ylabel("Frequency", fontsize=14)
-xticks(fontsize=12)
-yticks([0, 1e-3, 2e-3], fontsize=12)
-savefig(joinpath(@OUTPUT, "hist_solar.svg")) # hide
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
-figure(figsize=(8, 6))
-hist(data.Wind_gen, color="blue", edgecolor = "white", bins=50,
-     density=true, alpha=0.5)
-xlabel("Wind power generation (MWh)", fontsize=14)
-ylabel("Frequency", fontsize=14)
+histogram(
+	data.Solar_gen,
+	color = "blue",
+	bins = 100,
+	normalize = :pdf,
+	alpha = 0.5,
+	yticks = [0, 1e-3, 2e-3],
+)
+xlabel!("Solar power generation (MWh)")
+ylabel!("Frequency")
+savefig(joinpath(@OUTPUT, "hist_solar.svg")); # hide
 
-savefig(joinpath(@OUTPUT, "hist_wind.svg")) # hide
+histogram(data.Wind_gen, color = "blue", bins = 50, normalize = :pdf, alpha = 0.5)
+xlabel!("Wind power generation (MWh)")
+ylabel!("Frequency")
 
-fig = figure(figsize=(15, 15))
+savefig(joinpath(@OUTPUT, "hist_wind.svg")); # hide
 
-subplot(221)
-scatter(data.Solar_gen, data.Radiation_dir)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p1 = scatter(
+	data.Solar_gen,
+	data.Radiation_dir,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - directional",
+)
 
-subplot(222)
-scatter(data.Solar_gen, data.Radiation_dif)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p2 = scatter(
+	data.Solar_gen,
+	data.Radiation_dif,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - diffuse",
+)
 
-subplot(223)
-scatter(data.Solar_gen, data.Windspeed)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p3 = scatter(
+	data.Solar_gen,
+	data.Windspeed,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Wind speed (m/s)",
+)
 
-subplot(224)
-scatter(data.Solar_gen, data.Temperature)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+p4 = scatter(
+	data.Solar_gen,
+	data.Temperature,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Temperature (C)",
+)
 
-savefig(joinpath(@OUTPUT, "solar_scatter.png"), bbox_inches="tight") # hide
+plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
 
-fig = figure(figsize=(15, 15))
+savefig(joinpath(@OUTPUT, "solar_scatter.png")); # hide
 
-subplot(221)
-scatter(data.Wind_gen, data.Radiation_dir)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p1 = scatter(
+	data.Wind_gen,
+	data.Radiation_dir,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - directional",
+)
 
-subplot(222)
-scatter(data.Wind_gen, data.Radiation_dif)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p2 = scatter(
+	data.Wind_gen,
+	data.Radiation_dif,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - diffuse",
+)
 
-subplot(223)
-scatter(data.Wind_gen, data.Windspeed)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p3 = scatter(
+	data.Wind_gen,
+	data.Windspeed,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Wind speed (m/s)",
+)
 
-subplot(224)
-scatter(data.Wind_gen, data.Temperature)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+p4 = scatter(
+	data.Wind_gen,
+	data.Temperature,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Temperature (C)",
+)
 
-savefig(joinpath(@OUTPUT, "wind_scatter.png"), bbox_inches="tight") # hide
+plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
+
+
+savefig(joinpath(@OUTPUT, "wind_scatter.png")); # hide
 
 y_wind = data.Wind_gen
 X = data[:, [:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif]];
 
-train, test = partition(collect(eachindex(y_wind)), 0.7, shuffle=true, rng=5);
+train, test = partition(collect(eachindex(y_wind)), 0.7, shuffle = true, rng = 5);
 
 linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
-fit!(m_linReg, rows=train);
+fit!(m_linReg, rows = train);
 
-y_hat = MLJ.predict(m_linReg, rows=test);
+y_hat = MLJ.predict(m_linReg, rows = test);
 
-figure(figsize=(8, 6))
-plot(y_hat, color="blue", label="Predicted")
-plot(y_wind[test], color="red", label="Observed")
-xlabel("Time", fontsize=14)
-ylabel("Power generation", fontsize=14)
-xticks([])
-yticks(fontsize=12)
-xlim(0, 100)
-legend(fontsize=14)
+plot(y_hat, color = "blue", label = "Predicted", xlim = (0, 100), xticks = [])
+plot!(y_wind[test], color = "red", label = "Observed")
+xlabel!("Time")
+ylabel!("Power generation")
 
-savefig(joinpath(@OUTPUT, "obs_v_pred.svg")) # hide
+savefig(joinpath(@OUTPUT, "obs_v_pred.svg")); # hide
 
-rms(y_wind[train], MLJ.predict(m_linReg, rows=train))
+rms(y_wind[train], MLJ.predict(m_linReg, rows = train))
 
 rms(y_wind[test], y_hat)
 
 res = y_hat .- y_wind[test];
 
-figure(figsize=(12, 6))
-stem(res)
-xlim(0, length(res))
+plot(res, line = :stem, marker = :circle, xlim = (0, length(res)))
+hline!([0], color = "red", linewidth = 3)
 
-savefig(joinpath(@OUTPUT, "residuals.png")) # hide
+savefig(joinpath(@OUTPUT, "residuals.png")); # hide
 
-figure(figsize=(8, 6))
-hist(res, color="blue", edgecolor="white", bins=50,
-     density=true, alpha=0.5)
+histogram(res, color = "blue", bins = 50, normalize = :pdf, alpha = 0.5, legend = false)
 
-savefig(joinpath(@OUTPUT, "hist_residuals.svg")) # hide
-
+savefig(joinpath(@OUTPUT, "hist_residuals.svg")); # hide

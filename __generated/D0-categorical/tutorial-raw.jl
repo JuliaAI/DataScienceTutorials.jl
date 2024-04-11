@@ -25,4 +25,3 @@ v = categorical(["AA", "BB", missing, "AA", "BB", "CC"]);
 levels(v)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

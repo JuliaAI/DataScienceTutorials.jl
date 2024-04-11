@@ -7,8 +7,11 @@
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
 # [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 # [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
-#
+
+# @@dropdown
 # ## Tuning a single hyperparameter
+# @@
+# @@dropdown-content
 #
 # In MLJ, tuning is implemented as a model wrapper.
 # After wrapping a model in a _tuning strategy_ (e.g. cross-validation) and binding the wrapped model to data in a _machine_, fitting the machine initiates a search for optimal model hyperparameters.
@@ -21,7 +24,10 @@ using PrettyPrinting
 X, y = @load_iris
 DecisionTreeClassifier = @load DecisionTreeClassifier pkg=DecisionTree
 
+# @@dropdown
 # ### Specifying a range of value
+# @@
+# @@dropdown-content
 #
 # To specify a range of value, you can use the `range` function:
 
@@ -44,7 +50,12 @@ tm = TunedModel(model=dtc, ranges=[r, ], measure=cross_entropy)
 
 # For more options do `?TunedModel`.
 
+# ‎
+# @@
+# @@dropdown
 # ### Fitting and inspecting a tuned model
+# @@
+# @@dropdown-content
 #
 # To fit a tuned model, you can use the usual syntax:
 
@@ -71,20 +82,21 @@ r.best_history_entry.measurement[1]
 
 # Anyone wants plots? of course:
 
-using PyPlot
-figure(figsize=(8,6))
-res = r.plotting # contains all you need for plotting
-plot(res.parameter_values, res.measurements, ls="none", marker="o")
+using Plots
 
-xticks(1:5, fontsize=12)
-yticks(fontsize=12)
-xlabel("Maximum depth", fontsize=14)
-ylabel("Misclassification rate", fontsize=14)
-ylim([0, 1])
+plot(m, size=(800,600))
 
 # \figalt{hyperparameter heatmap}{A-model-tuning-hpt}
 
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Tuning nested hyperparameters
+# @@
+# @@dropdown-content
 
 # Let's generate simple dummy regression data
 
@@ -118,20 +130,11 @@ r.best_history_entry.measurement[1]
 
 # Let's visualise this
 
-figure(figsize=(8,6))
-
-res = r.plotting
-
-vals_sf = res.parameter_values[:, 1]
-vals_bf = res.parameter_values[:, 2]
-
-tricontourf(vals_sf, vals_bf, res.measurements)
-xlabel("Number of sub-features", fontsize=14)
-ylabel("Bagging fraction", fontsize=14)
-xticks([1, 2, 3], fontsize=12)
-yticks(fontsize=12)
+plot(m)
 
 # \figalt{Hyperparameter heatmap}{A-model-tuning-hm.svg}
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

@@ -25,7 +25,7 @@ ȳ = predict_mode(tree, rows=test)
 @show ȳ[1]
 @show mode(ŷ[1])
 
-mce = cross_entropy(ŷ, y[test]) |> mean
+mce = cross_entropy(ŷ, y[test])
 round(mce, digits=4)
 
 v = [1, 2, 3, 4]
@@ -42,4 +42,3 @@ vv = inverse_transform(stand, w)
 sum(abs.(vv .- v))
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

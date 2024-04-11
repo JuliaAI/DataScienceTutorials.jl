@@ -1,14 +1,8 @@
 # This file was generated, do not modify it. # hide
-using PyPlot
-ioff() # hide
-figure(figsize=(8,6))
-res = r.plotting # contains all you need for plotting
-plot(res.parameter_values, res.measurements, ls="none", marker="o")
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.2) # hide
 
-xticks(1:5, fontsize=12)
-yticks(fontsize=12)
-xlabel("Maximum depth", fontsize=14)
-ylabel("Misclassification rate", fontsize=14)
-ylim([0, 1])
+plot(m, size=(800,600))
 
-savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-model-tuning-hpt.svg")); # hide

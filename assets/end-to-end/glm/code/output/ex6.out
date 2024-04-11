@@ -1,3 +1,5 @@
 EvoTreeCount
 LinearCountRegressor
+NeuralNetworkClassifier
+NeuralNetworkRegressor
 XGBoostCount

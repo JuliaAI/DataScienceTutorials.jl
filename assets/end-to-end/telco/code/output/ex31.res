@@ -1,20 +1,7 @@
-ProbabilisticPipeline(
-  continuous_encoder = ContinuousEncoder(
-        drop_last = false, 
-        one_hot_ordered_factors = false), 
-  evo_tree_classifier = EvoTreeClassifier(
-        loss = EvoTrees.Softmax(), 
-        nrounds = 10, 
-        λ = 0.0, 
-        γ = 0.0, 
-        η = 0.1, 
-        max_depth = 5, 
-        min_weight = 1.0, 
-        rowsample = 1.0, 
-        colsample = 1.0, 
-        nbins = 64, 
-        α = 0.5, 
-        metric = :mlogloss, 
-        rng = Random.MersenneTwister(123), 
-        device = "cpu"), 
-  cache = true)
+6-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = CatBoostClassifier, package_name = CatBoost, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )

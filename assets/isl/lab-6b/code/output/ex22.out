@@ -1,3 +1,0 @@
-import MLJLinearModels ✔
-round(best_mdl.linear_regressor.lambda, sigdigits = 4) = 0.1
-round(best_mdl.linear_regressor.gamma, sigdigits = 4) = 7169.0

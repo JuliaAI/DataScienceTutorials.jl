@@ -6,7 +6,10 @@
 
 # **Main author**: Ayush Shridhar (ayush-1506).
 
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 import MLJFlux
 import MLJ
@@ -14,7 +17,6 @@ import DataFrames: DataFrame
 import Statistics
 import Flux
 using Random
-using PyPlot
 
 Random.seed!(11)
 
@@ -129,18 +131,21 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
-figure(figsize=(8,6))
+using Plots
 
-plt.plot(curve.parameter_values,
-    curve.measurements)
+plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 
-yscale("log")
-xlabel(curve.parameter_name)
-ylabel("l2")
+xlabel!(curve.parameter_name)
+ylabel!("l2-log")
 
 # \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 
+# ‎
+# @@
+# @@dropdown
 # ## Tuning
+# @@
+# @@dropdown-content
 
 # As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
 # batch_size parameter.
@@ -160,5 +165,7 @@ MLJ.fit!(m)
 
 MLJ.fitted_params(m).best_model.batch_size
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

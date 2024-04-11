@@ -1,6 +1,7 @@
 body {
     background: #fff;
     color: #363636;
+    overflow-x: hidden;
 }
 
 .header h2 {
@@ -58,12 +59,29 @@ The content `<div>` is where all your content goes.
      text-align: center;
      padding: 2.5em 2em 0;
      border-bottom: 1px solid #eee;
+     position: relative;
  }
     .header h1 {
         margin: 0.2em 0;
         font-size: 3em;
         font-weight: 300;
     }
+    .header h1::before {
+        content: url('https://seeklogo.com/images/J/julia-logo-DC9698BAF9-seeklogo.com.png');
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 2.8rem;
+        margin-left: -3rem;
+        transform: scale(0.19);
+        width: 120px;
+        height: 40px;
+      }
+      /* media queries for header */
+      @media only screen and (max-width: 1200px) {
+        .header h1::before {
+         display: none;
+        }
+      }
      .header h2 {
         font-weight: 300;
         color: #ccc;
@@ -86,7 +104,7 @@ appears on the left side of the page.
 
 #menu {
     margin-left: -250px; /* "#menu" width */
-    width: 250px;
+    width: 253px;
     position: fixed;
     top: 0;
     left: 0;
@@ -204,9 +222,9 @@ small screens.
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
 /*
-Hides the menu at `48em`, but modify this based on your app's needs.
+Hides the menu at `63em`, but modify this based on your app's needs.
 */
-@media (min-width: 48em) {
+@media (min-width: 63em) {
 
     .header,
     .content {
@@ -215,7 +233,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
 
     #layout {
-        padding-left: 250px; /* left col width "#menu" */
+        padding-left: 0px; /* left col width "#menu" */
         left: 0;
     }
     #menu {
@@ -233,7 +251,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 63em) {
     /* Only apply this when the window is small. Otherwise, the following
     case results in extra padding on the left:
         * Make the window small.

@@ -1,1 +1,1 @@
-Source @163 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+NearestNeighborModels.KNNRegressor

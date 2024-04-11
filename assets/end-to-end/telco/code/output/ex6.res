@@ -7,4 +7,5 @@ DecisionTreeClassifier(
   post_prune = false, 
   merge_purity_threshold = 1.0, 
   display_depth = 5, 
+  feature_importance = :impurity, 
   rng = Random._GLOBAL_RNG())

@@ -1,7 +1,9 @@
 # This file was generated, do not modify it. # hide
-plt.figure(figsize=(8,6))
-plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
-         density=true, alpha=0.5)
-plt.xlabel("Price", fontsize=14)
-plt.ylabel("Frequency", fontsize=14)
-plt.savefig(joinpath(@OUTPUT, "hist_price.svg")) # hide
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.2) # hide
+
+histogram(df.price, color = "blue", normalize=:pdf, bins=50, alpha=0.5, legend=false)
+xlabel!("Price")
+ylabel!("Frequency")
+savefig(joinpath(@OUTPUT, "hist_price.svg")); # hide

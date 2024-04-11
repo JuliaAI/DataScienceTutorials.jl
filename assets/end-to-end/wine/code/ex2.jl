@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
 using HTTP
 using MLJ
-using PyPlot
+using StableRNGs # for RNGs, stable over Julia versions
 import DataFrames: DataFrame, describe
 using UrlDownload
 MLJ.color_off() # hide

@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-coerce!(df, :Class => OrderedFactor{2});
+rng = StableRNG(123)
+y, X = unpack(df, ==(:Class); rng);

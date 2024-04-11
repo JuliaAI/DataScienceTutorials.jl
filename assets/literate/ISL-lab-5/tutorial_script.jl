@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-5/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -12,23 +12,20 @@ import RDatasets: dataset
 import DataFrames: DataFrame, select
 MLJ.color_off() # hide
 auto = dataset("ISLR", "Auto")
-y, X = unpack(auto, ==(:MPG), col->true)
+y, X = unpack(auto, ==(:MPG))
 train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 
 LR = @load LinearRegressor pkg=MLJLinearModels
 
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")); # hide
 
 lm = LR()
 mlm = machine(lm, select(X, :Horsepower), y)
@@ -38,16 +35,13 @@ rms(MLJ.predict(mlm, rows=test), y[test])^2
 xx = (Horsepower=range(50, 225, length=100) |> collect, )
 yy = MLJ.predict(mlm, xx)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy, lw=3)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+plot!(xx.Horsepower, yy,  legend=false, linewidth=3, color=:orange)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")); # hide
 
 hp = X.Horsepower
 Xhp = DataFrame(hp1=hp, hp2=hp.^2, hp3=hp.^3);
@@ -81,20 +75,15 @@ yy1 = MLJ.predict(lr1, Xnew)
 yy2 = MLJ.predict(lr2, Xnew)
 yy3 = MLJ.predict(lr3, Xnew)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy1, lw=3, label="Order 1")
-plot(xx.Horsepower, yy2, lw=3, label="Order 2")
-plot(xx.Horsepower, yy3, lw=3, label="Order 3")
+plot(X.Horsepower, y, seriestype=:scatter, label=false,  size=(800,600))
+plot!(xx.Horsepower, yy1,  label="Order 1", linewidth=3, color=:orange,)
+plot!(xx.Horsepower, yy2,  label="Order 2", linewidth=3, color=:green,)
+plot!(xx.Horsepower, yy3,  label="Order 3", linewidth=3, color=:red,)
 
-legend(fontsize=14)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g3.svg")); # hide
 
 Xhp = DataFrame([hp.^i for i in 1:10], :auto)
 
@@ -115,16 +104,9 @@ res = rep.plotting
 Xnew = DataFrame([hpn.^i for i in 1:10], :auto)
 yy5 = MLJ.predict(mtm, Xnew)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy5, lw=3)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+plot!(xx.Horsepower, yy5, color=:orange, linewidth=4, legend=false)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
-
-PyPlot.close_figs() # hide
-
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")); # hide

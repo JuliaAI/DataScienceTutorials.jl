@@ -4,4 +4,4 @@ knn = (@load KNNRegressor)()
 
 tree_booster = (@load EvoTreeRegressor)()
 forest = (@load RandomForestRegressor pkg=DecisionTree)()
-svm = (@load SVMRegressor)()
+svm = (@load EpsilonSVR pkg=LIBSVM)()

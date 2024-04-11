@@ -1,8 +1,7 @@
-7-element Vector{String}:
- "1"
- "2"
- "3"
- "7"
- "8"
- "9"
- "10"
+KNNRegressor(
+  K = 5, 
+  algorithm = :kdtree, 
+  metric = Distances.Euclidean(0.0), 
+  leafsize = 10, 
+  reorder = true, 
+  weights = NearestNeighborModels.Uniform())

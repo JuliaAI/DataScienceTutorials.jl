@@ -2,7 +2,7 @@
 
 using Pkg  # hideall
 Pkg.activate("_literate/D0-loading/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using RDatasets
 import DataFrames
@@ -85,4 +85,3 @@ write(fpath, c);
 
 data = CSV.read(fpath, DataFrames.DataFrame, header=false, missingstring="?")
 first(data[:, 1:5], 3)
-

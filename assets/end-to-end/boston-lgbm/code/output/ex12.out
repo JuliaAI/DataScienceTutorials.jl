@@ -1,1 +1,3 @@
-rms_score = 3.669
+best_model.learning_rate = 0.3320079815368962
+best_model.min_data_in_leaf = 7
+best_model.num_iterations = 82

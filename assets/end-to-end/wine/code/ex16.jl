@@ -1,3 +1,4 @@
 # This file was generated, do not modify it. # hide
-res = evaluate!(multi; opts...)
-round(res.measurement[1], sigdigits=3)
+fit!(knn) # train on all train data
+yhat = predict_mode(knn, Xtest)
+accuracy(yhat, ytest)

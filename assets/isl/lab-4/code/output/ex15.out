@@ -1,6 +1,6 @@
-false_positive(cm) = 598
-accuracy(ŷ, y) |> r3 = 0.518
-accuracy(cm) |> r3 = 0.518
-precision(ŷ, y) |> r3 = 0.518
-recall(ŷ, y) |> r3 = 0.992
-f1score(ŷ, y) |> r3 = 0.681
+false_positive(cm) = 457
+accuracy(ŷ, y) |> r3 = 0.522
+accuracy(cm) |> r3 = 0.522
+positive_predictive_value(ŷ, y) |> r3 = 0.526
+recall(ŷ, y) |> r3 = 0.782
+f1score(ŷ, y) |> r3 = 0.629

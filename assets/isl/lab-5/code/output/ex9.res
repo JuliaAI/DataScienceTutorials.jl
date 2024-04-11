@@ -1,5 +1,5 @@
-Machine{DeterministicPipeline{NamedTuple{,…},…},…} trained 1 time; caches data
-  model: MLJBase.DeterministicPipeline{NamedTuple{(:feature_selector, :linear_regressor), Tuple{MLJModelInterface.Unsupervised, MLJModelInterface.Deterministic}}, MLJModelInterface.predict}
+trained Machine; does not cache data
+  model: DeterministicPipeline(feature_selector = FeatureSelector(features = [:hp1, :hp2, :hp3], …), …)
   args: 
-    1:	Source @112 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @035 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @019 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @901 ⏎ AbstractVector{ScientificTypesBase.Continuous}

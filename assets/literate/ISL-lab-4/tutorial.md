@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-4/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## Stock market data
+@@
+@@dropdown-content
 
 Let's load the usual packages and the data
 
@@ -55,21 +58,23 @@ round.(cm, sigdigits=1)
 Let's see what the `:Volume` feature looks like:
 
 ````julia:ex7
-using PyPlot
-ioff() # hide
-figure(figsize=(8,6))
-plot(X.Volume)
-xlabel("Tick number", fontsize=14)
-ylabel("Volume", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.2) # hide
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
+plot(X.Volume, size=(800,600), linewidth=2, legend=false)
+xlabel!("Tick number")
+ylabel!("Volume")
+
+savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")); # hide
 ````
 
 \figalt{volume}{ISL-lab-4-volume.svg}
 
+@@dropdown
 ### Logistic Regression
+@@
+@@dropdown-content
 
 We will now try to train models; the target `:Direction` has two classes: `Up` and `Down`; it needs to be interpreted as a categorical object, and we will mark it as a _ordered factor_ to specify that 'Up' is positive and 'Down' negative (for the confusion matrix later):
 
@@ -81,14 +86,12 @@ classes(y[1])
 Note that in this case the default order comes from the lexicographic order which happens  to map  to  our intuition since `D`  comes before `U`.
 
 ````julia:ex9
-figure(figsize=(8,6))
 cm = countmap(y)
-PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
-xticks([1, 2], ["Down", "Up"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+Plots.bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")); # hide
 ````
 
 \fig{ISL-lab-4-bal.svg}
@@ -140,7 +143,7 @@ We can then compute the accuracy or precision, etc. easily for instance:
 @show false_positive(cm)
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
-@show precision(ŷ, y) |> r3
+@show positive_predictive_value(ŷ, y) |> r3   # a.k.a. precision
 @show recall(ŷ, y)    |> r3
 @show f1score(ŷ, y)   |> r3
 ````
@@ -189,7 +192,12 @@ Note also that we retrieved the raw predictions here i.e.: a score for each clas
 mode.(ŷ)
 ````
 
+‎
+@@
+@@dropdown
 ### LDA
+@@
+@@dropdown-content
 
 Let's do a similar thing but with a LDA model this time:
 
@@ -217,12 +225,17 @@ ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ````
 
+‎
+@@
+@@dropdown
 ### QDA
+@@
+@@dropdown-content
 
 Bayesian QDA is available via ScikitLearn:
 
 ````julia:ex23
-BayesianQDA = @load BayesianQDA pkg=ScikitLearn
+BayesianQDA = @load BayesianQDA pkg=MLJScikitLearnInterface
 ````
 
 Using it is done in much the same way as before:
@@ -235,7 +248,12 @@ ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ````
 
+‎
+@@
+@@dropdown
 ### KNN
+@@
+@@dropdown-content
 
 We can use K-Nearest Neighbors models via the [`NearestNeighbors`](https://github.com/KristofferC/NearestNeighbors.jl) package:
 
@@ -260,7 +278,15 @@ accuracy(ŷ, y[test]) |> r3
 
 A bit better but not hugely so.
 
+‎
+@@
+
+‎
+@@
+@@dropdown
 ## Caravan insurance data
+@@
+@@dropdown-content
 
 The caravan dataset is part of ISLR as well:
 
@@ -288,14 +314,12 @@ println("#$(vals[2]) ", nl2)
 we can also visualise this as was done before:
 
 ````julia:ex30
-figure(figsize=(8,6))
 cm = countmap(purchase)
-PyPlot.bar([1, 2], [cm["No"], cm["Yes"]])
-xticks([1, 2], ["No", "Yes"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal2.svg")); # hide
 ````
 
 \fig{ISL-lab-4-bal2.svg}
@@ -305,7 +329,7 @@ that's quite unbalanced.
 Apart from the target, all other variables are numbers; we can standardize the data:
 
 ````julia:ex31
-y, X = unpack(caravan, ==(:Purchase), col->true)
+y, X = unpack(caravan, ==(:Purchase))
 
 mstd = machine(Standardizer(), X)
 fit!(mstd)
@@ -349,7 +373,10 @@ ŷ = predict_mode(classif, rows=test)
 accuracy(ŷ, y[test]) |> r3
 ````
 
+@@dropdown
 ### ROC and AUC
+@@
+@@dropdown-content
 
 Since we have a probabilistic classifier, we can also check metrics that take _scores_ into account such as the area under the ROC curve (AUC):
 
@@ -362,22 +389,21 @@ auc(ŷ, y[test])
 We can also display the curve itself
 
 ````julia:ex37
-fprs, tprs, thresholds = roc(ŷ, y[test])
+fprs, tprs, thresholds = roc_curve(ŷ, y[test])
 
-figure(figsize=(8,6))
-plot(fprs, tprs)
+plot(fprs, tprs, linewidth=2, size=(800,600))
+xlabel!("False Positive Rate")
+ylabel!("True Positive Rate")
 
-xlabel("False Positive Rate", fontsize=14)
-ylabel("True Positive Rate", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-roc.svg")); # hide
 ````
 
 \figalt{ROC}{ISL-lab-4-roc.svg}
 
-````julia:ex38
-PyPlot.close_figs() # hide
-````
+‎
+@@
+
+‎
+@@
 

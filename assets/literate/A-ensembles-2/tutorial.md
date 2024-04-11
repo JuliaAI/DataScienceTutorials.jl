@@ -2,24 +2,25 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/A-ensembles-2/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## Prelims
+@@
+@@dropdown-content
 
 This tutorial builds upon the previous ensemble tutorial with a home-made Random Forest regressor on the "boston" dataset.
 
 ````julia:ex2
 using MLJ
-using PyPlot
 using PrettyPrinting
 using StableRNGs
 import DataFrames: DataFrame, describe
 MLJ.color_off() # hide
-ioff() # hide
 
 X, y = @load_boston
 sch = schema(X)
@@ -44,7 +45,12 @@ e
 
 Note that multiple measures can be reported simultaneously.
 
+‎
+@@
+@@dropdown
 ## Random forest
+@@
+@@dropdown-content
 
 Let's create an ensemble of DTR and fix the number of subfeatures to 3 for now.
 
@@ -61,21 +67,24 @@ To get an idea of how many trees are needed, we can follow the evaluation of the
 rng = StableRNG(5123) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
+curves = learning_curve(m, resampling=Holdout(fraction_train=0.8, rng=rng),
                          range=r, measure=rms);
 ````
 
 let's plot the curves
 
 ````julia:ex7
-figure(figsize=(8,6))
-plot(curves.parameter_values, curves.measurements)
-ylabel("Root Mean Squared error", fontsize=16)
-xlabel("Number of trees", fontsize=16)
-xticks([10, 100, 250, 500, 750, 1000], fontsize=14)
-yticks(fontsize=14)
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.2) # hide
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
+plot(curves.parameter_values, curves.measurements,
+xticks = [10, 100, 250, 500, 750, 1000],
+size=(800,600), linewidth=2, legend=false)
+xlabel!("Number of trees")
+ylabel!("Root Mean Squared error")
+
+savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")); # hide
 ````
 
 \figalt{RMS vs number of trees}{A-ensembles-2-curves.svg}
@@ -86,7 +95,10 @@ Let's go for 150 trees
 forest.n = 150;
 ````
 
+@@dropdown
 ### Tuning
+@@
+@@dropdown-content
 
 As `forest` is a composite model, it has nested hyperparameters:
 
@@ -116,26 +128,18 @@ e = evaluate!(m, resampling=Holdout(fraction_train=0.8),
 e
 ````
 
+‎
+@@
+@@dropdown
 ### Reporting
-Again, you could show a 2D heatmap of the hyperparameters
+@@
+@@dropdown-content
+Again, we can visualize the results from the hyperparameter search
 
 ````julia:ex12
-r = report(m)
+plot(m)
 
-figure(figsize=(8,6))
-
-res = r.plotting
-
-vals_sf = res.parameter_values[:, 1]
-vals_bf = res.parameter_values[:, 2]
-
-tricontourf(vals_sf, vals_bf, res.measurements)
-xticks(1:3:12, fontsize=12)
-xlabel("Number of sub-features", fontsize=14)
-yticks(0.4:0.2:1, fontsize=12)
-ylabel("Bagging fraction", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")); # hide
 ````
 
 \fig{A-ensembles-2-heatmap.svg}
@@ -148,7 +152,11 @@ For instance we could look at predictions on the whole dataset:
 ````julia:ex13
 ŷ = predict(m, X)
 @show rms(ŷ, y)
-
-PyPlot.close_figs() # hide
 ````
+
+‎
+@@
+
+‎
+@@
 

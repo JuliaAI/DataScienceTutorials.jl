@@ -46,9 +46,7 @@ fp = fitted_params(LinearModel)
 yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
-
-k = collect(keys(fp.fitted_params_given_machine))[3]
-println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n Coefficients:  ", fp.linear_regressor.coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
@@ -78,8 +76,7 @@ fp = fitted_params(LogisticModel)
 residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[3]
-println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n Coefficients:  ", fp.linear_binary_classifier.coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n residuals \n ", residuals[1:5])
@@ -91,4 +88,3 @@ yMode = coerce(yMode, OrderedFactor)
 confusion_matrix(yMode, y)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

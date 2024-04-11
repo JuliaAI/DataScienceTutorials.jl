@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/A-model-choice/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using RDatasets
 using MLJ
@@ -31,4 +31,3 @@ end
 knc = @load KNeighborsClassifier
 
 linreg = @load LinearRegressor pkg=GLM
-

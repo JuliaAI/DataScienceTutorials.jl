@@ -1,5 +1,12 @@
-Machine{ProbabilisticPipeline{NamedTuple{,…},…},…} trained 0 times; caches data
-  model: MLJBase.ProbabilisticPipeline{NamedTuple{(:standardizer, :multinomial_classifier), Tuple{MLJModelInterface.Unsupervised, MLJModelInterface.Probabilistic}}, MLJModelInterface.predict}
-  args: 
-    1:	Source @166 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @129 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{3}}`
+PerformanceEvaluation object with these fields:
+  model, measure, operation, measurement, per_fold,
+  per_observation, fitted_params_per_fold,
+  report_per_fold, train_test_rows, resampling, repeats
+Extract:
+┌──────────────────────┬──────────────┬─────────────┬──────────┐
+│ measure              │ operation    │ measurement │ per_fold │
+├──────────────────────┼──────────────┼─────────────┼──────────┤
+│ LogLoss(             │ predict      │ 0.0319      │ [0.0319] │
+│   tol = 2.22045e-16) │              │             │          │
+│ Accuracy()           │ predict_mode │ 1.0         │ [1.0]    │
+└──────────────────────┴──────────────┴─────────────┴──────────┘

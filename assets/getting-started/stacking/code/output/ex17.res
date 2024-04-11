@@ -1,1 +1,5 @@
-([1, 2, 3], [4, 5, 6], [7, 8, 9])
+untrained Machine; caches model-specific representations of data
+  model: LinearRegressor(fit_intercept = true, …)
+  args: 
+    1:	Node @861
+    2:	Node @101

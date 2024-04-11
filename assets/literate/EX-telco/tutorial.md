@@ -2,7 +2,7 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/EX-telco/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -14,7 +14,7 @@ Telco Customer Churn dataset, aimed at practicing data scientists
 new to MLJ (Machine Learning in Julia). This tutorial does not
 cover exploratory data analysis.
 
-MLJ is a *multi-paradigm* machine learning toolbox (i.e., not just
+MLJ is a general machine learning toolbox (i.e., not just
 deep-learning).
 
 For other MLJ learning resources see the [Learning
@@ -40,7 +40,10 @@ may help).
 
 **Time.** Between two and three hours, first time through.
 
+@@dropdown
 ## Summary of methods and types introduced
+@@
+@@dropdown-content
 
 |code   | purpose|
 |:-------|:-------------------------------------------------------|
@@ -64,6 +67,7 @@ may help).
 | `predict(mach, Xnew)` | make predictions given new features `Xnew`|
 | `fitted_params(mach)` | inspect learned parameters|
 | `report(mach)`        | inspect other outcomes of training|
+| `feature_importances(mach)` | inspect feature importances, where reported |
 | `confmat(yhat, y)`    | confusion matrix for predictions `yhat` and ground truth `y`|
 | `roc(yhat, y)` | compute points on the receiver-operator Characteristic|
 | `StratifiedCV(nfolds=6)` | 6-fold stratified cross-validation resampling strategy|
@@ -77,7 +81,12 @@ may help).
 | `RandomSearch()` | random search tuning strategy|
 | `TunedModel(model=..., tuning=..., options...)` | wrap the supervised `model` in specified `tuning` strategy|
 
+‎
+@@
+@@dropdown
 ## Warm up: Building a model for the iris dataset
+@@
+@@dropdown-content
 
 Before turning to the Telco Customer Churn dataset, we very quickly
 build a predictive model for Fisher's well-known iris data set, as way of
@@ -176,8 +185,12 @@ yhat[2]
 ````
 
 We now turn to the Telco dataset.
-
+‎
+@@
+@@dropdown
 ## Getting the Telco data
+@@
+@@dropdown-content
 
 ````julia:ex14
 import DataFrames
@@ -198,7 +211,12 @@ In the table, observations correspond to rows, and features to
 columns, which is the convention for representing all
 two-dimensional data in MLJ.
 
+‎
+@@
+@@dropdown
 ## Type coercion
+@@
+@@dropdown-content
 
 *Introduces:* `scitype`, `schema`, `coerce`
 
@@ -274,25 +292,40 @@ Re-inspecting the scitypes:
 schema(df0) |> DataFrames.DataFrame
 ````
 
+‎
+@@
+@@dropdown
 ## Preparing a holdout set for final testing
+@@
+@@dropdown-content
 
 *Introduces:* `partition`
 
 To reduce training times for the purposes of this tutorial, we're
 going to dump 90% of observations (after shuffling) and split off
 30% of the remainder for use as a lock-and-throw-away-the-key
-holdout set:
+holdout set.
 
 ````julia:ex23
-df, df_test, df_dumped = partition(df0, 0.07, 0.03, # in ratios 7:3:90
+import Random.Xoshiro
+rng = Xoshiro(123)
+df, df_test, df_dumped = partition(df0, 0.07, 0.03; # in ratios 7:3:90
                                    stratify=df0.Churn,
-                                   rng=123);
+                                   rng=rng);
 ````
 
 The reader interested in including all data can instead do
-`df, df_test = partition(df0, 0.7, rng=123)`.
+`df, df_test = partition(df0, 0.7; rng=rng )`.
 
+We have included the option `stratify=df0.Churn` to ensure the `Churn` classes have
+similary distributions in `df` and `df_test`.
+
+‎
+@@
+@@dropdown
 ## Splitting data into target and features
+@@
+@@dropdown-content
 
 *Introduces:* `unpack`
 
@@ -317,7 +350,12 @@ We'll do the same for the holdout data:
 ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 ````
 
+‎
+@@
+@@dropdown
 ## Loading a model and checking type requirements
+@@
+@@dropdown-content
 
 *Introduces:* `@load`, `input_scitype`, `target_scitype`
 
@@ -348,18 +386,29 @@ the following passing test:
 scitype(y) <: target_scitype(booster)
 ````
 
-However, our features `X` cannot be directly used with `booster`:
+Our features `X` are also compatible with `booster`:
 
 ````julia:ex30
 scitype(X) <: input_scitype(booster)
 ````
 
-As it turns out, this is because `booster`, like the majority of MLJ
-supervised models, expects the features to be `Continuous`. (With
-some experience, this can be gleaned from `input_scitype(booster)`.)
-So we need categorical feature encoding, discussed next.
+The majority of MLJ supervised models expects all features to be `Continuous` (and this
+used to be true for an earlier version of the EvoTrees.jl models.). For the sake of
+illustration, we will pretend this is true here, and introduce our own
+categorical feature encoding, discussed next.
 
+To see a list of all models that directly support the data (`X`, `y`) we can do this:
+
+````julia:ex31
+models(matching(X, y))
+````
+
+‎
+@@
+@@dropdown
 ## Building a model pipeline to incorporate feature encoding
+@@
+@@dropdown-content
 
 *Introduces:* `ContinuousEncoder`, pipeline operator `|>`
 
@@ -373,7 +422,7 @@ more models in a linear (non-branching) pipeline. Here's a pipeline
 that adds the `ContinuousEncoder` as a pre-processor to the
 gradient tree-boosting model above:
 
-````julia:ex31
+````julia:ex32
 pipe = ContinuousEncoder() |> booster
 ````
 
@@ -386,16 +435,21 @@ From the above display, we see that component model hyper-parameters
 are now *nested*, but they are still accessible (important in hyper-parameter
 optimization):
 
-````julia:ex32
+````julia:ex33
 pipe.evo_tree_classifier.max_depth
 ````
 
+‎
+@@
+@@dropdown
 ## Evaluating the pipeline model's performance
+@@
+@@dropdown-content
 
 *Introduces:* `measures` (function), **measures:** `brier_loss`,
  `auc`, `accuracy`; `machine`, `fit!`, `predict`, `fitted_params`,
  `report`, `roc`, **resampling strategy** `StratifiedCV`,
- `evaluate`, `FeatureSelector`
+ `evaluate`, `FeatureSelector`, `feature_importances`
 
 Without touching our test set `Xtest`, `ytest`, we will estimate the
 performance of our pipeline model, with default hyper-parameters, in
@@ -415,20 +469,23 @@ In any case, we need to choose some measures (metrics) to quantify
 the performance of our model. For a complete list of measures, one
 does `measures()`. Or we also can do:
 
-````julia:ex33
+````julia:ex34
 measures("Brier")
 ````
 
 We will be primarily using `brier_loss`, but also `auc` (area under
 the ROC curve) and `accuracy`.
 
+@@dropdown
 ### Evaluating by hand (with a holdout set)
+@@
+@@dropdown-content
 
 Our pipeline model can be trained just like the decision tree model
 we built for the iris data set. Binding all non-test data to the
 pipeline model:
 
-````julia:ex34
+````julia:ex35
 mach_pipe = machine(pipe, X, y)
 ````
 
@@ -436,38 +493,67 @@ We already encountered the `partition` method above. Here we apply
 it to row indices, instead of data containers, as `fit!` and
 `predict` only need a *view* of the data to work.
 
-````julia:ex35
+````julia:ex36
 train, validation = partition(1:length(y), 0.7)
 fit!(mach_pipe, rows=train)
 ````
 
 We note in passing that we can access two kinds of information from a trained machine:
 
-- The **learned parameters** (eg, coefficients of a linear model): We use `fitted_params(mach_pipe)`
-- Other **by-products of training** (eg, feature importances): We use `report(mach_pipe)`
+- The **learned parameters** (eg, coefficients of a linear model): We use
+  `fitted_params(mach_pipe)`
 
-````julia:ex36
+- Other **by-products of training** (eg, p-values): We use
+  `report(mach_pipe)`
+
+````julia:ex37
 fp = fitted_params(mach_pipe);
 keys(fp)
 ````
 
-For example, we can check that the encoder did not actually drop any features:
-
-````julia:ex37
-Set(fp.continuous_encoder.features_to_keep) == Set(schema(X).names)
-````
-
-And, from the report, extract feature importances:
+For example, we can extract the raw EvoTrees.jl learned parameter object:
 
 ````julia:ex38
-rpt = report(mach_pipe)
-keys(rpt.evo_tree_classifier)
+fp.evo_tree_classifier.fitresult
 ````
 
+And, from the report, extract the names of all features generated for the one-hot
+encoding:
+
 ````julia:ex39
-fi = rpt.evo_tree_classifier.feature_importances
+rpt = report(mach_pipe);
+keys(rpt.continuous_encoder)
+````
+
+````julia:ex40
+join(string.(rpt.continuous_encoder.new_features), ", ") |> println
+````
+
+Another example of information sometimes appearing in a report is feature
+importances. However, for models supporting feature importances, they are always
+available directly.
+
+````julia:ex41
+reports_feature_importances(pipe)
+````
+
+This hods because the supervised component of our pipeline supports feature imporances:
+
+````julia:ex42
+reports_feature_importances(booster)
+````
+
+And we can get the booster feature imporances from the pipeline's machine like this:
+
+````julia:ex43
+fi = feature_importances(mach_pipe)
+````
+
+which we'll put into data frame for later:
+
+````julia:ex44
 feature_importance_table =
-    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame
+    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame;
 ````
 
 For models not reporting feature importances, we recommend the
@@ -475,11 +561,11 @@ For models not reporting feature importances, we recommend the
 
 Returning to predictions and evaluations of our measures:
 
-````julia:ex40
+````julia:ex45
 ŷ = predict(mach_pipe, rows=validation);
 print(
     "Measurements:\n",
-    "  brier loss: ", brier_loss(ŷ, y[validation]) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ, y[validation]), "\n",
     "  auc:        ", auc(ŷ, y[validation]),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ), y[validation])
 )
@@ -494,29 +580,38 @@ While we're here, lets also generate a **confusion matrix** and
 characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)
 (ROC):
 
-````julia:ex41
+````julia:ex46
 confmat(mode.(ŷ), y[validation])
 ````
 
 Note: Importing the plotting package and calling the plotting
 functions for the first time can take a minute or so.
 
-````julia:ex42
+````julia:ex47
 using Plots
+Plots.scalefontsizes() #hide # reset font sizes
+Plots.scalefontsizes(0.85)
 ````
 
-````julia:ex43
-roc_curve = roc(ŷ, y[validation])
-plt = scatter(roc_curve, legend=false)
+````julia:ex48
+roc = roc_curve(ŷ, y[validation])
+plt = scatter(roc, legend=false)
 plot!(plt, xlab="false positive rate", ylab="true positive rate")
 plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 
-savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")); # hide
 ````
 
 \fig{EX-telco-roc.svg}
 
+(Warning here is a [minor bug](https://github.com/Evovest/EvoTrees.jl/issues/267).)
+
+‎
+@@
+@@dropdown
 ### Automated performance evaluation (more typical workflow)
+@@
+@@dropdown-content
 
 We can also get performance estimates with a single call to the
 `evaluate` function, which also allows for more complicated
@@ -529,9 +624,9 @@ observation space, for a total of 18 folds) and set
 We choose a `StratifiedCV` resampling strategy; the complete list of options is
 [here](https://alan-turing-institute.github.io/MLJ.jl/dev/evaluating_model_performance/#Built-in-resampling-strategies).
 
-````julia:ex44
+````julia:ex49
 e_pipe = evaluate(pipe, X, y,
-                  resampling=StratifiedCV(nfolds=6, rng=123),
+                  resampling=StratifiedCV(nfolds=6, rng=rng),
                   measures=[brier_loss, auc, accuracy],
                   repeats=3,
                   acceleration=CPUThreads())
@@ -541,47 +636,40 @@ e_pipe = evaluate(pipe, X, y,
 `evaluate` and `evaluate!` doc-strings to learn more about these
 functions and what the `PerformanceEvaluation` object `e_pipe` records.)
 
-While [less than ideal](https://arxiv.org/abs/2104.00673), let's
-adopt the common practice of using the standard error of a
-cross-validation score as an estimate of the uncertainty of a
-performance measure's expected value. Here's a utility function to
-calculate 95% confidence intervals for our performance estimates
-based on this practice, and it's application to the current
-evaluation:
+While [less than ideal](https://arxiv.org/abs/2104.00673), let's adopt the common
+practice of using the standard error of a cross-validation score as an estimate of the
+uncertainty of a performance measure's expected value. To get a 95% confidence interval
+based on this error, use "measurement ± delta" where "delta" is the number in the
+"1.96*SE" column.
 
-````julia:ex45
-using Measurements
-````
+‎
+@@
 
-````julia:ex46
-function confidence_intervals(e)
-    factor = 2.0 # to get level of 95%
-    measure = e.measure
-    nfolds = length(e.per_fold[1])
-    measurement = [e.measurement[j] ± factor*std(e.per_fold[j])/sqrt(nfolds - 1)
-                   for j in eachindex(measure)]
-    table = (measure=measure, measurement=measurement)
-    return DataFrames.DataFrame(table)
-end
-
-confidence_intervals_basic_model = confidence_intervals(e_pipe)
-````
-
+‎
+@@
+@@dropdown
 ## Filtering out unimportant features
+@@
+@@dropdown-content
 
 *Introduces:* `FeatureSelector`
 
 Before continuing, we'll modify our pipeline to drop those features
 with low feature importance, to speed up later optimization:
 
-````julia:ex47
+````julia:ex50
 unimportant_features = filter(:importance => <(0.005), feature_importance_table).feature
 
 pipe2 = ContinuousEncoder() |>
     FeatureSelector(features=unimportant_features, ignore=true) |> booster
 ````
 
+‎
+@@
+@@dropdown
 ## Wrapping our iterative model in control strategies
+@@
+@@dropdown-content
 
 *Introduces:* **control strategies:** `Step`, `NumberSinceBest`, `TimeLimit`,
 `InvalidValue`, **model wrapper** `IteratedModel`, **resampling strategy:** `Holdout`
@@ -606,7 +694,7 @@ eg, the neural network models provided by
 First, we select appropriate controls from [this
 list](https://alan-turing-institute.github.io/MLJ.jl/dev/controlling_iterative_models/#Controls-provided):
 
-````julia:ex48
+````julia:ex51
 controls = [
     Step(1),              # to increment iteration parameter (`pipe.nrounds`)
     NumberSinceBest(4),   # main stopping criterion
@@ -619,7 +707,7 @@ Now we wrap our pipeline model using the `IteratedModel` wrapper,
 being sure to specify the `measure` on which internal estimates of
 the out-of-sample performance will be based:
 
-````julia:ex49
+````julia:ex52
 iterated_pipe = IteratedModel(model=pipe2,
                               controls=controls,
                               measure=brier_loss,
@@ -634,18 +722,27 @@ estimate of the Brier loss.
 For demonstration purposes, let's bind `iterated_model` to all data
 not in our don't-touch holdout set, and train on all of that data:
 
-````julia:ex50
+````julia:ex53
 mach_iterated_pipe = machine(iterated_pipe, X, y)
 fit!(mach_iterated_pipe);
 ````
 
 To recap, internally this training is split into two separate steps:
 
-- A controlled iteration step, training on the holdout set, with the total number of iterations determined by the specified stopping criteria (based on the out-of-sample performance estimates)
-- A final step that trains the atomic model on *all* available
-  data using the number of iterations determined in the first step. Calling `predict` on `mach_iterated_pipe` means using the learned parameters of the second step.
+- A controlled iteration step, training on the holdout set, with the total number of
+  iterations determined by the specified stopping criteria (based on the out-of-sample
+  performance estimates)
 
+- A final step that trains the atomic model on *all* available data using the number of
+  iterations determined in the first step. Calling `predict` on `mach_iterated_pipe`
+  means using the learned parameters of the second step.
+
+‎
+@@
+@@dropdown
 ## Hyper-parameter optimization (model tuning)
+@@
+@@dropdown-content
 
 *Introduces:* `range`, **model wrapper** `TunedModel`, `RandomSearch`
 
@@ -678,12 +775,12 @@ To start with, we define ranges for the parameters of
 interest. Since these parameters are nested, let's force a
 display of our model to a larger depth:
 
-````julia:ex51
+````julia:ex54
 show(iterated_pipe, 2)
 ````
 
-````julia:ex52
-p1 = :(model.evo_tree_classifier.η)
+````julia:ex55
+p1 = :(model.evo_tree_classifier.eta)
 p2 = :(model.evo_tree_classifier.max_depth)
 
 r1 = range(iterated_pipe, p1, lower=-2, upper=-0.5, scale=x->10^x)
@@ -696,8 +793,8 @@ and `upper`.
 Next, we choose an optimization strategy from [this
 list](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/#Tuning-Models):
 
-````julia:ex53
-tuning = RandomSearch(rng=123)
+````julia:ex56
+tuning = RandomSearch(rng=rng)
 ````
 
 Then we wrap the model, specifying a `resampling` strategy and a
@@ -709,12 +806,12 @@ all measures can be accessed from the model's `report`.
 The keyword `n` specifies the total number of models (sets of
 hyper-parameters) to evaluate.
 
-````julia:ex54
+````julia:ex57
 tuned_iterated_pipe = TunedModel(model=iterated_pipe,
                                  range=[r1, r2],
                                  tuning=tuning,
                                  measures=[brier_loss, auc, accuracy],
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  acceleration=CPUThreads(),
                                  n=40)
 ````
@@ -723,7 +820,7 @@ To save time, we skip the `repeats` here.
 
 Binding our final model to data and training:
 
-````julia:ex55
+````julia:ex58
 mach_tuned_iterated_pipe = machine(tuned_iterated_pipe, X, y)
 fit!(mach_tuned_iterated_pipe)
 ````
@@ -737,45 +834,46 @@ internally into two separate steps:
 From `report(mach_tuned_iterated_pipe)` we can extract details about
 the optimization procedure. For example:
 
-````julia:ex56
+````julia:ex59
 rpt2 = report(mach_tuned_iterated_pipe);
 best_booster = rpt2.best_model.model.evo_tree_classifier
-````
 
-````julia:ex57
 print(
     "Optimal hyper-parameters: \n",
     "  max_depth: ", best_booster.max_depth, "\n",
-    "  η:         ", best_booster.η
+    "  eta:         ", best_booster.eta
 )
 ````
 
-Using the `confidence_intervals` function we defined earlier:
-
-````julia:ex58
+````julia:ex60
 e_best = rpt2.best_history_entry
-confidence_intervals(e_best)
+e_best.evaluation
 ````
 
 Digging a little deeper, we can learn what stopping criterion was
 applied in the case of the optimal model, and how many iterations
 were required:
 
-````julia:ex59
+````julia:ex61
 rpt2.best_report.controls |> collect
 ````
 
 Finally, we can visualize the optimization results:
 
-````julia:ex60
+````julia:ex62
 plot(mach_tuned_iterated_pipe, size=(600,450))
 
-savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")); # hide
 ````
 
 \fig{EX-telco-tuning.svg}
 
+‎
+@@
+@@dropdown
 ## Saving our model
+@@
+@@dropdown-content
 
 *Introduces:* `MLJ.save`
 
@@ -785,13 +883,18 @@ self-tuning pipeline machine using Julia's native serializer (see
 manual](https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Saving-machines)
 for more options):
 
-````julia:ex61
+````julia:ex63
 MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 ````
 
 We'll deserialize this in "Testing the final model" below.
 
+‎
+@@
+@@dropdown
 ## Final performance estimate
+@@
+@@dropdown-content
 
 Finally, to get an even more accurate estimate of performance, we
 can evaluate our model using stratified cross-validation and all the
@@ -802,28 +905,30 @@ this computation takes quite a bit longer than the previous one
 (which is being repeated six times, using 5/6th of the data each
 time):
 
-````julia:ex62
+````julia:ex64
 e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  measures=[brier_loss, auc, accuracy])
 ````
 
-````julia:ex63
-confidence_intervals(e_tuned_iterated_pipe)
-````
-
-For comparison, here are the confidence intervals for the basic
+For comparison, here again is the evaluation for the basic
 pipeline model (no feature selection and default hyperparameters):
 
-````julia:ex64
-confidence_intervals_basic_model
+````julia:ex65
+e_pipe
 ````
 
-As each pair of intervals overlap, it's doubtful the small changes
-here can be assigned statistical significance. Default `booster`
-hyper-parameters do a pretty good job.
+Tuning appears to improve all three scores (not just the Brier loss used in
+optimization). However, 95% confidence intervals, based on the standard errors, suggest
+we are not detecting statistically significant differences for `auc` and `accuracy`. In
+any case, the default `booster` hyper-parameters do a pretty good job. But it would
+definitely be worth revisiting this in the case we use all the data.
 
+@@
+@@dropdown
 ## Testing the final model
+@@
+@@dropdown-content
 
 We now determine the performance of our model on our
 lock-and-throw-away-the-key holdout set. To demonstrate
@@ -832,23 +937,23 @@ have called import/using on the same packages). Then the
 following should suffice to recover our model trained under
 "Hyper-parameter optimization" above:
 
-````julia:ex65
+````julia:ex66
 mach_restored = machine("tuned_iterated_pipe.jls")
 ````
 
 We compute predictions on the holdout set:
 
-````julia:ex66
+````julia:ex67
 ŷ_tuned = predict(mach_restored, Xtest);
 ŷ_tuned[1]
 ````
 
 And can compute the final performance measures:
 
-````julia:ex67
+````julia:ex68
 print(
     "Tuned model measurements on test:\n",
-    "  brier loss: ", brier_loss(ŷ_tuned, ytest) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ_tuned, ytest), "\n",
     "  auc:        ", auc(ŷ_tuned, ytest),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ_tuned), ytest)
 )
@@ -856,7 +961,7 @@ print(
 
 For comparison, here's the performance for the basic pipeline model
 
-````julia:ex68
+````julia:ex69
 mach_basic = machine(pipe, X, y)
 fit!(mach_basic, verbosity=0)
 
@@ -864,11 +969,14 @@ ŷ_basic = predict(mach_basic, Xtest);
 
 print(
     "Basic model measurements on test set:\n",
-    "  brier loss: ", brier_loss(ŷ_basic, ytest) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ_basic, ytest), "\n",
     "  auc:        ", auc(ŷ_basic, ytest),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ_basic), ytest)
 )
 
 rm("tuned_iterated_pipe.jls") # hide
 ````
+
+‎
+@@
 

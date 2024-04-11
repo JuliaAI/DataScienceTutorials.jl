@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-9/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## Getting started
+@@
+@@dropdown-content
 
 ````julia:ex2
 using MLJ
@@ -29,16 +32,19 @@ y = vcat(-ones(10), ones(10))
 which we can visualise
 
 ````julia:ex4
-using PyPlot
-ioff() # hide
-figure(figsize=(8,6))
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
 ym1 = y .== -1
 ym2 = .!ym1
-plot(X[ym1, 1], X[ym1, 2], ls="none", marker="o")
-plot(X[ym2, 1], X[ym2, 2], ls="none", marker="x")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-9-g1.svg")) # hide
+scatter(X[ym1, 1], X[ym1, 2], markershape=:circle, label="y=-1")
+scatter!(X[ym2, 1], X[ym2, 2], markershape=:cross, label="y=1")
+
+plot!(legend=:bottomright, xlabel="X1", ylabel="X2", title="Scatter Plot", size=(800,600))
+
+savefig(joinpath(@OUTPUT, "ISL-lab-9-g1.svg")); # You need to define @OUTPUT
 ````
 
 \figalt{Toy points}{ISL-lab-9-g1.svg}
@@ -70,7 +76,10 @@ misclassification_rate(ypred, y)
 
 Not bad.
 
+@@dropdown
 ### Basic tuning
+@@
+@@dropdown-content
 
 As usual we could tune the model, for instance the penalty encoding the tradeoff between margin width and misclassification:
 
@@ -88,7 +97,9 @@ misclassification_rate(ypred, y)
 
 You could also change the kernel etc.
 
-````julia:ex9
-PyPlot.close_figs() # hide
-````
+‎
+@@
+
+‎
+@@
 

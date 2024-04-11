@@ -1,0 +1,1 @@
+misclassification_rate(yhat_svm, ytest) = 0.0014044943820224719

@@ -2,7 +2,7 @@
 │ names                    │ scitypes                   │ types                    │
 ├──────────────────────────┼────────────────────────────┼──────────────────────────┤
 │ country                  │ Textual                    │ String3                  │
-│ country_long             │ Textual                    │ String63                 │
+│ country_long             │ Textual                    │ String                   │
 │ name                     │ Textual                    │ String                   │
 │ gppd_idnr                │ Textual                    │ String15                 │
 │ capacity_mw              │ Continuous                 │ Float64                  │

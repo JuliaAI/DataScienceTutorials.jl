@@ -1,11 +1,10 @@
 # This file was generated, do not modify it. # hide
-using PyPlot
-ioff() # hide
-figure(figsize=(8,6))
-plot(X.Volume)
-xlabel("Tick number", fontsize=14)
-ylabel("Volume", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.2) # hide
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")) # hide
+plot(X.Volume, size=(800,600), linewidth=2, legend=false)
+xlabel!("Tick number")
+ylabel!("Volume")
+
+savefig(joinpath(@OUTPUT, "ISL-lab-4-volume.svg")); # hide

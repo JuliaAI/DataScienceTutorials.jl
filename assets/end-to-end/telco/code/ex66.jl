@@ -1,3 +1,2 @@
 # This file was generated, do not modify it. # hide
-ŷ_tuned = predict(mach_restored, Xtest);
-ŷ_tuned[1]
+mach_restored = machine("tuned_iterated_pipe.jls")

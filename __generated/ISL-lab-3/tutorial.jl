@@ -4,7 +4,10 @@
 # [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-3/Manifest.toml), or by following
 # [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
+# @@dropdown
 # ## Simple linear regression
+# @@
+# @@dropdown-content
 #
 # `MLJ` essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.
 #
@@ -60,12 +63,12 @@ fp = fitted_params(mach_uni)
 
 # You can also visualise this
 
-using PyPlot
+using Plots
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
-plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
+plot!(Xnew.LStat, MLJ.predict(mach_uni, Xnew), linewidth=3, color=:orange)
 
 # \figalt{Univariate regression}{ISL-lab-3-lm1.svg}
 
@@ -89,20 +92,24 @@ round(rms(ŷ, y), sigdigits=4)
 
 # Let's see what the residuals look like
 
-figure(figsize=(8,6))
 res = ŷ .- y
-stem(res)
+plot(res, line=:stem, linewidth=1, marker=:circle, legend=false, size=((800,600)))
+hline!([0], linewidth=2, color=:red)    # add a horizontal line at x=0
 
 # \figalt{Plot of the residuals}{ISL-lab-3-res.svg}
 
 # Maybe that a histogram is more appropriate here
 
-figure(figsize=(8,6))
-hist(res, density=true)
+histogram(res, normalize=true, size=(800,600), label="residual")
 
 # \figalt{Histogram of the residuals}{ISL-lab-3-res2.svg}
 
+# ‎
+# @@
+# @@dropdown
 # ## Interaction and transformation
+# @@
+# @@dropdown-content
 #
 # Let's say we want to also consider an interaction term of `lstat` and `age` taken together.
 # To do this, just create a new dataframe with an additional column corresponding to the interaction term:
@@ -135,11 +142,12 @@ round(rms(ŷ, y), sigdigits=4)
 
 Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
-plot(Xnew.LStat, MLJ.predict(mach, Xnew))
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+plot!(Xnew.LStat, MLJ.predict(mach, Xnew), linewidth=3, color=:orange)
 
 # \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

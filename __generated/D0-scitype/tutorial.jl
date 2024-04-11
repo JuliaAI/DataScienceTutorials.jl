@@ -4,9 +4,15 @@
 # [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-scitype/Manifest.toml), or by following
 # [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
+# @@dropdown
 # ## Machine type vs Scientific Type
-#
+# @@
+# @@dropdown-content
+
+# @@dropdown
 # ### Why make a distinction?
+# @@
+# @@dropdown-content
 #
 # When analysing data, it is important to distinguish between
 #
@@ -24,8 +30,13 @@
 # * A vector of `String` e.g. `["High", "Low", "High", ...]` which should  be  interpreted as ordered categorical labels,
 # * A vector of `String` e.g. `["John", "Maria", ...]` which should not interpreted as informative data,
 # * A vector of floating points `[1.5,  1.5, -2.3, -2.3]` which should be interpreted as categorical data (e.g. the few possible values of some setting), etc.
-#
+
+# ‎
+# @@
+# @@dropdown
 # ### The Scientific Types
+# @@
+# @@dropdown-content
 #
 # The package [ScientificTypes.jl](https://github.com/JuliaAI/ScientificTypes.jl) defines a barebone type hierarchy which can be used to indicate how a particular feature should be interpreted; in particular:
 #
@@ -47,8 +58,13 @@
 # The convention used in MLJ is implemented in [ScientificTypes.jl](https://github.com/JuliaAI/ScientificTypes.jl).
 # This is what we will use throughout; you never need to use ScientificTypes.jl
 # unless you intend to implement your own scientific type convention.
-#
+
+# ‎
+# @@
+# @@dropdown
 # ### Inspecting the scitype
+# @@
+# @@dropdown-content
 #
 # The `schema` function
 
@@ -72,8 +88,13 @@ unique(boston.Chas)
 # so even  though it's got a machine type of `Int64` and consequently a
 # default  interpretation of `Count`, it would be more appropriate to interpret
 # it as an `OrderedFactor`.
-#
+
+# ‎
+# @@
+# @@dropdown
 # ### Changing the scitype
+# @@
+# @@dropdown-content
 #
 # In order to re-specify the scitype(s) of  feature(s) in a dataset, you can
 # use the `coerce` function and  specify pairs of variable name and  scientific
@@ -94,7 +115,12 @@ elscitype(boston2.Chas)
 
 boston3 = coerce(boston, :Chas => OrderedFactor, :Rad => OrderedFactor);
 
+# ‎
+# @@
+# @@dropdown
 # ### String and Unknown
+# @@
+# @@dropdown-content
 #
 # If a feature in  your dataset has String elements, then the  default scitype
 # is `Textual`; you can either choose to  drop  such columns or to coerce them
@@ -108,9 +134,20 @@ elscitype(feature)
 feature2 = coerce(feature, Multiclass)
 elscitype(feature2)
 
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Tips and tricks
-#
+# @@
+# @@dropdown-content
+
+# @@dropdown
 # ### Type to Type coercion
+# @@
+# @@dropdown-content
 #
 # In  some cases you will want to reinterpret all features currently
 # interpreted as some scitype `S1` into some other scitype `S2`.
@@ -126,7 +163,12 @@ schema(data)
 data2 = coerce(data, Count => Continuous)
 schema(data2)
 
+# ‎
+# @@
+# @@dropdown
 # ### Autotype
+# @@
+# @@dropdown-content
 #
 # A last useful tool is `autotype` which allows you to specify *rules* to
 # define the interpretation of features automatically.
@@ -147,5 +189,10 @@ schema(boston3)
 
 # You can also specify multiple rules, see [the docs](https://juliaai.github.io/ScientificTypes.jl/dev/#Automatic-type-conversion) for more information.
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# ‎
+# @@
+
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

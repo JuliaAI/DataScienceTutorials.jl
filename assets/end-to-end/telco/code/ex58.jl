@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-e_best = rpt2.best_history_entry
-confidence_intervals(e_best)
+mach_tuned_iterated_pipe = machine(tuned_iterated_pipe, X, y)
+fit!(mach_tuned_iterated_pipe)

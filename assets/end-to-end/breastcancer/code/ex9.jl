@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-pprint(schema(df))
+coerce!(df, :Class => OrderedFactor{2});
+scitype(df.Class)

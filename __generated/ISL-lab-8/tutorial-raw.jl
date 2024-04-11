@@ -84,7 +84,7 @@ fit!(mtm, rows=train)
 ypred = MLJ.predict(mtm, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)
@@ -103,4 +103,3 @@ ypred = MLJ.predict(xgb, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

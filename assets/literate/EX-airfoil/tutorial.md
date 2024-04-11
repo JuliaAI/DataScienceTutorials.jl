@@ -2,7 +2,7 @@
 ````julia:ex1
 using Pkg# hideall
 Pkg.activate("_literate/EX-airfoil/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -10,9 +10,16 @@ end;
 
 **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
 
+@@dropdown
 ## Getting started
+@@
+@@dropdown-content
 Here we use the [UCI "Airfoil Self-Noise" dataset](http://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise)
+
+@@dropdown
 ### Loading and  preparing the data
+@@
+@@dropdown-content
 
 ````julia:ex2
 using MLJ
@@ -20,8 +27,6 @@ using PrettyPrinting
 import DataFrames
 import Statistics
 using CSV
-using PyPlot
-ioff() # hide
 using HTTP
 using StableRNGs
 
@@ -79,7 +84,15 @@ for model in models(matching(X, y))
 end
 ````
 
+‎
+@@
+
+‎
+@@
+@@dropdown
 ## DecisionTreeRegressor
+@@
+@@dropdown-content
 
 We will first try out DecisionTreeRegressor:
 
@@ -98,7 +111,12 @@ Now you can call a loss function to assess the performance on test set.
 rms(pred_dcrm, y[test])
 ````
 
+‎
+@@
+@@dropdown
 ## RandomForestRegressor
+@@
+@@dropdown-content
 
 Now let's try out RandomForestRegressor:
 
@@ -126,7 +144,12 @@ Unsurprisingly, the RandomForestRegressor does a better job.
 
 Can we do even better? Yeah, we can!! We can make use of Model Tuning.
 
+‎
+@@
+@@dropdown
 ## Tuning
+@@
+@@dropdown-content
 
 In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/) and [model-tuning](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
 
@@ -171,29 +194,17 @@ Now to retrieve best model, You can use
 fitted_params(rfr_tm).best_model
 ````
 
-Now we can investigate the tuning by using report.
-Let's plot a heatmap of the measurements:
+Let's visualize the tuning results:
 
 ````julia:ex19
-r = report(rfr_tm)
-res = r.plotting
+using Plots
+plot(rfr_tm)
 
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
-
-figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
-
-xlabel("Number of trees", fontsize=14)
-ylabel("Sampling fraction", fontsize=14)
-xticks(9:1:15, fontsize=12)
-yticks(fontsize=12)
-plt.savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "airfoil_heatmap.svg")); # hide
 ````
 
 \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
 
-````julia:ex20
-PyPlot.close_figs() # hide
-````
+‎
+@@
 

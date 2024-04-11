@@ -1,5 +1,3 @@
-Machine trained 0 times; caches data
-  model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
-  args: 
-    1:	Source @885 ⏎ `ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}, AbstractVector{ScientificTypesBase.Multiclass{3}}}}`
-    2:	Source @785 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
+OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}} with 2 entries:
+  BrierScore => (aliases = ("brier_score", "quadratic_score"), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Distribution(), observation_scitype = Union{Missing, Infinite, Finite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Score(), external_aggregation_mode = Mean(), human_name = "brier score")
+  BrierLoss => (aliases = ("brier_loss", "cross_entropy", "quadratic_loss"), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Distribution(), observation_scitype = Union{Missing, Infinite, Finite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Loss(), external_aggregation_mode = Mean(), human_name = "brier loss")

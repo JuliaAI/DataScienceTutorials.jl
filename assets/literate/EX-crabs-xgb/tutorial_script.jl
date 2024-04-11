@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/EX-crabs-xgb/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -10,117 +10,105 @@ end;
 using MLJ
 using StatsBase
 using Random
-using PyPlot
-ioff() # hide
-using CategoricalArrays
-using PrettyPrinting
+using Plots
 import DataFrames
+import StableRNGs.StableRNG
 
-MLJ.color_off() # hide
-X, y = @load_crabs
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.1) #hide
+
+X, y = @load_crabs # a table and a vector
 X = DataFrames.DataFrame(X)
 @show size(X)
 @show y[1:3]
-first(X, 3) |> pretty
+first(X, 3)
 
-levels(y) |> pprint
+schema(X)
 
-Random.seed!(523)
-perm = randperm(length(y))
-X = X[perm,:]
-y = y[perm];
+levels(y)
 
-train, test = partition(collect(eachindex(y)), 0.70, shuffle=true, rng=52)
+train, test = partition(collect(eachindex(y)), 0.70, rng=StableRNG(123))
 XGBC = @load XGBoostClassifier
 xgb_model = XGBC()
 
-countmap(y[train]) |> pprint
+countmap(y[train])
 
 xgb  = XGBC()
-xgbm = machine(xgb, X, y)
+mach = machine(xgb, X, y)
 
 r = range(xgb, :num_round, lower=50, upper=500)
-curve = learning_curve(xgbm, range=r, resolution=50,
-                        measure=L1HingeLoss())
+curve = learning_curve(
+    mach,
+    range=r,
+    resolution=50,
+    measure=brier_loss,
+)
 
-figure(figsize=(8,6))
 plot(curve.parameter_values, curve.measurements)
-xlabel("Number of rounds", fontsize=14)
-ylabel("HingeLoss", fontsize=14)
-xticks([10, 100, 200, 500], fontsize=12)
+xlabel!("Number of rounds", fontsize=14)
+ylabel!("Brier loss", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-curve1.svg")); # hide
 
-xgb.num_round = 200;
+xgb.num_round = 300;
 
 r1 = range(xgb, :max_depth, lower=3, upper=10)
 r2 = range(xgb, :min_child_weight, lower=0, upper=5)
 
-tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
-                resampling=CV(rng=11), ranges=[r1,r2],
-                measure=cross_entropy)
-mtm = machine(tm, X, y)
-fit!(mtm, rows=train)
+tuned_model = TunedModel(
+    xgb,
+    tuning=Grid(resolution=8),
+    resampling=CV(rng=11),
+    ranges=[r1,r2],
+    measure=brier_loss,
+)
+mach = machine(tuned_model, X, y)
+fit!(mach, rows=train)
 
-r = report(mtm)
+plot(mach)
 
-res = r.plotting
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot.svg")); # hide
 
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
-
-figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
-
-xlabel("Maximum tree depth", fontsize=14)
-ylabel("Minimum child weight", fontsize=14)
-xticks(3:2:10, fontsize=12)
-yticks(fontsize=12)
-
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap.svg")) # hide
-
-xgb = fitted_params(mtm).best_model
+xgb = fitted_params(mach).best_model
 @show xgb.max_depth
 @show xgb.min_child_weight
 
-xgbm = machine(xgb, X, y)
-r = range(xgb, :gamma, lower=0, upper=10)
-curve = learning_curve!(xgbm, range=r, resolution=30,
-                        measure=cross_entropy);
+mach = machine(xgb, X, y)
+curve = learning_curve(
+    mach,
+    range= range(xgb, :gamma, lower=0, upper=10),
+    resolution=30,
+    measure=brier_loss,
+);
 
-@show round(minimum(curve.measurements), sigdigits=3)
-@show round(maximum(curve.measurements), sigdigits=3)
+plot(curve.parameter_values, curve.measurements)
+xlabel!("gamma", fontsize=14)
+ylabel!("Brier loss", fontsize=14)
+
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-gamma.svg")); # hide
+
+xgb.gamma = 3.8
 
 r1 = range(xgb, :subsample, lower=0.6, upper=1.0)
 r2 = range(xgb, :colsample_bytree, lower=0.6, upper=1.0)
-tm = TunedModel(model=xgb, tuning=Grid(resolution=8),
-                resampling=CV(rng=234), ranges=[r1,r2],
-                measure=cross_entropy)
-mtm = machine(tm, X, y)
-fit!(mtm, rows=train)
 
-r = report(mtm)
+tuned_model = TunedModel(
+    xgb,
+    tuning=Grid(resolution=8),
+    resampling=CV(rng=234),
+    ranges=[r1,r2],
+    measure=brier_loss,
+)
+mach = machine(tuned_model, X, y)
+fit!(mach, rows=train)
 
-res = r.plotting
+plot(mach)
 
-ss = res.parameter_values[:,1]
-cbt = res.parameter_values[:,2]
+savefig(joinpath(@OUTPUT, "EX-crabs-xgb-tuningplot2.svg")); # hide
 
-figure(figsize=(8,6))
-tricontourf(ss, cbt, res.measurements)
-
-xlabel("Sub sample", fontsize=14)
-ylabel("Col sample by tree", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
-
-savefig(joinpath(@OUTPUT, "EX-crabs-xgb-heatmap2.svg")) # hide
-
-xgb = fitted_params(mtm).best_model
+xgb = fitted_params(mach).best_model
 @show xgb.subsample
 @show xgb.colsample_bytree
 
-PyPlot.close_figs() # hide
-ŷ = predict_mode(mtm, rows=test)
+ŷ = predict_mode(mach, rows=test)
 round(accuracy(ŷ, y[test]), sigdigits=3)
-

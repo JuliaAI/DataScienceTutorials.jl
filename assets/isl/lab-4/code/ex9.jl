@@ -1,9 +1,7 @@
 # This file was generated, do not modify it. # hide
-figure(figsize=(8,6))
 cm = countmap(y)
-PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
-xticks([1, 2], ["Down", "Up"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+Plots.bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-4-bal.svg")); # hide

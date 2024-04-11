@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-8/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -94,7 +94,7 @@ fit!(mtm, rows=train)
 ypred = MLJ.predict(mtm, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)
@@ -111,4 +111,3 @@ fit!(xgb, rows=train)
 
 ypred = MLJ.predict(xgb, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
-

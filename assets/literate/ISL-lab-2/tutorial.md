@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-2/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## Basic commands
+@@
+@@dropdown-content
 
 This is a very brief and rough primer if you're new to Julia and wondering how to do simple things that are relevant for data analysis.
 
@@ -99,7 +102,12 @@ X = [1 2; 3 4; 5 6]
 size(X)
 ````
 
+‎
+@@
+@@dropdown
 ## Loading data
+@@
+@@dropdown-content
 
 There are many ways to load data in Julia, one convenient one is via the [`CSV`](https://github.com/JuliaData/CSV.jl) package.
 
@@ -161,7 +169,12 @@ For more detailed tutorials on basic data wrangling in Julia, consider
 * the [`DataFrames.jl` docs](http://juliadata.github.io/DataFrames.jl/latest/)
 * the [`StatsBases.jl` docs](https://juliastats.org/StatsBase.jl/latest/)
 
+‎
+@@
+@@dropdown
 ## Plotting data
+@@
+@@dropdown-content
 
 There are multiple libraries that can be used to  plot things in Julia:
 
@@ -171,21 +184,20 @@ There are multiple libraries that can be used to  plot things in Julia:
 * [PGFPlotsX.jl](https://github.com/KristofferC/PGFPlotsX.jl) and [PGFPlots](https://github.com/JuliaTeX/PGFPlots.jl) using the LaTeX package  pgfplots,
 * [Makie](https://github.com/JuliaPlots/Makie.jl), [Gaston](https://github.com/mbaz/Gaston.jl), [Vega](https://github.com/queryverse/VegaLite.jl), ...
 
-In these tutorials we use `PyPlot` but you could use another package of course.
+In these tutorials we use `Plots.jl` but you could use another package of course.
 
 ````julia:ex22
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
-figure(figsize=(8,6))
-plot(mpg)
+plot(mpg, size=(800,600), linewidth=2, legend=false)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")); # hide
 ````
 
 \figalt{Simple plot}{ISL-lab-2-mpg.svg}
 
-````julia:ex23
-PyPlot.close_figs() # hide
-````
+‎
+@@
 

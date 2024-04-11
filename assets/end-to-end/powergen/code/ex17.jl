@@ -1,24 +1,41 @@
 # This file was generated, do not modify it. # hide
-fig = figure(figsize=(15, 15))
+p1 = scatter(
+	data.Wind_gen,
+	data.Radiation_dir,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - directional",
+)
 
-subplot(221)
-scatter(data.Wind_gen, data.Radiation_dir)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p2 = scatter(
+	data.Wind_gen,
+	data.Radiation_dif,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - diffuse",
+)
 
-subplot(222)
-scatter(data.Wind_gen, data.Radiation_dif)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p3 = scatter(
+	data.Wind_gen,
+	data.Windspeed,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Wind speed (m/s)",
+)
 
-subplot(223)
-scatter(data.Wind_gen, data.Windspeed)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p4 = scatter(
+	data.Wind_gen,
+	data.Temperature,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Temperature (C)",
+)
 
-subplot(224)
-scatter(data.Wind_gen, data.Temperature)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
 
-savefig(joinpath(@OUTPUT, "wind_scatter.png"), bbox_inches="tight") # hide
+
+savefig(joinpath(@OUTPUT, "wind_scatter.png")); # hide

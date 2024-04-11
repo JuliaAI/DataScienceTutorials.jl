@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-8/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## Getting started
+@@
+@@dropdown-content
 
 ````julia:ex2
 using MLJ
@@ -37,7 +40,10 @@ X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;
 ````
 
+@@dropdown
 ### Decision Tree Classifier
+@@
+@@dropdown-content
 
 ````julia:ex5
 HotTreeClf = OneHotEncoder() |> DTC()
@@ -67,7 +73,12 @@ misclassification_rate(ypred, y[test])
 
 Not really...
 
+‎
+@@
+@@dropdown
 ### Tuning a DTC
+@@
+@@dropdown-content
 
 Let's try to do a bit of tuning
 
@@ -96,7 +107,12 @@ We can inspect the parameters of the best model
 fitted_params(mtm).best_model.decision_tree_classifier
 ````
 
+‎
+@@
+@@dropdown
 ### Decision Tree Regressor
+@@
+@@dropdown-content
 
 ````julia:ex10
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
@@ -145,12 +161,20 @@ ypred = MLJ.predict(mtm, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 ````
 
+‎
+@@
+
+‎
+@@
+@@dropdown
 ## Random Forest
+@@
+@@dropdown-content
 
 **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
 ````julia:ex13
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)
@@ -160,7 +184,12 @@ ypred = MLJ.predict(rf, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 ````
 
+‎
+@@
+@@dropdown
 ## Gradient Boosting Machine
+@@
+@@dropdown-content
 
 ````julia:ex14
 XGBR = @load XGBoostRegressor
@@ -174,4 +203,7 @@ round(rms(ypred, y[test]), sigdigits=3)
 ````
 
 Again we could do some tuning for this.
+
+‎
+@@
 

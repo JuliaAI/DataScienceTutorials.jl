@@ -1,3 +1,5 @@
 # This file was generated, do not modify it. # hide
-preds = predict(mtm, rows=test)
-rmsl(y[test], preds)
+blended_best = fitted_params(mach).best_model
+@show blended_best.knn_model.K
+@show blended_best.ridge_model.lambda
+@show blended_best.knn_weight

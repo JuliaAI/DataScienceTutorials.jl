@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,22 +8,25 @@
    <!-- Syntax highlighting via Prism, note: restricted langs -->
 <link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
  
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/landing.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/nav.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
   <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
-   <title>Airfoil</title>  
+   <title>Airfoil</title> 
   <!-- LUNR -->
   <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
   <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
   <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
         <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
           <div class="menu-logo">
@@ -31,89 +35,177 @@
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="display:none">
         </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
       </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
     </div>
-    <div id="main"> <!-- Closed in foot -->
-      
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/DataScienceTutorials.jl/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
 
-<!-- Content appended here -->
-<div class="franklin-content"><h1 id="airfoil"><a href="#airfoil" class="header-anchor">Airfoil</a></h1>
+    <!-- Content appended here --><div class="franklin-content"><h1 id="airfoil"><a href="#airfoil" class="header-anchor">Airfoil</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-airfoil.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li></ol></li><li><a href="#decisiontreeregressor">DecisionTreeRegressor</a></li><li><a href="#randomforestregressor">RandomForestRegressor</a></li><li><a href="#tuning">Tuning</a></li></ol></div>
 <p><strong>Main author</strong>: <a href="https://github.com/ashryaagr">Ashrya Agrawal</a>.</p>
-<h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2>
-<p>Here we use the <a href="http://archive.ics.uci.edu/ml/datasets/Airfoil&#43;Self-Noise">UCI &quot;Airfoil Self-Noise&quot; dataset</a></p>
-<h3 id="loading_and_preparing_the_data"><a href="#loading_and_preparing_the_data" class="header-anchor">Loading and  preparing the data</a></h3>
-<pre><code class="language-julia">using MLJ
+<div class="dropdown"><h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2></div>
+<div class="dropdown-content"><p>Here we use the <a href="http://archive.ics.uci.edu/ml/datasets/Airfoil&#43;Self-Noise">UCI &quot;Airfoil Self-Noise&quot; dataset</a></p>
+<div class="dropdown"><h3 id="loading_and_preparing_the_data"><a href="#loading_and_preparing_the_data" class="header-anchor">Loading and  preparing the data</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">using MLJ
 using PrettyPrinting
 import DataFrames
 import Statistics
 using CSV
-using PyPlot
 using HTTP
 using StableRNGs
 
@@ -125,18 +217,7 @@ df &#61; CSV.read&#40;req.body, DataFrames.DataFrame; header&#61;&#91;
                    &quot;Free_Velocity&quot;,&quot;Suction_Side&quot;,&quot;Scaled_Sound&quot;
                    &#93;
               &#41;;
-df&#91;1:5, :&#93; |&gt; pretty</code></pre><pre><code class="plaintext code-output">┌───────────┬──────────────┬──────────────┬───────────────┬──────────────┬──────────────┐
-│ Frequency │ Attack_Angle │ Chord+Length │ Free_Velocity │ Suction_Side │ Scaled_Sound │
-│ Int64     │ Float64      │ Float64      │ Float64       │ Float64      │ Float64      │
-│ Count     │ Continuous   │ Continuous   │ Continuous    │ Continuous   │ Continuous   │
-├───────────┼──────────────┼──────────────┼───────────────┼──────────────┼──────────────┤
-│ 800.0     │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 126.201      │
-│ 1000.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 125.201      │
-│ 1250.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 125.951      │
-│ 1600.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 127.591      │
-│ 2000.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 127.461      │
-└───────────┴──────────────┴──────────────┴───────────────┴──────────────┴──────────────┘
-</code></pre>
+df&#91;1:5, :&#93; |&gt; pretty</code></pre>
 <p>inspect the schema:</p>
 <pre><code class="language-julia">schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────┬─────────┐
 │ names         │ scitypes   │ types   │
@@ -158,81 +239,103 @@ df&#91;1:5, :&#93; |&gt; pretty</code></pre><pre><code class="plaintext code-out
 <p>Let&#39;s first see which models are compatible with the scientific type and machine type of our data</p>
 <pre><code class="language-julia">for model in models&#40;matching&#40;X, y&#41;&#41;
        print&#40;&quot;Model Name: &quot; , model.name , &quot; , Package: &quot; , model.package_name , &quot;\n&quot;&#41;
-end</code></pre><pre><code class="plaintext code-output">Model Name: ConstantRegressor , Package: MLJModels
+end</code></pre><pre><code class="plaintext code-output">Model Name: CatBoostRegressor , Package: CatBoost
+Model Name: ConstantRegressor , Package: MLJModels
 Model Name: DecisionTreeRegressor , Package: BetaML
 Model Name: DecisionTreeRegressor , Package: DecisionTree
 Model Name: DeterministicConstantRegressor , Package: MLJModels
+Model Name: EvoLinearRegressor , Package: EvoLinear
+Model Name: EvoSplineRegressor , Package: EvoLinear
+Model Name: EvoTreeGaussian , Package: EvoTrees
+Model Name: EvoTreeMLE , Package: EvoTrees
+Model Name: EvoTreeRegressor , Package: EvoTrees
+Model Name: GaussianMixtureRegressor , Package: BetaML
+Model Name: NeuralNetworkRegressor , Package: BetaML
 Model Name: RandomForestRegressor , Package: BetaML
 Model Name: RandomForestRegressor , Package: DecisionTree
-Model Name: RandomForestRegressor , Package: ScikitLearn
+Model Name: RandomForestRegressor , Package: MLJScikitLearnInterface
+Model Name: StableForestRegressor , Package: SIRUS
+Model Name: StableRulesRegressor , Package: SIRUS
 </code></pre>
 <p>Note that if we coerce <code>X.Frequency</code> to <code>Continuous</code>, many more models are available:</p>
 <pre><code class="language-julia">coerce&#33;&#40;X, :Frequency&#61;&gt;Continuous&#41;
 
 for model in models&#40;matching&#40;X, y&#41;&#41;
        print&#40;&quot;Model Name: &quot; , model.name , &quot; , Package: &quot; , model.package_name , &quot;\n&quot;&#41;
-end</code></pre><pre><code class="plaintext code-output">Model Name: ARDRegressor , Package: ScikitLearn
-Model Name: AdaBoostRegressor , Package: ScikitLearn
-Model Name: BaggingRegressor , Package: ScikitLearn
-Model Name: BayesianRidgeRegressor , Package: ScikitLearn
+end</code></pre><pre><code class="plaintext code-output">Model Name: ARDRegressor , Package: MLJScikitLearnInterface
+Model Name: AdaBoostRegressor , Package: MLJScikitLearnInterface
+Model Name: BaggingRegressor , Package: MLJScikitLearnInterface
+Model Name: BayesianRidgeRegressor , Package: MLJScikitLearnInterface
+Model Name: CatBoostRegressor , Package: CatBoost
 Model Name: ConstantRegressor , Package: MLJModels
 Model Name: DecisionTreeRegressor , Package: BetaML
 Model Name: DecisionTreeRegressor , Package: DecisionTree
 Model Name: DeterministicConstantRegressor , Package: MLJModels
-Model Name: DummyRegressor , Package: ScikitLearn
-Model Name: ElasticNetCVRegressor , Package: ScikitLearn
+Model Name: DummyRegressor , Package: MLJScikitLearnInterface
+Model Name: ElasticNetCVRegressor , Package: MLJScikitLearnInterface
 Model Name: ElasticNetRegressor , Package: MLJLinearModels
-Model Name: ElasticNetRegressor , Package: ScikitLearn
+Model Name: ElasticNetRegressor , Package: MLJScikitLearnInterface
 Model Name: EpsilonSVR , Package: LIBSVM
+Model Name: EvoLinearRegressor , Package: EvoLinear
+Model Name: EvoSplineRegressor , Package: EvoLinear
 Model Name: EvoTreeGaussian , Package: EvoTrees
+Model Name: EvoTreeMLE , Package: EvoTrees
 Model Name: EvoTreeRegressor , Package: EvoTrees
-Model Name: ExtraTreesRegressor , Package: ScikitLearn
-Model Name: GaussianProcessRegressor , Package: ScikitLearn
-Model Name: GradientBoostingRegressor , Package: ScikitLearn
+Model Name: ExtraTreesRegressor , Package: MLJScikitLearnInterface
+Model Name: GaussianMixtureRegressor , Package: BetaML
+Model Name: GaussianProcessRegressor , Package: MLJScikitLearnInterface
+Model Name: GradientBoostingRegressor , Package: MLJScikitLearnInterface
+Model Name: HistGradientBoostingRegressor , Package: MLJScikitLearnInterface
 Model Name: HuberRegressor , Package: MLJLinearModels
-Model Name: HuberRegressor , Package: ScikitLearn
+Model Name: HuberRegressor , Package: MLJScikitLearnInterface
 Model Name: KNNRegressor , Package: NearestNeighborModels
-Model Name: KNeighborsRegressor , Package: ScikitLearn
+Model Name: KNeighborsRegressor , Package: MLJScikitLearnInterface
 Model Name: KPLSRegressor , Package: PartialLeastSquaresRegressor
 Model Name: LADRegressor , Package: MLJLinearModels
 Model Name: LGBMRegressor , Package: LightGBM
-Model Name: LarsCVRegressor , Package: ScikitLearn
-Model Name: LarsRegressor , Package: ScikitLearn
-Model Name: LassoCVRegressor , Package: ScikitLearn
-Model Name: LassoLarsCVRegressor , Package: ScikitLearn
-Model Name: LassoLarsICRegressor , Package: ScikitLearn
-Model Name: LassoLarsRegressor , Package: ScikitLearn
+Model Name: LarsCVRegressor , Package: MLJScikitLearnInterface
+Model Name: LarsRegressor , Package: MLJScikitLearnInterface
+Model Name: LassoCVRegressor , Package: MLJScikitLearnInterface
+Model Name: LassoLarsCVRegressor , Package: MLJScikitLearnInterface
+Model Name: LassoLarsICRegressor , Package: MLJScikitLearnInterface
+Model Name: LassoLarsRegressor , Package: MLJScikitLearnInterface
 Model Name: LassoRegressor , Package: MLJLinearModels
-Model Name: LassoRegressor , Package: ScikitLearn
+Model Name: LassoRegressor , Package: MLJScikitLearnInterface
 Model Name: LinearRegressor , Package: GLM
 Model Name: LinearRegressor , Package: MLJLinearModels
+Model Name: LinearRegressor , Package: MLJScikitLearnInterface
 Model Name: LinearRegressor , Package: MultivariateStats
-Model Name: LinearRegressor , Package: ScikitLearn
+Model Name: NeuralNetworkRegressor , Package: BetaML
 Model Name: NeuralNetworkRegressor , Package: MLJFlux
 Model Name: NuSVR , Package: LIBSVM
-Model Name: OrthogonalMatchingPursuitCVRegressor , Package: ScikitLearn
-Model Name: OrthogonalMatchingPursuitRegressor , Package: ScikitLearn
+Model Name: OrthogonalMatchingPursuitCVRegressor , Package: MLJScikitLearnInterface
+Model Name: OrthogonalMatchingPursuitRegressor , Package: MLJScikitLearnInterface
 Model Name: PLSRegressor , Package: PartialLeastSquaresRegressor
-Model Name: PassiveAggressiveRegressor , Package: ScikitLearn
+Model Name: PassiveAggressiveRegressor , Package: MLJScikitLearnInterface
 Model Name: QuantileRegressor , Package: MLJLinearModels
-Model Name: RANSACRegressor , Package: ScikitLearn
+Model Name: RANSACRegressor , Package: MLJScikitLearnInterface
 Model Name: RandomForestRegressor , Package: BetaML
 Model Name: RandomForestRegressor , Package: DecisionTree
-Model Name: RandomForestRegressor , Package: ScikitLearn
-Model Name: RidgeCVRegressor , Package: ScikitLearn
+Model Name: RandomForestRegressor , Package: MLJScikitLearnInterface
+Model Name: RidgeCVRegressor , Package: MLJScikitLearnInterface
 Model Name: RidgeRegressor , Package: MLJLinearModels
+Model Name: RidgeRegressor , Package: MLJScikitLearnInterface
 Model Name: RidgeRegressor , Package: MultivariateStats
-Model Name: RidgeRegressor , Package: ScikitLearn
 Model Name: RobustRegressor , Package: MLJLinearModels
-Model Name: SGDRegressor , Package: ScikitLearn
-Model Name: SVMLinearRegressor , Package: ScikitLearn
-Model Name: SVMNuRegressor , Package: ScikitLearn
-Model Name: SVMRegressor , Package: ScikitLearn
-Model Name: TheilSenRegressor , Package: ScikitLearn
+Model Name: SGDRegressor , Package: MLJScikitLearnInterface
+Model Name: SRRegressor , Package: SymbolicRegression
+Model Name: SVMLinearRegressor , Package: MLJScikitLearnInterface
+Model Name: SVMNuRegressor , Package: MLJScikitLearnInterface
+Model Name: SVMRegressor , Package: MLJScikitLearnInterface
+Model Name: StableForestRegressor , Package: SIRUS
+Model Name: StableRulesRegressor , Package: SIRUS
+Model Name: TheilSenRegressor , Package: MLJScikitLearnInterface
 Model Name: XGBoostRegressor , Package: XGBoost
 </code></pre>
-<h2 id="decisiontreeregressor"><a href="#decisiontreeregressor" class="header-anchor">DecisionTreeRegressor</a></h2>
-<p>We will first try out DecisionTreeRegressor:</p>
+<p>‎</p></div>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="decisiontreeregressor"><a href="#decisiontreeregressor" class="header-anchor">DecisionTreeRegressor</a></h2></div>
+<div class="dropdown-content"><p>We will first try out DecisionTreeRegressor:</p>
 <pre><code class="language-julia">DecisionTreeRegressor &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
 
 dcrm &#61; machine&#40;DecisionTreeRegressor&#40;&#41;, X, y&#41;
@@ -241,9 +344,10 @@ fit&#33;&#40;dcrm, rows&#61;train&#41;
 pred_dcrm &#61; predict&#40;dcrm, rows&#61;test&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Now you can call a loss function to assess the performance on test set.</p>
-<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.912630331542761</code></pre>
-<h2 id="randomforestregressor"><a href="#randomforestregressor" class="header-anchor">RandomForestRegressor</a></h2>
-<p>Now let&#39;s try out RandomForestRegressor:</p>
+<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.915340269654321</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="randomforestregressor"><a href="#randomforestregressor" class="header-anchor">RandomForestRegressor</a></h2></div>
+<div class="dropdown-content"><p>Now let&#39;s try out RandomForestRegressor:</p>
 <pre><code class="language-julia">RandomForestRegressor &#61; @load RandomForestRegressor pkg&#61;DecisionTree
 rfr &#61; RandomForestRegressor&#40;&#41;
 
@@ -253,11 +357,12 @@ rfr_m &#61; machine&#40;rfr, X, y&#41;;</code></pre><pre><code class="plaintext 
 <pre><code class="language-julia">fit&#33;&#40;rfr_m, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr &#61; predict&#40;rfr_m, rows&#61;test&#41;;
-rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.3791419542821077</code></pre>
+rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2045180472586106</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
-<h2 id="tuning"><a href="#tuning" class="header-anchor">Tuning</a></h2>
-<p>In case you are new to model tuning using MLJ, refer <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/">lab5</a> and <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/">model-tuning</a></p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="tuning"><a href="#tuning" class="header-anchor">Tuning</a></h2></div>
+<div class="dropdown-content"><p>In case you are new to model tuning using MLJ, refer <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/">lab5</a> and <a href="https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/">model-tuning</a></p>
 <p>Range of values for parameters should be specified to do hyperparameter tuning</p>
 <pre><code class="language-julia">r_maxD &#61; range&#40;rfr, :n_trees, lower&#61;9, upper&#61;15&#41;
 r_samF &#61; range&#40;rfr, :sampling_fraction, lower&#61;0.6, upper&#61;0.8&#41;
@@ -274,50 +379,61 @@ rfr_tm &#61; machine&#40;tm, X, y&#41;;</code></pre>
 <pre><code class="language-julia">fit&#33;&#40;rfr_tm, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm &#61; predict&#40;rfr_tm, rows&#61;test&#41;;
-rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2884649951457146</code></pre>
+rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2930781342638586</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="language-julia">fitted_params&#40;rfr_tm&#41;.best_model</code></pre><pre><code class="plaintext code-output">RandomForestRegressor(
-    max_depth = -1,
-    min_samples_leaf = 1,
-    min_samples_split = 2,
-    min_purity_increase = 0.0,
-    n_subfeatures = -1,
-    n_trees = 13,
-    sampling_fraction = 0.7666666666666667,
-    pdf_smoothing = 0.0,
-    rng = Random._GLOBAL_RNG())</code></pre>
-<p>Now we can investigate the tuning by using report. Let&#39;s plot a heatmap of the measurements:</p>
-<pre><code class="language-julia">r &#61; report&#40;rfr_tm&#41;
-res &#61; r.plotting
-
-md &#61; res.parameter_values&#91;:,1&#93;
-mcw &#61; res.parameter_values&#91;:,2&#93;
-
-figure&#40;figsize&#61;&#40;8,6&#41;&#41;
-tricontourf&#40;md, mcw, res.measurements&#41;
-
-xlabel&#40;&quot;Number of trees&quot;, fontsize&#61;14&#41;
-ylabel&#40;&quot;Sampling fraction&quot;, fontsize&#61;14&#41;
-xticks&#40;9:1:15, fontsize&#61;12&#41;
-yticks&#40;fontsize&#61;12&#41;</code></pre>
+  max_depth = -1, 
+  min_samples_leaf = 1, 
+  min_samples_split = 2, 
+  min_purity_increase = 0.0, 
+  n_subfeatures = -1, 
+  n_trees = 13, 
+  sampling_fraction = 0.8, 
+  feature_importance = :impurity, 
+  rng = Random._GLOBAL_RNG())</code></pre>
+<p>Let&#39;s visualize the tuning results:</p>
+<pre><code class="language-julia">using Plots
+plot&#40;rfr_tm&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/airfoil/code/output/airfoil_heatmap.svg" alt="Hyperparameter heatmap">
+<p>‎</p></div>
 
-
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 28, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
-</div>
-</div><!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
+<script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/DataScienceTutorials.jl/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/DataScienceTutorials.jl/libs/nav/responsive.js"></script>
+
+
+<script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
+
 </body>
+
 </html>

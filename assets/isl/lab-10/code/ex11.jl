@@ -1,13 +1,11 @@
 # This file was generated, do not modify it. # hide
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
-figure(figsize=(8,6))
+Plots.bar(1:length(cs), cs, legend=false, size=((800,600)), ylim=(0, 1.1))
+xlabel!("Number of PCA features")
+ylabel!("Ratio of explained variance")
+plot!(1:length(cs), cs, color="red", marker="o", linewidth=3)
 
-PyPlot.bar(1:length(cs), cs)
-plot(1:length(cs), cs, color="red", marker="o")
-
-xlabel("Number of PCA features", fontsize=14)
-ylabel("Ratio of explained variance", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-10-g1.svg")); # hide

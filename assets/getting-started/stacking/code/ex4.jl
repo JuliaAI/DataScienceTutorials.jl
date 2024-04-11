@@ -1,14 +1,22 @@
 # This file was generated, do not modify it. # hide
-X = source()
-y = source()
+mutable struct MyAverageTwo <: DeterministicNetworkComposite
+    regressor1
+    regressor2
+end
 
-model1 = linear
-model2 = knn
+import MLJ.MLJBase.prefit
+function prefit(::MyAverageTwo, verbosity, X, y)
 
-m1 = machine(model1, X, y)
-y1 = predict(m1, X)
+    Xs = source(X)
+    ys = source(y)
 
-m2 = machine(model2, X, y)
-y2 = predict(m2, X)
+    m1 = machine(:regressor1, Xs, ys)
+    y1 = predict(m1, Xs)
 
-yhat = 0.5*y1 + 0.5*y2
+    m2 = machine(:regressor2, Xs, ys)
+    y2 = predict(m2, Xs)
+
+    yhat = 0.5*y1 + 0.5*y2
+
+    return (predict=yhat,)
+end

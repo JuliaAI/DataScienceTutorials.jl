@@ -1,7 +1,7 @@
 # This file was generated, do not modify it. # hide
-controls = [
-    Step(1),              # to increment iteration parameter (`pipe.nrounds`)
-    NumberSinceBest(4),   # main stopping criterion
-    TimeLimit(2/3600),    # never train more than 2 sec
-    InvalidValue()        # stop if NaN or ±Inf encountered
-]
+roc = roc_curve(ŷ, y[validation])
+plt = scatter(roc, legend=false)
+plot!(plt, xlab="false positive rate", ylab="true positive rate")
+plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
+
+savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")); # hide

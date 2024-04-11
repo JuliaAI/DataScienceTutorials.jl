@@ -3,7 +3,7 @@
      │ Symbol                 Union…   Any          Union…   Any                Int64     Type
 ─────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────
    1 │ country                         AFG                   ZWE                       0  String3
-   2 │ country_long                    Afghanistan           Zimbabwe                  0  String63
+   2 │ country_long                    Afghanistan           Zimbabwe                  0  String
    3 │ name                            'Muela                \u200bVärtaverket         0  String
    4 │ gppd_idnr                       ARG0000001            WRI1075863                0  String15
    5 │ capacity_mw            168.993  1.0          18.3     22500.0                   0  Float64

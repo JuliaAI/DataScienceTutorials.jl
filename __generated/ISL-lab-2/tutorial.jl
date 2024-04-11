@@ -4,7 +4,10 @@
 # [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-2/Manifest.toml), or by following
 # [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
+# @@dropdown
 # ## Basic commands
+# @@
+# @@dropdown-content
 #
 # This is a very brief and rough primer if you're new to Julia and wondering how to do simple things that are relevant for data analysis.
 #
@@ -71,7 +74,12 @@ X = [1 2; 3 4; 5 6]
 
 size(X)
 
+# ‎
+# @@
+# @@dropdown
 # ## Loading data
+# @@
+# @@dropdown-content
 #
 # There are many ways to load data in Julia, one convenient one is via the [`CSV`](https://github.com/JuliaData/CSV.jl) package.
 
@@ -116,8 +124,13 @@ mpg |> mean
 # * the [learn x in y](https://learnxinyminutes.com/docs/julia/) julia tutorial
 # * the [`DataFrames.jl` docs](http://juliadata.github.io/DataFrames.jl/latest/)
 # * the [`StatsBases.jl` docs](https://juliastats.org/StatsBase.jl/latest/)
-#
+
+# ‎
+# @@
+# @@dropdown
 # ## Plotting data
+# @@
+# @@dropdown-content
 #
 # There are multiple libraries that can be used to  plot things in Julia:
 #
@@ -127,14 +140,15 @@ mpg |> mean
 # * [PGFPlotsX.jl](https://github.com/KristofferC/PGFPlotsX.jl) and [PGFPlots](https://github.com/JuliaTeX/PGFPlots.jl) using the LaTeX package  pgfplots,
 # * [Makie](https://github.com/JuliaPlots/Makie.jl), [Gaston](https://github.com/mbaz/Gaston.jl), [Vega](https://github.com/queryverse/VegaLite.jl), ...
 #
-# In these tutorials we use `PyPlot` but you could use another package of course.
+# In these tutorials we use `Plots.jl` but you could use another package of course.
 
-using PyPlot
+using Plots
 
-figure(figsize=(8,6))
-plot(mpg)
+plot(mpg, size=(800,600), linewidth=2, legend=false)
 
 # \figalt{Simple plot}{ISL-lab-2-mpg.svg}
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

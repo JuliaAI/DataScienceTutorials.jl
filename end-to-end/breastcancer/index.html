@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,22 +8,25 @@
    <!-- Syntax highlighting via Prism, note: restricted langs -->
 <link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
  
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/landing.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/nav.css">
   <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
   <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
-   <title>Breast Cancer Wisconsin&#40;Diagnostic&#41;</title>  
+   <title>Breast Cancer Wisconsin&#40;Diagnostic&#41;</title> 
   <!-- LUNR -->
   <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
   <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
   <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
         <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
           <div class="menu-logo">
@@ -31,106 +35,197 @@
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="display:none">
         </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
       </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
     </div>
-    <div id="main"> <!-- Closed in foot -->
-      
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/DataScienceTutorials.jl/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
 
-<!-- Content appended here -->
-<div class="franklin-content"><h1 id="breast_cancer_wisconsindiagnostic"><a href="#breast_cancer_wisconsindiagnostic" class="header-anchor">Breast Cancer Wisconsin&#40;Diagnostic&#41;</a></h1>
+    <!-- Content appended here --><div class="franklin-content"><h1 id="breast_cancer_wisconsindiagnostic"><a href="#breast_cancer_wisconsindiagnostic" class="header-anchor">Breast Cancer Wisconsin&#40;Diagnostic&#41;</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
-<p><div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#loading_the_relevant_packages">Loading the relevant packages</a></li><li><a href="#downloading_and_loading_the_data">Downloading and loading the data</a></li><li><a href="#exploring_the_obtained_data">Exploring the obtained data</a><ol><li><a href="#inspecting_the_class_variable">Inspecting the class variable</a></li><li><a href="#inspecting_the_feature_set">Inspecting the feature set</a></li></ol></li><li><a href="#unpacking_the_values">Unpacking the values</a></li><li><a href="#standardizing_the_feature_set">Standardizing the &quot;feature set&quot;</a></li><li><a href="#train-test_split">Train-test split</a></li><li><a href="#model_compatibility">Model compatibility</a></li><li><a href="#analyzing_the_performance_of_different_models">Analyzing the performance of different models</a><ol><li><a href="#creating_various_empty_vectors_for_our_analysis">Creating various empty vectors for our analysis</a></li><li><a href="#collecting_data_for_analysis">Collecting data for analysis</a></li><li><a href="#analyzing_models">Analyzing models</a></li></ol></li></ol></div>
-<h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2>
-<p>This tutorial covers the concepts of iterative model selection on the popular <a href="https://archive.ics.uci.edu/ml/datasets/Breast&#43;Cancer&#43;Wisconsin&#43;&#40;Diagnostic&#41;">&quot;Breast Cancer Wisconsin &#40;Diagnostic&#41; Data Set&quot;</a> from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.</p>
-<h2 id="loading_the_relevant_packages"><a href="#loading_the_relevant_packages" class="header-anchor">Loading the relevant packages</a></h2>
-<p>For a guide to package intsllation in Julia please refer this <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">link</a> taken directly from Juliav1 documentation</p>
-<pre><code class="language-julia">using UrlDownload
+<p><div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#loading_the_relevant_packages">Loading the relevant packages</a></li><li><a href="#downloading_and_loading_the_data">Downloading and loading the data</a></li><li><a href="#exploring_the_obtained_data">Exploring the obtained data</a><ol><li><a href="#inspecting_the_class_variable">Inspecting the class variable</a></li><li><a href="#inspecting_the_feature_set">Inspecting the feature set</a></li></ol></li><li><a href="#unpacking_the_values">Unpacking the values</a></li><li><a href="#standardizing_the_feature_set">Standardizing the &quot;feature set&quot;</a></li><li><a href="#train-test_split">Train-test split</a></li><li><a href="#model_compatibility">Model compatibility</a></li><li><a href="#analyzing_the_performance_of_different_models">Analyzing the performance of different models</a><ol><li><a href="#creating_various_empty_vectors_for_our_analysis">Creating various empty vectors for our analysis</a></li><li><a href="#collecting_data_for_analysis">Collecting data for analysis</a></li><li><a href="#inspecting_results">Inspecting results</a></li></ol></li></ol></div>
+<div class="dropdown"><h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2></div>
+<div class="dropdown-content"><p>This tutorial covers programmatic model selection on the popular <a href="https://archive.ics.uci.edu/ml/datasets/Breast&#43;Cancer&#43;Wisconsin&#43;&#40;Diagnostic&#41;">&quot;Breast Cancer Wisconsin &#40;Diagnostic&#41; Data Set&quot;</a> from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="loading_the_relevant_packages"><a href="#loading_the_relevant_packages" class="header-anchor">Loading the relevant packages</a></h2></div>
+<div class="dropdown-content"><pre><code class="language-julia">using UrlDownload
 using DataFrames
-using PrettyPrinting
-using PyPlot
-using MLJ</code></pre>
-<p>Inititalizing a global random seed which we&#39;ll use throughout the code to maintain consistency in results</p>
-<pre><code class="language-julia">RANDOM_SEED &#61; 42;</code></pre>
-<h2 id="downloading_and_loading_the_data"><a href="#downloading_and_loading_the_data" class="header-anchor">Downloading and loading the data</a></h2>
-<p>Using the package UrlDownload.jl, we can capture the data from the given link using the below commands</p>
+using MLJ
+using StatsBase
+using StableRNGs # for an RNG stable across julia versions</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="downloading_and_loading_the_data"><a href="#downloading_and_loading_the_data" class="header-anchor">Downloading and loading the data</a></h2></div>
+<div class="dropdown-content"><p>Using the package UrlDownload.jl, we can capture the data from the given link using the below commands.</p>
 <pre><code class="language-julia">url &#61; &quot;https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data&quot;;
 feature_names &#61; &#91;&quot;ID&quot;, &quot;Class&quot;, &quot;mean radius&quot;, &quot;mean texture&quot;, &quot;mean perimeter&quot;, &quot;mean area&quot;, &quot;mean smoothness&quot;, &quot;mean compactness&quot;, &quot;mean concavity&quot;, &quot;mean concave points&quot;, &quot;mean symmetry&quot;, &quot;mean fractal dimension&quot;, &quot;radius error&quot;, &quot;texture error&quot;, &quot;perimeter error&quot;, &quot;area error&quot;, &quot;smoothness error&quot;, &quot;compactness error&quot;, &quot;concavity error&quot;, &quot;concave points error&quot;, &quot;symmetry error&quot;, &quot;fractal dimension error&quot;, &quot;worst radius&quot;, &quot;worst texture&quot;, &quot;worst perimeter&quot;, &quot;worst area&quot;, &quot;worst smoothness&quot;, &quot;worst compactness&quot;, &quot;worst concavity&quot;, &quot;worst concave points&quot;, &quot;worst symmetry&quot;, &quot;worst fractal dimension&quot;&#93;
 data &#61; urldownload&#40;url, true, format &#61; :CSV, header &#61; feature_names&#41;;</code></pre>
-<h2 id="exploring_the_obtained_data"><a href="#exploring_the_obtained_data" class="header-anchor">Exploring the obtained data</a></h2>
-<h3 id="inspecting_the_class_variable"><a href="#inspecting_the_class_variable" class="header-anchor">Inspecting the class variable</a></h3>
-<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8, 6&#41;&#41;
-hist&#40;data.Class&#41;
-xlabel&#40;&quot;Classes&quot;&#41;
-ylabel&#40;&quot;Number of samples&quot;&#41;</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="exploring_the_obtained_data"><a href="#exploring_the_obtained_data" class="header-anchor">Exploring the obtained data</a></h2></div>
+<div class="dropdown-content"><div class="dropdown"><h3 id="inspecting_the_class_variable"><a href="#inspecting_the_class_variable" class="header-anchor">Inspecting the class variable</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">using Plots
+
+Plots.bar&#40;countmap&#40;data.Class&#41;, legend&#61;false,&#41;
+xlabel&#33;&#40;&quot;Classes&quot;&#41;
+ylabel&#33;&#40;&quot;Number of samples&quot;&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/breastcancer/code/output/Target_class.svg" alt="Distribution of target classes">
-<h3 id="inspecting_the_feature_set"><a href="#inspecting_the_feature_set" class="header-anchor">Inspecting the feature set</a></h3>
-<pre><code class="language-julia">df &#61; DataFrame&#40;data&#41;&#91;:, 2:end&#93;;</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="inspecting_the_feature_set"><a href="#inspecting_the_feature_set" class="header-anchor">Inspecting the feature set</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">df &#61; DataFrame&#40;data&#41;&#91;:, 2:end&#93;;</code></pre>
 <p>Printing the 1st 10 rows so as to get a visual idea about the type of data we&#39;re dealing with</p>
-<pre><code class="language-julia">pprint&#40;first&#40;df,10&#41;&#41;</code></pre><pre><code class="plaintext code-output">10×31 DataFrame
+<pre><code class="language-julia">first&#40;df,10&#41;</code></pre><pre><code class="plaintext code-output">10×31 DataFrame
  Row │ Class    mean radius  mean texture  mean perimeter  mean area  mean smoothness  mean compactness  mean concavity  mean concave points  mean symmetry  mean fractal dimension  radius error  texture error  perimeter error  area error  smoothness error  compactness error  concavity error  concave points error  symmetry error  fractal dimension error  worst radius  worst texture  worst perimeter  worst area  worst smoothness  worst compactness  worst concavity  worst concave points  worst symmetry  worst fractal dimension
      │ String1  Float64      Float64       Float64         Float64    Float64          Float64           Float64         Float64              Float64        Float64                 Float64       Float64        Float64          Float64     Float64           Float64            Float64          Float64               Float64         Float64                  Float64       Float64        Float64          Float64     Float64           Float64            Float64          Float64               Float64         Float64
 ─────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -145,7 +240,7 @@ ylabel&#40;&quot;Number of samples&quot;&#41;</code></pre>
    9 │ M              13.0          21.82           87.5       519.8          0.1273            0.1932          0.1859               0.09353         0.235                  0.07389        0.3063         1.002             2.406       24.32          0.005731            0.03502          0.03553               0.01226         0.02143                 0.003749         15.49          30.73           106.2        739.3            0.1703             0.5401           0.539                 0.206           0.4378                  0.1072
   10 │ M              12.46         24.04           83.97      475.9          0.1186            0.2396          0.2273               0.08543         0.203                  0.08243        0.2976         1.599             2.039       23.94          0.007149            0.07217          0.07743               0.01432         0.01789                 0.01008          15.09          40.68            97.65       711.4            0.1853             1.058            1.105                 0.221           0.4366                  0.2075</code></pre>
 <p>For checking the statistical attributes of each inividual feature, we can use the <strong>decsribe&#40;&#41;</strong> method</p>
-<pre><code class="language-julia">pprint&#40;describe&#40;df&#41;&#41;</code></pre><pre><code class="plaintext code-output">31×7 DataFrame
+<pre><code class="language-julia">describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">31×7 DataFrame
  Row │ variable                 mean        min        median    max      nmissing  eltype
      │ Symbol                   Union…      Any        Union…    Any      Int64     DataType
 ─────┼───────────────────────────────────────────────────────────────────────────────────────
@@ -181,187 +276,250 @@ ylabel&#40;&quot;Number of samples&quot;&#41;</code></pre>
   30 │ worst symmetry           0.290076    0.1565     0.2822    0.6638          0  Float64
   31 │ worst fractal dimension  0.0839458   0.05504    0.08004   0.2075          0  Float64</code></pre>
 <p>As we can see the feature set consists of varying features that have different ranges and quantiles. This can cause trouble for the optimization techniques and might cause convergence issues. We can use a feature scaling technique like <strong>Standardizer&#40;&#41;</strong> to handle this.</p>
-<p>But first, let&#39;s handle the <a href="https://alan-turing-institute.github.io/ScientificTypes.jl/dev/">scientific types</a> of all the features. We can use the schema&#40;&#41; method from MLJ.jl package to do this</p>
-<pre><code class="language-julia">pprint&#40;schema&#40;df&#41;&#41;</code></pre><pre><code class="plaintext code-output">ScientificTypes.Schema{(:Class, Symbol("mean radius"), Symbol("mean texture"), Symbol("mean perimeter"), Symbol("mean area"), Symbol("mean smoothness"), Symbol("mean compactness"), Symbol("mean concavity"), Symbol("mean concave points"), Symbol("mean symmetry"), Symbol("mean fractal dimension"), Symbol("radius error"), Symbol("texture error"), Symbol("perimeter error"), Symbol("area error"), Symbol("smoothness error"), Symbol("compactness error"), Symbol("concavity error"), Symbol("concave points error"), Symbol("symmetry error"), Symbol("fractal dimension error"), Symbol("worst radius"), Symbol("worst texture"), Symbol("worst perimeter"), Symbol("worst area"), Symbol("worst smoothness"), Symbol("worst compactness"), Symbol("worst concavity"), Symbol("worst concave points"), Symbol("worst symmetry"), Symbol("worst fractal dimension")), Tuple{ScientificTypesBase.Textual, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous, ScientificTypesBase.Continuous}, Tuple{InlineStrings.String1, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64, Float64}}(nothing, nothing, nothing)</code></pre>
-<p>As the target variable is &#39;Textual&#39; in nature, we&#39;ll have to change it to a more appropriate scientific type. Using the <strong>coerce&#40;&#41;</strong> method, let&#39;s change it to an OrderedFactor.</p>
-<pre><code class="language-julia">coerce&#33;&#40;df, :Class &#61;&gt; OrderedFactor&#123;2&#125;&#41;;</code></pre>
-<h2 id="unpacking_the_values"><a href="#unpacking_the_values" class="header-anchor">Unpacking the values</a></h2>
-<p>Now that our data is fully processed, we can separate the target variable &#39;y&#39; from the feature set &#39;X&#39; using the <strong>unpack&#40;&#41;</strong> method.</p>
-<pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Class&#41;,name-&gt;true, rng &#61; RANDOM_SEED&#41;;</code></pre>
-<h2 id="standardizing_the_feature_set"><a href="#standardizing_the_feature_set" class="header-anchor">Standardizing the &quot;feature set&quot;</a></h2>
-<p>Now that our feature set is separated from the target variable, we can use the <strong>Standardizer&#40;&#41;</strong> worklow to obtain to standadrize our feature set &#39;X&#39;.</p>
+<p>But first, let&#39;s handle the <a href="https://alan-turing-institute.github.io/ScientificTypes.jl/dev/">scientific types</a> of all the features. We can use the <code>schema&#40;&#41;</code> method from MLJ.jl package to do this</p>
+<pre><code class="language-julia">schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌─────────────────────────┬────────────┬─────────┐
+│ names                   │ scitypes   │ types   │
+├─────────────────────────┼────────────┼─────────┤
+│ Class                   │ Textual    │ String1 │
+│ mean radius             │ Continuous │ Float64 │
+│ mean texture            │ Continuous │ Float64 │
+│ mean perimeter          │ Continuous │ Float64 │
+│ mean area               │ Continuous │ Float64 │
+│ mean smoothness         │ Continuous │ Float64 │
+│ mean compactness        │ Continuous │ Float64 │
+│ mean concavity          │ Continuous │ Float64 │
+│ mean concave points     │ Continuous │ Float64 │
+│ mean symmetry           │ Continuous │ Float64 │
+│ mean fractal dimension  │ Continuous │ Float64 │
+│ radius error            │ Continuous │ Float64 │
+│ texture error           │ Continuous │ Float64 │
+│ perimeter error         │ Continuous │ Float64 │
+│ area error              │ Continuous │ Float64 │
+│ smoothness error        │ Continuous │ Float64 │
+│ compactness error       │ Continuous │ Float64 │
+│ concavity error         │ Continuous │ Float64 │
+│ concave points error    │ Continuous │ Float64 │
+│ symmetry error          │ Continuous │ Float64 │
+│ fractal dimension error │ Continuous │ Float64 │
+│ worst radius            │ Continuous │ Float64 │
+│ worst texture           │ Continuous │ Float64 │
+│ worst perimeter         │ Continuous │ Float64 │
+│ worst area              │ Continuous │ Float64 │
+│ worst smoothness        │ Continuous │ Float64 │
+│ worst compactness       │ Continuous │ Float64 │
+│ worst concavity         │ Continuous │ Float64 │
+│ worst concave points    │ Continuous │ Float64 │
+│ worst symmetry          │ Continuous │ Float64 │
+│ worst fractal dimension │ Continuous │ Float64 │
+└─────────────────────────┴────────────┴─────────┘
+</code></pre>
+<p>As <code>Textual</code> is a sciytype reserved for text data &quot;with sentiment&quot;, we need to <code>coerce</code> the scitype to the more appropriate <code>OrderedFactor</code>:</p>
+<pre><code class="language-julia">coerce&#33;&#40;df, :Class &#61;&gt; OrderedFactor&#123;2&#125;&#41;;
+scitype&#40;df.Class&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{OrderedFactor{2}} (alias for AbstractArray{ScientificTypesBase.OrderedFactor{2}, 1})</code></pre>
+<p>‎</p></div>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="unpacking_the_values"><a href="#unpacking_the_values" class="header-anchor">Unpacking the values</a></h2></div>
+<div class="dropdown-content"><p>Now that our data is fully processed, we can separate the target variable &#39;y&#39; from the feature set &#39;X&#39; using the <strong>unpack&#40;&#41;</strong> method.</p>
+<pre><code class="language-julia">rng &#61; StableRNG&#40;123&#41;
+y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Class&#41;; rng&#41;;</code></pre>
+<p>We&#39;ll be using 80&#37; of data for training, and can perform a train-test split using the <code>partition</code> method:</p>
+<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.8; rng&#41;</code></pre><pre><code class="plaintext code-output">([281, 534, 44, 524, 554, 470, 50, 199, 295, 513, 569, 156, 176, 30, 404, 185, 307, 92, 373, 403, 9, 333, 210, 488, 79, 539, 561, 151, 366, 492, 178, 221, 209, 261, 43, 10, 475, 472, 352, 336, 407, 111, 275, 411, 90, 486, 390, 334, 549, 7, 421, 229, 415, 16, 257, 274, 160, 192, 510, 474, 310, 86, 114, 428, 72, 532, 317, 33, 558, 183, 36, 59, 489, 288, 551, 507, 170, 38, 144, 23, 31, 135, 456, 358, 252, 424, 223, 77, 203, 357, 158, 482, 224, 487, 303, 304, 434, 14, 251, 550, 149, 408, 268, 253, 244, 39, 519, 351, 491, 493, 538, 239, 112, 218, 238, 222, 546, 473, 356, 448, 517, 37, 213, 102, 41, 227, 168, 560, 47, 266, 327, 406, 480, 452, 143, 80, 361, 234, 469, 109, 173, 506, 365, 396, 541, 55, 246, 164, 372, 540, 495, 413, 61, 207, 374, 27, 189, 545, 457, 12, 188, 154, 468, 446, 471, 264, 494, 343, 236, 548, 335, 4, 350, 412, 103, 249, 430, 20, 69, 348, 186, 116, 65, 159, 146, 232, 128, 522, 313, 150, 233, 96, 113, 504, 405, 57, 445, 523, 435, 179, 191, 293, 202, 371, 329, 320, 544, 402, 139, 3, 119, 214, 215, 410, 130, 278, 325, 265, 153, 120, 375, 171, 53, 88, 70, 339, 376, 379, 19, 100, 105, 512, 364, 22, 535, 453, 437, 337, 349, 67, 99, 508, 83, 117, 305, 323, 226, 526, 399, 341, 204, 71, 565, 377, 414, 419, 163, 289, 467, 131, 297, 8, 206, 463, 441, 294, 398, 177, 477, 52, 18, 93, 260, 431, 145, 443, 250, 84, 87, 483, 400, 520, 94, 211, 568, 108, 290, 383, 490, 511, 107, 444, 422, 433, 389, 152, 362, 353, 49, 360, 240, 529, 311, 552, 543, 368, 462, 157, 432, 78, 66, 454, 393, 563, 104, 429, 201, 369, 259, 24, 367, 97, 40, 499, 449, 387, 76, 219, 296, 417, 17, 248, 292, 527, 32, 241, 308, 300, 409, 58, 394, 465, 95, 395, 81, 392, 62, 440, 380, 98, 167, 15, 442, 316, 148, 284, 500, 484, 243, 271, 386, 136, 194, 29, 514, 359, 230, 450, 122, 25, 464, 279, 556, 129, 416, 89, 542, 235, 322, 537, 285, 458, 60, 332, 459, 321, 461, 547, 85, 553, 426, 42, 237, 283, 401, 91, 138, 200, 231, 272, 439, 478, 326, 11, 518, 181, 174, 255, 505, 515, 509, 273, 280, 496, 460, 331, 344, 466, 567, 64, 438, 262, 299, 34, 75, 54, 263, 267, 205, 277, 328, 63, 525, 342, 388, 82, 220, 397, 225, 502, 169, 172, 126, 133, 115, 370, 291, 45, 74, 298, 503, 1, 338, 346, 256], [56, 536, 557, 182, 455, 35, 198, 481, 309, 282, 6, 124, 423, 347, 141, 562, 101, 498, 212, 118, 28, 533, 516, 48, 134, 391, 193, 132, 564, 197, 180, 187, 378, 385, 155, 276, 286, 476, 319, 190, 381, 479, 306, 217, 345, 137, 501, 287, 161, 354, 142, 247, 555, 208, 127, 330, 228, 110, 340, 147, 302, 485, 254, 270, 245, 447, 26, 427, 318, 162, 5, 363, 315, 216, 528, 314, 530, 21, 68, 436, 51, 242, 121, 2, 165, 195, 196, 497, 269, 566, 73, 451, 382, 559, 13, 312, 301, 324, 521, 531, 384, 420, 355, 418, 125, 123, 106, 258, 166, 46, 140, 425, 184, 175])</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="standardizing_the_feature_set"><a href="#standardizing_the_feature_set" class="header-anchor">Standardizing the &quot;feature set&quot;</a></h2></div>
+<div class="dropdown-content"><p>Now that our feature set is separated from the target variable, we can use the<code>Standardizer&#40;&#41;</code> worklow to obtain to standardize our feature set <code>X</code>:</p>
 <pre><code class="language-julia">transformer_instance &#61; Standardizer&#40;&#41;
-transformer_model &#61; machine&#40;transformer_instance, X&#41;
+transformer_model &#61; machine&#40;transformer_instance, X&#91;train,:&#93;&#41;
 fit&#33;&#40;transformer_model&#41;
 X &#61; MLJ.transform&#40;transformer_model, X&#41;;</code></pre>
-<h2 id="train-test_split"><a href="#train-test_split" class="header-anchor">Train-test split</a></h2>
-<p>After feature scaling, our data is ready to put into a Machine Learning model for classification&#33; Using 80&#37; of data for training, we can perform a train-test split using the <strong>partition&#40;&#41;</strong> method.</p>
-<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.8, shuffle&#61;true, rng&#61;RANDOM_SEED&#41;;</code></pre>
-<h2 id="model_compatibility"><a href="#model_compatibility" class="header-anchor">Model compatibility</a></h2>
-<p>Now that we have separate training and testing set, let&#39;s see the models compatible with our data&#33;</p>
-<pre><code class="language-julia">for m in models&#40;matching&#40;X, y&#41;&#41;
-    println&#40;&quot;Model name &#61; &quot;,m.name,&quot;, &quot;,&quot;Prediction type &#61; &quot;,m.prediction_type,&quot;, &quot;,&quot;Package name &#61; &quot;,m.package_name&#41;;
-end</code></pre><pre><code class="plaintext code-output">Model name = AdaBoostClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = AdaBoostStumpClassifier, Prediction type = probabilistic, Package name = DecisionTree
-Model name = BaggingClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = BayesianLDA, Prediction type = probabilistic, Package name = MultivariateStats
-Model name = BayesianLDA, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = BayesianQDA, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = BayesianSubspaceLDA, Prediction type = probabilistic, Package name = MultivariateStats
-Model name = ConstantClassifier, Prediction type = probabilistic, Package name = MLJModels
-Model name = DSADDetector, Prediction type = unknown, Package name = OutlierDetectionNetworks
-Model name = DecisionTreeClassifier, Prediction type = probabilistic, Package name = BetaML
-Model name = DecisionTreeClassifier, Prediction type = probabilistic, Package name = DecisionTree
-Model name = DeterministicConstantClassifier, Prediction type = deterministic, Package name = MLJModels
-Model name = DummyClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = ESADDetector, Prediction type = unknown, Package name = OutlierDetectionNetworks
-Model name = EvoTreeClassifier, Prediction type = probabilistic, Package name = EvoTrees
-Model name = ExtraTreesClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = GaussianNBClassifier, Prediction type = probabilistic, Package name = NaiveBayes
-Model name = GaussianNBClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = GaussianProcessClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = GradientBoostingClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = KNNClassifier, Prediction type = probabilistic, Package name = NearestNeighborModels
-Model name = KNeighborsClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = KernelPerceptronClassifier, Prediction type = probabilistic, Package name = BetaML
-Model name = LDA, Prediction type = probabilistic, Package name = MultivariateStats
-Model name = LGBMClassifier, Prediction type = probabilistic, Package name = LightGBM
-Model name = LinearBinaryClassifier, Prediction type = probabilistic, Package name = GLM
-Model name = LinearSVC, Prediction type = deterministic, Package name = LIBSVM
-Model name = LogisticCVClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = LogisticClassifier, Prediction type = probabilistic, Package name = MLJLinearModels
-Model name = LogisticClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = MultinomialClassifier, Prediction type = probabilistic, Package name = MLJLinearModels
-Model name = NeuralNetworkClassifier, Prediction type = probabilistic, Package name = MLJFlux
-Model name = NuSVC, Prediction type = deterministic, Package name = LIBSVM
-Model name = PassiveAggressiveClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = PegasosClassifier, Prediction type = probabilistic, Package name = BetaML
-Model name = PerceptronClassifier, Prediction type = probabilistic, Package name = BetaML
-Model name = PerceptronClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = ProbabilisticSGDClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = RandomForestClassifier, Prediction type = probabilistic, Package name = BetaML
-Model name = RandomForestClassifier, Prediction type = probabilistic, Package name = DecisionTree
-Model name = RandomForestClassifier, Prediction type = probabilistic, Package name = ScikitLearn
-Model name = RidgeCVClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = RidgeClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = SGDClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = SVC, Prediction type = deterministic, Package name = LIBSVM
-Model name = SVMClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = SVMLinearClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = SVMNuClassifier, Prediction type = deterministic, Package name = ScikitLearn
-Model name = SubspaceLDA, Prediction type = probabilistic, Package name = MultivariateStats
-Model name = XGBoostClassifier, Prediction type = probabilistic, Package name = XGBoost
-</code></pre>
-<h2 id="analyzing_the_performance_of_different_models"><a href="#analyzing_the_performance_of_different_models" class="header-anchor">Analyzing the performance of different models</a></h2>
-<p>Thats a lot of models for our data&#33; To narrow it down, lets analyze the performance of &quot;probabilistic classifiers&quot; from the &quot;ScikitLearn&quot; package.</p>
-<h3 id="creating_various_empty_vectors_for_our_analysis"><a href="#creating_various_empty_vectors_for_our_analysis" class="header-anchor">Creating various empty vectors for our analysis</a></h3>
-<ul>
-<li><p><strong>model_names</strong> captures the names of the models being iterated</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="train-test_split"><a href="#train-test_split" class="header-anchor">Train-test split</a></h2></div>
+<div class="dropdown-content"><p>With feature scaling complete, we are ready to compare the performance of various machine learning models for classification.</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="model_compatibility"><a href="#model_compatibility" class="header-anchor">Model compatibility</a></h2></div>
+<div class="dropdown-content"><p>Now that we have separate training and testing set, let&#39;s see the models compatible with our data&#33;</p>
+<pre><code class="language-julia">models&#40;matching&#40;X, y&#41;&#41;</code></pre><pre><code class="plaintext code-output">55-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = AdaBoostClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = AdaBoostStumpClassifier, package_name = DecisionTree, ... )
+ (name = BaggingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MultivariateStats, ... )
+ (name = BayesianQDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianSubspaceLDA, package_name = MultivariateStats, ... )
+ (name = CatBoostClassifier, package_name = CatBoost, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DecisionTreeClassifier, package_name = DecisionTree, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = DummyClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = ExtraTreesClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = NaiveBayes, ... )
+ (name = GaussianProcessClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = HistGradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KNNClassifier, package_name = NearestNeighborModels, ... )
+ (name = KNeighborsClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KernelPerceptronClassifier, package_name = BetaML, ... )
+ (name = LDA, package_name = MultivariateStats, ... )
+ (name = LGBMClassifier, package_name = LightGBM, ... )
+ (name = LinearBinaryClassifier, package_name = GLM, ... )
+ (name = LinearSVC, package_name = LIBSVM, ... )
+ (name = LogisticCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = LogisticClassifier, package_name = MLJLinearModels, ... )
+ (name = LogisticClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = MultinomialClassifier, package_name = MLJLinearModels, ... )
+ (name = NeuralNetworkClassifier, package_name = BetaML, ... )
+ (name = NeuralNetworkClassifier, package_name = MLJFlux, ... )
+ (name = NuSVC, package_name = LIBSVM, ... )
+ (name = PassiveAggressiveClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = PegasosClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticNuSVC, package_name = LIBSVM, ... )
+ (name = ProbabilisticSGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticSVC, package_name = LIBSVM, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )
+ (name = RandomForestClassifier, package_name = DecisionTree, ... )
+ (name = RandomForestClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVC, package_name = LIBSVM, ... )
+ (name = SVMClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMLinearClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMNuClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = StableForestClassifier, package_name = SIRUS, ... )
+ (name = StableRulesClassifier, package_name = SIRUS, ... )
+ (name = SubspaceLDA, package_name = MultivariateStats, ... )
+ (name = XGBoostClassifier, package_name = XGBoost, ... )</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="analyzing_the_performance_of_different_models"><a href="#analyzing_the_performance_of_different_models" class="header-anchor">Analyzing the performance of different models</a></h2></div>
+<div class="dropdown-content"><p>Thats a lot of models for our data&#33; To narrow it down, we&#39;ll analyze the performance of probablistic predictors with pure julia implementations:</p>
+<div class="dropdown"><h3 id="creating_various_empty_vectors_for_our_analysis"><a href="#creating_various_empty_vectors_for_our_analysis" class="header-anchor">Creating various empty vectors for our analysis</a></h3></div>
+<div class="dropdown-content"><ul>
+<li><p><code>model_names</code>: captures the names of the models being evaluated</p>
 </li>
-<li><p><strong>loss_acc captures</strong> the value of the model accuracy on the test set</p>
+<li><p><code>accuracies</code>: accuracies of the value of the model accuracy on the test set</p>
 </li>
-<li><p><strong>loss_ce captures</strong> the values of the Cross-entropy loss on the test set</p>
+<li><p><code>log_losses</code>: values of the log loss &#40;cross entropy&#41; on the test set</p>
 </li>
-<li><p><strong>loss_f1</strong> captures the values of F1-Score on the test set</p>
+<li><p><code>f1_scores</code>:  captures the values of F1-Score on the test set</p>
 </li>
 </ul>
 <pre><code class="language-julia">model_names&#61;Vector&#123;String&#125;&#40;&#41;;
-loss_acc&#61;&#91;&#93;;
-loss_ce&#61;&#91;&#93;;
-loss_f1&#61;&#91;&#93;;</code></pre>
-<h3 id="collecting_data_for_analysis"><a href="#collecting_data_for_analysis" class="header-anchor">Collecting data for analysis</a></h3>
-<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8, 6&#41;&#41;
-for m in models&#40;matching&#40;X, y&#41;&#41;
-    if m.prediction_type&#61;&#61;Symbol&#40;&quot;probabilistic&quot;&#41; &amp;&amp; m.package_name&#61;&#61;&quot;ScikitLearn&quot; &amp;&amp; m.name&#33;&#61;&quot;LogisticCVClassifier&quot;
-        #Excluding LogisticCVClassfiier as we can infer similar baseline results from the LogisticClassifier
+accuracies&#61;&#91;&#93;;
+log_losses&#61;&#91;&#93;;
+f1_scores&#61;&#91;&#93;;</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="collecting_data_for_analysis"><a href="#collecting_data_for_analysis" class="header-anchor">Collecting data for analysis</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">models_to_evaluate &#61; models&#40;matching&#40;X, y&#41;&#41; do m
+    m.prediction_type&#61;&#61;:probabilistic &amp;&amp; m.is_pure_julia &amp;&amp;
+        m.package_name &#33;&#61; &quot;SIRUS&quot;
+end
 
-        #Capturing the model and loading it using the @load utility
-        model_name&#61;m.name
-        package_name&#61;m.package_name
-        eval&#40;:&#40;clf &#61; @load &#36;model_name pkg&#61;&#36;package_name verbosity&#61;1&#41;&#41;
+p &#61; plot&#40;legendfontsize&#61;7, title&#61;&quot;ROC Curve&quot;&#41;
+plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black&#41;
+for m in models_to_evaluate
+    model&#61;m.name
+    pkg &#61; m.package_name
+    model_name &#61; &quot;&#36;model &#40;&#36;pkg&#41;&quot;
+    @info &quot;Evaluating &#36;model_name. &quot;
+    eval&#40;:&#40;clf &#61; @load &#36;model pkg&#61;&#36;pkg verbosity&#61;0&#41;&#41;
 
-        #Fitting the captured model onto the training set
-        clf_machine &#61; machine&#40;clf&#40;&#41;, X, y&#41;
-        fit&#33;&#40;clf_machine, rows&#61;train&#41;
+    clf_machine &#61; machine&#40;clf&#40;&#41;, X, y&#41;
+    fit&#33;&#40;clf_machine, rows&#61;train, verbosity&#61;0&#41;
 
-        #Getting the predictions onto the test set
-        y_pred &#61; MLJ.predict&#40;clf_machine, rows&#61;test&#41;;
+    y_pred &#61; MLJ.predict&#40;clf_machine, rows&#61;test&#41;;
 
-        #Plotting the ROC-AUC curve for each model being iterated
-        fprs, tprs, thresholds &#61; roc&#40;y_pred, y&#91;test&#93;&#41;
-        plot&#40;fprs, tprs,label&#61;model_name&#41;;
+    fprs, tprs, thresholds &#61; roc_curve&#40;y_pred, y&#91;test&#93;&#41;
+    plot&#33;&#40;p, fprs, tprs,label&#61;model_name&#41;
+    gui&#40;&#41;
 
-        #Obtaining different evaluation metrics
-        ce_loss &#61; mean&#40;cross_entropy&#40;y_pred,y&#91;test&#93;&#41;&#41;
-        acc &#61; accuracy&#40;mode.&#40;y_pred&#41;, y&#91;test&#93;&#41;
-        f1_score &#61; f1score&#40;mode.&#40;y_pred&#41;, y&#91;test&#93;&#41;
-
-        #Adding the different obtained values of the evaluation metrics to the respective vectors
-        push&#33;&#40;model_names, m.name&#41;
-        append&#33;&#40;loss_acc, acc&#41;
-        append&#33;&#40;loss_ce, ce_loss&#41;
-        append&#33;&#40;loss_f1, f1_score&#41;
-    end
+    push&#33;&#40;model_names, model_name&#41;
+    push&#33;&#40;accuracies, accuracy&#40;mode.&#40;y_pred&#41;, y&#91;test&#93;&#41;&#41;
+    push&#33;&#40;log_losses, log_loss&#40;y_pred,y&#91;test&#93;&#41;&#41;
+    push&#33;&#40;f1_scores, f1score&#40;mode.&#40;y_pred&#41;, y&#91;test&#93;&#41;&#41;
 end
 
 #Adding labels and legend to the ROC-AUC curve
-xlabel&#40;&quot;False Positive Rate&quot;&#41;
-ylabel&#40;&quot;True Positive Rate&quot;&#41;
-legend&#40;loc&#61;&quot;best&quot;, fontsize&#61;&quot;xx-small&quot;&#41;
-title&#40;&quot;ROC curve&quot;&#41;</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-import MLJScikitLearnInterface ✔
-</code></pre>
+xlabel&#33;&#40;&quot;False Positive Rate &#40;positive&#61;malignant&#41;&quot;&#41;
+ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/breastcancer/code/output/breastcancer_auc_curve.svg" alt="ROC-AUC Curve">
-<h3 id="analyzing_models"><a href="#analyzing_models" class="header-anchor">Analyzing models</a></h3>
-<p>Let&#39;s collect the data in form a dataframe for a more precise analysis</p>
-<pre><code class="language-julia">model_info&#61;DataFrame&#40;ModelName&#61;model_names,Accuracy&#61;loss_acc,CrossEntropyLoss&#61;loss_ce,F1Score&#61;loss_f1&#41;;</code></pre>
-<p>Now, let&#39;s sort the data on basis of the Cross-entropy loss</p>
-<pre><code class="language-julia">pprint&#40;sort&#33;&#40;model_info,&#91;:CrossEntropyLoss&#93;&#41;&#41;;</code></pre><pre><code class="plaintext code-output">13×4 DataFrame
- Row │ ModelName                   Accuracy  CrossEntropyLoss  F1Score
-     │ String                      Any       Any               Any
+<p>‎</p></div>
+<div class="dropdown"><h3 id="inspecting_results"><a href="#inspecting_results" class="header-anchor">Inspecting results</a></h3></div>
+<div class="dropdown-content"><p>Let&#39;s collect the data in form a dataframe for a more precise analysis</p>
+<pre><code class="language-julia">model_comparison&#61;DataFrame&#40;
+    ModelName&#61;model_names,
+    Accuracy&#61;accuracies,
+    LogLoss&#61;log_losses,
+    F1Score&#61;f1_scores
+&#41;;</code></pre>
+<p>Finally, let&#39;s sort the data on basis of the log loss:</p>
+<pre><code class="language-julia">sort&#33;&#40;model_comparison, &#91;:LogLoss&#93;&#41;</code></pre><pre><code class="plaintext code-output">21×4 DataFrame
+ Row │ ModelName                          Accuracy  LogLoss    F1Score
+     │ String                             Any       Any        Any
 ─────┼──────────────────────────────────────────────────────────────────
-   1 │ LogisticClassifier          0.973684  0.13142           0.962025
-   2 │ BayesianLDA                 0.95614   0.145701          0.935065
-   3 │ ExtraTreesClassifier        0.947368  0.15706           0.923077
-   4 │ RandomForestClassifier      0.938596  0.171584          0.911392
-   5 │ GradientBoostingClassifier  0.938596  0.236792          0.909091
-   6 │ AdaBoostClassifier          0.95614   0.3495            0.936709
-   7 │ KNeighborsClassifier        0.938596  0.432447          0.911392
-   8 │ BaggingClassifier           0.929825  0.473429          0.9
-   9 │ ProbabilisticSGDClassifier  0.938596  0.501896          0.915663
-  10 │ GaussianProcessClassifier   0.938596  0.597197          0.909091
-  11 │ GaussianNBClassifier        0.903509  0.929409          0.864198
-  12 │ BayesianQDA                 0.903509  1.1303            0.857143
-  13 │ DummyClassifier             0.552632  16.1248           0.385542</code></pre>
-<p>It seems like a simple LogisticClassifier works really well with this dataset&#33;</p>
-<h1 id="conclusion"><a href="#conclusion" class="header-anchor">Conclusion</a></h1>
-<p>This article covered iterative feature selection on the Breast cancer classification dataset. In this tutorial, we only analyzed the <strong>ScikitLearn</strong> models so as to keep the flow of the content precise, but the same workflow can be applied to any compatible model in the <strong>MLJ</strong> family.</p>
+   1 │ NeuralNetworkClassifier (BetaML)   0.991228  0.0792737  0.988235
+   2 │ NeuralNetworkClassifier (MLJFlux)  0.964912  0.0979576  0.953488
+   3 │ RandomForestClassifier (Decision…  0.95614   0.108824   0.942529
+   4 │ RandomForestClassifier (BetaML)    0.95614   0.117064   0.941176
+   5 │ EvoTreeClassifier (EvoTrees)       0.95614   0.127662   0.941176
+   6 │ BayesianLDA (MultivariateStats)    0.929825  0.166699   0.9
+   7 │ BayesianSubspaceLDA (Multivariat…  0.929825  0.166709   0.9
+   8 │ SubspaceLDA (MultivariateStats)    0.938596  0.209371   0.91358
+   9 │ AdaBoostStumpClassifier (Decisio…  0.947368  0.280023   0.926829
+  10 │ PegasosClassifier (BetaML)         0.912281  0.347228   0.886364
+  11 │ KernelPerceptronClassifier (Beta…  0.912281  0.400981   0.886364
+  12 │ KNNClassifier (NearestNeighborMo…  0.95614   0.430947   0.942529
+  13 │ ConstantClassifier (MLJModels)     0.622807  0.662744   0.0
+  14 │ LDA (MultivariateStats)            0.938596  0.677149   0.91358
+  15 │ GaussianNBClassifier (NaiveBayes)  0.929825  0.898701   0.906977
+  16 │ PerceptronClassifier (BetaML)      0.947368  1.42295    0.926829
+  17 │ MultinomialClassifier (MLJLinear…  0.938596  1.57496    0.915663
+  18 │ DecisionTreeClassifier (BetaML)    0.95614   1.58694    0.941176
+  19 │ LogisticClassifier (MLJLinearMod…  0.938596  2.20713    0.915663
+  20 │ LinearBinaryClassifier (GLM)       0.912281  2.88829    0.878049
+  21 │ DecisionTreeClassifier (Decision…  0.903509  3.4779     0.870588</code></pre>
+<p>‎</p></div>
+<p>‎</p></div>
 
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: August 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
-</div>
-</div><!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
+<script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/DataScienceTutorials.jl/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/DataScienceTutorials.jl/libs/nav/responsive.js"></script>
+
+
+<script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
+
 </body>
+
 </html>

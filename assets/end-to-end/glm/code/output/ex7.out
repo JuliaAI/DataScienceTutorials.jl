@@ -2,6 +2,7 @@ ARDRegressor
 AdaBoostRegressor
 BaggingRegressor
 BayesianRidgeRegressor
+CatBoostRegressor
 ConstantRegressor
 DecisionTreeRegressor
 DecisionTreeRegressor
@@ -11,11 +12,16 @@ ElasticNetCVRegressor
 ElasticNetRegressor
 ElasticNetRegressor
 EpsilonSVR
+EvoLinearRegressor
+EvoSplineRegressor
 EvoTreeGaussian
+EvoTreeMLE
 EvoTreeRegressor
 ExtraTreesRegressor
+GaussianMixtureRegressor
 GaussianProcessRegressor
 GradientBoostingRegressor
+HistGradientBoostingRegressor
 HuberRegressor
 HuberRegressor
 KNNRegressor
@@ -36,6 +42,7 @@ LinearRegressor
 LinearRegressor
 LinearRegressor
 NeuralNetworkRegressor
+NeuralNetworkRegressor
 NuSVR
 OrthogonalMatchingPursuitCVRegressor
 OrthogonalMatchingPursuitRegressor
@@ -52,8 +59,11 @@ RidgeRegressor
 RidgeRegressor
 RobustRegressor
 SGDRegressor
+SRRegressor
 SVMLinearRegressor
 SVMNuRegressor
 SVMRegressor
+StableForestRegressor
+StableRulesRegressor
 TheilSenRegressor
 XGBoostRegressor

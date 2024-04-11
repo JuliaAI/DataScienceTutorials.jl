@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/EX-telco/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -69,9 +69,11 @@ levels(df0.Churn) # to check order
 
 schema(df0) |> DataFrames.DataFrame
 
-df, df_test, df_dumped = partition(df0, 0.07, 0.03, # in ratios 7:3:90
+import Random.Xoshiro
+rng = Xoshiro(123)
+df, df_test, df_dumped = partition(df0, 0.07, 0.03; # in ratios 7:3:90
                                    stratify=df0.Churn,
-                                   rng=123);
+                                   rng=rng);
 
 y, X = unpack(df, ==(:Churn), !=(:customerID));
 schema(X).names
@@ -88,6 +90,8 @@ scitype(y) <: target_scitype(booster)
 
 scitype(X) <: input_scitype(booster)
 
+models(matching(X, y))
+
 pipe = ContinuousEncoder() |> booster
 
 pipe.evo_tree_classifier.max_depth
@@ -102,19 +106,26 @@ fit!(mach_pipe, rows=train)
 fp = fitted_params(mach_pipe);
 keys(fp)
 
-Set(fp.continuous_encoder.features_to_keep) == Set(schema(X).names)
+fp.evo_tree_classifier.fitresult
 
-rpt = report(mach_pipe)
-keys(rpt.evo_tree_classifier)
+rpt = report(mach_pipe);
+keys(rpt.continuous_encoder)
 
-fi = rpt.evo_tree_classifier.feature_importances
+join(string.(rpt.continuous_encoder.new_features), ", ") |> println
+
+reports_feature_importances(pipe)
+
+reports_feature_importances(booster)
+
+fi = feature_importances(mach_pipe)
+
 feature_importance_table =
-    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame
+    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame;
 
 ŷ = predict(mach_pipe, rows=validation);
 print(
     "Measurements:\n",
-    "  brier loss: ", brier_loss(ŷ, y[validation]) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ, y[validation]), "\n",
     "  auc:        ", auc(ŷ, y[validation]),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ), y[validation])
 )
@@ -122,33 +133,21 @@ print(
 confmat(mode.(ŷ), y[validation])
 
 using Plots
+Plots.scalefontsizes() #hide # reset font sizes
+Plots.scalefontsizes(0.85)
 
-roc_curve = roc(ŷ, y[validation])
-plt = scatter(roc_curve, legend=false)
+roc = roc_curve(ŷ, y[validation])
+plt = scatter(roc, legend=false)
 plot!(plt, xlab="false positive rate", ylab="true positive rate")
 plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 
-savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")); # hide
 
 e_pipe = evaluate(pipe, X, y,
-                  resampling=StratifiedCV(nfolds=6, rng=123),
+                  resampling=StratifiedCV(nfolds=6, rng=rng),
                   measures=[brier_loss, auc, accuracy],
                   repeats=3,
                   acceleration=CPUThreads())
-
-using Measurements
-
-function confidence_intervals(e)
-    factor = 2.0 # to get level of 95%
-    measure = e.measure
-    nfolds = length(e.per_fold[1])
-    measurement = [e.measurement[j] ± factor*std(e.per_fold[j])/sqrt(nfolds - 1)
-                   for j in eachindex(measure)]
-    table = (measure=measure, measurement=measurement)
-    return DataFrames.DataFrame(table)
-end
-
-confidence_intervals_basic_model = confidence_intervals(e_pipe)
 
 unimportant_features = filter(:importance => <(0.005), feature_importance_table).feature
 
@@ -172,19 +171,19 @@ fit!(mach_iterated_pipe);
 
 show(iterated_pipe, 2)
 
-p1 = :(model.evo_tree_classifier.η)
+p1 = :(model.evo_tree_classifier.eta)
 p2 = :(model.evo_tree_classifier.max_depth)
 
 r1 = range(iterated_pipe, p1, lower=-2, upper=-0.5, scale=x->10^x)
 r2 = range(iterated_pipe, p2, lower=2, upper=6)
 
-tuning = RandomSearch(rng=123)
+tuning = RandomSearch(rng=rng)
 
 tuned_iterated_pipe = TunedModel(model=iterated_pipe,
                                  range=[r1, r2],
                                  tuning=tuning,
                                  measures=[brier_loss, auc, accuracy],
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  acceleration=CPUThreads(),
                                  n=40)
 
@@ -197,27 +196,25 @@ best_booster = rpt2.best_model.model.evo_tree_classifier
 print(
     "Optimal hyper-parameters: \n",
     "  max_depth: ", best_booster.max_depth, "\n",
-    "  η:         ", best_booster.η
+    "  eta:         ", best_booster.eta
 )
 
 e_best = rpt2.best_history_entry
-confidence_intervals(e_best)
+e_best.evaluation
 
 rpt2.best_report.controls |> collect
 
 plot(mach_tuned_iterated_pipe, size=(600,450))
 
-savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")); # hide
 
 MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 
 e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  measures=[brier_loss, auc, accuracy])
 
-confidence_intervals(e_tuned_iterated_pipe)
-
-confidence_intervals_basic_model
+e_pipe
 
 mach_restored = machine("tuned_iterated_pipe.jls")
 
@@ -226,7 +223,7 @@ ŷ_tuned[1]
 
 print(
     "Tuned model measurements on test:\n",
-    "  brier loss: ", brier_loss(ŷ_tuned, ytest) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ_tuned, ytest), "\n",
     "  auc:        ", auc(ŷ_tuned, ytest),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ_tuned), ytest)
 )
@@ -238,10 +235,9 @@ ŷ_basic = predict(mach_basic, Xtest);
 
 print(
     "Basic model measurements on test set:\n",
-    "  brier loss: ", brier_loss(ŷ_basic, ytest) |> mean, "\n",
+    "  brier loss: ", brier_loss(ŷ_basic, ytest), "\n",
     "  auc:        ", auc(ŷ_basic, ytest),                "\n",
     "  accuracy:   ", accuracy(mode.(ŷ_basic), ytest)
 )
 
 rm("tuned_iterated_pipe.jls") # hide
-

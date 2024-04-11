@@ -1,8 +1,5 @@
 # This file was generated, do not modify it. # hide
-evaluate(
-    pipe,
-    X,
-    height,
-    resampling=Holdout(),
-    measure=rms
-) |> pprint
+transformed_target_model = TransformedTargetModel(
+    RidgeRegressor();
+    transformer=UnivariateBoxCoxTransformer(),
+)

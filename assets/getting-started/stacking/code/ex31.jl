@@ -1,10 +1,8 @@
 # This file was generated, do not modify it. # hide
-@from_network machine(Deterministic(), X, y; predict=yhat) begin
-    mutable struct MyTwoModelStack
-        regressor1=model1
-        regressor2=model2
-        judge=judge
-    end
-end
+avg = MyAverageTwo(tree_booster,svm)
+stack = MyTwoModelStack(model1=tree_booster, model2=svm, judge=forest)
+all_models = [tree_booster, svm, forest, avg, stack];
 
-my_two_model_stack = MyTwoModelStack()
+for model in all_models
+    print_performance(model, X, y)
+end

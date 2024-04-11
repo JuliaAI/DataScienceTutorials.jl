@@ -8,8 +8,11 @@
 #
 # 1. loading a standard dataset via `RDatasets.jl`,
 # 1. loading a local file with `CSV.jl`,
-#
+
+# @@dropdown
 # ## Using RDatasets
+# @@
+# @@dropdown-content
 #
 # The package [RDatasets.jl](https://github.com/JuliaStats/RDatasets.jl) provides access to most of the many datasets listed on [this page](http://vincentarelbundock.github.io/Rdatasets/datasets.html).
 # These are well known, standard datasets that can be used to get started with data processing and classical machine learning such as for instance `iris`, `crabs`, `Boston`, etc.
@@ -30,12 +33,20 @@ typeof(boston)
 
 # For a short introduction to DataFrame objects, see [this tutorial](/data/dataframe).
 
+# ‎
+# @@
+# @@dropdown
 # ## Using CSV
+# @@
+# @@dropdown-content
 #
 # The package [CSV.jl](https://github.com/JuliaData/CSV.jl) offers a powerful way to read arbitrary CSV files efficiently.
 # In particular the `CSV.read` function allows to read a file and return a DataFrame.
-#
+
+# @@dropdown
 # ### Basic usage
+# @@
+# @@dropdown-content
 #
 # Let's say you have a file `foo.csv` at some path `fpath=joinpath("data", "foo.csv")` with the content
 #
@@ -74,8 +85,13 @@ typeof(data)
 # * `delim=','` a char or string to specify how columns are separated.
 #
 # For more details see `?CSV.File`.
-#
+
+# ‎
+# @@
+# @@dropdown
 # ### Example 1
+# @@
+# @@dropdown-content
 #
 # Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00504/), the content of which we saved in a file at path `fpath`.
 
@@ -114,7 +130,12 @@ header = ["CIC0", "SM1_Dz", "GATS1i",
 data = CSV.read(fpath, DataFrames.DataFrame, header=header)
 first(data, 3)
 
+# ‎
+# @@
+# @@dropdown
 # ### Example 2
+# @@
+# @@dropdown-content
 #
 # Let's consider [this dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/00423/), the content of which we saved at `fpath`.
 
@@ -148,5 +169,10 @@ write(fpath, c);
 data = CSV.read(fpath, DataFrames.DataFrame, header=false, missingstring="?")
 first(data[:, 1:5], 3)
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# ‎
+# @@
+
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

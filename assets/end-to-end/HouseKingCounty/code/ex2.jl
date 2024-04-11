@@ -4,8 +4,6 @@ using PrettyPrinting
 import DataFrames: DataFrame, select!, Not, describe
 import Statistics
 using Dates
-using PyPlot
-ioff() # hide
 using UrlDownload
 
 MLJ.color_off() # hide
