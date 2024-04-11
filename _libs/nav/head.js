@@ -76,6 +76,10 @@ const navItems = [
   },
 ];
 
+// first get info on whether hosted or not
+const origin = window.location.origin;
+const hosted = origin.includes("github.io");
+
 const navList = document.querySelector('.nav-list');
 
 // for each object above we will call this function
@@ -104,14 +108,13 @@ function createDropDown(sections, sectionWidth) {
   // a dropdown is a ul wrapping a sequence of li wrapping an anchor for each item
   const dropdown = document.createElement('ul');
   dropdown.classList.add('nav-dropdown');
-
   // for each section make an li wrapping an anchor
   sections.forEach((section) => {
     const subItem = document.createElement('li');
     subItem.classList.add(sectionWidth)
     const subLink = document.createElement('a');
     subLink.textContent = section.name;
-    subLink.href = section.href;
+    subLink.href = (hosted) ? origin + "/DataScienceTutorials.jl" + section.href : section.href;
     subItem.appendChild(subLink);
     dropdown.appendChild(subItem);
   });
@@ -138,9 +141,10 @@ navList.innerHTML += searchForm
 
 // For the mobile navigation bar:
 function createListItem(item) {
+  const href = (hosted) ? origin + "/DataScienceTutorials.jl" + item.href : item.href;
   return `
     <li class="pure-menu-item">
-      <a href="${item.href}" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>${item.name}</a>
+      <a href="${href}" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>${item.name}</a>
     </li>
   `;
 }
@@ -220,8 +224,10 @@ function getPreviousAndNextTutorials(currentHref) {
 // Update buttons based on current href
 function updateNavigationButtons(currentHref) {
   const { previousTutorial, nextTutorial, currentIndex } = getPreviousAndNextTutorials(currentHref);
-  document.getElementById("prev-tutorial").setAttribute("href", previousTutorial.href);
-  document.getElementById("next-tutorial").setAttribute("href", nextTutorial.href);
+  const prevHref =  (hosted) ? origin + "/DataScienceTutorials.jl" + previousTutorial.href : previousTutorial.href;
+  const nextHref =  (hosted) ? origin + "/DataScienceTutorials.jl" + nextTutorial.href : nextTutorial.href;
+  document.getElementById("prev-tutorial").setAttribute("href", prevHref);
+  document.getElementById("next-tutorial").setAttribute("href", nextHref);
   document.getElementById("prev-label").innerHTML = previousTutorial.name;
   document.getElementById("next-label").innerHTML = nextTutorial.name;
   // if we are at home disable previous button
