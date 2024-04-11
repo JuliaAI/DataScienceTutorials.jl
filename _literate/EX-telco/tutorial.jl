@@ -271,12 +271,14 @@ schema(df0) |> DataFrames.DataFrame
 # 30% of the remainder for use as a lock-and-throw-away-the-key
 # holdout set.
 
-df, df_test, df_dumped = partition(df0, 0.07, 0.03, # in ratios 7:3:90
+import Random.Xoshiro
+rng = Xoshiro(123)
+df, df_test, df_dumped = partition(df0, 0.07, 0.03; # in ratios 7:3:90
                                    stratify=df0.Churn,
-                                   rng=123);
+                                   rng=rng);
 
 # The reader interested in including all data can instead do
-# `df, df_test = partition(df0, 0.7, rng=123)`.
+# `df, df_test = partition(df0, 0.7; rng=rng )`.
 
 # We have included the option `stratify=df0.Churn` to ensure the `Churn` classes have
 # similary distributions in `df` and `df_test`.
@@ -543,7 +545,7 @@ savefig(joinpath(@OUTPUT, "EX-telco-roc.svg")); # hide
 # [here](https://alan-turing-institute.github.io/MLJ.jl/dev/evaluating_model_performance/#Built-in-resampling-strategies).
 
 e_pipe = evaluate(pipe, X, y,
-                  resampling=StratifiedCV(nfolds=6, rng=123),
+                  resampling=StratifiedCV(nfolds=6, rng=rng),
                   measures=[brier_loss, auc, accuracy],
                   repeats=3,
                   acceleration=CPUThreads())
@@ -700,7 +702,7 @@ r2 = range(iterated_pipe, p2, lower=2, upper=6)
 # Next, we choose an optimization strategy from [this
 # list](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/#Tuning-Models):
 
-tuning = RandomSearch(rng=123)
+tuning = RandomSearch(rng=rng)
 
 # Then we wrap the model, specifying a `resampling` strategy and a
 # `measure`, as we did for `IteratedModel`.  In fact, we can include a
@@ -715,7 +717,7 @@ tuned_iterated_pipe = TunedModel(model=iterated_pipe,
                                  range=[r1, r2],
                                  tuning=tuning,
                                  measures=[brier_loss, auc, accuracy],
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  acceleration=CPUThreads(),
                                  n=40)
 
@@ -801,7 +803,7 @@ MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
 # time):
 
 e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
                                  measures=[brier_loss, auc, accuracy])
 
 
