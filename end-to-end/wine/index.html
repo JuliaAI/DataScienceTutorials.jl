@@ -339,8 +339,8 @@ ProbabilisticPipeline(
 multinom &#61; machine&#40;multinom_pipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(standardizer = Standardizer(features = Symbol[], …), …)
   args: 
-    1:	Source @676 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @547 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{3}}
+    1:	Source @307 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @840 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{3}}
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="language-julia">opts &#61; &#40;
@@ -425,7 +425,7 @@ ylabel&#33;&#40;&quot;PCA dimension 2&quot;&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

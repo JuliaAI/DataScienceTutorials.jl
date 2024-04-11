@@ -248,25 +248,25 @@ AbstractVector{Continuous} (alias for AbstractArray{ScientificTypesBase.Continuo
   model: ConstantRegressor(distribution_type = Distributions.Normal)
   args: 
     1:	Source @124 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}, AbstractVector{ScientificTypesBase.Multiclass{25}}, AbstractVector{ScientificTypesBase.Multiclass{15}}, AbstractVector{ScientificTypesBase.OrderedFactor{10}}}}
-    2:	Source @956 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    2:	Source @062 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>You can now train the machine specifying the data it should be trained on &#40;if unspecified, all the data will be used&#41;;</p>
 <pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.70, shuffle&#61;true&#41;; # 70:30 split
 fit&#33;&#40;mach, rows&#61;train&#41;
 ŷ &#61; predict&#40;mach, rows&#61;test&#41;;
 ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element Vector{Distributions.Normal{Float64}}:
- Distributions.Normal{Float64}(μ=180692.6555446516, σ=78726.40382700694)
- Distributions.Normal{Float64}(μ=180692.6555446516, σ=78726.40382700694)
- Distributions.Normal{Float64}(μ=180692.6555446516, σ=78726.40382700694)</code></pre>
+ Distributions.Normal{Float64}(μ=181748.07752698724, σ=78991.41604192833)
+ Distributions.Normal{Float64}(μ=181748.07752698724, σ=78991.41604192833)
+ Distributions.Normal{Float64}(μ=181748.07752698724, σ=78991.41604192833)</code></pre>
 <p>Observe that the output is probabilistic, each element is a univariate normal distribution &#40;with the same mean and variance as it&#39;s a constant model&#41;.</p>
 <p>You can recover deterministic output by either computing the mean of predictions or using <code>predict_mean</code> directly &#40;the <code>mean</code> function can be applied to any distribution from <a href="https://github.com/JuliaStats/Distributions.jl"><code>Distributions.jl</code></a>&#41;:</p>
 <pre><code class="language-julia">ŷ &#61; predict_mean&#40;mach, rows&#61;test&#41;
 ŷ&#91;1:3&#93;</code></pre><pre><code class="plaintext code-output">3-element Vector{Float64}:
- 180692.6555446516
- 180692.6555446516
- 180692.6555446516</code></pre>
+ 181748.07752698724
+ 181748.07752698724
+ 181748.07752698724</code></pre>
 <p>You can then call any loss function from <a href="https://juliaai.github.io/StatisticalMeasures.jl/dev/">StatisticalMeasures.jl</a> to assess the quality of the model by comparing the performances on the test set:</p>
-<pre><code class="language-julia">rmsl&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.3846310193929982</code></pre>
+<pre><code class="language-julia">rmsl&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.4010530061707538</code></pre>
 <p>‎</p>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="knn-ridge_blend"><a href="#knn-ridge_blend" class="header-anchor">KNN-Ridge blend</a></h2></div>
@@ -291,31 +291,31 @@ NearestNeighborModels.KNNRegressor</code></pre>
 <div class="dropdown"><h3 id="a_learning_network"><a href="#a_learning_network" class="header-anchor">A learning network</a></h3></div>
 <div class="dropdown-content"><p>Let&#39;s start by defining the source nodes of the network, which will wrap our data. Here we are including data only for testing purposes. Later when we &quot;export&quot; our functioning network, we&#39;ll remove reference to the data.</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @588 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @674 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>In our first &quot;layer&quot;, there&#39;s one-hot encoder and a log transformer; these will respectively lead to new nodes <code>W</code> and <code>z</code>:</p>
 <pre><code class="language-julia">hot &#61; machine&#40;OneHotEncoder&#40;&#41;, Xs&#41;
 
 W &#61; transform&#40;hot, Xs&#41;
-z &#61; log&#40;ys&#41;</code></pre><pre><code class="plaintext code-output">Node @236
+z &#61; log&#40;ys&#41;</code></pre><pre><code class="plaintext code-output">Node @886
   args:
-    1:	Source @588
+    1:	Source @674
   formula:
     #99(
-      Source @588)</code></pre>
+      Source @674)</code></pre>
 <p>In the second &quot;layer&quot;, there&#39;s a KNN regressor and a ridge regressor, these lead to nodes <code>ẑ₁</code> and <code>ẑ₂</code></p>
 <pre><code class="language-julia">knn   &#61; machine&#40;KNNRegressor&#40;K&#61;5&#41;, W, z&#41;
 ridge &#61; machine&#40;RidgeRegressor&#40;lambda&#61;2.5&#41;, W, z&#41;
 
 ẑ₁ &#61; predict&#40;knn, W&#41;
-ẑ₂ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node @045 → RidgeRegressor(…)
+ẑ₂ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node @806 → RidgeRegressor(…)
   args:
-    1:	Node @922 → OneHotEncoder(…)
+    1:	Node @967 → OneHotEncoder(…)
   formula:
     predict(
       machine(RidgeRegressor(lambda = 2.5, …), …), 
       transform(
         machine(OneHotEncoder(features = Symbol[], …), …), 
-        Source @109))</code></pre>
+        Source @277))</code></pre>
 <p>In the third &quot;layer&quot;, there&#39;s a weighted combination of the two regression models:</p>
 <pre><code class="language-julia">ẑ &#61; 0.3ẑ₁ &#43; 0.7ẑ₂;</code></pre>
 <p>And finally we need to invert the initial transformation of the target &#40;which was a log&#41;:</p>
@@ -323,7 +323,7 @@ ẑ₂ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext c
 <p>You&#39;ve now defined the learning network we need, which we test like this:</p>
 <pre><code class="language-julia">fit&#33;&#40;ŷ, rows&#61;train&#41;;
 preds &#61; ŷ&#40;rows&#61;test&#41;;
-rmsl&#40;preds, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.13041542869603778</code></pre>
+rmsl&#40;preds, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.13769959021539027</code></pre>
 <p>While that&#39;s essentially all we need to solve our problem, we&#39;ll go one step further, exporting our learning network as a stand-alone model type we can apply to any data set, and treat like any other type. In particular, this will make tuning the &#40;nested&#41; model hyperparameters easier.</p>
 <p>‎</p>
 <p>‎</p></div>
@@ -353,14 +353,14 @@ function prefit&#40;model::BlendedRegressor, verbosity, X, y&#41;
     ŷ &#61; exp&#40;ẑ&#41;
 
     &#40;predict&#61;ŷ,&#41;
-end</code></pre><pre><code class="plaintext code-output">prefit (generic function with 10 methods)</code></pre>
+end</code></pre><pre><code class="plaintext code-output">prefit (generic function with 9 methods)</code></pre>
 <p>We can now instantiate and fit such a model:</p>
 <pre><code class="language-julia">blended &#61; BlendedRegressor&#40;KNNRegressor&#40;K&#61;5&#41;, RidgeRegressor&#40;lambda&#61;2.5&#41;, 0.3&#41;
 mach &#61; machine&#40;blended, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 
 preds &#61; predict&#40;mach, rows&#61;test&#41;
-rmsl&#40;preds, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.13041542869603778</code></pre>
+rmsl&#40;preds, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.13769959021539027</code></pre>
 <p>‎</p>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="tuning_the_blended_model"><a href="#tuning_the_blended_model" class="header-anchor">Tuning the blended model</a></h3></div>
@@ -424,7 +424,7 @@ ranges &#61; &#91;k_range, l_range, w_range&#93;</code></pre><pre><code class="p
   train_best = true, 
   repeats = 1, 
   n = nothing, 
-  acceleration = ComputationalResources.CPUThreads{Int64}(1), 
+  acceleration = ComputationalResources.CPUThreads{Int64}(12), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
   cache = true)</code></pre>
@@ -436,13 +436,13 @@ fit&#33;&#40;mach, rows&#61;train&#41;;</code></pre>
 <pre><code class="language-julia">blended_best &#61; fitted_params&#40;mach&#41;.best_model
 @show blended_best.knn_model.K
 @show blended_best.ridge_model.lambda
-@show blended_best.knn_weight</code></pre><pre><code class="plaintext code-output">blended_best.knn_model.K = 7
-blended_best.ridge_model.lambda = 0.03162277660168379
+@show blended_best.knn_weight</code></pre><pre><code class="plaintext code-output">blended_best.knn_model.K = 4
+blended_best.ridge_model.lambda = 1.4677992676220695
 blended_best.knn_weight = 0.1
 </code></pre>
 <p>you can also use <code>mach</code> to make predictions &#40;which will be done using the best model, trained on <em>all</em> the <code>train</code> data&#41;:</p>
 <pre><code class="language-julia">preds &#61; predict&#40;mach, rows&#61;test&#41;
-rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext code-output">0.12300987844462546</code></pre>
+rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext code-output">0.13524716571046297</code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
 
@@ -458,7 +458,7 @@ rmsl&#40;y&#91;test&#93;, preds&#41;</code></pre><pre><code class="plaintext cod
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

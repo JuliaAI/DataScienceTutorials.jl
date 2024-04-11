@@ -355,7 +355,7 @@ fit&#33;&#40;dcrm, rows&#61;train&#41;
 pred_dcrm &#61; predict&#40;dcrm, rows&#61;test&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Now you can call a loss function to assess the performance on test set.</p>
-<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.9059335830223225</code></pre>
+<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">3.0364858673669275</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="randomforestregressor"><a href="#randomforestregressor" class="header-anchor">RandomForestRegressor</a></h2></div>
 <div class="dropdown-content"><p>Now let&#39;s try out RandomForestRegressor:</p>
@@ -368,7 +368,7 @@ rfr_m &#61; machine&#40;rfr, X, y&#41;;</code></pre><pre><code class="plaintext 
 <pre><code class="language-julia">fit&#33;&#40;rfr_m, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr &#61; predict&#40;rfr_m, rows&#61;test&#41;;
-rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2081602400063263</code></pre>
+rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.1899850803446466</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <p>‎</p></div>
@@ -390,7 +390,7 @@ rfr_tm &#61; machine&#40;tm, X, y&#41;;</code></pre>
 <pre><code class="language-julia">fit&#33;&#40;rfr_tm, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm &#61; predict&#40;rfr_tm, rows&#61;test&#41;;
-rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.4164243383072455</code></pre>
+rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.1532829822793498</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="language-julia">fitted_params&#40;rfr_tm&#41;.best_model</code></pre><pre><code class="plaintext code-output">RandomForestRegressor(
@@ -399,8 +399,8 @@ rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintex
   min_samples_split = 2, 
   min_purity_increase = 0.0, 
   n_subfeatures = -1, 
-  n_trees = 12, 
-  sampling_fraction = 0.7666666666666667, 
+  n_trees = 15, 
+  sampling_fraction = 0.8, 
   feature_importance = :impurity, 
   rng = Random._GLOBAL_RNG())</code></pre>
 <p>Let&#39;s visualize the tuning results:</p>
@@ -421,7 +421,7 @@ plot&#40;rfr_tm&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

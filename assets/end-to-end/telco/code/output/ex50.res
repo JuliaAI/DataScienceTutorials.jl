@@ -18,5 +18,5 @@ ProbabilisticPipeline(
         nbins = 64, 
         alpha = 0.5, 
         tree_type = "binary", 
-        rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
+        rng = Random.MersenneTwister(123, (0, 242484, 241482, 287))), 
   cache = true)

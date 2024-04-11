@@ -257,19 +257,19 @@ MLJLinearModels.RidgeRegressor</code></pre>
 Xcont &#61; &#40;x1 &#61; rand&#40;rng, 5&#41;, x2 &#61; rand&#40;5&#41;&#41;
 mach &#61; machine&#40;transformed_target_model, Xcont, y&#41; |&gt; fit&#33;
 yhat &#61; predict&#40;mach, Xcont&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- 1754.106294766073
- 1753.1464375235225
- 1748.7783411513058
- 1750.6584448549415
- 1753.3010865739004</code></pre>
+ 1751.8669503721433
+ 1761.0380391714327
+ 1745.4164443644154
+ 1749.3333949147136
+ 1752.3807141222846</code></pre>
 <p>In case you need convincing, removing the target transformation indeed gives a different outcome:</p>
 <pre><code class="language-julia">mach &#61; machine&#40;RidgeRegressor&#40;&#41;, Xcont, y&#41; |&gt; fit&#33;
 yhat - predict&#40;mach, Xcont&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- -4.003003645669651
- -4.088944024470493
- -4.062105213557061
- -3.7051768116848507
- -4.150165434873998</code></pre>
+ -3.886929751397247
+ -4.432585089219401
+ -3.8908797851088366
+ -3.6635370418441653
+ -4.090525387439129</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="the_final_pipeline"><a href="#the_final_pipeline" class="header-anchor">The final pipeline</a></h2></div>
 <div class="dropdown-content"><p>Next we insert our target-transformed model into a pipeline, to create a new model which includes the input data pre-processing we want:</p>
@@ -318,7 +318,7 @@ Extract:
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 01, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

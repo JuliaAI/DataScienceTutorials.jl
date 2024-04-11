@@ -224,7 +224,7 @@ r3&#40;pi&#41;</code></pre><pre><code class="plaintext code-output">3.14</code><
    4 │ Lag3       0.001716   1.1387    Float64
    5 │ Lag4       0.001636   1.13877   Float64
    6 │ Lag5       0.0056096  1.14755   Float64
-   7 │ Volume     1.47831    0.360357  Float64
+   7 │ Volume     1.4783     0.360357  Float64
    8 │ Today      0.0031384  1.13633   Float64
    9 │ Direction                       CategoricalValue{String, UInt8}</code></pre>
 <p>The target variable is <code>:Direction</code>:</p>
@@ -268,8 +268,8 @@ classif &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><
 untrained Machine; caches model-specific representations of data
   model: LogisticClassifier(lambda = 2.220446049250313e-16, …)
   args: 
-    1:	Source @587 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @678 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @097 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @794 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit&#33;&#40;classif&#41;
@@ -457,7 +457,7 @@ ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
