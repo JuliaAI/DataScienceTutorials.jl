@@ -2,15 +2,15 @@
 using MLJ
 using StatsBase
 using Random
-using PyPlot
-ioff() # hide
-using CategoricalArrays
-using PrettyPrinting
+using Plots
 import DataFrames
+import StableRNGs.StableRNG
 
-MLJ.color_off() # hide
-X, y = @load_crabs
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.1) # hide
+
+X, y = @load_crabs # a table and a vector
 X = DataFrames.DataFrame(X)
 @show size(X)
 @show y[1:3]
-first(X, 3) |> pretty
+first(X, 3)

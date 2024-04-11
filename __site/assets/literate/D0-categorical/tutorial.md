@@ -2,12 +2,15 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/D0-categorical/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 ````
 
 This tutorial follows loosely [the docs](https://juliadata.github.io/CategoricalArrays.jl/latest/using.html).
 
+@@dropdown
 ## Defining a categorical vector
+@@
+@@dropdown-content
 
 ````julia:ex2
 using CategoricalArrays
@@ -24,9 +27,17 @@ levels(v)
 
 which, by  default, returns the labels in lexicographic order.
 
+‎
+@@
+@@dropdown
 ## Working with categoricals
+@@
+@@dropdown-content
 
+@@dropdown
 ### Ordered categoricals
+@@
+@@dropdown-content
 
 You can specify that categories are *ordered* by specifying `ordered=true`, the order then follows that of the levels. If you wish to change that order, you  need to  use the `levels!` function.
 Let's see two examples.
@@ -69,7 +80,12 @@ now things are properly ordered:
 v[1] < v[2]
 ````
 
+‎
+@@
+@@dropdown
 ### Missing values
+@@
+@@dropdown-content
 
 You can also have a categorical vector with missing values:
 
@@ -82,4 +98,10 @@ that doesn't change the levels:
 ````julia:ex11
 levels(v)
 ````
+
+‎
+@@
+
+‎
+@@
 

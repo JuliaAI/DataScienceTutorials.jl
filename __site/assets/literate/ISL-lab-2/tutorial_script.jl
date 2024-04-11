@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-2/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -65,13 +65,10 @@ mpg |> mean
 @show nrow(auto)
 @show ncol(auto)
 
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
-figure(figsize=(8,6))
-plot(mpg)
+plot(mpg, size=(800,600), linewidth=2, legend=false)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")) # hide
-
-PyPlot.close_figs() # hide
-
+savefig(joinpath(@OUTPUT, "ISL-lab-2-mpg.svg")); # hide

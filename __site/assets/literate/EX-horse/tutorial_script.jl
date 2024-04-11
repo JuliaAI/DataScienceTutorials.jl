@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/EX-horse/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using MLJ
 MLJ.color_off() # hide
@@ -37,43 +37,40 @@ select!(data, Not(unwanted));
 train = 1:nrows(data_train)
 test = last(train) .+ (1:nrows(data_test));
 
-datac = coerce(data, autotype(data));
+coerce!(data, autotype(data));
 
-sch = schema(datac)
-for (name, scitype) in zip(sch.names, sch.scitypes)
-    println(rpad("$name", 30), scitype)
-end
+schema(data)
 
-length(unique(datac.hospital_number))
+length(unique(data.hospital_number))
 
-datac = select!(datac, Not(:hospital_number));
+data = select!(data, Not(:hospital_number));
 
-datac = coerce(datac, autotype(datac, rules=(:discrete_to_continuous,)));
+coerce!(data, Count => Continuous)
+schema(data)
 
-missing_outcome = ismissing.(datac.outcome)
+missing_outcome = ismissing.(data.outcome)
 idx_missing_outcome = missing_outcome |> findall
 
 train = setdiff!(train |> collect, idx_missing_outcome)
 test = setdiff!(test |> collect, idx_missing_outcome)
-datac = datac[.!missing_outcome, :];
+all = vcat(train, test);
 
-for name in names(datac)
-    col = datac[:, name]
-    ratio_missing = sum(ismissing.(col)) / nrows(datac) * 100
+for name in names(data)
+    col = data[all, name]
+    ratio_missing = sum(ismissing.(col)) / length(all) * 100
     println(rpad(name, 30), round(ratio_missing, sigdigits=3))
 end
 
 unwanted = [:peripheral_pulse, :nasogastric_tube, :nasogastric_reflux,
-        :nasogastric_reflux_ph, :feces, :abdomen, :abdomcentesis_appearance, :abdomcentesis_total_protein]
-select!(datac, Not(unwanted));
+            :nasogastric_reflux_ph, :feces, :abdomen,
+            :abdomcentesis_appearance, :abdomcentesis_total_protein]
+select!(data, Not(unwanted));
 
 @load FillImputer
-filler = machine(FillImputer(), datac)
-fit!(filler)
-datac = MLJ.transform(filler, datac)
+filler = machine(FillImputer(), data[all, :]) |> fit!
+data = MLJ.transform(filler, data)
 
-y, X = unpack(datac, ==(:outcome), name->true);
-X = coerce(X, autotype(X, :discrete_to_continuous));
+y, X = unpack(data, ==(:outcome)); # a vector and a table
 
 @load OneHotEncoder
 MultinomialClassifier = @load MultinomialClassifier pkg="MLJLinearModels"
@@ -81,40 +78,50 @@ MultinomialClassifier = @load MultinomialClassifier pkg="MLJLinearModels"
 Xtrain = X[train,:]
 ytrain = y[train];
 
-SimplePipe = Pipeline(
-    OneHotEncoder(),
-    MultinomialClassifier(),
-    prediction_type=:probabilistic
+pipe = OneHotEncoder() |>  MultinomialClassifier()
+
+metrics = [log_loss, accuracy]
+evaluate(
+    pipe, Xtrain, ytrain;
+    resampling = Holdout(fraction_train=0.9),
+    measures = metrics,
 )
-mach = machine(SimplePipe, Xtrain, ytrain)
-res = evaluate!(
-    mach;
-    resampling=Holdout(fraction_train=0.9),
-    measure=cross_entropy
+
+evaluate(pipe, Xtrain, ytrain; resampling=CV(nfolds=6), measures=metrics)
+
+mach = machine(pipe, Xtrain, ytrain) |> fit!
+fit!(mach, verbosity=0)
+yhat_prob = predict(mach, X[test,:])
+m = log_loss(yhat_prob, y[test])
+println("log loss: ", round(m, sigdigits=4))
+
+yhat = mode.(yhat_prob)
+m = accuracy(yhat, y[test])
+println("accuracy: ", round(m, sigdigits=4))
+
+lambdas = range(pipe, :(multinomial_classifier.lambda), lower=1e-3, upper=100, scale=:log10)
+tuned_pipe = TunedModel(
+    pipe;
+    tuning=Grid(resolution=20),
+    range=lambdas, measure=log_loss,
+    acceleration=CPUThreads(),
 )
-round(res.measurement[1], sigdigits=3)
+mach = machine(tuned_pipe, Xtrain, ytrain) |> fit!
+best_pipe = fitted_params(mach).best_model
 
-mcr = misclassification_rate(predict_mode(mach, Xtrain), ytrain)
-println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
+evaluate!(mach; resampling=CV(nfolds=6), measures=metrics)
 
-model = SimplePipe
-lambdas = range(model, :(multinomial_classifier.lambda), lower=1e-3, upper=100, scale=:log10)
-tm = TunedModel(model=SimplePipe, ranges=lambdas, measure=cross_entropy)
-mtm = machine(tm, Xtrain, ytrain)
-fit!(mtm)
-best_pipe = fitted_params(mtm).best_model
+fit!(mach) # fit on all the train data
+yhat = predict_mode(mach, X[test,:])
+m = accuracy(yhat, y[test])
+println("accuracy: ", round(m, sigdigits=4))
 
-ŷ = MLJ.predict(mtm, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
+EvoTreeClassifier = @load EvoTreeClassifier
+model = EvoTreeClassifier()
+mach = machine(model, Xtrain, ytrain)
+evaluate!(mach; resampling=CV(nfolds=6), measures=metrics)
 
-mcr = misclassification_rate(mode.(ŷ), ytrain)
-println(rpad("MNC mcr:", 10), round(mcr, sigdigits=3))
-
-XGBC = @load XGBoostClassifier
-dtc = machine(XGBC(), Xtrain, ytrain)
-fit!(dtc)
-ŷ = MLJ.predict(dtc, Xtrain)
-cross_entropy(ŷ, ytrain) |> mean
-
-misclassification_rate(mode.(ŷ), ytrain)
-
+fit!(mach) # fit on all the train data
+yhat = predict_mode(mach, X[test,:])
+m = accuracy(yhat, y[test])
+println("accuracy: ", round(m, sigdigits=4))

@@ -1,4 +1,4 @@
 # This file was generated, do not modify it. # hide
-e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
-                                 resampling=StratifiedCV(nfolds=6, rng=123),
-                                 measures=[brier_loss, auc, accuracy])
+plot(mach_tuned_iterated_pipe, size=(600,450))
+
+savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")); # hide

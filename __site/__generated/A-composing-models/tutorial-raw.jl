@@ -1,34 +1,34 @@
 using MLJ
-using PrettyPrinting
+import StableRNGs.StableRNG
 
-KNNRegressor = @load KNNRegressor
+
+RidgeRegressor = @load RidgeRegressor pkg=MLJLinearModels
 
 X = (age    = [23, 45, 34, 25, 67],
      gender = categorical(['m', 'm', 'f', 'm', 'f']))
 
-height = [178, 194, 165, 173, 168];
+y = Float64[1780, 1940, 1650, 1730, 1680];
 
-scitype(X.age)
+schema(X)
 
-pipe = Pipeline(
-    coercer = X -> coerce(X, :age=>Continuous),
-    one_hot_encoder = OneHotEncoder(),
-    transformed_target_model = TransformedTargetModel(
-        model = KNNRegressor(K=3);
-        target=UnivariateStandardizer()
-    )
+transformed_target_model = TransformedTargetModel(
+    RidgeRegressor();
+    transformer=UnivariateBoxCoxTransformer(),
 )
 
-pipe.transformed_target_model.model.K = 2
+rng = StableRNG(123)
+Xcont = (x1 = rand(rng, 5), x2 = rand(5))
+mach = machine(transformed_target_model, Xcont, y) |> fit!
+yhat = predict(mach, Xcont)
+
+mach = machine(RidgeRegressor(), Xcont, y) |> fit!
+yhat - predict(mach, Xcont)
+
+pipe = (X -> coerce(X, :age=>Continuous)) |> OneHotEncoder() |> transformed_target_model
+
+pipe.transformed_target_model_deterministic.model.lambda = 10.0
 pipe.one_hot_encoder.drop_last = true;
 
-evaluate(
-    pipe,
-    X,
-    height,
-    resampling=Holdout(),
-    measure=rms
-) |> pprint
+evaluate(pipe, X, y, resampling=CV(nfolds=3), measure=l1)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

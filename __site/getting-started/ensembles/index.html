@@ -1,114 +1,206 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
-  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
-   <title>Ensemble models</title>  
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Ensemble models</title> 
   <!-- LUNR -->
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
-        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+        <a href="/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
         </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
       </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
     </div>
-    <div id="main"> <!-- Closed in foot -->
-      
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
 
-<!-- Content appended here -->
-<div class="franklin-content"><h1 id="ensemble_models"><a href="#ensemble_models" class="header-anchor">Ensemble models</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+    <!-- Content appended here --><div class="franklin-content"><h1 id="ensemble_models"><a href="#ensemble_models" class="header-anchor">Ensemble models</a></h1>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#preliminary_steps">Preliminary steps</a></li><li><a href="#homogenous_ensembles">Homogenous ensembles</a><ol><li><a href="#training_and_testing_an_ensemble">Training and testing an ensemble</a></li><li><a href="#systematic_tuning">Systematic tuning</a></li><li><a href="#reporting_results">Reporting results</a></li></ol></li></ol></div>
-<h2 id="preliminary_steps"><a href="#preliminary_steps" class="header-anchor">Preliminary steps</a></h2>
-<p>Let&#39;s start by loading the relevant packages and generating some dummy data.</p>
+<div class="dropdown"><h2 id="preliminary_steps"><a href="#preliminary_steps" class="header-anchor">Preliminary steps</a></h2></div>
+<div class="dropdown-content"><p>Let&#39;s start by loading the relevant packages and generating some dummy data.</p>
 <pre><code class="language-julia">using MLJ
 import DataFrames: DataFrame
-using PrettyPrinting
 using StableRNGs
 
 rng &#61; StableRNG&#40;512&#41;
@@ -121,132 +213,171 @@ train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.7&#41;;</code></pre>
 <pre><code class="language-julia">KNNRegressor &#61; @load KNNRegressor
 knn_model &#61; KNNRegressor&#40;K&#61;10&#41;</code></pre><pre><code class="plaintext code-output">import NearestNeighborModels ✔
 KNNRegressor(
-    K = 10,
-    algorithm = :kdtree,
-    metric = Distances.Euclidean(0.0),
-    leafsize = 10,
-    reorder = true,
-    weights = NearestNeighborModels.Uniform())</code></pre>
+  K = 10, 
+  algorithm = :kdtree, 
+  metric = Distances.Euclidean(0.0), 
+  leafsize = 10, 
+  reorder = true, 
+  weights = NearestNeighborModels.Uniform())</code></pre>
 <p>As before, let&#39;s instantiate a machine that wraps the model and data:</p>
-<pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine{KNNRegressor,…} trained 0 times; caches data
-  model: NearestNeighborModels.KNNRegressor
+<pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
+  model: KNNRegressor(K = 10, …)
   args: 
-    1:	Source @057 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @811 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+    1:	Source @167 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @798 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>and fit it</p>
 <pre><code class="language-julia">fit&#33;&#40;knn, rows&#61;train&#41;
 ŷ &#61; predict&#40;knn, X&#91;test, :&#93;&#41; # or use rows&#61;test
-rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.06389980172436367</code></pre>
-<p>The few steps above are equivalent to just calling <code>evaluate&#33;</code>:</p>
-<pre><code class="language-julia">evaluate&#33;&#40;knn, resampling&#61;Holdout&#40;fraction_train&#61;0.7, rng&#61;StableRNG&#40;666&#41;&#41;,
-          measure&#61;rms&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  measure, measurement, operation, per_fold,
+l2&#40;ŷ, y&#91;test&#93;&#41; # sum of squares loss</code></pre><pre><code class="plaintext code-output">0.004083184660412992</code></pre>
+<p>The workflow above is equivalent to just calling <code>evaluate</code>:</p>
+<pre><code class="language-julia">evaluate&#40;
+    knn_model,
+    X,
+    y;
+    resampling&#61;Holdout&#40;fraction_train&#61;0.7, rng&#61;StableRNG&#40;666&#41;&#41;,
+    measure&#61;rms,
+&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
+  model, measure, operation, measurement, per_fold,
   per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_pairs
+  report_per_fold, train_test_rows, resampling, repeats
 Extract:
-┌────────────────────────┬─────────────┬───────────┬──────────┐
-│ measure                │ measurement │ operation │ per_fold │
-├────────────────────────┼─────────────┼───────────┼──────────┤
-│ RootMeanSquaredError() │ 0.124       │ predict   │ [0.124]  │
-└────────────────────────┴─────────────┴───────────┴──────────┘
+┌────────────────────────┬───────────┬─────────────┬──────────┐
+│ measure                │ operation │ measurement │ per_fold │
+├────────────────────────┼───────────┼─────────────┼──────────┤
+│ RootMeanSquaredError() │ predict   │ 0.124       │ [0.124]  │
+└────────────────────────┴───────────┴─────────────┴──────────┘
 </code></pre>
-<h2 id="homogenous_ensembles"><a href="#homogenous_ensembles" class="header-anchor">Homogenous ensembles</a></h2>
-<p>MLJ offers basic support for ensembling such as <a href="https://en.wikipedia.org/wiki/Bootstrap_aggregating"><em>bagging</em></a>. Defining such an ensemble of simple &quot;atomic&quot; models is done via the <code>EnsembleModel</code> constructor:</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="homogenous_ensembles"><a href="#homogenous_ensembles" class="header-anchor">Homogenous ensembles</a></h2></div>
+<div class="dropdown-content"><p>MLJ offers basic support for ensembling such as <a href="https://en.wikipedia.org/wiki/Bootstrap_aggregating"><em>bagging</em></a>.  Defining such an ensemble of simple &quot;atomic&quot; models is done via the <code>EnsembleModel</code> constructor:</p>
 <pre><code class="language-julia">ensemble_model &#61; EnsembleModel&#40;model&#61;knn_model, n&#61;20&#41;;</code></pre>
 <p>where the <code>n&#61;20</code> indicates how many models are present in the ensemble.</p>
-<h3 id="training_and_testing_an_ensemble"><a href="#training_and_testing_an_ensemble" class="header-anchor">Training and testing an ensemble</a></h3>
-<p>Now that we&#39;ve instantiated an ensemble, it can be trained and tested the same as any other model:</p>
-<pre><code class="language-julia">ensemble &#61; machine&#40;ensemble_model, X, y&#41;
-estimates &#61; evaluate&#33;&#40;ensemble, resampling&#61;CV&#40;&#41;&#41;
+<div class="dropdown"><h3 id="training_and_testing_an_ensemble"><a href="#training_and_testing_an_ensemble" class="header-anchor">Training and testing an ensemble</a></h3></div>
+<div class="dropdown-content"><p>Now that we&#39;ve instantiated an ensemble, it can be trained and tested the same as any other model:</p>
+<pre><code class="language-julia">estimates &#61; evaluate&#40;ensemble_model, X, y, resampling&#61;CV&#40;&#41;&#41;
 estimates</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  measure, measurement, operation, per_fold,
+  model, measure, operation, measurement, per_fold,
   per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_pairs
+  report_per_fold, train_test_rows, resampling, repeats
 Extract:
-┌────────────────────────┬─────────────┬───────────┬─────────────────────────────────────────────┐
-│ measure                │ measurement │ operation │ per_fold                                    │
-├────────────────────────┼─────────────┼───────────┼─────────────────────────────────────────────┤
-│ RootMeanSquaredError() │ 0.0856      │ predict   │ [0.09, 0.112, 0.079, 0.089, 0.0661, 0.0694] │
-└────────────────────────┴─────────────┴───────────┴─────────────────────────────────────────────┘
+┌──────────┬───────────┬─────────────┬─────────┬─────────────────────────────────────────────────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │ per_fold                                            │
+├──────────┼───────────┼─────────────┼─────────┼─────────────────────────────────────────────────────┤
+│ LPLoss(  │ predict   │ 0.00735     │ 0.00285 │ [0.0085, 0.0131, 0.00548, 0.00777, 0.00457, 0.0047] │
+│   p = 2) │           │             │         │                                                     │
+└──────────┴───────────┴─────────────┴─────────┴─────────────────────────────────────────────────────┘
 </code></pre>
-<p>here the implicit measure is the <code>rms</code> &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
+<p>here the implicit measure is the sum of squares loss &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
 <pre><code class="language-julia">@show estimates.measurement&#91;1&#93;
-@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.08560905340996186
-mean(estimates.per_fold[1]) = 0.08423976327531794
+@show mean&#40;estimates.per_fold&#91;1&#93;&#41;</code></pre><pre><code class="plaintext code-output">estimates.measurement[1] = 0.007350794741211419
+mean(estimates.per_fold[1]) = 0.007350794741211419
 </code></pre>
-<p>Note that multiple measurements can be specified jointly. Here only on measurement is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both  the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
-<h3 id="systematic_tuning"><a href="#systematic_tuning" class="header-anchor">Systematic tuning</a></h3>
-<p>Let&#39;s simultaneously tune the ensemble&#39;s <code>bagging_fraction</code> and the K-Nearest neighbour hyperparameter <code>K</code>. Since one of our models is  a field of the  other, we have nested hyperparameters:</p>
-<pre><code class="language-julia">params&#40;ensemble_model&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(model = (K = 10,
-          algorithm = :kdtree,
-          metric = Distances.Euclidean(0.0),
-          leafsize = 10,
-          reorder = true,
-          weights = NearestNeighborModels.Uniform()),
- atomic_weights = [],
- bagging_fraction = 0.8,
- rng = Random._GLOBAL_RNG(),
- n = 20,
- acceleration = ComputationalResources.CPU1{Nothing}(nothing),
- out_of_bag_measure = [])</code></pre>
+<p>Note that multiple measures can be specified jointly. Here only one measure is &#40;implicitly&#41; specified but we still have to select the corresponding results &#40;whence the <code>&#91;1&#93;</code> for both the <code>measurement</code> and <code>per_fold</code>&#41;.</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="systematic_tuning"><a href="#systematic_tuning" class="header-anchor">Systematic tuning</a></h3></div>
+<div class="dropdown-content"><p>Let&#39;s simultaneously tune the ensemble&#39;s <code>bagging_fraction</code> and the K-Nearest neighbour hyperparameter <code>K</code>. Since one of our models is a field of the other, we have nested hyperparameters:</p>
+<pre><code class="language-julia">ensemble_model</code></pre><pre><code class="plaintext code-output">DeterministicEnsembleModel(
+  model = KNNRegressor(
+        K = 10, 
+        algorithm = :kdtree, 
+        metric = Distances.Euclidean(0.0), 
+        leafsize = 10, 
+        reorder = true, 
+        weights = NearestNeighborModels.Uniform()), 
+  atomic_weights = Float64[], 
+  bagging_fraction = 0.8, 
+  rng = Random._GLOBAL_RNG(), 
+  n = 20, 
+  acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
+  out_of_bag_measure = Any[])</code></pre>
 <p>To define a tuning grid, we construct ranges for the two parameters and collate these ranges:</p>
-<pre><code class="language-julia">B_range &#61; range&#40;ensemble_model, :bagging_fraction,
-                lower&#61;0.5, upper&#61;1.0&#41;
-K_range &#61; range&#40;ensemble_model, :&#40;model.K&#41;,
-                lower&#61;1, upper&#61;20&#41;;</code></pre>
-<p>the scale for a tuning grid is linear by default but can be specified to <code>:log10</code> for logarithmic ranges. Now we have to define a <code>TunedModel</code> and fit it:</p>
-<pre><code class="language-julia">tm &#61; TunedModel&#40;model&#61;ensemble_model,
-                tuning&#61;Grid&#40;resolution&#61;10&#41;, # 10x10 grid
-                resampling&#61;Holdout&#40;fraction_train&#61;0.8, rng&#61;StableRNG&#40;42&#41;&#41;,
-                ranges&#61;&#91;B_range, K_range&#93;&#41;
+<pre><code class="language-julia">B_range &#61; range&#40;
+    ensemble_model,
+    :bagging_fraction,
+    lower&#61;0.5,
+    upper&#61;1.0,&#41;</code></pre><pre><code class="plaintext code-output">NumericRange(0.5 ≤ bagging_fraction ≤ 1.0; origin=0.75, unit=0.25)</code></pre>
+<pre><code class="language-julia">K_range &#61; range&#40;
+    ensemble_model,
+    :&#40;model.K&#41;,
+    lower&#61;1,
+    upper&#61;20,
+&#41;</code></pre><pre><code class="plaintext code-output">NumericRange(1 ≤ model.K ≤ 20; origin=10.5, unit=9.5)</code></pre>
+<p>The scale for a tuning grid is linear by default but can be specified to <code>:log10</code> for logarithmic ranges.  Now we have to define a <code>TunedModel</code> and fit it:</p>
+<pre><code class="language-julia">tm &#61; TunedModel&#40;
+    model&#61;ensemble_model,
+    tuning&#61;Grid&#40;resolution&#61;10&#41;, # 10x10 grid
+    resampling&#61;Holdout&#40;fraction_train&#61;0.8, rng&#61;StableRNG&#40;42&#41;&#41;,
+    ranges&#61;&#91;B_range, K_range&#93;,
+&#41;
 
 tuned_ensemble &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;tuned_ensemble, rows&#61;train&#41;;</code></pre>
 <p>Note the <code>rng&#61;42</code> seeds the random number generator for reproducibility of this example.</p>
-<h3 id="reporting_results"><a href="#reporting_results" class="header-anchor">Reporting results</a></h3>
-<p>The best model can be accessed like so:</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="reporting_results"><a href="#reporting_results" class="header-anchor">Reporting results</a></h3></div>
+<div class="dropdown-content"><p>The best model can be accessed like so:</p>
 <pre><code class="language-julia">best_ensemble &#61; fitted_params&#40;tuned_ensemble&#41;.best_model
 @show best_ensemble.model.K
-@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.model.K = 5
-best_ensemble.bagging_fraction = 0.6666666666666666
+@show best_ensemble.bagging_fraction</code></pre><pre><code class="plaintext code-output">best_ensemble.model.K = 3
+best_ensemble.bagging_fraction = 0.5555555555555556
 </code></pre>
 <p>The <code>report</code> method gives more detailed information on the tuning process:</p>
-<pre><code class="language-julia">r &#61; report&#40;tuned_ensemble&#41;;</code></pre>
-<p>For instance, <code>r.measurements</code> are the measurements for all pairs of hyperparameters which you could visualise nicely:</p>
-<pre><code class="language-julia">using PyPlot
+<pre><code class="language-julia">r &#61; report&#40;tuned_ensemble&#41;
+keys&#40;r&#41;</code></pre><pre><code class="plaintext code-output">(:best_model, :best_history_entry, :history, :best_report, :plotting)</code></pre>
+<p>For instance, <code>r.plotting</code> contains details about the optimization you might use in a plot:</p>
+<pre><code class="language-julia">r.plotting</code></pre><pre><code class="plaintext code-output">(parameter_names = ["bagging_fraction", "model.K"],
+ parameter_scales = [:linear, :linear],
+ parameter_values = Any[0.8888888888888888 16; 0.7222222222222222 12; 0.5 14; 0.5555555555555556 9; 0.8333333333333334 7; 0.5555555555555556 5; 0.6111111111111112 1; 0.6111111111111112 9; 0.9444444444444444 20; 0.7777777777777778 7; 0.5555555555555556 1; 0.7222222222222222 7; 0.6111111111111112 12; 1.0 3; 0.8888888888888888 7; 0.5555555555555556 12; 0.8888888888888888 20; 1.0 18; 0.7777777777777778 9; 0.6666666666666666 18; 1.0 16; 0.7777777777777778 20; 0.5555555555555556 18; 0.6111111111111112 18; 1.0 1; 0.8333333333333334 18; 0.6666666666666666 14; 0.5 5; 0.5 9; 0.9444444444444444 1; 0.6666666666666666 12; 0.9444444444444444 7; 0.8333333333333334 9; 0.5 18; 0.7222222222222222 14; 0.9444444444444444 5; 0.8888888888888888 14; 0.6111111111111112 16; 0.6111111111111112 3; 0.5555555555555556 14; 0.6111111111111112 5; 0.7222222222222222 3; 0.7222222222222222 5; 0.6666666666666666 9; 0.8888888888888888 5; 0.8333333333333334 16; 0.6666666666666666 20; 0.9444444444444444 3; 0.7777777777777778 3; 0.6111111111111112 7; 0.5555555555555556 7; 0.7222222222222222 20; 0.6111111111111112 14; 0.9444444444444444 9; 0.5 12; 0.9444444444444444 16; 0.6666666666666666 16; 0.7777777777777778 5; 1.0 14; 0.8333333333333334 1; 0.7222222222222222 1; 1.0 12; 0.5555555555555556 20; 0.6666666666666666 7; 0.9444444444444444 18; 0.8333333333333334 3; 0.5 16; 0.8888888888888888 1; 0.7222222222222222 16; 0.7222222222222222 18; 0.6111111111111112 20; 0.8888888888888888 18; 0.7777777777777778 12; 0.5555555555555556 16; 0.8333333333333334 5; 0.8888888888888888 9; 0.5 20; 0.8888888888888888 12; 0.7777777777777778 1; 0.6666666666666666 3; 0.5 3; 0.6666666666666666 1; 0.9444444444444444 14; 0.7777777777777778 18; 1.0 5; 0.8888888888888888 3; 0.8333333333333334 20; 0.6666666666666666 5; 0.8333333333333334 12; 1.0 7; 0.5 1; 1.0 9; 0.7777777777777778 14; 0.9444444444444444 12; 0.8333333333333334 14; 1.0 20; 0.7222222222222222 9; 0.5555555555555556 3; 0.5 7; 0.7777777777777778 16],
+ measurements = [0.005510537040250436, 0.005294018508449513, 0.01256484067837205, 0.0054860018049651, 0.0020693277819589496, 0.0019639439830071797, 0.0026603182414894643, 0.004444146375870455, 0.0077358949058529925, 0.0021799433620184293, 0.002901400981057841, 0.0028715722765500153, 0.0063458333077938715, 0.0036225306262139797, 0.002282828591914064, 0.00918965779826136, 0.008544481598245, 0.005444233904727673, 0.0027553596560795043, 0.013585059291628657, 0.004708208753217298, 0.011515816102703132, 0.015262646259212401, 0.015262646259212401, 0.004013058912260644, 0.007608354823647869, 0.008174126731907353, 0.0025495413808797004, 0.007349983003073203, 0.004008941270310222, 0.005569183605700463, 0.0024000064268967607, 0.0027606157648073283, 0.0177264497695686, 0.006709265024484596, 0.0019687980791523577, 0.004532308770527076, 0.010027634843248803, 0.0019779434879680985, 0.010841808736560734, 0.0020759881586082107, 0.0019617229890438992, 0.002018417496027778, 0.0031996429793088826, 0.0019590935482526337, 0.006171774142431638, 0.014983868707489145, 0.003177835188809685, 0.003177835188809685, 0.002723962310208088, 0.002723962310208088, 0.013727058382608561, 0.009915483651085747, 0.002628169289712383, 0.009036198537464698, 0.004849112481888398, 0.004849112481888398, 0.0020620505509132366, 0.004396831413497289, 0.0030967322661130544, 0.0030967322661130544, 0.0030050786079581266, 0.01837511993297943, 0.0024307747926904802, 0.006426314301505299, 0.002535709537183082, 0.016113432653505892, 0.0031873668461001063, 0.008375530466285825, 0.010134608879858106, 0.014975086337362012, 0.0070015054388494246, 0.005275102165054362, 0.013285463374577996, 0.0018856635463664257, 0.002738847963493905, 0.022079608995649973, 0.003959343153073119, 0.003848302817873994, 0.0022478853165749956, 0.0022478853165749956, 0.003198094938422581, 0.0047792631410639675, 0.008846111297017867, 0.0021374928753109066, 0.002577937915771061, 0.009416224842983895, 0.001936536575767905, 0.004489428112904196, 0.0029393446137467344, 0.0022063466071862636, 0.0025629081912535425, 0.0053210828789251345, 0.0034506146716379144, 0.005555011357520935, 0.007131032347247583, 0.0033241004726587385, 0.0016464401054677978, 0.004584602950789503, 0.007192982512486613],)</code></pre>
+<p>Although for that we can also use a built-in plot recipe for <code>TunedModel</code>:</p>
+<pre><code class="language-julia">using Plots
+plot&#40;tuned_ensemble&#41;</code></pre><pre><code class="plaintext code-output">Plot{Plots.GRBackend() n=4}</code></pre>
 
-figure&#40;figsize&#61;&#40;8,6&#41;&#41;
-
-res &#61; r.plotting
-vals_b &#61; res.parameter_values&#91;:, 1&#93;
-vals_k &#61; res.parameter_values&#91;:, 2&#93;
-
-tricontourf&#40;vals_b, vals_k, res.measurements&#41;
-xticks&#40;0.5:0.1:1, fontsize&#61;12&#41;
-xlabel&#40;&quot;Bagging fraction&quot;, fontsize&#61;14&#41;
-yticks&#40;&#91;1, 5, 10, 15, 20&#93;, fontsize&#61;12&#41;
-ylabel&#40;&quot;Number of neighbors - K&quot;, fontsize&#61;14&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/getting-started/ensembles/code/output/A-ensembles-heatmap.svg" alt="Hyperparameter heatmap">
-<p>Finally you can always just evaluate the model by reporting <code>rms</code> on the test set:</p>
+<img src="/assets/getting-started/ensembles/code/output/A-ensembles-plot.svg" alt="Hyperparameter tuning">
+<p>Finally you can always just evaluate the model by reporting <code>l2</code> on the test set:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;tuned_ensemble, rows&#61;test&#41;
-@show rms&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y[test]) = 0.056334546503186374
+@show l2&#40;ŷ, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">l2(ŷ, y[test]) = 0.00267032197153539
 </code></pre>
+<p>‎</p></div>
+<p>‎</p></div>
 
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 28, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
-</div>
-</div><!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/libs/collapse/collapse.js"></script>
+<script src="/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/libs/nav/head.js"></script>
+<script src="/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/libs/nav/responsive.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
+
 </body>
+
 </html>

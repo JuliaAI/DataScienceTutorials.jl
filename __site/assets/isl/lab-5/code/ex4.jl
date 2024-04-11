@@ -1,13 +1,10 @@
 # This file was generated, do not modify it. # hide
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g1.svg")); # hide

@@ -2,12 +2,18 @@
 ````julia:ex1
 using Pkg  # hideall
 Pkg.activate("_literate/D0-scitype/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 ````
 
+@@dropdown
 ## Machine type vs Scientific Type
+@@
+@@dropdown-content
 
+@@dropdown
 ### Why make a distinction?
+@@
+@@dropdown-content
 
 When analysing data, it is important to distinguish between
 
@@ -26,7 +32,12 @@ In many other cases however, there may be ambiguities, we list a few examples be
 * A vector of `String` e.g. `["John", "Maria", ...]` which should not interpreted as informative data,
 * A vector of floating points `[1.5,  1.5, -2.3, -2.3]` which should be interpreted as categorical data (e.g. the few possible values of some setting), etc.
 
+‎
+@@
+@@dropdown
 ### The Scientific Types
+@@
+@@dropdown-content
 
 The package [ScientificTypes.jl](https://github.com/JuliaAI/ScientificTypes.jl) defines a barebone type hierarchy which can be used to indicate how a particular feature should be interpreted; in particular:
 
@@ -49,7 +60,12 @@ The convention used in MLJ is implemented in [ScientificTypes.jl](https://github
 This is what we will use throughout; you never need to use ScientificTypes.jl
 unless you intend to implement your own scientific type convention.
 
+‎
+@@
+@@dropdown
 ### Inspecting the scitype
+@@
+@@dropdown-content
 
 The `schema` function
 
@@ -78,7 +94,12 @@ so even  though it's got a machine type of `Int64` and consequently a
 default  interpretation of `Count`, it would be more appropriate to interpret
 it as an `OrderedFactor`.
 
+‎
+@@
+@@dropdown
 ### Changing the scitype
+@@
+@@dropdown-content
 
 In order to re-specify the scitype(s) of  feature(s) in a dataset, you can
 use the `coerce` function and  specify pairs of variable name and  scientific
@@ -107,7 +128,12 @@ You can also specify multiple pairs in one shot with `coerce`:
 boston3 = coerce(boston, :Chas => OrderedFactor, :Rad => OrderedFactor);
 ````
 
+‎
+@@
+@@dropdown
 ### String and Unknown
+@@
+@@dropdown-content
 
 If a feature in  your dataset has String elements, then the  default scitype
 is `Textual`; you can either choose to  drop  such columns or to coerce them
@@ -125,9 +151,20 @@ feature2 = coerce(feature, Multiclass)
 elscitype(feature2)
 ````
 
-## Tips and tricks
+‎
+@@
 
+‎
+@@
+@@dropdown
+## Tips and tricks
+@@
+@@dropdown-content
+
+@@dropdown
 ### Type to Type coercion
+@@
+@@dropdown-content
 
 In  some cases you will want to reinterpret all features currently
 interpreted as some scitype `S1` into some other scitype `S2`.
@@ -147,7 +184,12 @@ data2 = coerce(data, Count => Continuous)
 schema(data2)
 ````
 
+‎
+@@
+@@dropdown
 ### Autotype
+@@
+@@dropdown-content
 
 A last useful tool is `autotype` which allows you to specify *rules* to
 define the interpretation of features automatically.
@@ -169,4 +211,10 @@ schema(boston3)
 ````
 
 You can also specify multiple rules, see [the docs](https://juliaai.github.io/ScientificTypes.jl/dev/#Automatic-type-conversion) for more information.
+
+‎
+@@
+
+‎
+@@
 

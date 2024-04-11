@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/D0-dataframe/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 ````
 
 This tutorial is loosely adapted from [this pandas tutorial](https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html) as well as the [DataFrames.jl documentation](http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/).
 It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.
 
+@@dropdown
 ## Basics
+@@
+@@dropdown-content
 
 To start with, we will use the `Boston` dataset which is very simple.
 
@@ -25,7 +28,10 @@ The `dataset` function returns a `DataFrame` object:
 typeof(boston)
 ````
 
+@@dropdown
 ### Accessing data
+@@
+@@dropdown-content
 
 Intuitively a DataFrame is just a wrapper around a number of columns, each of which is a `Vector` of some type with a name"
 
@@ -84,7 +90,12 @@ select!(b1, Not(:Crim))
 first(b1, 2)
 ````
 
+‎
+@@
+@@dropdown
 ### Describing the data
+@@
+@@dropdown-content
 
 `StatsBase` offers a convenient `describe` function which you can use on a DataFrame to get an overview of the data:
 
@@ -115,7 +126,12 @@ Further to `StatsBase`, `Statistics` offers a range of useful functions for data
 using Statistics
 ````
 
+‎
+@@
+@@dropdown
 ### Converting the data
+@@
+@@dropdown-content
 
 If you want to get the content of the dataframe as one big matrix, use `convert`:
 
@@ -124,7 +140,12 @@ mat = Matrix(boston)
 mat[1:3, 1:3]
 ````
 
+‎
+@@
+@@dropdown
 ### Adding columns
+@@
+@@dropdown-content
 
 Adding a column to a dataframe is very easy:
 
@@ -134,7 +155,12 @@ boston.Crim_x_Zn = boston.Crim .* boston.Zn;
 
 that's it! Remember also that you can drop columns or make subselections with `select` and `select!`.
 
+‎
+@@
+@@dropdown
 ### Missing values
+@@
+@@dropdown-content
 
 Let's load a dataset with missing values
 
@@ -156,7 +182,15 @@ The `skipmissing` function can help counter this  easily:
 std(skipmissing(mao.Age))
 ````
 
+‎
+@@
+
+‎
+@@
+@@dropdown
 ## Split-Apply-Combine
+@@
+@@dropdown-content
 
 This is a shorter version of the [DataFrames.jl tutorial](http://juliadata.github.io/DataFrames.jl/latest/man/split_apply_combine/).
 
@@ -165,7 +199,10 @@ iris = dataset("datasets", "iris")
 first(iris, 3)
 ````
 
+@@dropdown
 ### `groupby`
+@@
+@@dropdown-content
 
 The `groupby` function allows to form "sub-dataframes" corresponding to groups of rows.
 This can be very convenient to run specific analyses for specific groups without copying the data.
@@ -195,7 +232,12 @@ Note that `subdf_setosa` is a `SubDataFrame` meaning that it is just a view of t
 
 See `?groupby` for more information.
 
+‎
+@@
+@@dropdown
 ### `combine`
+@@
+@@dropdown-content
 
 The `combine` function allows to derive a new dataframe out of transformations of an existing one.
 Here's an example taken from the official doc (see `?combine`):
@@ -221,7 +263,12 @@ bar(v) = v[end-1:end]
 combine(df, :a => foo, :b => bar)
 ````
 
+‎
+@@
+@@dropdown
 ### `combine` with `groupby`
+@@
+@@dropdown-content
 
 Combining `groupby` with `combine` is very useful.
 For instance you might want to compute statistics across groups for different variables:
@@ -258,4 +305,10 @@ names(iris, Not(:Species))
 ````
 
 and note the use of `.` in `.=>` to indicate that we broadcast the function over each column.
+
+‎
+@@
+
+‎
+@@
 

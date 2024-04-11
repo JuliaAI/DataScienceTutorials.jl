@@ -5,17 +5,23 @@
 # [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
 # **Main author**: [Ashrya Agrawal](https://github.com/ashryaagr).
-#
+
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 # Here we use the [UCI "Airfoil Self-Noise" dataset](http://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise)
+
+# @@dropdown
 # ### Loading and  preparing the data
+# @@
+# @@dropdown-content
 
 using MLJ
 using PrettyPrinting
 import DataFrames
 import Statistics
 using CSV
-using PyPlot
 using HTTP
 using StableRNGs
 
@@ -59,7 +65,15 @@ for model in models(matching(X, y))
        print("Model Name: " , model.name , " , Package: " , model.package_name , "\n")
 end
 
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## DecisionTreeRegressor
+# @@
+# @@dropdown-content
 #
 # We will first try out DecisionTreeRegressor:
 
@@ -74,7 +88,12 @@ pred_dcrm = predict(dcrm, rows=test);
 
 rms(pred_dcrm, y[test])
 
+# ‎
+# @@
+# @@dropdown
 # ## RandomForestRegressor
+# @@
+# @@dropdown-content
 #
 # Now let's try out RandomForestRegressor:
 
@@ -95,8 +114,13 @@ rms(pred_rfr, y[test])
 # Unsurprisingly, the RandomForestRegressor does a better job.
 #
 # Can we do even better? Yeah, we can!! We can make use of Model Tuning.
-#
+
+# ‎
+# @@
+# @@dropdown
 # ## Tuning
+# @@
+# @@dropdown-content
 #
 # In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/) and [model-tuning](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
 #
@@ -131,24 +155,14 @@ rms(pred_rfr_tm, y[test])
 
 fitted_params(rfr_tm).best_model
 
-# Now we can investigate the tuning by using report.
-# Let's plot a heatmap of the measurements:
+# Let's visualize the tuning results:
 
-r = report(rfr_tm)
-res = r.plotting
-
-md = res.parameter_values[:,1]
-mcw = res.parameter_values[:,2]
-
-figure(figsize=(8,6))
-tricontourf(md, mcw, res.measurements)
-
-xlabel("Number of trees", fontsize=14)
-ylabel("Sampling fraction", fontsize=14)
-xticks(9:1:15, fontsize=12)
-yticks(fontsize=12)
+using Plots
+plot(rfr_tm)
 
 # \figalt{Hyperparameter heatmap}{airfoil_heatmap.svg}
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

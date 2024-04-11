@@ -13,7 +13,7 @@ X = coerce(X, :UrbanPop=>Continuous, :Assault=>Continuous);
 
 PCA = @load PCA pkg=MultivariateStats
 
-pca_mdl = PCA(pratio=1)
+pca_mdl = PCA(variance_ratio=1)
 pca = machine(pca_mdl, X)
 fit!(pca)
 PCA
@@ -37,7 +37,7 @@ Random.seed!(1515)
 
 SPCA = Pipeline(
     Standardizer(),
-    PCA(pratio=1-1e-4)
+    PCA(variance_ratio=1-1e-4)
 )
 
 spca = machine(SPCA, X)
@@ -45,18 +45,15 @@ fit!(spca)
 W = MLJ.transform(spca, X)
 names(W)
 
-rpca = collect(values(report(spca).report_given_machine))[2]
+rpca = report(spca).pca
 cs = cumsum(rpca.principalvars ./ rpca.tvar)
 
-using PyPlot
+using Plots
 
-figure(figsize=(8,6))
-
-PyPlot.bar(1:length(cs), cs)
-plot(1:length(cs), cs, color="red", marker="o")
-
-xlabel("Number of PCA features", fontsize=14)
-ylabel("Ratio of explained variance", fontsize=14)
+Plots.bar(1:length(cs), cs, legend=false, size=((800,600)), ylim=(0, 1.1))
+xlabel!("Number of PCA features")
+ylabel!("Ratio of explained variance")
+plot!(1:length(cs), cs, color="red", marker="o", linewidth=3)
 
 Random.seed!(1515)
 
@@ -70,21 +67,19 @@ SPCA2 = Pipeline(
 spca2 = machine(SPCA2, X)
 fit!(spca2)
 
-assignments = collect(values(report(spca2).report_given_machine))[3].assignments
+
+assignments = report(spca2).k_means.assignments
 mask1 = assignments .== 1
 mask2 = assignments .== 2
 mask3 = assignments .== 3;
 
-using PyPlot
-
-figure(figsize=(8, 6))
-for (m, c) in zip((mask1, mask2, mask3), ("red", "green", "blue"))
-    plot(W[m, 1], W[m, 2], ls="none", marker=".", markersize=10, color=c)
+p = plot(size=(800,600))
+legend_items = ["Group 1", "Group 2", "Group 3"]
+for (i, (m, c)) in enumerate(zip((mask1, mask2, mask3), ("red", "green", "blue")))
+    scatter!(p, W[m, 1], W[m, 2], color=c, label=legend_items[i])
 end
-
-xlabel("PCA-1", fontsize=13)
-ylabel("PCA-2", fontsize=13)
-legend(["Group 1", "Group 2", "Group 3"], fontsize=13)
+plot(p)
+xlabel!("PCA-1")
+ylabel!("PCA-2")
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

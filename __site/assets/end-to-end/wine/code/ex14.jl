@@ -1,3 +1,6 @@
 # This file was generated, do not modify it. # hide
-knn = machine(KnnPipe, Xtrain, ytrain)
-multi = machine(MnPipe, Xtrain, ytrain)
+opts = (
+    resampling=Holdout(fraction_train=0.9),
+    measures=[log_loss, accuracy],
+)
+evaluate!(knn; opts...)

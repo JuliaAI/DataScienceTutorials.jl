@@ -1,6 +1,3 @@
 # This file was generated, do not modify it. # hide
-KNNC = @load KNNClassifier
-MNC = @load MultinomialClassifier pkg=MLJLinearModels;
-
-KnnPipe = Standardizer |> KNNC
-MnPipe = Standardizer |> MNC
+(Xtrain, Xtest), (ytrain, ytest) =
+    partition((Xc, yc), 0.8, rng=StableRNG(123), multi=true);

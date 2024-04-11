@@ -19,23 +19,19 @@ X = select(smarket, Not(:Direction));
 cm = X |> Matrix |> cor
 round.(cm, sigdigits=1)
 
-using PyPlot
-figure(figsize=(8,6))
-plot(X.Volume)
-xlabel("Tick number", fontsize=14)
-ylabel("Volume", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
+using Plots
+
+plot(X.Volume, size=(800,600), linewidth=2, legend=false)
+xlabel!("Tick number")
+ylabel!("Volume")
 
 y = coerce(y, OrderedFactor)
 classes(y[1])
 
-figure(figsize=(8,6))
 cm = countmap(y)
-PyPlot.bar([1, 2], [cm["Down"], cm["Up"]])
-xticks([1, 2], ["Down", "Up"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+Plots.bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
 LogisticClassifier = @load LogisticClassifier pkg=MLJLinearModels
 X2 = select(X, Not([:Year, :Today]))
@@ -55,7 +51,7 @@ cm = confusion_matrix(ŷ, y)
 @show false_positive(cm)
 @show accuracy(ŷ, y)  |> r3
 @show accuracy(cm)    |> r3  # same thing
-@show precision(ŷ, y) |> r3
+@show positive_predictive_value(ŷ, y) |> r3   # a.k.a. precision
 @show recall(ŷ, y)    |> r3
 @show f1score(ŷ, y)   |> r3
 
@@ -95,7 +91,7 @@ ŷ = predict_mode(classif, rows=test)
 
 accuracy(ŷ, y[test]) |> r3
 
-BayesianQDA = @load BayesianQDA pkg=ScikitLearn
+BayesianQDA = @load BayesianQDA pkg=MLJScikitLearnInterface
 
 classif = machine(BayesianQDA(), X3, y)
 fit!(classif, rows=train)
@@ -127,14 +123,12 @@ nl2 = sum(purchase .== vals[2])
 println("#$(vals[1]) ", nl1)
 println("#$(vals[2]) ", nl2)
 
-figure(figsize=(8,6))
 cm = countmap(purchase)
-PyPlot.bar([1, 2], [cm["No"], cm["Yes"]])
-xticks([1, 2], ["No", "Yes"], fontsize=12)
-yticks(fontsize=12)
-ylabel("Number of occurences", fontsize=14)
+categories, vals = collect(keys(cm)), collect(values(cm))
+bar(categories, vals, title="Bar Chart Example", legend=false)
+ylabel!("Number of occurrences")
 
-y, X = unpack(caravan, ==(:Purchase), col->true)
+y, X = unpack(caravan, ==(:Purchase))
 
 mstd = machine(Standardizer(), X)
 fit!(mstd)
@@ -163,15 +157,10 @@ ŷ = MLJ.predict(classif, rows=test)
 
 auc(ŷ, y[test])
 
-fprs, tprs, thresholds = roc(ŷ, y[test])
+fprs, tprs, thresholds = roc_curve(ŷ, y[test])
 
-figure(figsize=(8,6))
-plot(fprs, tprs)
-
-xlabel("False Positive Rate", fontsize=14)
-ylabel("True Positive Rate", fontsize=14)
-xticks(fontsize=12)
-yticks(fontsize=12)
+plot(fprs, tprs, linewidth=2, size=(800,600))
+xlabel!("False Positive Rate")
+ylabel!("True Positive Rate")
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

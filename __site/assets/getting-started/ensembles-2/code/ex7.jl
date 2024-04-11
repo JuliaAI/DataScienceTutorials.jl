@@ -1,9 +1,12 @@
 # This file was generated, do not modify it. # hide
-figure(figsize=(8,6))
-plot(curves.parameter_values, curves.measurements)
-ylabel("Root Mean Squared error", fontsize=16)
-xlabel("Number of trees", fontsize=16)
-xticks([10, 100, 250, 500, 750, 1000], fontsize=14)
-yticks(fontsize=14)
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.2) # hide
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
+plot(curves.parameter_values, curves.measurements,
+xticks = [10, 100, 250, 500, 750, 1000],
+size=(800,600), linewidth=2, legend=false)
+xlabel!("Number of trees")
+ylabel!("Root Mean Squared error")
+
+savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")); # hide

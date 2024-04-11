@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/D0-processing/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## More data processing
+@@
+@@dropdown-content
 
 This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia.
 The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc
@@ -21,8 +24,6 @@ And some more information can be found on [this](https://en.wikibooks.org/wiki/I
 import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
-using PyPlot
-ioff() # hide
 ````
 
 Import data
@@ -71,7 +72,6 @@ describe(data)
 
 *Note:* the `describe()` function is from the `DataFrames` package (and won't work with other, non DataFrames, tables) whereas the `schema()` is from the MLJ package.
 
----
 Let's play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions (country and primary_fuel)
 
 ````julia:ex8
@@ -111,17 +111,17 @@ Before plotting, we can also sort values by decreasing order using `sort!()`.
 ````julia:ex12
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
-figure(figsize=(8,6))
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
-plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
-plt.xticks(rotation=90)
+Plots.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend=false)
 
-savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")); # hide
 ````
 
 \figalt{processing1}{D0-processing-g1.svg}
 
----
 Now that we have the total capacity by country and technology type, let's use it to calculate the share of each technology in total capacity.
 To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.
 
@@ -141,7 +141,6 @@ cap_share.capacity_mw_share = cap_share.capacity_mw_sum ./ cap_share.capacity_mw
 
 Let's visualise our dataframe again, which now includes the `capacity_mw_share` column.
 
----
 Now let's analyse features which exhibit some missing values.
 Suppose we want to calculate the age of each plant (rounded to full years). We face two issues.
 First, the commissioning_year is not reported for all plants.
@@ -194,18 +193,13 @@ median_age = median(skipmissing(data_nmiss.plant_age))
 And bring this into a frequency plot of the plant age observations
 
 ````julia:ex21
-figure(figsize=(8,6))
+histogram(data_nmiss.plant_age, color="blue",  bins=100, label="Plant Age Frequency",
+          normalize=:pdf, alpha=0.5, xlim=(0,130))
+vline!([mean_age], linewidth=2, color="red", label="Mean Age")
+vline!([median_age], linewidth=2, color="orange", label="Median Age")
 
-plt.hist(data_nmiss.plant_age, color="blue", edgecolor="white", bins=100,
-      density=true, alpha=0.5)
-plt.axvline(mean_age, label = "Mean", color = "red")
-plt.axvline(median_age, label = "Median")
 
-plt.legend()
-
-plt.xlim(0,)
-
-savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")); # hide
 ````
 
 \figalt{processing2}{D0-processing-g2.svg}
@@ -219,23 +213,22 @@ age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 
 coal_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Coal", age_mean.primary_fuel), :]
 gas_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Gas", age_mean.primary_fuel), :]
-
-width = 0.35  # the width of the bars
-
-fig, (ax1, ax2) = plt.subplots(1,2)
+````
 
 fig.suptitle("Mean plant age by country and technology")
 
-ax1.bar(coal_means.country, coal_means.plant_age_mean, width, label="Coal")
-ax2.bar(gas_means.country, gas_means.plant_age_mean, width, label="Gas")
+````julia:ex23
+p1 = Plots.bar(coal_means.country, coal_means.plant_age_mean, ylabel="Age", title="Coal")
+p2 = Plots.bar(gas_means.country, gas_means.plant_age_mean, title="Gas")
 
-ax1.set_ylabel("Age")
+plot(p1, p2, layout=(1, 2), size=(900,600), plot_title="Mean plant age by country and technology")
 
-ax1.set_title("Coal")
-ax2.set_title("Gas")
 
-savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")); # hide
 ````
 
 \figalt{processing3}{D0-processing-g3.svg}
+
+‎
+@@
 

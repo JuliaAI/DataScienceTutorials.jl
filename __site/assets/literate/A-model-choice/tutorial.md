@@ -2,7 +2,7 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/A-model-choice/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 ````
 
 [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
@@ -12,9 +12,16 @@ Pkg.update()
 [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
 [GLM.jl]: https://github.com/JuliaStats/GLM.jl
 [ScikitLearn.jl]: https://github.com/cstjean/ScikitLearn.jl
-## Data and its interpretation
 
+@@dropdown
+## Data and its interpretation
+@@
+@@dropdown-content
+
+@@dropdown
 ### Machine type and scientific type
+@@
+@@dropdown-content
 
 ````julia:ex2
 using RDatasets
@@ -37,7 +44,12 @@ iris2 = coerce(iris, :PetalWidth => OrderedFactor)
 first(iris2[:, [:PetalLength, :PetalWidth]], 1) |> pretty
 ````
 
+‎
+@@
+@@dropdown
 ### Unpacking data
+@@
+@@dropdown-content
 
 The function `unpack` helps specify the target and the input for a regression or classification task
 
@@ -65,9 +77,20 @@ You can also use the shorthand `@load_iris` for such common examples:
 X, y = @load_iris;
 ````
 
-## Choosing a model
+‎
+@@
 
+‎
+@@
+@@dropdown
+## Choosing a model
+@@
+@@dropdown-content
+
+@@dropdown
 ### Model search
+@@
+@@dropdown-content
 
 In MLJ, a _model_ is a struct storing the _hyperparameters_ of the learning algorithm indicated by the struct name (and only that).
 
@@ -82,7 +105,12 @@ for m in models(matching(X, y))
 end
 ````
 
+‎
+@@
+@@dropdown
 ### Loading a model
+@@
+@@dropdown-content
 
 Most models are implemented outside of the MLJ ecosystem; you therefore have to _load models_ using the `@load` command.
 
@@ -99,4 +127,10 @@ In some cases, there may be several packages offering the same model, for instan
 ````julia:ex9
 linreg = @load LinearRegressor pkg=GLM
 ````
+
+‎
+@@
+
+‎
+@@
 

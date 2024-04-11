@@ -1,6 +1,8 @@
 # This file was generated, do not modify it. # hide
-print(
-    "Optimal hyper-parameters: \n",
-    "  max_depth: ", best_booster.max_depth, "\n",
-    "  η:         ", best_booster.η
-)
+tuned_iterated_pipe = TunedModel(model=iterated_pipe,
+                                 range=[r1, r2],
+                                 tuning=tuning,
+                                 measures=[brier_loss, auc, accuracy],
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
+                                 acceleration=CPUThreads(),
+                                 n=40)

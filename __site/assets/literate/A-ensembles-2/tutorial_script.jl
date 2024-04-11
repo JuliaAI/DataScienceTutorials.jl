@@ -2,18 +2,16 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/A-ensembles-2/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 
 using MLJ
-using PyPlot
 using PrettyPrinting
 using StableRNGs
 import DataFrames: DataFrame, describe
 MLJ.color_off() # hide
-ioff() # hide
 
 X, y = @load_boston
 sch = schema(X)
@@ -33,17 +31,20 @@ forest.model.n_subfeatures = 3
 rng = StableRNG(5123) # for reproducibility
 m = machine(forest, X, y)
 r = range(forest, :n, lower=10, upper=1000)
-curves = learning_curve!(m, resampling=Holdout(fraction_train=0.8, rng=rng),
+curves = learning_curve(m, resampling=Holdout(fraction_train=0.8, rng=rng),
                          range=r, measure=rms);
 
-figure(figsize=(8,6))
-plot(curves.parameter_values, curves.measurements)
-ylabel("Root Mean Squared error", fontsize=16)
-xlabel("Number of trees", fontsize=16)
-xticks([10, 100, 250, 500, 750, 1000], fontsize=14)
-yticks(fontsize=14)
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.2) #hide
 
-savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")) # hide
+plot(curves.parameter_values, curves.measurements,
+xticks = [10, 100, 250, 500, 750, 1000],
+size=(800,600), linewidth=2, legend=false)
+xlabel!("Number of trees")
+ylabel!("Root Mean Squared error")
+
+savefig(joinpath(@OUTPUT, "A-ensembles-2-curves.svg")); # hide
 
 forest.n = 150;
 
@@ -62,25 +63,9 @@ e = evaluate!(m, resampling=Holdout(fraction_train=0.8),
               measure=[rms, rmslp1])
 e
 
-r = report(m)
+plot(m)
 
-figure(figsize=(8,6))
-
-res = r.plotting
-
-vals_sf = res.parameter_values[:, 1]
-vals_bf = res.parameter_values[:, 2]
-
-tricontourf(vals_sf, vals_bf, res.measurements)
-xticks(1:3:12, fontsize=12)
-xlabel("Number of sub-features", fontsize=14)
-yticks(0.4:0.2:1, fontsize=12)
-ylabel("Bagging fraction", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")) # hide
+savefig(joinpath(@OUTPUT, "A-ensembles-2-heatmap.svg")); # hide
 
 ŷ = predict(m, X)
 @show rms(ŷ, y)
-
-PyPlot.close_figs() # hide
-

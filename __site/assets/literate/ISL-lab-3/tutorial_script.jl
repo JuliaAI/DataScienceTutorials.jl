@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-3/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -34,15 +34,16 @@ fp = fitted_params(mach_uni)
 @show fp.coefs
 @show fp.intercept
 
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
-plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
+plot!(Xnew.LStat, MLJ.predict(mach_uni, Xnew), linewidth=3, color=:orange)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")); # hide
 
 mach = machine(mdl, X, y)
 fit!(mach)
@@ -58,16 +59,14 @@ println("Intercept: $(round(intercept, sigdigits=3))")
 ŷ = MLJ.predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
 
-figure(figsize=(8,6))
 res = ŷ .- y
-stem(res)
+plot(res, line=:stem, linewidth=1, marker=:circle, legend=false, size=((800,600)))
+hline!([0], linewidth=2, color=:red)    # add a horizontal line at x=0
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")); # hide
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
+histogram(res, normalize=true, size=(800,600), label="residual")
 
-figure(figsize=(8,6))
-hist(res, density=true)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")); # hide
 
 X2 = hcat(X, X.LStat .* X.Age);
 
@@ -86,11 +85,7 @@ round(rms(ŷ, y), sigdigits=4)
 
 Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
-plot(Xnew.LStat, MLJ.predict(mach, Xnew))
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+plot!(Xnew.LStat, MLJ.predict(mach, Xnew), linewidth=3, color=:orange)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
-
-PyPlot.close_figs() # hide
-
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")); # hide

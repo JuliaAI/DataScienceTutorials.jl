@@ -1,4 +1,4 @@
-Machine{UnivariateStandardizer,…} trained 0 times; caches data
-  model: MLJModels.UnivariateStandardizer
+untrained Machine; caches model-specific representations of data
+  model: UnivariateStandardizer()
   args: 
-    1:	Source @762 ⏎ `AbstractVector{ScientificTypesBase.Count}`
+    1:	Source @696 ⏎ AbstractVector{ScientificTypesBase.Count}

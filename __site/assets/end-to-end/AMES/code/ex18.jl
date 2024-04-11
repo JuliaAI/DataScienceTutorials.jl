@@ -1,7 +1,19 @@
 # This file was generated, do not modify it. # hide
-krb = KNNRidgeBlend(KNNRegressor(K=5), RidgeRegressor(lambda=2.5), 0.3)
-mach = machine(krb, X, y)
-fit!(mach, rows=train)
+import MLJ.MLJBase.prefit
+function prefit(model::BlendedRegressor, verbosity, X, y)
+    Xs = source(X)
+    ys = source(y)
 
-preds = predict(mach, rows=test)
-rmsl(y[test], preds)
+    hot = machine(OneHotEncoder(), Xs)
+    W = transform(hot, Xs)
+
+    z = log(ys)
+
+    knn = machine(:knn_model, W, z)
+    ridge = machine(:ridge_model, W, z)
+    ẑ = model.knn_weight * predict(knn, W) + (1.0 - model.knn_weight) * predict(ridge, W)
+
+    ŷ = exp(ẑ)
+
+    (predict=ŷ,)
+end

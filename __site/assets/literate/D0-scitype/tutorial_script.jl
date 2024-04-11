@@ -2,7 +2,7 @@
 
 using Pkg  # hideall
 Pkg.activate("_literate/D0-scitype/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using RDatasets
 using ScientificTypes
@@ -34,4 +34,3 @@ schema(data2)
 
 boston3 = coerce(boston, autotype(boston, :few_to_finite))
 schema(boston3)
-

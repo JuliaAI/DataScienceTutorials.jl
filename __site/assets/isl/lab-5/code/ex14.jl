@@ -2,13 +2,9 @@
 Xnew = DataFrame([hpn.^i for i in 1:10], :auto)
 yy5 = MLJ.predict(mtm, Xnew)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy5, lw=3)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+plot!(xx.Horsepower, yy5, color=:orange, linewidth=4, legend=false)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g4.svg")); # hide

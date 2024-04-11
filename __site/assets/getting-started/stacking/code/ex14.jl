@@ -1,2 +1,4 @@
 # This file was generated, do not modify it. # hide
-judge = linear
+f = node(X) do x
+    folds(x, 3)
+end

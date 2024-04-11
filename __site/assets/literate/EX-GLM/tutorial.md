@@ -2,7 +2,7 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/EX-GLM/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -23,7 +23,10 @@ LinearRegressor = @load LinearRegressor pkg=GLM
 LinearBinaryClassifier = @load LinearBinaryClassifier pkg=GLM
 ````
 
+@@dropdown
 ## Reading the data
+@@
+@@dropdown-content
 
 The CollegeDistance dataset was stored in a CSV file.  Here, we read the input file.
 
@@ -48,7 +51,12 @@ same for Y:
 first(dfY1, 3)
 ````
 
+‎
+@@
+@@dropdown
 ## Defining the Linear Model
+@@
+@@dropdown-content
 
 Let see how many MLJ models handle our kind of target which is the y variable.
 
@@ -88,7 +96,12 @@ fit!(LinearModel)
 fp = fitted_params(LinearModel)
 ````
 
+‎
+@@
+@@dropdown
 ## Reading the Output of Fitting the Linear Model
+@@
+@@dropdown-content
 
 We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.
 
@@ -97,9 +110,7 @@ We can quickly read the results of our models in MLJ.  Remember to compute the a
 yhatResponse = [ŷ[i,1].μ for i in 1:nrow(y)]
 residuals = y .- yhatResponse
 r = report(LinearModel)
-
-k = collect(keys(fp.fitted_params_given_machine))[3]
-println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n Coefficients:  ", fp.linear_regressor.coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n yhatResponse \n ", yhatResponse[1:5])
@@ -113,7 +124,12 @@ and get the accuracy
 round(rms(yhatResponse, y[:,1]), sigdigits=4)
 ````
 
+‎
+@@
+@@dropdown
 ## Defining the Logistic Model
+@@
+@@dropdown-content
 
 ````julia:ex11
 X = copy(dfX)
@@ -134,7 +150,12 @@ fit!(LogisticModel)
 fp = fitted_params(LogisticModel)
 ````
 
+‎
+@@
+@@dropdown
 ## Reading the Output from the Prediction of the Logistic Model
+@@
+@@dropdown-content
 
 The output of the MLJ model basically contain the same information as the R version of the model.
 
@@ -143,8 +164,7 @@ The output of the MLJ model basically contain the same information as the R vers
 residuals = [1 - pdf(ŷ[i], y[i,1]) for i in 1:nrow(y)]
 r = report(LogisticModel)
 
-k = collect(keys(fp.fitted_params_given_machine))[3]
-println("\n Coefficients:  ", fp.fitted_params_given_machine[k].coef)
+println("\n Coefficients:  ", fp.linear_binary_classifier.coef)
 println("\n y \n ", y[1:5,1])
 println("\n ŷ \n ", ŷ[1:5])
 println("\n residuals \n ", residuals[1:5])
@@ -159,4 +179,7 @@ y = coerce(y[:,1], OrderedFactor)
 yMode = coerce(yMode, OrderedFactor)
 confusion_matrix(yMode, y)
 ````
+
+‎
+@@
 

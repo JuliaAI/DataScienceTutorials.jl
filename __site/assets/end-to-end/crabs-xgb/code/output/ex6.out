@@ -1,2 +1,0 @@
-Dict(CategoricalArrays.CategoricalValue{String, UInt32} "B" => 62,
-     CategoricalArrays.CategoricalValue{String, UInt32} "O" => 78)

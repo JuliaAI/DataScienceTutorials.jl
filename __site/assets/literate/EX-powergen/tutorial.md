@@ -2,27 +2,28 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/EX-powergen/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
+	return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
 **Main author**: [Geoffroy Dolphin](https://github.com/gd1989)
 
+@@dropdown
 ## Initial data processing
+@@
+@@dropdown-content
 In this tutorial we are fitting solar and wind power generation output for Germany using weather data.
 We focus on the use of a simple linear estimator. Let's load the required packages to get started.
 
 ````julia:ex2
 using MLJ
 using UrlDownload
-using PyPlot
-ioff() # hide
 import DataFrames: DataFrame, describe, names, select!
 using Statistics
 
-LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
+LinearRegressor = @load LinearRegressor pkg = MLJLinearModels
 ````
 
 The power generation and weather data come from two separate datasets.
@@ -36,7 +37,7 @@ data_repo = "https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData
 url_power   = data_repo * "/power_syst/DE_power_hourly.csv"
 url_weather = data_repo * "/power_syst/DE_weather_data.csv"
 
-power   = DataFrame(urldownload(url_power))
+power = DataFrame(urldownload(url_power))
 weather = DataFrame(urldownload(url_weather));
 ````
 
@@ -59,9 +60,9 @@ So we select a subset of the power dataframe containing only `:utc_timestamp, :D
 
 ````julia:ex6
 select!(power, [
-    :utc_timestamp,
-    :DE_solar_generation_actual,
-    :DE_wind_generation_actual]);
+	:utc_timestamp,
+	:DE_solar_generation_actual,
+	:DE_wind_generation_actual]);
 ````
 
 Inspection of the column names in the weather DataFrame shows that we have weather data at the regional level (38 NUTS-2 statistical regions), which consists of four different weather variables: `_windspeed_10m, _temperature, _radiation_direct_horizontal, _radiation_diffuse_horizontal`.
@@ -74,7 +75,7 @@ To do this we define a simple function to filter columns based on weather variab
 colnames = names(weather)
 
 filter_by_name(name, cols) =
-    filter(cn -> occursin(name, String(cn)), cols)
+	filter(cn -> occursin(name, String(cn)), cols)
 
 wind   = weather[:, filter_by_name("windspeed", colnames)]
 temp   = weather[:, filter_by_name("temperature", colnames)]
@@ -96,10 +97,10 @@ the zip function associates elements of two objects in the same position with on
 ````julia:ex9
 n_rows = size(first(dfs), 1)
 for (df, name) in zip(dfs, col_mean)
-    df[!, name] = zeros(n_rows)
-    for (i, row) in enumerate(eachrow(df))
-      df[i, name] = mean(row)
-    end
+	df[!, name] = zeros(n_rows)
+	for (i, row) in enumerate(eachrow(df))
+		df[i, name] = mean(row)
+	end
 end;
 ````
 
@@ -107,13 +108,13 @@ Now that we have all variables we need to conduct our analysis, let's gather the
 
 ````julia:ex10
 data = DataFrame(
-    Timestamp     = weather.utc_timestamp,
-    Solar_gen     = power.DE_solar_generation_actual,
-    Wind_gen      = power.DE_wind_generation_actual,
-    Windspeed     = wind.windspeed_mean,
-    Temperature   = temp.temp_mean,
-    Radiation_dir = raddir.raddir_mean,
-    Radiation_dif = raddif.raddif_mean);
+	Timestamp     = weather.utc_timestamp,
+	Solar_gen     = power.DE_solar_generation_actual,
+	Wind_gen      = power.DE_wind_generation_actual,
+	Windspeed     = wind.windspeed_mean,
+	Temperature   = temp.temp_mean,
+	Radiation_dir = raddir.raddir_mean,
+	Radiation_dif = raddif.raddif_mean);
 ````
 
 ...and have a look at their summary statistics
@@ -125,7 +126,10 @@ describe(data, :mean, :median, :nmissing)
 Note that the `describe()` function provides you with information about missing values for each of the columns.
 Fortunately, there are none.
 
+@@dropdown
 ### Adjusting the scientific types
+@@
+@@dropdown-content
 
 Let's check the default scientific type that's currently associated with the data features:
 
@@ -146,19 +150,34 @@ schema(data)
 
 We're now ready to go!
 
+‎
+@@
+
+‎
+@@
+@@dropdown
 ## Exploratory Data Analysis
+@@
+@@dropdown-content
 
 To get a better understanding of our targets, let's plot their respective distributions.
 
 ````julia:ex14
-figure(figsize=(8, 6))
-hist(data.Solar_gen, color="blue", edgecolor="white", bins=100,
-     density=true, alpha=0.5)
-xlabel("Solar power generation (MWh)", fontsize=14)
-ylabel("Frequency", fontsize=14)
-xticks(fontsize=12)
-yticks([0, 1e-3, 2e-3], fontsize=12)
-savefig(joinpath(@OUTPUT, "hist_solar.svg")) # hide
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
+
+histogram(
+	data.Solar_gen,
+	color = "blue",
+	bins = 100,
+	normalize = :pdf,
+	alpha = 0.5,
+	yticks = [0, 1e-3, 2e-3],
+)
+xlabel!("Solar power generation (MWh)")
+ylabel!("Frequency")
+savefig(joinpath(@OUTPUT, "hist_solar.svg")); # hide
 ````
 
 \figalt{Histogram of the solar power generated}{hist_solar.svg}
@@ -167,13 +186,11 @@ As one might expect, the sun doesn't always shine (and certainly not at night), 
 The distribution of wind power generation looks markedly different
 
 ````julia:ex15
-figure(figsize=(8, 6))
-hist(data.Wind_gen, color="blue", edgecolor = "white", bins=50,
-     density=true, alpha=0.5)
-xlabel("Wind power generation (MWh)", fontsize=14)
-ylabel("Frequency", fontsize=14)
+histogram(data.Wind_gen, color = "blue", bins = 50, normalize = :pdf, alpha = 0.5)
+xlabel!("Wind power generation (MWh)")
+ylabel!("Frequency")
 
-savefig(joinpath(@OUTPUT, "hist_wind.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_wind.svg")); # hide
 ````
 
 \figalt{Histogram of the wind power generated}{hist_wind.svg}
@@ -182,29 +199,45 @@ Finally, before fitting the estimator, we might want to gauge what to expect fro
 Let's look at solar power first.
 
 ````julia:ex16
-fig = figure(figsize=(15, 15))
+p1 = scatter(
+	data.Solar_gen,
+	data.Radiation_dir,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - directional",
+)
 
-subplot(221)
-scatter(data.Solar_gen, data.Radiation_dir)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p2 = scatter(
+	data.Solar_gen,
+	data.Radiation_dif,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - diffuse",
+)
 
-subplot(222)
-scatter(data.Solar_gen, data.Radiation_dif)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p3 = scatter(
+	data.Solar_gen,
+	data.Windspeed,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Wind speed (m/s)",
+)
 
-subplot(223)
-scatter(data.Solar_gen, data.Windspeed)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p4 = scatter(
+	data.Solar_gen,
+	data.Temperature,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Temperature (C)",
+)
 
-subplot(224)
-scatter(data.Solar_gen, data.Temperature)
-xlabel("Solar power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
 
-savefig(joinpath(@OUTPUT, "solar_scatter.png"), bbox_inches="tight") # hide
+savefig(joinpath(@OUTPUT, "solar_scatter.png")); # hide
 ````
 
 @@img-wide \figalt{Solar power scatter plots}{solar_scatter.png} @@
@@ -212,36 +245,58 @@ savefig(joinpath(@OUTPUT, "solar_scatter.png"), bbox_inches="tight") # hide
 Then at wind generation
 
 ````julia:ex17
-fig = figure(figsize=(15, 15))
+p1 = scatter(
+	data.Wind_gen,
+	data.Radiation_dir,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - directional",
+)
 
-subplot(221)
-scatter(data.Wind_gen, data.Radiation_dir)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - directional", fontsize=14)
+p2 = scatter(
+	data.Wind_gen,
+	data.Radiation_dif,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Solar radiation - diffuse",
+)
 
-subplot(222)
-scatter(data.Wind_gen, data.Radiation_dif)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Solar radiation - diffuse", fontsize=14)
+p3 = scatter(
+	data.Wind_gen,
+	data.Windspeed,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Wind speed (m/s)",
+)
 
-subplot(223)
-scatter(data.Wind_gen, data.Windspeed)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Wind speed (m/s)", fontsize=14)
+p4 = scatter(
+	data.Wind_gen,
+	data.Temperature,
+	size = (150, 150),
+	legend = false,
+	xlabel = "Solar power (kW)",
+	ylabel = "Temperature (C)",
+)
 
-subplot(224)
-scatter(data.Wind_gen, data.Temperature)
-xlabel("Wind power (kW)", fontsize=14)
-ylabel("Temperature (C)", fontsize=14)
+plot!(p1, p2, p3, p4, layout = (2, 2), size = (1000, 1000))
 
-savefig(joinpath(@OUTPUT, "wind_scatter.png"), bbox_inches="tight") # hide
+
+savefig(joinpath(@OUTPUT, "wind_scatter.png")); # hide
 ````
 
 @@img-wide \figalt{Wind power scatter plots}{wind_scatter.png} @@
 
 As expected, solar power generation shows a strong relationship to solar irradiance while wind power generation denotes a strong relationship to wind speed.
 
+‎
+@@
+@@dropdown
 ## Models
+@@
+@@dropdown-content
 
 Let's fit a linear regression to our data.
 We focus on fitting the wind power generation but the same procedure could be applied for the solar power generation (a good exercise!).
@@ -254,7 +309,7 @@ X = data[:, [:Windspeed, :Temperature, :Radiation_dir, :Radiation_dif]];
 Next, we partition the data in training and test set; we choose the usual 70-30 split:
 
 ````julia:ex19
-train, test = partition(collect(eachindex(y_wind)), 0.7, shuffle=true, rng=5);
+train, test = partition(collect(eachindex(y_wind)), 0.7, shuffle = true, rng = 5);
 ````
 
 then we instantiate a model and fit it:
@@ -262,32 +317,30 @@ then we instantiate a model and fit it:
 ````julia:ex20
 linReg = LinearRegressor()
 m_linReg = machine(linReg, X, y_wind)
-fit!(m_linReg, rows=train);
+fit!(m_linReg, rows = train);
 ````
 
+@@dropdown
 ### Model evaluation
+@@
+@@dropdown-content
 
 We've now fitted the model for wind power generation (`Wind_gen`).
 Let's use it to predict values over the test set and investigate the performance:
 
 ````julia:ex21
-y_hat = MLJ.predict(m_linReg, rows=test);
+y_hat = MLJ.predict(m_linReg, rows = test);
 ````
 
 We can start by visualising the observed and predicted valzes of wind power generation.
 
 ````julia:ex22
-figure(figsize=(8, 6))
-plot(y_hat, color="blue", label="Predicted")
-plot(y_wind[test], color="red", label="Observed")
-xlabel("Time", fontsize=14)
-ylabel("Power generation", fontsize=14)
-xticks([])
-yticks(fontsize=12)
-xlim(0, 100)
-legend(fontsize=14)
+plot(y_hat, color = "blue", label = "Predicted", xlim = (0, 100), xticks = [])
+plot!(y_wind[test], color = "red", label = "Observed")
+xlabel!("Time")
+ylabel!("Power generation")
 
-savefig(joinpath(@OUTPUT, "obs_v_pred.svg")) # hide
+savefig(joinpath(@OUTPUT, "obs_v_pred.svg")); # hide
 ````
 
 \figalt{Observed vs Predicted}{obs_v_pred.svg}
@@ -295,7 +348,7 @@ savefig(joinpath(@OUTPUT, "obs_v_pred.svg")) # hide
 Let's look at the RMSE on the training and test sets.
 
 ````julia:ex23
-rms(y_wind[train], MLJ.predict(m_linReg, rows=train))
+rms(y_wind[train], MLJ.predict(m_linReg, rows = train))
 ````
 
 on the test set...
@@ -313,26 +366,29 @@ res = y_hat .- y_wind[test];
 Let's look at the stem plot of the residuals to check if there's any structure we might not have picked up:
 
 ````julia:ex26
-figure(figsize=(12, 6))
-stem(res)
-xlim(0, length(res))
+plot(res, line = :stem, marker = :circle, xlim = (0, length(res)))
+hline!([0], color = "red", linewidth = 3)
 
-savefig(joinpath(@OUTPUT, "residuals.png")) # hide
+savefig(joinpath(@OUTPUT, "residuals.png")); # hide
 ````
 
-@@img-wide \figalt{Residuals}{residuals.png} @@
+\figalt{Residuals}{residuals.png} @@
 
 Nothing really stands out, the distribution also looks ok:
 
 ````julia:ex27
-figure(figsize=(8, 6))
-hist(res, color="blue", edgecolor="white", bins=50,
-     density=true, alpha=0.5)
+histogram(res, color = "blue", bins = 50, normalize = :pdf, alpha = 0.5, legend = false)
 
-savefig(joinpath(@OUTPUT, "hist_residuals.svg")) # hide
+savefig(joinpath(@OUTPUT, "hist_residuals.svg")); # hide
 ````
 
 \figalt{Histogram of the residuals}{hist_residuals.svg}
 
 We leave it at that for now, I hope you found this tutorial interesting.
+
+‎
+@@
+
+‎
+@@
 

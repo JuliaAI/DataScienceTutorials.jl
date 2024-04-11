@@ -2,7 +2,7 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/EX-boston-flux/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -10,7 +10,10 @@ end;
 
 **Main author**: Ayush Shridhar (ayush-1506).
 
+@@dropdown
 ## Getting started
+@@
+@@dropdown-content
 
 ````julia:ex2
 import MLJFlux
@@ -19,7 +22,6 @@ import DataFrames: DataFrame
 import Statistics
 import Flux
 using Random
-using PyPlot
 
 MLJ.color_off() # hide
 Random.seed!(11)
@@ -159,21 +161,26 @@ curve = MLJ.learning_curve(nnregressor, features, targets,
                        resampling=MLJ.Holdout(fraction_train=0.7),
                        measure=MLJ.l2)
 
-figure(figsize=(8,6))
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.1) # hide
 
-plt.plot(curve.parameter_values,
-    curve.measurements)
+plot(curve.parameter_values, curve.measurements, yaxis=:log, legend=false)
 
-yscale("log")
-xlabel(curve.parameter_name)
-ylabel("l2")
+xlabel!(curve.parameter_name)
+ylabel!("l2-log")
 
-savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "EX-boston-flux-g1.svg")); # hide
 ````
 
 \figalt{BostonFlux1}{EX-boston-flux-g1.svg}
 
+‎
+@@
+@@dropdown
 ## Tuning
+@@
+@@dropdown-content
 
 As mentioned above, `nnregressor` can act like any other MLJ model. Let's try to tune the
 batch_size parameter.
@@ -198,4 +205,7 @@ The best value is:
 ````julia:ex17
 MLJ.fitted_params(m).best_model.batch_size
 ````
+
+‎
+@@
 

@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/D0-processing/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
@@ -10,8 +10,6 @@ end;
 import MLJ: schema, std, mean, median, coerce, coerce!, scitype
 using DataFrames
 using UrlDownload
-using PyPlot
-ioff() # hide
 
 raw_data = urldownload("https://github.com/tlienart/DataScienceTutorialsData.jl/blob/master/data/wri_global_power_plant_db_be_022020.csv?raw=true")
 data = DataFrame(raw_data);
@@ -45,12 +43,13 @@ cap_sum_plot = cap_sum[occursin.(ctry_selec, cap_sum.country) .& occursin.(tech_
 
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
-figure(figsize=(8,6))
+using Plots
+Plots.scalefontsizes() #hide
+Plots.scalefontsizes(1.3) #hide
 
-plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
-plt.xticks(rotation=90)
+Plots.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend=false)
 
-savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")); # hide
 
 cap_sum_ctry_gd = groupby(capacity, [:country]);
 cap_sum_ctry = combine(cap_sum_ctry_gd, :capacity_mw => sum);
@@ -78,18 +77,13 @@ data_nmiss[:, :plant_age] = current_year - data_nmiss[:, :commissioning_year];
 mean_age = mean(skipmissing(data_nmiss.plant_age))
 median_age = median(skipmissing(data_nmiss.plant_age))
 
-figure(figsize=(8,6))
+histogram(data_nmiss.plant_age, color="blue",  bins=100, label="Plant Age Frequency",
+          normalize=:pdf, alpha=0.5, xlim=(0,130))
+vline!([mean_age], linewidth=2, color="red", label="Mean Age")
+vline!([median_age], linewidth=2, color="orange", label="Median Age")
 
-plt.hist(data_nmiss.plant_age, color="blue", edgecolor="white", bins=100,
-      density=true, alpha=0.5)
-plt.axvline(mean_age, label = "Mean", color = "red")
-plt.axvline(median_age, label = "Median")
 
-plt.legend()
-
-plt.xlim(0,)
-
-savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g2.svg")); # hide
 
 age = select(data_nmiss, [:country, :primary_fuel, :plant_age])
 age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
@@ -97,19 +91,10 @@ age_mean = combine(groupby(age, [:country, :primary_fuel]), :plant_age => mean)
 coal_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Coal", age_mean.primary_fuel), :]
 gas_means = age_mean[occursin.(ctry_selec, age_mean.country) .& occursin.(r"Gas", age_mean.primary_fuel), :]
 
-width = 0.35  # the width of the bars
+p1 = Plots.bar(coal_means.country, coal_means.plant_age_mean, ylabel="Age", title="Coal")
+p2 = Plots.bar(gas_means.country, gas_means.plant_age_mean, title="Gas")
 
-fig, (ax1, ax2) = plt.subplots(1,2)
+plot(p1, p2, layout=(1, 2), size=(900,600), plot_title="Mean plant age by country and technology")
 
-fig.suptitle("Mean plant age by country and technology")
 
-ax1.bar(coal_means.country, coal_means.plant_age_mean, width, label="Coal")
-ax2.bar(gas_means.country, gas_means.plant_age_mean, width, label="Gas")
-
-ax1.set_ylabel("Age")
-
-ax1.set_title("Coal")
-ax2.set_title("Gas")
-
-savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")) # hide
-
+savefig(joinpath(@OUTPUT, "D0-processing-g3.svg")); # hide

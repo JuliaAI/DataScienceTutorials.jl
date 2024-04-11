@@ -1,116 +1,208 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
-  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
-   <title>Further data processing</title>  
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Further data processing</title> 
   <!-- LUNR -->
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
-        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+        <a href="/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
         </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
       </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
     </div>
-    <div id="main"> <!-- Closed in foot -->
-      
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
 
-<!-- Content appended here -->
-<div class="franklin-content"><h1 id="further_data_processing"><a href="#further_data_processing" class="header-anchor">Further data processing</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-processing.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+    <!-- Content appended here --><div class="franklin-content"><h1 id="further_data_processing"><a href="#further_data_processing" class="header-anchor">Further data processing</a></h1>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-processing.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#more_data_processing">More data processing</a></li></ol></div>
-<h2 id="more_data_processing"><a href="#more_data_processing" class="header-anchor">More data processing</a></h2>
-<p>This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia. The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc Hence plenty of material to work with&#33;</p>
+<div class="dropdown"><h2 id="more_data_processing"><a href="#more_data_processing" class="header-anchor">More data processing</a></h2></div>
+<div class="dropdown-content"><p>This tutorial uses the World Resources Institute Global Power Plants Dataset to explore data pre-processing in Julia. The dataset is created from multiple sources and is under continuous update, which means that there are lots of missing data, non-standard characters, etc Hence plenty of material to work with&#33;</p>
 <p>More tutorials on the manipulation of DataFrames can be found <a href="https://github.com/bkamins/Julia-DataFrames-Tutorial">here</a> And some more information can be found on <a href="https://en.wikibooks.org/wiki/Introducing_Julia/DataFrames">this</a> wikipage.</p>
 <pre><code class="language-julia">import MLJ: schema, std, mean, median, coerce, coerce&#33;, scitype
 using DataFrames
-using UrlDownload
-using PyPlot</code></pre><pre><code class="plaintext code-output">PyObject <matplotlib.pyplot._IoffContext object at 0x7f9300f5b8e0></code></pre>
+using UrlDownload</code></pre>
 <p>Import data</p>
 <pre><code class="language-julia">raw_data &#61; urldownload&#40;&quot;https://github.com/tlienart/DataScienceTutorialsData.jl/blob/master/data/wri_global_power_plant_db_be_022020.csv?raw&#61;true&quot;&#41;
 data &#61; DataFrame&#40;raw_data&#41;;</code></pre>
@@ -119,7 +211,7 @@ data &#61; DataFrame&#40;raw_data&#41;;</code></pre>
 │ names                    │ scitypes                   │ types                    │
 ├──────────────────────────┼────────────────────────────┼──────────────────────────┤
 │ country                  │ Textual                    │ String3                  │
-│ country_long             │ Textual                    │ String63                 │
+│ country_long             │ Textual                    │ String                   │
 │ name                     │ Textual                    │ String                   │
 │ gppd_idnr                │ Textual                    │ String15                 │
 │ capacity_mw              │ Continuous                 │ Float64                  │
@@ -155,7 +247,7 @@ schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌─
 │ names                 │ scitypes                   │ types                    │
 ├───────────────────────┼────────────────────────────┼──────────────────────────┤
 │ country               │ Textual                    │ String3                  │
-│ country_long          │ Textual                    │ String63                 │
+│ country_long          │ Textual                    │ String                   │
 │ name                  │ Textual                    │ String                   │
 │ gppd_idnr             │ Textual                    │ String15                 │
 │ capacity_mw           │ Continuous                 │ Float64                  │
@@ -177,7 +269,7 @@ schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌─
      │ Symbol                 Union…   Any          Union…   Any                Int64     Type
 ─────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────
    1 │ country                         AFG                   ZWE                       0  String3
-   2 │ country_long                    Afghanistan           Zimbabwe                  0  String63
+   2 │ country_long                    Afghanistan           Zimbabwe                  0  String
    3 │ name                            'Muela                \u200bVärtaverket         0  String
    4 │ gppd_idnr                       ARG0000001            WRI1075863                0  String15
    5 │ capacity_mw            168.993  1.0          18.3     22500.0                   0  Float64
@@ -190,7 +282,7 @@ schema&#40;data&#41;</code></pre><pre><code class="plaintext code-output">┌─
   12 │ commissioning_year     1995.49  1896.0       2005.0   2018.0                17340  Union{Missing, Float64}
   13 │ year_of_capacity_data  2016.86  2000         2017.0   2018                  19900  Union{Missing, Int64}</code></pre>
 <p><em>Note:</em> the <code>describe&#40;&#41;</code> function is from the <code>DataFrames</code> package &#40;and won&#39;t work with other, non DataFrames, tables&#41; whereas the <code>schema&#40;&#41;</code> is from the MLJ package.</p>
-<p><hr /> Let&#39;s play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions &#40;country and primary_fuel&#41;</p>
+<p>Let&#39;s play around with capacity data, for which there are no missing values. We create a sub-dataframe and aggregate over certain dimensions &#40;country and primary_fuel&#41;</p>
 <pre><code class="language-julia">capacity &#61; select&#40;data, &#91;:country, :primary_fuel, :capacity_mw&#93;&#41;;
 first&#40;capacity, 5&#41;</code></pre><pre><code class="plaintext code-output">5×3 DataFrame
  Row │ country  primary_fuel  capacity_mw
@@ -227,12 +319,11 @@ cap_sum_plot &#61; cap_sum&#91;occursin.&#40;ctry_selec, cap_sum.country&#41; .&
 <p>Note the <code>.</code> for element-wise comparison Before plotting, we can also sort values by decreasing order using <code>sort&#33;&#40;&#41;</code>.</p>
 <pre><code class="language-julia">sort&#33;&#40;cap_sum_plot, :capacity_mw_sum, rev&#61;true&#41;
 
-figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+using Plots
 
-plt.bar&#40;cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width&#61;0.35&#41;
-plt.xticks&#40;rotation&#61;90&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g1.svg" alt="processing1">
-<p><hr /> Now that we have the total capacity by country and technology type, let&#39;s use it to calculate the share of each technology in total capacity. To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.</p>
+Plots.bar&#40;cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend&#61;false&#41;</code></pre>
+<img src="/assets/data/processing/code/output/D0-processing-g1.svg" alt="processing1">
+<p>Now that we have the total capacity by country and technology type, let&#39;s use it to calculate the share of each technology in total capacity. To that end we first create a dataframe containing the country-level total capacity, using the same steps as above.</p>
 <pre><code class="language-julia">cap_sum_ctry_gd &#61; groupby&#40;capacity, &#91;:country&#93;&#41;;
 cap_sum_ctry &#61; combine&#40;cap_sum_ctry_gd, :capacity_mw &#61;&gt; sum&#41;;</code></pre>
 <p>The we join this dataframe with the disaggregated one; which requires that we convert the two GroupedDataFrame into DataFrames.</p>
@@ -241,7 +332,7 @@ cap_sum_ctry &#61; DataFrame&#40;cap_sum_ctry&#41;;
 cap_share &#61; leftjoin&#40;cap_sum, cap_sum_ctry, on &#61; :country, makeunique &#61; true&#41;
 cap_share.capacity_mw_share &#61; cap_share.capacity_mw_sum ./ cap_share.capacity_mw_sum_1;</code></pre>
 <p>Let&#39;s visualise our dataframe again, which now includes the <code>capacity_mw_share</code> column.</p>
-<p><hr /> Now let&#39;s analyse features which exhibit some missing values. Suppose we want to calculate the age of each plant &#40;rounded to full years&#41;. We face two issues. First, the commissioning_year is not reported for all plants. We need to gauge the representativity of the plants for which it is available with regard to the full dataset. One way to count the missing values is</p>
+<p>Now let&#39;s analyse features which exhibit some missing values. Suppose we want to calculate the age of each plant &#40;rounded to full years&#41;. We face two issues. First, the commissioning_year is not reported for all plants. We need to gauge the representativity of the plants for which it is available with regard to the full dataset. One way to count the missing values is</p>
 <pre><code class="language-julia">nMissings &#61; length&#40;findall&#40;x -&gt; ismissing&#40;x&#41;, data.commissioning_year&#41;&#41;</code></pre><pre><code class="plaintext code-output">17340</code></pre>
 <p>This represents about half of our observations</p>
 <pre><code class="language-julia">nMissings_share &#61; nMissings/size&#40;data&#41;&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.515411824153613</code></pre>
@@ -260,53 +351,66 @@ data_nmiss&#91;:, :plant_age&#93; &#61; current_year - data_nmiss&#91;:, :commis
 <pre><code class="language-julia">mean_age &#61; mean&#40;skipmissing&#40;data_nmiss.plant_age&#41;&#41;
 median_age &#61; median&#40;skipmissing&#40;data_nmiss.plant_age&#41;&#41;</code></pre><pre><code class="plaintext code-output">15.0</code></pre>
 <p>And bring this into a frequency plot of the plant age observations</p>
-<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
-
-plt.hist&#40;data_nmiss.plant_age, color&#61;&quot;blue&quot;, edgecolor&#61;&quot;white&quot;, bins&#61;100,
-      density&#61;true, alpha&#61;0.5&#41;
-plt.axvline&#40;mean_age, label &#61; &quot;Mean&quot;, color &#61; &quot;red&quot;&#41;
-plt.axvline&#40;median_age, label &#61; &quot;Median&quot;&#41;
-
-plt.legend&#40;&#41;
-
-plt.xlim&#40;0,&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g2.svg" alt="processing2">
+<pre><code class="language-julia">histogram&#40;data_nmiss.plant_age, color&#61;&quot;blue&quot;,  bins&#61;100, label&#61;&quot;Plant Age Frequency&quot;,
+          normalize&#61;:pdf, alpha&#61;0.5, xlim&#61;&#40;0,130&#41;&#41;
+vline&#33;&#40;&#91;mean_age&#93;, linewidth&#61;2, color&#61;&quot;red&quot;, label&#61;&quot;Mean Age&quot;&#41;
+vline&#33;&#40;&#91;median_age&#93;, linewidth&#61;2, color&#61;&quot;orange&quot;, label&#61;&quot;Median Age&quot;&#41;</code></pre>
+<img src="/assets/data/processing/code/output/D0-processing-g2.svg" alt="processing2">
 <p>We can also calculate and plot average plant age by country and technology Make sure all columns passed, other than the aggregation dimensions, are of type <code>Float</code> or <code>Int</code>, otherwise the function execution will fail.</p>
 <pre><code class="language-julia">age &#61; select&#40;data_nmiss, &#91;:country, :primary_fuel, :plant_age&#93;&#41;
 age_mean &#61; combine&#40;groupby&#40;age, &#91;:country, :primary_fuel&#93;&#41;, :plant_age &#61;&gt; mean&#41;
 
 coal_means &#61; age_mean&#91;occursin.&#40;ctry_selec, age_mean.country&#41; .&amp; occursin.&#40;r&quot;Coal&quot;, age_mean.primary_fuel&#41;, :&#93;
-gas_means &#61; age_mean&#91;occursin.&#40;ctry_selec, age_mean.country&#41; .&amp; occursin.&#40;r&quot;Gas&quot;, age_mean.primary_fuel&#41;, :&#93;
+gas_means &#61; age_mean&#91;occursin.&#40;ctry_selec, age_mean.country&#41; .&amp; occursin.&#40;r&quot;Gas&quot;, age_mean.primary_fuel&#41;, :&#93;</code></pre><pre><code class="plaintext code-output">2×3 DataFrame
+ Row │ country  primary_fuel  plant_age_mean
+     │ String3  String15      Float64
+─────┼───────────────────────────────────────
+   1 │ BEL      Gas                  16.5
+   2 │ DEU      Gas                  25.6867</code></pre>
+<p>fig.suptitle&#40;&quot;Mean plant age by country and technology&quot;&#41;</p>
+<pre><code class="language-julia">p1 &#61; Plots.bar&#40;coal_means.country, coal_means.plant_age_mean, ylabel&#61;&quot;Age&quot;, title&#61;&quot;Coal&quot;&#41;
+p2 &#61; Plots.bar&#40;gas_means.country, gas_means.plant_age_mean, title&#61;&quot;Gas&quot;&#41;
 
-width &#61; 0.35  # the width of the bars
+plot&#40;p1, p2, layout&#61;&#40;1, 2&#41;, size&#61;&#40;900,600&#41;, plot_title&#61;&quot;Mean plant age by country and technology&quot;&#41;</code></pre>
+<img src="/assets/data/processing/code/output/D0-processing-g3.svg" alt="processing3">
+<p>‎</p></div>
 
-fig, &#40;ax1, ax2&#41; &#61; plt.subplots&#40;1,2&#41;
-
-fig.suptitle&#40;&quot;Mean plant age by country and technology&quot;&#41;
-
-ax1.bar&#40;coal_means.country, coal_means.plant_age_mean, width, label&#61;&quot;Coal&quot;&#41;
-ax2.bar&#40;gas_means.country, gas_means.plant_age_mean, width, label&#61;&quot;Gas&quot;&#41;
-
-ax1.set_ylabel&#40;&quot;Age&quot;&#41;
-
-ax1.set_title&#40;&quot;Coal&quot;&#41;
-ax2.set_title&#40;&quot;Gas&quot;&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/data/processing/code/output/D0-processing-g3.svg" alt="processing3">
-
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 28, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
-</div>
-</div><!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/libs/collapse/collapse.js"></script>
+<script src="/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/libs/nav/head.js"></script>
+<script src="/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/libs/nav/responsive.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
+
 </body>
+
 </html>

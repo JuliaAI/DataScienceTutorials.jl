@@ -4,7 +4,10 @@
 # [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8/Manifest.toml), or by following
 # [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 
 using MLJ
 import RDatasets: dataset
@@ -26,7 +29,10 @@ carseats[!, :High] = High;
 X = select(carseats, Not([:Sales, :High]))
 y = carseats.High;
 
+# @@dropdown
 # ### Decision Tree Classifier
+# @@
+# @@dropdown-content
 
 HotTreeClf = OneHotEncoder() |> DTC()
 
@@ -49,8 +55,13 @@ ypred = predict_mode(mach, rows=test)
 misclassification_rate(ypred, y[test])
 
 # Not really...
-#
+
+# ‎
+# @@
+# @@dropdown
 # ### Tuning a DTC
+# @@
+# @@dropdown-content
 #
 # Let's try to do a bit of tuning
 
@@ -75,7 +86,12 @@ misclassification_rate(ypred, y[test])
 
 fitted_params(mtm).best_model.decision_tree_classifier
 
+# ‎
+# @@
+# @@dropdown
 # ### Decision Tree Regressor
+# @@
+# @@dropdown-content
 
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
@@ -118,11 +134,19 @@ fit!(mtm, rows=train)
 ypred = MLJ.predict(mtm, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Random Forest
+# @@
+# @@dropdown-content
 #
 # **Note**: the package [`DecisionTree.jl`](https://github.com/bensadeghi/DecisionTree.jl) also has a RandomForest model but it is not yet interfaced with in MLJ.
 
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 rf_mdl = RFR()
 rf = machine(rf_mdl, X, y)
@@ -131,7 +155,12 @@ fit!(rf, rows=train)
 ypred = MLJ.predict(rf, rows=test)
 round(rms(ypred, y[test]), sigdigits=3)
 
+# ‎
+# @@
+# @@dropdown
 # ## Gradient Boosting Machine
+# @@
+# @@dropdown-content
 
 XGBR = @load XGBoostRegressor
 
@@ -144,5 +173,7 @@ round(rms(ypred, y[test]), sigdigits=3)
 
 # Again we could do some tuning for this.
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

@@ -1,3 +1,3 @@
 LinearRegressor(
-    fit_intercept = true,
-    solver = nothing)
+  fit_intercept = true, 
+  solver = nothing)

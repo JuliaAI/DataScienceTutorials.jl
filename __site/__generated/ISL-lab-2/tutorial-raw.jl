@@ -56,10 +56,8 @@ mpg |> mean
 @show nrow(auto)
 @show ncol(auto)
 
-using PyPlot
+using Plots
 
-figure(figsize=(8,6))
-plot(mpg)
+plot(mpg, size=(800,600), linewidth=2, legend=false)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

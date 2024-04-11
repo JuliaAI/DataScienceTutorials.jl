@@ -1,1 +1,1 @@
-nothing
+NumericRange(0.5 ≤ bagging_fraction ≤ 1.0; origin=0.75, unit=0.25)

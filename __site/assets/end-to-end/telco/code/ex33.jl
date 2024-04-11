@@ -1,2 +1,2 @@
 # This file was generated, do not modify it. # hide
-measures("Brier")
+pipe.evo_tree_classifier.max_depth

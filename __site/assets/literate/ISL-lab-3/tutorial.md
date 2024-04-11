@@ -2,13 +2,16 @@
 ````julia:ex1
 using Pkg # hideall
 Pkg.activate("_literate/ISL-lab-3/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
 end;
 ````
 
+@@dropdown
 ## Simple linear regression
+@@
+@@dropdown-content
 
 `MLJ` essentially serves as a unified path to many existing Julia packages each of which provides their own functionalities and models, with their own conventions.
 
@@ -82,15 +85,16 @@ fp = fitted_params(mach_uni)
 You can also visualise this
 
 ````julia:ex10
-using PyPlot
-ioff() # hide
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
-plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
+plot!(Xnew.LStat, MLJ.predict(mach_uni, Xnew), linewidth=3, color=:orange)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lm1.svg")); # hide
 ````
 
 \figalt{Univariate regression}{ISL-lab-3-lm1.svg}
@@ -120,11 +124,10 @@ round(rms(ŷ, y), sigdigits=4)
 Let's see what the residuals look like
 
 ````julia:ex13
-figure(figsize=(8,6))
 res = ŷ .- y
-stem(res)
-
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
+plot(res, line=:stem, linewidth=1, marker=:circle, legend=false, size=((800,600)))
+hline!([0], linewidth=2, color=:red)    # add a horizontal line at x=0
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")); # hide
 ````
 
 \figalt{Plot of the residuals}{ISL-lab-3-res.svg}
@@ -132,15 +135,19 @@ savefig(joinpath(@OUTPUT, "ISL-lab-3-res.svg")) # hide
 Maybe that a histogram is more appropriate here
 
 ````julia:ex14
-figure(figsize=(8,6))
-hist(res, density=true)
+histogram(res, normalize=true, size=(800,600), label="residual")
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-res2.svg")); # hide
 ````
 
 \figalt{Histogram of the residuals}{ISL-lab-3-res2.svg}
 
+‎
+@@
+@@dropdown
 ## Interaction and transformation
+@@
+@@dropdown-content
 
 Let's say we want to also consider an interaction term of `lstat` and `age` taken together.
 To do this, just create a new dataframe with an additional column corresponding to the interaction term:
@@ -182,16 +189,14 @@ which again, we can visualise:
 ````julia:ex19
 Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
-plot(Xnew.LStat, MLJ.predict(mach, Xnew))
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+plot!(Xnew.LStat, MLJ.predict(mach, Xnew), linewidth=3, color=:orange)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-3-lreg.svg")); # hide
 ````
 
 \figalt{Polynomial regression}{ISL-lab-3-lreg.svg}
 
-````julia:ex20
-PyPlot.close_figs() # hide
-````
+‎
+@@
 

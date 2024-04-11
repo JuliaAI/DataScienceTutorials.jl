@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-Xs = source(X)
-ys = source(y)
+RidgeRegressor = @load RidgeRegressor pkg="MultivariateStats"
+KNNRegressor = @load KNNRegressor

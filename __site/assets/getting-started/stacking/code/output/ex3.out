@@ -2,4 +2,4 @@ import MLJLinearModels ✔
 import NearestNeighborModels ✔
 import EvoTrees ✔
 import MLJDecisionTreeInterface ✔
-import MLJScikitLearnInterface ✔
+import MLJLIBSVMInterface ✔

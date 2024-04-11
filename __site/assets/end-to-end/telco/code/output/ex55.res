@@ -1,5 +1,1 @@
-Machine trained 1 time; caches data
-  model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
-  args: 
-    1:	Source @007 ⏎ `ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}, AbstractVector{ScientificTypesBase.Multiclass{3}}}}`
-    2:	Source @099 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
+NumericRange(2 ≤ model.evo_tree_classifier.max_depth ≤ 6; origin=4.0, unit=2.0)

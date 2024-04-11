@@ -1,2 +1,3 @@
 # This file was generated, do not modify it. # hide
-corestrict(string.(1:10), f, 2)
+model1 = linear
+model2 = knn

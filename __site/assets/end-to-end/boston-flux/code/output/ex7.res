@@ -1,1 +1,1 @@
-MyNetworkBuilder
+MyNetworkBuilder(n1 = 20, …)

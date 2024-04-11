@@ -1,6 +1,3 @@
 # This file was generated, do not modify it. # hide
-train, test = partition(collect(eachindex(yc)), 0.8, shuffle=true, rng=111)
-Xtrain = selectrows(Xc, train)
-Xtest = selectrows(Xc, test)
-ytrain = selectrows(yc, train)
-ytest = selectrows(yc, test);
+knn = machine(knn_pipe, Xtrain, ytrain)
+multinom = machine(multinom_pipe, Xtrain, ytrain)

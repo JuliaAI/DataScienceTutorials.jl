@@ -1,11 +1,12 @@
 PerformanceEvaluation object with these fields:
-  measure, measurement, operation, per_fold,
+  model, measure, operation, measurement, per_fold,
   per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_pairs
+  report_per_fold, train_test_rows, resampling, repeats
 Extract:
-┌───────────────────────────────────────────────────┬─────────────┬───────────┬──────────┐
-│ measure                                           │ measurement │ operation │ per_fold │
-├───────────────────────────────────────────────────┼─────────────┼───────────┼──────────┤
-│ RootMeanSquaredError()                            │ 7.06        │ predict   │ [7.06]   │
-│ RootMeanSquaredLogProportionalError(offset = 1.0) │ 0.328       │ predict   │ [0.328]  │
-└───────────────────────────────────────────────────┴─────────────┴───────────┴──────────┘
+┌──────────────────────────────────────┬───────────┬─────────────┬──────────┐
+│ measure                              │ operation │ measurement │ per_fold │
+├──────────────────────────────────────┼───────────┼─────────────┼──────────┤
+│ RootMeanSquaredError()               │ predict   │ 7.06        │ [7.06]   │
+│ RootMeanSquaredLogProportionalError( │ predict   │ 0.328       │ [0.328]  │
+│   offset = 1)                        │           │             │          │
+└──────────────────────────────────────┴───────────┴─────────────┴──────────┘

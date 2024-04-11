@@ -1,2 +1,4 @@
 # This file was generated, do not modify it. # hide
-r = report(tuned_ensemble);
+best_ensemble = fitted_params(tuned_ensemble).best_model
+@show best_ensemble.model.K
+@show best_ensemble.bagging_fraction

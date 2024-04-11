@@ -1,1 +1,1 @@
-nothing
+NumericRange(1 ≤ model.K ≤ 20; origin=10.5, unit=9.5)

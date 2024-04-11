@@ -1,5 +1,11 @@
-Machine{DeterministicSurrogate,…} trained 0 times; does not cache data
-  model: MLJBase.DeterministicSurrogate
-  args: 
-    1:	Source @196 ⏎ `Nothing`
-    2:	Source @595 ⏎ `Nothing`
+MyAverageTwo(
+  regressor1 = LinearRegressor(
+        fit_intercept = true, 
+        solver = nothing), 
+  regressor2 = KNNRegressor(
+        K = 5, 
+        algorithm = :kdtree, 
+        metric = Distances.Euclidean(0.0), 
+        leafsize = 10, 
+        reorder = true, 
+        weights = NearestNeighborModels.Uniform()))

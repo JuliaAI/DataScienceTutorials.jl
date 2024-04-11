@@ -1,0 +1,2 @@
+best_ensemble.model.K = 3
+best_ensemble.bagging_fraction = 0.5555555555555556

@@ -1,120 +1,214 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
-  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
-   <title>MLJ for Data Scientists in Two Hours</title>  
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>MLJ for Data Scientists in Two Hours</title> 
   <!-- LUNR -->
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
-        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+        <a href="/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
         </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
       </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
     </div>
-    <div id="main"> <!-- Closed in foot -->
-      
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
 
-<!-- Content appended here -->
-<div class="franklin-content"><h1 id="mlj_for_data_scientists_in_two_hours"><a href="#mlj_for_data_scientists_in_two_hours" class="header-anchor">MLJ for Data Scientists in Two Hours</a></h1>
+    <!-- Content appended here --><div class="franklin-content"><h1 id="mlj_for_data_scientists_in_two_hours"><a href="#mlj_for_data_scientists_in_two_hours" class="header-anchor">MLJ for Data Scientists in Two Hours</a></h1>
 <p>An end-to-end example using the <strong>Telco Churn</strong> dataset</p>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#summary_of_methods_and_types_introduced">Summary of methods and types introduced</a></li><li><a href="#warm_up_building_a_model_for_the_iris_dataset">Warm up: Building a model for the iris dataset</a></li><li><a href="#getting_the_telco_data">Getting the Telco data</a></li><li><a href="#type_coercion">Type coercion</a></li><li><a href="#preparing_a_holdout_set_for_final_testing">Preparing a holdout set for final testing</a></li><li><a href="#splitting_data_into_target_and_features">Splitting data into target and features</a></li><li><a href="#loading_a_model_and_checking_type_requirements">Loading a model and checking type requirements</a></li><li><a href="#building_a_model_pipeline_to_incorporate_feature_encoding">Building a model pipeline to incorporate feature encoding</a></li><li><a href="#evaluating_the_pipeline_models_performance">Evaluating the pipeline model&#39;s performance</a><ol><li><a href="#evaluating_by_hand_with_a_holdout_set">Evaluating by hand &#40;with a holdout set&#41;</a></li><li><a href="#automated_performance_evaluation_more_typical_workflow">Automated performance evaluation &#40;more typical workflow&#41;</a></li></ol></li><li><a href="#filtering_out_unimportant_features">Filtering out unimportant features</a></li><li><a href="#wrapping_our_iterative_model_in_control_strategies">Wrapping our iterative model in control strategies</a></li><li><a href="#hyper-parameter_optimization_model_tuning">Hyper-parameter optimization &#40;model tuning&#41;</a></li><li><a href="#saving_our_model">Saving our model</a></li><li><a href="#final_performance_estimate">Final performance estimate</a></li><li><a href="#testing_the_final_model">Testing the final model</a></li></ol></div>
 <p>An application of the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">MLJ toolbox</a> to the Telco Customer Churn dataset, aimed at practicing data scientists new to MLJ &#40;Machine Learning in Julia&#41;. This tutorial does not cover exploratory data analysis.</p>
-<p>MLJ is a <em>multi-paradigm</em> machine learning toolbox &#40;i.e., not just deep-learning&#41;.</p>
+<p>MLJ is a general machine learning toolbox &#40;i.e., not just deep-learning&#41;.</p>
 <p>For other MLJ learning resources see the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/learning_mlj/">Learning MLJ</a> section of the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">manual</a>.</p>
 <p><strong>Topics covered</strong>: Grabbing and preparing a dataset, basic fit/predict workflow, constructing a pipeline to include data pre-processing, estimating performance metrics, ROC curves, confusion matrices, feature importance, basic feature selection, controlling iterative models, hyper-parameter optimization &#40;tuning&#41;.</p>
 <p><strong>Prerequisites for this tutorial.</strong> Previous experience building, evaluating, and optimizing machine learning models using scikit-learn, caret, MLR, weka, or similar tool. No previous experience with MLJ. Only fairly basic familiarity with Julia is required. Uses <a href="https://dataframes.juliadata.org/stable/">DataFrames.jl</a> but in a minimal way &#40;<a href="https://ahsmart.com/pub/data-wrangling-with-data-frames-jl-cheat-sheet/index.html">this cheatsheet</a> may help&#41;.</p>
 <p><strong>Time.</strong> Between two and three hours, first time through.</p>
-<h2 id="summary_of_methods_and_types_introduced"><a href="#summary_of_methods_and_types_introduced" class="header-anchor">Summary of methods and types introduced</a></h2>
-<table><tr><th align="left">code</th><th align="left">purpose</th></tr><tr><td align="left"><code>OpenML.load&#40;id&#41;</code></td><td align="left">grab a dataset from <a href="https://www.openml.org">OpenML.org</a></td></tr><tr><td align="left"><code>scitype&#40;X&#41;</code></td><td align="left">inspect the scientific type &#40;scitype&#41; of object <code>X</code></td></tr><tr><td align="left"><code>schema&#40;X&#41;</code></td><td align="left">inspect the column scitypes &#40;scientific types&#41; of a table <code>X</code></td></tr><tr><td align="left"><code>coerce&#40;X, ...&#41;</code></td><td align="left">fix column encodings to get appropriate scitypes</td></tr><tr><td align="left"><code>partition&#40;data, frac1, frac2, ...; rng&#61;...&#41;</code></td><td align="left">vertically split <code>data</code>, which can be a table, vector or matrix</td></tr><tr><td align="left"><code>unpack&#40;table, f1, f2, ...&#41;</code></td><td align="left">horizontally split <code>table</code> based on conditions <code>f1</code>, <code>f2</code>, ..., applied to column names</td></tr><tr><td align="left"><code>@load ModelType pkg&#61;...</code></td><td align="left">load code defining a model type</td></tr><tr><td align="left"><code>input_scitype&#40;model&#41;</code></td><td align="left">inspect the scitype that a model requires for features &#40;inputs&#41;</td></tr><tr><td align="left"><code>target_scitype&#40;model&#41;</code></td><td align="left">inspect the scitype that a model requires for the target &#40;labels&#41;</td></tr><tr><td align="left"><code>ContinuousEncoder</code></td><td align="left">built-in model type for re-encoding all features as <code>Continuous</code></td></tr><tr><td align="left"><code>model1 ∣&gt; model2 ∣&gt; ...</code></td><td align="left">combine multiple models into a pipeline</td></tr><tr><td align="left"><code>measures&#40;&quot;under curve&quot;&#41;</code></td><td align="left">list all measures &#40;metrics&#41; with string &quot;under curve&quot; in documentation</td></tr><tr><td align="left"><code>accuracy&#40;yhat, y&#41;</code></td><td align="left">compute accuracy of predictions <code>yhat</code> against ground truth observations <code>y</code></td></tr><tr><td align="left"><code>auc&#40;yhat, y&#41;, brier_loss&#40;yhat, y&#41;</code></td><td align="left">evaluate two probabilistic measures &#40;<code>yhat</code> a vector of probability distributions&#41;</td></tr><tr><td align="left"><code>machine&#40;model, X, y&#41;</code></td><td align="left">bind <code>model</code> to training data <code>X</code> &#40;features&#41; and <code>y</code> &#40;target&#41;</td></tr><tr><td align="left"><code>fit&#33;&#40;mach, rows&#61;...&#41;</code></td><td align="left">train machine using specified rows &#40;observation indices&#41;</td></tr><tr><td align="left"><code>predict&#40;mach, rows&#61;...&#41;</code>,</td><td align="left">make in-sample model predictions given specified rows</td></tr><tr><td align="left"><code>predict&#40;mach, Xnew&#41;</code></td><td align="left">make predictions given new features <code>Xnew</code></td></tr><tr><td align="left"><code>fitted_params&#40;mach&#41;</code></td><td align="left">inspect learned parameters</td></tr><tr><td align="left"><code>report&#40;mach&#41;</code></td><td align="left">inspect other outcomes of training</td></tr><tr><td align="left"><code>confmat&#40;yhat, y&#41;</code></td><td align="left">confusion matrix for predictions <code>yhat</code> and ground truth <code>y</code></td></tr><tr><td align="left"><code>roc&#40;yhat, y&#41;</code></td><td align="left">compute points on the receiver-operator Characteristic</td></tr><tr><td align="left"><code>StratifiedCV&#40;nfolds&#61;6&#41;</code></td><td align="left">6-fold stratified cross-validation resampling strategy</td></tr><tr><td align="left"><code>Holdout&#40;fraction_train&#61;0.7&#41;</code></td><td align="left">holdout resampling strategy</td></tr><tr><td align="left"><code>evaluate&#40;model, X, y; resampling&#61;..., options...&#41;</code></td><td align="left">estimate performance metrics for <code>model</code> using the data <code>X</code>, <code>y</code></td></tr><tr><td align="left"><code>FeatureSelector&#40;&#41;</code></td><td align="left">transformer for selecting features</td></tr><tr><td align="left"><code>Step&#40;3&#41;</code></td><td align="left">iteration control for stepping 3 iterations</td></tr><tr><td align="left"><code>NumberSinceBest&#40;6&#41;</code>, <code>TimeLimit&#40;60/5&#41;, InvalidValue&#40;&#41;</code></td><td align="left">stopping criterion iteration controls</td></tr><tr><td align="left"><code>IteratedModel&#40;model&#61;..., controls&#61;..., options...&#41;</code></td><td align="left">wrap an iterative <code>model</code> in controls</td></tr><tr><td align="left"><code>range&#40;model,  :some_hyperparam, lower&#61;..., upper&#61;...&#41;</code></td><td align="left">define a numeric range</td></tr><tr><td align="left"><code>RandomSearch&#40;&#41;</code></td><td align="left">random search tuning strategy</td></tr><tr><td align="left"><code>TunedModel&#40;model&#61;..., tuning&#61;..., options...&#41;</code></td><td align="left">wrap the supervised <code>model</code> in specified <code>tuning</code> strategy</td></tr></table>
-<h2 id="warm_up_building_a_model_for_the_iris_dataset"><a href="#warm_up_building_a_model_for_the_iris_dataset" class="header-anchor">Warm up: Building a model for the iris dataset</a></h2>
-<p>Before turning to the Telco Customer Churn dataset, we very quickly build a predictive model for Fisher&#39;s well-known iris data set, as way of introducing the main actors in any MLJ workflow. Details that you don&#39;t fully grasp should become clearer in the Telco study.</p>
+<div class="dropdown"><h2 id="summary_of_methods_and_types_introduced"><a href="#summary_of_methods_and_types_introduced" class="header-anchor">Summary of methods and types introduced</a></h2></div>
+<div class="dropdown-content"><table><tr><th align="left">code</th><th align="left">purpose</th></tr><tr><td align="left"><code>OpenML.load&#40;id&#41;</code></td><td align="left">grab a dataset from <a href="https://www.openml.org">OpenML.org</a></td></tr><tr><td align="left"><code>scitype&#40;X&#41;</code></td><td align="left">inspect the scientific type &#40;scitype&#41; of object <code>X</code></td></tr><tr><td align="left"><code>schema&#40;X&#41;</code></td><td align="left">inspect the column scitypes &#40;scientific types&#41; of a table <code>X</code></td></tr><tr><td align="left"><code>coerce&#40;X, ...&#41;</code></td><td align="left">fix column encodings to get appropriate scitypes</td></tr><tr><td align="left"><code>partition&#40;data, frac1, frac2, ...; rng&#61;...&#41;</code></td><td align="left">vertically split <code>data</code>, which can be a table, vector or matrix</td></tr><tr><td align="left"><code>unpack&#40;table, f1, f2, ...&#41;</code></td><td align="left">horizontally split <code>table</code> based on conditions <code>f1</code>, <code>f2</code>, ..., applied to column names</td></tr><tr><td align="left"><code>@load ModelType pkg&#61;...</code></td><td align="left">load code defining a model type</td></tr><tr><td align="left"><code>input_scitype&#40;model&#41;</code></td><td align="left">inspect the scitype that a model requires for features &#40;inputs&#41;</td></tr><tr><td align="left"><code>target_scitype&#40;model&#41;</code></td><td align="left">inspect the scitype that a model requires for the target &#40;labels&#41;</td></tr><tr><td align="left"><code>ContinuousEncoder</code></td><td align="left">built-in model type for re-encoding all features as <code>Continuous</code></td></tr><tr><td align="left"><code>model1 ∣&gt; model2 ∣&gt; ...</code></td><td align="left">combine multiple models into a pipeline</td></tr><tr><td align="left"><code>measures&#40;&quot;under curve&quot;&#41;</code></td><td align="left">list all measures &#40;metrics&#41; with string &quot;under curve&quot; in documentation</td></tr><tr><td align="left"><code>accuracy&#40;yhat, y&#41;</code></td><td align="left">compute accuracy of predictions <code>yhat</code> against ground truth observations <code>y</code></td></tr><tr><td align="left"><code>auc&#40;yhat, y&#41;, brier_loss&#40;yhat, y&#41;</code></td><td align="left">evaluate two probabilistic measures &#40;<code>yhat</code> a vector of probability distributions&#41;</td></tr><tr><td align="left"><code>machine&#40;model, X, y&#41;</code></td><td align="left">bind <code>model</code> to training data <code>X</code> &#40;features&#41; and <code>y</code> &#40;target&#41;</td></tr><tr><td align="left"><code>fit&#33;&#40;mach, rows&#61;...&#41;</code></td><td align="left">train machine using specified rows &#40;observation indices&#41;</td></tr><tr><td align="left"><code>predict&#40;mach, rows&#61;...&#41;</code>,</td><td align="left">make in-sample model predictions given specified rows</td></tr><tr><td align="left"><code>predict&#40;mach, Xnew&#41;</code></td><td align="left">make predictions given new features <code>Xnew</code></td></tr><tr><td align="left"><code>fitted_params&#40;mach&#41;</code></td><td align="left">inspect learned parameters</td></tr><tr><td align="left"><code>report&#40;mach&#41;</code></td><td align="left">inspect other outcomes of training</td></tr><tr><td align="left"><code>feature_importances&#40;mach&#41;</code></td><td align="left">inspect feature importances, where reported</td></tr><tr><td align="left"><code>confmat&#40;yhat, y&#41;</code></td><td align="left">confusion matrix for predictions <code>yhat</code> and ground truth <code>y</code></td></tr><tr><td align="left"><code>roc&#40;yhat, y&#41;</code></td><td align="left">compute points on the receiver-operator Characteristic</td></tr><tr><td align="left"><code>StratifiedCV&#40;nfolds&#61;6&#41;</code></td><td align="left">6-fold stratified cross-validation resampling strategy</td></tr><tr><td align="left"><code>Holdout&#40;fraction_train&#61;0.7&#41;</code></td><td align="left">holdout resampling strategy</td></tr><tr><td align="left"><code>evaluate&#40;model, X, y; resampling&#61;..., options...&#41;</code></td><td align="left">estimate performance metrics for <code>model</code> using the data <code>X</code>, <code>y</code></td></tr><tr><td align="left"><code>FeatureSelector&#40;&#41;</code></td><td align="left">transformer for selecting features</td></tr><tr><td align="left"><code>Step&#40;3&#41;</code></td><td align="left">iteration control for stepping 3 iterations</td></tr><tr><td align="left"><code>NumberSinceBest&#40;6&#41;</code>, <code>TimeLimit&#40;60/5&#41;, InvalidValue&#40;&#41;</code></td><td align="left">stopping criterion iteration controls</td></tr><tr><td align="left"><code>IteratedModel&#40;model&#61;..., controls&#61;..., options...&#41;</code></td><td align="left">wrap an iterative <code>model</code> in controls</td></tr><tr><td align="left"><code>range&#40;model,  :some_hyperparam, lower&#61;..., upper&#61;...&#41;</code></td><td align="left">define a numeric range</td></tr><tr><td align="left"><code>RandomSearch&#40;&#41;</code></td><td align="left">random search tuning strategy</td></tr><tr><td align="left"><code>TunedModel&#40;model&#61;..., tuning&#61;..., options...&#41;</code></td><td align="left">wrap the supervised <code>model</code> in specified <code>tuning</code> strategy</td></tr></table>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="warm_up_building_a_model_for_the_iris_dataset"><a href="#warm_up_building_a_model_for_the_iris_dataset" class="header-anchor">Warm up: Building a model for the iris dataset</a></h2></div>
+<div class="dropdown-content"><p>Before turning to the Telco Customer Churn dataset, we very quickly build a predictive model for Fisher&#39;s well-known iris data set, as way of introducing the main actors in any MLJ workflow. Details that you don&#39;t fully grasp should become clearer in the Telco study.</p>
 <p>This section is a condensed adaption of the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Fit-and-predict">Getting Started example</a> in the MLJ documentation.</p>
 <p>First, using the built-in iris dataset, we load and inspect the features <code>X_iris</code> &#40;a table&#41; and target variable <code>y_iris</code> &#40;a vector&#41;:</p>
 <pre><code class="language-julia">using MLJ</code></pre>
@@ -149,30 +243,34 @@ DecisionTreeClassifier(
   post_prune = false, 
   merge_purity_threshold = 1.0, 
   display_depth = 5, 
+  feature_importance = :impurity, 
   rng = Random._GLOBAL_RNG())</code></pre>
 <p>In MLJ, a <em>model</em> is just a container for hyper-parameters of some learning algorithm. It does not store learned parameters.</p>
 <p>Next, we bind the model together with the available data in what&#39;s called a <em>machine</em>:</p>
-<pre><code class="language-julia">mach &#61; machine&#40;model, X_iris, y_iris&#41;</code></pre><pre><code class="plaintext code-output">Machine trained 0 times; caches data
+<pre><code class="language-julia">mach &#61; machine&#40;model, X_iris, y_iris&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @858 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @919 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
+    1:	Source @969 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @114 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>A machine is essentially just a model &#40;ie, hyper-parameters&#41; plus data, but it additionally stores <em>learned parameters</em> &#40;the tree&#41; once it is trained on some view of the data:</p>
 <pre><code class="language-julia">train_rows &#61; vcat&#40;1:60, 91:150&#41;; # some row indices &#40;observations are rows not columns&#41;
 fit&#33;&#40;mach, rows&#61;train_rows&#41;
-fitted_params&#40;mach&#41;</code></pre><pre><code class="plaintext code-output">(tree = Decision Tree
+fitted_params&#40;mach&#41;</code></pre><pre><code class="plaintext code-output">(tree = DecisionTree.InfoNode{Float64, UInt32}(Decision Tree
+Leaves: 5
+Depth:  3, nchildren=2),
+ raw_tree = Decision Tree
 Leaves: 5
 Depth:  3,
- encoding = Dict{CategoricalArrays.CategoricalValue{String, UInt32}, UInt32}("virginica" => 0x00000003, "setosa" => 0x00000001, "versicolor" => 0x00000002),
+ encoding = Dict{UInt32, CategoricalArrays.CategoricalValue{String, UInt32}}(0x00000002 => "versicolor", 0x00000003 => "virginica", 0x00000001 => "setosa"),
  features = [:sepal_length, :sepal_width, :petal_length, :petal_width],)</code></pre>
 <p>A machine stores some other information enabling <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Warm-restarts">warm restart</a> for some models, but we won&#39;t go into that here. You are allowed to access and mutate the <code>model</code> parameter:</p>
 <pre><code class="language-julia">mach.model.min_samples_split  &#61; 10
-fit&#33;&#40;mach, rows&#61;train_rows&#41; # re-train with new hyper-parameter</code></pre><pre><code class="plaintext code-output">Machine trained 2 times; caches data
+fit&#33;&#40;mach, rows&#61;train_rows&#41; # re-train with new hyper-parameter</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @858 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @919 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
+    1:	Source @969 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @114 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>Now we can make predictions on some other view of the data, as in</p>
 <pre><code class="language-julia">predict&#40;mach, rows&#61;71:73&#41;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float64}:
@@ -192,15 +290,10 @@ yhat &#61; predict&#40;mach, Xnew&#41;</code></pre><pre><code class="plaintext c
  0.0
  0.75</code></pre>
 <p>A single prediction is displayed like this:</p>
-<pre><code class="language-julia">yhat&#91;2&#93;</code></pre><pre><code class="plaintext code-output">              UnivariateFinite{ScientificTypesBase.Multiclass{3}} 
-              ┌                                        ┐ 
-       setosa ┤ 0.0                                      
-   versicolor ┤■■■■■■■■■■■ 0.25                          
-    virginica ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.75   
-              └                                        ┘ </code></pre>
-<p>We now turn to the Telco dataset.</p>
-<h2 id="getting_the_telco_data"><a href="#getting_the_telco_data" class="header-anchor">Getting the Telco data</a></h2>
-<pre><code class="language-julia">import DataFrames</code></pre>
+<pre><code class="language-julia">yhat&#91;2&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.Multiclass{3}}(setosa=>0.0, versicolor=>0.25, virginica=>0.75)</code></pre>
+<p>We now turn to the Telco dataset. ‎</p></div>
+<div class="dropdown"><h2 id="getting_the_telco_data"><a href="#getting_the_telco_data" class="header-anchor">Getting the Telco data</a></h2></div>
+<div class="dropdown-content"><pre><code class="language-julia">import DataFrames</code></pre>
 <pre><code class="language-julia">data &#61; OpenML.load&#40;42178&#41; # data set from OpenML.org
 df0 &#61; DataFrames.DataFrame&#40;data&#41;
 first&#40;df0, 4&#41;</code></pre><pre><code class="plaintext code-output">4×21 DataFrame
@@ -213,11 +306,12 @@ first&#40;df0, 4&#41;</code></pre><pre><code class="plaintext code-output">4×21
    4 │ 7795-CFOCW  Male              0.0  No       No             45.0  No            No phone service  DSL              Yes             No            Yes               Yes          No           No               One year        No                Bank transfer (automatic)           42.3   1840.75       No</code></pre>
 <p>The object of this tutorial is to build and evaluate supervised learning models to predict the <code>Churn</code> variable, a binary variable measuring customer retention, based on other variables that are relevant.</p>
 <p>In the table, observations correspond to rows, and features to columns, which is the convention for representing all two-dimensional data in MLJ.</p>
-<h2 id="type_coercion"><a href="#type_coercion" class="header-anchor">Type coercion</a></h2>
-<p><em>Introduces:</em> <code>scitype</code>, <code>schema</code>, <code>coerce</code></p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="type_coercion"><a href="#type_coercion" class="header-anchor">Type coercion</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>scitype</code>, <code>schema</code>, <code>coerce</code></p>
 <p>A <a href="https://juliaai.github.io/ScientificTypes.jl/dev/">&quot;scientific type&quot;</a> or <em>scitype</em> indicates how MLJ will <em>interpret</em> data. For example, <code>typeof&#40;3.14&#41; &#61;&#61; Float64</code>, while <code>scitype&#40;3.14&#41; &#61;&#61; Continuous</code> and also <code>scitype&#40;3.14f0&#41; &#61;&#61; Continuous</code>. In MLJ, model data requirements are articulated using scitypes.</p>
 <p>Here are common &quot;scalar&quot; scitypes:</p>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/scitypes.svg" alt="scalar scitypesb">
+<img src="/assets/end-to-end/telco/scitypes.svg" alt="scalar scitypesb">
 <p>There are also container scitypes. For example, the scitype of any <code>N</code>-dimensional array is <code>AbstractArray&#123;S, N&#125;</code>, where <code>S</code> is the scitype of the elements:</p>
 <pre><code class="language-julia">scitype&#40;&#91;&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;&#93;&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre>
 <p>The <code>schema</code> operator summarizes the column scitypes of a table:</p>
@@ -291,49 +385,63 @@ levels&#40;df0.Churn&#41; # to check order</code></pre><pre><code class="plainte
   19 │ MonthlyCharges    Continuous        Float64
   20 │ TotalCharges      Continuous        Float64
   21 │ Churn             OrderedFactor{2}  CategoricalValue{String, UInt32}</code></pre>
-<h2 id="preparing_a_holdout_set_for_final_testing"><a href="#preparing_a_holdout_set_for_final_testing" class="header-anchor">Preparing a holdout set for final testing</a></h2>
-<p><em>Introduces:</em> <code>partition</code></p>
-<p>To reduce training times for the purposes of this tutorial, we&#39;re going to dump 90&#37; of observations &#40;after shuffling&#41; and split off 30&#37; of the remainder for use as a lock-and-throw-away-the-key holdout set:</p>
-<pre><code class="language-julia">df, df_test, df_dumped &#61; partition&#40;df0, 0.07, 0.03, # in ratios 7:3:90
+<p>‎</p></div>
+<div class="dropdown"><h2 id="preparing_a_holdout_set_for_final_testing"><a href="#preparing_a_holdout_set_for_final_testing" class="header-anchor">Preparing a holdout set for final testing</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>partition</code></p>
+<p>To reduce training times for the purposes of this tutorial, we&#39;re going to dump 90&#37; of observations &#40;after shuffling&#41; and split off 30&#37; of the remainder for use as a lock-and-throw-away-the-key holdout set.</p>
+<pre><code class="language-julia">import Random.Xoshiro
+rng &#61; Xoshiro&#40;123&#41;
+df, df_test, df_dumped &#61; partition&#40;df0, 0.07, 0.03; # in ratios 7:3:90
                                    stratify&#61;df0.Churn,
-                                   rng&#61;123&#41;;</code></pre>
-<p>The reader interested in including all data can instead do <code>df, df_test &#61; partition&#40;df0, 0.7, rng&#61;123&#41;</code>.</p>
-<h2 id="splitting_data_into_target_and_features"><a href="#splitting_data_into_target_and_features" class="header-anchor">Splitting data into target and features</a></h2>
-<p><em>Introduces:</em> <code>unpack</code></p>
+                                   rng&#61;rng&#41;;</code></pre>
+<p>The reader interested in including all data can instead do <code>df, df_test &#61; partition&#40;df0, 0.7; rng&#61;rng &#41;</code>.</p>
+<p>We have included the option <code>stratify&#61;df0.Churn</code> to ensure the <code>Churn</code> classes have similary distributions in <code>df</code> and <code>df_test</code>.</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="splitting_data_into_target_and_features"><a href="#splitting_data_into_target_and_features" class="header-anchor">Splitting data into target and features</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>unpack</code></p>
 <p>In the following call, the column with name <code>Churn</code> is copied over to a vector <code>y</code>, and every remaining column, except <code>customerID</code> &#40;which contains no useful information&#41; goes into a table <code>X</code>. Here <code>Churn</code> is the target variable for which we seek predictions, given new versions of the features <code>X</code>.</p>
 <pre><code class="language-julia">y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Churn&#41;, &#33;&#61;&#40;:customerID&#41;&#41;;
 schema&#40;X&#41;.names</code></pre><pre><code class="plaintext code-output">(:gender, :SeniorCitizen, :Partner, :Dependents, :tenure, :PhoneService, :MultipleLines, :InternetService, :OnlineSecurity, :OnlineBackup, :DeviceProtection, :TechSupport, :StreamingTV, :StreamingMovies, :Contract, :PaperlessBilling, :PaymentMethod, :MonthlyCharges, :TotalCharges)</code></pre>
 <pre><code class="language-julia">intersect&#40;&#91;:Churn, :customerID&#93;, schema&#40;X&#41;.names&#41;</code></pre><pre><code class="plaintext code-output">Symbol[]</code></pre>
 <p>We&#39;ll do the same for the holdout data:</p>
 <pre><code class="language-julia">ytest, Xtest &#61; unpack&#40;df_test, &#61;&#61;&#40;:Churn&#41;, &#33;&#61;&#40;:customerID&#41;&#41;;</code></pre>
-<h2 id="loading_a_model_and_checking_type_requirements"><a href="#loading_a_model_and_checking_type_requirements" class="header-anchor">Loading a model and checking type requirements</a></h2>
-<p><em>Introduces:</em> <code>@load</code>, <code>input_scitype</code>, <code>target_scitype</code></p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="loading_a_model_and_checking_type_requirements"><a href="#loading_a_model_and_checking_type_requirements" class="header-anchor">Loading a model and checking type requirements</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>@load</code>, <code>input_scitype</code>, <code>target_scitype</code></p>
 <p>For tools helping us to identify suitable models, see the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/model_search/#model_search">Model Search</a> section of the manual. We will build a gradient tree-boosting model, a popular first choice for structured data like we have here. Model code is contained in a third-party package called <a href="https://github.com/Evovest/EvoTrees.jl">EvoTrees.jl</a> which is loaded as follows:</p>
 <pre><code class="language-julia">Booster &#61; @load EvoTreeClassifier pkg&#61;EvoTrees</code></pre><pre><code class="plaintext code-output">import EvoTrees ✔
 EvoTrees.EvoTreeClassifier</code></pre>
 <p>Recall that a <em>model</em> is just a container for some algorithm&#39;s hyper-parameters. Let&#39;s create a <code>Booster</code> with default values for the hyper-parameters:</p>
 <pre><code class="language-julia">booster &#61; Booster&#40;&#41;</code></pre><pre><code class="plaintext code-output">EvoTreeClassifier(
-  loss = EvoTrees.Softmax(), 
-  nrounds = 10, 
-  λ = 0.0, 
-  γ = 0.0, 
-  η = 0.1, 
-  max_depth = 5, 
+  nrounds = 100, 
+  L2 = 0.0, 
+  lambda = 0.0, 
+  gamma = 0.0, 
+  eta = 0.1, 
+  max_depth = 6, 
   min_weight = 1.0, 
   rowsample = 1.0, 
   colsample = 1.0, 
   nbins = 64, 
-  α = 0.5, 
-  metric = :mlogloss, 
-  rng = Random.MersenneTwister(123), 
-  device = "cpu")</code></pre>
+  alpha = 0.5, 
+  tree_type = "binary", 
+  rng = Random.MersenneTwister(123))</code></pre>
 <p>This model is appropriate for the kind of target variable we have because of the following passing test:</p>
 <pre><code class="language-julia">scitype&#40;y&#41; &lt;: target_scitype&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
-<p>However, our features <code>X</code> cannot be directly used with <code>booster</code>:</p>
-<pre><code class="language-julia">scitype&#40;X&#41; &lt;: input_scitype&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">false</code></pre>
-<p>As it turns out, this is because <code>booster</code>, like the majority of MLJ supervised models, expects the features to be <code>Continuous</code>. &#40;With some experience, this can be gleaned from <code>input_scitype&#40;booster&#41;</code>.&#41; So we need categorical feature encoding, discussed next.</p>
-<h2 id="building_a_model_pipeline_to_incorporate_feature_encoding"><a href="#building_a_model_pipeline_to_incorporate_feature_encoding" class="header-anchor">Building a model pipeline to incorporate feature encoding</a></h2>
-<p><em>Introduces:</em> <code>ContinuousEncoder</code>, pipeline operator <code>|&gt;</code></p>
+<p>Our features <code>X</code> are also compatible with <code>booster</code>:</p>
+<pre><code class="language-julia">scitype&#40;X&#41; &lt;: input_scitype&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
+<p>The majority of MLJ supervised models expects all features to be <code>Continuous</code> &#40;and this used to be true for an earlier version of the EvoTrees.jl models.&#41;. For the sake of illustration, we will pretend this is true here, and introduce our own categorical feature encoding, discussed next.</p>
+<p>To see a list of all models that directly support the data &#40;<code>X</code>, <code>y</code>&#41; we can do this:</p>
+<pre><code class="language-julia">models&#40;matching&#40;X, y&#41;&#41;</code></pre><pre><code class="plaintext code-output">6-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = CatBoostClassifier, package_name = CatBoost, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="building_a_model_pipeline_to_incorporate_feature_encoding"><a href="#building_a_model_pipeline_to_incorporate_feature_encoding" class="header-anchor">Building a model pipeline to incorporate feature encoding</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>ContinuousEncoder</code>, pipeline operator <code>|&gt;</code></p>
 <p>The built-in <code>ContinuousEncoder</code> model transforms an arbitrary table to a table whose features are all <code>Continuous</code> &#40;dropping any fields it does not know how to encode&#41;. In particular, all <code>Multiclass</code> features are one-hot encoded.</p>
 <p>A <em>pipeline</em> is a stand-alone model that internally combines one or more models in a linear &#40;non-branching&#41; pipeline. Here&#39;s a pipeline that adds the <code>ContinuousEncoder</code> as a pre-processor to the gradient tree-boosting model above:</p>
 <pre><code class="language-julia">pipe &#61; ContinuousEncoder&#40;&#41; |&gt; booster</code></pre><pre><code class="plaintext code-output">ProbabilisticPipeline(
@@ -341,188 +449,184 @@ EvoTrees.EvoTreeClassifier</code></pre>
         drop_last = false, 
         one_hot_ordered_factors = false), 
   evo_tree_classifier = EvoTreeClassifier(
-        loss = EvoTrees.Softmax(), 
-        nrounds = 10, 
-        λ = 0.0, 
-        γ = 0.0, 
-        η = 0.1, 
-        max_depth = 5, 
+        nrounds = 100, 
+        L2 = 0.0, 
+        lambda = 0.0, 
+        gamma = 0.0, 
+        eta = 0.1, 
+        max_depth = 6, 
         min_weight = 1.0, 
         rowsample = 1.0, 
         colsample = 1.0, 
         nbins = 64, 
-        α = 0.5, 
-        metric = :mlogloss, 
-        rng = Random.MersenneTwister(123), 
-        device = "cpu"), 
+        alpha = 0.5, 
+        tree_type = "binary", 
+        rng = Random.MersenneTwister(123)), 
   cache = true)</code></pre>
 <p>Note that the component models appear as hyper-parameters of <code>pipe</code>. Pipelines are an implementation of a more general <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Composing-Models">model composition</a> interface provided by MLJ that advanced users may want to learn about.</p>
 <p>From the above display, we see that component model hyper-parameters are now <em>nested</em>, but they are still accessible &#40;important in hyper-parameter optimization&#41;:</p>
-<pre><code class="language-julia">pipe.evo_tree_classifier.max_depth</code></pre><pre><code class="plaintext code-output">5</code></pre>
-<h2 id="evaluating_the_pipeline_models_performance"><a href="#evaluating_the_pipeline_models_performance" class="header-anchor">Evaluating the pipeline model&#39;s performance</a></h2>
-<p><em>Introduces:</em> <code>measures</code> &#40;function&#41;, <strong>measures:</strong> <code>brier_loss</code>, <code>auc</code>, <code>accuracy</code>; <code>machine</code>, <code>fit&#33;</code>, <code>predict</code>, <code>fitted_params</code>, <code>report</code>, <code>roc</code>, <strong>resampling strategy</strong> <code>StratifiedCV</code>, <code>evaluate</code>, <code>FeatureSelector</code></p>
+<pre><code class="language-julia">pipe.evo_tree_classifier.max_depth</code></pre><pre><code class="plaintext code-output">6</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="evaluating_the_pipeline_models_performance"><a href="#evaluating_the_pipeline_models_performance" class="header-anchor">Evaluating the pipeline model&#39;s performance</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>measures</code> &#40;function&#41;, <strong>measures:</strong> <code>brier_loss</code>, <code>auc</code>, <code>accuracy</code>; <code>machine</code>, <code>fit&#33;</code>, <code>predict</code>, <code>fitted_params</code>, <code>report</code>, <code>roc</code>, <strong>resampling strategy</strong> <code>StratifiedCV</code>, <code>evaluate</code>, <code>FeatureSelector</code>, <code>feature_importances</code></p>
 <p>Without touching our test set <code>Xtest</code>, <code>ytest</code>, we will estimate the performance of our pipeline model, with default hyper-parameters, in two different ways:</p>
 <p><strong>Evaluating by hand.</strong> First, we&#39;ll do this &quot;by hand&quot; using the <code>fit&#33;</code> and <code>predict</code> workflow illustrated for the iris data set above, using a holdout resampling strategy. At the same time we&#39;ll see how to generate a <strong>confusion matrix</strong>, <strong>ROC curve</strong>, and inspect <strong>feature importances</strong>.</p>
 <p><strong>Automated performance evaluation.</strong> Next we&#39;ll apply the more typical and convenient <code>evaluate</code> workflow, but using <code>StratifiedCV</code> &#40;stratified cross-validation&#41; which is more informative.</p>
 <p>In any case, we need to choose some measures &#40;metrics&#41; to quantify the performance of our model. For a complete list of measures, one does <code>measures&#40;&#41;</code>. Or we also can do:</p>
-<pre><code class="language-julia">measures&#40;&quot;Brier&quot;&#41;</code></pre><pre><code class="plaintext code-output">2-element Vector{NamedTuple{(:name, :instances, :human_name, :target_scitype, :supports_weights, :supports_class_weights, :prediction_type, :orientation, :reports_each_observation, :aggregation, :is_feature_dependent, :docstring, :distribution_type)}}:
- (name = BrierLoss, instances = [brier_loss], ...)
- (name = BrierScore, instances = [brier_score], ...)</code></pre>
+<pre><code class="language-julia">measures&#40;&quot;Brier&quot;&#41;</code></pre><pre><code class="plaintext code-output">OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}} with 2 entries:
+  BrierScore => (aliases = ("brier_score", "quadratic_score"), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Distribution(), observation_scitype = Union{Missing, Infinite, Finite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Score(), external_aggregation_mode = Mean(), human_name = "brier score")
+  BrierLoss => (aliases = ("brier_loss", "cross_entropy", "quadratic_loss"), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Distribution(), observation_scitype = Union{Missing, Infinite, Finite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Loss(), external_aggregation_mode = Mean(), human_name = "brier loss")</code></pre>
 <p>We will be primarily using <code>brier_loss</code>, but also <code>auc</code> &#40;area under the ROC curve&#41; and <code>accuracy</code>.</p>
-<h3 id="evaluating_by_hand_with_a_holdout_set"><a href="#evaluating_by_hand_with_a_holdout_set" class="header-anchor">Evaluating by hand &#40;with a holdout set&#41;</a></h3>
-<p>Our pipeline model can be trained just like the decision tree model we built for the iris data set. Binding all non-test data to the pipeline model:</p>
-<pre><code class="language-julia">mach_pipe &#61; machine&#40;pipe, X, y&#41;</code></pre><pre><code class="plaintext code-output">Machine trained 0 times; caches data
+<div class="dropdown"><h3 id="evaluating_by_hand_with_a_holdout_set"><a href="#evaluating_by_hand_with_a_holdout_set" class="header-anchor">Evaluating by hand &#40;with a holdout set&#41;</a></h3></div>
+<div class="dropdown-content"><p>Our pipeline model can be trained just like the decision tree model we built for the iris data set. Binding all non-test data to the pipeline model:</p>
+<pre><code class="language-julia">mach_pipe &#61; machine&#40;pipe, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @885 ⏎ `ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}, AbstractVector{ScientificTypesBase.Multiclass{3}}}}`
-    2:	Source @785 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
+    1:	Source @279 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @925 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We already encountered the <code>partition</code> method above. Here we apply it to row indices, instead of data containers, as <code>fit&#33;</code> and <code>predict</code> only need a <em>view</em> of the data to work.</p>
 <pre><code class="language-julia">train, validation &#61; partition&#40;1:length&#40;y&#41;, 0.7&#41;
-fit&#33;&#40;mach_pipe, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">Machine trained 1 time; caches data
+fit&#33;&#40;mach_pipe, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @885 ⏎ `ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}, AbstractVector{ScientificTypesBase.Multiclass{3}}}}`
-    2:	Source @785 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
+    1:	Source @279 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @925 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We note in passing that we can access two kinds of information from a trained machine:</p>
 <ul>
 <li><p>The <strong>learned parameters</strong> &#40;eg, coefficients of a linear model&#41;: We use <code>fitted_params&#40;mach_pipe&#41;</code></p>
 </li>
-<li><p>Other <strong>by-products of training</strong> &#40;eg, feature importances&#41;: We use <code>report&#40;mach_pipe&#41;</code></p>
+<li><p>Other <strong>by-products of training</strong> &#40;eg, p-values&#41;: We use <code>report&#40;mach_pipe&#41;</code></p>
 </li>
 </ul>
 <pre><code class="language-julia">fp &#61; fitted_params&#40;mach_pipe&#41;;
-keys&#40;fp&#41;</code></pre><pre><code class="plaintext code-output">(:evo_tree_classifier, :continuous_encoder, :machines, :fitted_params_given_machine)</code></pre>
-<p>For example, we can check that the encoder did not actually drop any features:</p>
-<pre><code class="language-julia">Set&#40;fp.continuous_encoder.features_to_keep&#41; &#61;&#61; Set&#40;schema&#40;X&#41;.names&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
-<p>And, from the report, extract feature importances:</p>
-<pre><code class="language-julia">rpt &#61; report&#40;mach_pipe&#41;
-keys&#40;rpt.evo_tree_classifier&#41;</code></pre><pre><code class="plaintext code-output">(:feature_importances,)</code></pre>
-<pre><code class="language-julia">fi &#61; rpt.evo_tree_classifier.feature_importances
-feature_importance_table &#61;
-    &#40;feature&#61;Symbol.&#40;first.&#40;fi&#41;&#41;, importance&#61;last.&#40;fi&#41;&#41; |&gt; DataFrames.DataFrame</code></pre><pre><code class="plaintext code-output">45×2 DataFrame
- Row │ feature                            importance
-     │ Symbol                             Float64
-─────┼────────────────────────────────────────────────
-   1 │ tenure                             0.367021
-   2 │ MonthlyCharges                     0.167477
-   3 │ Contract__Month-to-month           0.16637
-   4 │ TotalCharges                       0.0608734
-   5 │ PaymentMethod__Bank transfer (au…  0.0381171
-   6 │ Dependents__No                     0.0273874
-   7 │ SeniorCitizen                      0.0262011
-   8 │ PaperlessBilling__No               0.024691
-   9 │ DeviceProtection__No               0.0234396
-  10 │ StreamingMovies__Yes               0.0182277
-  11 │ gender__Female                     0.0133198
-  12 │ OnlineBackup__Yes                  0.010152
-  13 │ MultipleLines__No                  0.0093157
-  14 │ StreamingTV__No                    0.00695159
-  15 │ DeviceProtection__Yes              0.00653241
-  16 │ PaperlessBilling__Yes              0.00581502
-  17 │ TechSupport__No                    0.00460489
-  18 │ PaymentMethod__Credit card (auto…  0.00369404
-  19 │ StreamingMovies__No                0.00352602
-  20 │ Contract__One year                 0.00339499
-  21 │ Contract__Two year                 0.00316092
-  22 │ Partner__Yes                       0.00292232
-  23 │ OnlineBackup__No                   0.0029127
-  24 │ Dependents__Yes                    0.00225914
-  25 │ Partner__No                        0.00145106
-  26 │ gender__Male                       0.000181241
-  27 │ PaymentMethod__Mailed check        1.17948e-6
-  28 │ OnlineSecurity__No internet serv…  0.0
-  29 │ OnlineSecurity__No                 0.0
-  30 │ PaymentMethod__Electronic check    0.0
-  31 │ OnlineSecurity__Yes                0.0
-  32 │ InternetService__Fiber optic       0.0
-  33 │ TechSupport__Yes                   0.0
-  34 │ OnlineBackup__No internet service  0.0
-  35 │ InternetService__No                0.0
-  36 │ StreamingTV__Yes                   0.0
-  37 │ PhoneService__No                   0.0
-  38 │ PhoneService__Yes                  0.0
-  39 │ DeviceProtection__No internet se…  0.0
-  40 │ StreamingTV__No internet service   0.0
-  41 │ StreamingMovies__No internet ser…  0.0
-  42 │ TechSupport__No internet service   0.0
-  43 │ MultipleLines__Yes                 0.0
-  44 │ MultipleLines__No phone service    0.0
-  45 │ InternetService__DSL               0.0</code></pre>
+keys&#40;fp&#41;</code></pre><pre><code class="plaintext code-output">(:evo_tree_classifier, :continuous_encoder)</code></pre>
+<p>For example, we can extract the raw EvoTrees.jl learned parameter object:</p>
+<pre><code class="language-julia">fp.evo_tree_classifier.fitresult</code></pre><pre><code class="plaintext code-output">EvoTrees.EvoTree{EvoTrees.MLogLoss, 2}
+ - Contains 101 trees in field `trees` (incl. 1 bias tree).
+ - Data input has 45 features.
+ - [:target_levels, :fnames, :feattypes, :edges, :featbins] info accessible in field `info`
+</code></pre>
+<p>And, from the report, extract the names of all features generated for the one-hot encoding:</p>
+<pre><code class="language-julia">rpt &#61; report&#40;mach_pipe&#41;;
+keys&#40;rpt.continuous_encoder&#41;</code></pre><pre><code class="plaintext code-output">(:features_to_keep, :new_features)</code></pre>
+<pre><code class="language-julia">join&#40;string.&#40;rpt.continuous_encoder.new_features&#41;, &quot;, &quot;&#41; |&gt; println</code></pre><pre><code class="plaintext code-output">gender__Female, gender__Male, SeniorCitizen, Partner__No, Partner__Yes, Dependents__No, Dependents__Yes, tenure, PhoneService__No, PhoneService__Yes, MultipleLines__No, MultipleLines__No phone service, MultipleLines__Yes, InternetService__DSL, InternetService__Fiber optic, InternetService__No, OnlineSecurity__No, OnlineSecurity__No internet service, OnlineSecurity__Yes, OnlineBackup__No, OnlineBackup__No internet service, OnlineBackup__Yes, DeviceProtection__No, DeviceProtection__No internet service, DeviceProtection__Yes, TechSupport__No, TechSupport__No internet service, TechSupport__Yes, StreamingTV__No, StreamingTV__No internet service, StreamingTV__Yes, StreamingMovies__No, StreamingMovies__No internet service, StreamingMovies__Yes, Contract__Month-to-month, Contract__One year, Contract__Two year, PaperlessBilling__No, PaperlessBilling__Yes, PaymentMethod__Bank transfer (automatic), PaymentMethod__Credit card (automatic), PaymentMethod__Electronic check, PaymentMethod__Mailed check, MonthlyCharges, TotalCharges
+</code></pre>
+<p>Another example of information sometimes appearing in a report is feature importances. However, for models supporting feature importances, they are always available directly.</p>
+<pre><code class="language-julia">reports_feature_importances&#40;pipe&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
+<p>This hods because the supervised component of our pipeline supports feature imporances:</p>
+<pre><code class="language-julia">reports_feature_importances&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
+<p>And we can get the booster feature imporances from the pipeline&#39;s machine like this:</p>
+<pre><code class="language-julia">fi &#61; feature_importances&#40;mach_pipe&#41;</code></pre><pre><code class="plaintext code-output">45-element Vector{Pair{String, Float64}}:
+                           "MonthlyCharges" => 0.23890620397780685
+                 "Contract__Month-to-month" => 0.16232294017366125
+                                   "tenure" => 0.14677468271414482
+                             "TotalCharges" => 0.14666498887062812
+                              "Partner__No" => 0.030441338887616118
+                           "gender__Female" => 0.025860497369449405
+                         "OnlineBackup__No" => 0.024299735947768884
+                            "SeniorCitizen" => 0.02280229847728746
+              "PaymentMethod__Mailed check" => 0.02153253456456951
+                       "OnlineSecurity__No" => 0.020133018731836202
+                         "PhoneService__No" => 0.019949239825781784
+          "PaymentMethod__Electronic check" => 0.019613869758192123
+             "InternetService__Fiber optic" => 0.01710091424020063
+   "PaymentMethod__Credit card (automatic)" => 0.011909647547861153
+                          "TechSupport__No" => 0.0107331453464553
+                        "MultipleLines__No" => 0.01008697622583624
+                     "PaperlessBilling__No" => 0.00943634524564372
+ "PaymentMethod__Bank transfer (automatic)" => 0.00821687161106134
+                     "DeviceProtection__No" => 0.008179337485642651
+                       "MultipleLines__Yes" => 0.006695659965183685
+                          "StreamingTV__No" => 0.006085178170408351
+                         "TechSupport__Yes" => 0.00573288513590814
+                       "Contract__Two year" => 0.005648160146719027
+                           "Dependents__No" => 0.0052877365294750085
+                       "Contract__One year" => 0.003658289499817455
+                      "StreamingMovies__No" => 0.003337851338772691
+                        "OnlineBackup__Yes" => 0.003151342690951194
+                      "OnlineSecurity__Yes" => 0.0028559465736072826
+                     "InternetService__DSL" => 0.0022030341978608006
+                    "DeviceProtection__Yes" => 0.0002864796512690182
+                         "StreamingTV__Yes" => 9.284909858362433e-5
+      "OnlineSecurity__No internet service" => 0.0
+                          "Dependents__Yes" => 0.0
+                             "Partner__Yes" => 0.0
+                    "PaperlessBilling__Yes" => 0.0
+        "OnlineBackup__No internet service" => 0.0
+                      "InternetService__No" => 0.0
+                     "StreamingMovies__Yes" => 0.0
+                             "gender__Male" => 0.0
+                        "PhoneService__Yes" => 0.0
+    "DeviceProtection__No internet service" => 0.0
+         "StreamingTV__No internet service" => 0.0
+     "StreamingMovies__No internet service" => 0.0
+         "TechSupport__No internet service" => 0.0
+          "MultipleLines__No phone service" => 0.0</code></pre>
+<p>which we&#39;ll put into data frame for later:</p>
+<pre><code class="language-julia">feature_importance_table &#61;
+    &#40;feature&#61;Symbol.&#40;first.&#40;fi&#41;&#41;, importance&#61;last.&#40;fi&#41;&#41; |&gt; DataFrames.DataFrame;</code></pre>
 <p>For models not reporting feature importances, we recommend the <a href="https://expandingman.gitlab.io/Shapley.jl/">Shapley.jl</a> package.</p>
 <p>Returning to predictions and evaluations of our measures:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;mach_pipe, rows&#61;validation&#41;;
 print&#40;
     &quot;Measurements:\n&quot;,
-    &quot;  brier loss: &quot;, brier_loss&#40;ŷ, y&#91;validation&#93;&#41; |&gt; mean, &quot;\n&quot;,
+    &quot;  brier loss: &quot;, brier_loss&#40;ŷ, y&#91;validation&#93;&#41;, &quot;\n&quot;,
     &quot;  auc:        &quot;, auc&#40;ŷ, y&#91;validation&#93;&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ&#41;, y&#91;validation&#93;&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Measurements:
-  brier loss: 0.27683139589958233
-  auc:        0.8171277997364954
+  brier loss: 0.32075024
+  auc:        0.7906746031746031
   accuracy:   0.7972972972972973</code></pre>
 <p>Note that we need <code>mode</code> in the last case because <code>accuracy</code> expects point predictions, not probabilistic ones. &#40;One can alternatively use <code>predict_mode</code> to generate the predictions.&#41;</p>
 <p>While we&#39;re here, lets also generate a <strong>confusion matrix</strong> and <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">receiver-operator characteristic</a> &#40;ROC&#41;:</p>
-<pre><code class="language-julia">confmat&#40;mode.&#40;ŷ&#41;, y&#91;validation&#93;&#41;</code></pre><pre><code class="plaintext code-output">              ┌───────────────────────────┐
-              │       Ground Truth        │
-┌─────────────┼─────────────┬─────────────┤
-│  Predicted  │     No      │     Yes     │
-├─────────────┼─────────────┼─────────────┤
-│     No      │     101     │     16      │
-├─────────────┼─────────────┼─────────────┤
-│     Yes     │     14      │     17      │
-└─────────────┴─────────────┴─────────────┘
+<pre><code class="language-julia">confmat&#40;mode.&#40;ŷ&#41;, y&#91;validation&#93;&#41;</code></pre><pre><code class="plaintext code-output">          ┌─────────────┐
+          │Ground Truth │
+┌─────────┼──────┬──────┤
+│Predicted│  No  │ Yes  │
+├─────────┼──────┼──────┤
+│   No    │  99  │  17  │
+├─────────┼──────┼──────┤
+│   Yes   │  13  │  19  │
+└─────────┴──────┴──────┘
 </code></pre>
 <p>Note: Importing the plotting package and calling the plotting functions for the first time can take a minute or so.</p>
-<pre><code class="language-julia">using Plots</code></pre>
-<pre><code class="language-julia">roc_curve &#61; roc&#40;ŷ, y&#91;validation&#93;&#41;
-plt &#61; scatter&#40;roc_curve, legend&#61;false&#41;
+<pre><code class="language-julia">using Plots
+Plots.scalefontsizes&#40;0.85&#41;</code></pre>
+<pre><code class="language-julia">roc &#61; roc_curve&#40;ŷ, y&#91;validation&#93;&#41;
+plt &#61; scatter&#40;roc, legend&#61;false&#41;
 plot&#33;&#40;plt, xlab&#61;&quot;false positive rate&quot;, ylab&#61;&quot;true positive rate&quot;&#41;
 plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
-<h3 id="automated_performance_evaluation_more_typical_workflow"><a href="#automated_performance_evaluation_more_typical_workflow" class="header-anchor">Automated performance evaluation &#40;more typical workflow&#41;</a></h3>
-<p>We can also get performance estimates with a single call to the <code>evaluate</code> function, which also allows for more complicated resampling - in this case stratified cross-validation. To make this more comprehensive, we set <code>repeats&#61;3</code> below to make our cross-validation &quot;Monte Carlo&quot; &#40;3 random size-6 partitions of the observation space, for a total of 18 folds&#41; and set <code>acceleration&#61;CPUThreads&#40;&#41;</code> to parallelize the computation.</p>
+<img src="/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
+<p>&#40;Warning here is a <a href="https://github.com/Evovest/EvoTrees.jl/issues/267">minor bug</a>.&#41;</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="automated_performance_evaluation_more_typical_workflow"><a href="#automated_performance_evaluation_more_typical_workflow" class="header-anchor">Automated performance evaluation &#40;more typical workflow&#41;</a></h3></div>
+<div class="dropdown-content"><p>We can also get performance estimates with a single call to the <code>evaluate</code> function, which also allows for more complicated resampling - in this case stratified cross-validation. To make this more comprehensive, we set <code>repeats&#61;3</code> below to make our cross-validation &quot;Monte Carlo&quot; &#40;3 random size-6 partitions of the observation space, for a total of 18 folds&#41; and set <code>acceleration&#61;CPUThreads&#40;&#41;</code> to parallelize the computation.</p>
 <p>We choose a <code>StratifiedCV</code> resampling strategy; the complete list of options is <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/evaluating_model_performance/#Built-in-resampling-strategies">here</a>.</p>
 <pre><code class="language-julia">e_pipe &#61; evaluate&#40;pipe, X, y,
-                  resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;123&#41;,
+                  resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;rng&#41;,
                   measures&#61;&#91;brier_loss, auc, accuracy&#93;,
                   repeats&#61;3,
                   acceleration&#61;CPUThreads&#40;&#41;&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  measure, measurement, operation, per_fold,
+  model, measure, operation, measurement, per_fold,
   per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows
+  report_per_fold, train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬─────────────┬──────────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ measure          │ measurement │ operation    │ per_fold                                                                                                                       │
-├──────────────────┼─────────────┼──────────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ BrierLoss()      │ 0.313       │ predict      │ [0.311, 0.344, 0.291, 0.348, 0.357, 0.295, 0.285, 0.313, 0.324, 0.296, 0.284, 0.343, 0.316, 0.268, 0.306, 0.369, 0.287, 0.298] │
-│ AreaUnderCurve() │ 0.788       │ predict      │ [0.778, 0.743, 0.802, 0.774, 0.724, 0.808, 0.832, 0.788, 0.743, 0.82, 0.862, 0.692, 0.761, 0.845, 0.827, 0.734, 0.833, 0.824]  │
-│ Accuracy()       │ 0.783       │ predict_mode │ [0.771, 0.78, 0.78, 0.78, 0.732, 0.817, 0.795, 0.78, 0.78, 0.793, 0.805, 0.768, 0.783, 0.841, 0.78, 0.744, 0.793, 0.768]       │
-└──────────────────┴─────────────┴──────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────┬──────────────┬─────────────┬─────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                                                                                                             │
+├──────────────────┼──────────────┼─────────────┼─────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ BrierLoss()      │ predict      │ 0.36        │ 0.0305  │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │
+│ AreaUnderCurve() │ predict      │ 0.79        │ 0.0227  │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │
+│ Accuracy()       │ predict_mode │ 0.759       │ 0.0213  │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │
+└──────────────────┴──────────────┴─────────────┴─────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 </code></pre>
 <p>&#40;There is also a version of <code>evaluate</code> for machines. Query the <code>evaluate</code> and <code>evaluate&#33;</code> doc-strings to learn more about these functions and what the <code>PerformanceEvaluation</code> object <code>e_pipe</code> records.&#41;</p>
-<p>While <a href="https://arxiv.org/abs/2104.00673">less than ideal</a>, let&#39;s adopt the common practice of using the standard error of a cross-validation score as an estimate of the uncertainty of a performance measure&#39;s expected value. Here&#39;s a utility function to calculate 95&#37; confidence intervals for our performance estimates based on this practice, and it&#39;s application to the current evaluation:</p>
-<pre><code class="language-julia">using Measurements</code></pre>
-<pre><code class="language-julia">function confidence_intervals&#40;e&#41;
-    factor &#61; 2.0 # to get level of 95&#37;
-    measure &#61; e.measure
-    nfolds &#61; length&#40;e.per_fold&#91;1&#93;&#41;
-    measurement &#61; &#91;e.measurement&#91;j&#93; ± factor*std&#40;e.per_fold&#91;j&#93;&#41;/sqrt&#40;nfolds - 1&#41;
-                   for j in eachindex&#40;measure&#41;&#93;
-    table &#61; &#40;measure&#61;measure, measurement&#61;measurement&#41;
-    return DataFrames.DataFrame&#40;table&#41;
-end
-
-confidence_intervals_basic_model &#61; confidence_intervals&#40;e_pipe&#41;</code></pre><pre><code class="plaintext code-output">3×2 DataFrame
- Row │ measure           measurement
-     │ Measure           Measuremen…
-─────┼───────────────────────────────
-   1 │ BrierLoss()       0.313±0.014
-   2 │ AreaUnderCurve()  0.788±0.023
-   3 │ Accuracy()        0.783±0.012</code></pre>
-<h2 id="filtering_out_unimportant_features"><a href="#filtering_out_unimportant_features" class="header-anchor">Filtering out unimportant features</a></h2>
-<p><em>Introduces:</em> <code>FeatureSelector</code></p>
+<p>While <a href="https://arxiv.org/abs/2104.00673">less than ideal</a>, let&#39;s adopt the common practice of using the standard error of a cross-validation score as an estimate of the uncertainty of a performance measure&#39;s expected value. To get a 95&#37; confidence interval based on this error, use &quot;measurement ± delta&quot; where &quot;delta&quot; is the number in the &quot;1.96*SE&quot; column.</p>
+<p>‎</p></div>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="filtering_out_unimportant_features"><a href="#filtering_out_unimportant_features" class="header-anchor">Filtering out unimportant features</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>FeatureSelector</code></p>
 <p>Before continuing, we&#39;ll modify our pipeline to drop those features with low feature importance, to speed up later optimization:</p>
 <pre><code class="language-julia">unimportant_features &#61; filter&#40;:importance &#61;&gt; &lt;&#40;0.005&#41;, feature_importance_table&#41;.feature
 
@@ -532,26 +636,26 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
         drop_last = false, 
         one_hot_ordered_factors = false), 
   feature_selector = FeatureSelector(
-        features = [:TechSupport__No, Symbol("PaymentMethod__Credit card (automatic)"), :StreamingMovies__No, Symbol("Contract__One year"), Symbol("Contract__Two year"), :Partner__Yes, :OnlineBackup__No, :Dependents__Yes, :Partner__No, :gender__Male, Symbol("PaymentMethod__Mailed check"), Symbol("OnlineSecurity__No internet service"), :OnlineSecurity__No, Symbol("PaymentMethod__Electronic check"), :OnlineSecurity__Yes, Symbol("InternetService__Fiber optic"), :TechSupport__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingTV__Yes, :PhoneService__No, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), :MultipleLines__Yes, Symbol("MultipleLines__No phone service"), :InternetService__DSL], 
+        features = [Symbol("Contract__One year"), :StreamingMovies__No, :OnlineBackup__Yes, :OnlineSecurity__Yes, :InternetService__DSL, :DeviceProtection__Yes, :StreamingTV__Yes, Symbol("OnlineSecurity__No internet service"), :Dependents__Yes, :Partner__Yes, :PaperlessBilling__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingMovies__Yes, :gender__Male, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), Symbol("MultipleLines__No phone service")], 
         ignore = true), 
   evo_tree_classifier = EvoTreeClassifier(
-        loss = EvoTrees.Softmax(), 
-        nrounds = 10, 
-        λ = 0.0, 
-        γ = 0.0, 
-        η = 0.1, 
-        max_depth = 5, 
+        nrounds = 100, 
+        L2 = 0.0, 
+        lambda = 0.0, 
+        gamma = 0.0, 
+        eta = 0.1, 
+        max_depth = 6, 
         min_weight = 1.0, 
         rowsample = 1.0, 
         colsample = 1.0, 
         nbins = 64, 
-        α = 0.5, 
-        metric = :mlogloss, 
-        rng = Random.MersenneTwister(123, (0, 86172, 85170, 780)), 
-        device = "cpu"), 
+        alpha = 0.5, 
+        tree_type = "binary", 
+        rng = Random.MersenneTwister(123, (0, 236472, 235470, 635))), 
   cache = true)</code></pre>
-<h2 id="wrapping_our_iterative_model_in_control_strategies"><a href="#wrapping_our_iterative_model_in_control_strategies" class="header-anchor">Wrapping our iterative model in control strategies</a></h2>
-<p><em>Introduces:</em> <strong>control strategies:</strong> <code>Step</code>, <code>NumberSinceBest</code>, <code>TimeLimit</code>, <code>InvalidValue</code>, <strong>model wrapper</strong> <code>IteratedModel</code>, <strong>resampling strategy:</strong> <code>Holdout</code></p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="wrapping_our_iterative_model_in_control_strategies"><a href="#wrapping_our_iterative_model_in_control_strategies" class="header-anchor">Wrapping our iterative model in control strategies</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <strong>control strategies:</strong> <code>Step</code>, <code>NumberSinceBest</code>, <code>TimeLimit</code>, <code>InvalidValue</code>, <strong>model wrapper</strong> <code>IteratedModel</code>, <strong>resampling strategy:</strong> <code>Holdout</code></p>
 <p>We want to optimize the hyper-parameters of our model. Since our model is iterative, these parameters include the &#40;nested&#41; iteration parameter <code>pipe.evo_tree_classifier.nrounds</code>. Sometimes this parameter is optimized first, fixed, and then maybe optimized again after the other parameters. Here we take a more principled approach, <strong>wrapping our model in a control strategy</strong> that makes it &quot;self-iterating&quot;. The strategy applies a stopping criterion to <em>out-of-sample</em> estimates of the model performance, constructed using an internally constructed holdout set. In this way, we avoid some data hygiene issues, and, when we subsequently optimize other parameters, we will always being using an optimal number of iterations.</p>
 <p>Note that this approach can be applied to any iterative MLJ model, eg, the neural network models provided by <a href="https://github.com/FluxML/MLJFlux.jl">MLJFlux.jl</a>.</p>
 <p>First, we select appropriate controls from <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/controlling_iterative_models/#Controls-provided">this list</a>:</p>
@@ -572,8 +676,22 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
                               resampling&#61;Holdout&#40;fraction_train&#61;0.7&#41;&#41;</code></pre><pre><code class="plaintext code-output">ProbabilisticIteratedModel(
   model = ProbabilisticPipeline(
         continuous_encoder = ContinuousEncoder(drop_last = false, …), 
-        feature_selector = FeatureSelector(features = [:TechSupport__No, Symbol("PaymentMethod__Credit card (automatic)"), :StreamingMovies__No, Symbol("Contract__One year"), Symbol("Contract__Two year"), :Partner__Yes, :OnlineBackup__No, :Dependents__Yes, :Partner__No, :gender__Male, Symbol("PaymentMethod__Mailed check"), Symbol("OnlineSecurity__No internet service"), :OnlineSecurity__No, Symbol("PaymentMethod__Electronic check"), :OnlineSecurity__Yes, Symbol("InternetService__Fiber optic"), :TechSupport__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingTV__Yes, :PhoneService__No, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), :MultipleLines__Yes, Symbol("MultipleLines__No phone service"), :InternetService__DSL], …), 
-        evo_tree_classifier = EvoTreeClassifier(loss = EvoTrees.Softmax(), …), 
+        feature_selector = FeatureSelector(features = [Symbol("Contract__One year"), :StreamingMovies__No, :OnlineBackup__Yes, :OnlineSecurity__Yes, :InternetService__DSL, :DeviceProtection__Yes, :StreamingTV__Yes, Symbol("OnlineSecurity__No internet service"), :Dependents__Yes, :Partner__Yes, :PaperlessBilling__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingMovies__Yes, :gender__Male, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), Symbol("MultipleLines__No phone service")], …), 
+        evo_tree_classifier = EvoTrees.EvoTreeClassifier{EvoTrees.MLogLoss}
+ - nrounds: 100
+ - L2: 0.0
+ - lambda: 0.0
+ - gamma: 0.0
+ - eta: 0.1
+ - max_depth: 6
+ - min_weight: 1.0
+ - rowsample: 1.0
+ - colsample: 1.0
+ - nbins: 64
+ - alpha: 0.5
+ - tree_type: binary
+ - rng: Random.MersenneTwister(123, (0, 236472, 235470, 635))
+, 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
   resampling = Holdout(
@@ -599,8 +717,9 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
 <li><p>A final step that trains the atomic model on <em>all</em> available data using the number of iterations determined in the first step. Calling <code>predict</code> on <code>mach_iterated_pipe</code> means using the learned parameters of the second step.</p>
 </li>
 </ul>
-<h2 id="hyper-parameter_optimization_model_tuning"><a href="#hyper-parameter_optimization_model_tuning" class="header-anchor">Hyper-parameter optimization &#40;model tuning&#41;</a></h2>
-<p><em>Introduces:</em> <code>range</code>, <strong>model wrapper</strong> <code>TunedModel</code>, <code>RandomSearch</code></p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="hyper-parameter_optimization_model_tuning"><a href="#hyper-parameter_optimization_model_tuning" class="header-anchor">Hyper-parameter optimization &#40;model tuning&#41;</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>range</code>, <strong>model wrapper</strong> <code>TunedModel</code>, <code>RandomSearch</code></p>
 <p>We now turn to hyper-parameter optimization. A tool not discussed here is the <code>learning_curve</code> function, which can be useful when wanting to visualize the effect of changes to a <em>single</em> hyper-parameter &#40;which could be an iteration parameter&#41;. See, for example, <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/">this section of the manual</a> or <a href="https://github.com/ablaom/MLJTutorial.jl/blob/dev/notebooks/04_tuning/notebook.ipynb">this tutorial</a>.</p>
 <p>Fine tuning the hyper-parameters of a gradient booster can be somewhat involved. Here we settle for simultaneously optimizing two key parameters: <code>max_depth</code> and <code>η</code> &#40;learning_rate&#41;.</p>
 <p>Like iteration control, <strong>model optimization in MLJ is implemented as a model wrapper</strong>, called <code>TunedModel</code>. After wrapping a model in a tuning strategy and binding the wrapped model to data in a machine called <code>mach</code>, calling <code>fit&#33;&#40;mach&#41;</code> instigates a search for optimal model hyperparameters, within a specified range, and then uses all supplied data to train the best model. To predict using that model, one then calls <code>predict&#40;mach, Xnew&#41;</code>. In this way the wrapped model may be viewed as a &quot;self-tuning&quot; version of the unwrapped model. That is, wrapping the model simply transforms certain hyper-parameters into learned parameters &#40;just as <code>IteratedModel</code> does for an iteration parameter&#41;.</p>
@@ -611,23 +730,22 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
               drop_last = false, 
               one_hot_ordered_factors = false), 
         feature_selector = FeatureSelector(
-              features = [:TechSupport__No, Symbol("PaymentMethod__Credit card (automatic)"), :StreamingMovies__No, Symbol("Contract__One year"), Symbol("Contract__Two year"), :Partner__Yes, :OnlineBackup__No, :Dependents__Yes, :Partner__No, :gender__Male, Symbol("PaymentMethod__Mailed check"), Symbol("OnlineSecurity__No internet service"), :OnlineSecurity__No, Symbol("PaymentMethod__Electronic check"), :OnlineSecurity__Yes, Symbol("InternetService__Fiber optic"), :TechSupport__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingTV__Yes, :PhoneService__No, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), :MultipleLines__Yes, Symbol("MultipleLines__No phone service"), :InternetService__DSL], 
+              features = [Symbol("Contract__One year"), :StreamingMovies__No, :OnlineBackup__Yes, :OnlineSecurity__Yes, :InternetService__DSL, :DeviceProtection__Yes, :StreamingTV__Yes, Symbol("OnlineSecurity__No internet service"), :Dependents__Yes, :Partner__Yes, :PaperlessBilling__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingMovies__Yes, :gender__Male, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), Symbol("MultipleLines__No phone service")], 
               ignore = true), 
         evo_tree_classifier = EvoTreeClassifier(
-              loss = EvoTrees.Softmax(), 
-              nrounds = 10, 
-              λ = 0.0, 
-              γ = 0.0, 
-              η = 0.1, 
-              max_depth = 5, 
+              nrounds = 100, 
+              L2 = 0.0, 
+              lambda = 0.0, 
+              gamma = 0.0, 
+              eta = 0.1, 
+              max_depth = 6, 
               min_weight = 1.0, 
               rowsample = 1.0, 
               colsample = 1.0, 
               nbins = 64, 
-              α = 0.5, 
-              metric = :mlogloss, 
-              rng = Random.MersenneTwister(123, (0, 86172, 85170, 780)), 
-              device = "cpu"), 
+              alpha = 0.5, 
+              tree_type = "binary", 
+              rng = Random.MersenneTwister(123, (0, 236472, 235470, 635))), 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
   resampling = Holdout(
@@ -642,25 +760,25 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
   check_measure = true, 
   iteration_parameter = nothing, 
   cache = true)</code></pre>
-<pre><code class="language-julia">p1 &#61; :&#40;model.evo_tree_classifier.η&#41;
+<pre><code class="language-julia">p1 &#61; :&#40;model.evo_tree_classifier.eta&#41;
 p2 &#61; :&#40;model.evo_tree_classifier.max_depth&#41;
 
 r1 &#61; range&#40;iterated_pipe, p1, lower&#61;-2, upper&#61;-0.5, scale&#61;x-&gt;10^x&#41;
 r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre><pre><code class="plaintext code-output">NumericRange(2 ≤ model.evo_tree_classifier.max_depth ≤ 6; origin=4.0, unit=2.0)</code></pre>
 <p>Nominal ranges are defined by specifying <code>values</code> instead of <code>lower</code> and <code>upper</code>.</p>
 <p>Next, we choose an optimization strategy from <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/#Tuning-Models">this list</a>:</p>
-<pre><code class="language-julia">tuning &#61; RandomSearch&#40;rng&#61;123&#41;</code></pre><pre><code class="plaintext code-output">RandomSearch(
+<pre><code class="language-julia">tuning &#61; RandomSearch&#40;rng&#61;rng&#41;</code></pre><pre><code class="plaintext code-output">RandomSearch(
   bounded = Distributions.Uniform, 
   positive_unbounded = Distributions.Gamma, 
   other = Distributions.Normal, 
-  rng = Random.MersenneTwister(123))</code></pre>
+  rng = Random.Xoshiro(0x028dfc8b09743300, 0x63602df923831c17, 0x583c62916d9b98c3, 0x9a3836f04c25bd68, 0xf4e85a418b9c4f80))</code></pre>
 <p>Then we wrap the model, specifying a <code>resampling</code> strategy and a <code>measure</code>, as we did for <code>IteratedModel</code>.  In fact, we can include a battery of <code>measures</code>; by default, optimization is with respect to performance estimates based on the first measure, but estimates for all measures can be accessed from the model&#39;s <code>report</code>.</p>
 <p>The keyword <code>n</code> specifies the total number of models &#40;sets of hyper-parameters&#41; to evaluate.</p>
 <pre><code class="language-julia">tuned_iterated_pipe &#61; TunedModel&#40;model&#61;iterated_pipe,
                                  range&#61;&#91;r1, r2&#93;,
                                  tuning&#61;tuning,
                                  measures&#61;&#91;brier_loss, auc, accuracy&#93;,
-                                 resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;123&#41;,
+                                 resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;rng&#41;,
                                  acceleration&#61;CPUThreads&#40;&#41;,
                                  n&#61;40&#41;</code></pre><pre><code class="plaintext code-output">ProbabilisticTunedModel(
   model = ProbabilisticIteratedModel(
@@ -679,31 +797,32 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
         bounded = Distributions.Uniform, 
         positive_unbounded = Distributions.Gamma, 
         other = Distributions.Normal, 
-        rng = Random.MersenneTwister(123)), 
+        rng = Random.Xoshiro(0x028dfc8b09743300, 0x63602df923831c17, 0x583c62916d9b98c3, 0x9a3836f04c25bd68, 0xf4e85a418b9c4f80)), 
   resampling = StratifiedCV(
         nfolds = 6, 
         shuffle = true, 
-        rng = Random.MersenneTwister(123)), 
-  measure = MLJBase.Measure[BrierLoss(), AreaUnderCurve(), Accuracy()], 
+        rng = Random.Xoshiro(0x028dfc8b09743300, 0x63602df923831c17, 0x583c62916d9b98c3, 0x9a3836f04c25bd68, 0xf4e85a418b9c4f80)), 
+  measure = StatisticalMeasuresBase.FussyMeasure[BrierLoss(), AreaUnderCurve(), Accuracy()], 
   weights = nothing, 
+  class_weights = nothing, 
   operation = nothing, 
-  range = MLJBase.NumericRange{T, MLJBase.Bounded} where T[transformed NumericRange(-2.0 ≤ model.evo_tree_classifier.η ≤ -0.5; origin=-1.25, unit=0.75), NumericRange(2 ≤ model.evo_tree_classifier.max_depth ≤ 6; origin=4.0, unit=2.0)], 
+  range = MLJBase.NumericRange{T, MLJBase.Bounded} where T[NumericRange(0.01 ≤ model.evo_tree_classifier.eta ≤ 0.3162; after scaling: origin=0.05623, unit=5.623), NumericRange(2 ≤ model.evo_tree_classifier.max_depth ≤ 6; origin=4.0, unit=2.0)], 
   selection_heuristic = MLJTuning.NaiveSelection(nothing), 
   train_best = true, 
   repeats = 1, 
   n = 40, 
-  acceleration = ComputationalResources.CPUThreads{Int64}(1), 
+  acceleration = ComputationalResources.CPUThreads{Int64}(12), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
   cache = true)</code></pre>
 <p>To save time, we skip the <code>repeats</code> here.</p>
 <p>Binding our final model to data and training:</p>
 <pre><code class="language-julia">mach_tuned_iterated_pipe &#61; machine&#40;tuned_iterated_pipe, X, y&#41;
-fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">Machine trained 1 time; caches data
+fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
-    1:	Source @007 ⏎ `ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}, AbstractVector{ScientificTypesBase.Multiclass{3}}}}`
-    2:	Source @099 ⏎ `AbstractVector{ScientificTypesBase.OrderedFactor{2}}`
+    1:	Source @579 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @242 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>As explained above, the training we have just performed was split internally into two separate steps:</p>
 <ul>
@@ -714,107 +833,96 @@ fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plainte
 </ul>
 <p>From <code>report&#40;mach_tuned_iterated_pipe&#41;</code> we can extract details about the optimization procedure. For example:</p>
 <pre><code class="language-julia">rpt2 &#61; report&#40;mach_tuned_iterated_pipe&#41;;
-best_booster &#61; rpt2.best_model.model.evo_tree_classifier</code></pre><pre><code class="plaintext code-output">EvoTreeClassifier(
-  loss = EvoTrees.Softmax(), 
-  nrounds = 10, 
-  λ = 0.0, 
-  γ = 0.0, 
-  η = 0.14682597477521467, 
-  max_depth = 2, 
-  min_weight = 1.0, 
-  rowsample = 1.0, 
-  colsample = 1.0, 
-  nbins = 64, 
-  α = 0.5, 
-  metric = :mlogloss, 
-  rng = Random.MersenneTwister(123, (0, 86172, 85170, 780)), 
-  device = "cpu")</code></pre>
-<pre><code class="language-julia">print&#40;
+best_booster &#61; rpt2.best_model.model.evo_tree_classifier
+
+print&#40;
     &quot;Optimal hyper-parameters: \n&quot;,
     &quot;  max_depth: &quot;, best_booster.max_depth, &quot;\n&quot;,
-    &quot;  η:         &quot;, best_booster.η
+    &quot;  eta:         &quot;, best_booster.eta
 &#41;</code></pre><pre><code class="plaintext code-output">Optimal hyper-parameters: 
-  max_depth: 2
-  η:         0.14682597477521467</code></pre>
-<p>Using the <code>confidence_intervals</code> function we defined earlier:</p>
+  max_depth: 3
+  eta:         0.061573795880493394</code></pre>
 <pre><code class="language-julia">e_best &#61; rpt2.best_history_entry
-confidence_intervals&#40;e_best&#41;</code></pre><pre><code class="plaintext code-output">3×2 DataFrame
- Row │ measure           measurement
-     │ Measure           Measuremen…
-─────┼───────────────────────────────
-   1 │ BrierLoss()       0.294±0.031
-   2 │ AreaUnderCurve()  0.817±0.051
-   3 │ Accuracy()        0.801±0.023</code></pre>
+e_best.evaluation</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
+  model, measure, operation, measurement, per_fold,
+  per_observation, fitted_params_per_fold,
+  report_per_fold, train_test_rows, resampling, repeats
+Extract:
+┌──────────────────┬──────────────┬─────────────┬─────────┬─────────────────────────────────────────────────┐
+│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                        │
+├──────────────────┼──────────────┼─────────────┼─────────┼─────────────────────────────────────────────────┤
+│ BrierLoss()      │ predict      │ 0.28        │ 0.0166  │ Float32[0.252, 0.296, 0.289, 0.281, 0.263, 0.3] │
+│ AreaUnderCurve() │ predict      │ 0.834       │ 0.017   │ [0.862, 0.811, 0.82, 0.834, 0.851, 0.825]       │
+│ Accuracy()       │ predict_mode │ 0.789       │ 0.0297  │ [0.831, 0.744, 0.793, 0.793, 0.817, 0.756]      │
+└──────────────────┴──────────────┴─────────────┴─────────┴─────────────────────────────────────────────────┘
+</code></pre>
 <p>Digging a little deeper, we can learn what stopping criterion was applied in the case of the optimal model, and how many iterations were required:</p>
 <pre><code class="language-julia">rpt2.best_report.controls |&gt; collect</code></pre><pre><code class="plaintext code-output">4-element Vector{Tuple{Any, NamedTuple}}:
- (IterationControl.Step(1), (new_iterations = 26,))
+ (IterationControl.Step(1), (new_iterations = 34,))
  (EarlyStopping.NumberSinceBest(4), (done = true, log = "Stop triggered by EarlyStopping.NumberSinceBest(4) stopping criterion. "))
  (EarlyStopping.TimeLimit(Dates.Millisecond(2000)), (done = false, log = ""))
  (EarlyStopping.InvalidValue(), (done = false, log = ""))</code></pre>
 <p>Finally, we can visualize the optimization results:</p>
 <pre><code class="language-julia">plot&#40;mach_tuned_iterated_pipe, size&#61;&#40;600,450&#41;&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/code/output/EX-telco-tuning.svg" alt="">
-<h2 id="saving_our_model"><a href="#saving_our_model" class="header-anchor">Saving our model</a></h2>
-<p><em>Introduces:</em> <code>MLJ.save</code></p>
+<img src="/assets/end-to-end/telco/code/output/EX-telco-tuning.svg" alt="">
+<p>‎</p></div>
+<div class="dropdown"><h2 id="saving_our_model"><a href="#saving_our_model" class="header-anchor">Saving our model</a></h2></div>
+<div class="dropdown-content"><p><em>Introduces:</em> <code>MLJ.save</code></p>
 <p>Here&#39;s how to serialize our final, trained self-iterating, self-tuning pipeline machine using Julia&#39;s native serializer &#40;see <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Saving-machines">the manual</a> for more options&#41;:</p>
 <pre><code class="language-julia">MLJ.save&#40;&quot;tuned_iterated_pipe.jls&quot;, mach_tuned_iterated_pipe&#41;</code></pre>
 <p>We&#39;ll deserialize this in &quot;Testing the final model&quot; below.</p>
-<h2 id="final_performance_estimate"><a href="#final_performance_estimate" class="header-anchor">Final performance estimate</a></h2>
-<p>Finally, to get an even more accurate estimate of performance, we can evaluate our model using stratified cross-validation and all the data attached to our machine. Because this evaluation implies <a href="https://mlr.mlr-org.com/articles/tutorial/nested_resampling.html">nested resampling</a>, this computation takes quite a bit longer than the previous one &#40;which is being repeated six times, using 5/6th of the data each time&#41;:</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="final_performance_estimate"><a href="#final_performance_estimate" class="header-anchor">Final performance estimate</a></h2></div>
+<div class="dropdown-content"><p>Finally, to get an even more accurate estimate of performance, we can evaluate our model using stratified cross-validation and all the data attached to our machine. Because this evaluation implies <a href="https://mlr.mlr-org.com/articles/tutorial/nested_resampling.html">nested resampling</a>, this computation takes quite a bit longer than the previous one &#40;which is being repeated six times, using 5/6th of the data each time&#41;:</p>
 <pre><code class="language-julia">e_tuned_iterated_pipe &#61; evaluate&#40;tuned_iterated_pipe, X, y,
-                                 resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;123&#41;,
+                                 resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;rng&#41;,
                                  measures&#61;&#91;brier_loss, auc, accuracy&#93;&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  measure, measurement, operation, per_fold,
+  model, measure, operation, measurement, per_fold,
   per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows
+  report_per_fold, train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬─────────────┬──────────────┬────────────────────────────────────────────┐
-│ measure          │ measurement │ operation    │ per_fold                                   │
-├──────────────────┼─────────────┼──────────────┼────────────────────────────────────────────┤
-│ BrierLoss()      │ 0.293       │ predict      │ [0.297, 0.334, 0.265, 0.278, 0.322, 0.26]  │
-│ AreaUnderCurve() │ 0.816       │ predict      │ [0.804, 0.749, 0.823, 0.858, 0.772, 0.892] │
-│ Accuracy()       │ 0.801       │ predict_mode │ [0.807, 0.793, 0.841, 0.793, 0.768, 0.805] │
-└──────────────────┴─────────────┴──────────────┴────────────────────────────────────────────┘
+┌──────────────────┬──────────────┬─────────────┬─────────┬───────────────────────────────────────────────────┐
+│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                          │
+├──────────────────┼──────────────┼─────────────┼─────────┼───────────────────────────────────────────────────┤
+│ BrierLoss()      │ predict      │ 0.292       │ 0.0409  │ Float32[0.295, 0.254, 0.316, 0.371, 0.247, 0.266] │
+│ AreaUnderCurve() │ predict      │ 0.823       │ 0.0491  │ [0.81, 0.874, 0.802, 0.727, 0.866, 0.861]         │
+│ Accuracy()       │ predict_mode │ 0.781       │ 0.046   │ [0.795, 0.829, 0.72, 0.72, 0.841, 0.78]           │
+└──────────────────┴──────────────┴─────────────┴─────────┴───────────────────────────────────────────────────┘
 </code></pre>
-<pre><code class="language-julia">confidence_intervals&#40;e_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">3×2 DataFrame
- Row │ measure           measurement
-     │ Measure           Measuremen…
-─────┼───────────────────────────────
-   1 │ BrierLoss()       0.293±0.027
-   2 │ AreaUnderCurve()  0.816±0.048
-   3 │ Accuracy()        0.801±0.022</code></pre>
-<p>For comparison, here are the confidence intervals for the basic pipeline model &#40;no feature selection and default hyperparameters&#41;:</p>
-<pre><code class="language-julia">confidence_intervals_basic_model</code></pre><pre><code class="plaintext code-output">3×2 DataFrame
- Row │ measure           measurement
-     │ Measure           Measuremen…
-─────┼───────────────────────────────
-   1 │ BrierLoss()       0.313±0.014
-   2 │ AreaUnderCurve()  0.788±0.023
-   3 │ Accuracy()        0.783±0.012</code></pre>
-<p>As each pair of intervals overlap, it&#39;s doubtful the small changes here can be assigned statistical significance. Default <code>booster</code> hyper-parameters do a pretty good job.</p>
-<h2 id="testing_the_final_model"><a href="#testing_the_final_model" class="header-anchor">Testing the final model</a></h2>
-<p>We now determine the performance of our model on our lock-and-throw-away-the-key holdout set. To demonstrate deserialization, we&#39;ll pretend we&#39;re in a new Julia session &#40;but have called import/using on the same packages&#41;. Then the following should suffice to recover our model trained under &quot;Hyper-parameter optimization&quot; above:</p>
-<pre><code class="language-julia">mach_restored &#61; machine&#40;&quot;tuned_iterated_pipe.jls&quot;&#41;</code></pre><pre><code class="plaintext code-output">Machine trained 1 time; caches data
+<p>For comparison, here again is the evaluation for the basic pipeline model &#40;no feature selection and default hyperparameters&#41;:</p>
+<pre><code class="language-julia">e_pipe</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
+  model, measure, operation, measurement, per_fold,
+  per_observation, fitted_params_per_fold,
+  report_per_fold, train_test_rows, resampling, repeats
+Extract:
+┌──────────────────┬──────────────┬─────────────┬─────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                                                                                                             │
+├──────────────────┼──────────────┼─────────────┼─────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ BrierLoss()      │ predict      │ 0.36        │ 0.0305  │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │
+│ AreaUnderCurve() │ predict      │ 0.79        │ 0.0227  │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │
+│ Accuracy()       │ predict_mode │ 0.759       │ 0.0213  │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │
+└──────────────────┴──────────────┴─────────────┴─────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<p>Tuning appears to improve all three scores &#40;not just the Brier loss used in optimization&#41;. However, 95&#37; confidence intervals, based on the standard errors, suggest we are not detecting statistically significant differences for <code>auc</code> and <code>accuracy</code>. In any case, the default <code>booster</code> hyper-parameters do a pretty good job. But it would definitely be worth revisiting this in the case we use all the data.</p></div>
+<div class="dropdown"><h2 id="testing_the_final_model"><a href="#testing_the_final_model" class="header-anchor">Testing the final model</a></h2></div>
+<div class="dropdown-content"><p>We now determine the performance of our model on our lock-and-throw-away-the-key holdout set. To demonstrate deserialization, we&#39;ll pretend we&#39;re in a new Julia session &#40;but have called import/using on the same packages&#41;. Then the following should suffice to recover our model trained under &quot;Hyper-parameter optimization&quot; above:</p>
+<pre><code class="language-julia">mach_restored &#61; machine&#40;&quot;tuned_iterated_pipe.jls&quot;&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
 </code></pre>
 <p>We compute predictions on the holdout set:</p>
 <pre><code class="language-julia">ŷ_tuned &#61; predict&#40;mach_restored, Xtest&#41;;
-ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">       UnivariateFinite{ScientificTypesBase.Multiclass{2}} 
-       ┌                                        ┐ 
-    No ┤■■■■■■■■■■■■■■■■■ 0.4644309597323305      
-   Yes ┤■■■■■■■■■■■■■■■■■■■■ 0.5355690402676695   
-       └                                        ┘ </code></pre>
+ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.Multiclass{2}}(No=>0.718, Yes=>0.282)</code></pre>
 <p>And can compute the final performance measures:</p>
 <pre><code class="language-julia">print&#40;
     &quot;Tuned model measurements on test:\n&quot;,
-    &quot;  brier loss: &quot;, brier_loss&#40;ŷ_tuned, ytest&#41; |&gt; mean, &quot;\n&quot;,
+    &quot;  brier loss: &quot;, brier_loss&#40;ŷ_tuned, ytest&#41;, &quot;\n&quot;,
     &quot;  auc:        &quot;, auc&#40;ŷ_tuned, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_tuned&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Tuned model measurements on test:
-  brier loss: 0.2725784645587789
-  auc:        0.8470046082949308
-  accuracy:   0.8056872037914692</code></pre>
+  brier loss: 0.27884042
+  auc:        0.8567396313364055
+  accuracy:   0.7725118483412322</code></pre>
 <p>For comparison, here&#39;s the performance for the basic pipeline model</p>
 <pre><code class="language-julia">mach_basic &#61; machine&#40;pipe, X, y&#41;
 fit&#33;&#40;mach_basic, verbosity&#61;0&#41;
@@ -823,28 +931,51 @@ ŷ_basic &#61; predict&#40;mach_basic, Xtest&#41;;
 
 print&#40;
     &quot;Basic model measurements on test set:\n&quot;,
-    &quot;  brier loss: &quot;, brier_loss&#40;ŷ_basic, ytest&#41; |&gt; mean, &quot;\n&quot;,
+    &quot;  brier loss: &quot;, brier_loss&#40;ŷ_basic, ytest&#41;, &quot;\n&quot;,
     &quot;  auc:        &quot;, auc&#40;ŷ_basic, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_basic&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Basic model measurements on test set:
-  brier loss: 0.3059458610206901
-  auc:        0.8120967741935484
+  brier loss: 0.33141056
+  auc:        0.8130184331797236
   accuracy:   0.7725118483412322</code></pre>
+<p>‎</p></div>
 
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: May 23, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
-</div>
-</div><!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/libs/collapse/collapse.js"></script>
+<script src="/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/libs/nav/head.js"></script>
+<script src="/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/libs/nav/responsive.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
+
 </body>
+
 </html>

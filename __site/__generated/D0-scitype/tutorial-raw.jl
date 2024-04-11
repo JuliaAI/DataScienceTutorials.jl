@@ -30,4 +30,3 @@ boston3 = coerce(boston, autotype(boston, :few_to_finite))
 schema(boston3)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

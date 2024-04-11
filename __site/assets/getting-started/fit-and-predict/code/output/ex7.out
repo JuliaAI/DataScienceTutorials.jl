@@ -1,10 +1,15 @@
-(tree = Decision Tree
+(tree =
+     DecisionTree.InfoNode{Float64, UInt32}(Decision Tree
+Leaves: 5
+Depth:  4, nchildren=2),
+ raw_tree = Decision Tree
 Leaves: 5
 Depth:  4,
  encoding =
-     Dict(CategoricalArrays.CategoricalValue{String, UInt32} "virginica" =>
-              0x00000003,
-          CategoricalArrays.CategoricalValue{String, UInt32} "setosa" =>
-              0x00000001,
-          CategoricalArrays.CategoricalValue{String, UInt32} "versicolor" =>
-              0x00000002))
+     Dict(0x00000002 =>
+              CategoricalArrays.CategoricalValue{String, UInt32} "versicolor",
+          0x00000003 =>
+              CategoricalArrays.CategoricalValue{String, UInt32} "virginica",
+          0x00000001 =>
+              CategoricalArrays.CategoricalValue{String, UInt32} "setosa"),
+ features = [:sepal_length, :sepal_width, :petal_length, :petal_width])

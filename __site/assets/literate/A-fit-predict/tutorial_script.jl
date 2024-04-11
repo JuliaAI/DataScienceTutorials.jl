@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/A-fit-predict/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using MLJ
 import Statistics
@@ -32,7 +32,7 @@ ȳ = predict_mode(tree, rows=test)
 @show ȳ[1]
 @show mode(ŷ[1])
 
-mce = cross_entropy(ŷ, y[test]) |> mean
+mce = cross_entropy(ŷ, y[test])
 round(mce, digits=4)
 
 v = [1, 2, 3, 4]
@@ -47,4 +47,3 @@ w = transform(stand, v)
 
 vv = inverse_transform(stand, w)
 sum(abs.(vv .- v))
-

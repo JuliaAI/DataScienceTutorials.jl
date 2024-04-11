@@ -1,1 +1,1 @@
-nothing
+UnivariateFinite{ScientificTypesBase.Multiclass{2}}(No=>0.718, Yes=>0.282)

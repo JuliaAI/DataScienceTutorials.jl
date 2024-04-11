@@ -81,4 +81,3 @@ data = CSV.read(fpath, DataFrames.DataFrame, header=false, missingstring="?")
 first(data[:, 1:5], 3)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

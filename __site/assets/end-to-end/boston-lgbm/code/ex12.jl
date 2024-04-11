@@ -1,7 +1,5 @@
 # This file was generated, do not modify it. # hide
-predictions = MLJ.predict(mtm, rows=test)
-rms_score = round(rms(predictions, targets[test, 1]), sigdigits=4)
-
-@show rms_score
-
-PyPlot.close_figs() # hide
+best_model = fitted_params(mach).best_model
+@show best_model.learning_rate
+@show best_model.min_data_in_leaf
+@show best_model.num_iterations

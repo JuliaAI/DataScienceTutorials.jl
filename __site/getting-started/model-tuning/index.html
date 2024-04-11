@@ -1,157 +1,251 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
-  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
-   <title>Tuning a model</title>  
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Tuning a model</title> 
   <!-- LUNR -->
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
+
 <body>
   <div id="layout">
     <!-- Menu toggle / hamburger icon -->
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
-    <div id="menu">
+    <div id="menu" style="display: none;">
       <div class="pure-menu">
-        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+        <a href="/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
-          <input class="search-input" name="q" placeholder="Enter search term" type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="visibility:hidden">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
         </form>
-  <!-- LIST OF MENU ITEMS -->
-  <ul class="pure-menu-list">
-    <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/" class="pure-menu-link"><strong>Home</strong></a></li>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a href="/"
+              class="pure-menu-link"><strong>Home</strong></a></li>
 
-    <!-- DATA BASICS -->
-    <li class="pure-menu-sublist-title"><strong>Data basics</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading data</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data Frames</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Categorical Arrays</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific Type</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data processing</a></li>
-    </ul>
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
 
-    <!-- GETTING STARTED WITH MLJ -->
-    <li class="pure-menu-sublist-title"><strong>Getting started</strong></li>
-    <ul class="pure-menu-sublist">
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Choosing a model</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Fit, predict, transform</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Model tuning</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/ensembles-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Composing models</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/learning-networks-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Learning networks (2)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Stacking</a></li>
-    </ul>
-
-    <!-- INTRO TO STATS LEARNING -->
-    <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
-    <ul class="pure-menu-sublist" id=isl>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 10</a></li>
-    </ul>
-
-    <!-- END TO END EXAMPLES -->
-    <li class="pure-menu-sublist-title"><strong>End to end examples</strong></li>
-    <ul class="pure-menu-sublist" id=e2e>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco Churn</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Wine</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Crabs (XGB)</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Horse</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-      <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-    </ul>
-  </ul>
-  <!-- END OF LIST OF MENU ITEMS -->
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
       </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
     </div>
-    <div id="main"> <!-- Closed in foot -->
-      
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
 
-<!-- Content appended here -->
-<div class="franklin-content"><h1 id="tuning_a_model"><a href="#tuning_a_model" class="header-anchor">Tuning a model</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-tuning.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+    <!-- Content appended here --><div class="franklin-content"><h1 id="tuning_a_model"><a href="#tuning_a_model" class="header-anchor">Tuning a model</a></h1>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-model-tuning.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#tuning_a_single_hyperparameter">Tuning a single hyperparameter</a><ol><li><a href="#specifying_a_range_of_value">Specifying a range of value</a></li><li><a href="#fitting_and_inspecting_a_tuned_model">Fitting and inspecting a tuned model</a></li></ol></li><li><a href="#tuning_nested_hyperparameters">Tuning nested hyperparameters</a></li></ol></div><pre><code class="plaintext code-output">@OUTPUT (macro with 1 method)</code></pre>
 <p></p>
-<h2 id="tuning_a_single_hyperparameter"><a href="#tuning_a_single_hyperparameter" class="header-anchor">Tuning a single hyperparameter</a></h2>
-<p>In MLJ, tuning is implemented as a model wrapper. After wrapping a model in a <em>tuning strategy</em> &#40;e.g. cross-validation&#41; and binding the wrapped model to data in a <em>machine</em>, fitting the machine initiates a search for optimal model hyperparameters.</p>
+<div class="dropdown"><h2 id="tuning_a_single_hyperparameter"><a href="#tuning_a_single_hyperparameter" class="header-anchor">Tuning a single hyperparameter</a></h2></div>
+<div class="dropdown-content"><p>In MLJ, tuning is implemented as a model wrapper. After wrapping a model in a <em>tuning strategy</em> &#40;e.g. cross-validation&#41; and binding the wrapped model to data in a <em>machine</em>, fitting the machine initiates a search for optimal model hyperparameters.</p>
 <p>Let&#39;s use a decision tree classifier and tune the maximum depth of the tree. As usual, start by loading data and the model</p>
 <pre><code class="language-julia">using MLJ
 using PrettyPrinting
 X, y &#61; @load_iris
 DecisionTreeClassifier &#61; @load DecisionTreeClassifier pkg&#61;DecisionTree</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 MLJDecisionTreeInterface.DecisionTreeClassifier</code></pre>
-<h3 id="specifying_a_range_of_value"><a href="#specifying_a_range_of_value" class="header-anchor">Specifying a range of value</a></h3>
-<p>To specify a range of value, you can use the <code>range</code> function:</p>
+<div class="dropdown"><h3 id="specifying_a_range_of_value"><a href="#specifying_a_range_of_value" class="header-anchor">Specifying a range of value</a></h3></div>
+<div class="dropdown-content"><p>To specify a range of value, you can use the <code>range</code> function:</p>
 <pre><code class="language-julia">dtc &#61; DecisionTreeClassifier&#40;&#41;
 r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><pre><code class="plaintext code-output">NumericRange(1 ≤ max_depth ≤ 5; origin=3.0, unit=2.0)</code></pre>
 <p>As you can see, the range function takes a model &#40;<code>dtc</code>&#41;, a symbol for the hyperparameter of interest &#40;<code>:max_depth</code>&#41; and indication of how to samples values. For hyperparameters of type <code>&lt;:Real</code>, you should specify a range of values as done above. For hyperparameters of other type &#40;e.g. <code>Symbol</code>&#41;, you should use the <code>values&#61;...</code> keyword.</p>
 <p>Once a range of values has been defined, you can then wrap the model in a <code>TunedModel</code> specifying the tuning strategy.</p>
 <pre><code class="language-julia">tm &#61; TunedModel&#40;model&#61;dtc, ranges&#61;&#91;r, &#93;, measure&#61;cross_entropy&#41;</code></pre><pre><code class="plaintext code-output">ProbabilisticTunedModel(
-    model = DecisionTreeClassifier(
-            max_depth = -1,
-            min_samples_leaf = 1,
-            min_samples_split = 2,
-            min_purity_increase = 0.0,
-            n_subfeatures = 0,
-            post_prune = false,
-            merge_purity_threshold = 1.0,
-            pdf_smoothing = 0.0,
-            display_depth = 5,
-            rng = Random._GLOBAL_RNG()),
-    tuning = Grid(
-            goal = nothing,
-            resolution = 10,
-            shuffle = true,
-            rng = Random._GLOBAL_RNG()),
-    resampling = Holdout(
-            fraction_train = 0.7,
-            shuffle = false,
-            rng = Random._GLOBAL_RNG()),
-    measure = LogLoss(tol = 2.220446049250313e-16),
-    weights = nothing,
-    operation = nothing,
-    range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange(1 ≤ max_depth ≤ 5; origin=3.0, unit=2.0)],
-    selection_heuristic = MLJTuning.NaiveSelection(nothing),
-    train_best = true,
-    repeats = 1,
-    n = nothing,
-    acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing),
-    check_measure = true,
-    cache = true)</code></pre>
+  model = DecisionTreeClassifier(
+        max_depth = -1, 
+        min_samples_leaf = 1, 
+        min_samples_split = 2, 
+        min_purity_increase = 0.0, 
+        n_subfeatures = 0, 
+        post_prune = false, 
+        merge_purity_threshold = 1.0, 
+        display_depth = 5, 
+        feature_importance = :impurity, 
+        rng = Random._GLOBAL_RNG()), 
+  tuning = RandomSearch(
+        bounded = Distributions.Uniform, 
+        positive_unbounded = Distributions.Gamma, 
+        other = Distributions.Normal, 
+        rng = Random._GLOBAL_RNG()), 
+  resampling = Holdout(
+        fraction_train = 0.7, 
+        shuffle = false, 
+        rng = Random._GLOBAL_RNG()), 
+  measure = LogLoss(tol = 2.22045e-16), 
+  weights = nothing, 
+  class_weights = nothing, 
+  operation = nothing, 
+  range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange(1 ≤ max_depth ≤ 5; origin=3.0, unit=2.0)], 
+  selection_heuristic = MLJTuning.NaiveSelection(nothing), 
+  train_best = true, 
+  repeats = 1, 
+  n = nothing, 
+  acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
+  acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
+  check_measure = true, 
+  cache = true)</code></pre>
 <p>Note that &quot;wrapping a model in a tuning strategy&quot; as above means creating a new &quot;self-tuning&quot; version of the model, <code>tuned_model &#61; TunedModel&#40;model&#61;...&#41;</code>, in which further key-word arguments specify:</p>
 <ol>
 <li><p>the algorithm &#40;a.k.a., tuning strategy&#41; for searching the hyper-parameter space of the model &#40;e.g., <code>tuning &#61; Random&#40;rng&#61;123&#41;</code> or <code>tuning &#61; Grid&#40;goal&#61;100&#41;</code>&#41;.</p>
@@ -164,14 +258,15 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
 </li>
 </ol>
 <p>For more options do <code>?TunedModel</code>.</p>
-<h3 id="fitting_and_inspecting_a_tuned_model"><a href="#fitting_and_inspecting_a_tuned_model" class="header-anchor">Fitting and inspecting a tuned model</a></h3>
-<p>To fit a tuned model, you can use the usual syntax:</p>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="fitting_and_inspecting_a_tuned_model"><a href="#fitting_and_inspecting_a_tuned_model" class="header-anchor">Fitting and inspecting a tuned model</a></h3></div>
+<div class="dropdown-content"><p>To fit a tuned model, you can use the usual syntax:</p>
 <pre><code class="language-julia">m &#61; machine&#40;tm, X, y&#41;
-fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">Machine{ProbabilisticTunedModel{Grid,…},…} trained 1 time; caches data
-  model: MLJTuning.ProbabilisticTunedModel{MLJTuning.Grid, MLJDecisionTreeInterface.DecisionTreeClassifier}
+fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
+  model: ProbabilisticTunedModel(model = DecisionTreeClassifier(max_depth = -1, …), …)
   args: 
-    1:	Source @648 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
-    2:	Source @876 ⏎ `AbstractVector{ScientificTypesBase.Multiclass{3}}`
+    1:	Source @175 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @547 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="language-julia">fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">1</code></pre>
@@ -183,42 +278,38 @@ fit&#33;&#40;m&#41;
 fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">2</code></pre>
 <p>Let&#39;s check the misclassification rate for the best model:</p>
 <pre><code class="language-julia">r &#61; report&#40;m&#41;
-r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.2</code></pre>
+r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.1111111111111111</code></pre>
 <p>Anyone wants plots? of course:</p>
-<pre><code class="language-julia">using PyPlot
-figure&#40;figsize&#61;&#40;8,6&#41;&#41;
-res &#61; r.plotting # contains all you need for plotting
-plot&#40;res.parameter_values, res.measurements, ls&#61;&quot;none&quot;, marker&#61;&quot;o&quot;&#41;
+<pre><code class="language-julia">using Plots
 
-xticks&#40;1:5, fontsize&#61;12&#41;
-yticks&#40;fontsize&#61;12&#41;
-xlabel&#40;&quot;Maximum depth&quot;, fontsize&#61;14&#41;
-ylabel&#40;&quot;Misclassification rate&quot;, fontsize&#61;14&#41;
-ylim&#40;&#91;0, 1&#93;&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/getting-started/model-tuning/code/output/A-model-tuning-hpt.svg" alt="hyperparameter heatmap">
-<h2 id="tuning_nested_hyperparameters"><a href="#tuning_nested_hyperparameters" class="header-anchor">Tuning nested hyperparameters</a></h2>
-<p>Let&#39;s generate simple dummy regression data</p>
+plot&#40;m, size&#61;&#40;800,600&#41;&#41;</code></pre>
+<img src="/assets/getting-started/model-tuning/code/output/A-model-tuning-hpt.svg" alt="hyperparameter heatmap">
+<p>‎</p></div>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="tuning_nested_hyperparameters"><a href="#tuning_nested_hyperparameters" class="header-anchor">Tuning nested hyperparameters</a></h2></div>
+<div class="dropdown-content"><p>Let&#39;s generate simple dummy regression data</p>
 <pre><code class="language-julia">X &#61; &#40;x1&#61;rand&#40;100&#41;, x2&#61;rand&#40;100&#41;, x3&#61;rand&#40;100&#41;&#41;
 y &#61; 2X.x1 - X.x2 &#43; 0.05 * randn&#40;100&#41;;</code></pre>
 <p>Let&#39;s then build a simple ensemble model with decision tree regressors:</p>
 <pre><code class="language-julia">DecisionTreeRegressor &#61; @load DecisionTreeRegressor pkg&#61;DecisionTree
 forest &#61; EnsembleModel&#40;model&#61;DecisionTreeRegressor&#40;&#41;&#41;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 DeterministicEnsembleModel(
-    model = DecisionTreeRegressor(
-            max_depth = -1,
-            min_samples_leaf = 5,
-            min_samples_split = 2,
-            min_purity_increase = 0.0,
-            n_subfeatures = 0,
-            post_prune = false,
-            merge_purity_threshold = 1.0,
-            rng = Random._GLOBAL_RNG()),
-    atomic_weights = Float64[],
-    bagging_fraction = 0.8,
-    rng = Random._GLOBAL_RNG(),
-    n = 100,
-    acceleration = ComputationalResources.CPU1{Nothing}(nothing),
-    out_of_bag_measure = Any[])</code></pre>
+  model = DecisionTreeRegressor(
+        max_depth = -1, 
+        min_samples_leaf = 5, 
+        min_samples_split = 2, 
+        min_purity_increase = 0.0, 
+        n_subfeatures = 0, 
+        post_prune = false, 
+        merge_purity_threshold = 1.0, 
+        feature_importance = :impurity, 
+        rng = Random._GLOBAL_RNG()), 
+  atomic_weights = Float64[], 
+  bagging_fraction = 0.8, 
+  rng = Random._GLOBAL_RNG(), 
+  n = 100, 
+  acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
+  out_of_bag_measure = Any[])</code></pre>
 <p>Such a model has <em>nested</em> hyperparameters in that the ensemble has hyperparameters &#40;e.g. the <code>:bagging_fraction</code>&#41; and the atom has hyperparameters &#40;e.g. <code>:n_subfeatures</code> or <code>:max_depth</code>&#41;. You can see this by inspecting the parameters using <code>params</code>:</p>
 <pre><code class="language-julia">params&#40;forest&#41; |&gt; pprint</code></pre><pre><code class="plaintext code-output">(model = (max_depth = -1,
           min_samples_leaf = 5,
@@ -227,6 +318,7 @@ DeterministicEnsembleModel(
           n_subfeatures = 0,
           post_prune = false,
           merge_purity_threshold = 1.0,
+          feature_importance = :impurity,
           rng = Random._GLOBAL_RNG()),
  atomic_weights = [],
  bagging_fraction = 0.8,
@@ -244,37 +336,48 @@ m &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;m&#41;;</code></pre>
 <p>A useful function to inspect a model after fitting it is the <code>report</code> function which collects information on the model and the tuning, for instance you can use it to recover the best measurement:</p>
 <pre><code class="language-julia">r &#61; report&#40;m&#41;
-r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.17610812000071374</code></pre>
+r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaintext code-output">0.17461460519401023</code></pre>
 <p>Let&#39;s visualise this</p>
-<pre><code class="language-julia">figure&#40;figsize&#61;&#40;8,6&#41;&#41;
+<pre><code class="language-julia">plot&#40;m&#41;</code></pre>
+<img src="/assets/getting-started/model-tuning/code/output/A-model-tuning-hm.svg" alt="Hyperparameter heatmap">
+<p>‎</p></div>
 
-res &#61; r.plotting
-
-vals_sf &#61; res.parameter_values&#91;:, 1&#93;
-vals_bf &#61; res.parameter_values&#91;:, 2&#93;
-
-tricontourf&#40;vals_sf, vals_bf, res.measurements&#41;
-xlabel&#40;&quot;Number of sub-features&quot;, fontsize&#61;14&#41;
-ylabel&#40;&quot;Bagging fraction&quot;, fontsize&#61;14&#41;
-xticks&#40;&#91;1, 2, 3&#93;, fontsize&#61;12&#41;
-yticks&#40;fontsize&#61;12&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/getting-started/model-tuning/code/output/A-model-tuning-hm.svg" alt="Hyperparameter heatmap">
-
-
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: July 28, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 02, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
-</div>
-</div><!-- CONTENT ENDS HERE -->
-      </div> <!-- end of id=main -->
-  </div> <!-- end of id=layout -->
-  <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
-  
-  
-      <script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/libs/collapse/collapse.js"></script>
+<script src="/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/libs/nav/head.js"></script>
+<script src="/libs/nav/footer-nav.js"></script>
+<!-- landing page -->
+<script src="/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/libs/nav/responsive.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
-  
+
 </body>
+
 </html>

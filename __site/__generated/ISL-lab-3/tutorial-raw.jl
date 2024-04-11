@@ -24,12 +24,12 @@ fp = fitted_params(mach_uni)
 @show fp.coefs
 @show fp.intercept
 
-using PyPlot
+using Plots
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+
 Xnew = (LStat = collect(range(extrema(X.LStat)..., length=100)),)
-plot(Xnew.LStat, MLJ.predict(mach_uni, Xnew))
+plot!(Xnew.LStat, MLJ.predict(mach_uni, Xnew), linewidth=3, color=:orange)
 
 mach = machine(mdl, X, y)
 fit!(mach)
@@ -45,12 +45,11 @@ println("Intercept: $(round(intercept, sigdigits=3))")
 ŷ = MLJ.predict(mach, X)
 round(rms(ŷ, y), sigdigits=4)
 
-figure(figsize=(8,6))
 res = ŷ .- y
-stem(res)
+plot(res, line=:stem, linewidth=1, marker=:circle, legend=false, size=((800,600)))
+hline!([0], linewidth=2, color=:red)    # add a horizontal line at x=0
 
-figure(figsize=(8,6))
-hist(res, density=true)
+histogram(res, normalize=true, size=(800,600), label="residual")
 
 X2 = hcat(X, X.LStat .* X.Age);
 
@@ -69,9 +68,7 @@ round(rms(ŷ, y), sigdigits=4)
 
 Xnew = (LStat = Xnew.LStat, LStat2 = Xnew.LStat.^2)
 
-figure(figsize=(8,6))
-plot(X.LStat, y, ls="none", marker="o")
-plot(Xnew.LStat, MLJ.predict(mach, Xnew))
+plot(X.LStat, y, seriestype=:scatter, markershape=:circle, legend=false, size=(800,600))
+plot!(Xnew.LStat, MLJ.predict(mach, Xnew), linewidth=3, color=:orange)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
-

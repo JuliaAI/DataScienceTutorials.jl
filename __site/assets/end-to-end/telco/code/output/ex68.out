@@ -1,4 +1,4 @@
-Basic model measurements on test set:
-  brier loss: 0.3059458610206901
-  auc:        0.8120967741935484
+Tuned model measurements on test:
+  brier loss: 0.27884042
+  auc:        0.8567396313364055
   accuracy:   0.7725118483412322

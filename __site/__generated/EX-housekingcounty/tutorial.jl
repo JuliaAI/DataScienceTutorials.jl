@@ -4,18 +4,23 @@
 # [this `Manifest.toml`](https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-housekingcounty/Manifest.toml), or by following
 # [these](https://juliaai.github.io/DataScienceTutorials.jl/#learning_by_doing) detailed instructions.
 
+# @@dropdown
 # ## Getting started
+# @@
+# @@dropdown-content
 #
 # This tutorial is adapted from [the corresponding MLR3 tutorial](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/).
-#
+
+# @@dropdown
 # ### Loading and  preparing the data
+# @@
+# @@dropdown-content
 
 using MLJ
 using PrettyPrinting
 import DataFrames: DataFrame, select!, Not, describe
 import Statistics
 using Dates
-using PyPlot
 using UrlDownload
 
 
@@ -60,28 +65,29 @@ df.price = df.price ./ 1000;
 
 select!(df, Not([:yr_renovated, :sqft_basement, :zipcode]));
 
+# ‎
+# @@
+# @@dropdown
 # ### Basic data visualisation
+# @@
+# @@dropdown-content
 #
 # Let's plot a basic histogram of the prices to get an idea for the distribution:
 
-plt.figure(figsize=(8,6))
-plt.hist(df.price, color = "blue", edgecolor = "white", bins=50,
-         density=true, alpha=0.5)
-plt.xlabel("Price", fontsize=14)
-plt.ylabel("Frequency", fontsize=14)
+using Plots
+
+histogram(df.price, color = "blue", normalize=:pdf, bins=50, alpha=0.5, legend=false)
+xlabel!("Price")
+ylabel!("Frequency")
 
 # \figalt{Histogram of the prices}{hist_price.svg}
 
 # Let's see if there's a difference between renovated and unrenovated flats:
 
-plt.figure(figsize=(8,6))
-plt.hist(df.price[df.isrenovated .== true], color="blue", density=true,
-        edgecolor="white", bins=50, label="renovated", alpha=0.5)
-plt.hist(df.price[df.isrenovated .== false], color="red", density=true,
-        edgecolor="white", bins=50, label="unrenovated", alpha=0.5)
-plt.xlabel("Price", fontsize=14)
-plt.ylabel("Frequency", fontsize=14)
-plt.legend(fontsize=12)
+histogram(df.price[df.isrenovated .== true], color = "blue", normalize=:pdf, bins=50, alpha=0.5, label="renovated")
+histogram!(df.price[df.isrenovated .== false], color = "red", normalize=:pdf, bins=50, alpha=0.5, label="unrenovated")
+xlabel!("Price")
+ylabel!("Frequency")
 
 # \figalt{Histogram of the prices depending on renovation}{hist_price2.svg}
 # We can observe that renovated flats seem to achieve higher sales values, and this might thus be a relevant feature.
@@ -89,7 +95,15 @@ plt.legend(fontsize=12)
 #
 # Likewise, this could be done to verify that `condition`, `waterfront` etc are important features.
 
+# ‎
+# @@
+
+# ‎
+# @@
+# @@dropdown
 # ## Fitting a first model
+# @@
+# @@dropdown-content
 
 DTR = @load DecisionTreeRegressor pkg=DecisionTree
 
@@ -105,11 +119,14 @@ rms(y[test], MLJ.predict(tree, rows=test))
 
 # Let's try to do better.
 
+# @@dropdown
 # ### Random forest model
+# @@
+# @@dropdown-content
 
 # We might be able to improve upon the RMSE using more powerful learners.
 
-RFR = @load RandomForestRegressor pkg=ScikitLearn
+RFR = @load RandomForestRegressor pkg=MLJScikitLearnInterface
 
 # That model only accepts input in the form of `Count` and so we have to coerce all `Finite` types into `Count`:
 
@@ -129,7 +146,12 @@ cv3 = CV(; nfolds=3)
 res = evaluate(rf_mdl, X, y, resampling=CV(shuffle=true),
                measure=rms, verbosity=0)
 
+# ‎
+# @@
+# @@dropdown
 # ### GBM
+# @@
+# @@dropdown-content
 #
 # Let's try a different kind of model: Gradient Boosted Decision Trees from the package xgboost and we'll try to tune it too.
 
@@ -160,5 +182,10 @@ fit!(mtm, rows=train)
 
 rms(y[test], MLJ.predict(mtm, rows=test))
 
-# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
+# ‎
+# @@
 
+# ‎
+# @@
+
+# This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl

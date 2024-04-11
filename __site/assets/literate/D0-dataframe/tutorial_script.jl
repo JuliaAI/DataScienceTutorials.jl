@@ -2,7 +2,7 @@
 
 using Pkg # hideall
 Pkg.activate("_literate/D0-dataframe/Project.toml")
-Pkg.update()
+Pkg.instantiate()
 
 using RDatasets
 using DataFrames
@@ -80,4 +80,3 @@ combine(gdf, :PetalLength => mean => :MPL, :PetalLength => std => :SPL)
 combine(gdf, names(iris, Not(:Species)) .=> std)
 
 names(iris, Not(:Species))
-

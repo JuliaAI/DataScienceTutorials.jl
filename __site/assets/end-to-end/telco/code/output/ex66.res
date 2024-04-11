@@ -1,5 +1,3 @@
-       UnivariateFinite{ScientificTypesBase.Multiclass{2}} 
-       ┌                                        ┐ 
-    No ┤■■■■■■■■■■■■■■■■■ 0.4644309597323305      
-   Yes ┤■■■■■■■■■■■■■■■■■■■■ 0.5355690402676695   
-       └                                        ┘ 
+trained Machine; does not cache data
+  model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
+  args: 

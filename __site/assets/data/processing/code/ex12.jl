@@ -1,9 +1,10 @@
 # This file was generated, do not modify it. # hide
 sort!(cap_sum_plot, :capacity_mw_sum, rev=true)
 
-figure(figsize=(8,6))
+using Plots
+Plots.scalefontsizes() # hide
+Plots.scalefontsizes(1.3) # hide
 
-plt.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, width=0.35)
-plt.xticks(rotation=90)
+Plots.bar(cap_sum_plot.country, cap_sum_plot.capacity_mw_sum, legend=false)
 
-savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")) # hide
+savefig(joinpath(@OUTPUT, "D0-processing-g1.svg")); # hide

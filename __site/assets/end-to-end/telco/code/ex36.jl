@@ -1,3 +1,3 @@
 # This file was generated, do not modify it. # hide
-fp = fitted_params(mach_pipe);
-keys(fp)
+train, validation = partition(1:length(y), 0.7)
+fit!(mach_pipe, rows=train)

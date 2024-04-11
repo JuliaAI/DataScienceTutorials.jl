@@ -1,4 +1,1 @@
-Measurements:
-  brier loss: 0.27683139589958233
-  auc:        0.8171277997364954
-  accuracy:   0.7972972972972973
+gender__Female, gender__Male, SeniorCitizen, Partner__No, Partner__Yes, Dependents__No, Dependents__Yes, tenure, PhoneService__No, PhoneService__Yes, MultipleLines__No, MultipleLines__No phone service, MultipleLines__Yes, InternetService__DSL, InternetService__Fiber optic, InternetService__No, OnlineSecurity__No, OnlineSecurity__No internet service, OnlineSecurity__Yes, OnlineBackup__No, OnlineBackup__No internet service, OnlineBackup__Yes, DeviceProtection__No, DeviceProtection__No internet service, DeviceProtection__Yes, TechSupport__No, TechSupport__No internet service, TechSupport__Yes, StreamingTV__No, StreamingTV__No internet service, StreamingTV__Yes, StreamingMovies__No, StreamingMovies__No internet service, StreamingMovies__Yes, Contract__Month-to-month, Contract__One year, Contract__Two year, PaperlessBilling__No, PaperlessBilling__Yes, PaymentMethod__Bank transfer (automatic), PaymentMethod__Credit card (automatic), PaymentMethod__Electronic check, PaymentMethod__Mailed check, MonthlyCharges, TotalCharges

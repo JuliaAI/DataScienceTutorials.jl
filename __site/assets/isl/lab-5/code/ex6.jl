@@ -2,13 +2,10 @@
 xx = (Horsepower=range(50, 225, length=100) |> collect, )
 yy = MLJ.predict(mlm, xx)
 
-figure(figsize=(8,6))
-plot(X.Horsepower, y, ls="none", marker="o")
-plot(xx.Horsepower, yy, lw=3)
+plot(X.Horsepower, y, seriestype=:scatter, legend=false,  size=(800,600))
+plot!(xx.Horsepower, yy,  legend=false, linewidth=3, color=:orange)
+xlabel!("Horsepower")
+ylabel!("MPG")
 
-xlabel("Horsepower", fontsize=14)
-xticks(50:50:250, fontsize=12)
-yticks(10:10:50, fontsize=12)
-ylabel("MPG", fontsize=14)
 
-savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")) # hide
+savefig(joinpath(@OUTPUT, "ISL-lab-5-g2.svg")); # hide

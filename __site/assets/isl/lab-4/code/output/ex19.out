@@ -1,1 +1,1 @@
-CategoricalDistributions.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.5, Up=>0.5), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.495, Up=>0.505)]
+CategoricalDistributions.UnivariateFinite{ScientificTypesBase.OrderedFactor{2}, String, UInt8, Float64}[UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.521, Up=>0.479), UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(Down=>0.504, Up=>0.496)]
