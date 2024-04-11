@@ -1,1 +1,1 @@
-UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.712, Yes=>0.288)
+UnivariateFinite{ScientificTypesBase.Multiclass{2}}(No=>0.676, Yes=>0.324)
