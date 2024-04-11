@@ -12,7 +12,6 @@ jobs:
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
+        ACCESS_TOKEN: ${{ secrets.DST }}
         BRANCH: gh-pages
         FOLDER: __site
-permissions:
-  contents: write
