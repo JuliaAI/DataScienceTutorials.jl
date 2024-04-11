@@ -42,12 +42,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // make the button link to how-to-run-code
 document.addEventListener("DOMContentLoaded", function() {
+    // first get info on whether hosted or not
+    const origin = window.location.origin;
+    const hosted = origin.includes("github.io");
     // Get the div element with the class 'run-code'
     var element = document.querySelector('.run-code');
     
     // Add click event listener to the div element
     element.addEventListener('click', function(event) {
         // Change the location to "/how-to-run-code"
-        window.location.href = "/how-to-run-code";
+        window.location.href = (hosted) ? origin + "/DataScienceTutorials.jl" + "/how-to-run-code" : "/how-to-run-code";
     });
 });
