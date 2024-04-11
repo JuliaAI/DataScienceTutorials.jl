@@ -339,8 +339,8 @@ ProbabilisticPipeline(
 multinom &#61; machine&#40;multinom_pipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(standardizer = Standardizer(features = Symbol[], …), …)
   args: 
-    1:	Source @504 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @308 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{3}}
+    1:	Source @676 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @547 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{3}}
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="language-julia">opts &#61; &#40;

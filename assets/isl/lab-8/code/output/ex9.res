@@ -1,5 +1,5 @@
 DecisionTreeClassifier(
-  max_depth = 6, 
+  max_depth = 9, 
   min_samples_leaf = 1, 
   min_samples_split = 2, 
   min_purity_increase = 0.0, 
