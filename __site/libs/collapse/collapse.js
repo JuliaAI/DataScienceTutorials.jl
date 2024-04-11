@@ -4,7 +4,7 @@
 let isHosted = window.location.origin.includes("github.io");
 // accordingly get icons
 const rightIcon = (isHosted) ? origin + "/DataScienceTutorials.jl" + "/assets/right-icon.svg" : "/assets/right-icon.svg";
-const downIcon = (isHosted) ? origin + "/DataScienceTutorials.jl" + "/assets/left-icon.svg" : "/assets/down-icon.svg";
+const downIcon = (isHosted) ? origin + "/DataScienceTutorials.jl" + "/assets/down-icon.svg" : "/assets/down-icon.svg";
 
 document.addEventListener("DOMContentLoaded", function () {
   var filename = window.location.pathname;
