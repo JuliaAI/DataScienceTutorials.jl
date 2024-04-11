@@ -90,7 +90,7 @@ function createNavItem(item) {
   // set style, link and text content of anchor
   link.textContent = item.name;
   link.classList.add('main-nav-item');
-  link.href = item.href;
+  link.href = (hosted) ? origin + "/DataScienceTutorials.jl" + item.href : item.href;
   link.id = item.id;
 
   li.appendChild(link);
@@ -129,11 +129,12 @@ navItems.forEach((item) => {
 });
 
 // add a final li as searchform
+let formAction = (hosted) ? origin + "/DataScienceTutorials.jl" + "/search/index.html" : "/search/index.html";
 searchForm = `
   <li>
     <form id="lunrSearchForm" name="lunrSearchForm" style="margin-left: 1.5rem; margin-right: -2rem;">
       <input class="search-input" name="q" placeholder="Search..." type="text">
-      <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
+      <input type="submit" value="Search" formaction=${formAction} style="display:none">
     </form>
   </li>`
 
@@ -207,7 +208,6 @@ const flatItems = flattenNavItems(navItems);
 // loop and roate based on clicks
 function getPreviousAndNextTutorials(currentHref) {
   let currentIndex = flatItems.findIndex(item => (currentHref.includes(item.href) && item.href != "/"));
-  console.log(currentIndex)
   currentIndex = currentIndex === -1 ? 0 : currentIndex;
   const totalItems = flatItems.length;
 
