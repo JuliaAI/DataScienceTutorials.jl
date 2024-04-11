@@ -217,7 +217,18 @@ df &#61; CSV.read&#40;req.body, DataFrames.DataFrame; header&#61;&#91;
                    &quot;Free_Velocity&quot;,&quot;Suction_Side&quot;,&quot;Scaled_Sound&quot;
                    &#93;
               &#41;;
-df&#91;1:5, :&#93; |&gt; pretty</code></pre>
+df&#91;1:5, :&#93; |&gt; pretty</code></pre><pre><code class="plaintext code-output">┌───────────┬──────────────┬──────────────┬───────────────┬──────────────┬──────────────┐
+│ Frequency │ Attack_Angle │ Chord+Length │ Free_Velocity │ Suction_Side │ Scaled_Sound │
+│ Int64     │ Float64      │ Float64      │ Float64       │ Float64      │ Float64      │
+│ Count     │ Continuous   │ Continuous   │ Continuous    │ Continuous   │ Continuous   │
+├───────────┼──────────────┼──────────────┼───────────────┼──────────────┼──────────────┤
+│ 800.0     │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 126.201      │
+│ 1000.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 125.201      │
+│ 1250.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 125.951      │
+│ 1600.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 127.591      │
+│ 2000.0    │ 0.0          │ 0.3048       │ 71.3          │ 0.00266337   │ 127.461      │
+└───────────┴──────────────┴──────────────┴───────────────┴──────────────┴──────────────┘
+</code></pre>
 <p>inspect the schema:</p>
 <pre><code class="language-julia">schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌───────────────┬────────────┬─────────┐
 │ names         │ scitypes   │ types   │
@@ -344,7 +355,7 @@ fit&#33;&#40;dcrm, rows&#61;train&#41;
 pred_dcrm &#61; predict&#40;dcrm, rows&#61;test&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Now you can call a loss function to assess the performance on test set.</p>
-<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.915340269654321</code></pre>
+<pre><code class="language-julia">rms&#40;pred_dcrm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.9059335830223225</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="randomforestregressor"><a href="#randomforestregressor" class="header-anchor">RandomForestRegressor</a></h2></div>
 <div class="dropdown-content"><p>Now let&#39;s try out RandomForestRegressor:</p>
@@ -357,7 +368,7 @@ rfr_m &#61; machine&#40;rfr, X, y&#41;;</code></pre><pre><code class="plaintext 
 <pre><code class="language-julia">fit&#33;&#40;rfr_m, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr &#61; predict&#40;rfr_m, rows&#61;test&#41;;
-rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2045180472586106</code></pre>
+rms&#40;pred_rfr, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2081602400063263</code></pre>
 <p>Unsurprisingly, the RandomForestRegressor does a better job.</p>
 <p>Can we do even better? Yeah, we can&#33;&#33; We can make use of Model Tuning.</p>
 <p>‎</p></div>
@@ -379,7 +390,7 @@ rfr_tm &#61; machine&#40;tm, X, y&#41;;</code></pre>
 <pre><code class="language-julia">fit&#33;&#40;rfr_tm, rows&#61;train&#41;;</code></pre>
 <p>predict values on the rows corresponding to test</p>
 <pre><code class="language-julia">pred_rfr_tm &#61; predict&#40;rfr_tm, rows&#61;test&#41;;
-rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.2930781342638586</code></pre>
+rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">2.4164243383072455</code></pre>
 <p>That was great&#33; We have further improved the accuracy</p>
 <p>Now to retrieve best model, You can use</p>
 <pre><code class="language-julia">fitted_params&#40;rfr_tm&#41;.best_model</code></pre><pre><code class="plaintext code-output">RandomForestRegressor(
@@ -388,8 +399,8 @@ rms&#40;pred_rfr_tm, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintex
   min_samples_split = 2, 
   min_purity_increase = 0.0, 
   n_subfeatures = -1, 
-  n_trees = 13, 
-  sampling_fraction = 0.8, 
+  n_trees = 12, 
+  sampling_fraction = 0.7666666666666667, 
   feature_importance = :impurity, 
   rng = Random._GLOBAL_RNG())</code></pre>
 <p>Let&#39;s visualize the tuning results:</p>

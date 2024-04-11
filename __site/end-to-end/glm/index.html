@@ -334,14 +334,14 @@ LinearRegressorPipe &#61; Pipeline&#40;
 LinearModel &#61; machine&#40;LinearRegressorPipe, X, yv&#41;
 fit&#33;&#40;LinearModel&#41;
 fp &#61; fitted_params&#40;LinearModel&#41;</code></pre><pre><code class="plaintext code-output">(linear_regressor = (features = [:V1, :V2, :V3, :V4, :V5],
-                     coef = [1.020786949740552, 1.03242891546997, 0.009406292423317619, 0.02663391517120747, 0.2998591563637024],
-                     intercept = 0.015893883995789778,),
+                     coef = [1.0207869497405522, 1.0324289154699704, 0.009406292423317641, 0.026633915171207435, 0.2998591563637022],
+                     intercept = 0.0158938839957898,),
  one_hot_encoder = (all_features = [:V1, :V2, :V3, :V4, :V5],
                     fitted_levels_given_feature = Dict{Symbol, CategoricalArrays.CategoricalArray}(),
                     ref_name_pairs_given_feature = Dict{Symbol, Vector{Union{Pair{Missing, Symbol}, Pair{<:Unsigned, Symbol}}}}(),),
  standardizer = (features_fit = [:V1, :V2, :V5, :V3, :V4],
-                 means = (0.0024456300706479973, -0.015561621122145304, 0.0077036209704558975, 0.02442889884313839, 0.15168404285157286),
-                 stds = (1.1309193246154066, 1.1238897897565245, 1.1421493464876622, 2.332713568319154, 6.806065861835239),),)</code></pre>
+                 means = (0.0024456300706479973, -0.01556162112214531, 0.0077036209704558906, 0.02442889884313842, 0.1516840428515729),
+                 stds = (1.1309193246154063, 1.1238897897565248, 1.142149346487662, 2.332713568319154, 6.806065861835238),),)</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="reading_the_output_of_fitting_the_linear_model"><a href="#reading_the_output_of_fitting_the_linear_model" class="header-anchor">Reading the Output of Fitting the Linear Model</a></h2></div>
 <div class="dropdown-content"><p>We can quickly read the results of our models in MLJ.  Remember to compute the accuracy of the linear model.</p>
@@ -355,22 +355,22 @@ println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n yhatResponse \n &quot;, yhatResponse&#91;1:5&#93;&#41;
 println&#40;&quot;\n Residuals \n &quot;, y&#91;1:5,1&#93; .- yhatResponse&#91;1:5&#93;&#41;
 println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_regressor.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">
- Coefficients:  [1.020786949740552, 1.03242891546997, 0.009406292423317619, 0.02663391517120747, 0.2998591563637024]
+ Coefficients:  [1.0207869497405522, 1.0324289154699704, 0.009406292423317641, 0.026633915171207435, 0.2998591563637022]
 
  y 
  [-2.0446341129015, -0.461528671336098, 0.458261960749596, 2.2746223981481, -0.969887403007307]
 
  ŷ 
- Distributions.Normal{Float64}[Distributions.Normal{Float64}(μ=-1.6915415373374758, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=1.4120055632036441, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.4736296806862398, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.7266938985590489, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=-1.8396459459760568, σ=0.9580569656804974)]
+ Distributions.Normal{Float64}[Distributions.Normal{Float64}(μ=-1.691541537337476, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=1.412005563203644, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.47362968068623934, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=0.7266938985590493, σ=0.9580569656804974), Distributions.Normal{Float64}(μ=-1.8396459459760568, σ=0.9580569656804974)]
 
  yhatResponse 
- [-1.6915415373374758, 1.4120055632036441, 0.4736296806862398, 0.7266938985590489, -1.8396459459760568]
+ [-1.691541537337476, 1.412005563203644, 0.47362968068623934, 0.7266938985590493, -1.8396459459760568]
 
  Residuals 
- [-0.3530925755640242, -1.873534234539742, -0.015367719936643764, 1.5479284995890512, 0.8697585429687498]
+ [-0.35309257556402396, -1.8735342345397419, -0.01536771993664332, 1.5479284995890508, 0.8697585429687498]
 
  Standard Error per Coefficient 
-[0.01587640310780568, 0.015862782503144917, 0.01515900587321476, 0.01515667698600387, 0.016546721612329368]
+[0.015876403107805682, 0.015862782503144917, 0.01515900587321476, 0.015156676986003866, 0.01654672161232937]
 </code></pre>
 <p>and get the accuracy</p>
 <pre><code class="language-julia">round&#40;rms&#40;yhatResponse, y&#91;:,1&#93;&#41;, sigdigits&#61;4&#41;</code></pre><pre><code class="plaintext code-output">0.9573</code></pre>
@@ -392,14 +392,14 @@ LinearBinaryClassifierPipe &#61; Pipeline&#40;
 LogisticModel &#61; machine&#40;LinearBinaryClassifierPipe, X, yc&#41;
 fit&#33;&#40;LogisticModel&#41;
 fp &#61; fitted_params&#40;LogisticModel&#41;</code></pre><pre><code class="plaintext code-output">(linear_binary_classifier = (features = [:gender__female, :ethnicity__afam, :ethnicity__hispanic, :score, :fcollege__no, :mcollege__no, :home__no, :urban__no, :unemp, :wage, :tuition, :income__high, :region__other],
-                             coef = [0.20250729378868748, 0.13075293910912908, 0.344951624939835, 0.9977565847160846, -0.5022315102984592, -0.4785005626021651, -0.20440507809955, -0.06922751403500071, 0.05892864973017096, -0.08344749828203225, -0.0023151433338598607, 0.46177653955786574, 0.3843262958100779],
-                             intercept = -1.076633890579366,),
+                             coef = [0.20250729378868745, 0.13075293910912897, 0.34495162493983506, 0.9977565847160846, -0.5022315102984591, -0.4785005626021655, -0.20440507809955005, -0.06922751403500105, 0.058928649730170986, -0.08344749828203227, -0.0023151433338598278, 0.46177653955786574, 0.38432629581007766],
+                             intercept = -1.076633890579365,),
  one_hot_encoder = (all_features = [:gender, :ethnicity, :score, :fcollege, :mcollege, :home, :urban, :unemp, :wage, :tuition, :income, :region],
                     fitted_levels_given_feature = Dict{Symbol, CategoricalArrays.CategoricalArray}(:income => CategoricalArrays.CategoricalValue{InlineStrings.String7, UInt32}[InlineStrings.String7("high"), InlineStrings.String7("low")], :ethnicity => CategoricalArrays.CategoricalValue{InlineStrings.String15, UInt32}[InlineStrings.String15("afam"), InlineStrings.String15("hispanic"), InlineStrings.String15("other")], :fcollege => CategoricalArrays.CategoricalValue{InlineStrings.String3, UInt32}[InlineStrings.String3("no"), InlineStrings.String3("yes")], :home => CategoricalArrays.CategoricalValue{InlineStrings.String3, UInt32}[InlineStrings.String3("no"), InlineStrings.String3("yes")], :urban => CategoricalArrays.CategoricalValue{InlineStrings.String3, UInt32}[InlineStrings.String3("no"), InlineStrings.String3("yes")], :region => CategoricalArrays.CategoricalValue{InlineStrings.String7, UInt32}[InlineStrings.String7("other"), InlineStrings.String7("west")], :mcollege => CategoricalArrays.CategoricalValue{InlineStrings.String3, UInt32}[InlineStrings.String3("no"), InlineStrings.String3("yes")], :gender => CategoricalArrays.CategoricalValue{InlineStrings.String7, UInt32}[InlineStrings.String7("female"), InlineStrings.String7("male")]),
                     ref_name_pairs_given_feature = Dict{Symbol, Vector{Union{Pair{Missing, Symbol}, Pair{<:Unsigned, Symbol}}}}(:income => [0x00000001 => :income__high], :ethnicity => [0x00000001 => :ethnicity__afam, 0x00000002 => :ethnicity__hispanic], :fcollege => [0x00000001 => :fcollege__no], :home => [0x00000001 => :home__no], :urban => [0x00000001 => :urban__no], :region => [0x00000001 => :region__other], :mcollege => [0x00000001 => :mcollege__no], :gender => [0x00000001 => :gender__female]),),
  standardizer = (features_fit = [:wage, :unemp, :tuition, :score],
-                 means = (9.500506478338009, 7.597214581091511, 0.8146082493518824, 50.88902933684601),
-                 stds = (1.3430670761078416, 2.763580873344848, 0.33950381985971717, 8.701909614072397),),)</code></pre>
+                 means = (9.500506478338005, 7.597214581091511, 0.8146082493518824, 50.88902933684601),
+                 stds = (1.343067076107842, 2.763580873344849, 0.33950381985971717, 8.701909614072397),),)</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="reading_the_output_from_the_prediction_of_the_logistic_model"><a href="#reading_the_output_from_the_prediction_of_the_logistic_model" class="header-anchor">Reading the Output from the Prediction of the Logistic Model</a></h2></div>
 <div class="dropdown-content"><p>The output of the MLJ model basically contain the same information as the R version of the model.</p>
@@ -412,7 +412,7 @@ println&#40;&quot;\n y \n &quot;, y&#91;1:5,1&#93;&#41;
 println&#40;&quot;\n ŷ \n &quot;, ŷ&#91;1:5&#93;&#41;
 println&#40;&quot;\n residuals \n &quot;, residuals&#91;1:5&#93;&#41;
 println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_classifier.stderror&#91;2:end&#93;&#41;</code></pre><pre><code class="plaintext code-output">
- Coefficients:  [0.20250729378868748, 0.13075293910912908, 0.344951624939835, 0.9977565847160846, -0.5022315102984592, -0.4785005626021651, -0.20440507809955, -0.06922751403500071, 0.05892864973017096, -0.08344749828203225, -0.0023151433338598607, 0.46177653955786574, 0.3843262958100779]
+ Coefficients:  [0.20250729378868745, 0.13075293910912897, 0.34495162493983506, 0.9977565847160846, -0.5022315102984591, -0.4785005626021655, -0.20440507809955005, -0.06922751403500105, 0.058928649730170986, -0.08344749828203227, -0.0023151433338598278, 0.46177653955786574, 0.38432629581007766]
 
  y 
  [0, 0, 0, 0, 0]
@@ -424,7 +424,7 @@ println&#40;&quot;\n Standard Error per Coefficient \n&quot;, r.linear_binary_cl
  [0.11944603346742211, 0.16182691493524637, 0.13445730373831222, 0.06370799769022906, 0.05604680411361729]
 
  Standard Error per Coefficient 
-[0.07542967234030676, 0.1226000420274196, 0.10934317995152516, 0.04661437250372939, 0.09609243724815357, 0.10743620672240191, 0.10642223545563922, 0.09190778860389334, 0.03922724536508867, 0.04118915117919154, 0.05115399636339277, 0.08454431256127866, 0.1228145565794004]
+[0.07542967234030676, 0.12260004202741959, 0.10934317995152518, 0.04661437250372938, 0.09609243724815368, 0.10743620672240183, 0.10642223545563925, 0.09190778860389334, 0.03922724536508867, 0.04118915117919155, 0.05115399636339279, 0.08454431256127862, 0.1228145565794004]
 </code></pre>
 <p>No logistic analysis is complete without the confusion matrix:</p>
 <pre><code class="language-julia">yMode &#61; &#91;mode&#40;ŷ&#91;i&#93;&#41; for i in 1:length&#40;ŷ&#41;&#93;

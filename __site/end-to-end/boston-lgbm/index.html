@@ -204,8 +204,9 @@ import DataFrames
 import Statistics
 import StableRNGs.StableRNG
 
-LGBMRegressor &#61; @load LGBMRegressor pkg&#61;LightGBM</code></pre><pre><code class="plaintext code-output">import LightGBM ✔
-LightGBM.MLJInterface.LGBMRegressor</code></pre>
+LGBMRegressor &#61; @load LGBMRegressor pkg&#61;LightGBM</code></pre><pre><code class="plaintext code-output">import LightGBMInitError: LightGBM.LibraryNotFoundError("lib_lightgbm not found. Please ensure this library is either in system dirs or the dedicated paths: [\"/Users/essam/.julia/packages/LightGBM/mUQGf/src\"]")
+during initialization of module LightGBM
+</code></pre>
 <p>Let us try LightGBM out by doing a regression task on the Boston house prices dataset. This is a commonly used dataset so there is a loader built into MLJ.</p>
 <p>Here, the objective is to show how LightGBM can do better than a Linear Regressor with minimal effort.</p>
 <p>We start out by taking a quick peek at the data itself and its statistical properties.</p>
@@ -273,8 +274,9 @@ using Plots
 dims &#61; &#40;600, 370&#41;
 plt &#61; plot&#40;curve.parameter_values, curve.measurements, size&#61;dims&#41;
 xlabel&#33;&#40;&quot;Number of rounds&quot;, fontsize&#61;14&#41;
-ylabel&#33;&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/boston-lgbm/code/output/lgbm_hp1.svg" alt="">
+ylabel&#33;&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: `LGBMRegressor` not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/end-to-end/boston-lgbm/code/lgbm_hp1.svg' not found. //</span></p>
 <p>It looks like that we don&#39;t need to go much past 100 boosts</p>
 <p>Since LightGBM is a gradient based learning method, we also have a learning rate parameter which controls the size of gradient updates.</p>
 <p>Let us look at a learning curve for this parameter too</p>
@@ -296,16 +298,13 @@ plot&#40;
     xscale &#61;:log10,
 &#41;
 xlabel&#33;&#40;&quot;Learning rate &#40;log scale&#41;&quot;, fontsize&#61;14&#41;
-ylabel&#33;&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/boston-lgbm/code/output/lgbm_hp2.svg" alt="">
+ylabel&#33;&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: `LGBMRegressor` not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/end-to-end/boston-lgbm/code/lgbm_hp2.svg' not found. //</span></p>
 <p>It seems like near 0.5 is a reasonable place. Bearing in mind that for lower values of learning rate we possibly require more boosting in order to converge, so the default value of 100 might not be sufficient for convergence. We leave this as an exercise to the reader.  We can still try to tune this parameter, however.</p>
 <p>Finally let us check number of datapoints required to produce a leaf in an individual tree. This parameter controls the complexity of individual learner trees, and too low a value might lead to overfitting.</p>
 <pre><code class="language-julia">lgb &#61; LGBMRegressor&#40;&#41; #initialised a model with default params
-mach &#61; machine&#40;lgb, features&#91;train, :&#93;, targets&#91;train, 1&#93;&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
-  model: LGBMRegressor(boosting = gbdt, …)
-  args: 
-    1:	Source @612 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @567 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+mach &#61; machine&#40;lgb, features&#91;train, :&#93;, targets&#91;train, 1&#93;&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: `LGBMRegressor` not defined
 </code></pre>
 <p>dataset is small enough and the lower and upper sets the tree to have certain number of leaves</p>
 <pre><code class="language-julia">curve &#61; learning_curve&#40;
@@ -317,8 +316,9 @@ mach &#61; machine&#40;lgb, features&#91;train, :&#93;, targets&#91;train, 1&#93
 
 plot&#40;curve.parameter_values, curve.measurements, size&#61;dims&#41;
 xlabel&#33;&#40;&quot;Min data in leaf&quot;, fontsize&#61;14&#41;
-ylabel&#33;&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/boston-lgbm/code/output/lgbm_hp3.svg" alt="">
+ylabel&#33;&#40;&quot;RMSE&quot;, fontsize&#61;14&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: `lgb` not defined
+</code></pre>
+<p><span style="color:red;">// Image matching '/assets/end-to-end/boston-lgbm/code/lgbm_hp3.svg' not found. //</span></p>
 <p>It does not seem like there is a huge risk for overfitting, and lower is better for this parameter.</p>
 <p>Using the learning curves above we can select some small-ish ranges to jointly search for the best combinations of these parameters via cross validation.</p>
 <pre><code class="language-julia">r1 &#61; range&#40;lgb, :num_iterations, lower&#61;50, upper&#61;100&#41;
@@ -333,20 +333,19 @@ tuned_model &#61; TunedModel&#40;
     n&#61;100,
 &#41;
 mach &#61; machine&#40;tuned_model, features, targets&#41;
-fit&#33;&#40;mach, rows&#61;train&#41;;</code></pre>
+fit&#33;&#40;mach, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">UndefVarError: `lgb` not defined
+</code></pre>
 <p>Let&#39;s see what the cross validation best model parameters turned out to be?</p>
 <pre><code class="language-julia">best_model &#61; fitted_params&#40;mach&#41;.best_model
 @show best_model.learning_rate
 @show best_model.min_data_in_leaf
-@show best_model.num_iterations</code></pre><pre><code class="plaintext code-output">best_model.learning_rate = 0.3320079815368962
-best_model.min_data_in_leaf = 7
-best_model.num_iterations = 82
+@show best_model.num_iterations</code></pre><pre><code class="plaintext code-output">UndefVarError: `mach` not defined
 </code></pre>
 <p>Great, and now let&#39;s predict using the held out data &#40;predicting using the <code>TunedModel</code> machine uses the best model trained on all the <code>train</code> data&#41;:</p>
 <pre><code class="language-julia">predictions &#61; MLJ.predict&#40;mach, rows&#61;test&#41;
 rms_score &#61; round&#40;rms&#40;predictions, targets&#91;test, 1&#93;&#41;, sigdigits&#61;4&#41;
 
-@show rms_score</code></pre><pre><code class="plaintext code-output">rms_score = 3.606
+@show rms_score</code></pre><pre><code class="plaintext code-output">UndefVarError: `mach` not defined
 </code></pre>
 <p>‎</p></div>
 

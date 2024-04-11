@@ -464,7 +464,7 @@ xlabel&#33;&#40;&quot;Time&quot;&#41;
 ylabel&#33;&#40;&quot;Power generation&quot;&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/obs_v_pred.svg" alt="Observed vs Predicted">
 <p>Let&#39;s look at the RMSE on the training and test sets.</p>
-<pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, MLJ.predict&#40;m_linReg, rows &#61; train&#41;&#41;</code></pre><pre><code class="plaintext code-output">2934.599963885754</code></pre>
+<pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, MLJ.predict&#40;m_linReg, rows &#61; train&#41;&#41;</code></pre><pre><code class="plaintext code-output">2934.5999638857543</code></pre>
 <p>on the test set...</p>
 <pre><code class="language-julia">rms&#40;y_wind&#91;test&#93;, y_hat&#41;</code></pre><pre><code class="plaintext code-output">2872.517439095293</code></pre>
 <p>Finally, let&#39;s plot the residuals to see if there is any obvious remaining structure in them.</p>

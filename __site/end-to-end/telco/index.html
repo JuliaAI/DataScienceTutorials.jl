@@ -6,20 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/landing.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/nav.css">
-  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
-  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
    <title>MLJ for Data Scientists in Two Hours</title> 
   <!-- LUNR -->
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
-  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
 </head>
 
 <body>
@@ -28,19 +28,19 @@
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
     <div id="menu" style="display: none;">
       <div class="pure-menu">
-        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
+        <a href="/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
           <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
-          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="display:none">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
+          <li class="pure-menu-item pure-menu-top-item "><a href="/"
               class="pure-menu-link"><strong>Home</strong></a></li>
 
           <!-- DATA BASICS -->
@@ -50,19 +50,19 @@
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist">
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
                   data</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
                   Frames</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Categorical Arrays</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
                   Type</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
                   processing</a></li>
             </ul>
           </div>
@@ -75,29 +75,29 @@
             <ul class="pure-menu-sublist">
               <li
                 class="pure-menu-item ">
-                <a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Choosing a model</a>
               </li>
               <li class="pure-menu-item ">
-                <a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
               </li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Model tuning</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Ensembles</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
               <li
                 class="pure-menu-item ">
-                <a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Composing models</a>
               </li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Stacking</a></li>
             </ul>
           </div>
@@ -107,21 +107,21 @@
           </div>
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist" id=isl>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/"
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
                   class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 10</a></li>
             </ul>
           </div>
@@ -132,33 +132,33 @@
           <div class="dropdown-content collapse">
             <ul class="pure-menu-sublist" >
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
                   Churn</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
               </li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Wine</a></li>
               <li class="pure-menu-item "><a
-                  href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Crabs (XGB)</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Horse</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/creditfraud" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
             </ul>
           </div>
@@ -168,7 +168,7 @@
           </div>
           <div class="dropdown-content collapse">
             <ul class="pure-menu-sublist" id=adv>
-              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/advanced/ensembles-3/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
             </ul>
           </div>
@@ -180,7 +180,7 @@
   <div id="nav" class="navigation">
     <div class="nav-container">
       <div class="brand">
-        <a href="/DataScienceTutorials.jl/">DataScienceTutorials.jl</a>
+        <a href="/">DataScienceTutorials.jl</a>
       </div>
       <nav>
         <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
@@ -195,7 +195,7 @@
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="mlj_for_data_scientists_in_two_hours"><a href="#mlj_for_data_scientists_in_two_hours" class="header-anchor">MLJ for Data Scientists in Two Hours</a></h1>
 <p>An end-to-end example using the <strong>Telco Churn</strong> dataset</p>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-telco.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#summary_of_methods_and_types_introduced">Summary of methods and types introduced</a></li><li><a href="#warm_up_building_a_model_for_the_iris_dataset">Warm up: Building a model for the iris dataset</a></li><li><a href="#getting_the_telco_data">Getting the Telco data</a></li><li><a href="#type_coercion">Type coercion</a></li><li><a href="#preparing_a_holdout_set_for_final_testing">Preparing a holdout set for final testing</a></li><li><a href="#splitting_data_into_target_and_features">Splitting data into target and features</a></li><li><a href="#loading_a_model_and_checking_type_requirements">Loading a model and checking type requirements</a></li><li><a href="#building_a_model_pipeline_to_incorporate_feature_encoding">Building a model pipeline to incorporate feature encoding</a></li><li><a href="#evaluating_the_pipeline_models_performance">Evaluating the pipeline model&#39;s performance</a><ol><li><a href="#evaluating_by_hand_with_a_holdout_set">Evaluating by hand &#40;with a holdout set&#41;</a></li><li><a href="#automated_performance_evaluation_more_typical_workflow">Automated performance evaluation &#40;more typical workflow&#41;</a></li></ol></li><li><a href="#filtering_out_unimportant_features">Filtering out unimportant features</a></li><li><a href="#wrapping_our_iterative_model_in_control_strategies">Wrapping our iterative model in control strategies</a></li><li><a href="#hyper-parameter_optimization_model_tuning">Hyper-parameter optimization &#40;model tuning&#41;</a></li><li><a href="#saving_our_model">Saving our model</a></li><li><a href="#final_performance_estimate">Final performance estimate</a></li><li><a href="#testing_the_final_model">Testing the final model</a></li></ol></div>
 <p>An application of the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">MLJ toolbox</a> to the Telco Customer Churn dataset, aimed at practicing data scientists new to MLJ &#40;Machine Learning in Julia&#41;. This tutorial does not cover exploratory data analysis.</p>
@@ -250,8 +250,8 @@ DecisionTreeClassifier(
 <pre><code class="language-julia">mach &#61; machine&#40;model, X_iris, y_iris&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @969 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @114 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @228 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @804 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>A machine is essentially just a model &#40;ie, hyper-parameters&#41; plus data, but it additionally stores <em>learned parameters</em> &#40;the tree&#41; once it is trained on some view of the data:</p>
 <pre><code class="language-julia">train_rows &#61; vcat&#40;1:60, 91:150&#41;; # some row indices &#40;observations are rows not columns&#41;
@@ -269,8 +269,8 @@ Depth:  3,
 fit&#33;&#40;mach, rows&#61;train_rows&#41; # re-train with new hyper-parameter</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @969 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @114 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @228 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @804 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>Now we can make predictions on some other view of the data, as in</p>
 <pre><code class="language-julia">predict&#40;mach, rows&#61;71:73&#41;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float64}:
@@ -311,7 +311,7 @@ first&#40;df0, 4&#41;</code></pre><pre><code class="plaintext code-output">4×21
 <div class="dropdown-content"><p><em>Introduces:</em> <code>scitype</code>, <code>schema</code>, <code>coerce</code></p>
 <p>A <a href="https://juliaai.github.io/ScientificTypes.jl/dev/">&quot;scientific type&quot;</a> or <em>scitype</em> indicates how MLJ will <em>interpret</em> data. For example, <code>typeof&#40;3.14&#41; &#61;&#61; Float64</code>, while <code>scitype&#40;3.14&#41; &#61;&#61; Continuous</code> and also <code>scitype&#40;3.14f0&#41; &#61;&#61; Continuous</code>. In MLJ, model data requirements are articulated using scitypes.</p>
 <p>Here are common &quot;scalar&quot; scitypes:</p>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/scitypes.svg" alt="scalar scitypesb">
+<img src="/assets/end-to-end/telco/scitypes.svg" alt="scalar scitypesb">
 <p>There are also container scitypes. For example, the scitype of any <code>N</code>-dimensional array is <code>AbstractArray&#123;S, N&#125;</code>, where <code>S</code> is the scitype of the elements:</p>
 <pre><code class="language-julia">scitype&#40;&#91;&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;&#93;&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre>
 <p>The <code>schema</code> operator summarizes the column scitypes of a table:</p>
@@ -482,16 +482,16 @@ EvoTrees.EvoTreeClassifier</code></pre>
 <pre><code class="language-julia">mach_pipe &#61; machine&#40;pipe, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @279 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @925 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @921 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @202 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We already encountered the <code>partition</code> method above. Here we apply it to row indices, instead of data containers, as <code>fit&#33;</code> and <code>predict</code> only need a <em>view</em> of the data to work.</p>
 <pre><code class="language-julia">train, validation &#61; partition&#40;1:length&#40;y&#41;, 0.7&#41;
 fit&#33;&#40;mach_pipe, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @279 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @925 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @921 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @202 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We note in passing that we can access two kinds of information from a trained machine:</p>
 <ul>
@@ -506,7 +506,7 @@ keys&#40;fp&#41;</code></pre><pre><code class="plaintext code-output">(:evo_tree
 <pre><code class="language-julia">fp.evo_tree_classifier.fitresult</code></pre><pre><code class="plaintext code-output">EvoTrees.EvoTree{EvoTrees.MLogLoss, 2}
  - Contains 101 trees in field `trees` (incl. 1 bias tree).
  - Data input has 45 features.
- - [:target_levels, :fnames, :feattypes, :edges, :featbins] info accessible in field `info`
+ - [:target_levels, :target_isordered, :fnames, :feattypes, :edges, :featbins] info accessible in field `info`
 </code></pre>
 <p>And, from the report, extract the names of all features generated for the one-hot encoding:</p>
 <pre><code class="language-julia">rpt &#61; report&#40;mach_pipe&#41;;
@@ -519,37 +519,37 @@ keys&#40;rpt.continuous_encoder&#41;</code></pre><pre><code class="plaintext cod
 <pre><code class="language-julia">reports_feature_importances&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
 <p>And we can get the booster feature imporances from the pipeline&#39;s machine like this:</p>
 <pre><code class="language-julia">fi &#61; feature_importances&#40;mach_pipe&#41;</code></pre><pre><code class="plaintext code-output">45-element Vector{Pair{String, Float64}}:
-                           "MonthlyCharges" => 0.23890620397780685
-                 "Contract__Month-to-month" => 0.16232294017366125
-                                   "tenure" => 0.14677468271414482
-                             "TotalCharges" => 0.14666498887062812
-                              "Partner__No" => 0.030441338887616118
-                           "gender__Female" => 0.025860497369449405
-                         "OnlineBackup__No" => 0.024299735947768884
-                            "SeniorCitizen" => 0.02280229847728746
-              "PaymentMethod__Mailed check" => 0.02153253456456951
-                       "OnlineSecurity__No" => 0.020133018731836202
-                         "PhoneService__No" => 0.019949239825781784
-          "PaymentMethod__Electronic check" => 0.019613869758192123
-             "InternetService__Fiber optic" => 0.01710091424020063
-   "PaymentMethod__Credit card (automatic)" => 0.011909647547861153
-                          "TechSupport__No" => 0.0107331453464553
-                        "MultipleLines__No" => 0.01008697622583624
-                     "PaperlessBilling__No" => 0.00943634524564372
- "PaymentMethod__Bank transfer (automatic)" => 0.00821687161106134
-                     "DeviceProtection__No" => 0.008179337485642651
-                       "MultipleLines__Yes" => 0.006695659965183685
-                          "StreamingTV__No" => 0.006085178170408351
-                         "TechSupport__Yes" => 0.00573288513590814
-                       "Contract__Two year" => 0.005648160146719027
-                           "Dependents__No" => 0.0052877365294750085
-                       "Contract__One year" => 0.003658289499817455
-                      "StreamingMovies__No" => 0.003337851338772691
-                        "OnlineBackup__Yes" => 0.003151342690951194
-                      "OnlineSecurity__Yes" => 0.0028559465736072826
-                     "InternetService__DSL" => 0.0022030341978608006
-                    "DeviceProtection__Yes" => 0.0002864796512690182
-                         "StreamingTV__Yes" => 9.284909858362433e-5
+                           "MonthlyCharges" => 0.23890620397780693
+                 "Contract__Month-to-month" => 0.16232294017366128
+                                   "tenure" => 0.14677468271414487
+                             "TotalCharges" => 0.14666498887062815
+                              "Partner__No" => 0.030441338887616125
+                           "gender__Female" => 0.025860497369449408
+                         "OnlineBackup__No" => 0.02429973594776889
+                            "SeniorCitizen" => 0.02280229847728747
+              "PaymentMethod__Mailed check" => 0.021532534564569515
+                       "OnlineSecurity__No" => 0.020133018731836205
+                         "PhoneService__No" => 0.019949239825781787
+          "PaymentMethod__Electronic check" => 0.01961386975819213
+             "InternetService__Fiber optic" => 0.017100914240200632
+   "PaymentMethod__Credit card (automatic)" => 0.011909647547861155
+                          "TechSupport__No" => 0.010733145346455301
+                        "MultipleLines__No" => 0.010086976225836241
+                     "PaperlessBilling__No" => 0.009436345245643721
+ "PaymentMethod__Bank transfer (automatic)" => 0.008216871611061341
+                     "DeviceProtection__No" => 0.008179337485642653
+                       "MultipleLines__Yes" => 0.006695659965183687
+                          "StreamingTV__No" => 0.006085178170408352
+                         "TechSupport__Yes" => 0.005732885135908142
+                       "Contract__Two year" => 0.005648160146719028
+                           "Dependents__No" => 0.005287736529475009
+                       "Contract__One year" => 0.003658289499817456
+                      "StreamingMovies__No" => 0.003337851338772692
+                        "OnlineBackup__Yes" => 0.003151342690951195
+                      "OnlineSecurity__Yes" => 0.0028559465736072835
+                     "InternetService__DSL" => 0.002203034197860801
+                    "DeviceProtection__Yes" => 0.00028647965126901834
+                         "StreamingTV__Yes" => 9.284909858362434e-5
       "OnlineSecurity__No internet service" => 0.0
                           "Dependents__Yes" => 0.0
                              "Partner__Yes" => 0.0
@@ -598,7 +598,7 @@ Plots.scalefontsizes&#40;0.85&#41;</code></pre>
 plt &#61; scatter&#40;roc, legend&#61;false&#41;
 plot&#33;&#40;plt, xlab&#61;&quot;false positive rate&quot;, ylab&#61;&quot;true positive rate&quot;&#41;
 plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
+<img src="/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
 <p>&#40;Warning here is a <a href="https://github.com/Evovest/EvoTrees.jl/issues/267">minor bug</a>.&#41;</p>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="automated_performance_evaluation_more_typical_workflow"><a href="#automated_performance_evaluation_more_typical_workflow" class="header-anchor">Automated performance evaluation &#40;more typical workflow&#41;</a></h3></div>
@@ -651,7 +651,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
         nbins = 64, 
         alpha = 0.5, 
         tree_type = "binary", 
-        rng = Random.MersenneTwister(123, (0, 236472, 235470, 635))), 
+        rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
   cache = true)</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="wrapping_our_iterative_model_in_control_strategies"><a href="#wrapping_our_iterative_model_in_control_strategies" class="header-anchor">Wrapping our iterative model in control strategies</a></h2></div>
@@ -690,7 +690,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
  - nbins: 64
  - alpha: 0.5
  - tree_type: binary
- - rng: Random.MersenneTwister(123, (0, 236472, 235470, 635))
+ - rng: Random.MersenneTwister(123, (0, 234468, 233466, 775))
 , 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
@@ -745,7 +745,7 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
               nbins = 64, 
               alpha = 0.5, 
               tree_type = "binary", 
-              rng = Random.MersenneTwister(123, (0, 236472, 235470, 635))), 
+              rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
   resampling = Holdout(
@@ -811,7 +811,7 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
   train_best = true, 
   repeats = 1, 
   n = 40, 
-  acceleration = ComputationalResources.CPUThreads{Int64}(12), 
+  acceleration = ComputationalResources.CPUThreads{Int64}(1), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
   cache = true)</code></pre>
@@ -821,8 +821,8 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
 fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
-    1:	Source @579 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @242 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @039 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @279 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>As explained above, the training we have just performed was split internally into two separate steps:</p>
 <ul>
@@ -841,30 +841,30 @@ print&#40;
     &quot;  eta:         &quot;, best_booster.eta
 &#41;</code></pre><pre><code class="plaintext code-output">Optimal hyper-parameters: 
   max_depth: 3
-  eta:         0.061573795880493394</code></pre>
+  eta:         0.06363819027728988</code></pre>
 <pre><code class="language-julia">e_best &#61; rpt2.best_history_entry
 e_best.evaluation</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
   model, measure, operation, measurement, per_fold,
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬──────────────┬─────────────┬─────────┬─────────────────────────────────────────────────┐
-│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                        │
-├──────────────────┼──────────────┼─────────────┼─────────┼─────────────────────────────────────────────────┤
-│ BrierLoss()      │ predict      │ 0.28        │ 0.0166  │ Float32[0.252, 0.296, 0.289, 0.281, 0.263, 0.3] │
-│ AreaUnderCurve() │ predict      │ 0.834       │ 0.017   │ [0.862, 0.811, 0.82, 0.834, 0.851, 0.825]       │
-│ Accuracy()       │ predict_mode │ 0.789       │ 0.0297  │ [0.831, 0.744, 0.793, 0.793, 0.817, 0.756]      │
-└──────────────────┴──────────────┴─────────────┴─────────┴─────────────────────────────────────────────────┘
+┌──────────────────┬──────────────┬─────────────┬─────────┬───────────────────────────────────────────────────┐
+│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                          │
+├──────────────────┼──────────────┼─────────────┼─────────┼───────────────────────────────────────────────────┤
+│ BrierLoss()      │ predict      │ 0.278       │ 0.0195  │ Float32[0.245, 0.294, 0.293, 0.278, 0.259, 0.301] │
+│ AreaUnderCurve() │ predict      │ 0.836       │ 0.0214  │ [0.87, 0.814, 0.818, 0.833, 0.862, 0.818]         │
+│ Accuracy()       │ predict_mode │ 0.789       │ 0.0261  │ [0.807, 0.744, 0.793, 0.793, 0.829, 0.768]        │
+└──────────────────┴──────────────┴─────────────┴─────────┴───────────────────────────────────────────────────┘
 </code></pre>
 <p>Digging a little deeper, we can learn what stopping criterion was applied in the case of the optimal model, and how many iterations were required:</p>
 <pre><code class="language-julia">rpt2.best_report.controls |&gt; collect</code></pre><pre><code class="plaintext code-output">4-element Vector{Tuple{Any, NamedTuple}}:
- (IterationControl.Step(1), (new_iterations = 34,))
+ (IterationControl.Step(1), (new_iterations = 54,))
  (EarlyStopping.NumberSinceBest(4), (done = true, log = "Stop triggered by EarlyStopping.NumberSinceBest(4) stopping criterion. "))
  (EarlyStopping.TimeLimit(Dates.Millisecond(2000)), (done = false, log = ""))
  (EarlyStopping.InvalidValue(), (done = false, log = ""))</code></pre>
 <p>Finally, we can visualize the optimization results:</p>
 <pre><code class="language-julia">plot&#40;mach_tuned_iterated_pipe, size&#61;&#40;600,450&#41;&#41;</code></pre>
-<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/code/output/EX-telco-tuning.svg" alt="">
+<img src="/assets/end-to-end/telco/code/output/EX-telco-tuning.svg" alt="">
 <p>‎</p></div>
 <div class="dropdown"><h2 id="saving_our_model"><a href="#saving_our_model" class="header-anchor">Saving our model</a></h2></div>
 <div class="dropdown-content"><p><em>Introduces:</em> <code>MLJ.save</code></p>
@@ -884,9 +884,9 @@ Extract:
 ┌──────────────────┬──────────────┬─────────────┬─────────┬───────────────────────────────────────────────────┐
 │ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                          │
 ├──────────────────┼──────────────┼─────────────┼─────────┼───────────────────────────────────────────────────┤
-│ BrierLoss()      │ predict      │ 0.292       │ 0.0409  │ Float32[0.295, 0.254, 0.316, 0.371, 0.247, 0.266] │
-│ AreaUnderCurve() │ predict      │ 0.823       │ 0.0491  │ [0.81, 0.874, 0.802, 0.727, 0.866, 0.861]         │
-│ Accuracy()       │ predict_mode │ 0.781       │ 0.046   │ [0.795, 0.829, 0.72, 0.72, 0.841, 0.78]           │
+│ BrierLoss()      │ predict      │ 0.295       │ 0.0404  │ Float32[0.295, 0.258, 0.325, 0.371, 0.252, 0.266] │
+│ AreaUnderCurve() │ predict      │ 0.825       │ 0.0507  │ [0.81, 0.874, 0.803, 0.727, 0.878, 0.861]         │
+│ Accuracy()       │ predict_mode │ 0.781       │ 0.034   │ [0.795, 0.829, 0.756, 0.72, 0.805, 0.78]          │
 └──────────────────┴──────────────┴─────────────┴─────────┴───────────────────────────────────────────────────┘
 </code></pre>
 <p>For comparison, here again is the evaluation for the basic pipeline model &#40;no feature selection and default hyperparameters&#41;:</p>
@@ -912,7 +912,7 @@ Extract:
 </code></pre>
 <p>We compute predictions on the holdout set:</p>
 <pre><code class="language-julia">ŷ_tuned &#61; predict&#40;mach_restored, Xtest&#41;;
-ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.Multiclass{2}}(No=>0.718, Yes=>0.282)</code></pre>
+ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.712, Yes=>0.288)</code></pre>
 <p>And can compute the final performance measures:</p>
 <pre><code class="language-julia">print&#40;
     &quot;Tuned model measurements on test:\n&quot;,
@@ -920,9 +920,9 @@ ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">Univar
     &quot;  auc:        &quot;, auc&#40;ŷ_tuned, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_tuned&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Tuned model measurements on test:
-  brier loss: 0.27884042
-  auc:        0.8567396313364055
-  accuracy:   0.7725118483412322</code></pre>
+  brier loss: 0.2760039
+  auc:        0.8487327188940093
+  accuracy:   0.7914691943127962</code></pre>
 <p>For comparison, here&#39;s the performance for the basic pipeline model</p>
 <pre><code class="language-julia">mach_basic &#61; machine&#40;pipe, X, y&#41;
 fit&#33;&#40;mach_basic, verbosity&#61;0&#41;
@@ -935,7 +935,7 @@ print&#40;
     &quot;  auc:        &quot;, auc&#40;ŷ_basic, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_basic&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Basic model measurements on test set:
-  brier loss: 0.33141056
+  brier loss: 0.3314106
   auc:        0.8130184331797236
   accuracy:   0.7725118483412322</code></pre>
 <p>‎</p></div>
@@ -959,20 +959,20 @@ print&#40;
 </div> <!-- end of id=main -->
 </div> <!-- end of id=layout -->
 <!-- for collapse functionality -->
-<script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
-<script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
+<script src="/libs/collapse/collapse.js"></script>
+<script src="/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
-<script src="/DataScienceTutorials.jl/libs/nav/footer-nav.js"></script>
+<script src="/libs/nav/head.js"></script>
+<script src="/libs/nav/footer-nav.js"></script>
 <!-- landing page -->
-<script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
+<script src="/libs/landing/landing.js"></script>
 <!-- navigation bar -->
-<script src="/DataScienceTutorials.jl/libs/nav/nav.js"></script>
+<script src="/libs/nav/nav.js"></script>
 <!-- responsive navigation bar -->
-<script src="/DataScienceTutorials.jl/libs/nav/responsive.js"></script>
+<script src="/libs/nav/responsive.js"></script>
 
 
-<script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
+<script src="/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
 

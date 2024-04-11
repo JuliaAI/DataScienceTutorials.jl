@@ -7,7 +7,7 @@ DeterministicPipeline(
   svc = SVC(
         kernel = LIBSVM.Kernel.RadialBasis, 
         gamma = 0.0, 
-        cost = 3.5, 
+        cost = 2.14, 
         cachesize = 200.0, 
         degree = 3, 
         coef0 = 0.0, 
