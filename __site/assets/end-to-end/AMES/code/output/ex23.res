@@ -21,7 +21,7 @@ DeterministicTunedModel(
   train_best = true, 
   repeats = 1, 
   n = nothing, 
-  acceleration = ComputationalResources.CPUThreads{Int64}(1), 
+  acceleration = ComputationalResources.CPUThreads{Int64}(12), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
   cache = true)

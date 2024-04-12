@@ -208,6 +208,7 @@ const flatItems = flattenNavItems(navItems);
 // loop and roate based on clicks
 function getPreviousAndNextTutorials(currentHref) {
   let currentIndex = flatItems.findIndex(item => (currentHref.includes(item.href) && item.href != "/"));
+  console.log(currentIndex)
   currentIndex = currentIndex === -1 ? 0 : currentIndex;
   const totalItems = flatItems.length;
 

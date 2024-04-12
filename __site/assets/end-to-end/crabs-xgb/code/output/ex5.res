@@ -36,7 +36,7 @@ XGBoostClassifier(
   objective = "automatic", 
   base_score = 0.5, 
   watchlist = nothing, 
-  nthread = 1, 
+  nthread = 12, 
   importance_type = "gain", 
   seed = nothing, 
   validate_parameters = false, 
