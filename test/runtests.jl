@@ -1,4 +1,18 @@
-using Test, Logging
+# This file was originally developed to test that each tutorial.jl file could be
+# executed. When written, all tutorials were based on a *single* Manifest.toml, appearing
+# at the top level. But now each tutorial get's it's own environment and the approach
+# taken here does not work.
+
+@warn """
+
+Testing of tutorials with `test DataScienceTutorials` no longer performs any testing. See
+comments at top of /test/runtests.jl.
+
+"""
+
+using Pkg, Test, Logging, Random
+
+if false
 
 const curdir = @__DIR__
 const scripts_dir = normpath(joinpath(curdir, "..", "_literate"))
@@ -67,29 +81,40 @@ function strip_code(fpath)
     return tp
 end
 
+const rng = Random.Xoshiro(round(Int, time()))
+const complete = true
+
 for (root, _, files) in walkdir(scripts_dir), file in files
 
-    # NOTE: if want to run a single file  in isolation, uncomment line below
+    contains(root, "CondaPkg") && continue
+    last(split(file, ".")) == "jl" || continue
 
-#    splitdir(file)[2] ∉ ("ISL-lab-8.jl",) && continue
-#    startswith(splitdir(file)[2], "ISL-lab-4") || continue
+    root_stub = last(splitdir(root))
+
+
+    # NOTE: If you want to run a single file in isolation, uncomment next line and
+    # comment out the block that follows it:
+
+    # startswith(root_stub, "ISL-lab-4") || continue
 
     file == ".DS_Store" && continue
 
-    @testset "testing $file" begin
-        println("\n\n>> looking at $file ...")
+    @testset "testing $root_stub/$file" begin
+        println("\n\n>> looking at $root_stub/$file ...")
         path = joinpath(root, file)
         tf = tempname()
         write(tf, """
-        module Tester
-            using Franklin
-            import ..strip_code
-            include(strip_code("$path"))
-        end
-        """)
+                module Tester
+                    using Franklin
+                    import ..strip_code
+                    include(strip_code("$path"))
+                end
+                """)
         @test begin
             try_run(tf); true
         end
     end
 end
 println("All done 🍻")
+
+end
