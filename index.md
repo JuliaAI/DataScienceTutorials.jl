@@ -29,7 +29,7 @@ What kind of user are you? These are our recommendations for different types of 
   @@tab-content,selected-content
   ## Completely new to Julia?
 
-  Try one of these [external resources](/external-resources):
+  Try one of these [external resources](/info/external-resources):
 
   - [Julia's learning resources page](https://julialang.org/learning/) 
 
@@ -54,8 +54,8 @@ What kind of user are you? These are our recommendations for different types of 
   # New to machine learning but have moderate Julia skills?
 
   Start out with the [Introduction to Statistical
-  Learning](/isl) tutorials, or one of
-  these [external resources](/external-resources):
+  Learning](/info/isl) tutorials, or one of
+  these [external resources](/info/external-resources):
 
   - [MLCourse](https://github.com/jbrea/MLCourse): Teaching material for
     an introductory machine learning course at EPFL (for an interactive
@@ -72,8 +72,8 @@ What kind of user are you? These are our recommendations for different types of 
   To get started with Julia, you can try one of the external resources found in the **New to Julia** tab.
 
   Once you have basic Julia competency, try the [Introduction to
-  Statistical Learning](/isl)
-  tutorials or one of these [external reources](/external-resources):
+  Statistical Learning](/info/isl)
+  tutorials or one of these [external resources](/info/external-resources):
 
   - [Julia Data
     Science](https://github.com/JuliaDataScience/JuliaDataScience): Book
