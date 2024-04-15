@@ -3,4 +3,4 @@
 
 # Further data processing
 
-\tutorial{D0-processing}
+\tutorial{data/processing}

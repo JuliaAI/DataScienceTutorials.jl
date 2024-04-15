@@ -3,4 +3,4 @@
 
 # Crabs with XGBoost
 
-\tutorial{EX-crabs-xgb}
+\tutorial{end-to-end/crabs-xgb}

@@ -4,4 +4,4 @@
 
 An end-to-end example using the **Telco Churn** dataset
 
-\tutorial{EX-telco}
+\tutorial{end-to-end/telco}

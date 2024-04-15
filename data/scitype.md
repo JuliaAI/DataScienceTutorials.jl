@@ -3,4 +3,4 @@
 
 # Data interpretation: Scientific Types
 
-\tutorial{D0-scitype}
+\tutorial{data/scitype}

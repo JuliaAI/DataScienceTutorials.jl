@@ -3,4 +3,4 @@
 
 # Tuning a model
 
-\tutorial{A-model-tuning}
+\tutorial{getting-started/model-tuning}

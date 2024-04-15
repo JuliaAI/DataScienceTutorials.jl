@@ -2,4 +2,4 @@
 
 # Lab 3 - Linear Regression
 
-\tutorial{ISL-lab-3}
+\tutorial{isl/lab-3}

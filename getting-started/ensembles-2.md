@@ -3,4 +3,4 @@
 
 # Ensemble models 2
 
-\tutorial{A-ensembles-2}
+\tutorial{getting-started/ensembles-2}

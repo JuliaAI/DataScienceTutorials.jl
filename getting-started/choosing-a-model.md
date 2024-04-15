@@ -3,4 +3,4 @@
 
 # Choosing and evaluating a model
 
-\tutorial{A-model-choice}
+\tutorial{getting-started/model-choice}

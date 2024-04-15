@@ -2,4 +2,4 @@
 
 # Lab 2
 
-\tutorial{ISL-lab-2}
+\tutorial{isl/lab-2}

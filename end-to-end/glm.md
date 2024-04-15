@@ -2,4 +2,4 @@
 
 # Using GLM.jl
 
-\tutorial{EX-GLM}
+\tutorial{end-to-end/GLM}

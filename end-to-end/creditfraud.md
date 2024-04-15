@@ -3,4 +3,4 @@
 
 # Credit Card Fraud
 
-\tutorial{EX-creditfraud}
+\tutorial{end-to-end/creditfraud}

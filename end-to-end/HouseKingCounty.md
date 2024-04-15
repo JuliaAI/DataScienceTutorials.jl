@@ -4,4 +4,4 @@
 
 # House King County
 
-\tutorial{EX-housekingcounty}
+\tutorial{end-to-end/housekingcounty}

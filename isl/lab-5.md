@@ -2,4 +2,4 @@
 
 # Lab 5 - Cross validation and the bootstrap
 
-\tutorial{ISL-lab-5}
+\tutorial{isl/lab-5}

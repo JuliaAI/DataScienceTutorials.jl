@@ -2,4 +2,4 @@
 
 # Manipulating a DataFrame
 
-\tutorial{D0-dataframe}
+\tutorial{data/dataframe}

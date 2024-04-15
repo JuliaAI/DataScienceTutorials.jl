@@ -3,4 +3,4 @@
 
 # Horse colic data
 
-\tutorial{EX-horse}
+\tutorial{end-to-end/horse}

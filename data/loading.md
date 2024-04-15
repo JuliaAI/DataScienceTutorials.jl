@@ -3,4 +3,4 @@
 
 # Loading and elementary processing of data
 
-\tutorial{D0-loading}
+\tutorial{data/loading}
