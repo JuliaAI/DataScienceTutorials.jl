@@ -6,7 +6,7 @@ This repository contains the source code for a [set of tutorials](https://juliaa
 
 You can read the tutorials [online](https://juliaai.github.io/DataScienceTutorials.jl/).
 
-You can find a runnable script for each tutorial at the top of each tutorial page along with a `Project.toml` and a `Manifest.toml` you can use to re-create the exact environment that was used to run the tutorial.
+You can find a runnable script for each tutorial linked at the top of each tutorial page along with a `Project.toml` and a `Manifest.toml` you can use to re-create the exact environment that was used to run the tutorial.
 
 To do so, save both files in an appropriate folder, start Julia, `cd` to the folder and
 
@@ -23,57 +23,85 @@ Pkg.instantiate()
 The rest of these instructions assume that you've cloned the package and have `cd` to it.
 
 ### Structure
-
-All tutorials correspond to a Literate script that's in `_literate/`.
+The following are the folders relevant to pages on the website:
+```
+├── _literate
+│   ├── data             # has "Data Basics" tutorials
+│   ├── getting-started  # has "Getting Started" tutorials
+│   ├── isl              # has "Introduction to Statistical Learning" tutorials
+│   ├── end-to-end       # has "End-to-End" tutorials
+│   └── advanced         # has "Advanced" tutorials
+├── data                 # This and the four folders below import content from "_literate" to the website 
+├── getting-started
+├── isl
+├── end-to-end
+├── advanced
+├── info                 # has markdown files corresponding to info pages
+├── index.md             # has markdown for the landing page
+├── search.md            # has markdown for the search page
+├── routes.json          # has all the navigation bar data
+├── collapse-script.jl   # script that adds dropdowns to tutorials
+├── deploy.jl            # deployment script
+├── Manifest.toml
+└── Project.toml         # Project's environment
+```
+To understand the rest of the structure which could help you change styles with CSS or add interaction with JavaScript read the relevant page on [Franklin's documentation](https://franklinjl.org/workflow/)
 
 ### Fixing an existing tutorial
 
-Find the corresponding script, fix it in a PR.
+Find the corresponding Julia script in `_literate` and fix it in a PR.
 
 ### Add a new tutorial
 
-* Duplicate the folder `EX-wine`.
-* Change its name:
-  * `EX-somename` for an "end-to-end" tutorial `somename`
-  * `A-somename` for a "getting started" tutorial `somename`
-  * `D0-somename` for a "data" tutorial `somename`
-  * `ISL-lab-x` for an "Introduction to Statistical Learning" tutorial
+* Go to the appropriate folder inside `_literate` depending on the category of the tutorial as described above
+* Duplicate one of the tutorials as a starting point.
 * Remove `Manifest.toml` and `Project.toml`
-* Activate that folder and add the packages that you'll need (MLJ, ...)
+* Create and activate an environment in that folder and add the packages that you'll need (MLJ, ...)
 * Write your tutorial following the blueprint
+* Run `julia collapse-script.jl` to add necessary Franklin syntax to your tutorial to make sections in it collapsible like other tutorials
 
-**Note**: your tutorial **must** "just work" otherwise it will be ignored, in other words, we should be able to just copy the folder containing your `.jl` and `.toml` files, and run it without having to do anything special.
+**Note**: your tutorial **must** "just work" otherwise it will be ignored, in other words, any Julia user should be able to just copy the folder containing your `.jl` and `.toml` files, and run it without having to do anything special.
 
-Once all that's done, the remaining things to do are to create the HTML page and a link in the appropriate location. Let's assume you wanted to add an E2E tutorial "Dinosaurs" then in the previous step you'd have `EX-dinosaurs` and you would
+Once all that's done, the remaining things to do are to create the HTML page and a link in the appropriate location. Let's assume you wanted to add an E2E tutorial "Dinosaurs" then this implies that `_literate/end-to-end/dinosaurs.jl` exists and you would:
 
-* create a file `dinosaurs.md` in `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{EX-dinosaurs}`
-* add a link pointing to that tutorial in `_libs/nav/head.js` following the template so your tutorial shows in the navigation bar
-* lastly, to make sections in your tutorial collapsible like other tutorials run the `collapse-script.jl` file via `julia collapse-script.jl`
+* Create a file `dinosaurs.md` in the top-level folder `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{end-to-end/dinosaurs}`
+* Add a link pointing to that tutorial in `routing.json` following the template so your tutorial shows in the navigation bar
+* Ensure your tutorials renders correctly by running the following:
+```julia
+cd("path/to/DataScienceTutorials")
 
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+
+using Franklin
+serve()                 # serve the website locally
+```
+This may generate some files under `__site`. Don't push them in your PR.
 
 ### Publishing updates
 
 **Assumptions**:
 
-* you have a PR with changes, someone has reviewed them and they got merged into the main branch
+* you have a PR with changes, someone has reviewed them and they got merged into the master branch
 
-* Be sure the version of Julia declared near the top of `index.md`
+* Be sure the version of Julia declared [here](https://juliaai.github.io/DataScienceTutorials.jl/how-to-run-code/)
   matches the version used to generate the web-site (which should
   match the version declared in each tutorial's Manifest.toml file)
 
 
-**Once the changes are in the main branch**:
+**Once the changes are in the master branch:**
 
-* run `cd("path/to/DataScienceTutorials"); using Franklin` to launch Franklin
-* run `serve(single=true, verb=true)` to ensure no issues generating the relevant html pages with code block evaluations, and then run `serve()` (after restarting) to serve the pages live on a local browser for viewing
-* run `include("deploy.jl")` to re-generate the LUNR index and push the changes to GitHub.
-
-The second step requires you have `lunr` and `cheerio` installed, if not:
-
-```
+* Run `cd("path/to/DataScienceTutorials"); using Franklin` to launch Franklin
+* In case you don't have `lunr` and `cheerio` installed already, also do:
+```julia
 using NodeJS
 run(`sudo $(npm_cmd()) i lunr cheerio`)
 ```
+* Run `serve(single=true, verb=true)` to ensure no issues generating the relevant html pages with code block evaluations
+* Run `serve()` (after restarting) to serve the pages live on a local browser for viewing
+* run `include("deploy.jl")` which re-generates the LUNR index and automatically pushes the changes to GitHub.
+
 
 This should take ≤ 15 seconds to complete.
 
@@ -139,9 +167,9 @@ serve(; eval_all=true)
 
 note that this will take a while.
 
-#### Merge conflicts
+#### Merge conflicts or Missing Styles
 
-If you get merge conflicts, do
+If you get merge conflicts or have styles that seem to be missing after `serve()`, do
 
 ```julia
 cleanpull()
