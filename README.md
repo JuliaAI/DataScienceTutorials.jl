@@ -42,7 +42,6 @@ The following are the folders relevant to pages on the website:
 ├── routes.json          # has all the navigation bar data
 ├── collapse-script.jl   # script that adds collapsible sections to tutorials
 ├── deploy.jl            # deployment script
-├── Manifest.toml
 └── Project.toml         # For the project's environment
 ```
 To understand the rest of the structure which could help you change styles with CSS or add interaction with JavaScript read the relevant page on [Franklin's documentation](https://franklinjl.org/workflow/).
