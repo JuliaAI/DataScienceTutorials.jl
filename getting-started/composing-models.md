@@ -3,4 +3,4 @@
 
 # Composing models
 
-\tutorial{A-composing-models}
+\tutorial{getting-started/composing-models}

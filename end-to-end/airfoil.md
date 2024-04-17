@@ -3,4 +3,4 @@
 
 # Airfoil
 
-\tutorial{EX-airfoil}
+\tutorial{end-to-end/airfoil}

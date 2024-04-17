@@ -2,4 +2,4 @@
 
 # Wine
 
-\tutorial{EX-wine}
+\tutorial{end-to-end/wine}

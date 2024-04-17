@@ -3,4 +3,4 @@
 
 # Handling categorical data
 
-\tutorial{D0-categorical}
+\tutorial{data/categorical}

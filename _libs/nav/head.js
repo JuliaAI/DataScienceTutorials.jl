@@ -1,80 +1,4 @@
-
-const navItems = [
-  { name: 'Home', href: '/', sections: [], sectionItemWidth: '', id: 'home' },
-  {
-    name: 'Data Basics',                                    // Category name to be shown in navigation bar
-    id: 'data',                                             // id to be manipulated with js
-    href: '/data',                                             // in case it should link anywhere
-    sections: [                                             // list items to be shown in its dropdown and where they link to
-      { name: 'Loading Data', href: '/data/loading/' },
-      { name: 'Data Frames', href: '/data/dataframe/' },
-      { name: 'Categorical Arrays', href: '/data/categorical/' },
-      { name: 'Scientific Type', href: '/data/scitype/' },
-      { name: 'Data processing', href: '/data/processing/' },
-    ],
-    sectionItemWidth: 'short-item'
-  },
-  {
-    name: 'Getting Started',
-    id: 'getting-started',
-    href: '/getting-started',
-    sections: [
-      { name: 'Choosing a model', href: '/getting-started/choosing-a-model/' },
-      { name: 'Fit, predict, transform', href: '/getting-started/fit-and-predict/' },
-      { name: 'Model tuning', href: '/getting-started/model-tuning/' },
-      { name: 'Ensembles', href: '/getting-started/ensembles/' },
-      { name: 'Ensembles (2)', href: '/getting-started/ensembles-2/' },
-      { name: 'Composing models', href: '/getting-started/composing-models/' },
-      { name: 'Stacking', href: '/getting-started/stacking/' },
-    ],
-    sectionItemWidth: 'medium-item'
-  },
-  {
-    name: 'Intro to Stats Learning',
-    id: 'stats-learning',
-    href: '/isl',
-    sections: [
-      { name: 'Lab 2', href: '/isl/lab-2/' },
-      { name: 'Lab 3', href: '/isl/lab-3/' },
-      { name: 'Lab 4', href: '/isl/lab-4/' },
-      { name: 'Lab 5', href: '/isl/lab-5/' },
-      { name: 'Lab 6b', href: '/isl/lab-6b/' },
-      { name: 'Lab 8', href: '/isl/lab-8/' },
-      { name: 'Lab 9', href: '/isl/lab-9/' },
-      { name: 'Lab 10', href: '/isl/lab-10/' },
-    ],
-    sectionItemWidth: 'long-item'
-  },
-
-  {
-    name: 'End to End',
-    id: 'end-to-end',
-    href: '/end-to-end',
-    sections: [
-      { name: 'Telco Churn', href: '/end-to-end/telco/' },
-      { name: 'AMES', href: '/end-to-end/AMES/' },
-      { name: 'Wine', href: '/end-to-end/wine/' },
-      { name: 'Crabs (XGB)', href: '/end-to-end/crabs-xgb/' },
-      { name: 'Horse', href: '/end-to-end/horse/' },
-      { name: 'King County Houses', href: '/end-to-end/HouseKingCounty/' },
-      { name: 'Airfoil', href: '/end-to-end/airfoil' },
-      { name: 'Boston (lgbm)', href: '/end-to-end/boston-lgbm' },
-      { name: 'Using GLM.jl', href: '/end-to-end/glm/' },
-      { name: 'Power Generation', href: '/end-to-end/powergen/' },
-      { name: 'Boston (Flux)', href: '/end-to-end/boston-flux' },
-      { name: 'Breast Cancer', href: '/end-to-end/breastcancer' },
-      { name: 'Credit Fraud', href: '/end-to-end/creditfraud' },
-    ],
-    sectionItemWidth: 'long-item'
-  },
-  {
-    name: 'Advanced',
-    id: 'advanced',
-    href: '#!',
-    sections: [{ name: 'Ensembles (3)', href: '/advanced/ensembles-3' }],
-    sectionItemWidth: 'medium-item'
-  },
-];
+import navItems from '../../routes.json' assert {type: 'json'};
 
 // first get info on whether hosted or not
 const origin = window.location.origin;
@@ -130,7 +54,7 @@ navItems.forEach((item) => {
 
 // add a final li as searchform
 let formAction = (hosted) ? origin + "/DataScienceTutorials.jl" + "/search/index.html" : "/search/index.html";
-searchForm = `
+let searchForm = `
   <li>
     <form id="lunrSearchForm" name="lunrSearchForm" style="margin-left: 1.5rem; margin-right: -2rem;">
       <input class="search-input" name="q" placeholder="Search..." type="text">
@@ -192,7 +116,7 @@ generateSidebar(navItems);
 // Flatten the nav items so we can easily iterate through them
 function flattenNavItems(items) {
   return items.reduce((acc, item) => {
-    const mainHrefs = ["/data", "/end-to-end", "/getting-started", "/isl", "#!"];
+    const mainHrefs = ["/info/data", "/info/end-to-end", "/info/getting-started", "/info/isl", "#!"];
     if (!mainHrefs.includes(item.href)) {      
       acc.push(item);
     }

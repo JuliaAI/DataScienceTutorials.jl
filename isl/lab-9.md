@@ -2,4 +2,4 @@
 
 # Lab 9 - Support Vector Machine
 
-\tutorial{ISL-lab-9}
+\tutorial{isl/lab-9}

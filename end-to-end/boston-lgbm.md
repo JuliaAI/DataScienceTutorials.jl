@@ -3,4 +3,4 @@
 
 # Boston with LightGBM
 
-\tutorial{EX-boston-lgbm}
+\tutorial{end-to-end/boston-lgbm}

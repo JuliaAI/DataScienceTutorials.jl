@@ -2,4 +2,4 @@
 
 # Lab 4 - Logistic Regression, LDA, QDA, KNN
 
-\tutorial{ISL-lab-4}
+\tutorial{isl/lab-4}

@@ -3,4 +3,4 @@
 
 # Boston with Flux
 
-\tutorial{EX-boston-flux}
+\tutorial{end-to-end/boston-flux}

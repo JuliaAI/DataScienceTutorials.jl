@@ -3,4 +3,4 @@
 
 # Fit, predict, transform
 
-\tutorial{A-fit-predict}
+\tutorial{getting-started/fit-predict}

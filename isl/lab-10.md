@@ -2,4 +2,4 @@
 
 # Lab 10 - PCA and Clustering
 
-\tutorial{ISL-lab-10}
+\tutorial{isl/lab-10}

@@ -2,4 +2,4 @@
 
 # Power Generation
 
-\tutorial{EX-powergen}
+\tutorial{end-to-end/powergen}
