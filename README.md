@@ -49,7 +49,7 @@ To understand the rest of the structure which could help you change styles with 
 ### 👨🏻‍🔧 Modifying an existing tutorial
 
 * Find the corresponding Julia script in `_literate` and fix it in a PR.
-* Ensure it works and renders properly as explained in [this section](#👀-visualise-modifications-locally).
+* Ensure it works and renders properly as explained below.
 
 
 ### ✨ Add a new tutorial
@@ -68,7 +68,7 @@ Once all that's done, the remaining things to do are to create the HTML page and
 
 * Create a file `dinosaurs.md` in the top-level folder `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{end-to-end/dinosaurs}`
 * Add a link pointing to that tutorial in `routing.json` following the template so your tutorial shows in the navigation bar
-* Ensure your tutorials renders correctly as explained in the [next section](#👀-visualise-modifications-locally).
+* Ensure your tutorials renders correctly as explained in the next section.
 
 > [!NOTE]  
 > For plots, we do prefer that you use `Plots.jl` with the default backend. In general, try to avoid having Python as a dependency in your tutorial.
