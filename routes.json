@@ -23,8 +23,7 @@
         { "name": "Model tuning", "href": "/getting-started/model-tuning/" },
         { "name": "Ensembles", "href": "/getting-started/ensembles/" },
         { "name": "Ensembles (2)", "href": "/getting-started/ensembles-2/" },
-        { "name": "Composing models", "href": "/getting-started/composing-models/" },
-        { "name": "Stacking", "href": "/getting-started/stacking/" }
+        { "name": "Composing models", "href": "/getting-started/composing-models/" }
       ],
       "sectionItemWidth": "medium-item"
     },
@@ -70,7 +69,10 @@
       "name": "Advanced",
       "id": "advanced",
       "href": "#!",
-      "sections": [{ "name": "Ensembles (3)", "href": "/advanced/ensembles-3" }],
+      "sections": [
+        { "name": "Ensembles (3)", "href": "/advanced/ensembles-3" },
+        { "name": "Stacking", "href": "/advanced/stacking/" }
+      ],
       "sectionItemWidth": "medium-item"
     }
   ]
