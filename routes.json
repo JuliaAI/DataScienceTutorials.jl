@@ -33,14 +33,14 @@
       "id": "stats-learning",
       "href": "/info/isl",
       "sections": [
-        { "name": "Lab 2", "href": "/isl/lab-2/" },
-        { "name": "Lab 3", "href": "/isl/lab-3/" },
-        { "name": "Lab 4", "href": "/isl/lab-4/" },
-        { "name": "Lab 5", "href": "/isl/lab-5/" },
-        { "name": "Lab 6b", "href": "/isl/lab-6b/" },
-        { "name": "Lab 8", "href": "/isl/lab-8/" },
-        { "name": "Lab 9", "href": "/isl/lab-9/" },
-        { "name": "Lab 10", "href": "/isl/lab-10/" }
+        { "name": "Basic Operations", "href": "/isl/lab-2/" },
+        { "name": "Linear Regression", "href": "/isl/lab-3/" },
+        { "name": "Logistic Regression & Friends", "href": "/isl/lab-4/" },
+        { "name": "Cross Validation", "href": "/isl/lab-5/" },
+        { "name": "Ridge & Lasso Regression", "href": "/isl/lab-6b/" },
+        { "name": "Tree-based Models", "href": "/isl/lab-8/" },
+        { "name": "Support Vector Machine", "href": "/isl/lab-9/" },
+        { "name": "PCA & Clustering", "href": "/isl/lab-10/" }
       ],
       "sectionItemWidth": "long-item"
     },
