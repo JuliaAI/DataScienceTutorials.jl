@@ -250,8 +250,8 @@ lr3 &#61; machine&#40;LinMod, Xhp, y&#41;
 fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: DeterministicPipeline(feature_selector = FeatureSelector(features = [:hp1, :hp2, :hp3], …), …)
   args: 
-    1:	Source @705 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @005 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @835 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @558 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="language-julia">get_mse&#40;lr&#41; &#61; rms&#40;MLJ.predict&#40;lr, rows&#61;test&#41;, y&#91;test&#93;&#41;^2

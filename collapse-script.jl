@@ -71,22 +71,24 @@ function read_tutorials(tutorials_dir)
 
     # Iterate over all files named "tutorial.js" in subdirectories
     for subdir in readdir(tutorials_dir)
-        file_path = joinpath(tutorials_dir, subdir, "tutorial.jl")
-        if isfile(file_path)
-            try
-                file = open(file_path, "r")
-                content = read(file, String)
-                close(file)
-                file = open(file_path, "w")
-                modified_content = introduce_dropdowns(content)
-                write(file, modified_content)
-                close(file)
-                # Store content in the dictionary
-            catch e
-                throw("Error reading file '$file_path': $(e)")
+        for tutorial_subdir in readdir(joinpath(tutorials_dir, subdir))
+            file_path = joinpath(tutorials_dir, subdir, tutorial_subdir, "tutorial.jl")
+            if isfile(file_path)
+                try
+                    file = open(file_path, "r")
+                    content = read(file, String)
+                    close(file)
+                    file = open(file_path, "w")
+                    modified_content = introduce_dropdowns(content)
+                    write(file, modified_content)
+                    close(file)
+                    # Store content in the dictionary
+                catch e
+                    throw("Error reading file '$file_path': $(e)")
+                end
             end
         end
-    end
+    end 
 end
 
 

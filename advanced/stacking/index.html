@@ -336,16 +336,16 @@ model2 &#61; knn</code></pre><pre><code class="plaintext code-output">KNNRegress
 <div class="dropdown"><h3 id="define_the_training_nodes"><a href="#define_the_training_nodes" class="header-anchor">Define the training nodes</a></h3></div>
 <div class="dropdown-content"><p>Let&#39;s instantiate some input and target source nodes for the learning network, wrapping the play data defined above in source nodes:</p>
 <pre><code class="language-julia">X &#61; source&#40;Xraw&#41;
-y &#61; source&#40;yraw&#41;</code></pre><pre><code class="plaintext code-output">Source @402 ⏎ `AbstractVector{ScientificTypesBase.Count}`</code></pre>
+y &#61; source&#40;yraw&#41;</code></pre><pre><code class="plaintext code-output">Source @966 ⏎ `AbstractVector{ScientificTypesBase.Count}`</code></pre>
 <p>Our first internal node will represent the three folds &#40;vectors of row indices&#41; for creating the out-of-sample predictions. We would like to define <code>f &#61; folds&#40;X, 3&#41;</code> but this will not work because <code>X</code> is not a table, just a node representing a table. So instead we do this:</p>
 <pre><code class="language-julia">f &#61; node&#40;X&#41; do x
     folds&#40;x, 3&#41;
-end</code></pre><pre><code class="plaintext code-output">Node @301
+end</code></pre><pre><code class="plaintext code-output">Node @503
   args:
-    1:	Source @305
+    1:	Source @238
   formula:
     #5(
-      Source @305)</code></pre>
+      Source @238)</code></pre>
 <p>Now <code>f</code> is itself a node, and so callable:</p>
 <pre><code class="language-julia">f&#40;&#41;</code></pre><pre><code class="plaintext code-output">([1, 2, 3], [4, 5, 6], [7, 8, 9])</code></pre>
 <p>We&#39;ll overload <code>restrict</code> and <code>corestrict</code> for nodes, to save us having to write <code>node&#40;....&#41;</code> all the time:</p>
@@ -361,8 +361,8 @@ m12 &#61; machine&#40;model1, corestrict&#40;X, f, 2&#41;, corestrict&#40;y, f, 
 m13 &#61; machine&#40;model1, corestrict&#40;X, f, 3&#41;, corestrict&#40;y, f, 3&#41;&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: LinearRegressor(fit_intercept = true, …)
   args: 
-    1:	Node @955
-    2:	Node @396
+    1:	Node @413
+    2:	Node @035
 </code></pre>
 <p>Define each out-of-sample prediction of <code>model1</code>:</p>
 <pre><code class="language-julia">y11 &#61; predict&#40;m11, restrict&#40;X, f, 1&#41;&#41;;
@@ -410,16 +410,16 @@ plot&#33;&#40;
 m_judge &#61; machine&#40;judge, X_oos, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: LinearRegressor(fit_intercept = true, …)
   args: 
-    1:	Node @466
-    2:	Source @402 ⏎ AbstractVector{ScientificTypesBase.Count}
+    1:	Node @016
+    2:	Source @966 ⏎ AbstractVector{ScientificTypesBase.Count}
 </code></pre>
 <p>Are we done with constructing machines? Well, not quite. Recall that when we use the stack to make predictions on new data, we will be feeding the adjudicator ordinary predictions of the base learners &#40;rather than out-of-sample predictions&#41;. But so far, we have only defined machines to train the base learners on fold complements, not on the full data, which we do now:</p>
 <pre><code class="language-julia">m1 &#61; machine&#40;model1, X, y&#41;
 m2 &#61; machine&#40;model2, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: KNNRegressor(K = 5, …)
   args: 
-    1:	Source @305 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @402 ⏎ AbstractVector{ScientificTypesBase.Count}
+    1:	Source @238 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @966 ⏎ AbstractVector{ScientificTypesBase.Count}
 </code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="define_nodes_still_needed_for_prediction"><a href="#define_nodes_still_needed_for_prediction" class="header-anchor">Define nodes still needed for prediction</a></h3></div>
@@ -427,9 +427,9 @@ m2 &#61; machine&#40;model2, X, y&#41;</code></pre><pre><code class="plaintext c
 <pre><code class="language-julia">y1 &#61; predict&#40;m1, X&#41;;
 y2 &#61; predict&#40;m2, X&#41;;
 X_judge &#61; MLJ.table&#40;hcat&#40;y1, y2&#41;&#41;
-yhat &#61; predict&#40;m_judge, X_judge&#41;</code></pre><pre><code class="plaintext code-output">Node @146 → LinearRegressor(…)
+yhat &#61; predict&#40;m_judge, X_judge&#41;</code></pre><pre><code class="plaintext code-output">Node @877 → LinearRegressor(…)
   args:
-    1:	Node @398
+    1:	Node @613
   formula:
     predict(
       machine(LinearRegressor(fit_intercept = true, …), …), 
@@ -437,10 +437,10 @@ yhat &#61; predict&#40;m_judge, X_judge&#41;</code></pre><pre><code class="plain
         hcat(
           predict(
             machine(LinearRegressor(fit_intercept = true, …), …), 
-            Source @305),
+            Source @238),
           predict(
             machine(KNNRegressor(K = 5, …), …), 
-            Source @305))))</code></pre>
+            Source @238))))</code></pre>
 <p>Let&#39;s check the final prediction node can be fit and called:</p>
 <pre><code class="language-julia">fit&#33;&#40;yhat, verbosity&#61;0&#41;
 
@@ -528,7 +528,7 @@ end</code></pre><pre><code class="plaintext code-output">EvoTreeRegressor = 1.50
 EpsilonSVR = 1.06 ± 0.06462
 RandomForestRegressor = 2.0667 ± 0.06426
 MyAverageTwo = 1.1539 ± 0.0567
-MyTwoModelStack = 0.85824 ± 0.05274
+MyTwoModelStack = 0.84787 ± 0.04954
 </code></pre>
 <h4 id="tuning_a_stack"><a href="#tuning_a_stack" class="header-anchor">Tuning a stack</a></h4>
 <p>A standard abuse of good data hygiene is to optimize stack component models <em>separately</em> and then tune the adjudicating model hyperparameters &#40;using the same resampling of the data&#41; with the base learners fixed. Although more computationally expensive, better generalization might be expected by applying tuning to the stack as a whole, either simultaneously, or in cheaper sequential steps. Since our stack is a stand-alone model, this is readily implemented.</p>
@@ -546,7 +546,7 @@ mach &#61; fit&#33;&#40;machine&#40;tuned_stack,  X, y&#41;, verbosity&#61;0&#41
 best_stack &#61; fitted_params&#40;mach&#41;.best_model
 best_stack.model2.cost</code></pre><pre><code class="plaintext code-output">4.641588833612779</code></pre>
 <p>Let&#39;s evaluate the best stack using the same data resampling used to evaluate the various untuned models earlier &#40;now we are neglecting data hygiene&#33;&#41;:</p>
-<pre><code class="language-julia">print_performance&#40;best_stack, X, y&#41;</code></pre><pre><code class="plaintext code-output">MyTwoModelStack = 0.85853 ± 0.03844
+<pre><code class="language-julia">print_performance&#40;best_stack, X, y&#41;</code></pre><pre><code class="plaintext code-output">MyTwoModelStack = 0.85951 ± 0.042
 </code></pre>
 <p>‎</p></div>
 
