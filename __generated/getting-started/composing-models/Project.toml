@@ -1,0 +1,4 @@
+[deps]
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
+StableRNGs = "860ef19b-820b-49d6-a774-d7a799459cd3"

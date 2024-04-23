@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="lab_4_-_logistic_regression_lda_qda_knn"><a href="#lab_4_-_logistic_regression_lda_qda_knn" class="header-anchor">Lab 4 - Logistic Regression, LDA, QDA, KNN</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-4.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/isl/lab-4.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#stock_market_data">Stock market data</a><ol><li><a href="#logistic_regression">Logistic Regression</a></li><li><a href="#lda">LDA</a></li><li><a href="#qda">QDA</a></li><li><a href="#knn">KNN</a></li></ol></li><li><a href="#caravan_insurance_data">Caravan insurance data</a><ol><li><a href="#roc_and_auc">ROC and AUC</a></li></ol></li></ol></div>
 <div class="dropdown"><h2 id="stock_market_data"><a href="#stock_market_data" class="header-anchor">Stock market data</a></h2></div>
@@ -224,7 +224,7 @@ r3&#40;pi&#41;</code></pre><pre><code class="plaintext code-output">3.14</code><
    4 │ Lag3       0.001716   1.1387    Float64
    5 │ Lag4       0.001636   1.13877   Float64
    6 │ Lag5       0.0056096  1.14755   Float64
-   7 │ Volume     1.4783     0.360357  Float64
+   7 │ Volume     1.47831    0.360357  Float64
    8 │ Today      0.0031384  1.13633   Float64
    9 │ Direction                       CategoricalValue{String, UInt8}</code></pre>
 <p>The target variable is <code>:Direction</code>:</p>
@@ -268,8 +268,8 @@ classif &#61; machine&#40;LogisticClassifier&#40;&#41;, X2, y&#41;</code></pre><
 untrained Machine; caches model-specific representations of data
   model: LogisticClassifier(lambda = 2.220446049250313e-16, …)
   args: 
-    1:	Source @097 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @794 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @098 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @952 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>Let&#39;s fit it to the data and try to reproduce the output:</p>
 <pre><code class="language-julia">fit&#33;&#40;classif&#41;
@@ -457,7 +457,7 @@ ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -467,7 +467,7 @@ ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

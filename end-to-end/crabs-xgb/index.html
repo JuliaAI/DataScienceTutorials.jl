@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="crabs_with_xgboost"><a href="#crabs_with_xgboost" class="header-anchor">Crabs with XGBoost</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-crabs-xgb.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/crabs-xgb.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#first_steps">First steps</a></li><li><a href="#xgboost_machine">XGBoost machine</a><ol><li><a href="#more_tuning_1">More tuning &#40;1&#41;</a></li><li><a href="#more_tuning_2">More tuning &#40;2&#41;</a></li><li><a href="#more_tuning_3">More tuning &#40;3&#41;</a></li></ol></li></ol></div>
 <p>This example is inspired from <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/">this post</a> showing how to use XGBoost.</p>
@@ -277,7 +277,7 @@ XGBoostClassifier(
   objective = "automatic", 
   base_score = 0.5, 
   watchlist = nothing, 
-  nthread = 12, 
+  nthread = 1, 
   importance_type = "gain", 
   seed = nothing, 
   validate_parameters = false, 
@@ -295,8 +295,8 @@ XGBoostClassifier(
 mach &#61; machine&#40;xgb, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: XGBoostClassifier(test = 1, …)
   args: 
-    1:	Source @132 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @628 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @931 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @968 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="language-julia">r &#61; range&#40;xgb, :num_round, lower&#61;50, upper&#61;500&#41;
@@ -308,7 +308,7 @@ curve &#61; learning_curve&#40;
 &#41;</code></pre><pre><code class="plaintext code-output">(parameter_name = "num_round",
  parameter_scale = :linear,
  parameter_values = [50, 59, 68, 78, 87, 96, 105, 114, 123, 133, 142, 151, 160, 169, 179, 188, 197, 206, 215, 224, 234, 243, 252, 261, 270, 280, 289, 298, 307, 316, 326, 335, 344, 353, 362, 371, 381, 390, 399, 408, 417, 427, 436, 445, 454, 463, 472, 482, 491, 500],
- measurements = [0.9827865362167358, 0.9765130877494812, 0.9802314043045044, 0.9803095459938049, 0.9777001738548279, 0.9799514412879944, 0.9762154817581177, 0.9763209223747253, 0.9742343425750732, 0.9760051965713501, 0.9764391779899597, 0.9756509065628052, 0.980719268321991, 0.9772397875785828, 0.9772177934646606, 0.9768736958503723, 0.9761089086532593, 0.9740495085716248, 0.9750213623046875, 0.9736446738243103, 0.9707552790641785, 0.9720619320869446, 0.9704257845878601, 0.9698981046676636, 0.969187319278717, 0.9682750701904297, 0.9691286683082581, 0.9673327803611755, 0.9684506058692932, 0.9694636464118958, 0.9687978625297546, 0.9675275087356567, 0.9685811996459961, 0.9674876928329468, 0.9682658314704895, 0.9671816229820251, 0.9675007462501526, 0.9683974981307983, 0.9670326113700867, 0.9688385128974915, 0.967542827129364, 0.9679813385009766, 0.9694725275039673, 0.9683115482330322, 0.9692115783691406, 0.9678464531898499, 0.9694718718528748, 0.9693232178688049, 0.9685226082801819, 0.9692760705947876],)</code></pre>
+ measurements = [0.9827864766120911, 0.976513147354126, 0.9802314639091492, 0.9803095459938049, 0.977700412273407, 0.9799517393112183, 0.9762152433395386, 0.9763208031654358, 0.9742345809936523, 0.976005494594574, 0.9764387607574463, 0.9756509065628052, 0.9807194471359253, 0.9772394895553589, 0.9772175550460815, 0.9768737554550171, 0.976108729839325, 0.9740497469902039, 0.9750215411186218, 0.9736448526382446, 0.9707552790641785, 0.9720620512962341, 0.970425546169281, 0.969897985458374, 0.9691877365112305, 0.9682754278182983, 0.9691285490989685, 0.967332661151886, 0.9684506058692932, 0.9694637656211853, 0.9687979221343994, 0.9675276279449463, 0.96858149766922, 0.9674876928329468, 0.9682654142379761, 0.9671816229820251, 0.9675007462501526, 0.9683972597122192, 0.9670327305793762, 0.9688388109207153, 0.9675427079200745, 0.9679811000823975, 0.9694727659225464, 0.9683114290237427, 0.9692115187644958, 0.9678465723991394, 0.9694716334342957, 0.9693232774734497, 0.9685224890708923, 0.9692762494087219],)</code></pre>
 <p>Let&#39;s have a look</p>
 <pre><code class="language-julia">plot&#40;curve.parameter_values, curve.measurements&#41;
 xlabel&#33;&#40;&quot;Number of rounds&quot;, fontsize&#61;14&#41;
@@ -332,8 +332,8 @@ mach &#61; machine&#40;tuned_model, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @528 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @421 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @607 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @724 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <p>Let&#39;s visualize details about the tuning:</p>
 <pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
@@ -380,8 +380,8 @@ mach &#61; machine&#40;tuned_model, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @144 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @223 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @207 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @438 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/crabs-xgb/code/output/EX-crabs-xgb-tuningplot2.svg" alt="Hyperparameter tuningplot">
@@ -410,7 +410,7 @@ round&#40;accuracy&#40;ŷ, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></p
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -420,7 +420,7 @@ round&#40;accuracy&#40;ŷ, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></p
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

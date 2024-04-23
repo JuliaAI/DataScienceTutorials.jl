@@ -19,7 +19,7 @@ ProbabilisticIteratedModel(
               nbins = 64, 
               alpha = 0.5, 
               tree_type = "binary", 
-              rng = Random.MersenneTwister(123, (0, 242484, 241482, 287))), 
+              rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
   resampling = Holdout(

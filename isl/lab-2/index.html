@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="lab_2"><a href="#lab_2" class="header-anchor">Lab 2</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-2.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/isl/lab-2.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#basic_commands">Basic commands</a></li><li><a href="#loading_data">Loading data</a></li><li><a href="#plotting_data">Plotting data</a></li></ol></div>
 <div class="dropdown"><h2 id="basic_commands"><a href="#basic_commands" class="header-anchor">Basic commands</a></h2></div>
@@ -246,7 +246,7 @@ sqrt(x) = 2.0
 <pre><code class="language-julia">x &#61; randn&#40;1_000&#41; # 1_000 points iid from a N&#40;0, 1&#41;
 μ &#61; mean&#40;x&#41;
 σ &#61; std&#40;x&#41;
-@show &#40;μ, σ&#41;</code></pre><pre><code class="plaintext code-output">(μ, σ) = (0.0059294683608663995, 0.9873829615688988)
+@show &#40;μ, σ&#41;</code></pre><pre><code class="plaintext code-output">(μ, σ) = (0.037333380612954124, 0.9930641952535695)
 </code></pre>
 <p>Indexing data starts at 1, use <code>:</code> to indicate the full range</p>
 <pre><code class="language-julia">X &#61; &#91;1 2; 3 4; 5 6&#93;
@@ -306,7 +306,7 @@ first&#40;auto, 3&#41;</code></pre><pre><code class="plaintext code-output">3×9
 <pre><code class="language-julia">mpg &#61; auto.MPG
 mpg &#61; auto&#91;:, 1&#93;
 mpg &#61; auto&#91;:, :MPG&#93;
-mpg |&gt; mean</code></pre><pre><code class="plaintext code-output">23.44591836734694</code></pre>
+mpg |&gt; mean</code></pre><pre><code class="plaintext code-output">23.445918367346938</code></pre>
 <p>To get dimensions you can use <code>size</code> and <code>nrow</code> and <code>ncol</code></p>
 <pre><code class="language-julia">@show size&#40;auto&#41;
 @show nrow&#40;auto&#41;
@@ -357,7 +357,7 @@ plot&#40;mpg, size&#61;&#40;800,600&#41;, linewidth&#61;2, legend&#61;false&#41;
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -367,7 +367,7 @@ plot&#40;mpg, size&#61;&#40;800,600&#41;, linewidth&#61;2, legend&#61;false&#41;
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

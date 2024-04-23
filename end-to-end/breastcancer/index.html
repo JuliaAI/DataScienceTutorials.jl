@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="breast_cancer_wisconsindiagnostic"><a href="#breast_cancer_wisconsindiagnostic" class="header-anchor">Breast Cancer Wisconsin&#40;Diagnostic&#41;</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-breastcancer.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/breastcancer.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#loading_the_relevant_packages">Loading the relevant packages</a></li><li><a href="#downloading_and_loading_the_data">Downloading and loading the data</a></li><li><a href="#exploring_the_obtained_data">Exploring the obtained data</a><ol><li><a href="#inspecting_the_class_variable">Inspecting the class variable</a></li><li><a href="#inspecting_the_feature_set">Inspecting the feature set</a></li></ol></li><li><a href="#unpacking_the_values">Unpacking the values</a></li><li><a href="#standardizing_the_feature_set">Standardizing the &quot;feature set&quot;</a></li><li><a href="#train-test_split">Train-test split</a></li><li><a href="#model_compatibility">Model compatibility</a></li><li><a href="#analyzing_the_performance_of_different_models">Analyzing the performance of different models</a><ol><li><a href="#creating_various_empty_vectors_for_our_analysis">Creating various empty vectors for our analysis</a></li><li><a href="#collecting_data_for_analysis">Collecting data for analysis</a></li><li><a href="#inspecting_results">Inspecting results</a></li></ol></li></ol></div>
 <div class="dropdown"><h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2></div>
@@ -460,27 +460,27 @@ ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
  Row │ ModelName                          Accuracy  LogLoss    F1Score
      │ String                             Any       Any        Any
 ─────┼──────────────────────────────────────────────────────────────────
-   1 │ NeuralNetworkClassifier (BetaML)   0.991228  0.0792737  0.988235
-   2 │ NeuralNetworkClassifier (MLJFlux)  0.964912  0.0979576  0.953488
-   3 │ RandomForestClassifier (Decision…  0.95614   0.108824   0.942529
-   4 │ RandomForestClassifier (BetaML)    0.95614   0.117064   0.941176
+   1 │ NeuralNetworkClassifier (MLJFlux)  0.973684  0.0852176  0.965517
+   2 │ NeuralNetworkClassifier (BetaML)   0.982456  0.0889816  0.97619
+   3 │ RandomForestClassifier (Decision…  0.95614   0.114434   0.942529
+   4 │ RandomForestClassifier (BetaML)    0.938596  0.121808   0.915663
    5 │ EvoTreeClassifier (EvoTrees)       0.95614   0.127662   0.941176
    6 │ BayesianLDA (MultivariateStats)    0.929825  0.166699   0.9
    7 │ BayesianSubspaceLDA (Multivariat…  0.929825  0.166709   0.9
    8 │ SubspaceLDA (MultivariateStats)    0.938596  0.209371   0.91358
-   9 │ AdaBoostStumpClassifier (Decisio…  0.947368  0.280023   0.926829
-  10 │ PegasosClassifier (BetaML)         0.912281  0.347228   0.886364
-  11 │ KernelPerceptronClassifier (Beta…  0.912281  0.400981   0.886364
-  12 │ KNNClassifier (NearestNeighborMo…  0.95614   0.430947   0.942529
+   9 │ AdaBoostStumpClassifier (Decisio…  0.947368  0.275107   0.926829
+  10 │ KernelPerceptronClassifier (Beta…  0.912281  0.400981   0.886364
+  11 │ KNNClassifier (NearestNeighborMo…  0.95614   0.430947   0.942529
+  12 │ PegasosClassifier (BetaML)         0.903509  0.444873   0.876404
   13 │ ConstantClassifier (MLJModels)     0.622807  0.662744   0.0
   14 │ LDA (MultivariateStats)            0.938596  0.677149   0.91358
   15 │ GaussianNBClassifier (NaiveBayes)  0.929825  0.898701   0.906977
-  16 │ PerceptronClassifier (BetaML)      0.947368  1.42295    0.926829
+  16 │ PerceptronClassifier (BetaML)      0.947368  1.31957    0.926829
   17 │ MultinomialClassifier (MLJLinear…  0.938596  1.57496    0.915663
   18 │ DecisionTreeClassifier (BetaML)    0.95614   1.58694    0.941176
   19 │ LogisticClassifier (MLJLinearMod…  0.938596  2.20713    0.915663
   20 │ LinearBinaryClassifier (GLM)       0.912281  2.88829    0.878049
-  21 │ DecisionTreeClassifier (Decision…  0.903509  3.4779     0.870588</code></pre>
+  21 │ DecisionTreeClassifier (Decision…  0.912281  3.16172    0.886364</code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
 
@@ -496,7 +496,7 @@ ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: March 29, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -506,7 +506,7 @@ ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->
