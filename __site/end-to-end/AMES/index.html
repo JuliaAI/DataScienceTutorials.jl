@@ -247,8 +247,8 @@ AbstractVector{Continuous} (alias for AbstractArray{ScientificTypesBase.Continuo
 <pre><code class="language-julia">mach &#61; machine&#40;creg, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: ConstantRegressor(distribution_type = Distributions.Normal)
   args: 
-    1:	Source @856 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}, AbstractVector{ScientificTypesBase.Multiclass{25}}, AbstractVector{ScientificTypesBase.Multiclass{15}}, AbstractVector{ScientificTypesBase.OrderedFactor{10}}}}
-    2:	Source @033 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @653 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Count}, AbstractVector{ScientificTypesBase.Multiclass{25}}, AbstractVector{ScientificTypesBase.Multiclass{15}}, AbstractVector{ScientificTypesBase.OrderedFactor{10}}}}
+    2:	Source @622 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>You can now train the machine specifying the data it should be trained on &#40;if unspecified, all the data will be used&#41;;</p>
 <pre><code class="language-julia">train, test &#61; partition&#40;collect&#40;eachindex&#40;y&#41;&#41;, 0.70, shuffle&#61;true&#41;; # 70:30 split
@@ -291,31 +291,31 @@ NearestNeighborModels.KNNRegressor</code></pre>
 <div class="dropdown"><h3 id="a_learning_network"><a href="#a_learning_network" class="header-anchor">A learning network</a></h3></div>
 <div class="dropdown-content"><p>Let&#39;s start by defining the source nodes of the network, which will wrap our data. Here we are including data only for testing purposes. Later when we &quot;export&quot; our functioning network, we&#39;ll remove reference to the data.</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @779 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @719 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>In our first &quot;layer&quot;, there&#39;s one-hot encoder and a log transformer; these will respectively lead to new nodes <code>W</code> and <code>z</code>:</p>
 <pre><code class="language-julia">hot &#61; machine&#40;OneHotEncoder&#40;&#41;, Xs&#41;
 
 W &#61; transform&#40;hot, Xs&#41;
-z &#61; log&#40;ys&#41;</code></pre><pre><code class="plaintext code-output">Node @352
+z &#61; log&#40;ys&#41;</code></pre><pre><code class="plaintext code-output">Node @005
   args:
-    1:	Source @779
+    1:	Source @719
   formula:
     #99(
-      Source @779)</code></pre>
+      Source @719)</code></pre>
 <p>In the second &quot;layer&quot;, there&#39;s a KNN regressor and a ridge regressor, these lead to nodes <code>ẑ₁</code> and <code>ẑ₂</code></p>
 <pre><code class="language-julia">knn   &#61; machine&#40;KNNRegressor&#40;K&#61;5&#41;, W, z&#41;
 ridge &#61; machine&#40;RidgeRegressor&#40;lambda&#61;2.5&#41;, W, z&#41;
 
 ẑ₁ &#61; predict&#40;knn, W&#41;
-ẑ₂ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node @851 → RidgeRegressor(…)
+ẑ₂ &#61; predict&#40;ridge, W&#41;</code></pre><pre><code class="plaintext code-output">Node @842 → RidgeRegressor(…)
   args:
-    1:	Node @826 → OneHotEncoder(…)
+    1:	Node @674 → OneHotEncoder(…)
   formula:
     predict(
       machine(RidgeRegressor(lambda = 2.5, …), …), 
       transform(
         machine(OneHotEncoder(features = Symbol[], …), …), 
-        Source @247))</code></pre>
+        Source @347))</code></pre>
 <p>In the third &quot;layer&quot;, there&#39;s a weighted combination of the two regression models:</p>
 <pre><code class="language-julia">ẑ &#61; 0.3ẑ₁ &#43; 0.7ẑ₂;</code></pre>
 <p>And finally we need to invert the initial transformation of the target &#40;which was a log&#41;:</p>

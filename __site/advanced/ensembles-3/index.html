@@ -228,50 +228,50 @@ DecisionTreeRegressor(
 <p>Here&#39;s a small data set we can use for step 1:</p>
 <pre><code class="language-julia">X &#61; &#40;; x&#61;rand&#40;5&#41;&#41;
 y &#61; rand&#40;5&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- 0.8489629716154674
- 0.28883932654629807
- 0.4280209840965742
- 0.2703302937859725
- 0.4978678544223083</code></pre>
+ 0.6906374111142441
+ 0.22165754479055744
+ 0.5316055658895007
+ 0.07912849644558873
+ 0.641119125199737</code></pre>
 <p>As a warm-up exercise, we&#39;ll suppose we have only two models in the ensemble.  We start by wrapping the input data in source nodes. These nodes will be interface points for new training data when we <code>fit&#33;</code> our new ensemble model type; <code>Xs</code> will also be an interface point for production data when we call <code>predict</code> on our new ensemble model type.</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @472 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @781 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>Here are two distinct machines &#40;for learning distinct trees&#41; that share the same atomic model &#40;hyperparameters&#41;:</p>
 <pre><code class="language-julia">mach1 &#61; machine&#40;atom, Xs, ys&#41;
 mach2 &#61; machine&#40;atom, Xs, ys&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeRegressor(max_depth = -1, …)
   args: 
-    1:	Source @861 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @472 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @094 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @781 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Here are prediction nodes:</p>
 <pre><code class="language-julia">y1 &#61; predict&#40;mach1, Xs&#41;
-y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @091 → DecisionTreeRegressor(…)
+y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @684 → DecisionTreeRegressor(…)
   args:
-    1:	Source @861
+    1:	Source @094
   formula:
     predict(
       machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-      Source @861)</code></pre>
+      Source @094)</code></pre>
 <p>It happens that <code>mean</code> immediately works on vectors of nodes, because <code>&#43;</code> and division by a scalar works for nodes:</p>
-<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @365
+<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @367
   args:
-    1:	Node @169
+    1:	Node @390
   formula:
     #113(
       +(
         predict(
           machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-          Source @861),
+          Source @094),
         predict(
           machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-          Source @861)))</code></pre>
+          Source @094)))</code></pre>
 <p>Let&#39;s test the network:</p>
 <pre><code class="language-julia">fit&#33;&#40;yhat&#41;
 Xnew &#61; &#40;; x&#61;rand&#40;2&#41;&#41;
 yhat&#40;Xnew&#41;</code></pre><pre><code class="plaintext code-output">2-element Vector{Float64}:
- 0.4668042860933241
- 0.4668042860933241</code></pre>
+ 0.4328296286879256
+ 0.4328296286879256</code></pre>
 <p>Great. No issues. Here&#39;s how we have an ensemble of any size:</p>
 <pre><code class="language-julia">n &#61; 10
 machines &#61; &#40;machine&#40;atom, Xs, ys&#41; for i in 1:n&#41;

@@ -250,8 +250,8 @@ DecisionTreeClassifier(
 <pre><code class="language-julia">mach &#61; machine&#40;model, X_iris, y_iris&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @764 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @349 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @078 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @085 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>A machine is essentially just a model &#40;ie, hyper-parameters&#41; plus data, but it additionally stores <em>learned parameters</em> &#40;the tree&#41; once it is trained on some view of the data:</p>
 <pre><code class="language-julia">train_rows &#61; vcat&#40;1:60, 91:150&#41;; # some row indices &#40;observations are rows not columns&#41;
@@ -269,8 +269,8 @@ Depth:  3,
 fit&#33;&#40;mach, rows&#61;train_rows&#41; # re-train with new hyper-parameter</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @764 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @349 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @078 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @085 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>Now we can make predictions on some other view of the data, as in</p>
 <pre><code class="language-julia">predict&#40;mach, rows&#61;71:73&#41;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float64}:
@@ -482,16 +482,16 @@ EvoTrees.EvoTreeClassifier</code></pre>
 <pre><code class="language-julia">mach_pipe &#61; machine&#40;pipe, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @739 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @015 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @146 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @001 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We already encountered the <code>partition</code> method above. Here we apply it to row indices, instead of data containers, as <code>fit&#33;</code> and <code>predict</code> only need a <em>view</em> of the data to work.</p>
 <pre><code class="language-julia">train, validation &#61; partition&#40;1:length&#40;y&#41;, 0.7&#41;
 fit&#33;&#40;mach_pipe, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @739 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @015 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @146 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @001 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We note in passing that we can access two kinds of information from a trained machine:</p>
 <ul>
@@ -821,8 +821,8 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
 fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
-    1:	Source @713 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @184 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @787 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @402 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>As explained above, the training we have just performed was split internally into two separate steps:</p>
 <ul>

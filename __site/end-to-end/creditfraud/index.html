@@ -340,8 +340,8 @@ mach &#61; machine&#40;model_logit, Xtrain, ytrain&#41; |&gt; fit&#33;</code></p
 trained Machine; caches model-specific representations of data
   model: LogisticClassifier(lambda = 1.0, …)
   args: 
-    1:	Source @804 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @090 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @481 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @312 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <h4 id="predictions"><a href="#predictions" class="header-anchor">Predictions</a></h4>
 <p><code>LogisticClassifier</code> is a probabilistic predictor, i.e. for each observation in the sample it attaches a probability to each of the possible values of the target.  To recover a deterministic output, we use <code>predict_mode</code> instead of <code>predict</code>:</p>
@@ -392,8 +392,8 @@ self_tuning_logit_model &#61; TunedModel&#40;
 mach &#61; machine&#40;self_tuning_logit_model, Xtrain, ytrain&#41; |&gt; fit&#33;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = LogisticClassifier(lambda = 1.0, …), …)
   args: 
-    1:	Source @133 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @364 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @597 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @724 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <h4 id="predictions__2"><a href="#predictions__2" class="header-anchor">Predictions</a></h4>
 <pre><code class="language-julia">yhat_logit_tuned &#61; predict_mode&#40;mach, Xtest&#41;;</code></pre>
@@ -443,7 +443,7 @@ fitted_params&#40;mach&#41;.best_model</code></pre><pre><code class="plaintext c
   svc = SVC(
         kernel = LIBSVM.Kernel.RadialBasis, 
         gamma = 0.0, 
-        cost = 2.82, 
+        cost = 3.5, 
         cachesize = 200.0, 
         degree = 3, 
         coef0 = 0.0, 

@@ -295,8 +295,8 @@ XGBoostClassifier(
 mach &#61; machine&#40;xgb, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: XGBoostClassifier(test = 1, …)
   args: 
-    1:	Source @931 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @968 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @307 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @086 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="language-julia">r &#61; range&#40;xgb, :num_round, lower&#61;50, upper&#61;500&#41;
@@ -332,8 +332,8 @@ mach &#61; machine&#40;tuned_model, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @607 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @724 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @616 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @126 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <p>Let&#39;s visualize details about the tuning:</p>
 <pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
@@ -380,8 +380,8 @@ mach &#61; machine&#40;tuned_model, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @207 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @438 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @610 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @186 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/crabs-xgb/code/output/EX-crabs-xgb-tuningplot2.svg" alt="Hyperparameter tuningplot">

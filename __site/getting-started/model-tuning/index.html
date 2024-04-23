@@ -265,8 +265,8 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
 fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = DecisionTreeClassifier(max_depth = -1, …), …)
   args: 
-    1:	Source @501 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @996 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @926 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @508 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="language-julia">fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">1</code></pre>

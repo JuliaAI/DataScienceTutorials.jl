@@ -51,6 +51,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add click event listener to the div element
     element.addEventListener('click', function(event) {
         // Change the location to "/how-to-run-code"
-        window.location.href = (hosted) ? origin + "/DataScienceTutorials.jl" + "/how-to-run-code" : "/how-to-run-code";
+        window.location.href = (hosted) ? origin + "/DataScienceTutorials.jl" + "/info/how-to-run-code" : "/info/how-to-run-code";
     });
 });

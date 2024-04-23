@@ -372,7 +372,7 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">137.0149157116507</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">135.73747680719234</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
@@ -384,7 +384,7 @@ Extract:
 ┌────────────────────────┬───────────┬─────────────┬─────────┬────────────────────────────────────────────┐
 │ measure                │ operation │ measurement │ 1.96*SE │ per_fold                                   │
 ├────────────────────────┼───────────┼─────────────┼─────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError() │ predict   │ 134.0       │ 7.43    │ [139.0, 119.0, 137.0, 140.0, 141.0, 128.0] │
+│ RootMeanSquaredError() │ predict   │ 135.0       │ 7.69    │ [139.0, 120.0, 134.0, 144.0, 141.0, 130.0] │
 └────────────────────────┴───────────┴─────────────┴─────────┴────────────────────────────────────────────┘
 </code></pre>
 <p>‎</p></div>

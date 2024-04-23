@@ -1,8 +1,0 @@
-[deps]
-CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-EvoTrees = "f6006082-12f8-11e9-0c9c-0d5d367ab1e5"
-HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
-MLJModels = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
