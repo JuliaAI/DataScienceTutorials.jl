@@ -5,4 +5,4 @@
 
 # Stacking
 
-\tutorial{getting-started/stacking}
+\tutorial{advanced/stacking}
