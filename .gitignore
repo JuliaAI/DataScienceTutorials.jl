@@ -3,5 +3,4 @@
 test/*.svg
 /*.svg
 node_modules/
-package-lock.json
 .CondaPkg
