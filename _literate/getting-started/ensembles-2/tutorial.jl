@@ -1,5 +1,5 @@
 using Pkg # hideall
-Pkg.activate("_literate/A-ensembles-2/Project.toml")
+Pkg.activate("_literate/getting-started/ensembles-2/Project.toml")
 Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"

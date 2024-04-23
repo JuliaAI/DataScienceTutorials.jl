@@ -1,5 +1,5 @@
 using Pkg # hideall
-Pkg.activate("_literate/A-fit-predict/Project.toml")
+Pkg.activate("_literate/getting-started/fit-predict/Project.toml")
 Pkg.instantiate()
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl

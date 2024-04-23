@@ -1,5 +1,5 @@
 using Pkg  # hideall
-Pkg.activate("_literate/D0-scitype/Project.toml")
+Pkg.activate("_literate/data/scitype/Project.toml")
 Pkg.instantiate()
 
 

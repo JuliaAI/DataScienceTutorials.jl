@@ -1,5 +1,5 @@
 using Pkg # hideall
-Pkg.activate("_literate/A-model-choice/Project.toml")
+Pkg.activate("_literate/getting-started/model-choice/Project.toml")
 Pkg.instantiate()
 
 # [MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl

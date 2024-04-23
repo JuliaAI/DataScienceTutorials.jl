@@ -35,7 +35,7 @@ ACTIVATE(dir) = """
     """
 
  function pre_process_script(io, s)
-    chunks = Literate.parse(s)
+    chunks = Literate.parse(Literate.FranklinFlavor(), s)
 
     remove = Int[]
     rx  = r".*?#\s*?(?i)hideall.*?"
@@ -77,26 +77,26 @@ ACTIVATE(dir) = """
 
 
 
-for dir in readdir("_literate")
-   startswith(dir, "DRAFT") && continue
+for maindir in readdir("_literate")
+   for subdir in readdir("_literate"/maindir)
+      dir = maindir * "/" * subdir
+      startswith(dir, "DRAFT") && continue
+      script   = "_literate"/dir/"tutorial.jl"
+      project  = "_literate"/dir/"Project.toml"
+      manifest = "_literate"/dir/"Manifest.toml"
+      path = genpath/dir
+      isdir(path) || mkpath(path)
 
-   script   = "_literate"/dir/"tutorial.jl"
-   project  = "_literate"/dir/"Project.toml"
-   manifest = "_literate"/dir/"Manifest.toml"
+      cp(project,  path/"Project.toml",  force=true)
+      cp(manifest, path/"Manifest.toml", force=true)
 
-   path = genpath/dir
-   isdir(path) || mkpath(path)
+      preproc(s) = ACTIVATE(dir) * s
 
-   cp(project,  path/"Project.toml",  force=true)
-   cp(manifest, path/"Manifest.toml", force=true)
-
-   preproc(s) = ACTIVATE(dir) * s
-
-   temp_script = tempname()
-   open(temp_script, "w") do ts
-      s = preproc(read(script, String))
-      pre_process_script(ts, s)
-   end
+      temp_script = tempname()
+      open(temp_script, "w") do ts
+         s = preproc(read(script, String))
+         pre_process_script(ts, s)
+      end
 
    # Notebook
    Literate.notebook(temp_script, path, name="tutorial",
@@ -114,6 +114,7 @@ for dir in readdir("_literate")
    cd(genpath)
    success(pipeline(`tar czf $dir.tar.gz $dir`))
    cd(bk)
+   end
 end
 
 ##################################################################

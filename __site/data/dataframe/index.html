@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="manipulating_a_dataframe"><a href="#manipulating_a_dataframe" class="header-anchor">Manipulating a DataFrame</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/D0-dataframe.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/data/dataframe.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#basics">Basics</a><ol><li><a href="#accessing_data">Accessing data</a></li><li><a href="#describing_the_data">Describing the data</a></li><li><a href="#converting_the_data">Converting the data</a></li><li><a href="#adding_columns">Adding columns</a></li><li><a href="#missing_values">Missing values</a></li></ol></li><li><a href="#split-apply-combine">Split-Apply-Combine</a><ol><li><a href="#groupby"><code>groupby</code></a></li><li><a href="#combine"><code>combine</code></a></li><li><a href="#combine_with_groupby"><code>combine</code> with <code>groupby</code></a></li></ol></li></ol></div>
 <p>This tutorial is loosely adapted from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">this pandas tutorial</a> as well as the <a href="http://juliadata.github.io/DataFrames.jl/latest/man/getting_started/">DataFrames.jl documentation</a>. It is by no means meant to be a complete introduction, rather, it focuses on some key functionalities that are particularly useful in a classical machine learning context.</p>
@@ -492,7 +492,7 @@ combine&#40;gdf, :PetalLength &#61;&gt; mean &#61;&gt; :MPL, :PetalLength &#61;&
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -502,7 +502,7 @@ combine&#40;gdf, :PetalLength &#61;&gt; mean &#61;&gt; :MPL, :PetalLength &#61;&
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

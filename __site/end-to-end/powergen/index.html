@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="power_generation"><a href="#power_generation" class="header-anchor">Power Generation</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-powergen.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/powergen.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#adjusting_the_scientific_types">Adjusting the scientific types</a></li></ol></li><li><a href="#exploratory_data_analysis">Exploratory Data Analysis</a></li><li><a href="#models">Models</a><ol><li><a href="#model_evaluation">Model evaluation</a></li></ol></li></ol></div>
 <p><strong>Main author</strong>: <a href="https://github.com/gd1989">Geoffroy Dolphin</a></p>
@@ -464,7 +464,7 @@ xlabel&#33;&#40;&quot;Time&quot;&#41;
 ylabel&#33;&#40;&quot;Power generation&quot;&#41;</code></pre>
 <img src="/DataScienceTutorials.jl/assets/end-to-end/powergen/code/output/obs_v_pred.svg" alt="Observed vs Predicted">
 <p>Let&#39;s look at the RMSE on the training and test sets.</p>
-<pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, MLJ.predict&#40;m_linReg, rows &#61; train&#41;&#41;</code></pre><pre><code class="plaintext code-output">2934.599963885754</code></pre>
+<pre><code class="language-julia">rms&#40;y_wind&#91;train&#93;, MLJ.predict&#40;m_linReg, rows &#61; train&#41;&#41;</code></pre><pre><code class="plaintext code-output">2934.5999638857543</code></pre>
 <p>on the test set...</p>
 <pre><code class="language-julia">rms&#40;y_wind&#91;test&#93;, y_hat&#41;</code></pre><pre><code class="plaintext code-output">2872.517439095293</code></pre>
 <p>Finally, let&#39;s plot the residuals to see if there is any obvious remaining structure in them.</p>
@@ -492,7 +492,7 @@ hline&#33;&#40;&#91;0&#93;, color &#61; &quot;red&quot;, linewidth &#61; 3&#41;<
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 03, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -502,7 +502,7 @@ hline&#33;&#40;&#91;0&#93;, color &#61; &quot;red&quot;, linewidth &#61; 3&#41;<
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

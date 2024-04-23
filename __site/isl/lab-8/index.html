@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="lab_8_-_tree-based_models"><a href="#lab_8_-_tree-based_models" class="header-anchor">Lab 8 - Tree-based models</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/ISL-lab-8.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/isl/lab-8.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div>
 <div class="dropdown"><h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2></div>
@@ -236,7 +236,7 @@ misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext
 <pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;333&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 ypred &#61; predict_mode&#40;mach, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.26</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.28</code></pre>
 <p>Not really...</p>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="tuning_a_dtc"><a href="#tuning_a_dtc" class="header-anchor">Tuning a DTC</a></h3></div>
@@ -256,11 +256,11 @@ mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
 ypred &#61; predict_mode&#40;mtm, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.29</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.275</code></pre>
 <p>We can inspect the parameters of the best model</p>
 <pre><code class="language-julia">fitted_params&#40;mtm&#41;.best_model.decision_tree_classifier</code></pre><pre><code class="plaintext code-output">DecisionTreeClassifier(
-  max_depth = 6, 
-  min_samples_leaf = 1, 
+  max_depth = 5, 
+  min_samples_leaf = 22, 
   min_samples_split = 2, 
   min_purity_increase = 0.0, 
   n_subfeatures = 0, 
@@ -319,8 +319,233 @@ rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
 ypred &#61; MLJ.predict&#40;rf, rows&#61;test&#41;
-round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
-3.8</code></pre>
+round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">Transaction
+
+  Prefix: /Users/essam/Documents/GitHub/DataScienceTutorials.jl/_literate/isl/lab-8/.CondaPkg/env
+
+  Removing specs:
+
+   - bzip2
+   - ca-certificates
+   - joblib
+   - libblas
+   - libcblas
+   - libcxx
+   - libexpat
+   - libffi
+   - libgfortran
+   - libgfortran5
+   - liblapack
+   - libopenblas
+   - libsqlite
+   - libzlib
+   - llvm-openmp
+   - ncurses
+   - numpy
+   - openssl
+   - pip
+   - python
+   - python_abi
+   - readline
+   - scikit-learn
+   - scipy
+   - setuptools
+   - threadpoolctl
+   - tk
+   - tzdata
+   - wheel
+   - xz
+
+
+  Package                 Version  Build                 Channel           Size
+─────────────────────────────────────────────────────────────────────────────────
+  Remove:
+─────────────────────────────────────────────────────────────────────────────────
+
+  - scikit-learn            1.3.2  py312h6f466fd_2       conda-forge     Cached
+  - threadpoolctl           3.4.0  pyhc1e730c_0          conda-forge     Cached
+  - scipy                  1.13.0  py312h9d7df2b_0       conda-forge     Cached
+  - joblib                  1.4.0  pyhd8ed1ab_0          conda-forge     Cached
+  - numpy                  1.26.4  py312h8442bc7_0       conda-forge     Cached
+  - python_abi               3.12  4_cp312               conda-forge     Cached
+  - pip                      24.0  pyhd8ed1ab_0          conda-forge     Cached
+  - liblapack               3.9.0  22_osxarm64_openblas  conda-forge     Cached
+  - libcxx                 16.0.6  h4653b0c_0            conda-forge     Cached
+  - libcblas                3.9.0  22_osxarm64_openblas  conda-forge     Cached
+  - python                 3.12.2  hdf0ec26_0_cpython    conda-forge     Cached
+  - libblas                 3.9.0  22_osxarm64_openblas  conda-forge     Cached
+  - setuptools             69.2.0  pyhd8ed1ab_0          conda-forge     Cached
+  - libopenblas            0.3.27  openmp_h6c19121_0     conda-forge     Cached
+  - wheel                  0.43.0  pyhd8ed1ab_1          conda-forge     Cached
+  - libgfortran             5.0.0  13_2_0_hd922786_3     conda-forge     Cached
+  - xz                      5.2.6  h57fd34a_0            conda-forge     Cached
+  - tzdata                  2024a  h0c530f3_0            conda-forge     Cached
+  - tk                     8.6.13  h5083fa2_1            conda-forge     Cached
+  - readline                  8.2  h92ec313_1            conda-forge     Cached
+  - openssl                 3.2.1  h0d3ecfb_1            conda-forge     Cached
+  - libsqlite              3.45.2  h091b4b1_0            conda-forge     Cached
+  - libffi                  3.4.2  h3422bc3_5            conda-forge     Cached
+  - libexpat                2.6.2  hebf3989_0            conda-forge     Cached
+  - bzip2                   1.0.8  h93a5062_5            conda-forge     Cached
+  - libgfortran5           13.2.0  hf226fd6_3            conda-forge     Cached
+  - ncurses          6.4.20240210  h078ce10_0            conda-forge     Cached
+  - ca-certificates      2024.2.2  hf0a4a13_0            conda-forge     Cached
+  - libzlib                1.2.13  h53f4e23_5            conda-forge     Cached
+  - llvm-openmp            18.1.3  hcd81f8e_0            conda-forge     Cached
+
+  Summary:
+
+  Remove: 30 packages
+
+  Total download: 0 B
+
+─────────────────────────────────────────────────────────────────────────────────
+
+
+
+Transaction starting
+Unlinking scikit-learn-1.3.2-py312h6f466fd_2
+Unlinking threadpoolctl-3.4.0-pyhc1e730c_0
+Unlinking scipy-1.13.0-py312h9d7df2b_0
+Unlinking joblib-1.4.0-pyhd8ed1ab_0
+Unlinking numpy-1.26.4-py312h8442bc7_0
+Unlinking python_abi-3.12-4_cp312
+Unlinking pip-24.0-pyhd8ed1ab_0
+Unlinking liblapack-3.9.0-22_osxarm64_openblas
+Unlinking libcxx-16.0.6-h4653b0c_0
+Unlinking libcblas-3.9.0-22_osxarm64_openblas
+Unlinking python-3.12.2-hdf0ec26_0_cpython
+Unlinking libblas-3.9.0-22_osxarm64_openblas
+Unlinking setuptools-69.2.0-pyhd8ed1ab_0
+Unlinking libopenblas-0.3.27-openmp_h6c19121_0
+Unlinking wheel-0.43.0-pyhd8ed1ab_1
+Unlinking libgfortran-5.0.0-13_2_0_hd922786_3
+Unlinking xz-5.2.6-h57fd34a_0
+Unlinking tzdata-2024a-h0c530f3_0
+Unlinking tk-8.6.13-h5083fa2_1
+Unlinking readline-8.2-h92ec313_1
+Unlinking openssl-3.2.1-h0d3ecfb_1
+Unlinking libsqlite-3.45.2-h091b4b1_0
+Unlinking libffi-3.4.2-h3422bc3_5
+Unlinking libexpat-2.6.2-hebf3989_0
+Unlinking bzip2-1.0.8-h93a5062_5
+Unlinking libgfortran5-13.2.0-hf226fd6_3
+Unlinking ncurses-6.4.20240210-h078ce10_0
+Unlinking ca-certificates-2024.2.2-hf0a4a13_0
+Unlinking libzlib-1.2.13-h53f4e23_5
+Unlinking llvm-openmp-18.1.3-hcd81f8e_0
+
+Transaction finished
+
+To activate this environment, use:
+
+    micromamba activate /Users/essam/Documents/GitHub/DataScienceTutorials.jl/_literate/isl/lab-8/.CondaPkg/env
+
+Or to execute a single command in this environment, use:
+
+    micromamba run -p /Users/essam/Documents/GitHub/DataScienceTutorials.jl/_literate/isl/lab-8/.CondaPkg/env mycommand
+
+
+Transaction
+
+  Prefix: /Users/essam/Documents/GitHub/DataScienceTutorials.jl/_literate/isl/lab-8/.CondaPkg/env
+
+  Updating specs:
+
+   - conda-forge::python[version='>=3.7,<4',build=*cpython*]
+   - conda-forge::scikit-learn[version='>=1.2, <1.4']
+
+
+  Package                 Version  Build                 Channel           Size
+─────────────────────────────────────────────────────────────────────────────────
+  Install:
+─────────────────────────────────────────────────────────────────────────────────
+
+  + xz                      5.2.6  h57fd34a_0            conda-forge     Cached
+  + libexpat                2.6.2  hebf3989_0            conda-forge     Cached
+  + ncurses          6.4.20240210  h078ce10_0            conda-forge     Cached
+  + libcxx                 16.0.6  h4653b0c_0            conda-forge     Cached
+  + python_abi               3.12  4_cp312               conda-forge     Cached
+  + llvm-openmp            18.1.3  hcd81f8e_0            conda-forge     Cached
+  + bzip2                   1.0.8  h93a5062_5            conda-forge     Cached
+  + libffi                  3.4.2  h3422bc3_5            conda-forge     Cached
+  + libzlib                1.2.13  h53f4e23_5            conda-forge     Cached
+  + ca-certificates      2024.2.2  hf0a4a13_0            conda-forge     Cached
+  + readline                  8.2  h92ec313_1            conda-forge     Cached
+  + libgfortran5           13.2.0  hf226fd6_3            conda-forge     Cached
+  + tk                     8.6.13  h5083fa2_1            conda-forge     Cached
+  + libsqlite              3.45.3  h091b4b1_0            conda-forge      825kB
+  + openssl                 3.2.1  h0d3ecfb_1            conda-forge     Cached
+  + libgfortran             5.0.0  13_2_0_hd922786_3     conda-forge     Cached
+  + libopenblas            0.3.27  openmp_h6c19121_0     conda-forge     Cached
+  + libblas                 3.9.0  22_osxarm64_openblas  conda-forge     Cached
+  + libcblas                3.9.0  22_osxarm64_openblas  conda-forge     Cached
+  + liblapack               3.9.0  22_osxarm64_openblas  conda-forge     Cached
+  + tzdata                  2024a  h0c530f3_0            conda-forge     Cached
+  + python                 3.12.3  h4a7b5fc_0_cpython    conda-forge       13MB
+  + wheel                  0.43.0  pyhd8ed1ab_1          conda-forge     Cached
+  + setuptools             69.5.1  pyhd8ed1ab_0          conda-forge      502kB
+  + pip                      24.0  pyhd8ed1ab_0          conda-forge     Cached
+  + threadpoolctl           3.4.0  pyhc1e730c_0          conda-forge     Cached
+  + joblib                  1.4.0  pyhd8ed1ab_0          conda-forge     Cached
+  + numpy                  1.26.4  py312h8442bc7_0       conda-forge     Cached
+  + scipy                  1.13.0  py312h9d7df2b_0       conda-forge     Cached
+  + scikit-learn            1.3.2  py312h6f466fd_2       conda-forge     Cached
+
+  Summary:
+
+  Install: 30 packages
+
+  Total download: 15MB
+
+─────────────────────────────────────────────────────────────────────────────────
+
+
+
+Transaction starting
+Linking xz-5.2.6-h57fd34a_0
+Linking libexpat-2.6.2-hebf3989_0
+Linking ncurses-6.4.20240210-h078ce10_0
+Linking libcxx-16.0.6-h4653b0c_0
+Linking python_abi-3.12-4_cp312
+Linking llvm-openmp-18.1.3-hcd81f8e_0
+Linking bzip2-1.0.8-h93a5062_5
+Linking libffi-3.4.2-h3422bc3_5
+Linking libzlib-1.2.13-h53f4e23_5
+Linking ca-certificates-2024.2.2-hf0a4a13_0
+Linking readline-8.2-h92ec313_1
+Linking libgfortran5-13.2.0-hf226fd6_3
+Linking tk-8.6.13-h5083fa2_1
+Linking libsqlite-3.45.3-h091b4b1_0
+Linking openssl-3.2.1-h0d3ecfb_1
+Linking libgfortran-5.0.0-13_2_0_hd922786_3
+Linking libopenblas-0.3.27-openmp_h6c19121_0
+Linking libblas-3.9.0-22_osxarm64_openblas
+Linking libcblas-3.9.0-22_osxarm64_openblas
+Linking liblapack-3.9.0-22_osxarm64_openblas
+Linking tzdata-2024a-h0c530f3_0
+Linking python-3.12.3-h4a7b5fc_0_cpython
+Linking wheel-0.43.0-pyhd8ed1ab_1
+Linking setuptools-69.5.1-pyhd8ed1ab_0
+Linking pip-24.0-pyhd8ed1ab_0
+Linking threadpoolctl-3.4.0-pyhc1e730c_0
+Linking joblib-1.4.0-pyhd8ed1ab_0
+Linking numpy-1.26.4-py312h8442bc7_0
+Linking scipy-1.13.0-py312h9d7df2b_0
+Linking scikit-learn-1.3.2-py312h6f466fd_2
+
+Transaction finished
+
+To activate this environment, use:
+
+    micromamba activate /Users/essam/Documents/GitHub/DataScienceTutorials.jl/_literate/isl/lab-8/.CondaPkg/env
+
+Or to execute a single command in this environment, use:
+
+    micromamba run -p /Users/essam/Documents/GitHub/DataScienceTutorials.jl/_literate/isl/lab-8/.CondaPkg/env mycommand
+
+import MLJScikitLearnInterface ✔
+3.73</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine" class="header-anchor">Gradient Boosting Machine</a></h2></div>
 <div class="dropdown-content"><pre><code class="language-julia">XGBR &#61; @load XGBoostRegressor
@@ -347,7 +572,7 @@ round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -357,7 +582,7 @@ round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre>
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

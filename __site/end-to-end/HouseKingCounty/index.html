@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="house_king_county"><a href="#house_king_county" class="header-anchor">House King County</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/EX-housekingcounty.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/housekingcounty.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li><li><a href="#basic_data_visualisation">Basic data visualisation</a></li></ol></li><li><a href="#fitting_a_first_model">Fitting a first model</a><ol><li><a href="#random_forest_model">Random forest model</a></li><li><a href="#gbm">GBM</a></li></ol></li></ol></div>
 <div class="dropdown"><h2 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started</a></h2></div>
@@ -359,7 +359,7 @@ tree &#61; machine&#40;DTR&#40;&#41;, X, y&#41;
 fit&#33;&#40;tree, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.64505965923362</code></pre>
+<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.87448003287824</code></pre>
 <p>Let&#39;s try to do better.</p>
 <div class="dropdown"><h3 id="random_forest_model"><a href="#random_forest_model" class="header-anchor">Random forest model</a></h3></div>
 <div class="dropdown-content"><p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -372,7 +372,7 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">135.31571384469405</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">137.0149157116507</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
@@ -384,7 +384,7 @@ Extract:
 ┌────────────────────────┬───────────┬─────────────┬─────────┬────────────────────────────────────────────┐
 │ measure                │ operation │ measurement │ 1.96*SE │ per_fold                                   │
 ├────────────────────────┼───────────┼─────────────┼─────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError() │ predict   │ 137.0       │ 4.38    │ [136.0, 137.0, 130.0, 138.0, 135.0, 145.0] │
+│ RootMeanSquaredError() │ predict   │ 134.0       │ 7.43    │ [139.0, 119.0, 137.0, 140.0, 141.0, 128.0] │
 └────────────────────────┴───────────┴─────────────┴─────────┴────────────────────────────────────────────┘
 </code></pre>
 <p>‎</p></div>
@@ -410,7 +410,7 @@ r2 &#61; range&#40;xgb, :num_round, lower&#61;1, upper&#61;25&#41;;</code></pre>
 mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">138.20745278225192</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">138.2074527822519</code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
 
@@ -426,7 +426,7 @@ rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pr
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: January 31, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -436,7 +436,7 @@ rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pr
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->

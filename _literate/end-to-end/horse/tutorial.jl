@@ -1,5 +1,5 @@
 using Pkg # hideall
-Pkg.activate("_literate/EX-horse/Project.toml")
+Pkg.activate("_literate/end-to-end/horse/Project.toml")
 Pkg.instantiate()
 
 

@@ -194,7 +194,7 @@
     
 
     <!-- Content appended here --><div class="franklin-content"><h1 id="ensemble_models_2"><a href="#ensemble_models_2" class="header-anchor">Ensemble models 2</a></h1>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/A-ensembles-2.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/getting-started/ensembles-2.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#prelims">Prelims</a></li><li><a href="#random_forest">Random forest</a><ol><li><a href="#tuning">Tuning</a></li><li><a href="#reporting">Reporting</a></li></ol></li></ol></div>
 <div class="dropdown"><h2 id="prelims"><a href="#prelims" class="header-anchor">Prelims</a></h2></div>
@@ -300,8 +300,8 @@ Extract:
 ┌──────────────────────────────────────┬───────────┬─────────────┬──────────┐
 │ measure                              │ operation │ measurement │ per_fold │
 ├──────────────────────────────────────┼───────────┼─────────────┼──────────┤
-│ RootMeanSquaredError()               │ predict   │ 3.96        │ [3.96]   │
-│ RootMeanSquaredLogProportionalError( │ predict   │ 0.249       │ [0.249]  │
+│ RootMeanSquaredError()               │ predict   │ 3.94        │ [3.94]   │
+│ RootMeanSquaredLogProportionalError( │ predict   │ 0.252       │ [0.252]  │
 │   offset = 1)                        │           │             │          │
 └──────────────────────────────────────┴───────────┴─────────────┴──────────┘
 </code></pre>
@@ -313,7 +313,7 @@ Extract:
 <p>Even though we&#39;ve only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around <code>0.75</code> work well.</p>
 <p>Now that the machine <code>m</code> is trained, you can use use it for predictions &#40;implicitly, this will use the best model&#41;. For instance we could look at predictions on the whole dataset:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;m, X&#41;
-@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.393525853933367
+@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.4033460038774233
 </code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
@@ -330,7 +330,7 @@ Extract:
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 09, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
@@ -340,7 +340,7 @@ Extract:
 <script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
 <script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/DataScienceTutorials.jl/libs/nav/head.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
 <script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->
