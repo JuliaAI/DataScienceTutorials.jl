@@ -39,7 +39,7 @@ The following are the folders relevant to pages on the website:
 ├── info                 # has markdown files corresponding to info pages
 ├── index.md             # has markdown for the landing page
 ├── search.md            # has markdown for the search page
-├── routes.json          # has all the navigation bar data
+├── _libs/nav/head.js    # has all the navigation bar data
 ├── collapse-script.jl   # script that adds collapsible sections to tutorials
 ├── deploy.jl            # deployment script
 └── Project.toml         # environment for dev operations, eg. deploy.jl
@@ -67,7 +67,7 @@ To understand the rest of the structure which could help you change styles with 
 Once all that's done, the remaining things to do are to create the HTML page and a link in the appropriate location. Let's assume you wanted to add an E2E tutorial "Dinosaurs" then this implies that `_literate/end-to-end/dinosaurs.jl` exists and you would:
 
 * Create a file `dinosaurs.md` in the top-level folder `end-to-end/` by duplicating the `end-to-end/wine.md` and changing the reference in it to `\tutorial{end-to-end/dinosaurs}`
-* Add a link pointing to that tutorial in `routing.json` following the template so your tutorial shows in the navigation bar
+* Add a link pointing to that tutorial in `_libs/nav/head.js` following the template so your tutorial shows in the navigation bar
 * Ensure your tutorials renders correctly as explained in the next section.
 
 > [!NOTE]  
