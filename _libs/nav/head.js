@@ -1,5 +1,5 @@
 const navItems = [
-  // { name: "Home", href: "/", sections: [], sectionItemWidth: "", id: "home" },
+  { name: "Home", href: "/", sections: [], sectionItemWidth: "", id: "home" },
   {
     name: "Data Basics",
     id: "data",
