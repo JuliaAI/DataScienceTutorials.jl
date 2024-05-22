@@ -1,5 +1,5 @@
 const navItems = [
-  { name: "Home", href: "/", sections: [], sectionItemWidth: "", id: "home" },
+  // { name: "Home", href: "/", sections: [], sectionItemWidth: "", id: "home" },
   {
     name: "Data Basics",
     id: "data",
@@ -248,6 +248,8 @@ const navItems = [
     ],
     sectionItemWidth: "medium-item",
   },
+  { name: "Contribute", href: "https://github.com/JuliaAI/DataScienceTutorials.jl?tab=readme-ov-file#-for-developers", sections: [], sectionItemWidth: "", id: "contribute" },
+
 ];
 
 // first get info on whether hosted or not
