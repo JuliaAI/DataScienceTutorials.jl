@@ -248,6 +248,8 @@ const navItems = [
     ],
     sectionItemWidth: "medium-item",
   },
+  { name: "Contribute", href: "https://github.com/JuliaAI/DataScienceTutorials.jl?tab=readme-ov-file#-for-developers", sections: [], sectionItemWidth: "", id: "contribute" },
+
 ];
 
 // first get info on whether hosted or not

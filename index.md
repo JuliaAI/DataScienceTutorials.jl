@@ -84,4 +84,3 @@ What kind of user are you? These are our recommendations for different types of 
     preview see [here](https://bio322.epfl.ch)).
   @@
 @@
-Willing to contribute? Consider checking our [repository](https://github.com/JuliaAI/DataScienceTutorials.jl) on Github.

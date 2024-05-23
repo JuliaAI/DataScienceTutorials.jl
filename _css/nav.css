@@ -23,7 +23,7 @@
   }
 }
 
-a#home {
+a#home, a#contribute {
   border-radius: 3rem;
 }
 
@@ -61,6 +61,7 @@ nav ul li {
   font-weight: 500;
 }
 
+
 .nav-dropdown li {
   float: none;
 }
@@ -89,7 +90,7 @@ nav ul li a:visited:hover {
   background: #9b59b6;
   color: #fff;
 }
-#home:hover {
+#home:hover, #contribute:hover {
   background-color: #9b59b6;
   color: white !important;
 }
@@ -155,4 +156,8 @@ nav ul li ul li a {
 .button-label {
   font-size: 0.9rem;
   font-weight: 400;
+}
+
+#home {
+  display: none;
 }
