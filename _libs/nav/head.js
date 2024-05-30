@@ -103,7 +103,7 @@ const navItems = [
         href: "/getting-started/ensembles-2/",
         tags: ["Regression", "Ensemble Models", "Hyperparameter Tuning"],
         ilos: [
-          "Familiarize yourself with dealing with real-world datasets such as the Boston Housing",
+          "Familiarize yourself with dealing with real-world datasets such as the Boston Housing dataset",
           "Understand how to implement Random Forests using bagging over Decision Trees",
           "Learn how to analyze the effect of a specific hyperparameter using MLJ's learning curve",
           "Learn how to tune the parameters of Random Forests"
