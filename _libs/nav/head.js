@@ -86,7 +86,7 @@ const navItems = [
         tags: ["Classification", "Hyperparameter Tuning"],
         ilos: [
           "Learn how to optimize a single hyperparameter of your model",
-           "Learn how to hyperparameter tune multiple hyperparameters, that are possibly nested, and visualize the results"
+           "Learn how to tune multiple hyperparameters, that are possibly nested, and visualize the results"
         ]
       },
       {
