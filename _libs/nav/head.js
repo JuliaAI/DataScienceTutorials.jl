@@ -225,7 +225,7 @@ const navItems = [
           "Hyperparameter Optimization",
         ],
         ilos: [
-          "Understand the different types and methods introduced by MLJ",
+          "Get a grasp on using MLJ as a data scientist new to MLJ or Julia",
           "Refresh your skills on building simple models",
           "Learn how to prepare example real-life data by loading, coercing, partitioning and unpacking data",
           "Learn how to build pipelines in MLJ",
@@ -233,7 +233,9 @@ const navItems = [
           "Understand how to perform feature selection in MLJ",
           "Learn how to wrap models in iterative strategies in MLJ",
           "Learn how to tune hyperparameters in MLJ",
-          "Learn how to save and perform final evaluations on your models in MLJ"
+          "Familiarize yourself with confusion matrices, ROC curve and stratified cross-validation",
+          "Learn how to save and perform final evaluations on your models in MLJ",
+          "Understand the different types and methods introduced by MLJ",
         ]
       },
       {
