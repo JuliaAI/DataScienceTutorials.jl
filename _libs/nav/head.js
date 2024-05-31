@@ -242,7 +242,7 @@ const navItems = [
         tags: ["Regression", "Learning Networks", "Hyperparameter Tuning"],
         ilos: [
           "Get familiar with building baselines models for your machine learning task",
-          "Learn how to build simple learning networks in MLJ",
+          "Learn how to build simple learning networks (advanced model composition) in MLJ",
           "Learn how to tune and analyze the evaluation results from learning networks"
         ]
       },
