@@ -3,4 +3,4 @@
 
 # Breast Cancer Wisconsin(Diagnostic)
 
-\tutorial{end-to-end/breastcancer}
+\tutorial{advanced/breastcancer}

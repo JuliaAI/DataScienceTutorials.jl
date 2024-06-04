@@ -238,16 +238,7 @@ const navItems = [
           "Understand the different types and methods introduced by MLJ",
         ]
       },
-      {
-        name: "KNN & Ridge Regression Learning Network on AMES Pricing Data",
-        href: "/end-to-end/AMES/",
-        tags: ["Regression", "Learning Networks", "Hyperparameter Tuning"],
-        ilos: [
-          "Get familiar with building baselines models for your machine learning task",
-          "Learn how to build simple learning networks (advanced model composition) in MLJ",
-          "Learn how to tune and analyze the evaluation results from learning networks"
-        ]
-      },
+
       {
         name: "KNN, Logistic Regression and PCA on Wine Dataset",
         href: "/end-to-end/wine/",
@@ -328,7 +319,7 @@ const navItems = [
         ]
       },
       {
-        name: "Linear Regression on Temporal Power Generation Data",
+        name: "Linear Regression on Temporal Power Data",
         href: "/end-to-end/powergen/",
         tags: ["Data Processing", "Regression"],
         ilos: [
@@ -352,23 +343,7 @@ const navItems = [
         ]
       },
       {
-        name: "Benchmarking Classification Models on Breast Cancer Data",
-        href: "/end-to-end/breastcancer",
-        tags: [
-          "Encoders",
-          "Classification",
-          "Iterative Models",
-          "Distribution Fitter",
-          "Bayesian Models",
-          "Neural Networks",
-        ],
-        ilos: [
-          "Familiarize yourself with common data preprocessing and visualization workflows",
-          "Learn how MLJ can be used to benchmark a large set of models against some dataset"
-        ]
-      },
-      {
-        name: "Credit Fraud Detection with Logistic Regression, SVM and Neural Networks",
+        name: "Credit Fraud Detection with Classical and Deep Models",
         href: "/end-to-end/creditfraud",
         tags: [
           "Classification",
@@ -393,6 +368,32 @@ const navItems = [
     id: "advanced",
     href: "#!",
     sections: [
+      {
+        name: "Benchmarking Classification Models on Breast Cancer Data",
+        href: "/advanced/breastcancer",
+        tags: [
+          "Encoders",
+          "Classification",
+          "Iterative Models",
+          "Distribution Fitter",
+          "Bayesian Models",
+          "Neural Networks",
+        ],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization workflows",
+          "Learn how MLJ can be used to benchmark a large set of models against some dataset"
+        ]
+      },
+      {
+        name: "KNN & Ridge Regression Learning Network on AMES Pricing Data",
+        href: "/advanced/AMES/",
+        tags: ["Regression", "Learning Networks", "Hyperparameter Tuning"],
+        ilos: [
+          "Get familiar with building baselines models for your machine learning task",
+          "Learn how to build simple learning networks (advanced model composition) in MLJ",
+          "Learn how to tune and analyze the evaluation results from learning networks"
+        ]
+      },
       {
         name: "Build Basic Learning Networks with MLJ",
         href: "/advanced/ensembles-3",
