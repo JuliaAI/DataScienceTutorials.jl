@@ -6,37 +6,54 @@ const navItems = [
     href: "/info/data",
     sections: [
       {
-        name: "Choosing a model",
-        href: "/getting-started/choosing-a-model/",
+        name: "Loading and Accessing Data",
+        href: "/data/loading/",
         tags: ["Data Processing"],
+        ilos: [
+            "Understand how to load and access various datasets in R using RDatasets.jl",
+            "Learn how to save and load a local dataset in CSV format using CSV.jl"
+        ]
       },
       {
-        name: "Fit, predict, transform",
-        href: "/getting-started/fit-and-predict/",
+        name: "Manipulating Data Frames with DataFrames.jl",
+        href: "/data/dataframe/",
         tags: ["Data Processing"],
+        ilos: [
+        "Learn how to inspect, describe, and convert datasets into the form of Data Frames",
+        "Learn how to modify a Data Frame by adding columns and imputing missing values",
+        "Familiarize yourself with the groupby and combine operations on Data Frames"
+        ]
       },
       {
-        name: "Model tuning",
-        href: "/getting-started/model-tuning/",
+        name: "Working with Categorical Data",
+        href: "/data/categorical/",
         tags: ["Data Processing"],
+        ilos: [
+         "Understand the different types of categorical data (e.g., nominal and ordinal data) via CategoricalArrays.jl",
+         "Learn how to work with and utilize such categorical arrays"
+        ]
       },
       {
-        name: "Ensembles",
-        href: "/getting-started/ensembles/",
+        name: "Understanding Scientific Types",
+        href: "/data/scitype/",
         tags: ["Data Processing"],
+        ilos: [
+          "Gain a comprehension of the rationale behind having scientific types and their different categories",
+          "Learn how to inspect and modify the scientific types in your data using ScientificTypes.jl",
+          "Learn about practical tips and tricks related to scientific types"
+        ]
       },
       {
-        name: "Ensembles (2)",
-        href: "/getting-started/ensembles-2/",
+        name: "Data Processing and Visualization",
+        href: "/data/processing/",
         tags: ["Data Processing"],
-      },
-      {
-        name: "Composing models",
-        href: "/getting-started/composing-models/",
-        tags: ["Data Processing", "Missing Value Imputation"],
+        ilos: [
+         "Learn how to apply common data processing techniques on a real-world dataset",
+         "Learn how to create various plots (e.g., bar charts and histograms) to analyze your data"
+        ]
       },
     ],
-    sectionItemWidth: "short-item",
+    sectionItemWidth: "long-item",
   },
   {
     name: "Getting Started",
@@ -44,37 +61,66 @@ const navItems = [
     href: "/info/getting-started",
     sections: [
       {
-        name: "Choosing a model",
+        name: "Preparing data and model with Iris",
         href: "/getting-started/choosing-a-model/",
         tags: ["Classification", "Regression"],
+        ilos: [
+          "Understand why and how to coerce the data types of different variables in your dataset",
+          "Learn how to separate features and targets for training",
+          "Be able to find and load the models suitable for your data"
+        ]
       },
       {
-        name: "Fit, predict, transform",
+        name: "Supervised and Unsupervised Workflows in MLJ",
         href: "/getting-started/fit-and-predict/",
         tags: ["Classification", "Encoders"],
+        ilos: [
+          "Learn how to implement a supervised learning workflow with MLJ",
+          "Learn how to implement an unsupervised learning workflow with MLJ",
+          "Familiarize yourself with using MLJ's classification and transformation models",
+        ]
       },
       {
-        name: "Model tuning",
+        name: "Hyperparameter Tuning for Single and Composite Models",
         href: "/getting-started/model-tuning/",
         tags: ["Classification", "Hyperparameter Tuning"],
+        ilos: [
+          "Learn how to optimize a single hyperparameter of your model",
+           "Learn how to tune multiple hyperparameters, that are possibly nested, and visualize the results"
+        ]
       },
       {
-        name: "Ensembles",
+        name: "Building and Tuning Bagging Ensemble Models",
         href: "/getting-started/ensembles/",
         tags: ["Regression", "Ensemble Models", "Hyperparameter Tuning"],
+        ilos: [
+          "Understand how to implement bagging ensemble models in MLJ and compare them to atomic models",
+          "Learn how to optimize the parameters of bagging ensemble models and visualize the results"
+        ]
       },
       {
-        name: "Ensembles (2)",
+        name: "Building Random Forests with Bagging Ensembles",
         href: "/getting-started/ensembles-2/",
         tags: ["Regression", "Ensemble Models", "Hyperparameter Tuning"],
+        ilos: [
+          "Familiarize yourself with dealing with real-world datasets such as the Boston Housing dataset",
+          "Understand how to implement Random Forests using bagging over Decision Trees",
+          "Learn how to analyze the effect of a specific hyperparameter using MLJ's learning curve",
+          "Learn how to tune the parameters of Random Forests"
+        ]
       },
       {
-        name: "Composing models",
+        name: "Composing Models and Target Transformations",
         href: "/getting-started/composing-models/",
         tags: ["Regression", "Encoders", "Pipelines"],
+        ilos: [
+          "Learn how to transform the target of your regression data using MLJ",
+          "Understand how to combine models and transformation algorithms in MLJ",
+          "Gain an understanding of the benefits of using MLJ pipelines"
+        ]
       },
     ],
-    sectionItemWidth: "medium-item",
+    sectionItemWidth: "long-item",
   },
   {
     name: "Intro to Stats Learning",
@@ -82,40 +128,81 @@ const navItems = [
     href: "/info/isl",
     sections: [
       {
-        name: "Basic Operations",
+        name: "Vectors, Matrices and Data Loading in Julia",
         href: "/isl/lab-2/",
         tags: ["Data Processing"],
+        ilos : [
+          "Understand how to work with vectors and matrices in Julia",
+          "Learn about loading and plotting datasets in Julia"
+        ]
       },
-      { name: "Linear Regression", href: "/isl/lab-3/", tags: ["Regression"] },
+      { name: "Multivariate Linear Regression & Interactions", 
+      href: "/isl/lab-3/", 
+      tags: ["Regression"],
+      ilos: [
+        "Understand how to build single and multivariable linear regression models with MLJ",
+        "Learn how to add interaction terms to model nonlinear trends in your data",
+        "Learn how to plot regression fits and their residuals"
+      ] 
+    },
       {
-        name: "Logistic Regression & Friends",
+        name: "Logistic Regression & Friends on Stock Market Data",
         href: "/isl/lab-4/",
         tags: ["Classification", "Bayesian Models", "Distribution Fitter"],
+        ilos: [
+          "Understand how to load and preprocess example datasets from RDatasets.jl",
+          "Explore how to train and analyze logistic regression on stock market data",
+          "Explore classification-related metrics such as cross-entropy loss, confusion matrix, and area under the ROC curve",
+          "Compare logistic regression to various other classifiers such as LDA, QDA, and KNN",
+          "Analyze training classification models on imbalanced datasets",
+        ]
       },
       {
-        name: "Cross Validation",
+        name: "Building Polynomial Regression Models and Tuning Them",
         href: "/isl/lab-5/",
         tags: ["Regression", "Feature Selection", "Hyperparameter Tuning"],
+        ilos: [
+          "Understand how to build a polynomial regression model with MLJ",
+          "Learn how to use feature selectors and models in an MLJ pipeline",
+          "Analyze and hyperparameter tune polynomial regression models"
+        ]
       },
       {
-        name: "Ridge & Lasso Regression",
+        name: "Ridge & Lasso Regression on Hitters Dataset",
         href: "/isl/lab-6b/",
         tags: ["Regression", "Encoders", "Hyperparameter Tuning"],
+        ilos: [
+          "Strengthen your data preparation, plotting, and analysis skills",
+          "Compare different types of linear regression such as Lasso and Ridge regression",
+          "Refresh on hyperparameter tuning and model composition with MLJ "
+        ]
       },
       {
-        name: "Tree-based Models",
+        name: "Exploring Tree-based Models",
         href: "/isl/lab-8/",
-        tags: ["Iterative Models", "Classification", "Regression"],
+        tags: ["Iterative Models", "Classification", "Regression", "Hyperparameter Tuning"],
+        ilos: [
+          "Explore various tree-based models for classification and regression including ordinary decision trees, random forests, and XGBoost",
+          "Refresh your skills on hyperparameter tuning and building MLJ pipelines"
+        ]
       },
       {
-        name: "Support Vector Machine",
+        name: "Building and Tuning a Support Vector Machine",
         href: "/isl/lab-9/",
         tags: ["Classification", "Hyperparameter Tuning"],
+        ilos: [
+          "Familiarize yourself with generating and visualizing custom classification data",
+          "Learn how to build and tune support vector machine (SVM) models with MLJ"
+        ]
       },
       {
-        name: "PCA & Clustering",
+        name: "Unsupervised Learning with PCA and Clustering ",
         href: "/isl/lab-10/",
         tags: ["Dimensionality Reduction", "Clustering", "Pipelines"],
+        ilos: [
+          "Learn how to build unsupervised models such as KMeans and PCA in MLJ",
+          "Learn how to analyze and visualize results from unsupervised models such as KMeans and PCA"
+        ]
       },
     ],
     sectionItemWidth: "long-item",
@@ -127,7 +214,7 @@ const navItems = [
     href: "/info/end-to-end",
     sections: [
       {
-        name: "Telco Churn",
+        name: "MLJ for Data Scientists in Two Hours",
         href: "/end-to-end/telco/",
         tags: [
           "Classification",
@@ -137,14 +224,23 @@ const navItems = [
           "Iterative Models",
           "Hyperparameter Optimization",
         ],
+        ilos: [
+          "Get a grasp on using MLJ as a data scientist new to MLJ or Julia",
+          "Refresh your skills on building simple models",
+          "Learn how to prepare example real-life data by loading, coercing, partitioning and unpacking data",
+          "Learn how to build pipelines in MLJ",
+          "Learn about how to manually and automatically evaluate models in MLJ",
+          "Understand how to perform feature selection in MLJ",
+          "Learn how to wrap models in iterative strategies in MLJ",
+          "Learn how to tune hyperparameters in MLJ",
+          "Familiarize yourself with confusion matrices, ROC curve and stratified cross-validation",
+          "Learn how to save and perform final evaluations on your models in MLJ",
+          "Understand the different types and methods introduced by MLJ",
+        ]
       },
+
       {
-        name: "AMES",
-        href: "/end-to-end/AMES/",
-        tags: ["Regression", "Learning Networks", "Hyperparameter Tuning"],
-      },
-      {
-        name: "Wine",
+        name: "KNN, Logistic Regression and PCA on Wine Dataset",
         href: "/end-to-end/wine/",
         tags: [
           "Encoders",
@@ -152,14 +248,24 @@ const navItems = [
           "Pipelines",
           "Dimensionality Reduction",
         ],
+        ilos: [
+          "Familiarize yourself with the common data preprocessing steps in MLJ",
+          "Refresh your skills on building pipelines and comparing classification models with MLJ",
+          "Learn how to reduce the dimensionality of high-dimensional data using dimensionality reduction techniques such as PCA"
+        ]
       },
       {
-        name: "Crabs (XGB)",
+        name: "XGBoost on Crabs Dataset",
         href: "/end-to-end/crabs-xgb/",
         tags: ["Classification", "Iterative Models", "Hyperparameter Tuning"],
+        ilos: [
+          "Learn how to build XGBoost models in MLJ",
+          "Familiarize yourself with various XGBoost hyperparameters and their effects",
+          "Refresh your skills on using learning curves and hyperparameter tuning in MLJ"
+        ]
       },
       {
-        name: "Horse",
+        name: "EvoTree Classifier on Horse Colic Dataset",
         href: "/end-to-end/horse/",
         tags: [
           "Missing Value Imputation",
@@ -168,34 +274,62 @@ const navItems = [
           "Iterative Models",
           "Hyperparameter Tuning",
         ],
+        ilos: [
+          "Familiarize yourself with common data preprocessing techniques in Julia",
+          "Get familiar with building baselines models for your learning task in MLJ",
+          "Refresh your understanding of using pipelines, evaluation and hyperparameter tuning in MLJ"
+        ]
       },
       {
-        name: "King County Houses",
+        name: "Tree-based models on King County Houses Dataset",
         href: "/end-to-end/HouseKingCounty/",
         tags: ["Regression", "Iterative Models"],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization techniques in Julia",
+          "Explore different tree-based models such as decision trees, random forests and gradient boosters and compare them together"
+        ]
       },
       {
-        name: "Airfoil",
+        name: "Tree-based models on Airfoil Dataset",
         href: "/end-to-end/airfoil",
         tags: ["Encoders", "Regression", "Hyperparameter Tuning"],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization techniques in Julia",
+          "Explore different tree-based models such as decision trees, random forests and compare them together",
+          "Refresh your understanding of tuning hyperparameters with MLJ and analyzing tuning results"
+        ]
       },
       {
-        name: "Boston (lgbm)",
+        name: "LightGBM on Boston Data",
         href: "/end-to-end/boston-lgbm",
         tags: ["Regression", "Hyperparameter Tuning", "Iterative Models"],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization techniques in Julia",
+          "Build and analyze LightGBM models in MLJ by utilizing learning curves and hyperparameter tuning",
+        ]
       },
       {
-        name: "Using GLM.jl",
+        name: "Exploring Generative Linear Models",
         href: "/end-to-end/glm/",
-        tags: ["Pipelines", "Encoders", "Classification"],
+        tags: ["Pipelines", "Encoders", "Classification", "Regression"],
+        ilos: [
+          "Understand how to use generative linear models from GLM.jl in MLJ",
+          "Practice examples of using linear regression and logistic regression models in MLJ",
+          "Understand how to interpret the outputs from linear and logistic regression models"
+        ]
       },
       {
-        name: "Power Generation",
+        name: "Linear Regression on Temporal Power Data",
         href: "/end-to-end/powergen/",
         tags: ["Data Processing", "Regression"],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization workflows",
+          "Gain an understanding of exploratory data analytics to better understand the data before developing your model",
+          "Train and analyze linear regression models on temporal data with MLJ"
+        ]
       },
       {
-        name: "Boston (Flux)",
+        name: "Custom Neural Networks on Boston Data",
         href: "/end-to-end/boston-flux",
         tags: [
           "Neural Networks",
@@ -203,21 +337,13 @@ const navItems = [
           "Regression",
           "Iterative Models",
         ],
+        ilos: [
+          "Learn how to build and train arbitrary feedforward neural networks via MLJFlux.jl",
+          "Understand how deep learning MLJFlux models can be hyperparameter tuned with MLJ"
+        ]
       },
       {
-        name: "Breast Cancer",
-        href: "/end-to-end/breastcancer",
-        tags: [
-          "Encoders",
-          "Classification",
-          "Iterative Models",
-          "Distribution Fitter",
-          "Bayesian Models",
-          "Neural Networks",
-        ],
-      },
-      {
-        name: "Credit Fraud",
+        name: "Credit Fraud Detection with Classical and Deep Models",
         href: "/end-to-end/creditfraud",
         tags: [
           "Classification",
@@ -226,6 +352,13 @@ const navItems = [
           "Pipelines",
           "Neural Networks",
         ],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization workflows",
+          "Refresh your understanding of classification metrics such as the confusion matrix and ROC curves",
+          "Build and hyperparameter tune logistic regression and SVM models",
+          "Learn how to build basic neural networks with MLJFlux.jl",
+          "Learn how to correct for class imbalance using the Imbalance.jl package"
+        ]
       },
     ],
     sectionItemWidth: "long-item",
@@ -236,14 +369,49 @@ const navItems = [
     href: "#!",
     sections: [
       {
-        name: "Ensembles (3)",
-        href: "/advanced/ensembles-3",
-        tags: ["Regression", "Learning Networks"],
+        name: "Benchmarking Classification Models on Breast Cancer Data",
+        href: "/advanced/breastcancer",
+        tags: [
+          "Encoders",
+          "Classification",
+          "Iterative Models",
+          "Distribution Fitter",
+          "Bayesian Models",
+          "Neural Networks",
+        ],
+        ilos: [
+          "Familiarize yourself with common data preprocessing and visualization workflows",
+          "Learn how MLJ can be used to benchmark a large set of models against some dataset"
+        ]
       },
       {
-        name: "Stacking",
+        name: "KNN & Ridge Regression Learning Network on AMES Pricing Data",
+        href: "/advanced/AMES/",
+        tags: ["Regression", "Learning Networks", "Hyperparameter Tuning"],
+        ilos: [
+          "Get familiar with building baselines models for your machine learning task",
+          "Learn how to build simple learning networks (advanced model composition) in MLJ",
+          "Learn how to tune and analyze the evaluation results from learning networks"
+        ]
+      },
+      {
+        name: "Build Basic Learning Networks with MLJ",
+        href: "/advanced/ensembles-3",
+        tags: ["Regression", "Learning Networks"],
+        ilos: [
+          "Have a clear understanding of how learning networks function in MLJ",
+          "Be able to construct basic learning networks with MLJ",
+          "Understand how to evaluate and tune learning networks"
+        ]
+      },
+      {
+        name: "Stacking with Learning Networks",
         href: "/advanced/stacking/",
-        tags: ["Ensemble Models", "Learning Networks", "Hyperparamter Tuning"],
+        tags: ["Ensemble Models", "Learning Networks", "Hyperparameter Tuning"],
+        ilos: [
+          "Have a grasp of how to build and analyze complex learning networks (e.g., stacking)",
+          "Be able to evaluate and tune learning networks"
+        ]
       },
     ],
     sectionItemWidth: "medium-item",

@@ -1,5 +1,5 @@
 using Pkg # hideall
-Pkg.activate("_literate/end-to-end/AMES/Project.toml")
+Pkg.activate("_literate/advanced/AMES/Project.toml")
 Pkg.instantiate()
 
 # Build a model for the Ames House Price data set using a simple learning network to blend

@@ -3,4 +3,4 @@
 
 # AMES
 
-\tutorial{end-to-end/AMES}
+\tutorial{advanced/AMES}
