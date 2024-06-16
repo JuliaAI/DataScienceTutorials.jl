@@ -138,7 +138,7 @@ run(`sudo $(npm_cmd()) i lunr cheerio`)
 * run `include("deploy.jl")` which re-generates the LUNR index and automatically pushes the changes to GitHub.
 
 
-This should take ≤ 15 seconds to complete.
+This last step should take ≤ 15 seconds to complete.
 
 ### 🕵🏽 Troubleshooting
 

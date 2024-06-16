@@ -6,6 +6,12 @@ body {
 
 .header h2 {
     text-align: center;
+
+}
+
+#menu-logo-link div {
+    white-space: normal !important;
+    /* word-wrap: normal !important; */
 }
 
 .pure-img-responsive {
@@ -65,6 +71,7 @@ The content `<div>` is where all your content goes.
         margin: 0.2em 0;
         font-size: 3em;
         font-weight: 300;
+
     }
     .header h1::before {
         content: url('https://seeklogo.com/images/J/julia-logo-DC9698BAF9-seeklogo.com.png');
@@ -122,6 +129,8 @@ appears on the left side of the page.
         color: #999;
         border: none;
         padding: 0.6em 0 0.6em 0.6em;
+        word-wrap: break-word;  
+        white-space: break-spaces;    
     }
 
     /*
