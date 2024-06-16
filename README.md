@@ -119,9 +119,10 @@ This makes Franklin to re-evaluate some of the code based on the changes which m
 
 * you have a PR with changes, someone has reviewed them and they got merged into the master branch
 
-* Be sure the version of Julia declared [here](https://juliaai.github.io/DataScienceTutorials.jl/how-to-run-code/)
-  matches the version used to generate the web-site (which should
-  match the version declared in each tutorial's Manifest.toml file)
+* Be sure the version of Julia declared
+  [here](https://github.com/JuliaAI/DataScienceTutorials.jl/blob/master/info/how-to-run-code.md)
+  matches the version used to generate the web-site (which should match the version
+  declared in each tutorial's Manifest.toml file)
 
 
 **Once the changes are in the master branch:**
