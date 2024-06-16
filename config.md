@@ -3,7 +3,7 @@ prepath = "DataScienceTutorials.jl"
 
 website_title = "Data Science Tutorials"
 website_descr = "Data Science Tutorials using Julia"
-website_url   = "https://alan-turing-institute.github.io/DataScienceTutorials.jl/"
+website_url   = "https://JuliaAI.github.io/DataScienceTutorials.jl/"
 
 author = "Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators"
 

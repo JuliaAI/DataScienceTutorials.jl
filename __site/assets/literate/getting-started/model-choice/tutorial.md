@@ -5,9 +5,9 @@ Pkg.activate("_literate/getting-started/model-choice/Project.toml")
 Pkg.instantiate()
 ````
 
-[MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
+[MLJ.jl]: https://github.com/JuliaAI/MLJ.jl
 [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
-[MLJModels.jl]: https://github.com/alan-turing-institute/MLJModels.jl
+[MLJModels.jl]: https://github.com/JuliaAI/MLJModels.jl
 [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl
 [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
 [GLM.jl]: https://github.com/JuliaStats/GLM.jl

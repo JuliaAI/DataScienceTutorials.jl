@@ -119,7 +119,7 @@ To coerce `int` features to `Float`, we nest the `autotype` function in the `coe
 function.  The `autotype` function returns a dictionary containing scientific types,
 which is then passed to the `coerce` function.  For more details on the use of
 `autotype`, see the [Scientific
-Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype)
+Types](https://JuliaAI.github.io/DataScienceTutorials.jl/data/scitype/index.html#autotype)
 
 ````julia:ex9
 Xc = coerce(X, autotype(X, rules = (:discrete_to_continuous,)))

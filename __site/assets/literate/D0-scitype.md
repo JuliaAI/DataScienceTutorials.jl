@@ -1,7 +1,7 @@
 <!--This file was generated, do not modify it.-->
 ## Machine type vs Scientific Type
 
-\note{while [ScientificTypes.jl](https://github.com/alan-turing-institute/ScientificTypes.jl) was developped as  part of the development of MLJ and is broadly used by it, it is fully independent of MLJ and can easily be used outside of it.}
+\note{while [ScientificTypes.jl](https://github.com/JuliaAI/ScientificTypes.jl) was developped as  part of the development of MLJ and is broadly used by it, it is fully independent of MLJ and can easily be used outside of it.}
 
 ### Why make a distinction?
 
@@ -140,5 +140,5 @@ boston3 = coerce(boston, autotype(boston, :few_to_finite))
 schema(boston3)
 ```
 
-You can also specify multiple rules, see [the docs](https://alan-turing-institute.github.io/ScientificTypes.jl/stable/#Automatic-type-conversion-for-tabular-data-1) for more information.
+You can also specify multiple rules, see [the docs](https://JuliaAI.github.io/ScientificTypes.jl/stable/#Automatic-type-conversion-for-tabular-data-1) for more information.
 

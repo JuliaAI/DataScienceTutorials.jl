@@ -81,7 +81,7 @@ first(capacity, 5)
 
 This dataframe contains several subgroups (country and technology type) and it would be interesting to get data aggregates by subgroup.
 To obtain a `view` of the DataFrame by subgroup, we can use the `groupby` function.
-(See the [DataFrame tutorial](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/#groupby) for an introduction to the use of `groupby`)
+(See the [DataFrame tutorial](https://JuliaAI.github.io/DataScienceTutorials.jl/data/dataframe/#groupby) for an introduction to the use of `groupby`)
 
 ````julia:ex9
 cap_gr = groupby(capacity, [:country, :primary_fuel]);

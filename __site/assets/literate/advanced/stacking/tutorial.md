@@ -17,13 +17,13 @@ intensive. Nevertheless, stacking has been used successfully by teams in data sc
 science competitions.
 
 For routine stacking tasks the MLJ user should use the `Stack` model documented
-[here](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Model-Stacking). Internally,
+[here](https://JuliaAI.github.io/MLJ.jl/dev/composing_models/#Model-Stacking). Internally,
 `Stack` is implemented using MLJ's learning networks feature, and the purpose of this
 tutorial give an advanced illustration of MLJ learning networks by presenting a
 simplified version of this implementation. Familiarity with model stacking is not
 essential, but we assume the reader is already familiar with learning network basics, as
 illustrated in the [Learning
-networks](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/) section
+networks](https://JuliaAI.github.io/MLJ.jl/dev/learning_networks/) section
 of the MLJ manual. The "Ensembles (learning networks)" tutorial also gives a simple
 illustration.
 

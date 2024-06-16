@@ -104,7 +104,7 @@ convergence issues. We can use a feature scaling technique like __Standardizer()
 handle this.
 
 But first, let's handle the [scientific
-types](https://alan-turing-institute.github.io/ScientificTypes.jl/dev/) of all the
+types](https://JuliaAI.github.io/ScientificTypes.jl/dev/) of all the
 features. We can use the `schema()` method from MLJ.jl package to do this
 
 ````julia:ex8

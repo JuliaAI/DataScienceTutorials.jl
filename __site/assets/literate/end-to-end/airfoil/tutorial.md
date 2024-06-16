@@ -151,7 +151,7 @@ Can we do even better? Yeah, we can!! We can make use of Model Tuning.
 @@
 @@dropdown-content
 
-In case you are new to model tuning using MLJ, refer [lab5](https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/) and [model-tuning](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
+In case you are new to model tuning using MLJ, refer [lab5](https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-5/) and [model-tuning](https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
 
 Range of values for parameters should be specified to do hyperparameter tuning
 

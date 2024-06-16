@@ -8,7 +8,7 @@ macro OUTPUT()
 end
 ````
 
-[MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
+[MLJ.jl]: https://github.com/JuliaAI/MLJ.jl
 [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 [NearestNeighbors.jl]: https://github.com/KristofferC/NearestNeighbors.jl
 

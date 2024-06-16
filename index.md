@@ -1,5 +1,5 @@
 @def title = "Data Science Tutorials in Julia"
-Tutorials for learning data science using Julia, with a focus on machine learning (ML) using the [MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/) toolbox and related packages.
+Tutorials for learning data science using Julia, with a focus on machine learning (ML) using the [MLJ](https://JuliaAI.github.io/MLJ.jl/dev/) toolbox and related packages.
 
 @@run-code
 

@@ -1,5 +1,5 @@
 <!--This file was generated, do not modify it.-->
-[MLJ.jl]: https://github.com/alan-turing-institute/MLJ.jl
+[MLJ.jl]: https://github.com/JuliaAI/MLJ.jl
 [RDatasets.jl]: https://github.com/JuliaStats/RDatasets.jl
 [DecisionTree.jl]: https://github.com/bensadeghi/DecisionTree.jl
 

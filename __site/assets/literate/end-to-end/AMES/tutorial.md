@@ -115,7 +115,7 @@ Let's try something a bit fancier than a constant regressor.
 
 We are going to combine all this into a single new stand-alone composite model type,
 which will start by building and testing a [learning
-network](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/#Learning-Networks).
+network](https://JuliaAI.github.io/MLJ.jl/dev/learning_networks/#Learning-Networks).
 
 ````julia:ex10
 RidgeRegressor = @load RidgeRegressor pkg="MultivariateStats"
@@ -293,7 +293,7 @@ tuned_blended = TunedModel(
 ````
 
 For more tuning options, see [the
-docs](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/).
+docs](https://JuliaAI.github.io/MLJ.jl/dev/tuning_models/).
 
 Now `tuned_blended` is a "self-tuning" version of the original model, with all the
 necessary resampling occurring under the hood. You can think of wrapping a model in

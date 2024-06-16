@@ -2,7 +2,7 @@
 
 ## Learning by doing
 
-This website offers tutorials for [MLJ.jl](https://alan-turing-institute.github.io/MLJ.jl/dev/) and related packages. 
+This website offers tutorials for [MLJ.jl](https://JuliaAI.github.io/MLJ.jl/dev/) and related packages. 
 
 The code included on each tutorial is tested to work reliably
 under these two conditions:
@@ -97,7 +97,7 @@ If you are new to MLJ but are familiar with Julia and with Machine Learning, we 
 1. How to [create models](/getting-started/learning-networks-2/) from learning networks
 1. An extended tutorial on [stacking](/getting-started/stacking/)
 
-Additionally, you can refer to the [documentation](https://alan-turing-institute.github.io/MLJ.jl/stable/) for more detailed information.
+Additionally, you can refer to the [documentation](https://JuliaAI.github.io/MLJ.jl/stable/) for more detailed information.
 
 ## Introduction to Statistical Learning with MLJ
 

@@ -3,7 +3,7 @@
 Here are some useful resources for learning data science using Julia
 which are not part of Data Science Tutorials:
 
-- [The MLJ reference manual](https://alan-turing-institute.github.io/MLJ.jl/dev/).
+- [The MLJ reference manual](https://JuliaAI.github.io/MLJ.jl/dev/).
 
 - [MLCourse](https://github.com/jbrea/MLCourse): Teaching material for
   an introductory machine learning course at EPFL (for an interactive

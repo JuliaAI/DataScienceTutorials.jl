@@ -9,7 +9,7 @@ end;
 ````
 
 An application of the [MLJ
-toolbox](https://alan-turing-institute.github.io/MLJ.jl/dev/) to the
+toolbox](https://JuliaAI.github.io/MLJ.jl/dev/) to the
 Telco Customer Churn dataset, aimed at practicing data scientists
 new to MLJ (Machine Learning in Julia). This tutorial does not
 cover exploratory data analysis.
@@ -18,9 +18,9 @@ MLJ is a general machine learning toolbox (i.e., not just
 deep-learning).
 
 For other MLJ learning resources see the [Learning
-MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_mlj/)
+MLJ](https://JuliaAI.github.io/MLJ.jl/dev/learning_mlj/)
 section of the
-[manual](https://alan-turing-institute.github.io/MLJ.jl/dev/).
+[manual](https://JuliaAI.github.io/MLJ.jl/dev/).
 
 **Topics covered**: Grabbing and preparing a dataset, basic
 fit/predict workflow, constructing a pipeline to include data
@@ -94,7 +94,7 @@ introducing the main actors in any MLJ workflow. Details that you
 don't fully grasp should become clearer in the Telco study.
 
 This section is a condensed adaption of the [Getting Started
-example](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Fit-and-predict)
+example](https://JuliaAI.github.io/MLJ.jl/dev/getting_started/#Fit-and-predict)
 in the MLJ documentation.
 
 First, using the built-in iris dataset, we load and inspect the features
@@ -145,7 +145,7 @@ fitted_params(mach)
 ````
 
 A machine stores some other information enabling [warm
-restart](https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Warm-restarts)
+restart](https://JuliaAI.github.io/MLJ.jl/dev/machines/#Warm-restarts)
 for some models, but we won't go into that here. You are allowed to
 access and mutate the `model` parameter:
 
@@ -360,7 +360,7 @@ ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 *Introduces:* `@load`, `input_scitype`, `target_scitype`
 
 For tools helping us to identify suitable models, see the [Model
-Search](https://alan-turing-institute.github.io/MLJ.jl/dev/model_search/#model_search)
+Search](https://JuliaAI.github.io/MLJ.jl/dev/model_search/#model_search)
 section of the manual. We will build a gradient tree-boosting model,
 a popular first choice for structured data like we have here. Model
 code is contained in a third-party package called
@@ -428,7 +428,7 @@ pipe = ContinuousEncoder() |> booster
 
 Note that the component models appear as hyper-parameters of
 `pipe`. Pipelines are an implementation of a more general [model
-composition](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Composing-Models)
+composition](https://JuliaAI.github.io/MLJ.jl/dev/composing_models/#Composing-Models)
 interface provided by MLJ that advanced users may want to learn about.
 
 From the above display, we see that component model hyper-parameters
@@ -622,7 +622,7 @@ observation space, for a total of 18 folds) and set
 `acceleration=CPUThreads()` to parallelize the computation.
 
 We choose a `StratifiedCV` resampling strategy; the complete list of options is
-[here](https://alan-turing-institute.github.io/MLJ.jl/dev/evaluating_model_performance/#Built-in-resampling-strategies).
+[here](https://JuliaAI.github.io/MLJ.jl/dev/evaluating_model_performance/#Built-in-resampling-strategies).
 
 ````julia:ex49
 e_pipe = evaluate(pipe, X, y,
@@ -692,7 +692,7 @@ eg, the neural network models provided by
 [MLJFlux.jl](https://github.com/FluxML/MLJFlux.jl).
 
 First, we select appropriate controls from [this
-list](https://alan-turing-institute.github.io/MLJ.jl/dev/controlling_iterative_models/#Controls-provided):
+list](https://JuliaAI.github.io/MLJ.jl/dev/controlling_iterative_models/#Controls-provided):
 
 ````julia:ex51
 controls = [
@@ -751,7 +751,7 @@ here is the `learning_curve` function, which can be useful when
 wanting to visualize the effect of changes to a *single*
 hyper-parameter (which could be an iteration parameter). See, for
 example, [this section of the
-manual](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
+manual](https://JuliaAI.github.io/MLJ.jl/dev/learning_curves/)
 or [this
 tutorial](https://github.com/ablaom/MLJTutorial.jl/blob/dev/notebooks/04_tuning/notebook.ipynb).
 
@@ -791,7 +791,7 @@ Nominal ranges are defined by specifying `values` instead of `lower`
 and `upper`.
 
 Next, we choose an optimization strategy from [this
-list](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/#Tuning-Models):
+list](https://JuliaAI.github.io/MLJ.jl/dev/tuning_models/#Tuning-Models):
 
 ````julia:ex56
 tuning = RandomSearch(rng=rng)
@@ -880,7 +880,7 @@ savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")); # hide
 Here's how to serialize our final, trained self-iterating,
 self-tuning pipeline machine using Julia's native serializer (see
 [the
-manual](https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Saving-machines)
+manual](https://JuliaAI.github.io/MLJ.jl/dev/machines/#Saving-machines)
 for more options):
 
 ````julia:ex63
