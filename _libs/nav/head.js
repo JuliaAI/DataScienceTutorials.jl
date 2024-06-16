@@ -309,7 +309,7 @@ const navItems = [
         ]
       },
       {
-        name: "Exploring Generative Linear Models",
+        name: "Exploring Generalized Linear Models",
         href: "/end-to-end/glm/",
         tags: ["Pipelines", "Encoders", "Classification", "Regression"],
         ilos: [
