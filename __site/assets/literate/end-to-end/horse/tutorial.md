@@ -79,7 +79,7 @@ data; to facilitate the interpretation, we can use `autotype` from `ScientificTy
 By default, `autotype` will check all columns and suggest a Finite type assuming there
 are relatively few distinct values in the column.  More sophisticated rules can be
 passed, see
-[ScientificTypes.jl](https://JuliaAI.github.io/ScientificTypes.jl/dev/):
+[ScientificTypes.jl](https://alan-turing-institute.github.io/ScientificTypes.jl/dev/):
 
 ````julia:ex5
 coerce!(data, autotype(data));

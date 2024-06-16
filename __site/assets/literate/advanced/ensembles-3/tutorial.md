@@ -13,7 +13,7 @@ networks.
 
 Learning networks are an advanced MLJ feature which are covered in detail, with
 examples, in the [Learning
-networks](https://JuliaAI.github.io/MLJ.jl/dev/learning_networks/) section
+networks](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/) section
 of the manual. In the "Ensemble" and "Ensemble (2)" tutorials it is shown how to create
 and apply homogeneous ensembles using MLJ's built-in `EnsembleModel` wrapper. To provide
 a simple illustration of learning networks we show how a user could build their own
@@ -24,7 +24,7 @@ selection of features in each split of a decision tree).
 For a more advanced illustration, see the "Stacking" tutorial.
 
 Some familiarity with the early parts of [Learning networks by
-example](https://JuliaAI.github.io/MLJ.jl/dev/learning_networks/#Learning-networks-by-example)
+example](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_networks/#Learning-networks-by-example)
 will be helpful, but is not essential.
 
 @@dropdown

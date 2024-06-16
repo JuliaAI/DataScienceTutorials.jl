@@ -103,7 +103,7 @@ nnregressor = MLJFlux.NeuralNetworkRegressor(builder=myregressor, epochs=10)
 ````
 
 Other parameters that NeuralNetworkRegressor takes can be found here:
-https://github.com/JuliaAI/MLJFlux.jl#model-hyperparameters
+https://github.com/alan-turing-institute/MLJFlux.jl#model-hyperparameters
 
 `nnregressor` now acts like any other MLJ model. Let's try wrapping it in a
 MLJ machine and calling `fit!, predict`.

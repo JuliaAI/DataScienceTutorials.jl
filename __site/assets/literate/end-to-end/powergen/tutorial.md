@@ -138,7 +138,7 @@ schema(data)
 ````
 
 It is important that the scientific type of the variables corresponds to one of the types allowed for use with the models you are planning to use.
-(For more guidance on this, see the [Scientific Type](https://JuliaAI.github.io/DataScienceTutorials.jl/data/scitype/) tutorial.
+(For more guidance on this, see the [Scientific Type](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/) tutorial.
 The scientific type of both `Wind_gen` and `Solar_gen` is currently `Count`. Let's coerce them to `Continuous`.
 
 ````julia:ex13

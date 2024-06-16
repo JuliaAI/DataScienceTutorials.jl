@@ -2,260 +2,260 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/search/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/creditfraud/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-2/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/breastcancer/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/info/how-to-run-code/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/advanced/ensembles-3/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/advanced/AMES/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/telco/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/airfoil/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/data/loading/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles-2/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-9/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-5/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/info/external-resources/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/powergen/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/composing-models/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/old-index/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/AMES/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-4/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/data/categorical/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/categorical/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-2/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/model-tuning/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/telco/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/ensembles/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/info/end-to-end/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/info/isl/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/advanced/ensembles-3/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-3/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-10/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-10/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/info/external-resources/index.html</loc>
-    <lastmod>2024-04-12</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/data/scitype/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-8/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/wine/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/advanced/stacking/index.html</loc>
-    <lastmod>2024-04-23</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/info/data/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-9/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/glm/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/search/index.html</loc>
-    <lastmod>2024-01-31</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-5/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/airfoil/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-8/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/composing-models/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/info/end-to-end/index.html</loc>
-    <lastmod>2024-04-12</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/ensembles/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/advanced/stacking/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/old-index/index.html</loc>
-    <lastmod>2024-02-23</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/advanced/breastcancer/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/glm/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-6b/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/info/how-to-run-code/index.html</loc>
-    <lastmod>2024-04-09</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/isl/lab-3/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/processing/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/data/processing/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/info/data/index.html</loc>
-    <lastmod>2024-04-12</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/getting-started/ensembles-2/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-4/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/powergen/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/wine/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/data/dataframe/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/isl/lab-6b/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/info/getting-started/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/info/isl/index.html</loc>
-    <lastmod>2024-04-12</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/horse/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/info/getting-started/index.html</loc>
-    <lastmod>2024-04-12</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/loading/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/HouseKingCounty/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
-    <loc>https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/HouseKingCounty/index.html</loc>
-    <lastmod>2024-04-15</lastmod>
+    <loc>https://JuliaAI.github.io/DataScienceTutorials.jl/end-to-end/creditfraud/index.html</loc>
+    <lastmod>2024-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>

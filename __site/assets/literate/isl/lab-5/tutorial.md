@@ -30,6 +30,10 @@ Note the use of `rng=` to seed the shuffling of indices so that the results are 
 @@
 @@dropdown-content
 
+This tutorial introduces polynomial regression in a very hands-on way. A more
+programmatic alternative is to use MLJ's `InteractionTransformer`. Run
+`doc("InteractionTransformer")` for details.
+
 ````julia:ex3
 LR = @load LinearRegressor pkg=MLJLinearModels
 ````
