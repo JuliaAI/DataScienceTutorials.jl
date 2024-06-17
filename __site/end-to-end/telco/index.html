@@ -252,8 +252,8 @@ DecisionTreeClassifier(
 <pre><code class="language-julia">mach &#61; machine&#40;model, X_iris, y_iris&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @078 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @085 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @929 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @768 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>A machine is essentially just a model &#40;ie, hyper-parameters&#41; plus data, but it additionally stores <em>learned parameters</em> &#40;the tree&#41; once it is trained on some view of the data:</p>
 <pre><code class="language-julia">train_rows &#61; vcat&#40;1:60, 91:150&#41;; # some row indices &#40;observations are rows not columns&#41;
@@ -271,8 +271,8 @@ Depth:  3,
 fit&#33;&#40;mach, rows&#61;train_rows&#41; # re-train with new hyper-parameter</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @078 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @085 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @929 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @768 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>Now we can make predictions on some other view of the data, as in</p>
 <pre><code class="language-julia">predict&#40;mach, rows&#61;71:73&#41;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float64}:
@@ -434,12 +434,13 @@ EvoTrees.EvoTreeClassifier</code></pre>
 <pre><code class="language-julia">scitype&#40;X&#41; &lt;: input_scitype&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
 <p>The majority of MLJ supervised models expects all features to be <code>Continuous</code> &#40;and this used to be true for an earlier version of the EvoTrees.jl models.&#41;. For the sake of illustration, we will pretend this is true here, and introduce our own categorical feature encoding, discussed next.</p>
 <p>To see a list of all models that directly support the data &#40;<code>X</code>, <code>y</code>&#41; we can do this:</p>
-<pre><code class="language-julia">models&#40;matching&#40;X, y&#41;&#41;</code></pre><pre><code class="plaintext code-output">6-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+<pre><code class="language-julia">models&#40;matching&#40;X, y&#41;&#41;</code></pre><pre><code class="plaintext code-output">7-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :constructor, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
  (name = CatBoostClassifier, package_name = CatBoost, ... )
  (name = ConstantClassifier, package_name = MLJModels, ... )
  (name = DecisionTreeClassifier, package_name = BetaML, ... )
  (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
  (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = LinearBinaryClassifier, package_name = GLM, ... )
  (name = RandomForestClassifier, package_name = BetaML, ... )</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="building_a_model_pipeline_to_incorporate_feature_encoding"><a href="#building_a_model_pipeline_to_incorporate_feature_encoding" class="header-anchor">Building a model pipeline to incorporate feature encoding</a></h2></div>
@@ -484,16 +485,16 @@ EvoTrees.EvoTreeClassifier</code></pre>
 <pre><code class="language-julia">mach_pipe &#61; machine&#40;pipe, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @146 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @001 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @114 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @594 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We already encountered the <code>partition</code> method above. Here we apply it to row indices, instead of data containers, as <code>fit&#33;</code> and <code>predict</code> only need a <em>view</em> of the data to work.</p>
 <pre><code class="language-julia">train, validation &#61; partition&#40;1:length&#40;y&#41;, 0.7&#41;
 fit&#33;&#40;mach_pipe, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @146 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @001 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @114 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @594 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We note in passing that we can access two kinds of information from a trained machine:</p>
 <ul>
@@ -517,41 +518,53 @@ keys&#40;rpt.continuous_encoder&#41;</code></pre><pre><code class="plaintext cod
 </code></pre>
 <p>Another example of information sometimes appearing in a report is feature importances. However, for models supporting feature importances, they are always available directly.</p>
 <pre><code class="language-julia">reports_feature_importances&#40;pipe&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
-<p>This hods because the supervised component of our pipeline supports feature imporances:</p>
+<pre><code class="language-julia">Pkg.status&#40;&#41;</code></pre><pre><code class="plaintext code-output">Status `~/GoogleDrive/Julia/MLJ/DataScienceTutorials/_literate/end-to-end/telco/Project.toml`
+  [a93c6f00] DataFrames v1.6.1
+  [7806a523] DecisionTree v0.12.4
+  [31c24e10] Distributions v0.25.109
+  [f6006082] EvoTrees v0.16.7
+  [add582a8] MLJ v0.20.6
+  [a7f614a8] MLJBase v1.4.0
+  [c6f25543] MLJDecisionTreeInterface v0.4.2
+  [1b6a4a23] MLJMultivariateStatsInterface v0.5.3
+  [91a5bcdd] Plots v1.40.4
+  [9a3f8284] Random
+</code></pre>
+<p>This holds because the supervised component of our pipeline supports feature importances:</p>
 <pre><code class="language-julia">reports_feature_importances&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
 <p>And we can get the booster feature imporances from the pipeline&#39;s machine like this:</p>
 <pre><code class="language-julia">fi &#61; feature_importances&#40;mach_pipe&#41;</code></pre><pre><code class="plaintext code-output">45-element Vector{Pair{String, Float64}}:
-                           "MonthlyCharges" => 0.23890620397780693
-                 "Contract__Month-to-month" => 0.16232294017366128
-                                   "tenure" => 0.14677468271414487
-                             "TotalCharges" => 0.14666498887062815
-                              "Partner__No" => 0.030441338887616125
-                           "gender__Female" => 0.025860497369449408
-                         "OnlineBackup__No" => 0.02429973594776889
-                            "SeniorCitizen" => 0.02280229847728747
-              "PaymentMethod__Mailed check" => 0.021532534564569515
-                       "OnlineSecurity__No" => 0.020133018731836205
-                         "PhoneService__No" => 0.019949239825781787
-          "PaymentMethod__Electronic check" => 0.01961386975819213
-             "InternetService__Fiber optic" => 0.017100914240200632
-   "PaymentMethod__Credit card (automatic)" => 0.011909647547861155
-                          "TechSupport__No" => 0.010733145346455301
-                        "MultipleLines__No" => 0.010086976225836241
-                     "PaperlessBilling__No" => 0.009436345245643721
- "PaymentMethod__Bank transfer (automatic)" => 0.008216871611061341
-                     "DeviceProtection__No" => 0.008179337485642653
-                       "MultipleLines__Yes" => 0.006695659965183687
-                          "StreamingTV__No" => 0.006085178170408352
-                         "TechSupport__Yes" => 0.005732885135908142
-                       "Contract__Two year" => 0.005648160146719028
-                           "Dependents__No" => 0.005287736529475009
-                       "Contract__One year" => 0.003658289499817456
-                      "StreamingMovies__No" => 0.003337851338772692
-                        "OnlineBackup__Yes" => 0.003151342690951195
-                      "OnlineSecurity__Yes" => 0.0028559465736072835
-                     "InternetService__DSL" => 0.002203034197860801
-                    "DeviceProtection__Yes" => 0.00028647965126901834
-                         "StreamingTV__Yes" => 9.284909858362434e-5
+                           "MonthlyCharges" => 0.23890620397780685
+                 "Contract__Month-to-month" => 0.16232294017366125
+                                   "tenure" => 0.14677468271414482
+                             "TotalCharges" => 0.14666498887062812
+                              "Partner__No" => 0.030441338887616118
+                           "gender__Female" => 0.025860497369449405
+                         "OnlineBackup__No" => 0.024299735947768884
+                            "SeniorCitizen" => 0.02280229847728746
+              "PaymentMethod__Mailed check" => 0.02153253456456951
+                       "OnlineSecurity__No" => 0.020133018731836202
+                         "PhoneService__No" => 0.019949239825781784
+          "PaymentMethod__Electronic check" => 0.019613869758192123
+             "InternetService__Fiber optic" => 0.01710091424020063
+   "PaymentMethod__Credit card (automatic)" => 0.011909647547861153
+                          "TechSupport__No" => 0.0107331453464553
+                        "MultipleLines__No" => 0.01008697622583624
+                     "PaperlessBilling__No" => 0.00943634524564372
+ "PaymentMethod__Bank transfer (automatic)" => 0.00821687161106134
+                     "DeviceProtection__No" => 0.008179337485642651
+                       "MultipleLines__Yes" => 0.006695659965183685
+                          "StreamingTV__No" => 0.006085178170408351
+                         "TechSupport__Yes" => 0.00573288513590814
+                       "Contract__Two year" => 0.005648160146719027
+                           "Dependents__No" => 0.0052877365294750085
+                       "Contract__One year" => 0.003658289499817455
+                      "StreamingMovies__No" => 0.003337851338772691
+                        "OnlineBackup__Yes" => 0.003151342690951194
+                      "OnlineSecurity__Yes" => 0.0028559465736072826
+                     "InternetService__DSL" => 0.0022030341978608006
+                    "DeviceProtection__Yes" => 0.0002864796512690182
+                         "StreamingTV__Yes" => 9.284909858362433e-5
       "OnlineSecurity__No internet service" => 0.0
                           "Dependents__Yes" => 0.0
                              "Partner__Yes" => 0.0
@@ -601,7 +614,6 @@ plt &#61; scatter&#40;roc, legend&#61;false&#41;
 plot&#33;&#40;plt, xlab&#61;&quot;false positive rate&quot;, ylab&#61;&quot;true positive rate&quot;&#41;
 plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black&#41;</code></pre>
 <img src="/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
-<p>&#40;Warning here is a <a href="https://github.com/Evovest/EvoTrees.jl/issues/267">minor bug</a>.&#41;</p>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="automated_performance_evaluation_more_typical_workflow"><a href="#automated_performance_evaluation_more_typical_workflow" class="header-anchor">Automated performance evaluation &#40;more typical workflow&#41;</a></h3></div>
 <div class="dropdown-content"><p>We can also get performance estimates with a single call to the <code>evaluate</code> function, which also allows for more complicated resampling - in this case stratified cross-validation. To make this more comprehensive, we set <code>repeats&#61;3</code> below to make our cross-validation &quot;Monte Carlo&quot; &#40;3 random size-6 partitions of the observation space, for a total of 18 folds&#41; and set <code>acceleration&#61;CPUThreads&#40;&#41;</code> to parallelize the computation.</p>
@@ -611,17 +623,25 @@ plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:da
                   measures&#61;&#91;brier_loss, auc, accuracy&#93;,
                   repeats&#61;3,
                   acceleration&#61;CPUThreads&#40;&#41;&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬──────────────┬─────────────┬─────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                                                                                                             │
-├──────────────────┼──────────────┼─────────────┼─────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ BrierLoss()      │ predict      │ 0.36        │ 0.0305  │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │
-│ AreaUnderCurve() │ predict      │ 0.79        │ 0.0227  │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │
-│ Accuracy()       │ predict_mode │ 0.759       │ 0.0213  │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │
-└──────────────────┴──────────────┴─────────────┴─────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───┬──────────────────┬──────────────┬─────────────┐
+│   │ measure          │ operation    │ measurement │
+├───┼──────────────────┼──────────────┼─────────────┤
+│ A │ BrierLoss()      │ predict      │ 0.36        │
+│ B │ AreaUnderCurve() │ predict      │ 0.79        │
+│ C │ Accuracy()       │ predict_mode │ 0.759       │
+└───┴──────────────────┴──────────────┴─────────────┘
+┌───┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                                                                                                             │ 1.96*SE │
+├───┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │ 0.0305  │
+│ B │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │ 0.0227  │
+│ C │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │ 0.0213  │
+└───┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>&#40;There is also a version of <code>evaluate</code> for machines. Query the <code>evaluate</code> and <code>evaluate&#33;</code> doc-strings to learn more about these functions and what the <code>PerformanceEvaluation</code> object <code>e_pipe</code> records.&#41;</p>
 <p>While <a href="https://arxiv.org/abs/2104.00673">less than ideal</a>, let&#39;s adopt the common practice of using the standard error of a cross-validation score as an estimate of the uncertainty of a performance measure&#39;s expected value. To get a 95&#37; confidence interval based on this error, use &quot;measurement ± delta&quot; where &quot;delta&quot; is the number in the &quot;1.96*SE&quot; column.</p>
@@ -629,7 +649,7 @@ Extract:
 <p>‎</p></div>
 <div class="dropdown"><h2 id="filtering_out_unimportant_features"><a href="#filtering_out_unimportant_features" class="header-anchor">Filtering out unimportant features</a></h2></div>
 <div class="dropdown-content"><p><em>Introduces:</em> <code>FeatureSelector</code></p>
-<p>Before continuing, we&#39;ll modify our pipeline to drop those features with low feature importance, to speed up later optimization:</p>
+<p>Before continuing, we&#39;ll modify our pipeline to drop those features with low feature importance, to speed up later optimization. For a more sophisticated alternative, you may want to try MLJ&#39;s <code>RecursiveFeatureSelection</code> model wrapper. Run <code>doc&#40;&quot;RecursiveFeatureElimination&quot;&#41;</code> for details.</p>
 <pre><code class="language-julia">unimportant_features &#61; filter&#40;:importance &#61;&gt; &lt;&#40;0.005&#41;, feature_importance_table&#41;.feature
 
 pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
@@ -653,7 +673,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
         nbins = 64, 
         alpha = 0.5, 
         tree_type = "binary", 
-        rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
+        rng = Random.MersenneTwister(123, (0, 234468, 233466, 919))), 
   cache = true)</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="wrapping_our_iterative_model_in_control_strategies"><a href="#wrapping_our_iterative_model_in_control_strategies" class="header-anchor">Wrapping our iterative model in control strategies</a></h2></div>
@@ -692,7 +712,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
  - nbins: 64
  - alpha: 0.5
  - tree_type: binary
- - rng: Random.MersenneTwister(123, (0, 234468, 233466, 775))
+ - rng: Random.MersenneTwister(123, (0, 234468, 233466, 919))
 , 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
@@ -703,7 +723,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
   measure = BrierLoss(), 
   weights = nothing, 
   class_weights = nothing, 
-  operation = MLJModelInterface.predict, 
+  operation = nothing, 
   retrain = false, 
   check_measure = true, 
   iteration_parameter = nothing, 
@@ -747,7 +767,7 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
               nbins = 64, 
               alpha = 0.5, 
               tree_type = "binary", 
-              rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
+              rng = Random.MersenneTwister(123, (0, 234468, 233466, 919))), 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
   resampling = Holdout(
@@ -757,7 +777,7 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
   measure = BrierLoss(), 
   weights = nothing, 
   class_weights = nothing, 
-  operation = MLJModelInterface.predict, 
+  operation = nothing, 
   retrain = false, 
   check_measure = true, 
   iteration_parameter = nothing, 
@@ -790,7 +810,7 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
         measure = BrierLoss(), 
         weights = nothing, 
         class_weights = nothing, 
-        operation = MLJModelInterface.predict, 
+        operation = nothing, 
         retrain = false, 
         check_measure = true, 
         iteration_parameter = nothing, 
@@ -813,18 +833,20 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
   train_best = true, 
   repeats = 1, 
   n = 40, 
-  acceleration = ComputationalResources.CPUThreads{Int64}(1), 
+  acceleration = ComputationalResources.CPUThreads{Int64}(12), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
-  cache = true)</code></pre>
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)</code></pre>
 <p>To save time, we skip the <code>repeats</code> here.</p>
 <p>Binding our final model to data and training:</p>
 <pre><code class="language-julia">mach_tuned_iterated_pipe &#61; machine&#40;tuned_iterated_pipe, X, y&#41;
 fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
-    1:	Source @787 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @402 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @068 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @340 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>As explained above, the training we have just performed was split internally into two separate steps:</p>
 <ul>
@@ -843,24 +865,31 @@ print&#40;
     &quot;  eta:         &quot;, best_booster.eta
 &#41;</code></pre><pre><code class="plaintext code-output">Optimal hyper-parameters: 
   max_depth: 3
-  eta:         0.06363819027728988</code></pre>
+  eta:         0.21339382422195247</code></pre>
 <pre><code class="language-julia">e_best &#61; rpt2.best_history_entry
-e_best.evaluation</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+e_best.evaluation</code></pre><pre><code class="plaintext code-output">CompactPerformanceEvaluation object with these fields:
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬──────────────┬─────────────┬─────────┬───────────────────────────────────────────────────┐
-│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                          │
-├──────────────────┼──────────────┼─────────────┼─────────┼───────────────────────────────────────────────────┤
-│ BrierLoss()      │ predict      │ 0.278       │ 0.0195  │ Float32[0.245, 0.294, 0.293, 0.278, 0.259, 0.301] │
-│ AreaUnderCurve() │ predict      │ 0.836       │ 0.0214  │ [0.87, 0.814, 0.818, 0.833, 0.862, 0.818]         │
-│ Accuracy()       │ predict_mode │ 0.789       │ 0.0261  │ [0.807, 0.744, 0.793, 0.793, 0.829, 0.768]        │
-└──────────────────┴──────────────┴─────────────┴─────────┴───────────────────────────────────────────────────┘
+┌───┬──────────────────┬──────────────┬─────────────┐
+│   │ measure          │ operation    │ measurement │
+├───┼──────────────────┼──────────────┼─────────────┤
+│ A │ BrierLoss()      │ predict      │ 0.286       │
+│ B │ AreaUnderCurve() │ predict      │ 0.82        │
+│ C │ Accuracy()       │ predict_mode │ 0.801       │
+└───┴──────────────────┴──────────────┴─────────────┘
+┌───┬───────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                      │ 1.96*SE │
+├───┼───────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.312, 0.3, 0.282, 0.235, 0.3, 0.289] │ 0.024   │
+│ B │ [0.769, 0.798, 0.829, 0.894, 0.798, 0.834]    │ 0.0379  │
+│ C │ [0.783, 0.817, 0.793, 0.854, 0.756, 0.805]    │ 0.0289  │
+└───┴───────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>Digging a little deeper, we can learn what stopping criterion was applied in the case of the optimal model, and how many iterations were required:</p>
 <pre><code class="language-julia">rpt2.best_report.controls |&gt; collect</code></pre><pre><code class="plaintext code-output">4-element Vector{Tuple{Any, NamedTuple}}:
- (IterationControl.Step(1), (new_iterations = 54,))
+ (IterationControl.Step(1), (new_iterations = 14,))
  (EarlyStopping.NumberSinceBest(4), (done = true, log = "Stop triggered by EarlyStopping.NumberSinceBest(4) stopping criterion. "))
  (EarlyStopping.TimeLimit(Dates.Millisecond(2000)), (done = false, log = ""))
  (EarlyStopping.InvalidValue(), (done = false, log = ""))</code></pre>
@@ -871,7 +900,8 @@ Extract:
 <div class="dropdown"><h2 id="saving_our_model"><a href="#saving_our_model" class="header-anchor">Saving our model</a></h2></div>
 <div class="dropdown-content"><p><em>Introduces:</em> <code>MLJ.save</code></p>
 <p>Here&#39;s how to serialize our final, trained self-iterating, self-tuning pipeline machine using Julia&#39;s native serializer &#40;see <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Saving-machines">the manual</a> for more options&#41;:</p>
-<pre><code class="language-julia">MLJ.save&#40;&quot;tuned_iterated_pipe.jls&quot;, mach_tuned_iterated_pipe&#41;</code></pre>
+<pre><code class="language-julia">FILE &#61; joinpath&#40;tempdir&#40;&#41;, &quot;tuned_iterated_pipe.jls&quot;&#41;
+MLJ.save&#40;FILE, mach_tuned_iterated_pipe&#41;</code></pre>
 <p>We&#39;ll deserialize this in &quot;Testing the final model&quot; below.</p>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="final_performance_estimate"><a href="#final_performance_estimate" class="header-anchor">Final performance estimate</a></h2></div>
@@ -879,42 +909,58 @@ Extract:
 <pre><code class="language-julia">e_tuned_iterated_pipe &#61; evaluate&#40;tuned_iterated_pipe, X, y,
                                  resampling&#61;StratifiedCV&#40;nfolds&#61;6, rng&#61;rng&#41;,
                                  measures&#61;&#91;brier_loss, auc, accuracy&#93;&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬──────────────┬─────────────┬─────────┬───────────────────────────────────────────────────┐
-│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                          │
-├──────────────────┼──────────────┼─────────────┼─────────┼───────────────────────────────────────────────────┤
-│ BrierLoss()      │ predict      │ 0.295       │ 0.0404  │ Float32[0.295, 0.258, 0.325, 0.371, 0.252, 0.266] │
-│ AreaUnderCurve() │ predict      │ 0.825       │ 0.0507  │ [0.81, 0.874, 0.803, 0.727, 0.878, 0.861]         │
-│ Accuracy()       │ predict_mode │ 0.781       │ 0.034   │ [0.795, 0.829, 0.756, 0.72, 0.805, 0.78]          │
-└──────────────────┴──────────────┴─────────────┴─────────┴───────────────────────────────────────────────────┘
+┌───┬──────────────────┬──────────────┬─────────────┐
+│   │ measure          │ operation    │ measurement │
+├───┼──────────────────┼──────────────┼─────────────┤
+│ A │ BrierLoss()      │ predict      │ 0.287       │
+│ B │ AreaUnderCurve() │ predict      │ 0.839       │
+│ C │ Accuracy()       │ predict_mode │ 0.791       │
+└───┴──────────────────┴──────────────┴─────────────┘
+┌───┬───────────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                          │ 1.96*SE │
+├───┼───────────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.289, 0.254, 0.308, 0.356, 0.252, 0.265] │ 0.0351  │
+│ B │ [0.836, 0.874, 0.822, 0.757, 0.876, 0.869]        │ 0.0403  │
+│ C │ [0.759, 0.829, 0.793, 0.744, 0.817, 0.805]        │ 0.0293  │
+└───┴───────────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>For comparison, here again is the evaluation for the basic pipeline model &#40;no feature selection and default hyperparameters&#41;:</p>
 <pre><code class="language-julia">e_pipe</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────┬──────────────┬─────────────┬─────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ measure          │ operation    │ measurement │ 1.96*SE │ per_fold                                                                                                                             │
-├──────────────────┼──────────────┼─────────────┼─────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ BrierLoss()      │ predict      │ 0.36        │ 0.0305  │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │
-│ AreaUnderCurve() │ predict      │ 0.79        │ 0.0227  │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │
-│ Accuracy()       │ predict_mode │ 0.759       │ 0.0213  │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │
-└──────────────────┴──────────────┴─────────────┴─────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌───┬──────────────────┬──────────────┬─────────────┐
+│   │ measure          │ operation    │ measurement │
+├───┼──────────────────┼──────────────┼─────────────┤
+│ A │ BrierLoss()      │ predict      │ 0.36        │
+│ B │ AreaUnderCurve() │ predict      │ 0.79        │
+│ C │ Accuracy()       │ predict_mode │ 0.759       │
+└───┴──────────────────┴──────────────┴─────────────┘
+┌───┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                                                                                                             │ 1.96*SE │
+├───┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │ 0.0305  │
+│ B │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │ 0.0227  │
+│ C │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │ 0.0213  │
+└───┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>Tuning appears to improve all three scores &#40;not just the Brier loss used in optimization&#41;. However, 95&#37; confidence intervals, based on the standard errors, suggest we are not detecting statistically significant differences for <code>auc</code> and <code>accuracy</code>. In any case, the default <code>booster</code> hyper-parameters do a pretty good job. But it would definitely be worth revisiting this in the case we use all the data.</p></div>
 <div class="dropdown"><h2 id="testing_the_final_model"><a href="#testing_the_final_model" class="header-anchor">Testing the final model</a></h2></div>
 <div class="dropdown-content"><p>We now determine the performance of our model on our lock-and-throw-away-the-key holdout set. To demonstrate deserialization, we&#39;ll pretend we&#39;re in a new Julia session &#40;but have called import/using on the same packages&#41;. Then the following should suffice to recover our model trained under &quot;Hyper-parameter optimization&quot; above:</p>
-<pre><code class="language-julia">mach_restored &#61; machine&#40;&quot;tuned_iterated_pipe.jls&quot;&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
+<pre><code class="language-julia">mach_restored &#61; machine&#40;FILE&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
 </code></pre>
 <p>We compute predictions on the holdout set:</p>
 <pre><code class="language-julia">ŷ_tuned &#61; predict&#40;mach_restored, Xtest&#41;;
-ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.712, Yes=>0.288)</code></pre>
+ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.655, Yes=>0.345)</code></pre>
 <p>And can compute the final performance measures:</p>
 <pre><code class="language-julia">print&#40;
     &quot;Tuned model measurements on test:\n&quot;,
@@ -922,8 +968,8 @@ ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">Univar
     &quot;  auc:        &quot;, auc&#40;ŷ_tuned, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_tuned&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Tuned model measurements on test:
-  brier loss: 0.2760039
-  auc:        0.8487327188940093
+  brier loss: 0.27469411
+  auc:        0.851094470046083
   accuracy:   0.7914691943127962</code></pre>
 <p>For comparison, here&#39;s the performance for the basic pipeline model</p>
 <pre><code class="language-julia">mach_basic &#61; machine&#40;pipe, X, y&#41;
@@ -937,7 +983,7 @@ print&#40;
     &quot;  auc:        &quot;, auc&#40;ŷ_basic, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_basic&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Basic model measurements on test set:
-  brier loss: 0.3314106
+  brier loss: 0.33141056
   auc:        0.8130184331797236
   accuracy:   0.7725118483412322</code></pre>
 <p>‎</p></div>
@@ -954,7 +1000,7 @@ print&#40;
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

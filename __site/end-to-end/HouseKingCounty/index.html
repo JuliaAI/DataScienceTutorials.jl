@@ -361,7 +361,7 @@ tree &#61; machine&#40;DTR&#40;&#41;, X, y&#41;
 fit&#33;&#40;tree, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.87448003287824</code></pre>
+<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.64505965923362</code></pre>
 <p>Let&#39;s try to do better.</p>
 <div class="dropdown"><h3 id="random_forest_model"><a href="#random_forest_model" class="header-anchor">Random forest model</a></h3></div>
 <div class="dropdown-content"><p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -374,7 +374,7 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">135.73747680719234</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">136.45143371671338</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
@@ -386,7 +386,7 @@ Extract:
 ┌────────────────────────┬───────────┬─────────────┬─────────┬────────────────────────────────────────────┐
 │ measure                │ operation │ measurement │ 1.96*SE │ per_fold                                   │
 ├────────────────────────┼───────────┼─────────────┼─────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError() │ predict   │ 135.0       │ 7.69    │ [139.0, 120.0, 134.0, 144.0, 141.0, 130.0] │
+│ RootMeanSquaredError() │ predict   │ 137.0       │ 4.46    │ [136.0, 134.0, 130.0, 139.0, 135.0, 145.0] │
 └────────────────────────┴───────────┴─────────────┴─────────┴────────────────────────────────────────────┘
 </code></pre>
 <p>‎</p></div>
@@ -412,7 +412,7 @@ r2 &#61; range&#40;xgb, :num_round, lower&#61;1, upper&#61;25&#41;;</code></pre>
 mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">138.2074527822519</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">138.20745278225192</code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
 

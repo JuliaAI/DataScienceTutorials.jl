@@ -1,7 +1,7 @@
 # This file was generated, do not modify it.
 
 using Pkg # hideall
-Pkg.activate("_literate/end-to-end/telco/Project.toml")
+Pkg.activate("_literate/end-to-end/telco")
 Pkg.instantiate()
 macro OUTPUT()
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
@@ -115,6 +115,8 @@ join(string.(rpt.continuous_encoder.new_features), ", ") |> println
 
 reports_feature_importances(pipe)
 
+Pkg.status()
+
 reports_feature_importances(booster)
 
 fi = feature_importances(mach_pipe)
@@ -208,7 +210,8 @@ plot(mach_tuned_iterated_pipe, size=(600,450))
 
 savefig(joinpath(@OUTPUT, "EX-telco-tuning.svg")); # hide
 
-MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
+FILE = joinpath(tempdir(), "tuned_iterated_pipe.jls")
+MLJ.save(FILE, mach_tuned_iterated_pipe)
 
 e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
                                  resampling=StratifiedCV(nfolds=6, rng=rng),
@@ -216,7 +219,7 @@ e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
 
 e_pipe
 
-mach_restored = machine("tuned_iterated_pipe.jls")
+mach_restored = machine(FILE)
 
 ŷ_tuned = predict(mach_restored, Xtest);
 ŷ_tuned[1]
@@ -240,4 +243,4 @@ print(
     "  accuracy:   ", accuracy(mode.(ŷ_basic), ytest)
 )
 
-rm("tuned_iterated_pipe.jls") # hide
+rm(FILE) # hide

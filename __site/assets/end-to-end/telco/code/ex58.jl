@@ -1,3 +1,8 @@
 # This file was generated, do not modify it. # hide
-mach_tuned_iterated_pipe = machine(tuned_iterated_pipe, X, y)
-fit!(mach_tuned_iterated_pipe)
+tuned_iterated_pipe = TunedModel(model=iterated_pipe,
+                                 range=[r1, r2],
+                                 tuning=tuning,
+                                 measures=[brier_loss, auc, accuracy],
+                                 resampling=StratifiedCV(nfolds=6, rng=rng),
+                                 acceleration=CPUThreads(),
+                                 n=40)

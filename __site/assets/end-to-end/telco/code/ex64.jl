@@ -1,4 +1,3 @@
 # This file was generated, do not modify it. # hide
-e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
-                                 resampling=StratifiedCV(nfolds=6, rng=rng),
-                                 measures=[brier_loss, auc, accuracy])
+FILE = joinpath(tempdir(), "tuned_iterated_pipe.jls")
+MLJ.save(FILE, mach_tuned_iterated_pipe)

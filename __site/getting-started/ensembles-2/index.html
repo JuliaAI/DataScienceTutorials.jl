@@ -302,8 +302,8 @@ Extract:
 ┌──────────────────────────────────────┬───────────┬─────────────┬──────────┐
 │ measure                              │ operation │ measurement │ per_fold │
 ├──────────────────────────────────────┼───────────┼─────────────┼──────────┤
-│ RootMeanSquaredError()               │ predict   │ 3.94        │ [3.94]   │
-│ RootMeanSquaredLogProportionalError( │ predict   │ 0.252       │ [0.252]  │
+│ RootMeanSquaredError()               │ predict   │ 3.96        │ [3.96]   │
+│ RootMeanSquaredLogProportionalError( │ predict   │ 0.249       │ [0.249]  │
 │   offset = 1)                        │           │             │          │
 └──────────────────────────────────────┴───────────┴─────────────┴──────────┘
 </code></pre>
@@ -315,7 +315,7 @@ Extract:
 <p>Even though we&#39;ve only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around <code>0.75</code> work well.</p>
 <p>Now that the machine <code>m</code> is trained, you can use use it for predictions &#40;implicitly, this will use the best model&#41;. For instance we could look at predictions on the whole dataset:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;m, X&#41;
-@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.4033460038774233
+@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.393525853933367
 </code></pre>
 <p>‎</p></div>
 <p>‎</p></div>

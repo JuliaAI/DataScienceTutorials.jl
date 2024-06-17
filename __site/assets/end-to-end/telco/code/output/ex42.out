@@ -1,0 +1,11 @@
+Status `~/GoogleDrive/Julia/MLJ/DataScienceTutorials/_literate/end-to-end/telco/Project.toml`
+  [a93c6f00] DataFrames v1.6.1
+  [7806a523] DecisionTree v0.12.4
+  [31c24e10] Distributions v0.25.109
+  [f6006082] EvoTrees v0.16.7
+  [add582a8] MLJ v0.20.6
+  [a7f614a8] MLJBase v1.4.0
+  [c6f25543] MLJDecisionTreeInterface v0.4.2
+  [1b6a4a23] MLJMultivariateStatsInterface v0.5.3
+  [91a5bcdd] Plots v1.40.4
+  [9a3f8284] Random

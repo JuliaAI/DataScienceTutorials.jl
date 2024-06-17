@@ -241,8 +241,8 @@ W &#61; MLJ.transform&#40;pca, X&#41;;</code></pre><pre><code class="plaintext c
 <p>Let&#39;s inspect the fit:</p>
 <pre><code class="language-julia">r &#61; report&#40;pca&#41;
 cumsum&#40;r.principalvars ./ r.tvar&#41;</code></pre><pre><code class="plaintext code-output">4-element Vector{Float64}:
- 0.9655342205668824
- 0.9933515571990574
+ 0.9655342205668822
+ 0.9933515571990573
  0.9991510921213993
  1.0</code></pre>
 <p>In the second line we look at the explained variance with 1 then 2 PCA features and it seems that with 2 we almost completely recover all of the variance.</p>
@@ -278,12 +278,12 @@ names&#40;W&#41;</code></pre><pre><code class="plaintext code-output">6-element 
 <p>What kind of variance can we explain?</p>
 <pre><code class="language-julia">rpca &#61; report&#40;spca&#41;.pca
 cs &#61; cumsum&#40;rpca.principalvars ./ rpca.tvar&#41;</code></pre><pre><code class="plaintext code-output">6-element Vector{Float64}:
- 0.41746967484847325
- 0.723307481220977
- 0.9436456234171873
- 0.9997505816044252
- 0.9998956501446639
- 1.0000000000000002</code></pre>
+ 0.41746967484847314
+ 0.7233074812209768
+ 0.943645623417187
+ 0.9997505816044248
+ 0.9998956501446636
+ 0.9999999999999998</code></pre>
 <p>Let&#39;s visualise this</p>
 <pre><code class="language-julia">using Plots
 

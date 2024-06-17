@@ -1,3 +1,9 @@
 # This file was generated, do not modify it. # hide
-e_best = rpt2.best_history_entry
-e_best.evaluation
+rpt2 = report(mach_tuned_iterated_pipe);
+best_booster = rpt2.best_model.model.evo_tree_classifier
+
+print(
+    "Optimal hyper-parameters: \n",
+    "  max_depth: ", best_booster.max_depth, "\n",
+    "  eta:         ", best_booster.eta
+)

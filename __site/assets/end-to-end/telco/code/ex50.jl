@@ -1,5 +1,6 @@
 # This file was generated, do not modify it. # hide
-unimportant_features = filter(:importance => <(0.005), feature_importance_table).feature
-
-pipe2 = ContinuousEncoder() |>
-    FeatureSelector(features=unimportant_features, ignore=true) |> booster
+e_pipe = evaluate(pipe, X, y,
+                  resampling=StratifiedCV(nfolds=6, rng=rng),
+                  measures=[brier_loss, auc, accuracy],
+                  repeats=3,
+                  acceleration=CPUThreads())

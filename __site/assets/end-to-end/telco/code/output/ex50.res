@@ -1,22 +1,20 @@
-ProbabilisticPipeline(
-  continuous_encoder = ContinuousEncoder(
-        drop_last = false, 
-        one_hot_ordered_factors = false), 
-  feature_selector = FeatureSelector(
-        features = [Symbol("Contract__One year"), :StreamingMovies__No, :OnlineBackup__Yes, :OnlineSecurity__Yes, :InternetService__DSL, :DeviceProtection__Yes, :StreamingTV__Yes, Symbol("OnlineSecurity__No internet service"), :Dependents__Yes, :Partner__Yes, :PaperlessBilling__Yes, Symbol("OnlineBackup__No internet service"), :InternetService__No, :StreamingMovies__Yes, :gender__Male, :PhoneService__Yes, Symbol("DeviceProtection__No internet service"), Symbol("StreamingTV__No internet service"), Symbol("StreamingMovies__No internet service"), Symbol("TechSupport__No internet service"), Symbol("MultipleLines__No phone service")], 
-        ignore = true), 
-  evo_tree_classifier = EvoTreeClassifier(
-        nrounds = 100, 
-        L2 = 0.0, 
-        lambda = 0.0, 
-        gamma = 0.0, 
-        eta = 0.1, 
-        max_depth = 6, 
-        min_weight = 1.0, 
-        rowsample = 1.0, 
-        colsample = 1.0, 
-        nbins = 64, 
-        alpha = 0.5, 
-        tree_type = "binary", 
-        rng = Random.MersenneTwister(123, (0, 234468, 233466, 775))), 
-  cache = true)
+PerformanceEvaluation object with these fields:
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Extract:
+┌───┬──────────────────┬──────────────┬─────────────┐
+│   │ measure          │ operation    │ measurement │
+├───┼──────────────────┼──────────────┼─────────────┤
+│ A │ BrierLoss()      │ predict      │ 0.36        │
+│ B │ AreaUnderCurve() │ predict      │ 0.79        │
+│ C │ Accuracy()       │ predict_mode │ 0.759       │
+└───┴──────────────────┴──────────────┴─────────────┘
+┌───┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                                                                                                             │ 1.96*SE │
+├───┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.271, 0.441, 0.347, 0.381, 0.311, 0.446, 0.397, 0.305, 0.397, 0.259, 0.442, 0.282, 0.385, 0.289, 0.337, 0.46, 0.364, 0.366] │ 0.0305  │
+│ B │ [0.846, 0.729, 0.826, 0.792, 0.812, 0.717, 0.742, 0.827, 0.766, 0.839, 0.753, 0.853, 0.71, 0.842, 0.829, 0.745, 0.782, 0.803]        │ 0.0227  │
+│ C │ [0.795, 0.707, 0.78, 0.732, 0.793, 0.695, 0.735, 0.793, 0.72, 0.817, 0.707, 0.817, 0.771, 0.829, 0.805, 0.72, 0.732, 0.72]           │ 0.0213  │
+└───┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┘
