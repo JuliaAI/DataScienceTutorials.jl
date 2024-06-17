@@ -453,7 +453,9 @@ join(string.(rpt.continuous_encoder.new_features), ", ") |> println
 
 reports_feature_importances(pipe)
 
-# This hods because the supervised component of our pipeline supports feature imporances:
+Pkg.status()
+
+# This holds because the supervised component of our pipeline supports feature importances:
 
 reports_feature_importances(booster)
 
@@ -503,8 +505,6 @@ plot!([0, 1], [0, 1], linewidth=2, linestyle=:dash, color=:black)
 
 # \fig{EX-telco-roc.svg}
 
-# (Warning here is a [minor bug](https://github.com/Evovest/EvoTrees.jl/issues/267).)
-
 # ‎
 # @@
 # @@dropdown
@@ -551,8 +551,10 @@ e_pipe = evaluate(pipe, X, y,
 
 # *Introduces:* `FeatureSelector`
 
-# Before continuing, we'll modify our pipeline to drop those features
-# with low feature importance, to speed up later optimization:
+# Before continuing, we'll modify our pipeline to drop those features with low feature
+# importance, to speed up later optimization. For a more sophisticated alternative, you
+# may want to try MLJ's `RecursiveFeatureSelection` model wrapper. Run
+# `doc("RecursiveFeatureElimination")` for details.
 
 unimportant_features = filter(:importance => <(0.005), feature_importance_table).feature
 
@@ -752,7 +754,8 @@ plot(mach_tuned_iterated_pipe, size=(600,450))
 # manual](https://alan-turing-institute.github.io/MLJ.jl/dev/machines/#Saving-machines)
 # for more options):
 
-MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
+FILE = joinpath(tempdir(), "tuned_iterated_pipe.jls")
+MLJ.save(FILE, mach_tuned_iterated_pipe)
 
 # We'll deserialize this in "Testing the final model" below.
 
@@ -800,7 +803,7 @@ e_pipe
 # following should suffice to recover our model trained under
 # "Hyper-parameter optimization" above:
 
-mach_restored = machine("tuned_iterated_pipe.jls")
+mach_restored = machine(FILE)
 
 # We compute predictions on the holdout set:
 

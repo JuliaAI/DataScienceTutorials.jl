@@ -1,0 +1,3 @@
+blended_best.knn_model.K = 4
+blended_best.ridge_model.lambda = 0.2154434690031884
+blended_best.knn_weight = 0.1

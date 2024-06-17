@@ -23,6 +23,10 @@ train, test = partition(eachindex(y), 0.5, shuffle=true, rng=444);
 # @@
 # @@dropdown-content
 
+# This tutorial introduces polynomial regression in a very hands-on way. A more
+# programmatic alternative is to use MLJ's `InteractionTransformer`. Run
+# `doc("InteractionTransformer")` for details.
+
 LR = @load LinearRegressor pkg=MLJLinearModels
 
 # In this part we only build models with the `Horsepower` feature.

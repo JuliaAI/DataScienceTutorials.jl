@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <!-- Syntax highlighting via Prism, note: restricted langs -->
+<link rel="stylesheet" href="/libs/highlight/github.min.css">
+ 
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/franklin.css">
+  <link rel="stylesheet" href="/css/pure.css">
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/extra.css">
+  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+   <title>Breast Cancer Wisconsin&#40;Diagnostic&#41;</title> 
+  <!-- LUNR -->
+  <script src="/libs/lunr/lunr.min.js"></script>
+  <script src="/libs/lunr/lunr_index.js"></script>
+  <script src="/libs/lunr/lunrclient.min.js"></script>
+</head>
+
+<body>
+  <div id="layout">
+    <!-- Menu toggle / hamburger icon -->
+    <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
+    <div id="menu" style="display: none;">
+      <div class="pure-menu">
+        <a href="/" id="menu-logo-link">
+          <div class="menu-logo">
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <p><strong>Data Science Tutorials</strong></p>
+          </div>
+        </a>
+        <form id="lunrSearchForm" name="lunrSearchForm">
+          <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
+          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
+        </form>
+        <!-- LIST OF MENU ITEMS -->
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
+
+          <!-- DATA BASICS -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Data Basics</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li class="pure-menu-item "><a
+                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  data</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  Frames</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Categorical Arrays</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  Type</a></li>
+              <li class="pure-menu-item "><a
+                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  processing</a></li>
+            </ul>
+          </div>
+
+          <!-- GETTING STARTED WITH MLJ -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Getting Started</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist">
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Choosing a model</a>
+              </li>
+              <li class="pure-menu-item ">
+                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Model tuning</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Ensembles</a></li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
+              <li
+                class="pure-menu-item ">
+                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Composing models</a>
+              </li>
+              <li class="pure-menu-item "><a
+                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Stacking</a></li>
+            </ul>
+          </div>
+          <!-- INTRO TO STATS LEARNING -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Intro to Stats Learning</strong></li>
+          </div>
+          <div class="collapse dropdown-content">
+            <ul class="pure-menu-sublist" id=isl>
+              <li class="pure-menu-item "><a href="/isl/lab-2/"
+                  class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 3</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 4</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 5</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 8</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 9</a></li>
+              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Lab 10</a></li>
+            </ul>
+          </div>
+          <!-- End to End -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>End to End</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" >
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  Churn</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+              </li>
+              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Wine</a></li>
+              <li class="pure-menu-item "><a
+                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  Crabs (XGB)</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Horse</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> King County Houses</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Airfoil </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Power Generation </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
+              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
+            </ul>
+          </div>
+          <!-- ADVANCED EXAMPLES -->
+          <div class="dropdown">
+            <li class="pure-menu-sublist-title"><strong>Advanced Examples</strong></li>
+          </div>
+          <div class="dropdown-content collapse">
+            <ul class="pure-menu-sublist" id=adv>
+              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
+                    style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
+            </ul>
+          </div>
+      </div>
+      </ul>
+      <!-- END OF LIST OF MENU ITEMS -->
+    </div>
+  </div>
+  <div id="nav" class="navigation">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="/">DataScienceTutorials.jl</a>
+      </div>
+      <nav>
+        <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+        <ul class="nav-list">
+        <!-- horizontal navigation bar gets injected -->
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="main"> <!-- Closed in foot -->
+    
+
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="breast_cancer_wisconsindiagnostic"><a href="#breast_cancer_wisconsindiagnostic" class="header-anchor">Breast Cancer Wisconsin&#40;Diagnostic&#41;</a></h1>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/advanced/breastcancer.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
+<p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
+<p><div class="franklin-toc"><ol><li><a href="#introduction">Introduction</a></li><li><a href="#loading_the_relevant_packages">Loading the relevant packages</a></li><li><a href="#downloading_and_loading_the_data">Downloading and loading the data</a></li><li><a href="#exploring_the_obtained_data">Exploring the obtained data</a><ol><li><a href="#inspecting_the_class_variable">Inspecting the class variable</a></li><li><a href="#inspecting_the_feature_set">Inspecting the feature set</a></li></ol></li><li><a href="#unpacking_the_values">Unpacking the values</a></li><li><a href="#standardizing_the_feature_set">Standardizing the &quot;feature set&quot;</a></li><li><a href="#train-test_split">Train-test split</a></li><li><a href="#model_compatibility">Model compatibility</a></li><li><a href="#analyzing_the_performance_of_different_models">Analyzing the performance of different models</a><ol><li><a href="#creating_various_empty_vectors_for_our_analysis">Creating various empty vectors for our analysis</a></li><li><a href="#collecting_data_for_analysis">Collecting data for analysis</a></li><li><a href="#inspecting_results">Inspecting results</a></li></ol></li></ol></div>
+<div class="dropdown"><h2 id="introduction"><a href="#introduction" class="header-anchor">Introduction</a></h2></div>
+<div class="dropdown-content"><p>This tutorial covers programmatic model selection on the popular <a href="https://archive.ics.uci.edu/ml/datasets/Breast&#43;Cancer&#43;Wisconsin&#43;&#40;Diagnostic&#41;">&quot;Breast Cancer Wisconsin &#40;Diagnostic&#41; Data Set&quot;</a> from the UCI archives. The tutorial also covers basic data preprocessing and usage of MLJ Scientific Types.</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="loading_the_relevant_packages"><a href="#loading_the_relevant_packages" class="header-anchor">Loading the relevant packages</a></h2></div>
+<div class="dropdown-content"><pre><code class="language-julia">using UrlDownload
+using DataFrames
+using MLJ
+using StatsBase
+using StableRNGs # for an RNG stable across julia versions</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="downloading_and_loading_the_data"><a href="#downloading_and_loading_the_data" class="header-anchor">Downloading and loading the data</a></h2></div>
+<div class="dropdown-content"><p>Using the package UrlDownload.jl, we can capture the data from the given link using the below commands.</p>
+<pre><code class="language-julia">url &#61; &quot;https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data&quot;;
+feature_names &#61; &#91;&quot;ID&quot;, &quot;Class&quot;, &quot;mean radius&quot;, &quot;mean texture&quot;, &quot;mean perimeter&quot;, &quot;mean area&quot;, &quot;mean smoothness&quot;, &quot;mean compactness&quot;, &quot;mean concavity&quot;, &quot;mean concave points&quot;, &quot;mean symmetry&quot;, &quot;mean fractal dimension&quot;, &quot;radius error&quot;, &quot;texture error&quot;, &quot;perimeter error&quot;, &quot;area error&quot;, &quot;smoothness error&quot;, &quot;compactness error&quot;, &quot;concavity error&quot;, &quot;concave points error&quot;, &quot;symmetry error&quot;, &quot;fractal dimension error&quot;, &quot;worst radius&quot;, &quot;worst texture&quot;, &quot;worst perimeter&quot;, &quot;worst area&quot;, &quot;worst smoothness&quot;, &quot;worst compactness&quot;, &quot;worst concavity&quot;, &quot;worst concave points&quot;, &quot;worst symmetry&quot;, &quot;worst fractal dimension&quot;&#93;
+data &#61; urldownload&#40;url, true, format &#61; :CSV, header &#61; feature_names&#41;;</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="exploring_the_obtained_data"><a href="#exploring_the_obtained_data" class="header-anchor">Exploring the obtained data</a></h2></div>
+<div class="dropdown-content"><div class="dropdown"><h3 id="inspecting_the_class_variable"><a href="#inspecting_the_class_variable" class="header-anchor">Inspecting the class variable</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">using Plots
+
+Plots.bar&#40;countmap&#40;data.Class&#41;, legend&#61;false,&#41;
+xlabel&#33;&#40;&quot;Classes&quot;&#41;
+ylabel&#33;&#40;&quot;Number of samples&quot;&#41;</code></pre>
+<img src="/assets/advanced/breastcancer/code/output/Target_class.svg" alt="Distribution of target classes">
+<p>‎</p></div>
+<div class="dropdown"><h3 id="inspecting_the_feature_set"><a href="#inspecting_the_feature_set" class="header-anchor">Inspecting the feature set</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">df &#61; DataFrame&#40;data&#41;&#91;:, 2:end&#93;;</code></pre>
+<p>Printing the 1st 10 rows so as to get a visual idea about the type of data we&#39;re dealing with</p>
+<pre><code class="language-julia">first&#40;df,10&#41;</code></pre><pre><code class="plaintext code-output">10×31 DataFrame
+ Row │ Class    mean radius  mean texture  mean perimeter  mean area  mean smoothness  mean compactness  mean concavity  mean concave points  mean symmetry  mean fractal dimension  radius error  texture error  perimeter error  area error  smoothness error  compactness error  concavity error  concave points error  symmetry error  fractal dimension error  worst radius  worst texture  worst perimeter  worst area  worst smoothness  worst compactness  worst concavity  worst concave points  worst symmetry  worst fractal dimension
+     │ String1  Float64      Float64       Float64         Float64    Float64          Float64           Float64         Float64              Float64        Float64                 Float64       Float64        Float64          Float64     Float64           Float64            Float64          Float64               Float64         Float64                  Float64       Float64        Float64          Float64     Float64           Float64            Float64          Float64               Float64         Float64
+─────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ M              17.99         10.38          122.8      1001.0          0.1184            0.2776          0.3001               0.1471          0.2419                 0.07871        1.095          0.9053            8.589      153.4           0.006399            0.04904          0.05373               0.01587         0.03003                 0.006193         25.38          17.33           184.6       2019.0            0.1622             0.6656           0.7119                0.2654          0.4601                  0.1189
+   2 │ M              20.57         17.77          132.9      1326.0          0.08474           0.07864         0.0869               0.07017         0.1812                 0.05667        0.5435         0.7339            3.398       74.08          0.005225            0.01308          0.0186                0.0134          0.01389                 0.003532         24.99          23.41           158.8       1956.0            0.1238             0.1866           0.2416                0.186           0.275                   0.08902
+   3 │ M              19.69         21.25          130.0      1203.0          0.1096            0.1599          0.1974               0.1279          0.2069                 0.05999        0.7456         0.7869            4.585       94.03          0.00615             0.04006          0.03832               0.02058         0.0225                  0.004571         23.57          25.53           152.5       1709.0            0.1444             0.4245           0.4504                0.243           0.3613                  0.08758
+   4 │ M              11.42         20.38           77.58      386.1          0.1425            0.2839          0.2414               0.1052          0.2597                 0.09744        0.4956         1.156             3.445       27.23          0.00911             0.07458          0.05661               0.01867         0.05963                 0.009208         14.91          26.5             98.87       567.7            0.2098             0.8663           0.6869                0.2575          0.6638                  0.173
+   5 │ M              20.29         14.34          135.1      1297.0          0.1003            0.1328          0.198                0.1043          0.1809                 0.05883        0.7572         0.7813            5.438       94.44          0.01149             0.02461          0.05688               0.01885         0.01756                 0.005115         22.54          16.67           152.2       1575.0            0.1374             0.205            0.4                   0.1625          0.2364                  0.07678
+   6 │ M              12.45         15.7            82.57      477.1          0.1278            0.17            0.1578               0.08089         0.2087                 0.07613        0.3345         0.8902            2.217       27.19          0.00751             0.03345          0.03672               0.01137         0.02165                 0.005082         15.47          23.75           103.4        741.6            0.1791             0.5249           0.5355                0.1741          0.3985                  0.1244
+   7 │ M              18.25         19.98          119.6      1040.0          0.09463           0.109           0.1127               0.074           0.1794                 0.05742        0.4467         0.7732            3.18        53.91          0.004314            0.01382          0.02254               0.01039         0.01369                 0.002179         22.88          27.66           153.2       1606.0            0.1442             0.2576           0.3784                0.1932          0.3063                  0.08368
+   8 │ M              13.71         20.83           90.2       577.9          0.1189            0.1645          0.09366              0.05985         0.2196                 0.07451        0.5835         1.377             3.856       50.96          0.008805            0.03029          0.02488               0.01448         0.01486                 0.005412         17.06          28.14           110.6        897.0            0.1654             0.3682           0.2678                0.1556          0.3196                  0.1151
+   9 │ M              13.0          21.82           87.5       519.8          0.1273            0.1932          0.1859               0.09353         0.235                  0.07389        0.3063         1.002             2.406       24.32          0.005731            0.03502          0.03553               0.01226         0.02143                 0.003749         15.49          30.73           106.2        739.3            0.1703             0.5401           0.539                 0.206           0.4378                  0.1072
+  10 │ M              12.46         24.04           83.97      475.9          0.1186            0.2396          0.2273               0.08543         0.203                  0.08243        0.2976         1.599             2.039       23.94          0.007149            0.07217          0.07743               0.01432         0.01789                 0.01008          15.09          40.68            97.65       711.4            0.1853             1.058            1.105                 0.221           0.4366                  0.2075</code></pre>
+<p>For checking the statistical attributes of each inividual feature, we can use the <strong>decsribe&#40;&#41;</strong> method</p>
+<pre><code class="language-julia">describe&#40;df&#41;</code></pre><pre><code class="plaintext code-output">31×7 DataFrame
+ Row │ variable                 mean        min        median    max      nmissing  eltype
+     │ Symbol                   Union…      Any        Union…    Any      Int64     DataType
+─────┼───────────────────────────────────────────────────────────────────────────────────────
+   1 │ Class                                B                    M               0  String1
+   2 │ mean radius              14.1273     6.981      13.37     28.11           0  Float64
+   3 │ mean texture             19.2896     9.71       18.84     39.28           0  Float64
+   4 │ mean perimeter           91.969      43.79      86.24     188.5           0  Float64
+   5 │ mean area                654.889     143.5      551.1     2501.0          0  Float64
+   6 │ mean smoothness          0.0963603   0.05263    0.09587   0.1634          0  Float64
+   7 │ mean compactness         0.104341    0.01938    0.09263   0.3454          0  Float64
+   8 │ mean concavity           0.0887993   0.0        0.06154   0.4268          0  Float64
+   9 │ mean concave points      0.0489191   0.0        0.0335    0.2012          0  Float64
+  10 │ mean symmetry            0.181162    0.106      0.1792    0.304           0  Float64
+  11 │ mean fractal dimension   0.0627976   0.04996    0.06154   0.09744         0  Float64
+  12 │ radius error             0.405172    0.1115     0.3242    2.873           0  Float64
+  13 │ texture error            1.21685     0.3602     1.108     4.885           0  Float64
+  14 │ perimeter error          2.86606     0.757      2.287     21.98           0  Float64
+  15 │ area error               40.3371     6.802      24.53     542.2           0  Float64
+  16 │ smoothness error         0.00704098  0.001713   0.00638   0.03113         0  Float64
+  17 │ compactness error        0.0254781   0.002252   0.02045   0.1354          0  Float64
+  18 │ concavity error          0.0318937   0.0        0.02589   0.396           0  Float64
+  19 │ concave points error     0.0117961   0.0        0.01093   0.05279         0  Float64
+  20 │ symmetry error           0.0205423   0.007882   0.01873   0.07895         0  Float64
+  21 │ fractal dimension error  0.0037949   0.0008948  0.003187  0.02984         0  Float64
+  22 │ worst radius             16.2692     7.93       14.97     36.04           0  Float64
+  23 │ worst texture            25.6772     12.02      25.41     49.54           0  Float64
+  24 │ worst perimeter          107.261     50.41      97.66     251.2           0  Float64
+  25 │ worst area               880.583     185.2      686.5     4254.0          0  Float64
+  26 │ worst smoothness         0.132369    0.07117    0.1313    0.2226          0  Float64
+  27 │ worst compactness        0.254265    0.02729    0.2119    1.058           0  Float64
+  28 │ worst concavity          0.272188    0.0        0.2267    1.252           0  Float64
+  29 │ worst concave points     0.114606    0.0        0.09993   0.291           0  Float64
+  30 │ worst symmetry           0.290076    0.1565     0.2822    0.6638          0  Float64
+  31 │ worst fractal dimension  0.0839458   0.05504    0.08004   0.2075          0  Float64</code></pre>
+<p>As we can see the feature set consists of varying features that have different ranges and quantiles. This can cause trouble for the optimization techniques and might cause convergence issues. We can use a feature scaling technique like <strong>Standardizer&#40;&#41;</strong> to handle this.</p>
+<p>But first, let&#39;s handle the <a href="https://alan-turing-institute.github.io/ScientificTypes.jl/dev/">scientific types</a> of all the features. We can use the <code>schema&#40;&#41;</code> method from MLJ.jl package to do this</p>
+<pre><code class="language-julia">schema&#40;df&#41;</code></pre><pre><code class="plaintext code-output">┌─────────────────────────┬────────────┬─────────┐
+│ names                   │ scitypes   │ types   │
+├─────────────────────────┼────────────┼─────────┤
+│ Class                   │ Textual    │ String1 │
+│ mean radius             │ Continuous │ Float64 │
+│ mean texture            │ Continuous │ Float64 │
+│ mean perimeter          │ Continuous │ Float64 │
+│ mean area               │ Continuous │ Float64 │
+│ mean smoothness         │ Continuous │ Float64 │
+│ mean compactness        │ Continuous │ Float64 │
+│ mean concavity          │ Continuous │ Float64 │
+│ mean concave points     │ Continuous │ Float64 │
+│ mean symmetry           │ Continuous │ Float64 │
+│ mean fractal dimension  │ Continuous │ Float64 │
+│ radius error            │ Continuous │ Float64 │
+│ texture error           │ Continuous │ Float64 │
+│ perimeter error         │ Continuous │ Float64 │
+│ area error              │ Continuous │ Float64 │
+│ smoothness error        │ Continuous │ Float64 │
+│ compactness error       │ Continuous │ Float64 │
+│ concavity error         │ Continuous │ Float64 │
+│ concave points error    │ Continuous │ Float64 │
+│ symmetry error          │ Continuous │ Float64 │
+│ fractal dimension error │ Continuous │ Float64 │
+│ worst radius            │ Continuous │ Float64 │
+│ worst texture           │ Continuous │ Float64 │
+│ worst perimeter         │ Continuous │ Float64 │
+│ worst area              │ Continuous │ Float64 │
+│ worst smoothness        │ Continuous │ Float64 │
+│ worst compactness       │ Continuous │ Float64 │
+│ worst concavity         │ Continuous │ Float64 │
+│ worst concave points    │ Continuous │ Float64 │
+│ worst symmetry          │ Continuous │ Float64 │
+│ worst fractal dimension │ Continuous │ Float64 │
+└─────────────────────────┴────────────┴─────────┘
+</code></pre>
+<p>As <code>Textual</code> is a sciytype reserved for text data &quot;with sentiment&quot;, we need to <code>coerce</code> the scitype to the more appropriate <code>OrderedFactor</code>:</p>
+<pre><code class="language-julia">coerce&#33;&#40;df, :Class &#61;&gt; OrderedFactor&#123;2&#125;&#41;;
+scitype&#40;df.Class&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{OrderedFactor{2}} (alias for AbstractArray{ScientificTypesBase.OrderedFactor{2}, 1})</code></pre>
+<p>‎</p></div>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="unpacking_the_values"><a href="#unpacking_the_values" class="header-anchor">Unpacking the values</a></h2></div>
+<div class="dropdown-content"><p>Now that our data is fully processed, we can separate the target variable &#39;y&#39; from the feature set &#39;X&#39; using the <strong>unpack&#40;&#41;</strong> method.</p>
+<pre><code class="language-julia">rng &#61; StableRNG&#40;123&#41;
+y, X &#61; unpack&#40;df, &#61;&#61;&#40;:Class&#41;; rng&#41;;</code></pre>
+<p>We&#39;ll be using 80&#37; of data for training, and can perform a train-test split using the <code>partition</code> method:</p>
+<pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.8; rng&#41;</code></pre><pre><code class="plaintext code-output">([281, 534, 44, 524, 554, 470, 50, 199, 295, 513, 569, 156, 176, 30, 404, 185, 307, 92, 373, 403, 9, 333, 210, 488, 79, 539, 561, 151, 366, 492, 178, 221, 209, 261, 43, 10, 475, 472, 352, 336, 407, 111, 275, 411, 90, 486, 390, 334, 549, 7, 421, 229, 415, 16, 257, 274, 160, 192, 510, 474, 310, 86, 114, 428, 72, 532, 317, 33, 558, 183, 36, 59, 489, 288, 551, 507, 170, 38, 144, 23, 31, 135, 456, 358, 252, 424, 223, 77, 203, 357, 158, 482, 224, 487, 303, 304, 434, 14, 251, 550, 149, 408, 268, 253, 244, 39, 519, 351, 491, 493, 538, 239, 112, 218, 238, 222, 546, 473, 356, 448, 517, 37, 213, 102, 41, 227, 168, 560, 47, 266, 327, 406, 480, 452, 143, 80, 361, 234, 469, 109, 173, 506, 365, 396, 541, 55, 246, 164, 372, 540, 495, 413, 61, 207, 374, 27, 189, 545, 457, 12, 188, 154, 468, 446, 471, 264, 494, 343, 236, 548, 335, 4, 350, 412, 103, 249, 430, 20, 69, 348, 186, 116, 65, 159, 146, 232, 128, 522, 313, 150, 233, 96, 113, 504, 405, 57, 445, 523, 435, 179, 191, 293, 202, 371, 329, 320, 544, 402, 139, 3, 119, 214, 215, 410, 130, 278, 325, 265, 153, 120, 375, 171, 53, 88, 70, 339, 376, 379, 19, 100, 105, 512, 364, 22, 535, 453, 437, 337, 349, 67, 99, 508, 83, 117, 305, 323, 226, 526, 399, 341, 204, 71, 565, 377, 414, 419, 163, 289, 467, 131, 297, 8, 206, 463, 441, 294, 398, 177, 477, 52, 18, 93, 260, 431, 145, 443, 250, 84, 87, 483, 400, 520, 94, 211, 568, 108, 290, 383, 490, 511, 107, 444, 422, 433, 389, 152, 362, 353, 49, 360, 240, 529, 311, 552, 543, 368, 462, 157, 432, 78, 66, 454, 393, 563, 104, 429, 201, 369, 259, 24, 367, 97, 40, 499, 449, 387, 76, 219, 296, 417, 17, 248, 292, 527, 32, 241, 308, 300, 409, 58, 394, 465, 95, 395, 81, 392, 62, 440, 380, 98, 167, 15, 442, 316, 148, 284, 500, 484, 243, 271, 386, 136, 194, 29, 514, 359, 230, 450, 122, 25, 464, 279, 556, 129, 416, 89, 542, 235, 322, 537, 285, 458, 60, 332, 459, 321, 461, 547, 85, 553, 426, 42, 237, 283, 401, 91, 138, 200, 231, 272, 439, 478, 326, 11, 518, 181, 174, 255, 505, 515, 509, 273, 280, 496, 460, 331, 344, 466, 567, 64, 438, 262, 299, 34, 75, 54, 263, 267, 205, 277, 328, 63, 525, 342, 388, 82, 220, 397, 225, 502, 169, 172, 126, 133, 115, 370, 291, 45, 74, 298, 503, 1, 338, 346, 256], [56, 536, 557, 182, 455, 35, 198, 481, 309, 282, 6, 124, 423, 347, 141, 562, 101, 498, 212, 118, 28, 533, 516, 48, 134, 391, 193, 132, 564, 197, 180, 187, 378, 385, 155, 276, 286, 476, 319, 190, 381, 479, 306, 217, 345, 137, 501, 287, 161, 354, 142, 247, 555, 208, 127, 330, 228, 110, 340, 147, 302, 485, 254, 270, 245, 447, 26, 427, 318, 162, 5, 363, 315, 216, 528, 314, 530, 21, 68, 436, 51, 242, 121, 2, 165, 195, 196, 497, 269, 566, 73, 451, 382, 559, 13, 312, 301, 324, 521, 531, 384, 420, 355, 418, 125, 123, 106, 258, 166, 46, 140, 425, 184, 175])</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="standardizing_the_feature_set"><a href="#standardizing_the_feature_set" class="header-anchor">Standardizing the &quot;feature set&quot;</a></h2></div>
+<div class="dropdown-content"><p>Now that our feature set is separated from the target variable, we can use the<code>Standardizer&#40;&#41;</code> worklow to obtain to standardize our feature set <code>X</code>:</p>
+<pre><code class="language-julia">transformer_instance &#61; Standardizer&#40;&#41;
+transformer_model &#61; machine&#40;transformer_instance, X&#91;train,:&#93;&#41;
+fit&#33;&#40;transformer_model&#41;
+X &#61; MLJ.transform&#40;transformer_model, X&#41;;</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="train-test_split"><a href="#train-test_split" class="header-anchor">Train-test split</a></h2></div>
+<div class="dropdown-content"><p>With feature scaling complete, we are ready to compare the performance of various machine learning models for classification.</p>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="model_compatibility"><a href="#model_compatibility" class="header-anchor">Model compatibility</a></h2></div>
+<div class="dropdown-content"><p>Now that we have separate training and testing set, let&#39;s see the models compatible with our data&#33;</p>
+<pre><code class="language-julia">models&#40;matching&#40;X, y&#41;&#41;</code></pre><pre><code class="plaintext code-output">55-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = AdaBoostClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = AdaBoostStumpClassifier, package_name = DecisionTree, ... )
+ (name = BaggingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MultivariateStats, ... )
+ (name = BayesianQDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianSubspaceLDA, package_name = MultivariateStats, ... )
+ (name = CatBoostClassifier, package_name = CatBoost, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DecisionTreeClassifier, package_name = DecisionTree, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = DummyClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = ExtraTreesClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = NaiveBayes, ... )
+ (name = GaussianProcessClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = HistGradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KNNClassifier, package_name = NearestNeighborModels, ... )
+ (name = KNeighborsClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KernelPerceptronClassifier, package_name = BetaML, ... )
+ (name = LDA, package_name = MultivariateStats, ... )
+ (name = LGBMClassifier, package_name = LightGBM, ... )
+ (name = LinearBinaryClassifier, package_name = GLM, ... )
+ (name = LinearSVC, package_name = LIBSVM, ... )
+ (name = LogisticCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = LogisticClassifier, package_name = MLJLinearModels, ... )
+ (name = LogisticClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = MultinomialClassifier, package_name = MLJLinearModels, ... )
+ (name = NeuralNetworkClassifier, package_name = BetaML, ... )
+ (name = NeuralNetworkClassifier, package_name = MLJFlux, ... )
+ (name = NuSVC, package_name = LIBSVM, ... )
+ (name = PassiveAggressiveClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = PegasosClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticNuSVC, package_name = LIBSVM, ... )
+ (name = ProbabilisticSGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticSVC, package_name = LIBSVM, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )
+ (name = RandomForestClassifier, package_name = DecisionTree, ... )
+ (name = RandomForestClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVC, package_name = LIBSVM, ... )
+ (name = SVMClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMLinearClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMNuClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = StableForestClassifier, package_name = SIRUS, ... )
+ (name = StableRulesClassifier, package_name = SIRUS, ... )
+ (name = SubspaceLDA, package_name = MultivariateStats, ... )
+ (name = XGBoostClassifier, package_name = XGBoost, ... )</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h2 id="analyzing_the_performance_of_different_models"><a href="#analyzing_the_performance_of_different_models" class="header-anchor">Analyzing the performance of different models</a></h2></div>
+<div class="dropdown-content"><p>Thats a lot of models for our data&#33; To narrow it down, we&#39;ll analyze the performance of probablistic predictors with pure julia implementations:</p>
+<div class="dropdown"><h3 id="creating_various_empty_vectors_for_our_analysis"><a href="#creating_various_empty_vectors_for_our_analysis" class="header-anchor">Creating various empty vectors for our analysis</a></h3></div>
+<div class="dropdown-content"><ul>
+<li><p><code>model_names</code>: captures the names of the models being evaluated</p>
+</li>
+<li><p><code>accuracies</code>: accuracies of the value of the model accuracy on the test set</p>
+</li>
+<li><p><code>log_losses</code>: values of the log loss &#40;cross entropy&#41; on the test set</p>
+</li>
+<li><p><code>f1_scores</code>:  captures the values of F1-Score on the test set</p>
+</li>
+</ul>
+<pre><code class="language-julia">model_names&#61;Vector&#123;String&#125;&#40;&#41;;
+accuracies&#61;&#91;&#93;;
+log_losses&#61;&#91;&#93;;
+f1_scores&#61;&#91;&#93;;</code></pre>
+<p>‎</p></div>
+<div class="dropdown"><h3 id="collecting_data_for_analysis"><a href="#collecting_data_for_analysis" class="header-anchor">Collecting data for analysis</a></h3></div>
+<div class="dropdown-content"><pre><code class="language-julia">models_to_evaluate &#61; models&#40;matching&#40;X, y&#41;&#41; do m
+    m.prediction_type&#61;&#61;:probabilistic &amp;&amp; m.is_pure_julia &amp;&amp;
+        m.package_name &#33;&#61; &quot;SIRUS&quot;
+end
+
+p &#61; plot&#40;legendfontsize&#61;7, title&#61;&quot;ROC Curve&quot;&#41;
+plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black&#41;
+for m in models_to_evaluate
+    model&#61;m.name
+    pkg &#61; m.package_name
+    model_name &#61; &quot;&#36;model &#40;&#36;pkg&#41;&quot;
+    @info &quot;Evaluating &#36;model_name. &quot;
+    eval&#40;:&#40;clf &#61; @load &#36;model pkg&#61;&#36;pkg verbosity&#61;0&#41;&#41;
+
+    clf_machine &#61; machine&#40;clf&#40;&#41;, X, y&#41;
+    fit&#33;&#40;clf_machine, rows&#61;train, verbosity&#61;0&#41;
+
+    y_pred &#61; MLJ.predict&#40;clf_machine, rows&#61;test&#41;;
+
+    fprs, tprs, thresholds &#61; roc_curve&#40;y_pred, y&#91;test&#93;&#41;
+    plot&#33;&#40;p, fprs, tprs,label&#61;model_name&#41;
+    gui&#40;&#41;
+
+    push&#33;&#40;model_names, model_name&#41;
+    push&#33;&#40;accuracies, accuracy&#40;mode.&#40;y_pred&#41;, y&#91;test&#93;&#41;&#41;
+    push&#33;&#40;log_losses, log_loss&#40;y_pred,y&#91;test&#93;&#41;&#41;
+    push&#33;&#40;f1_scores, f1score&#40;mode.&#40;y_pred&#41;, y&#91;test&#93;&#41;&#41;
+end
+
+#Adding labels and legend to the ROC-AUC curve
+xlabel&#33;&#40;&quot;False Positive Rate &#40;positive&#61;malignant&#41;&quot;&#41;
+ylabel&#33;&#40;&quot;True Positive Rate&quot;&#41;</code></pre>
+<img src="/assets/advanced/breastcancer/code/output/breastcancer_auc_curve.svg" alt="ROC-AUC Curve">
+<p>‎</p></div>
+<div class="dropdown"><h3 id="inspecting_results"><a href="#inspecting_results" class="header-anchor">Inspecting results</a></h3></div>
+<div class="dropdown-content"><p>Let&#39;s collect the data in form a dataframe for a more precise analysis</p>
+<pre><code class="language-julia">model_comparison&#61;DataFrame&#40;
+    ModelName&#61;model_names,
+    Accuracy&#61;accuracies,
+    LogLoss&#61;log_losses,
+    F1Score&#61;f1_scores
+&#41;;</code></pre>
+<p>Finally, let&#39;s sort the data on basis of the log loss:</p>
+<pre><code class="language-julia">sort&#33;&#40;model_comparison, &#91;:LogLoss&#93;&#41;</code></pre><pre><code class="plaintext code-output">21×4 DataFrame
+ Row │ ModelName                          Accuracy  LogLoss    F1Score
+     │ String                             Any       Any        Any
+─────┼──────────────────────────────────────────────────────────────────
+   1 │ NeuralNetworkClassifier (BetaML)   0.982456  0.0815565  0.97619
+   2 │ NeuralNetworkClassifier (MLJFlux)  0.964912  0.0841788  0.953488
+   3 │ RandomForestClassifier (Decision…  0.95614   0.108848   0.942529
+   4 │ RandomForestClassifier (BetaML)    0.964912  0.111642   0.953488
+   5 │ EvoTreeClassifier (EvoTrees)       0.95614   0.127662   0.941176
+   6 │ BayesianLDA (MultivariateStats)    0.929825  0.166699   0.9
+   7 │ BayesianSubspaceLDA (Multivariat…  0.929825  0.166709   0.9
+   8 │ SubspaceLDA (MultivariateStats)    0.938596  0.209371   0.91358
+   9 │ AdaBoostStumpClassifier (Decisio…  0.947368  0.275107   0.926829
+  10 │ KernelPerceptronClassifier (Beta…  0.894737  0.418525   0.863636
+  11 │ KNNClassifier (NearestNeighborMo…  0.95614   0.430947   0.942529
+  12 │ PegasosClassifier (BetaML)         0.912281  0.498056   0.891304
+  13 │ ConstantClassifier (MLJModels)     0.622807  0.662744   0.0
+  14 │ LDA (MultivariateStats)            0.938596  0.677149   0.91358
+  15 │ GaussianNBClassifier (NaiveBayes)  0.929825  0.898701   0.906977
+  16 │ PerceptronClassifier (BetaML)      0.947368  1.36307    0.926829
+  17 │ MultinomialClassifier (MLJLinear…  0.938596  1.57496    0.915663
+  18 │ DecisionTreeClassifier (BetaML)    0.95614   1.58694    0.941176
+  19 │ LogisticClassifier (MLJLinearMod…  0.938596  2.20713    0.915663
+  20 │ LinearBinaryClassifier (GLM)       0.912281  2.88829    0.878049
+  21 │ DecisionTreeClassifier (Decision…  0.903509  3.4779     0.873563</code></pre>
+<p>‎</p></div>
+<p>‎</p></div>
+
+<div class="bottom-nav-container">
+  <a id="prev-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>← Previous Tutorial</div>
+        <div id="prev-label" class="button-label"> Home</div>
+    </Button></a>
+  <a id="next-tutorial" style="text-decoration: none"><Button class="bottom-nav">
+        <div>Next Tutorial →</div>
+        <div id="next-label" class="button-label">Home</div> 
+    </Button></a>
+</div>
+<div class="page-foot">
+  <div class="copyright">
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+      href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
+  </div>
+</div></div><!-- CONTENT ENDS HERE -->
+</div> <!-- end of id=main -->
+</div> <!-- end of id=layout -->
+<!-- for collapse functionality -->
+<script src="/libs/collapse/collapse.js"></script>
+<script src="/libs/pure/ui.min.js"></script>
+<!-- head and footer-nav -->
+<script src="/libs/nav/head.js"  type="module"></script>
+<!-- landing page -->
+<script src="/libs/landing/landing.js"></script>
+<!-- navigation bar -->
+<script src="/libs/nav/nav.js"></script>
+<!-- responsive navigation bar -->
+<script src="/libs/nav/responsive.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+
+</body>
+
+</html>
