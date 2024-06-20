@@ -230,50 +230,50 @@ DecisionTreeRegressor(
 <p>Here&#39;s a small data set we can use for step 1:</p>
 <pre><code class="language-julia">X &#61; &#40;; x&#61;rand&#40;5&#41;&#41;
 y &#61; rand&#40;5&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- 0.03820006838537782
- 0.7640105467929027
- 0.23616350563668287
- 0.9959481929134603
- 0.453603276225674</code></pre>
+ 0.9297007196784309
+ 0.09783418880740213
+ 0.41939964625245607
+ 0.3083593753088256
+ 0.6835693409933543</code></pre>
 <p>As a warm-up exercise, we&#39;ll suppose we have only two models in the ensemble.  We start by wrapping the input data in source nodes. These nodes will be interface points for new training data when we <code>fit&#33;</code> our new ensemble model type; <code>Xs</code> will also be an interface point for production data when we call <code>predict</code> on our new ensemble model type.</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @131 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @507 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>Here are two distinct machines &#40;for learning distinct trees&#41; that share the same atomic model &#40;hyperparameters&#41;:</p>
 <pre><code class="language-julia">mach1 &#61; machine&#40;atom, Xs, ys&#41;
 mach2 &#61; machine&#40;atom, Xs, ys&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeRegressor(max_depth = -1, …)
   args: 
-    1:	Source @787 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @131 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @169 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @507 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Here are prediction nodes:</p>
 <pre><code class="language-julia">y1 &#61; predict&#40;mach1, Xs&#41;
-y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @528 → DecisionTreeRegressor(…)
+y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @867 → DecisionTreeRegressor(…)
   args:
-    1:	Source @787
+    1:	Source @169
   formula:
     predict(
-      machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-      Source @787)</code></pre>
+      [0m[1mmachine(DecisionTreeRegressor(max_depth = -1, …), …)[22m, 
+      Source @169)</code></pre>
 <p>It happens that <code>mean</code> immediately works on vectors of nodes, because <code>&#43;</code> and division by a scalar works for nodes:</p>
-<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @251
+<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @574
   args:
-    1:	Node @007
+    1:	Node @655
   formula:
     #113(
       +(
         predict(
-          machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-          Source @787),
+          [0m[1mmachine(DecisionTreeRegressor(max_depth = -1, …), …)[22m, 
+          Source @169),
         predict(
-          machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-          Source @787)))</code></pre>
+          [0m[1mmachine(DecisionTreeRegressor(max_depth = -1, …), …)[22m, 
+          Source @169)))</code></pre>
 <p>Let&#39;s test the network:</p>
 <pre><code class="language-julia">fit&#33;&#40;yhat&#41;
 Xnew &#61; &#40;; x&#61;rand&#40;2&#41;&#41;
 yhat&#40;Xnew&#41;</code></pre><pre><code class="plaintext code-output">2-element Vector{Float64}:
- 0.49758511799081956
- 0.49758511799081956</code></pre>
+ 0.48777265420809374
+ 0.48777265420809374</code></pre>
 <p>Great. No issues. Here&#39;s how we have an ensemble of any size:</p>
 <pre><code class="language-julia">n &#61; 10
 machines &#61; &#40;machine&#40;atom, Xs, ys&#41; for i in 1:n&#41;
@@ -300,7 +300,7 @@ function prefit&#40;ensemble::MyEnsemble, verbosity, X, y&#41;
 
     return &#40;predict&#61;yhat,&#41;
 
-end</code></pre><pre><code class="plaintext code-output">prefit (generic function with 8 methods)</code></pre>
+end</code></pre><pre><code class="plaintext code-output">prefit (generic function with 7 methods)</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="application_to_data"><a href="#application_to_data" class="header-anchor">Application to data</a></h2></div>
 <div class="dropdown-content"><pre><code class="language-julia">X, y &#61; @load_boston;</code></pre>
@@ -367,7 +367,7 @@ xlabel&#33;&#40;curve.parameter_name&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

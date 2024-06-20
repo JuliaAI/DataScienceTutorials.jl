@@ -238,7 +238,7 @@ misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext
 <pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;333&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 ypred &#61; predict_mode&#40;mach, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.26</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.29</code></pre>
 <p>Not really...</p>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="tuning_a_dtc"><a href="#tuning_a_dtc" class="header-anchor">Tuning a DTC</a></h3></div>
@@ -258,11 +258,11 @@ mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
 ypred &#61; predict_mode&#40;mtm, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.29</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.275</code></pre>
 <p>We can inspect the parameters of the best model</p>
 <pre><code class="language-julia">fitted_params&#40;mtm&#41;.best_model.decision_tree_classifier</code></pre><pre><code class="plaintext code-output">DecisionTreeClassifier(
-  max_depth = 6, 
-  min_samples_leaf = 1, 
+  max_depth = 5, 
+  min_samples_leaf = 22, 
   min_samples_split = 2, 
   min_purity_increase = 0.0, 
   n_subfeatures = 0, 
@@ -322,7 +322,7 @@ fit&#33;&#40;rf, rows&#61;train&#41;
 
 ypred &#61; MLJ.predict&#40;rf, rows&#61;test&#41;
 round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
-3.74</code></pre>
+3.69</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine" class="header-anchor">Gradient Boosting Machine</a></h2></div>
 <div class="dropdown-content"><pre><code class="language-julia">XGBR &#61; @load XGBoostRegressor
@@ -349,7 +349,7 @@ round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

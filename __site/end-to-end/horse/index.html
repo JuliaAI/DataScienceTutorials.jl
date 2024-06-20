@@ -422,31 +422,39 @@ evaluate&#40;
     resampling &#61; Holdout&#40;fraction_train&#61;0.9&#41;,
     measures &#61; metrics,
 &#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────┬──────────────┬─────────────┬──────────┐
-│ measure              │ operation    │ measurement │ per_fold │
-├──────────────────────┼──────────────┼─────────────┼──────────┤
-│ LogLoss(             │ predict      │ 0.835       │ [0.835]  │
-│   tol = 2.22045e-16) │              │             │          │
-│ Accuracy()           │ predict_mode │ 0.667       │ [0.667]  │
-└──────────────────────┴──────────────┴─────────────┴──────────┘
+┌───┬──────────────────────┬──────────────┬─────────────┐
+│   │ measure              │ operation    │ measurement │
+├───┼──────────────────────┼──────────────┼─────────────┤
+│ A │ LogLoss(             │ predict      │ 0.835       │
+│   │   tol = 2.22045e-16) │              │             │
+│ B │ Accuracy()           │ predict_mode │ 0.667       │
+└───┴──────────────────────┴──────────────┴─────────────┘
 </code></pre>
 <p>If we perform cross-validation instead, we also get a very rough idea of the uncertainties in our estimates &#40;&quot;SE&quot; is &quot;standard error&quot;&#41;:</p>
 <pre><code class="language-julia">evaluate&#40;pipe, Xtrain, ytrain; resampling&#61;CV&#40;nfolds&#61;6&#41;, measures&#61;metrics&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────┬──────────────┬─────────────┬─────────┬─────────────────────────────────────────┐
-│ measure              │ operation    │ measurement │ 1.96*SE │ per_fold                                │
-├──────────────────────┼──────────────┼─────────────┼─────────┼─────────────────────────────────────────┤
-│ LogLoss(             │ predict      │ 0.735       │ 0.162   │ [0.978, 0.566, 0.65, 0.525, 0.91, 0.78] │
-│   tol = 2.22045e-16) │              │             │         │                                         │
-│ Accuracy()           │ predict_mode │ 0.686       │ 0.0418  │ [0.62, 0.74, 0.68, 0.72, 0.64, 0.714]   │
-└──────────────────────┴──────────────┴─────────────┴─────────┴─────────────────────────────────────────┘
+┌───┬──────────────────────┬──────────────┬─────────────┐
+│   │ measure              │ operation    │ measurement │
+├───┼──────────────────────┼──────────────┼─────────────┤
+│ A │ LogLoss(             │ predict      │ 0.735       │
+│   │   tol = 2.22045e-16) │              │             │
+│ B │ Accuracy()           │ predict_mode │ 0.686       │
+└───┴──────────────────────┴──────────────┴─────────────┘
+┌───┬─────────────────────────────────────────┬─────────┐
+│   │ per_fold                                │ 1.96*SE │
+├───┼─────────────────────────────────────────┼─────────┤
+│ A │ [0.978, 0.566, 0.65, 0.525, 0.91, 0.78] │ 0.162   │
+│ B │ [0.62, 0.74, 0.68, 0.72, 0.64, 0.714]   │ 0.0418  │
+└───┴─────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>And for a final comparison, here&#39;s how we do on the test set, which we have not yet touched:</p>
 <pre><code class="language-julia">mach &#61; machine&#40;pipe, Xtrain, ytrain&#41; |&gt; fit&#33;
@@ -486,17 +494,24 @@ best_pipe &#61; fitted_params&#40;mach&#41;.best_model</code></pre><pre><code cl
         solver = nothing), 
   cache = true)</code></pre>
 <pre><code class="language-julia">evaluate&#33;&#40;mach; resampling&#61;CV&#40;nfolds&#61;6&#41;, measures&#61;metrics&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────┬──────────────┬─────────────┬─────────┬───────────────────────────────────────────┐
-│ measure              │ operation    │ measurement │ 1.96*SE │ per_fold                                  │
-├──────────────────────┼──────────────┼─────────────┼─────────┼───────────────────────────────────────────┤
-│ LogLoss(             │ predict      │ 0.706       │ 0.111   │ [0.798, 0.63, 0.638, 0.528, 0.866, 0.774] │
-│   tol = 2.22045e-16) │              │             │         │                                           │
-│ Accuracy()           │ predict_mode │ 0.686       │ 0.0317  │ [0.68, 0.7, 0.7, 0.74, 0.64, 0.653]       │
-└──────────────────────┴──────────────┴─────────────┴─────────┴───────────────────────────────────────────┘
+┌───┬──────────────────────┬──────────────┬─────────────┐
+│   │ measure              │ operation    │ measurement │
+├───┼──────────────────────┼──────────────┼─────────────┤
+│ A │ LogLoss(             │ predict      │ 0.706       │
+│   │   tol = 2.22045e-16) │              │             │
+│ B │ Accuracy()           │ predict_mode │ 0.686       │
+└───┴──────────────────────┴──────────────┴─────────────┘
+┌───┬───────────────────────────────────────────┬─────────┐
+│   │ per_fold                                  │ 1.96*SE │
+├───┼───────────────────────────────────────────┼─────────┤
+│ A │ [0.798, 0.63, 0.638, 0.528, 0.866, 0.774] │ 0.111   │
+│ B │ [0.68, 0.7, 0.7, 0.74, 0.64, 0.653]       │ 0.0317  │
+└───┴───────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>So, not likely a statistically significant difference. Nevertheless, let&#39;s see how we do with accuracy on a holdout set:</p>
 <pre><code class="language-julia">fit&#33;&#40;mach&#41; # fit on all the train data
@@ -514,17 +529,24 @@ model &#61; EvoTreeClassifier&#40;&#41;
 mach &#61; machine&#40;model, Xtrain, ytrain&#41;
 evaluate&#33;&#40;mach; resampling&#61;CV&#40;nfolds&#61;6&#41;, measures&#61;metrics&#41;</code></pre><pre><code class="plaintext code-output">import EvoTrees ✔
 PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────┬──────────────┬─────────────┬─────────┬─────────────────────────────────────────┐
-│ measure              │ operation    │ measurement │ 1.96*SE │ per_fold                                │
-├──────────────────────┼──────────────┼─────────────┼─────────┼─────────────────────────────────────────┤
-│ LogLoss(             │ predict      │ 0.848       │ 0.106   │ [0.903, 0.699, 0.917, 0.694, 0.9, 0.98] │
-│   tol = 2.22045e-16) │              │             │         │                                         │
-│ Accuracy()           │ predict_mode │ 0.719       │ 0.0532  │ [0.78, 0.68, 0.7, 0.8, 0.64, 0.714]     │
-└──────────────────────┴──────────────┴─────────────┴─────────┴─────────────────────────────────────────┘
+┌───┬──────────────────────┬──────────────┬─────────────┐
+│   │ measure              │ operation    │ measurement │
+├───┼──────────────────────┼──────────────┼─────────────┤
+│ A │ LogLoss(             │ predict      │ 0.848       │
+│   │   tol = 2.22045e-16) │              │             │
+│ B │ Accuracy()           │ predict_mode │ 0.719       │
+└───┴──────────────────────┴──────────────┴─────────────┘
+┌───┬─────────────────────────────────────────┬─────────┐
+│   │ per_fold                                │ 1.96*SE │
+├───┼─────────────────────────────────────────┼─────────┤
+│ A │ [0.903, 0.699, 0.917, 0.694, 0.9, 0.98] │ 0.106   │
+│ B │ [0.78, 0.68, 0.7, 0.8, 0.64, 0.714]     │ 0.0532  │
+└───┴─────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>That&#39;s better accuracy, although not significantly better, than the other CV estimates based on <code>train</code>, and without any tuning. Do we actually do better on the <code>test</code> set?</p>
 <pre><code class="language-julia">fit&#33;&#40;mach&#41; # fit on all the train data
@@ -548,7 +570,7 @@ println&#40;&quot;accuracy: &quot;, round&#40;m, sigdigits&#61;4&#41;&#41;</code
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

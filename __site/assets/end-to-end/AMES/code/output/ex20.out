@@ -1,3 +1,0 @@
-blended.knn_weight = 0.3
-blended.knn_model.K = 5
-blended.ridge_model.lambda = 2.5

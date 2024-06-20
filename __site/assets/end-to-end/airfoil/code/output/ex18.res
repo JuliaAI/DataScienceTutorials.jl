@@ -5,6 +5,6 @@ RandomForestRegressor(
   min_purity_increase = 0.0, 
   n_subfeatures = -1, 
   n_trees = 14, 
-  sampling_fraction = 0.8, 
+  sampling_fraction = 0.7, 
   feature_importance = :impurity, 
   rng = Random._GLOBAL_RNG())

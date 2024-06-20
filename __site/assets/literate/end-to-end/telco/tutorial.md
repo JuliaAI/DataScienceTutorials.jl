@@ -371,12 +371,12 @@ loaded as follows:
 Booster = @load EvoTreeClassifier pkg=EvoTrees
 ````
 
-Recall that a *model* is just a container for some algorithm's
-hyper-parameters. Let's create a `Booster` with default values for
-the hyper-parameters:
+Recall that a *model* is just a container for some algorithm's hyper-parameters. Let's
+create a `Booster` with default values for all the hyper-parameters, except its RNG,
+which we'll take to be a `Xoshiro` because it is thread safe:
 
 ````julia:ex28
-booster = Booster()
+booster = Booster(rng=Xoshiro(123))
 ````
 
 This model is appropriate for the kind of target variable we have because of

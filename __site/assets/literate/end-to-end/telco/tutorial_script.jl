@@ -84,7 +84,7 @@ ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 
 Booster = @load EvoTreeClassifier pkg=EvoTrees
 
-booster = Booster()
+booster = Booster(rng=Xoshiro(123))
 
 scitype(y) <: target_scitype(booster)
 

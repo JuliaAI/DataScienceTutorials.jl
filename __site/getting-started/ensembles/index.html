@@ -225,8 +225,8 @@ KNNRegressor(
 <pre><code class="language-julia">knn &#61; machine&#40;knn_model, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: KNNRegressor(K = 10, …)
   args: 
-    1:	Source @940 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @487 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @877 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @914 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>and fit it</p>
 <pre><code class="language-julia">fit&#33;&#40;knn, rows&#61;train&#41;
@@ -240,15 +240,16 @@ l2&#40;ŷ, y&#91;test&#93;&#41; # sum of squares loss</code></pre><pre><code cl
     resampling&#61;Holdout&#40;fraction_train&#61;0.7, rng&#61;StableRNG&#40;666&#41;&#41;,
     measure&#61;rms,
 &#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌────────────────────────┬───────────┬─────────────┬──────────┐
-│ measure                │ operation │ measurement │ per_fold │
-├────────────────────────┼───────────┼─────────────┼──────────┤
-│ RootMeanSquaredError() │ predict   │ 0.124       │ [0.124]  │
-└────────────────────────┴───────────┴─────────────┴──────────┘
+┌────────────────────────┬───────────┬─────────────┐
+│ measure                │ operation │ measurement │
+├────────────────────────┼───────────┼─────────────┤
+│ RootMeanSquaredError() │ predict   │ 0.124       │
+└────────────────────────┴───────────┴─────────────┘
 </code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="homogenous_ensembles"><a href="#homogenous_ensembles" class="header-anchor">Homogenous ensembles</a></h2></div>
@@ -259,16 +260,22 @@ Extract:
 <div class="dropdown-content"><p>Now that we&#39;ve instantiated an ensemble, it can be trained and tested the same as any other model:</p>
 <pre><code class="language-julia">estimates &#61; evaluate&#40;ensemble_model, X, y, resampling&#61;CV&#40;&#41;&#41;
 estimates</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────┬───────────┬─────────────┬─────────┬─────────────────────────────────────────────────────┐
-│ measure  │ operation │ measurement │ 1.96*SE │ per_fold                                            │
-├──────────┼───────────┼─────────────┼─────────┼─────────────────────────────────────────────────────┤
-│ LPLoss(  │ predict   │ 0.00735     │ 0.00285 │ [0.0085, 0.0131, 0.00548, 0.00777, 0.00457, 0.0047] │
-│   p = 2) │           │             │         │                                                     │
-└──────────┴───────────┴─────────────┴─────────┴─────────────────────────────────────────────────────┘
+┌──────────┬───────────┬─────────────┐
+│ measure  │ operation │ measurement │
+├──────────┼───────────┼─────────────┤
+│ LPLoss(  │ predict   │ 0.00735     │
+│   p = 2) │           │             │
+└──────────┴───────────┴─────────────┘
+┌─────────────────────────────────────────────────────┬─────────┐
+│ per_fold                                            │ 1.96*SE │
+├─────────────────────────────────────────────────────┼─────────┤
+│ [0.0085, 0.0131, 0.00548, 0.00777, 0.00457, 0.0047] │ 0.00285 │
+└─────────────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>here the implicit measure is the sum of squares loss &#40;default for regressions&#41;. The <code>measurement</code> is the mean taken over the folds:</p>
 <pre><code class="language-julia">@show estimates.measurement&#91;1&#93;
@@ -356,7 +363,7 @@ plot&#40;tuned_ensemble&#41;</code></pre><pre><code class="plaintext code-output
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

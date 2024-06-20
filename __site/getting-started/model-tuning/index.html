@@ -267,8 +267,8 @@ r   &#61; range&#40;dtc, :max_depth, lower&#61;1, upper&#61;5&#41;</code></pre><
 fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = DecisionTreeClassifier(max_depth = -1, …), …)
   args: 
-    1:	Source @002 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @789 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @632 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @125 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>In order to inspect the best model, you can use the function <code>fitted_params</code> on the machine and inspect the <code>best_model</code> field:</p>
 <pre><code class="language-julia">fitted_params&#40;m&#41;.best_model.max_depth</code></pre><pre><code class="plaintext code-output">1</code></pre>
@@ -356,7 +356,7 @@ r.best_history_entry.measurement&#91;1&#93;</code></pre><pre><code class="plaint
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

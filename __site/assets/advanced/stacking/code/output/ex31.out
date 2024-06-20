@@ -2,4 +2,4 @@ EvoTreeRegressor = 1.5015 ± 0.06594
 EpsilonSVR = 1.06 ± 0.06462
 RandomForestRegressor = 2.0759 ± 0.06702
 MyAverageTwo = 1.1539 ± 0.0567
-MyTwoModelStack = 0.86044 ± 0.05274
+MyTwoModelStack = 0.85946 ± 0.0526

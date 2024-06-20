@@ -15,7 +15,7 @@ ProbabilisticIteratedModel(
  - nbins: 64
  - alpha: 0.5
  - tree_type: binary
- - rng: Random.MersenneTwister(123, (0, 234468, 233466, 919))
+ - rng: Random.Xoshiro(0x779da755ff77601e, 0x2bfc9047d023e84f, 0x244081633d9f19f8, 0xcfc8b8b9e72e3690, 0xf4e85a418b9c4f80)
 , 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 

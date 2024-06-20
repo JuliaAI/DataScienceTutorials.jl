@@ -297,8 +297,8 @@ XGBoostClassifier(
 mach &#61; machine&#40;xgb, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: XGBoostClassifier(test = 1, …)
   args: 
-    1:	Source @266 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @859 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @654 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @983 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <p>We will tune it varying the number of rounds used and generate a learning curve</p>
 <pre><code class="language-julia">r &#61; range&#40;xgb, :num_round, lower&#61;50, upper&#61;500&#41;
@@ -334,8 +334,8 @@ mach &#61; machine&#40;tuned_model, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @433 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @581 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @211 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @226 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <p>Let&#39;s visualize details about the tuning:</p>
 <pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
@@ -382,8 +382,8 @@ mach &#61; machine&#40;tuned_model, X, y&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = XGBoostClassifier(test = 1, …), …)
   args: 
-    1:	Source @676 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @529 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
+    1:	Source @968 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @747 ⏎ AbstractVector{ScientificTypesBase.Multiclass{2}}
 </code></pre>
 <pre><code class="language-julia">plot&#40;mach&#41;</code></pre>
 <img src="/assets/end-to-end/crabs-xgb/code/output/EX-crabs-xgb-tuningplot2.svg" alt="Hyperparameter tuningplot">
@@ -412,7 +412,7 @@ round&#40;accuracy&#40;ŷ, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></p
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

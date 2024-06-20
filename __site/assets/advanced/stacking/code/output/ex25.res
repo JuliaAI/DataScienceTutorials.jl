@@ -1,6 +1,6 @@
-Node @915 → LinearRegressor(…)
+Node @949 → LinearRegressor(…)
   args:
-    1:	Node @841
+    1:	Node @191
   formula:
     predict(
       machine(LinearRegressor(fit_intercept = true, …), …), 
@@ -8,7 +8,7 @@ Node @915 → LinearRegressor(…)
         hcat(
           predict(
             machine(LinearRegressor(fit_intercept = true, …), …), 
-            Source @516),
+            Source @176),
           predict(
             machine(KNNRegressor(K = 5, …), …), 
-            Source @516))))
+            Source @176))))

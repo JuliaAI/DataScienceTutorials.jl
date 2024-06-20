@@ -254,8 +254,8 @@ mach_uni &#61; machine&#40;mdl, X_uni, y&#41;
 fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: LinearRegressor(fit_intercept = true, …)
   args: 
-    1:	Source @843 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @477 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @147 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @949 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp &#61; fitted_params&#40;mach_uni&#41;
@@ -345,7 +345,7 @@ plot&#33;&#40;Xnew.LStat, MLJ.predict&#40;mach, Xnew&#41;, linewidth&#61;3, colo
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 16, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

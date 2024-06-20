@@ -1,1 +1,4 @@
-UndefVarError: `machine` not defined
+Basic model measurements on test set:
+  brier loss: 0.33141056
+  auc:        0.8130184331797236
+  accuracy:   0.7725118483412322

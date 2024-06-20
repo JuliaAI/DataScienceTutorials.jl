@@ -252,8 +252,8 @@ DecisionTreeClassifier(
 <pre><code class="language-julia">mach &#61; machine&#40;model, X_iris, y_iris&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @929 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @768 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @683 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @738 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>A machine is essentially just a model &#40;ie, hyper-parameters&#41; plus data, but it additionally stores <em>learned parameters</em> &#40;the tree&#41; once it is trained on some view of the data:</p>
 <pre><code class="language-julia">train_rows &#61; vcat&#40;1:60, 91:150&#41;; # some row indices &#40;observations are rows not columns&#41;
@@ -271,8 +271,8 @@ Depth:  3,
 fit&#33;&#40;mach, rows&#61;train_rows&#41; # re-train with new hyper-parameter</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: DecisionTreeClassifier(max_depth = -1, …)
   args: 
-    1:	Source @929 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @768 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+    1:	Source @683 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @738 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
 </code></pre>
 <p>Now we can make predictions on some other view of the data, as in</p>
 <pre><code class="language-julia">predict&#40;mach, rows&#61;71:73&#41;</code></pre><pre><code class="plaintext code-output">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float64}:
@@ -413,8 +413,8 @@ schema&#40;X&#41;.names</code></pre><pre><code class="plaintext code-output">(:g
 <p>For tools helping us to identify suitable models, see the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/model_search/#model_search">Model Search</a> section of the manual. We will build a gradient tree-boosting model, a popular first choice for structured data like we have here. Model code is contained in a third-party package called <a href="https://github.com/Evovest/EvoTrees.jl">EvoTrees.jl</a> which is loaded as follows:</p>
 <pre><code class="language-julia">Booster &#61; @load EvoTreeClassifier pkg&#61;EvoTrees</code></pre><pre><code class="plaintext code-output">import EvoTrees ✔
 EvoTrees.EvoTreeClassifier</code></pre>
-<p>Recall that a <em>model</em> is just a container for some algorithm&#39;s hyper-parameters. Let&#39;s create a <code>Booster</code> with default values for the hyper-parameters:</p>
-<pre><code class="language-julia">booster &#61; Booster&#40;&#41;</code></pre><pre><code class="plaintext code-output">EvoTreeClassifier(
+<p>Recall that a <em>model</em> is just a container for some algorithm&#39;s hyper-parameters. Let&#39;s create a <code>Booster</code> with default values for all the hyper-parameters, except its RNG, which we&#39;ll take to be a <code>Xoshiro</code> because it is thread safe:</p>
+<pre><code class="language-julia">booster &#61; Booster&#40;rng&#61;Xoshiro&#40;123&#41;&#41;</code></pre><pre><code class="plaintext code-output">EvoTreeClassifier(
   nrounds = 100, 
   L2 = 0.0, 
   lambda = 0.0, 
@@ -427,7 +427,7 @@ EvoTrees.EvoTreeClassifier</code></pre>
   nbins = 64, 
   alpha = 0.5, 
   tree_type = "binary", 
-  rng = Random.MersenneTwister(123))</code></pre>
+  rng = Random.Xoshiro(0xfefa8d41b8f5dca5, 0xf80cc98e147960c1, 0x20e2ccc17662fc1d, 0xea7a7dcb2e787c01, 0xf4e85a418b9c4f80))</code></pre>
 <p>This model is appropriate for the kind of target variable we have because of the following passing test:</p>
 <pre><code class="language-julia">scitype&#40;y&#41; &lt;: target_scitype&#40;booster&#41;</code></pre><pre><code class="plaintext code-output">true</code></pre>
 <p>Our features <code>X</code> are also compatible with <code>booster</code>:</p>
@@ -464,7 +464,7 @@ EvoTrees.EvoTreeClassifier</code></pre>
         nbins = 64, 
         alpha = 0.5, 
         tree_type = "binary", 
-        rng = Random.MersenneTwister(123)), 
+        rng = Random.Xoshiro(0xfefa8d41b8f5dca5, 0xf80cc98e147960c1, 0x20e2ccc17662fc1d, 0xea7a7dcb2e787c01, 0xf4e85a418b9c4f80)), 
   cache = true)</code></pre>
 <p>Note that the component models appear as hyper-parameters of <code>pipe</code>. Pipelines are an implementation of a more general <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Composing-Models">model composition</a> interface provided by MLJ that advanced users may want to learn about.</p>
 <p>From the above display, we see that component model hyper-parameters are now <em>nested</em>, but they are still accessible &#40;important in hyper-parameter optimization&#41;:</p>
@@ -485,16 +485,16 @@ EvoTrees.EvoTreeClassifier</code></pre>
 <pre><code class="language-julia">mach_pipe &#61; machine&#40;pipe, X, y&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @114 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @594 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @506 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @237 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We already encountered the <code>partition</code> method above. Here we apply it to row indices, instead of data containers, as <code>fit&#33;</code> and <code>predict</code> only need a <em>view</em> of the data to work.</p>
 <pre><code class="language-julia">train, validation &#61; partition&#40;1:length&#40;y&#41;, 0.7&#41;
 fit&#33;&#40;mach_pipe, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …)
   args: 
-    1:	Source @114 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @594 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @506 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @237 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>We note in passing that we can access two kinds of information from a trained machine:</p>
 <ul>
@@ -673,7 +673,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
         nbins = 64, 
         alpha = 0.5, 
         tree_type = "binary", 
-        rng = Random.MersenneTwister(123, (0, 234468, 233466, 919))), 
+        rng = Random.Xoshiro(0x779da755ff77601e, 0x2bfc9047d023e84f, 0x244081633d9f19f8, 0xcfc8b8b9e72e3690, 0xf4e85a418b9c4f80)), 
   cache = true)</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="wrapping_our_iterative_model_in_control_strategies"><a href="#wrapping_our_iterative_model_in_control_strategies" class="header-anchor">Wrapping our iterative model in control strategies</a></h2></div>
@@ -712,7 +712,7 @@ pipe2 &#61; ContinuousEncoder&#40;&#41; |&gt;
  - nbins: 64
  - alpha: 0.5
  - tree_type: binary
- - rng: Random.MersenneTwister(123, (0, 234468, 233466, 919))
+ - rng: Random.Xoshiro(0x779da755ff77601e, 0x2bfc9047d023e84f, 0x244081633d9f19f8, 0xcfc8b8b9e72e3690, 0xf4e85a418b9c4f80)
 , 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
@@ -767,7 +767,7 @@ fit&#33;&#40;mach_iterated_pipe&#41;;</code></pre>
               nbins = 64, 
               alpha = 0.5, 
               tree_type = "binary", 
-              rng = Random.MersenneTwister(123, (0, 234468, 233466, 919))), 
+              rng = Random.Xoshiro(0x779da755ff77601e, 0x2bfc9047d023e84f, 0x244081633d9f19f8, 0xcfc8b8b9e72e3690, 0xf4e85a418b9c4f80)), 
         cache = true), 
   controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
   resampling = Holdout(
@@ -845,8 +845,8 @@ r2 &#61; range&#40;iterated_pipe, p2, lower&#61;2, upper&#61;6&#41;</code></pre>
 fit&#33;&#40;mach_tuned_iterated_pipe&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
   args: 
-    1:	Source @068 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @340 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+    1:	Source @030 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
+    2:	Source @174 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
 </code></pre>
 <p>As explained above, the training we have just performed was split internally into two separate steps:</p>
 <ul>
@@ -865,7 +865,7 @@ print&#40;
     &quot;  eta:         &quot;, best_booster.eta
 &#41;</code></pre><pre><code class="plaintext code-output">Optimal hyper-parameters: 
   max_depth: 3
-  eta:         0.21339382422195247</code></pre>
+  eta:         0.06363819027728988</code></pre>
 <pre><code class="language-julia">e_best &#61; rpt2.best_history_entry
 e_best.evaluation</code></pre><pre><code class="plaintext code-output">CompactPerformanceEvaluation object with these fields:
   model, measure, operation,
@@ -876,20 +876,20 @@ Extract:
 │   │ measure          │ operation    │ measurement │
 ├───┼──────────────────┼──────────────┼─────────────┤
 │ A │ BrierLoss()      │ predict      │ 0.286       │
-│ B │ AreaUnderCurve() │ predict      │ 0.82        │
-│ C │ Accuracy()       │ predict_mode │ 0.801       │
+│ B │ AreaUnderCurve() │ predict      │ 0.824       │
+│ C │ Accuracy()       │ predict_mode │ 0.817       │
 └───┴──────────────────┴──────────────┴─────────────┘
-┌───┬───────────────────────────────────────────────┬─────────┐
-│   │ per_fold                                      │ 1.96*SE │
-├───┼───────────────────────────────────────────────┼─────────┤
-│ A │ Float32[0.312, 0.3, 0.282, 0.235, 0.3, 0.289] │ 0.024   │
-│ B │ [0.769, 0.798, 0.829, 0.894, 0.798, 0.834]    │ 0.0379  │
-│ C │ [0.783, 0.817, 0.793, 0.854, 0.756, 0.805]    │ 0.0289  │
-└───┴───────────────────────────────────────────────┴─────────┘
+┌───┬───────────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                          │ 1.96*SE │
+├───┼───────────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.305, 0.299, 0.286, 0.235, 0.295, 0.294] │ 0.0226  │
+│ B │ [0.786, 0.795, 0.826, 0.91, 0.806, 0.82]          │ 0.0393  │
+│ C │ [0.819, 0.817, 0.805, 0.878, 0.793, 0.793]        │ 0.0279  │
+└───┴───────────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>Digging a little deeper, we can learn what stopping criterion was applied in the case of the optimal model, and how many iterations were required:</p>
 <pre><code class="language-julia">rpt2.best_report.controls |&gt; collect</code></pre><pre><code class="plaintext code-output">4-element Vector{Tuple{Any, NamedTuple}}:
- (IterationControl.Step(1), (new_iterations = 14,))
+ (IterationControl.Step(1), (new_iterations = 54,))
  (EarlyStopping.NumberSinceBest(4), (done = true, log = "Stop triggered by EarlyStopping.NumberSinceBest(4) stopping criterion. "))
  (EarlyStopping.TimeLimit(Dates.Millisecond(2000)), (done = false, log = ""))
  (EarlyStopping.InvalidValue(), (done = false, log = ""))</code></pre>
@@ -917,16 +917,16 @@ Extract:
 ┌───┬──────────────────┬──────────────┬─────────────┐
 │   │ measure          │ operation    │ measurement │
 ├───┼──────────────────┼──────────────┼─────────────┤
-│ A │ BrierLoss()      │ predict      │ 0.287       │
-│ B │ AreaUnderCurve() │ predict      │ 0.839       │
-│ C │ Accuracy()       │ predict_mode │ 0.791       │
+│ A │ BrierLoss()      │ predict      │ 0.292       │
+│ B │ AreaUnderCurve() │ predict      │ 0.822       │
+│ C │ Accuracy()       │ predict_mode │ 0.781       │
 └───┴──────────────────┴──────────────┴─────────────┘
 ┌───┬───────────────────────────────────────────────────┬─────────┐
 │   │ per_fold                                          │ 1.96*SE │
 ├───┼───────────────────────────────────────────────────┼─────────┤
-│ A │ Float32[0.289, 0.254, 0.308, 0.356, 0.252, 0.265] │ 0.0351  │
-│ B │ [0.836, 0.874, 0.822, 0.757, 0.876, 0.869]        │ 0.0403  │
-│ C │ [0.759, 0.829, 0.793, 0.744, 0.817, 0.805]        │ 0.0293  │
+│ A │ Float32[0.295, 0.258, 0.321, 0.371, 0.246, 0.261] │ 0.0415  │
+│ B │ [0.81, 0.874, 0.786, 0.727, 0.86, 0.873]          │ 0.0514  │
+│ C │ [0.795, 0.829, 0.72, 0.72, 0.817, 0.805]          │ 0.0429  │
 └───┴───────────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>For comparison, here again is the evaluation for the basic pipeline model &#40;no feature selection and default hyperparameters&#41;:</p>
@@ -960,7 +960,7 @@ Extract:
 </code></pre>
 <p>We compute predictions on the holdout set:</p>
 <pre><code class="language-julia">ŷ_tuned &#61; predict&#40;mach_restored, Xtest&#41;;
-ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.655, Yes=>0.345)</code></pre>
+ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.712, Yes=>0.288)</code></pre>
 <p>And can compute the final performance measures:</p>
 <pre><code class="language-julia">print&#40;
     &quot;Tuned model measurements on test:\n&quot;,
@@ -968,8 +968,8 @@ ŷ_tuned&#91;1&#93;</code></pre><pre><code class="plaintext code-output">Univar
     &quot;  auc:        &quot;, auc&#40;ŷ_tuned, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_tuned&#41;, ytest&#41;
 &#41;</code></pre><pre><code class="plaintext code-output">Tuned model measurements on test:
-  brier loss: 0.27469411
-  auc:        0.851094470046083
+  brier loss: 0.27600387
+  auc:        0.8487327188940093
   accuracy:   0.7914691943127962</code></pre>
 <p>For comparison, here&#39;s the performance for the basic pipeline model</p>
 <pre><code class="language-julia">mach_basic &#61; machine&#40;pipe, X, y&#41;
@@ -982,8 +982,10 @@ print&#40;
     &quot;  brier loss: &quot;, brier_loss&#40;ŷ_basic, ytest&#41;, &quot;\n&quot;,
     &quot;  auc:        &quot;, auc&#40;ŷ_basic, ytest&#41;,                &quot;\n&quot;,
     &quot;  accuracy:   &quot;, accuracy&#40;mode.&#40;ŷ_basic&#41;, ytest&#41;
-&#41;</code></pre><pre><code class="plaintext code-output">UndefVarError: `machine` not defined
-</code></pre>
+&#41;</code></pre><pre><code class="plaintext code-output">Basic model measurements on test set:
+  brier loss: 0.33141056
+  auc:        0.8130184331797236
+  accuracy:   0.7725118483412322</code></pre>
 <p>‎</p></div>
 
 <div class="bottom-nav-container">
@@ -998,7 +1000,7 @@ print&#40;
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 17, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->
