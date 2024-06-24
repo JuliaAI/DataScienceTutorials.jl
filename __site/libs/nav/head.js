@@ -434,7 +434,7 @@ function createNavItem(item) {
   // set style, link and text content of anchor
   link.textContent = item.name;
   link.classList.add("main-nav-item");
-  link.href = hosted
+  link.href = (hosted && !item.href.startWith("https"))
     ? origin + "/DataScienceTutorials.jl" + item.href
     : item.href;
   link.id = item.id;
