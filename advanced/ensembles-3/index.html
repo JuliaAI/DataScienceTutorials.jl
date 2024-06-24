@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="ensemble_models_3_learning_networks"><a href="#ensemble_models_3_learning_networks" class="header-anchor">Ensemble models 3 &#40;learning networks&#41;</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="ensemble_models_3_learning_networks"><a href="#ensemble_models_3_learning_networks" class="header-anchor">Ensemble models 3 &#40;learning networks&#41;</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/advanced/ensembles-3.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#definition_of_composite_model_type">Definition of composite model type</a></li><li><a href="#application_to_data">Application to data</a></li></ol></div>
@@ -228,50 +230,50 @@ DecisionTreeRegressor(
 <p>Here&#39;s a small data set we can use for step 1:</p>
 <pre><code class="language-julia">X &#61; &#40;; x&#61;rand&#40;5&#41;&#41;
 y &#61; rand&#40;5&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- 0.6906374111142441
- 0.22165754479055744
- 0.5316055658895007
- 0.07912849644558873
- 0.641119125199737</code></pre>
+ 0.9297007196784309
+ 0.09783418880740213
+ 0.41939964625245607
+ 0.3083593753088256
+ 0.6835693409933543</code></pre>
 <p>As a warm-up exercise, we&#39;ll suppose we have only two models in the ensemble.  We start by wrapping the input data in source nodes. These nodes will be interface points for new training data when we <code>fit&#33;</code> our new ensemble model type; <code>Xs</code> will also be an interface point for production data when we call <code>predict</code> on our new ensemble model type.</p>
 <pre><code class="language-julia">Xs &#61; source&#40;X&#41;
-ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @781 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
+ys &#61; source&#40;y&#41;</code></pre><pre><code class="plaintext code-output">Source @507 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre>
 <p>Here are two distinct machines &#40;for learning distinct trees&#41; that share the same atomic model &#40;hyperparameters&#41;:</p>
 <pre><code class="language-julia">mach1 &#61; machine&#40;atom, Xs, ys&#41;
 mach2 &#61; machine&#40;atom, Xs, ys&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: DecisionTreeRegressor(max_depth = -1, …)
   args: 
-    1:	Source @094 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @781 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @169 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @507 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Here are prediction nodes:</p>
 <pre><code class="language-julia">y1 &#61; predict&#40;mach1, Xs&#41;
-y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @684 → DecisionTreeRegressor(…)
+y2 &#61; predict&#40;mach2, Xs&#41;</code></pre><pre><code class="plaintext code-output">Node @867 → DecisionTreeRegressor(…)
   args:
-    1:	Source @094
+    1:	Source @169
   formula:
     predict(
-      machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-      Source @094)</code></pre>
+      [0m[1mmachine(DecisionTreeRegressor(max_depth = -1, …), …)[22m, 
+      Source @169)</code></pre>
 <p>It happens that <code>mean</code> immediately works on vectors of nodes, because <code>&#43;</code> and division by a scalar works for nodes:</p>
-<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @367
+<pre><code class="language-julia">yhat &#61; mean&#40;&#91;y1, y2&#93;&#41;</code></pre><pre><code class="plaintext code-output">Node @574
   args:
-    1:	Node @390
+    1:	Node @655
   formula:
     #113(
       +(
         predict(
-          machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-          Source @094),
+          [0m[1mmachine(DecisionTreeRegressor(max_depth = -1, …), …)[22m, 
+          Source @169),
         predict(
-          machine(DecisionTreeRegressor(max_depth = -1, …), …), 
-          Source @094)))</code></pre>
+          [0m[1mmachine(DecisionTreeRegressor(max_depth = -1, …), …)[22m, 
+          Source @169)))</code></pre>
 <p>Let&#39;s test the network:</p>
 <pre><code class="language-julia">fit&#33;&#40;yhat&#41;
 Xnew &#61; &#40;; x&#61;rand&#40;2&#41;&#41;
 yhat&#40;Xnew&#41;</code></pre><pre><code class="plaintext code-output">2-element Vector{Float64}:
- 0.4328296286879256
- 0.4328296286879256</code></pre>
+ 0.48777265420809374
+ 0.48777265420809374</code></pre>
 <p>Great. No issues. Here&#39;s how we have an ensemble of any size:</p>
 <pre><code class="language-julia">n &#61; 10
 machines &#61; &#40;machine&#40;atom, Xs, ys&#41; for i in 1:n&#41;
@@ -365,7 +367,7 @@ xlabel&#33;&#40;curve.parameter_name&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

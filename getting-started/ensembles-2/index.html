@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="ensemble_models_2"><a href="#ensemble_models_2" class="header-anchor">Ensemble models 2</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="ensemble_models_2"><a href="#ensemble_models_2" class="header-anchor">Ensemble models 2</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/getting-started/ensembles-2.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#prelims">Prelims</a></li><li><a href="#random_forest">Random forest</a><ol><li><a href="#tuning">Tuning</a></li><li><a href="#reporting">Reporting</a></li></ol></li></ol></div>
@@ -227,17 +229,18 @@ MLJDecisionTreeInterface.DecisionTreeRegressor</code></pre>
 e &#61; evaluate&#33;&#40;tree, resampling&#61;Holdout&#40;fraction_train&#61;0.8&#41;,
               measure&#61;&#91;rms, rmslp1&#93;&#41;
 e</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────────────────────┬───────────┬─────────────┬──────────┐
-│ measure                              │ operation │ measurement │ per_fold │
-├──────────────────────────────────────┼───────────┼─────────────┼──────────┤
-│ RootMeanSquaredError()               │ predict   │ 7.06        │ [7.06]   │
-│ RootMeanSquaredLogProportionalError( │ predict   │ 0.328       │ [0.328]  │
-│   offset = 1)                        │           │             │          │
-└──────────────────────────────────────┴───────────┴─────────────┴──────────┘
+┌───┬──────────────────────────────────────┬───────────┬─────────────┐
+│   │ measure                              │ operation │ measurement │
+├───┼──────────────────────────────────────┼───────────┼─────────────┤
+│ A │ RootMeanSquaredError()               │ predict   │ 7.06        │
+│ B │ RootMeanSquaredLogProportionalError( │ predict   │ 0.328       │
+│   │   offset = 1)                        │           │             │
+└───┴──────────────────────────────────────┴───────────┴─────────────┘
 </code></pre>
 <p>Note that multiple measures can be reported simultaneously.</p>
 <p>‎</p></div>
@@ -293,17 +296,18 @@ m &#61; machine&#40;tuned_forest, X, y&#41;
 e &#61; evaluate&#33;&#40;m, resampling&#61;Holdout&#40;fraction_train&#61;0.8&#41;,
               measure&#61;&#91;rms, rmslp1&#93;&#41;
 e</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────────────────────┬───────────┬─────────────┬──────────┐
-│ measure                              │ operation │ measurement │ per_fold │
-├──────────────────────────────────────┼───────────┼─────────────┼──────────┤
-│ RootMeanSquaredError()               │ predict   │ 3.94        │ [3.94]   │
-│ RootMeanSquaredLogProportionalError( │ predict   │ 0.252       │ [0.252]  │
-│   offset = 1)                        │           │             │          │
-└──────────────────────────────────────┴───────────┴─────────────┴──────────┘
+┌───┬──────────────────────────────────────┬───────────┬─────────────┐
+│   │ measure                              │ operation │ measurement │
+├───┼──────────────────────────────────────┼───────────┼─────────────┤
+│ A │ RootMeanSquaredError()               │ predict   │ 3.96        │
+│ B │ RootMeanSquaredLogProportionalError( │ predict   │ 0.249       │
+│   │   offset = 1)                        │           │             │
+└───┴──────────────────────────────────────┴───────────┴─────────────┘
 </code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="reporting"><a href="#reporting" class="header-anchor">Reporting</a></h3></div>
@@ -313,7 +317,7 @@ Extract:
 <p>Even though we&#39;ve only done a very rough search, it seems that around 7 sub-features and a bagging fraction of around <code>0.75</code> work well.</p>
 <p>Now that the machine <code>m</code> is trained, you can use use it for predictions &#40;implicitly, this will use the best model&#41;. For instance we could look at predictions on the whole dataset:</p>
 <pre><code class="language-julia">ŷ &#61; predict&#40;m, X&#41;
-@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.4033460038774233
+@show rms&#40;ŷ, y&#41;</code></pre><pre><code class="plaintext code-output">rms(ŷ, y) = 2.393525853933367
 </code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
@@ -330,7 +334,7 @@ Extract:
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

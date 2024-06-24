@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="lab_8_-_tree-based_models"><a href="#lab_8_-_tree-based_models" class="header-anchor">Lab 8 - Tree-based models</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="lab_8_-_tree-based_models"><a href="#lab_8_-_tree-based_models" class="header-anchor">Lab 8 - Tree-based models</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/isl/lab-8.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#decision_tree_classifier">Decision Tree Classifier</a></li><li><a href="#tuning_a_dtc">Tuning a DTC</a></li><li><a href="#decision_tree_regressor">Decision Tree Regressor</a></li></ol></li><li><a href="#random_forest">Random Forest</a></li><li><a href="#gradient_boosting_machine">Gradient Boosting Machine</a></li></ol></div>
@@ -236,7 +238,7 @@ misclassification_rate&#40;ypred, y&#41;</code></pre><pre><code class="plaintext
 <pre><code class="language-julia">train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;333&#41;
 fit&#33;&#40;mach, rows&#61;train&#41;
 ypred &#61; predict_mode&#40;mach, rows&#61;test&#41;
-misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.28</code></pre>
+misclassification_rate&#40;ypred, y&#91;test&#93;&#41;</code></pre><pre><code class="plaintext code-output">0.29</code></pre>
 <p>Not really...</p>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="tuning_a_dtc"><a href="#tuning_a_dtc" class="header-anchor">Tuning a DTC</a></h3></div>
@@ -320,7 +322,7 @@ fit&#33;&#40;rf, rows&#61;train&#41;
 
 ypred &#61; MLJ.predict&#40;rf, rows&#61;test&#41;
 round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre><pre><code class="plaintext code-output">import MLJScikitLearnInterface ✔
-3.8</code></pre>
+3.69</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="gradient_boosting_machine"><a href="#gradient_boosting_machine" class="header-anchor">Gradient Boosting Machine</a></h2></div>
 <div class="dropdown-content"><pre><code class="language-julia">XGBR &#61; @load XGBoostRegressor
@@ -347,7 +349,7 @@ round&#40;rms&#40;ypred, y&#91;test&#93;&#41;, sigdigits&#61;3&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

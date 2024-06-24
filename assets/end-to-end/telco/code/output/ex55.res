@@ -1,1 +1,1 @@
-NumericRange(2 ≤ model.evo_tree_classifier.max_depth ≤ 6; origin=4.0, unit=2.0)
+nothing

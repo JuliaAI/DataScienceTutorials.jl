@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="house_king_county"><a href="#house_king_county" class="header-anchor">House King County</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="house_king_county"><a href="#house_king_county" class="header-anchor">House King County</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/housekingcounty.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#loading_and_preparing_the_data">Loading and  preparing the data</a></li><li><a href="#basic_data_visualisation">Basic data visualisation</a></li></ol></li><li><a href="#fitting_a_first_model">Fitting a first model</a><ol><li><a href="#random_forest_model">Random forest model</a></li><li><a href="#gbm">GBM</a></li></ol></li></ol></div>
@@ -359,7 +361,7 @@ tree &#61; machine&#40;DTR&#40;&#41;, X, y&#41;
 fit&#33;&#40;tree, rows&#61;train&#41;;</code></pre><pre><code class="plaintext code-output">import MLJDecisionTreeInterface ✔
 </code></pre>
 <p>Let&#39;s see how it does</p>
-<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.87448003287824</code></pre>
+<pre><code class="language-julia">rms&#40;y&#91;test&#93;, MLJ.predict&#40;tree, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">179.64505965923362</code></pre>
 <p>Let&#39;s try to do better.</p>
 <div class="dropdown"><h3 id="random_forest_model"><a href="#random_forest_model" class="header-anchor">Random forest model</a></h3></div>
 <div class="dropdown-content"><p>We might be able to improve upon the RMSE using more powerful learners.</p>
@@ -372,20 +374,26 @@ MLJScikitLearnInterface.RandomForestRegressor</code></pre>
 rf &#61; machine&#40;rf_mdl, X, y&#41;
 fit&#33;&#40;rf, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">135.73747680719234</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;rf, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">136.90049515798702</code></pre>
 <p>A bit better but it would be best to check this a bit more carefully:</p>
 <pre><code class="language-julia">cv3 &#61; CV&#40;; nfolds&#61;3&#41;
 res &#61; evaluate&#40;rf_mdl, X, y, resampling&#61;CV&#40;shuffle&#61;true&#41;,
                measure&#61;rms, verbosity&#61;0&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌────────────────────────┬───────────┬─────────────┬─────────┬────────────────────────────────────────────┐
-│ measure                │ operation │ measurement │ 1.96*SE │ per_fold                                   │
-├────────────────────────┼───────────┼─────────────┼─────────┼────────────────────────────────────────────┤
-│ RootMeanSquaredError() │ predict   │ 135.0       │ 7.69    │ [139.0, 120.0, 134.0, 144.0, 141.0, 130.0] │
-└────────────────────────┴───────────┴─────────────┴─────────┴────────────────────────────────────────────┘
+┌────────────────────────┬───────────┬─────────────┐
+│ measure                │ operation │ measurement │
+├────────────────────────┼───────────┼─────────────┤
+│ RootMeanSquaredError() │ predict   │ 136.0       │
+└────────────────────────┴───────────┴─────────────┘
+┌────────────────────────────────────────────┬─────────┐
+│ per_fold                                   │ 1.96*SE │
+├────────────────────────────────────────────┼─────────┤
+│ [135.0, 132.0, 130.0, 138.0, 135.0, 145.0] │ 4.37    │
+└────────────────────────────────────────────┴─────────┘
 </code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h3 id="gbm"><a href="#gbm" class="header-anchor">GBM</a></h3></div>
@@ -410,7 +418,7 @@ r2 &#61; range&#40;xgb, :num_round, lower&#61;1, upper&#61;25&#41;;</code></pre>
 mtm &#61; machine&#40;tm, X, y&#41;
 fit&#33;&#40;mtm, rows&#61;train&#41;
 
-rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">138.2074527822519</code></pre>
+rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pre><pre><code class="plaintext code-output">138.20745278225192</code></pre>
 <p>‎</p></div>
 <p>‎</p></div>
 
@@ -426,7 +434,7 @@ rms&#40;y&#91;test&#93;, MLJ.predict&#40;mtm, rows&#61;test&#41;&#41;</code></pr
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

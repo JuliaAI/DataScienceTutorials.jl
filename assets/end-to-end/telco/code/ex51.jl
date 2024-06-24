@@ -1,7 +1,5 @@
 # This file was generated, do not modify it. # hide
-controls = [
-    Step(1),              # to increment iteration parameter (`pipe.nrounds`)
-    NumberSinceBest(4),   # main stopping criterion
-    TimeLimit(2/3600),    # never train more than 2 sec
-    InvalidValue()        # stop if NaN or ±Inf encountered
-]
+unimportant_features = filter(:importance => <(0.005), feature_importance_table).feature
+
+pipe2 = ContinuousEncoder() |>
+    FeatureSelector(features=unimportant_features, ignore=true) |> booster

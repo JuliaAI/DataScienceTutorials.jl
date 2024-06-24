@@ -13,6 +13,7 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
 
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 .pure-button:focus,
 a:active,
@@ -25,9 +26,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0
 }
-
 html {
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
 }

@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="wine"><a href="#wine" class="header-anchor">Wine</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="wine"><a href="#wine" class="header-anchor">Wine</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/wine.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#initial_data_processing">Initial data processing</a><ol><li><a href="#getting_the_data">Getting the data</a></li><li><a href="#setting_the_scientific_type">Setting the scientific type</a></li></ol></li><li><a href="#getting_a_baseline">Getting a baseline</a></li><li><a href="#visualising_the_classes">Visualising the classes</a></li></ol></div>
@@ -339,8 +341,8 @@ ProbabilisticPipeline(
 multinom &#61; machine&#40;multinom_pipe, Xtrain, ytrain&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; does not cache data
   model: ProbabilisticPipeline(standardizer = Standardizer(features = Symbol[], …), …)
   args: 
-    1:	Source @623 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @934 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{3}}
+    1:	Source @586 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @285 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{3}}
 </code></pre>
 <p>Let&#39;s train a KNNClassifier with default hyperparameters and get a baseline misclassification rate using 90&#37; of the training data to train the model and the remaining 10&#37; to evaluate it:</p>
 <pre><code class="language-julia">opts &#61; &#40;
@@ -348,31 +350,33 @@ multinom &#61; machine&#40;multinom_pipe, Xtrain, ytrain&#41;</code></pre><pre><
     measures&#61;&#91;log_loss, accuracy&#93;,
 &#41;
 evaluate&#33;&#40;knn; opts...&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────┬──────────────┬─────────────┬──────────┐
-│ measure              │ operation    │ measurement │ per_fold │
-├──────────────────────┼──────────────┼─────────────┼──────────┤
-│ LogLoss(             │ predict      │ 0.0319      │ [0.0319] │
-│   tol = 2.22045e-16) │              │             │          │
-│ Accuracy()           │ predict_mode │ 1.0         │ [1.0]    │
-└──────────────────────┴──────────────┴─────────────┴──────────┘
+┌───┬──────────────────────┬──────────────┬─────────────┐
+│   │ measure              │ operation    │ measurement │
+├───┼──────────────────────┼──────────────┼─────────────┤
+│ A │ LogLoss(             │ predict      │ 0.0319      │
+│   │   tol = 2.22045e-16) │              │             │
+│ B │ Accuracy()           │ predict_mode │ 1.0         │
+└───┴──────────────────────┴──────────────┴─────────────┘
 </code></pre>
 <p>Now we do the same with a MultinomialClassifier</p>
 <pre><code class="language-julia">evaluate&#33;&#40;multinom; opts...&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────────────────┬──────────────┬─────────────┬──────────┐
-│ measure              │ operation    │ measurement │ per_fold │
-├──────────────────────┼──────────────┼─────────────┼──────────┤
-│ LogLoss(             │ predict      │ 3.3e-6      │ [3.3e-6] │
-│   tol = 2.22045e-16) │              │             │          │
-│ Accuracy()           │ predict_mode │ 1.0         │ [1.0]    │
-└──────────────────────┴──────────────┴─────────────┴──────────┘
+┌───┬──────────────────────┬──────────────┬─────────────┐
+│   │ measure              │ operation    │ measurement │
+├───┼──────────────────────┼──────────────┼─────────────┤
+│ A │ LogLoss(             │ predict      │ 3.3e-6      │
+│   │   tol = 2.22045e-16) │              │             │
+│ B │ Accuracy()           │ predict_mode │ 1.0         │
+└───┴──────────────────────┴──────────────┴─────────────┘
 </code></pre>
 <p>Both methods have perfect out-of-sample accuracy, without any tuning&#33;</p>
 <p>Let&#39;s check the accuracy on the test set:</p>
@@ -425,7 +429,7 @@ ylabel&#33;&#40;&quot;PCA dimension 2&quot;&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

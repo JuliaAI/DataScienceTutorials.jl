@@ -1,3 +1,5 @@
 # This file was generated, do not modify it. # hide
-mach_iterated_pipe = machine(iterated_pipe, X, y)
-fit!(mach_iterated_pipe);
+iterated_pipe = IteratedModel(model=pipe2,
+                              controls=controls,
+                              measure=brier_loss,
+                              resampling=Holdout(fraction_train=0.7))

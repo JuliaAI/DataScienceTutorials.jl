@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="composing_models"><a href="#composing_models" class="header-anchor">Composing models</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="composing_models"><a href="#composing_models" class="header-anchor">Composing models</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/getting-started/composing-models.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#generating_dummy_data">Generating dummy data</a></li><li><a href="#wrapping_a_supervised_model_in_learned_target_transformations">Wrapping a supervised model in learned target transformations</a></li><li><a href="#the_final_pipeline">The final pipeline</a></li></ol></div>
@@ -257,19 +259,19 @@ MLJLinearModels.RidgeRegressor</code></pre>
 Xcont &#61; &#40;x1 &#61; rand&#40;rng, 5&#41;, x2 &#61; rand&#40;5&#41;&#41;
 mach &#61; machine&#40;transformed_target_model, Xcont, y&#41; |&gt; fit&#33;
 yhat &#61; predict&#40;mach, Xcont&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- 1754.106294766073
- 1753.1464375235225
- 1748.7783411513058
- 1750.6584448549415
- 1753.3010865739004</code></pre>
+ 1751.8669503721433
+ 1761.0380391714327
+ 1745.4164443644154
+ 1749.3333949147136
+ 1752.3807141222846</code></pre>
 <p>In case you need convincing, removing the target transformation indeed gives a different outcome:</p>
 <pre><code class="language-julia">mach &#61; machine&#40;RidgeRegressor&#40;&#41;, Xcont, y&#41; |&gt; fit&#33;
 yhat - predict&#40;mach, Xcont&#41;</code></pre><pre><code class="plaintext code-output">5-element Vector{Float64}:
- -4.003003645669651
- -4.088944024470493
- -4.062105213557061
- -3.7051768116848507
- -4.150165434873998</code></pre>
+ -3.886929751397247
+ -4.432585089219401
+ -3.8908797851088366
+ -3.6635370418441653
+ -4.090525387439129</code></pre>
 <p>‎</p></div>
 <div class="dropdown"><h2 id="the_final_pipeline"><a href="#the_final_pipeline" class="header-anchor">The final pipeline</a></h2></div>
 <div class="dropdown-content"><p>Next we insert our target-transformed model into a pipeline, to create a new model which includes the input data pre-processing we want:</p>
@@ -292,16 +294,22 @@ yhat - predict&#40;mach, Xcont&#41;</code></pre><pre><code class="plaintext code
 pipe.one_hot_encoder.drop_last &#61; true;</code></pre>
 <p>Evaluation for a pipe can be done with the <code>evaluate&#33;</code> method.</p>
 <pre><code class="language-julia">evaluate&#40;pipe, X, y, resampling&#61;CV&#40;nfolds&#61;3&#41;, measure&#61;l1&#41;</code></pre><pre><code class="plaintext code-output">PerformanceEvaluation object with these fields:
-  model, measure, operation, measurement, per_fold,
-  per_observation, fitted_params_per_fold,
-  report_per_fold, train_test_rows, resampling, repeats
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
 Extract:
-┌──────────┬───────────┬─────────────┬─────────┬───────────────────────┐
-│ measure  │ operation │ measurement │ 1.96*SE │ per_fold              │
-├──────────┼───────────┼─────────────┼─────────┼───────────────────────┤
-│ LPLoss(  │ predict   │ 187.0       │ 129.0   │ [168.0, 141.0, 314.0] │
-│   p = 1) │           │             │         │                       │
-└──────────┴───────────┴─────────────┴─────────┴───────────────────────┘
+┌──────────┬───────────┬─────────────┐
+│ measure  │ operation │ measurement │
+├──────────┼───────────┼─────────────┤
+│ LPLoss(  │ predict   │ 187.0       │
+│   p = 1) │           │             │
+└──────────┴───────────┴─────────────┘
+┌───────────────────────┬─────────┐
+│ per_fold              │ 1.96*SE │
+├───────────────────────┼─────────┤
+│ [168.0, 141.0, 314.0] │ 129.0   │
+└───────────────────────┴─────────┘
 </code></pre>
 <p>‎</p>
 <p>‎</p></div>
@@ -318,7 +326,7 @@ Extract:
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="lab_5_-_cross_validation_and_the_bootstrap"><a href="#lab_5_-_cross_validation_and_the_bootstrap" class="header-anchor">Lab 5 - Cross validation and the bootstrap</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="lab_5_-_cross_validation_and_the_bootstrap"><a href="#lab_5_-_cross_validation_and_the_bootstrap" class="header-anchor">Lab 5 - Cross validation and the bootstrap</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/isl/lab-5.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a><ol><li><a href="#polynomial_regression">Polynomial regression</a></li></ol></li><li><a href="#k-folds_cross_validation">K-Folds Cross Validation</a></li><li><a href="#the_bootstrap">The Bootstrap</a></li></ol></div>
@@ -206,7 +208,8 @@ y, X &#61; unpack&#40;auto, &#61;&#61;&#40;:MPG&#41;&#41;
 train, test &#61; partition&#40;eachindex&#40;y&#41;, 0.5, shuffle&#61;true, rng&#61;444&#41;;</code></pre>
 <p>Note the use of <code>rng&#61;</code> to seed the shuffling of indices so that the results are reproducible.</p>
 <div class="dropdown"><h3 id="polynomial_regression"><a href="#polynomial_regression" class="header-anchor">Polynomial regression</a></h3></div>
-<div class="dropdown-content"><pre><code class="language-julia">LR &#61; @load LinearRegressor pkg&#61;MLJLinearModels</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
+<div class="dropdown-content"><p>This tutorial introduces polynomial regression in a very hands-on way. A more programmatic alternative is to use MLJ&#39;s <code>InteractionTransformer</code>. Run <code>doc&#40;&quot;InteractionTransformer&quot;&#41;</code> for details.</p>
+<pre><code class="language-julia">LR &#61; @load LinearRegressor pkg&#61;MLJLinearModels</code></pre><pre><code class="plaintext code-output">import MLJLinearModels ✔
 MLJLinearModels.LinearRegressor</code></pre>
 <p>In this part we only build models with the <code>Horsepower</code> feature.</p>
 <pre><code class="language-julia">using Plots
@@ -250,8 +253,8 @@ lr3 &#61; machine&#40;LinMod, Xhp, y&#41;
 fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: DeterministicPipeline(feature_selector = FeatureSelector(features = [:hp1, :hp2, :hp3], …), …)
   args: 
-    1:	Source @835 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @558 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @596 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @593 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Let&#39;s check the performances on the test set</p>
 <pre><code class="language-julia">get_mse&#40;lr&#41; &#61; rms&#40;MLJ.predict&#40;lr, rows&#61;test&#41;, y&#91;test&#93;&#41;^2
@@ -260,7 +263,7 @@ fit&#33;&#40;lr3, rows&#61;train&#41;</code></pre><pre><code class="plaintext co
 @show get_mse&#40;lr2&#41;
 @show get_mse&#40;lr3&#41;</code></pre><pre><code class="plaintext code-output">get_mse(lr1) = 23.49399089500798
 get_mse(lr2) = 19.287175510952153
-get_mse(lr3) = 19.381831638657914
+get_mse(lr3) = 19.381831638657932
 </code></pre>
 <p>Let&#39;s visualise the models</p>
 <pre><code class="language-julia">hpn  &#61; xx.Horsepower
@@ -314,7 +317,9 @@ tm &#61; TunedModel&#40;model&#61;LinMod, ranges&#61;r, resampling&#61;CV&#40;nf
   acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
-  cache = true)</code></pre>
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)</code></pre>
 <p>Now we&#39;re left with fitting the tuned model</p>
 <pre><code class="language-julia">mtm &#61; machine&#40;tm, Xhp, y&#41;
 fit&#33;&#40;mtm&#41;
@@ -323,8 +328,8 @@ rep &#61; report&#40;mtm&#41;
 res &#61; rep.plotting
 
 @show round.&#40;res.measurements.^2, digits&#61;2&#41;
-@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [21.2, 21.3, 20.92, 25.61, 27.42, 223.53, 20.92, 21.32, 21.2, 27.42]
-argmin(res.measurements) = 3
+@show argmin&#40;res.measurements&#41;</code></pre><pre><code class="plaintext code-output">round.(res.measurements .^ 2, digits = 2) = [20.87, 20.92, 223.53, 88.3, 20.87, 21.3, 21.3, 21.2, 21.32, 21.3]
+argmin(res.measurements) = 1
 </code></pre>
 <p>So the conclusion here is that the 5th order polynomial does quite well.</p>
 <p>In ISL they use a different seed so the results are a bit different but comparable.</p>
@@ -353,7 +358,7 @@ ylabel&#33;&#40;&quot;MPG&quot;&#41;</code></pre>
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

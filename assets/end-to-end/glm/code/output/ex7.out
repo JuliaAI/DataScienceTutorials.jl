@@ -47,6 +47,7 @@ NuSVR
 OrthogonalMatchingPursuitCVRegressor
 OrthogonalMatchingPursuitRegressor
 PLSRegressor
+PartLS
 PassiveAggressiveRegressor
 QuantileRegressor
 RANSACRegressor

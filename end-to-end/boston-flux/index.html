@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="boston_with_flux"><a href="#boston_with_flux" class="header-anchor">Boston with Flux</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="boston_with_flux"><a href="#boston_with_flux" class="header-anchor">Boston with Flux</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/boston-flux.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#getting_started">Getting started</a></li><li><a href="#tuning">Tuning</a></li></ol></div>
@@ -265,15 +267,15 @@ end</code></pre>
 <pre><code class="language-julia">mach &#61; MLJ.machine&#40;nnregressor, features, targets&#41;</code></pre><pre><code class="plaintext code-output">untrained Machine; caches model-specific representations of data
   model: NeuralNetworkRegressor(builder = MyNetworkBuilder(n1 = 20, …), …)
   args: 
-    1:	Source @935 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @456 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @382 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @299 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Let&#39;s fit this on the train set</p>
 <pre><code class="language-julia">MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: NeuralNetworkRegressor(builder = MyNetworkBuilder(n1 = 20, …), …)
   args: 
-    1:	Source @935 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @456 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @382 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @299 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>As we can see, the training loss decreases at each epoch, showing the the neural network is gradually learning form the training set.</p>
 <pre><code class="language-julia">preds &#61; MLJ.predict&#40;mach, features&#91;test, :&#93;&#41;
@@ -285,8 +287,8 @@ print&#40;preds&#91;1:5&#93;&#41;</code></pre><pre><code class="plaintext code-o
 MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: NeuralNetworkRegressor(builder = MyNetworkBuilder(n1 = 20, …), …)
   args: 
-    1:	Source @935 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @456 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @382 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @299 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>You can always specify that you want to retrain the model from scratch using the force&#61;true parameter. &#40;Look at documentation for <code>fit&#33;</code> for more&#41;.</p>
 <p>However, changing parameters such as batch_size will necessarily cause re-training from scratch.</p>
@@ -294,8 +296,8 @@ MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><co
 MLJ.fit&#33;&#40;mach, rows&#61;train, verbosity&#61;3&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: NeuralNetworkRegressor(builder = MyNetworkBuilder(n1 = 20, …), …)
   args: 
-    1:	Source @935 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @456 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @382 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @299 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>Another bit to remember here is that changing the optimiser doesn&#39;t cause retaining by default. However, the <code>optimiser_changes_trigger_retraining</code> in NeuralNetworkRegressor can be toggled to accomodate this. This allows one to modify the learning rate, for example, after an initial burn-in period.</p>
 <pre><code class="language-julia"># Inspecting out-of-sample loss as a function of epochs
@@ -351,15 +353,17 @@ tm &#61; MLJ.TunedModel&#40;model&#61;nnregressor, ranges&#61;&#91;bs, &#93;, me
   acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
-  cache = true)</code></pre>
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)</code></pre>
 <p>For more on tuning, refer to the model-tuning tutorial.</p>
 <pre><code class="language-julia">m &#61; MLJ.machine&#40;tm, features, targets&#41;
 
 MLJ.fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; does not cache data
   model: DeterministicTunedModel(model = NeuralNetworkRegressor(builder = MyNetworkBuilder(n1 = 20, …), …), …)
   args: 
-    1:	Source @358 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @213 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @983 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @456 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>This evaluated the model at each value of our range. The best value is:</p>
 <pre><code class="language-julia">MLJ.fitted_params&#40;m&#41;.best_model.batch_size</code></pre><pre><code class="plaintext code-output">5</code></pre>
@@ -377,7 +381,7 @@ MLJ.fit&#33;&#40;m&#41;</code></pre><pre><code class="plaintext code-output">tra
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

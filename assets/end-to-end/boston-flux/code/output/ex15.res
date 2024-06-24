@@ -31,4 +31,6 @@ DeterministicTunedModel(
   acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
   acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
   check_measure = true, 
-  cache = true)
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)

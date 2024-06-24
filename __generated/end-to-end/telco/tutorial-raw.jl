@@ -75,7 +75,7 @@ ytest, Xtest = unpack(df_test, ==(:Churn), !=(:customerID));
 
 Booster = @load EvoTreeClassifier pkg=EvoTrees
 
-booster = Booster()
+booster = Booster(rng=Xoshiro(123))
 
 scitype(y) <: target_scitype(booster)
 
@@ -105,6 +105,8 @@ keys(rpt.continuous_encoder)
 join(string.(rpt.continuous_encoder.new_features), ", ") |> println
 
 reports_feature_importances(pipe)
+
+Pkg.status()
 
 reports_feature_importances(booster)
 
@@ -194,7 +196,8 @@ rpt2.best_report.controls |> collect
 
 plot(mach_tuned_iterated_pipe, size=(600,450))
 
-MLJ.save("tuned_iterated_pipe.jls", mach_tuned_iterated_pipe)
+FILE = joinpath(tempdir(), "tuned_iterated_pipe.jls")
+MLJ.save(FILE, mach_tuned_iterated_pipe)
 
 e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
                                  resampling=StratifiedCV(nfolds=6, rng=rng),
@@ -202,7 +205,7 @@ e_tuned_iterated_pipe = evaluate(tuned_iterated_pipe, X, y,
 
 e_pipe
 
-mach_restored = machine("tuned_iterated_pipe.jls")
+mach_restored = machine(FILE)
 
 ŷ_tuned = predict(mach_restored, Xtest);
 ŷ_tuned[1]

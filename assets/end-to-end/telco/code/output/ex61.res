@@ -1,5 +1,19 @@
-4-element Vector{Tuple{Any, NamedTuple}}:
- (IterationControl.Step(1), (new_iterations = 54,))
- (EarlyStopping.NumberSinceBest(4), (done = true, log = "Stop triggered by EarlyStopping.NumberSinceBest(4) stopping criterion. "))
- (EarlyStopping.TimeLimit(Dates.Millisecond(2000)), (done = false, log = ""))
- (EarlyStopping.InvalidValue(), (done = false, log = ""))
+CompactPerformanceEvaluation object with these fields:
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  train_test_rows, resampling, repeats
+Extract:
+┌───┬──────────────────┬──────────────┬─────────────┐
+│   │ measure          │ operation    │ measurement │
+├───┼──────────────────┼──────────────┼─────────────┤
+│ A │ BrierLoss()      │ predict      │ 0.286       │
+│ B │ AreaUnderCurve() │ predict      │ 0.824       │
+│ C │ Accuracy()       │ predict_mode │ 0.817       │
+└───┴──────────────────┴──────────────┴─────────────┘
+┌───┬───────────────────────────────────────────────────┬─────────┐
+│   │ per_fold                                          │ 1.96*SE │
+├───┼───────────────────────────────────────────────────┼─────────┤
+│ A │ Float32[0.305, 0.299, 0.286, 0.235, 0.295, 0.294] │ 0.0226  │
+│ B │ [0.786, 0.795, 0.826, 0.91, 0.806, 0.82]          │ 0.0393  │
+│ C │ [0.819, 0.817, 0.805, 0.878, 0.793, 0.793]        │ 0.0279  │
+└───┴───────────────────────────────────────────────────┴─────────┘

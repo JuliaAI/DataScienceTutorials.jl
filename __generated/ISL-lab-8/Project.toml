@@ -1,9 +1,0 @@
-[deps]
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-DecisionTree = "7806a523-6efd-50cb-b5f6-3fa6f1930dbb"
-MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
-MLJDecisionTreeInterface = "c6f25543-311c-4c74-83dc-3ea6d1015661"
-MLJScikitLearnInterface = "5ae90465-5518-4432-b9d2-8a1def2f0cab"
-MLJXGBoostInterface = "54119dfa-1dab-4055-a167-80440f4f7a91"
-PrettyPrinting = "54e16d92-306c-5ea0-a30b-337be88ac337"
-RDatasets = "ce6b1742-4840-55fa-b093-852dadbb1d8b"

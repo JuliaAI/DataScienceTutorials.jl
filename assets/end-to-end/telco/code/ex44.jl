@@ -1,3 +1,2 @@
 # This file was generated, do not modify it. # hide
-feature_importance_table =
-    (feature=Symbol.(first.(fi)), importance=last.(fi)) |> DataFrames.DataFrame;
+fi = feature_importances(mach_pipe)

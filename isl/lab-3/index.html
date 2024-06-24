@@ -40,8 +40,9 @@
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
-          <li class="pure-menu-item pure-menu-top-item "><a href="/DataScienceTutorials.jl/"
-              class="pure-menu-link"><strong>Home</strong></a></li>
+          <li class="pure-menu-item pure-menu-top-item "><a
+   	      href="https://github.com/JuliaAI/DataScienceTutorials.jl"
+              class="pure-menu-link"><strong>Contribute</strong></a></li>
 
           <!-- DATA BASICS -->
           <div class="dropdown">
@@ -193,7 +194,8 @@
   <div id="main"> <!-- Closed in foot -->
     
 
-    <!-- Content appended here --><div class="franklin-content"><h1 id="lab_3_-_linear_regression"><a href="#lab_3_-_linear_regression" class="header-anchor">Lab 3 - Linear Regression</a></h1>
+    <!-- Content appended here -->
+<div class="franklin-content"><h1 id="lab_3_-_linear_regression"><a href="#lab_3_-_linear_regression" class="header-anchor">Lab 3 - Linear Regression</a></h1>
 <em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/isl/lab-3.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#simple_linear_regression">Simple linear regression</a></li><li><a href="#interaction_and_transformation">Interaction and transformation</a></li></ol></div>
@@ -252,14 +254,14 @@ mach_uni &#61; machine&#40;mdl, X_uni, y&#41;
 fit&#33;&#40;mach_uni&#41;</code></pre><pre><code class="plaintext code-output">trained Machine; caches model-specific representations of data
   model: LinearRegressor(fit_intercept = true, …)
   args: 
-    1:	Source @085 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @797 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @147 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @949 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre>
 <p>You can then retrieve the  fitted parameters using <code>fitted_params</code>:</p>
 <pre><code class="language-julia">fp &#61; fitted_params&#40;mach_uni&#41;
 @show fp.coefs
-@show fp.intercept</code></pre><pre><code class="plaintext code-output">fp.coefs = [:LStat => -0.9500493537579882]
-fp.intercept = 34.55384087938306
+@show fp.intercept</code></pre><pre><code class="plaintext code-output">fp.coefs = [:LStat => -0.950049353757991]
+fp.intercept = 34.553840879383095
 </code></pre>
 <p>You can also visualise this</p>
 <pre><code class="language-julia">using Plots
@@ -343,7 +345,7 @@ plot&#33;&#40;Xnew.LStat, MLJ.predict&#40;mach, Xnew&#41;, linewidth&#61;3, colo
 </div>
 <div class="page-foot">
   <div class="copyright">
-    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: April 15, 2024. Website built with <a
+    &copy; Thibaut Lienart, Anthony Blaom, Sebastian Vollmer and collaborators. Last modified: June 20, 2024. Website built with <a
       href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a>.
   </div>
 </div></div><!-- CONTENT ENDS HERE -->

@@ -1,5 +1,37 @@
-trained Machine; does not cache data
-  model: ProbabilisticTunedModel(model = ProbabilisticIteratedModel(model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …)
-  args: 
-    1:	Source @787 ⏎ ScientificTypesBase.Table{Union{AbstractVector{ScientificTypesBase.Continuous}, AbstractVector{ScientificTypesBase.Multiclass{3}}, AbstractVector{ScientificTypesBase.Multiclass{2}}, AbstractVector{ScientificTypesBase.Multiclass{4}}}}
-    2:	Source @402 ⏎ AbstractVector{ScientificTypesBase.OrderedFactor{2}}
+ProbabilisticTunedModel(
+  model = ProbabilisticIteratedModel(
+        model = ProbabilisticPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), 
+        controls = Any[IterationControl.Step(1), EarlyStopping.NumberSinceBest(4), EarlyStopping.TimeLimit(Dates.Millisecond(2000)), EarlyStopping.InvalidValue()], 
+        resampling = Holdout(fraction_train = 0.7, …), 
+        measure = BrierLoss(), 
+        weights = nothing, 
+        class_weights = nothing, 
+        operation = nothing, 
+        retrain = false, 
+        check_measure = true, 
+        iteration_parameter = nothing, 
+        cache = true), 
+  tuning = RandomSearch(
+        bounded = Distributions.Uniform, 
+        positive_unbounded = Distributions.Gamma, 
+        other = Distributions.Normal, 
+        rng = Random.Xoshiro(0x028dfc8b09743300, 0x63602df923831c17, 0x583c62916d9b98c3, 0x9a3836f04c25bd68, 0xf4e85a418b9c4f80)), 
+  resampling = StratifiedCV(
+        nfolds = 6, 
+        shuffle = true, 
+        rng = Random.Xoshiro(0x028dfc8b09743300, 0x63602df923831c17, 0x583c62916d9b98c3, 0x9a3836f04c25bd68, 0xf4e85a418b9c4f80)), 
+  measure = StatisticalMeasuresBase.FussyMeasure[BrierLoss(), AreaUnderCurve(), Accuracy()], 
+  weights = nothing, 
+  class_weights = nothing, 
+  operation = nothing, 
+  range = MLJBase.NumericRange{T, MLJBase.Bounded} where T[NumericRange(0.01 ≤ model.evo_tree_classifier.eta ≤ 0.3162; after scaling: origin=0.05623, unit=5.623), NumericRange(2 ≤ model.evo_tree_classifier.max_depth ≤ 6; origin=4.0, unit=2.0)], 
+  selection_heuristic = MLJTuning.NaiveSelection(nothing), 
+  train_best = true, 
+  repeats = 1, 
+  n = 40, 
+  acceleration = ComputationalResources.CPUThreads{Int64}(12), 
+  acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
+  check_measure = true, 
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)

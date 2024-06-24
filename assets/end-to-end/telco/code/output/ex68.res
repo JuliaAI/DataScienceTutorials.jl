@@ -1,1 +1,1 @@
-nothing
+UnivariateFinite{ScientificTypesBase.OrderedFactor{2}}(No=>0.712, Yes=>0.288)
