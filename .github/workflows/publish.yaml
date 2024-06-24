@@ -10,8 +10,8 @@ jobs:
         persist-credentials: false
 
     - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        ACCESS_TOKEN: ${{ secrets.DST }}
-        BRANCH: gh-pages
-        FOLDER: __site
+        ssh-key: ${{ secrets.DST }}
+        branch: gh-pages
+        folder: __site
