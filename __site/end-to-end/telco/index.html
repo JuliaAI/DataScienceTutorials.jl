@@ -6,20 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
    <!-- Syntax highlighting via Prism, note: restricted langs -->
-<link rel="stylesheet" href="/libs/highlight/github.min.css">
+<link rel="stylesheet" href="/DataScienceTutorials.jl/libs/highlight/github.min.css">
  
-  <link rel="stylesheet" href="/css/landing.css">
-  <link rel="stylesheet" href="/css/franklin.css">
-  <link rel="stylesheet" href="/css/pure.css">
-  <link rel="stylesheet" href="/css/side-menu.css">
-  <link rel="stylesheet" href="/css/nav.css">
-  <link rel="stylesheet" href="/css/extra.css">
-  <!-- <link rel="icon" href="/assets/infra/favicon.gif"> -->
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/landing.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/franklin.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/pure.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/side-menu.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/nav.css">
+  <link rel="stylesheet" href="/DataScienceTutorials.jl/css/extra.css">
+  <!-- <link rel="icon" href="/DataScienceTutorials.jl/assets/infra/favicon.gif"> -->
    <title>MLJ for Data Scientists in Two Hours</title> 
   <!-- LUNR -->
-  <script src="/libs/lunr/lunr.min.js"></script>
-  <script src="/libs/lunr/lunr_index.js"></script>
-  <script src="/libs/lunr/lunrclient.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr.min.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunr_index.js"></script>
+  <script src="/DataScienceTutorials.jl/libs/lunr/lunrclient.min.js"></script>
 </head>
 
 <body>
@@ -28,15 +28,15 @@
     <a href="#menu" id="menuLink" class="menu-link"><span></span></a>
     <div id="menu" style="display: none;">
       <div class="pure-menu">
-        <a href="/" id="menu-logo-link">
+        <a href="/DataScienceTutorials.jl/" id="menu-logo-link">
           <div class="menu-logo">
-            <!-- <img id="menu-logo" alt="MLJ Logo" src="/assets/infra/MLJLogo2.svg" /> -->
+            <!-- <img id="menu-logo" alt="MLJ Logo" src="/DataScienceTutorials.jl/assets/infra/MLJLogo2.svg" /> -->
             <p><strong>Data Science Tutorials</strong></p>
           </div>
         </a>
         <form id="lunrSearchForm" name="lunrSearchForm">
           <input class="search-input" name="q" placeholder="Search in tutorials..." type="text">
-          <input type="submit" value="Search" formaction="/search/index.html" style="display:none">
+          <input type="submit" value="Search" formaction="/DataScienceTutorials.jl/search/index.html" style="display:none">
         </form>
         <!-- LIST OF MENU ITEMS -->
         <ul class="pure-menu-list">
@@ -51,19 +51,19 @@
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist">
               <li class="pure-menu-item "><a
-                  href="/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
+                  href="/DataScienceTutorials.jl/data/loading/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Loading
                   data</a></li>
               <li class="pure-menu-item "><a
-                  href="/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  href="/DataScienceTutorials.jl/data/dataframe/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
                   Frames</a></li>
               <li class="pure-menu-item "><a
-                  href="/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/DataScienceTutorials.jl/data/categorical/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Categorical Arrays</a></li>
               <li class="pure-menu-item "><a
-                  href="/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
+                  href="/DataScienceTutorials.jl/data/scitype/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Scientific
                   Type</a></li>
               <li class="pure-menu-item "><a
-                  href="/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
+                  href="/DataScienceTutorials.jl/data/processing/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Data
                   processing</a></li>
             </ul>
           </div>
@@ -76,29 +76,29 @@
             <ul class="pure-menu-sublist">
               <li
                 class="pure-menu-item ">
-                <a href="/getting-started/choosing-a-model/" class="pure-menu-link"><span
+                <a href="/DataScienceTutorials.jl/getting-started/choosing-a-model/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Choosing a model</a>
               </li>
               <li class="pure-menu-item ">
-                <a href="/getting-started/fit-and-predict/" class="pure-menu-link"><span
+                <a href="/DataScienceTutorials.jl/getting-started/fit-and-predict/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Fit, predict, transform</a>
               </li>
               <li class="pure-menu-item "><a
-                  href="/getting-started/model-tuning/" class="pure-menu-link"><span
+                  href="/DataScienceTutorials.jl/getting-started/model-tuning/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Model tuning</a></li>
               <li class="pure-menu-item "><a
-                  href="/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/DataScienceTutorials.jl/getting-started/ensembles/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Ensembles</a></li>
               <li class="pure-menu-item "><a
-                  href="/getting-started/ensembles-2/" class="pure-menu-link"><span
+                  href="/DataScienceTutorials.jl/getting-started/ensembles-2/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Ensembles 2</a></li>
               <li
                 class="pure-menu-item ">
-                <a href="/getting-started/composing-models/" class="pure-menu-link"><span
+                <a href="/DataScienceTutorials.jl/getting-started/composing-models/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Composing models</a>
               </li>
               <li class="pure-menu-item "><a
-                  href="/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/DataScienceTutorials.jl/getting-started/stacking/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Stacking</a></li>
             </ul>
           </div>
@@ -108,21 +108,21 @@
           </div>
           <div class="collapse dropdown-content">
             <ul class="pure-menu-sublist" id=isl>
-              <li class="pure-menu-item "><a href="/isl/lab-2/"
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-2/"
                   class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> Lab 2</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-3/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-3/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 3</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-4/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-4/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 4</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-5/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-5/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 5</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-6b/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-6b/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 6b</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-8/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-8/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 8</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-9/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-9/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 9</a></li>
-              <li class="pure-menu-item "><a href="/isl/lab-10/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/isl/lab-10/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Lab 10</a></li>
             </ul>
           </div>
@@ -133,33 +133,33 @@
           <div class="dropdown-content collapse">
             <ul class="pure-menu-sublist" >
               <li class="pure-menu-item "><a
-                  href="/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
+                  href="/DataScienceTutorials.jl/end-to-end/telco/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>Telco
                   Churn</a></li>
               <li class="pure-menu-item "><a
-                  href="/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
+                  href="/DataScienceTutorials.jl/end-to-end/AMES/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span> AMES</a>
               </li>
-              <li class="pure-menu-item "><a href="/end-to-end/wine/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/wine/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Wine</a></li>
               <li class="pure-menu-item "><a
-                  href="/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
+                  href="/DataScienceTutorials.jl/end-to-end/crabs-xgb/" class="pure-menu-link"><span style="padding-right:0.5rem;">•</span>
                   Crabs (XGB)</a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/horse/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/horse/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Horse</a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/HouseKingCounty/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> King County Houses</a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/airfoil" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/airfoil" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Airfoil </a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/boston-lgbm" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-lgbm" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Boston (lgbm) </a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/glm/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/glm/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Using GLM.jl </a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/powergen/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/powergen/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Power Generation </a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/boston-flux" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/boston-flux" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Boston (Flux) </a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/breastcancer" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/breastcancer" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Breast Cancer</a></li>
-              <li class="pure-menu-item "><a href="/end-to-end/creditfraud" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/end-to-end/creditfraud" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Credit Fraud</a></li>
             </ul>
           </div>
@@ -169,7 +169,7 @@
           </div>
           <div class="dropdown-content collapse">
             <ul class="pure-menu-sublist" id=adv>
-              <li class="pure-menu-item "><a href="/advanced/ensembles-3/" class="pure-menu-link"><span
+              <li class="pure-menu-item "><a href="/DataScienceTutorials.jl/advanced/ensembles-3/" class="pure-menu-link"><span
                     style="padding-right:0.5rem;">•</span> Ensembles (3)</a></li>
             </ul>
           </div>
@@ -181,7 +181,7 @@
   <div id="nav" class="navigation">
     <div class="nav-container">
       <div class="brand">
-        <a href="/">DataScienceTutorials.jl</a>
+        <a href="/DataScienceTutorials.jl/">DataScienceTutorials.jl</a>
       </div>
       <nav>
         <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
@@ -197,7 +197,7 @@
     <!-- Content appended here -->
 <div class="franklin-content"><h1 id="mlj_for_data_scientists_in_two_hours"><a href="#mlj_for_data_scientists_in_two_hours" class="header-anchor">MLJ for Data Scientists in Two Hours</a></h1>
 <p>An end-to-end example using the <strong>Telco Churn</strong> dataset</p>
-<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/telco.tar.gz">project folder</a> and follow <a href="/#learning_by_doing">these instructions</a>.</em></p>
+<em>To ensure code in this tutorial runs as shown, download the tutorial <a href="https://raw.githubusercontent.com/juliaai/DataScienceTutorials.jl/gh-pages/__generated/end-to-end/telco.tar.gz">project folder</a> and follow <a href="/DataScienceTutorials.jl/#learning_by_doing">these instructions</a>.</em></p>
 <p><em>If you have questions or suggestions about this tutorial, please open an issue <a href="https://github.com/JuliaAI/DataScienceTutorials.jl/issues/new">here</a>.</em></p>
 <p><div class="franklin-toc"><ol><li><a href="#summary_of_methods_and_types_introduced">Summary of methods and types introduced</a></li><li><a href="#warm_up_building_a_model_for_the_iris_dataset">Warm up: Building a model for the iris dataset</a></li><li><a href="#getting_the_telco_data">Getting the Telco data</a></li><li><a href="#type_coercion">Type coercion</a></li><li><a href="#preparing_a_holdout_set_for_final_testing">Preparing a holdout set for final testing</a></li><li><a href="#splitting_data_into_target_and_features">Splitting data into target and features</a></li><li><a href="#loading_a_model_and_checking_type_requirements">Loading a model and checking type requirements</a></li><li><a href="#building_a_model_pipeline_to_incorporate_feature_encoding">Building a model pipeline to incorporate feature encoding</a></li><li><a href="#evaluating_the_pipeline_models_performance">Evaluating the pipeline model&#39;s performance</a><ol><li><a href="#evaluating_by_hand_with_a_holdout_set">Evaluating by hand &#40;with a holdout set&#41;</a></li><li><a href="#automated_performance_evaluation_more_typical_workflow">Automated performance evaluation &#40;more typical workflow&#41;</a></li></ol></li><li><a href="#filtering_out_unimportant_features">Filtering out unimportant features</a></li><li><a href="#wrapping_our_iterative_model_in_control_strategies">Wrapping our iterative model in control strategies</a></li><li><a href="#hyper-parameter_optimization_model_tuning">Hyper-parameter optimization &#40;model tuning&#41;</a></li><li><a href="#saving_our_model">Saving our model</a></li><li><a href="#final_performance_estimate">Final performance estimate</a></li><li><a href="#testing_the_final_model">Testing the final model</a></li></ol></div>
 <p>An application of the <a href="https://alan-turing-institute.github.io/MLJ.jl/dev/">MLJ toolbox</a> to the Telco Customer Churn dataset, aimed at practicing data scientists new to MLJ &#40;Machine Learning in Julia&#41;. This tutorial does not cover exploratory data analysis.</p>
@@ -313,7 +313,7 @@ first&#40;df0, 4&#41;</code></pre><pre><code class="plaintext code-output">4×21
 <div class="dropdown-content"><p><em>Introduces:</em> <code>scitype</code>, <code>schema</code>, <code>coerce</code></p>
 <p>A <a href="https://juliaai.github.io/ScientificTypes.jl/dev/">&quot;scientific type&quot;</a> or <em>scitype</em> indicates how MLJ will <em>interpret</em> data. For example, <code>typeof&#40;3.14&#41; &#61;&#61; Float64</code>, while <code>scitype&#40;3.14&#41; &#61;&#61; Continuous</code> and also <code>scitype&#40;3.14f0&#41; &#61;&#61; Continuous</code>. In MLJ, model data requirements are articulated using scitypes.</p>
 <p>Here are common &quot;scalar&quot; scitypes:</p>
-<img src="/assets/end-to-end/telco/scitypes.svg" alt="scalar scitypesb">
+<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/scitypes.svg" alt="scalar scitypesb">
 <p>There are also container scitypes. For example, the scitype of any <code>N</code>-dimensional array is <code>AbstractArray&#123;S, N&#125;</code>, where <code>S</code> is the scitype of the elements:</p>
 <pre><code class="language-julia">scitype&#40;&#91;&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;&#93;&#41;</code></pre><pre><code class="plaintext code-output">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre>
 <p>The <code>schema</code> operator summarizes the column scitypes of a table:</p>
@@ -613,7 +613,7 @@ Plots.scalefontsizes&#40;0.85&#41;</code></pre>
 plt &#61; scatter&#40;roc, legend&#61;false&#41;
 plot&#33;&#40;plt, xlab&#61;&quot;false positive rate&quot;, ylab&#61;&quot;true positive rate&quot;&#41;
 plot&#33;&#40;&#91;0, 1&#93;, &#91;0, 1&#93;, linewidth&#61;2, linestyle&#61;:dash, color&#61;:black&#41;</code></pre>
-<img src="/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
+<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/code/output/EX-telco-roc.svg" alt="">
 <p>‎</p></div>
 <div class="dropdown"><h3 id="automated_performance_evaluation_more_typical_workflow"><a href="#automated_performance_evaluation_more_typical_workflow" class="header-anchor">Automated performance evaluation &#40;more typical workflow&#41;</a></h3></div>
 <div class="dropdown-content"><p>We can also get performance estimates with a single call to the <code>evaluate</code> function, which also allows for more complicated resampling - in this case stratified cross-validation. To make this more comprehensive, we set <code>repeats&#61;3</code> below to make our cross-validation &quot;Monte Carlo&quot; &#40;3 random size-6 partitions of the observation space, for a total of 18 folds&#41; and set <code>acceleration&#61;CPUThreads&#40;&#41;</code> to parallelize the computation.</p>
@@ -895,7 +895,7 @@ Extract:
  (EarlyStopping.InvalidValue(), (done = false, log = ""))</code></pre>
 <p>Finally, we can visualize the optimization results:</p>
 <pre><code class="language-julia">plot&#40;mach_tuned_iterated_pipe, size&#61;&#40;600,450&#41;&#41;</code></pre>
-<img src="/assets/end-to-end/telco/code/output/EX-telco-tuning.svg" alt="">
+<img src="/DataScienceTutorials.jl/assets/end-to-end/telco/code/output/EX-telco-tuning.svg" alt="">
 <p>‎</p></div>
 <div class="dropdown"><h2 id="saving_our_model"><a href="#saving_our_model" class="header-anchor">Saving our model</a></h2></div>
 <div class="dropdown-content"><p><em>Introduces:</em> <code>MLJ.save</code></p>
@@ -1007,19 +1007,19 @@ print&#40;
 </div> <!-- end of id=main -->
 </div> <!-- end of id=layout -->
 <!-- for collapse functionality -->
-<script src="/libs/collapse/collapse.js"></script>
-<script src="/libs/pure/ui.min.js"></script>
+<script src="/DataScienceTutorials.jl/libs/collapse/collapse.js"></script>
+<script src="/DataScienceTutorials.jl/libs/pure/ui.min.js"></script>
 <!-- head and footer-nav -->
-<script src="/libs/nav/head.js"  type="module"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/head.js"  type="module"></script>
 <!-- landing page -->
-<script src="/libs/landing/landing.js"></script>
+<script src="/DataScienceTutorials.jl/libs/landing/landing.js"></script>
 <!-- navigation bar -->
-<script src="/libs/nav/nav.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/nav.js"></script>
 <!-- responsive navigation bar -->
-<script src="/libs/nav/responsive.js"></script>
+<script src="/DataScienceTutorials.jl/libs/nav/responsive.js"></script>
 
 
-<script src="/libs/highlight/highlight.pack.js"></script>
+<script src="/DataScienceTutorials.jl/libs/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
 
 
