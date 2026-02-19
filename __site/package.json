@@ -3,7 +3,7 @@
   "lockfileVersion": 1,
   "dependencies": {
     "cheerio": "^1.0.0-rc.11",
-    "gh-pages": "^5.0.0",
+    "gh-pages": "^6.3.0",
     "highlight.js": "^10.7.3",
     "lunr": "^2.3.9"
   }
